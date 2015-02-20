@@ -1,0 +1,1255 @@
+\chapter{Безконтекстни езици и стекови автомати}
+
+Основни източници в тази глава са:
+\begin{itemize}
+\item 
+  глава 4 от \cite{hopcroft1}, глави 5, 6 и 7 от \cite{hopcroft2};
+\item
+  глава 2 от \cite{sipser};
+\item
+  глава 3 от \cite{papadimitriou}.
+\end{itemize}
+
+\section{Безконтекстни граматики}
+% От Сипсер, същото е в слайдовете на Сашка
+% Малко е тъпо, че в Пападимитриу дефиницията е различна. Там \Sigma \subseteq V
+\begin{dfn}
+  \marginpar{На англ. context-free grammar}
+  \marginpar{Други срещани наименования са контекстно-свободна, контекстно-независима}
+  Безконтекстна граматика e четворка от вида
+  \[G = (V,\Sigma,R,S),\]
+  където
+  \begin{itemize}
+  \item
+    \marginpar{Променливите се наричат също нетерминали}
+    $V$ е крайно множество от {\em променливи};
+  \item
+    \marginpar{Буквите се наричат също терминали.}
+    $\Sigma$ е крайно множество от {\em букви}, $\Sigma \cap V = \emptyset$;
+  \item
+    $R \subseteq V\times (V\cup\Sigma)^\star$, крайно множество от {\em правила};
+  \item
+    $S \in V$ е началната променлива. 
+  \end{itemize}
+  Обикновено ще пишем $A \rightarrow_G \alpha$ вместо $(A,\alpha) \in R$.
+  Пишем $u \Rightarrow_G v$, ако съществуват думи $x,y\in (\Sigma\cup V)^\star$, $A\in V$,
+  правило $A\rightarrow_G v^\prime$ и $u = xAy$, $v = xv^\prime y$.
+  Езикът генериран от $G$ е множеството
+  \[\L(G) = \{\alpha\in\Sigma^\star\mid S \rightarrow^\star_G \alpha\}.\]
+\end{dfn}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
+\end{problem}
+\begin{proof}
+  Да разгледаме граматиката $G$ с правила
+  \begin{align*}
+    S& \rightarrow aSc\vert aS \vert B\\
+    B& \rightarrow bBc\vert bB\vert\varepsilon.
+  \end{align*}
+  
+  Лесно се вижда, че за всяко $n$ имаме свойствата:
+  \marginpar{Док. с индукция по $n$}
+  \begin{itemize}
+  \item 
+    $S \rightarrow^\star a^nSc^n$,
+  \item
+    $S \rightarrow^\star a^nS$,
+  \item
+    $B \rightarrow^\star a^nBc^n$,
+  \item
+    $B \rightarrow^\star b^nB$.
+  \end{itemize}
+  Комбинирайки горните свойства, можем да видим, че за всяко $n \geq k$,
+  \begin{itemize}
+  \item 
+    $S \rightarrow^\star a^nSc^k$,
+  \item
+    $B \rightarrow^\star b^nBc^k$.
+  \end{itemize}
+  За да докажем, че $L \subseteq L(G)$, 
+  да разгледаме една дума $\omega \in L$, т.е. $\omega = a^mb^nc^k$, $m+n \geq k$.
+  Имаме два случая:
+  \begin{itemize}
+  \item 
+    $k \leq m$, т.е. $m = k+l$ и $m+n = k+l+n$.
+    Тогава имаме изводите:
+    \[S \rightarrow^\star a^kSc^k,\ S \rightarrow^\star a^lS,\ S \rightarrow B,\ B \rightarrow^\star b^nB,\ B \rightarrow \varepsilon.\]
+    Обединявайки всичко това, получаваме:
+    \[S \rightarrow^\star a^mb^nc^k.\]
+  \item
+    $k > m$, т.е. $k = m+l$ и $m+n = m+l+r$.
+    Тогава имаме изводите:
+    \[S \rightarrow^\star a^mSc^m,\ S\rightarrow B,\ B\rightarrow^\star b^lBc^l,\ B\rightarrow b^rB,\ B\rightarrow\varepsilon,\]
+    и отново получаваме $S \rightarrow^\star a^mb^nc^k$.
+  \end{itemize}
+  Така доказахме, че $\omega \in L(G)$.
+  
+  Сега ще докажем, че $L(G) \subseteq L$.
+  С индукция по дължината на извода $l$,
+  ще докажем, че ако $S \stackrel{l}{\rightarrow}\omega$, то $\omega \in M$, където
+  \[M = \{a^nSc^k\mid n\geq k\}\cup\{a^nb^mBc^k\mid n+m\geq k\}\cup\{a^nb^mc^k\mid n+m\geq k\}.\]
+  
+  Ако $l = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$, $S \in M$.
+
+  Нека $l > 0$ и $S \stackrel{l-1}{\rightarrow} \alpha \rightarrow \omega$.
+  От {\bf И.П.} имаме, че $\alpha \in M$. Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
+  Разглеждаме всички варианти за думата $\alpha \in M$ и за правилото $C\rightarrow \gamma$ в граматиката $G$
+  за да докажем, че  $\omega \in M$.
+  Удобно е да представим всички случаи в таблица.
+  \begin{center}
+    \begin{tabular}{| c | c | c |}
+      \hline
+      $\alpha$ & $C \rightarrow \gamma$ & $\omega$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow aSc$ & $a^{n+1}Sc^{k+1}$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow aS$ & $a^{n+1}Sc^{k}$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow B$ & $a^{n}Bc^{k}$ \\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow bBc$ & $a^nb^{m+1}Bc^{k+1}$\\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow bB$ & $a^nb^{m+1}Bc^{k}$\\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow \varepsilon$ & $a^nb^{m}c^{k}$\\ \hline
+    \end{tabular}
+  \end{center}
+  Във всички случаи се установява, че $\omega \in M$.
+  Сега, за всяка дума $\omega \in L(G)$ следва, че
+  \[\omega \in \Sigma^\star \cap M = \{a^mb^nc^k\mid m+n \geq k\}.\]
+\end{proof}
+
+
+\begin{problem}
+  \marginpar{
+    $S \to aS \mid aSc \mid aB \mid bB$\\
+    $B \to bB \mid bBc \mid \varepsilon$
+}
+  Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k + 1\}$ е безконтекстен.  
+\end{problem}
+% \begin{proof}
+%   Разгледайте граматиката $G$ с правила:
+%   \begin{align*}
+%     & S \to aS \mid aSc \mid aB \mid bB\\
+%     & B \to bB \mid bBc \mid \varepsilon.
+%   \end{align*}
+  % \begin{enumerate}[a)]
+  % \item 
+  %   За посоката $L \subseteq \L(G)$, първо докажете, че:
+  %   \begin{itemize}
+  %   \item 
+  %     $S \to^\star a^{n+k}Sc^k$, за всяко $n,k \in \Nat$;
+  %   \item
+  %     $B \to^\star b^{n+k}Bc^k$, за всяко $n,k \in \Nat$;
+  %   \end{itemize}
+  % \item
+  %   За посоката $\L(G) \subseteq L$, 
+  %   да разгледаме множеството
+  %   \[M = \{a^mSc^k \mid m\geq k\} \cup \{a^mb^nBc^k \mid m+n \geq k+1\} \cup \{a^mb^nc^k \mid m+n \geq k+1\}.\]
+  %   \begin{center}
+  %     \begin{tabular}{| c | c | c |}
+  %       \hline
+  %       $\alpha$ & $C \rightarrow \gamma$ & $\omega$ \\ \hline
+  %       $a^nSc^k$ & $S \rightarrow aSc$ & $a^{n+1}Sc^{k+1}$ \\ \hline
+  %       $a^nSc^k$ & $S \rightarrow aS$ & $a^{n+1}Sc^{k}$ \\ \hline
+  %       $a^nSc^k$ & $S \rightarrow aB$ & $a^{n+1}Bc^{k}$ \\ \hline
+  %       $a^nSc^k$ & $S \rightarrow bB$ & $a^{n}bBc^{k}$ \\ \hline
+  %       $a^nb^mBc^k$ & $B \rightarrow bBc$ & $a^nb^{m+1}Bc^{k+1}$\\ \hline
+  %       $a^nb^mBc^k$ & $B \rightarrow bB$ & $a^nb^{m+1}Bc^{k}$\\ \hline
+  %       $a^nb^mBc^k$ & $B \rightarrow \varepsilon$ & $a^nb^{m}c^{k}$\\ \hline
+  %     \end{tabular}
+  %   \end{center}
+  % \end{enumerate}
+%\end{proof}
+
+
+
+\begin{problem}
+  \label{pr:nanb}
+  Нека $\omega$ е произволна дума над азбуката $\{a,b\}$. 
+  Тогава:
+  \begin{enumerate}[a)]
+  \item 
+    ако $n_a(\omega) = n_b(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
+    $\omega = \omega_1 a \omega_2$, $n_a(\omega_1) = n_b(\omega_1)$ и $n_a(\omega_2) = n_b(\omega_2)$.
+  \item
+    ако $n_b(\omega) = n_a(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
+    $\omega = \omega_1 b \omega_2$, $n_a(\omega_1) = n_b(\omega_1)$ и $n_a(\omega_2) = n_b(\omega_2)$.
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  Пълна индукция по дължината на думата $\omega$, за които $n_a(\omega) = n_b(\omega)+1$.
+  \begin{itemize}
+  \item 
+    $\abs{\omega} = 1$. Тогава $\omega_1 = \omega_2 = \varepsilon$ и $\omega = a$.
+  \item
+    $\abs{\omega} = n+1$. Ще разгледаме два случая, в зависимост от първия символ на $\omega$.
+    \begin{itemize}
+    \item 
+      Случаят $\omega = a\omega'$ е лесен. (Защо?)
+    \item
+      Интересният случай е $\omega = b\omega'$.    
+      Тогава $\omega = b^{i+1}a\omega'$. Да разгледаме думата $\omega''$, която се получава от $\omega$
+      като премахнем първото срещане на думата $ba$, т.е. 
+      $\omega'' = b^i\omega'$ и $\abs{\omega''} = n-1$.
+      Понеже от $\omega$ сме премахнали равен брой $a$-та и $b$-та, $n_a(\omega'') = n_b(\omega'')+1$.
+      Според {\bf И.П.} за $\omega''$, можем да запишем думатата като $\omega'' = \omega''_1a\omega''_2$
+      и $n_a(\omega''_1) = n_b(\omega''_1)$, $n_a(\omega''_2) = n_b(\omega''_2)$.
+      Понеже $b^i$ е префикс на $\omega''_1$, за да получим обратно $\omega$, трябва 
+      да прибавим премахнатата част $ba$ веднага след $b^i$ в $\omega''_1$.
+    \end{itemize}
+  \end{itemize}
+\end{proof}
+
+\begin{problem}
+  Да се докаже, че езикът $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) = n_b(\alpha)\}$ 
+  е безконтекстен.
+\end{problem}
+\begin{proof}
+  \marginpar{  Алтернативна граматика за езика $L$ е
+  \begin{align*}
+    S& \rightarrow aB\vert bA\\
+    A& \rightarrow a\vert aS\vert bAA\\
+    B& \rightarrow b\vert bS\vert aBB
+  \end{align*}}
+  Една възможна граматика $G$ е следната: 
+  \[S \rightarrow aSbS\vert bSaS \vert\varepsilon.\]
+  Като следствие от \Prob{nanb} може лесно да се изведе, че за думи $\omega$, за които $n_a(\omega) = n_b(\omega)$,
+  е изпълнено следното:
+  \begin{enumerate}[a)]
+  \item 
+    ако $\omega = a\omega'$, то
+    $\omega = a\omega_1b\omega_2$ и $n_a(\omega_1) = n_b(\omega_1)$, $n_a(\omega_2) = n_b(\omega_2)$;
+  \item
+    ако $\omega = b\omega'$, то
+    $\omega = b\omega_1a\omega_2$ и $n_a(\omega_1) = n_b(\omega_1)$, $n_a(\omega_2) = n_b(\omega_2)$.
+  \end{enumerate}
+
+  Сега първо ще проверим, че $L \subseteq L(G)$.
+  За целта ще докажем с {\em пълна индукция} по дължината на думата $\omega$, че за всяка дума $\omega$ със свойството $n_a(\omega) = n_b(\omega)$ е изпълнено
+  $S \rightarrow^\star \omega$.
+  \begin{itemize}
+  \item 
+    Нека $\abs{\omega} = 0$. Тогава $S \rightarrow \varepsilon$.
+  \item
+    Нека $\abs{\omega} = k+1$. Имаме два случая.
+    \begin{itemize}
+    \item 
+      $\omega = a\omega^\prime$, т.е. от свойство а), $\omega = a\omega_1b\omega_2$ и $n_a(\omega_1) = n_b(\omega_1)$, $n_a(\omega_2) = n_b(\omega_2)$.
+      Тогава $\abs{\omega_1} \leq k$ и по И.П. $S \rightarrow^\star \omega_1$.
+      Аналогично, $S \rightarrow^\star \omega_2$.
+      Понеже имаме правило $S \rightarrow aSbS$, заключаваме че $S \rightarrow^\star a\omega_1b\omega_2$.
+    \item
+      $\omega = b\omega^\prime$, т.е. свойство б), $\omega = b\omega_1a\omega_2$ и $n_a(\omega_1) = n_b(\omega_1)$, $n_a(\omega_2) = n_b(\omega_2)$.
+      Този случай се разглежда аналогично.
+    \end{itemize}
+  \end{itemize}
+  
+  Преминаваме към доказателството на другата посока, т.е. $L(G) \subseteq L$.
+  Тук с индукция по дължината на извода $l$ ще докажем, че
+  $S \stackrel{l}{\rightarrow} \omega$, то $\omega \in M$,
+  където
+  \[M = \{\omega \in \{a,b,S\}^\star \mid n_a(\omega) = n_b(\omega)\}.\]
+  За $l = 0$  е ясно, че $S \stackrel{0}{\rightarrow^\star} S$.
+  За $l = k+1$, то $S \stackrel{k}{\rightarrow^\star} \alpha \rightarrow \omega$.
+  От {\bf И.П.} имаме, че $\alpha \in M$.
+  Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
+  Разглеждаме всички варианти за думата $\alpha \in M$ и за правилото $C\rightarrow \gamma$ в граматиката $G$
+  за да докажем, че  $\omega \in M$.
+  Удобно е да представим всички случаи в таблица.
+  \begin{center}
+    \begin{tabular}{| c | c | c |}
+      \hline
+      $\alpha$ & $C \rightarrow \gamma$ & $\omega$ \\ \hline
+      $\in M$ & $S \rightarrow aSbS$ & $\in M$ \\ \hline
+      $\in M$ & $S \rightarrow bSaS$ & $\in M$ \\ \hline
+      $\in M$ & $S \rightarrow \varepsilon$ & $\in M$ \\ \hline
+    \end{tabular}
+  \end{center}
+  Във всички случаи лесно се установява, че $\omega \in M$.
+  Така за всяка дума $\omega \in L(G)$ следва, че
+  \[\omega \in \Sigma^\star \cap M = L.\]
+\end{proof}
+
+\begin{problem}
+  Докажете, че следните езици са безконтекстни.
+  \begin{enumerate}[a)]
+  \item
+    \marginpar{$S \rightarrow aSa\ \vert\ bSb\ \vert\ \varepsilon$}
+    $L = \{ww^R \mid w \in \{a,b\}^\star\}$;
+  \item
+    \marginpar{$S \rightarrow aSa\ \vert\ bSb\ \vert\ a\vert\ b\ \vert\ \varepsilon$}
+    $L = \{w \in \{a,b\}^\star \mid w = w^R\}$;
+  \item
+    $L = \{a^nb^{2n} \mid n \in \Nat\}$;
+  \item
+    \marginpar{$S \rightarrow aSb | aS | a$}
+    $L = \{a^nb^k \mid n > k\}$;
+  \item
+    $L = \{a^nb^k \mid n \geq 2k\}$;
+  \item
+    \marginpar{$S \rightarrow aSc | B,\ B \rightarrow bBc | \varepsilon$}
+    $L = \{a^nb^mc^{n+m}\mid n,m \in \Nat\}$;
+  \item
+    $L = \{a^nb^kc^m \mid n + k \geq m+1\}$;
+  \item
+    $L = \{a^nb^kc^m \mid n + k \geq m+2\}$;
+  \item
+    $L = \{a^nb^kc^m \mid n + k + 1 \geq m\}$;
+  \item
+    $L = \{a^nb^kc^m \mid n + k + 2 \geq m\}$;
+  \item
+    $\{a,b\}^\star \setminus \{a^{2n}b^n \mid n\in\Nat\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid n_a(\omega) = 2n_b(\omega)\}$;
+  \item
+    $L = \{\omega_1 a \omega_2 b \mid \omega_1,\omega_2 \in \{a,b\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
+  \item
+    $L = \{\alpha c \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha^R\mbox{ е поддума на }\beta \}$.
+  \item
+    $L = \{a^nb^mc^k \mid n, m, k \text{ не са страни на триъгълник}\}$.
+  \end{enumerate}
+\end{problem}
+
+\section{Езици, които не са безконтекстни}
+
+\begin{lemma}[за нарастването (безконтекстни езици)]
+  \index{лема за нарастването!безконтекстни езици}
+  \label{lem:pumping-context} 
+  \marginpar{(\cite{sipser}, стр. 123; \cite{hopcroft1}, стр. 125)}
+  За всеки безконтекстен език $L\neq\{\epsilon\}$ съществува $p>0$, такова
+  че ако $\alpha\in L, \abs{\alpha} \geq p$, то съществува разбиване на думата на пет части, $\alpha=xyuvw$,
+  за което е изпълнено:
+  \begin{enumerate}[1)]
+  \item
+    $\abs{yv}\geq 1$,
+  \item
+    $\abs{yuv}\leq p$, и
+  \item
+    $(\forall i\geq 0)[xy^iuv^iw\in L]$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+  Нека $G$ е граматиката за езика $L$.
+  Нека \[b = \max\{\abs{\beta} \mid A\rightarrow\beta\in R\}.\]
+  Можем да приемем, че $b \geq 2$.
+  \marginpar{Възлите в дървото са променливи и терминалите са листа}
+  Това означава, че във всяко дърво на извод, всеки възел има
+  не повече от $b$ наследника.
+  Нека $p = b^{\abs{V}}+1$. Ще покажем, че $p$ е константата за разрастването на граматиката $G$.
+  % Тъй като $b \geq 2$, то $p > b^{\abs{V}}$.
+  Това означва, че всяка дума с дължина поне $p$ в езика $L$ има дърво на извод с височина
+  поне $\abs{V} + 1$.
+  
+  Нека $\abs{\alpha} \geq p$ и $T$ е дърво на извода за думата $\alpha$ {\em с минимален брой възли}. 
+  От направените по-горе разсъждения е ясно, че височината на $T$ е поне $\abs{V} + 2$.
+  Следователно, най-дългият път $\pi$ в $T$ има дължина поне $\abs{V}+2$ и 
+  по него има поне $\abs{V}+1$ променливи, защото само листата са терминали.
+  Нека $R$ да бъде променлива, която се среща като възел по пътя $\pi$ и се повтаря по него, като е измежду последните $\abs{V} + 1$
+  възли по $\pi$.
+  Последните две повтаряния на $R$ разделят думата $\alpha$ на пет части, нека
+  $\alpha = xyuvw$.
+  \begin{enumerate}[1)]
+  \item
+    $\abs{yv}\geq 1$,
+    защото ако допуснем, че $\abs{yv} = 0$,
+    то ще достигнем до противоречие с минималността на $T$.
+  \item
+    $\abs{yuv} \leq p$, защото сме избрали най-долното $R$.
+  \item
+    $xy^iuv^iw \in L$, защото можем да заменим поддървото 
+    с корен последното $R$ за поддървото с корен предпоследното $R$.
+    В случая $i = 0$, правим обратното.
+  \end{enumerate}
+\end{proof}
+
+\begin{cor}
+  Нека $G$ е безконтекстна граматика и $p$ е константата за разрастването на $G$, $L = \L(G)$.
+  Тогава $\abs{L} = \infty$ точно тогава, когато съществува $\alpha \in L$, за която $p \leq \abs{\alpha} < 2p$.
+\end{cor}
+\begin{proof}
+  Ако съществува дума $\alpha \in L$, за която $\abs{\alpha} \geq p$, то от \Lem{pumping-context} следва,
+  че $\abs{L} = \infty$, защото $\alpha = xyuvw$ и $xy^iuv^iw \in L$, за всяко $i\in\Nat$.
+
+  За другата посока, нека сега $\abs{L} = \infty$.
+  Да изберем думата $\alpha \in L$, $\abs{\alpha} \geq p$ и нека тя да бъде минималната с това свойство.
+  Да допуснем, че $\abs{\alpha} \geq 2p$.
+  Тогава от \Lem{pumping-context} следва, че $\alpha = xyuvw$, $\abs{yv} \geq 1$, $\abs{yuv} \leq p$, $xuw \in L$.
+  Ако $\abs{xuw} < p$, то $\abs{yv} > p$, защото $\abs{yv} + \abs{xuw} = \abs{z} \geq 2p$, и следователно $\abs{yuv} > p$, което е противоречие.
+  Следва, че $\abs{z} > \abs{xuw} \geq p$. Противоречие с минималността на $\alpha$.
+\end{proof}
+
+\begin{framed}
+  \Lem{pumping-context} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е безконтекстен.
+  За целта, доказваме отрицанието на \Lem{pumping-context} за $L$, т.е.
+  за всяка константа $p$, ние намираме дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на пет части, $\alpha = xyuvw$,
+  със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$, е изпълнено, че $(\exists i)[xy^iuv^iw \not\in L]$.
+\end{framed}
+
+\begin{example}
+  \label{example:anbncn}
+  Езикът $L = \{a^nb^nc^n\ \mid\ n\in\Nat\}$ не е безконтекстен.
+\end{example}
+\begin{proof}
+  Да разгледаме $\alpha = a^pb^pc^p$.
+  Tогава за разбиването $\alpha = xyuvw$, което удовлетворява условията 1) и 2) от \Lem{pumping-context},
+  знаем, че поне една от $y$ и $v$ не е празната дума.
+  Имаме два случая за $y$, $v$.
+  \begin{itemize}
+  \item
+    $y$ и $v$ са думи съставени от една буква.
+    В този случай получаваме, че $xy^2uv^2w$ има различен брой букви $a$, $b$ и $c$.
+  \item
+    $y$ или $v$ е съставена от две букви.
+    Тогава е възможно да се окаже, че $xy^2uv^2w$ да има равен брой $a$, $b$ и $c$,
+    но тогава редът на буквите е нарушен.
+  \end{itemize}  
+  Разгледахме всички възможни случаи за $y$ и $v$ и във всеки един от тях достигнахме до противоречие.
+  Следователно, езикът $L$ не е контекстно-свободен.
+\end{proof}
+
+% \begin{problem}
+%   Да се даде пример за език $L$, който {\bf не} е безконтекстен, но удовлетворява
+%   лемата за разрастването.
+% \end{problem}
+
+\begin{example}
+  Приложете лемата за разрастването за да докажете, че
+  езикът $L$ не е контекстно-свободен, където:
+  \begin{itemize}
+  \item
+    $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$;
+  \item
+    $L = \{\beta\beta\mid \beta\in \{a,b\}^\star\}$;
+  \end{itemize}
+\end{example}
+\begin{proof}
+  \begin{itemize}
+  \item
+    Да фиксираме думата $\alpha = a^pb^pc^p$ и да разгледаме
+    едно произволно нейно разбиване, $\alpha = xyuvw$, което удовлетворява 
+    условията 1) и 2) от \Lem{pumping-context}.
+    Знаем, че поне една от $y$ и $v$ не е празната дума.
+    \begin{enumerate}[a)]
+    \item
+      $y$ и $v$ са съставени от една буква.
+      Имаме три случая.
+      \begin{enumerate}[i)]
+      \item
+        $a$ не се среща в $y$ и $v$.
+        Тогава $xy^0vu^0w$ съдържа повече $a$ от $b$ или $c$.
+      \item
+        $b$ не се среща в $y$ и $v$.
+        Ако $a$ се среща в $y$ или $v$, тогава $xy^2uv^2w$ съдържа повече $a$ от $b$
+        Ако $c$ се среща в $y$ или $v$, тогава $xy^0uv^0w$ съдържа по-малко $c$ от $b$.
+      \item
+        $c$ не се среща в $y$ и $v$.
+        Тогава $xy^2uv^2w$ съдържа повече $a$ или $b$ от $c$.
+      \end{enumerate}      
+    \item
+      $y$ или $v$ е съставена от две букви.
+      Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
+    \end{enumerate}
+  \item
+    \marginpar{Защо $\alpha = a^pba^pb$ не е добър кандидат?}
+    Разгледайте $\alpha = a^pb^pa^pb^p = xyuvw$,
+    т.е. $\beta = a^pb^p$ и $\alpha = \beta\beta$.
+    \begin{enumerate}[a)]
+    \item
+      Ако $yuv$ е в първата част на думата, то 
+      $xy^0uv^0w = a^ib^ja^pb^p \not\in L$.
+      Аналогично ако $yuv$ е във втората част на думата.
+    \item
+      Ако $yuv$ е в двете части на думата, то 
+      $xy^0uv^0w = a^pb^ia^jb^p \not\in L$.
+    \end{enumerate}    
+  \end{itemize}
+\end{proof}
+
+
+\begin{thm}
+  Безконтекстните езици {\bf не} са затворени относно сечение и допълнение.
+\end{thm}
+\begin{proof}
+  \marginpar{(Виж Пример \ref{example:anbncn})}
+  Да разгледаме езика
+  \[L_0 = \{a^nb^nc^n\mid n\in\Nat\},\] за който вече знаем, че не е безконтекстен.
+  Да вземем също така и безконтекстните езици 
+  \[L_1 = \{a^nb^nc^m\mid n,m\in\Nat\},\ L_2 = \{a^mb^nc^n\mid n,m\in\Nat\},\]
+  \begin{itemize}
+  \item 
+    Понеже $L_0 = L_1\cap L_2$, то заключаваме, че безконтекстните езици не са затворени 
+    относно операцията сечение.
+  \item
+    \marginpar{Озн. $\ov{L} = \Sigma^\star \setminus L$}
+    Да допуснем, че безконтекстните езици са затворени относно операцията допълнение.
+    Тогава  $\ov{L}_1$ и $\ov{L}_2$ са безконтекстни.
+    Знаем, че безконтекстните езици са затворени относно обединение. 
+    Следователно, езикът $L_3 = \ov{L}_1 \cup \ov{L}_2$ също е безконтекстен.
+    Ние допуснахме, че безконтекстните са затворени относно допълнение, следователно $\ov{L}_3$
+    също е безконтекстен.
+    Но тогава получаваме, че езикът
+    \[L_0 = L_1 \cap L_2 = \ov{\ov{L}_1 \cup \ov{L}_2} = \ov{L}_3\]
+    е безконтекстен, което е противоречие.
+  \end{itemize}
+\end{proof}
+
+\begin{problem}
+  Проверете дали следните езици са безконтекстни:
+  \begin{enumerate}[a)]
+  \item
+    $\{a^nb^{2n}c^{3n}\ \mid\ n\in\Nat\}$;
+  \item
+    $\{a^nb^{2n}c^{n}\ \mid\ n\in\Nat\}$;
+  \item
+    $\{a^mb^n\mid\ m \neq n\}$;
+  \item
+    $\{a^nb^mc^k\mid n < m < k\}$;
+  \item
+    $\{a^nb^nc^m\mid m \leq n\}$;
+  \item
+    $L^\star$, където
+    $L = \{\alpha\alpha^R \mid \alpha \in \{a,b\}^\star\}$;
+  \item
+    $\{www\mid w\in \{a,b\}^\star\}$;
+  \item
+    $\{ww^R\mid w\in \{a,b\}^\star\}$;
+  \item
+    $\{a^{n^2}b^n\ \mid n \in \Nat\}$;
+  \item
+    $\{a^p\ \mid\ p\mbox{ е просто }\}$;
+  \item
+    $\{a^nb^na^nb^n\mid n\geq 0\}$;
+  \item
+    $\{w \in \{a,b\}^\star \mid w = w^R\}$;
+  \item
+    % Дефиниция на подниз
+    $\{w c x\mid w,x\in \{a,b\}^\star\ \&\ w\mbox{ е подниз на }x\}$;
+  \item
+    $\{x_1 c x_2 c \dots c x_k\mid k\geq 2\ \&\ x_i\in\{a,b\}^\star\ \&\ (\exists i,j)[i \neq j\ \&\ x_i = x_j]\}$;
+  \item
+    $\{a^ib^jc^k\mid i,j,k\geq 0\ \&\ (i = j \vee j = k)\}$;
+  \item
+    $\{\alpha \in \{a,b,c\}^\star\mid n_a(\alpha) = n_b(\alpha) = n_c(\alpha)\}$;
+  \item
+    $\{a,b\}^\star \setminus \{a^nb^n\mid n\in \Nat\}$;
+  \end{enumerate}
+\end{problem}
+% \begin{proof}
+%   \begin{enumerate}
+  % \item
+    % За думата $w = a^pb^pc^p = xyuvw$ разгледайте различните случаи за $y$ и $v$.
+  % \item[2)]
+  %   Разгледайте $w = a^pb^pc^p$.
+  %   \begin{enumerate}[a)]
+  %   \item
+  %     Знаем, че поне една от $y$ и $v$ не е празната дума.
+  %     Имаме три случая за поддумите $y$ и $v$.
+  %     \begin{enumerate}[i)]
+  %     \item
+  %       $a$ не се среща в $y$ и $v$.
+  %       Тогава $xy^0vu^0w$ съдържа повече $a$ от $b$ или $c$.
+  %     \item
+  %       $b$ не се среща в $y$ и $v$.
+  %       Ако $a$ се среща в $y$ или $v$, тогава $xy^2uv^2w$ съдържа повече $a$ от $b$
+  %       Ако $c$ се среща в $y$ или $v$, тогава $xy^0uv^0w$ съдържа по-малко $c$ от $b$.
+  %     \item
+  %       $c$ не се среща в $y$ и $v$.
+  %       Тогава $xy^2uv^2w$ съдържа повече $a$ или $b$ от $c$.
+  %     \end{enumerate}      
+  %   \item
+  %     $y$ или $v$ е съставена от две букви.  Контекстно-свободните езици {\bf не} са затворени относно сечение и допълнение.
+  %     Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
+  %   \end{enumerate}
+  % \item[3)]
+  %   \marginpar{Защо $\alpha = a^pba^pb$ не е добър кандидат?}
+  %   Разгледайте $\alpha = a^pb^pa^pb^p$.
+  %   \begin{enumerate}[a)]
+  %   \item
+  %     Ако $yuv$ е в първата част на думата, то 
+  %     $xy^0uv^0w = a^ib^ja^pb^p \not\in L_3$.
+  %     Аналогично ако $yuv$ е във втората част на думата.
+  %   \item
+  %     Ако $yuv$ е в двете части на думата, то 
+  %     Но $xy^0uv^0w = a^pb^ia^jb^p \not\in L_3$.
+  %   \end{enumerate}
+%   \item[10)]
+%     безконтекстен е. Лесно може да се напише контекстно-свободна граматика за този език.
+%   \item[12)]
+%     Разгледайте езика $L = L_{12} \cap a^\star b^\star c^\star$.
+%   \end{enumerate}
+% \end{proof}
+
+\begin{problem}
+  Проверете кои от следните езици са контекстно-свободни:
+  \begin{enumerate}[a)]
+  \item
+    $\{a^mb^nc^k\mid m = n \vee n = k \vee m = k\}$;
+  \item
+    $\{a^mb^nc^k\mid m \neq n \vee n \neq k \vee m \neq k\}$;
+  \item
+    $\{a^mb^nc^k\mid m = n \wedge n = k \wedge m = k\}$;
+  \item
+    $\{w \in \{a,b,c\}^\star\mid n_a(w) \neq n_b(w) \vee n_a(w) \neq n_c(w) \vee n_b(w) \neq n_c(w)\}$.
+  \end{enumerate}
+\end{problem}
+
+\section{Алгоритми}
+
+\subsection{Нормална Форма на Чомски}
+
+\begin{dfn}
+%[стр. 99 от \cite{sipser}]
+\index{Нормална форма на Чомски}
+Една контекстно-свободна граматика е в {\em нормална форма на Чоски}, ако
+всяко правило е от вида
+\[A \rightarrow BC\mbox{ и }A \rightarrow a,\]
+като $B, C$ {\em не могат} да бъдат променливата за начало $S$.
+Освен това, позволяваме правилото $S\to\varepsilon$.
+\footnote{На стр. 151 в \cite{papadimitriou} дефиницията е малко по-различна.
+Там дефинират $G$ да бъде в нормална форма на Чомски ако $R \subseteq V\times(V\cup\Sigma)^2$.
+В този случай губим езиците $\{\varepsilon\}$ и $\{a\}$, за $a\in\Sigma$.}
+\end{dfn}
+
+\begin{thm}
+  Всеки безконтекстен език $L$ е генериран от контекстно-свободна
+  граматика в нормална форма на Чомски.
+\end{thm}
+\begin{proof}
+%  \marginpar{Броят на правилата може да се увеличи експоненциално.}
+  Нека имаме контекстно-свободна граматика $G$, за която $L = L(G)$.
+  Ще построим контекстно-свободна граматика $G^\prime$ в нормална форма на Чомски, $L = L(G^\prime)$.
+  % [стр. 99 от \cite{sipser}]
+  Следваме следната процедура:
+  \begin{itemize}
+  \item
+    Добвяме нов начален символ $S_0$ и правило $S_0 \to S$.
+  \item
+    \marginpar{Сложност $O(n)$}
+    Съкращаваме дължината на правилата.
+    Заменяме правилата от вида $A\to u_1\dots u_n$, $n\geq 3$, $u_i \in V\cup\Sigma$, с
+    правилата \[A\to u_1A_1,\ A_1\to u_2A_2,\ \dots,\ A_{n-2} \to u_{n-1}u_n.\]
+    където $A_i$ са нови променливи.
+  \item
+    \marginpar{Сложност $O(n)$}
+    За всяка променлива $A \neq S_0$ премахваме правилата от вида $A\to\varepsilon$.
+    Това правим по следния начин.
+    
+    Ако имаме правило от вида $R \to Au$ или $R\to u A$, $u \in V \cup \Sigma$,
+    то добавяме правилото $R\to u$.
+    %Правим това за всяко срещане на променливата $A$ в дясната страна на правило.
+    Например, 
+    \begin{itemize}
+    \item 
+      ако имаме правило $R\to aA$, то добавяме правилото $R \to a$;
+    \item
+      ако имаме правило $R\to AA$, то добавяме правилото $R \to A$.
+    \end{itemize}
+    Ако имаме правило от вида $R\to A$, то добавяме правилото $R\to\varepsilon$
+    само ако променливата $R$ още не е преминала през процедурата за премахване на $\varepsilon$.
+  \item
+    \marginpar{Сложност $O(n^2)$}
+    Премахваме преименуващите правила, т.е. правила от вида $A\to B$.
+    Всяко правило от вида $B \to \beta$ го заменяме с $A\to \beta$,
+    освен ако $A \to \beta$ е вече премахнато преименуващо правило.
+  \item
+    % Заменяме правилата от вида $A\to u_1\dots u_n$, $n\geq 3$, $u_i \in V\cup\Sigma$, с
+    % правилата \[A\to u_1A_1,\ A_1\to u_2A_2,\ \dots,\ A_{n-2} \to u_{n-1}u_n.\]
+    % където $A_i$ са нови променливи.
+    За правила от вида $A\to u_1 u_2$, където $u_1, u_2 \in V \cup \Sigma$, 
+    заменяме всяка буква $u_i$ с новата променлива $U_i$
+    и добавяме правилото $U_i\to u_i$.
+    Например, правилото $A \to aB$ се заменя с правилото $A \to XB$ и добавяме правилото $X \to a$,
+    където $X$ е нова променлива.
+  \end{itemize}
+\end{proof}
+
+\begin{thm}
+  При дадена безконтекстна граматика $G$ с дължина $n$, можем да намерим еквивалентна
+  на нея граматика $G'$ в нормална форма на Чомски за време $O(n^2)$,
+  като получената граматика е с дължина $O(n^2)$.
+\end{thm}
+
+
+\begin{problem}
+  Нека е дадена граматиката  $G = \pair{\{S,A,B,C,D,E\}, \{a,b\},S, R}$.
+  \begin{enumerate}[a)]
+  \item
+    Намерете множеството $\{X \in V \mid X \rightarrow^\star_G \varepsilon\}$.
+  \item
+    Вярно ли е, че $\varepsilon \in L(G)$?
+  \item
+    Постройте граматика $G_1$ без $\varepsilon$-правила, за която $L(G_1)=L(G)\setminus\{\varepsilon\}$.
+  \end{enumerate}
+  Множеството от правила $R$ на граматиката $G$ е зададено като:
+  \begin{enumerate}[a)]
+  \item
+    $R = \{S\rightarrow D,D\rightarrow AD|b,A\rightarrow ACB|BC|a, B\rightarrow ABCA|CEC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb\}$;
+  \item
+    $R = \{S \rightarrow aD, D\rightarrow \varepsilon|ABBA|ADD,A\rightarrow DEB|a,B\rightarrow DDD|DC|b,C\rightarrow CCE|a, E\rightarrow \varepsilon|bEa\}$;
+  \item
+    $R = \{ S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AB|CC, C\rightarrow \varepsilon|CA|a, E\rightarrow a|EB\}$;
+  \item
+    $R = \{ S \rightarrow AD|a, D\rightarrow \varepsilon|BB|AD,A\rightarrow DB|a,B\rightarrow DD|DC|b,C\rightarrow CE|a, E\rightarrow AB|b|EA\}$;
+  \item
+    $R =\{S\rightarrow AS|SB|SS,B\rightarrow CA|b, C\rightarrow AA|a|BA,A\rightarrow \varepsilon|BS\}$;
+  % \item
+  %   $R = \{S\rightarrow AB|AC,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a,C\rightarrow CS|a\}$;
+  % \item
+  %   $R = \{S\rightarrow AS|SB|SS,B\rightarrow AC|b, C\rightarrow A|a|AB,A\rightarrow \varepsilon|BS\}$;
+  \item
+    $R = \{S\rightarrow BA|CA,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a, C\rightarrow CS|a\}$;
+  \item
+    $R = \{S\rightarrow AS|b,A\rightarrow AC|BC|a, B\rightarrow BC|CC,C\rightarrow \varepsilon|CA|a\}$;
+  \item
+    $R = \{S\rightarrow \varepsilon|BA|AS,A\rightarrow SB|a,B\rightarrow SS|SC|b,
+    C\rightarrow CC|a\}$; 
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Нека е дадена граматиката  $G = \pair{\{S,A,B,C\}, \{a,b\}, S, R}$.
+  Използвайте обща конструкция, за да премахнете ,,дългите'' правила 
+  (т.е. правила с дължина поне 2, които не са в н.ф. на Чомски) от $ G$ като при това получите 
+  безконтестна граматика $G_1$ с език $L(G)=L(G_1)$, където:
+  \begin{enumerate}[a)]
+  \item
+    $R = \{S \rightarrow \varepsilon|ab|aAba, A\rightarrow aBCb, B\rightarrow bbb, C\rightarrow aC\vert aCaC\}\rangle$;
+  \item
+    $R = \{S \rightarrow \varepsilon|ab|baAb, A\rightarrow BaBb,B\rightarrow b,C\rightarrow AbA\vert aCCa\}$;
+  \item
+    $R = \{A\rightarrow BSB|a,B\rightarrow ba|BC,C\rightarrow BaSA|a|b,S\rightarrow CC|b\}$;
+  \item
+    $R = \{A\rightarrow BAS,B\rightarrow CB,C\rightarrow ab|ABbS,S\rightarrow CC|b\}$;
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Използвайте обща конструкция, за да премахнете преименуващите правила от граматиката $G$ като при това запазите езика,
+  където $G = \pair{\{A,B,C,S\},\{a,b\}, S, R}$ и
+  \begin{enumerate}[a)]
+  \item
+    $R = \{A\rightarrow B|S,B\rightarrow C|BC,C\rightarrow AB|a|b,S\rightarrow B|CC|b\}$;
+  \item
+    $R = \{A\rightarrow B,B\rightarrow S|C|BC,C\rightarrow a|AB,S\rightarrow C|CC|b\}$;
+  \item
+    $R = \{A\rightarrow B|CC|a,B\rightarrow S|AB,C\rightarrow SC|b,S\rightarrow A|CC|b\}$;
+  \item
+    $R = \{A\rightarrow BB|b,B\rightarrow S|SS|b,C\rightarrow B|a,S\rightarrow C|AB|a\}$;
+  \item
+    $R = \{S\rightarrow A|a,A\rightarrow B|C|b, B\rightarrow AB, C\rightarrow CC|a\}$;
+  \item
+    $R = \{S\rightarrow A|B, A\rightarrow a|C|AB, B\rightarrow b|C, C\rightarrow CS|a|b\}$;
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Намерете безконтекстна граматика в нормална форма на Чомски за езиците от задача 6.
+\end{problem}
+
+
+\subsection{Проблемът за принадлежност}
+
+\begin{thm}
+  Съществува {\em полиномиален} алгоритъм , който проверява дали дадена дума принадлежни на граматиката $G$.
+  \marginpar{За дума $\alpha$, алгоритъмът работи за време $O(\abs{\alpha}^3)$}
+\end{thm}
+% \begin{proof}[стр. 154 от \cite{papadimitriou}]
+Можем да приемем, че $G$ е граматика в нормална форма на Чомски.
+Нека $\alpha = a_1a_2\dots a_n$ е дума, за която искаме да проверим дали $\alpha \in L(G)$.
+\marginpar{Това е алгоритъм на Cocke, Younger и Kasami (CYK), който е пример за динамично програмиране}
+\begin{algorithm}[H]
+  \caption{Проверка за $\alpha \in L(G)$}
+  \label{alg:belongs-to-grammar}
+  \begin{algorithmic}[1]
+    \State $n := \abs{\alpha}$
+    \ForAll{$1 \leq i \leq n$}
+    \State $V[i,i] = \{A \in V \mid A\rightarrow a_i\}$
+    \EndFor
+    \ForAll{$1 \leq i,j \leq n\ \&\ i \neq j$}
+    \State$V[i,j] = \emptyset$
+    \EndFor      
+    \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала}
+    \ForAll{$i \in [1, n-s]$}\Comment{Начало на интервала}
+    \ForAll{$k \in [i, i + s)$}\Comment{Разделяне на интервала}
+    \If{$\exists A\to BC \in R\ \&\ B \in V[i,k]\ \&\ C\in V[k+1,i+s]$}
+    \State $V[i,i+s] := V[i,i+s] \cup \{A\}$
+    \EndIf
+    \EndFor
+    \EndFor
+    \EndFor
+    \If{$S \in V[1,n]$}
+    \State \Return \texttt{True}\Comment{Има извод на думата от $S$}
+    \Else
+    \State \Return \texttt{False}
+    \EndIf
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{lemma}
+  За дадена граматика в нормална форма на Чомски и дума $\alpha$, 
+  за всяко $0 \leq s < \abs{\alpha}$, след $s$-тата итерация на алгоритъма, за всяко $i = 1,\dots,n-s$,
+  \[V[i,i+s] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s}\}.\]
+\end{lemma}
+% \begin{proof}
+%   Пълна индукция по $s$.
+%   За $s = 0$  е ясно.
+
+%   Нека твърдението е вярно за  $s < n$. Ще докажем, че за всяко $i = 1,\dots,n-s-1$,
+%   \[V[i,i+s+1] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s+1}\}.\]
+  
+% \end{proof}
+
+\begin{problem}
+  Нека е дадена граматиката $G = \pair{\{a,b\}, \{S,A,B,C\},S,R}$.
+  Използвайте CYK-алгоритъма, за да проверите дали
+  думата $\alpha$ принадлежи на $L(G)$, където правилата на граматиката $R$ и думата $\alpha$
+  са зададени като:
+  \begin{enumerate}[a)]
+  \item
+    $R =\{S\rightarrow a| AB|AC, C\rightarrow SB|AS,A\rightarrow a, B\rightarrow b\}$, $\alpha=aaabb$;
+  \item
+    $R = \{S\rightarrow BA| CA|a, C\rightarrow BS|SA,A\rightarrow a, B\rightarrow b\}$, $\alpha=bbaaa$;
+  \item
+    $R =\{S\rightarrow AB|BC, A\rightarrow BA|a,B\rightarrow CC|b, C\rightarrow AB|a\}$, $\alpha=baaba$;
+  \item
+    $R = \{S\rightarrow AB, A\rightarrow AC|a|b,B\rightarrow CB|a, C\rightarrow a\}$, $\alpha=babaa$;
+  % \item
+  %   $R = \{S\rightarrow BA|SS|b, A\rightarrow SA|a,B\rightarrow BS|b\}$, $\alpha = bbbaa$;
+  % \item
+  %   $R = \{S\rightarrow AB| BS|b, A\rightarrow SS|a,B\rightarrow BA|b\}$, $\alpha = babab$;
+  % \item
+  %   $R = \{S\rightarrow BA| AS|a, A\rightarrow AB|a,B\rightarrow SS|b\}$, $\alpha = ababa$;
+  % \item
+  %   $R = \{S\rightarrow AB|a, A\rightarrow BA|SS|a,B\rightarrow SS|b\}$, $\alpha = aabba$.
+  \end{enumerate}
+\end{problem}
+
+\begin{thm}
+  Съществуват алгоритми за определяне дали един безконтекстен език е 
+  празен, краен или безкраен.
+\end{thm}
+\begin{proof}
+  Нека е дадена една безконтекстна граматика $G$ в НФЧ.
+  \begin{description}
+  \item[($\L(G) = \emptyset?$)]
+    Тръгваме от нетерминалите от вида $A\to a$ и се опитваме да стигнем до $S$.
+    Ако успеем да стигнем, то $\L(G) \neq \emptyset$.
+  \item
+    Ако имаме цикли в 
+  \item[($\abs{\L(G)} < \infty?$ или $\abs{\L(G)} = \infty?$)]
+    Гледаме дали имаме цикли.
+  \end{description}
+\end{proof}
+
+\section{Недетерминирани стекови автомати}
+
+\index{автомат!недетерминиран стеков}
+\marginpar{На англ. Push-down automaton}
+%Sipser p.102
+\begin{dfn}
+  Недетерминиран стеков автомат е 7-орка от вида
+  \[P = \PDA,\] където:
+  \begin{itemize}
+  \item
+    $Q$ е крайно множество от състояния;
+  \item  
+    $\Sigma$ е крайна входна азбука;
+  \item
+    $\Gamma$ е крайна стекова азбука;
+  \item
+    $\# \in \Gamma$ е символ за дъно на стека;
+  \item
+    $s\in Q$ е начално състояние;
+  \item
+    \marginpar{Озн. $\Ps_{fin}(A)$ - крайните подмножества на $A$}
+    $\Delta:Q\times\Sigma_\varepsilon\times\Gamma\rightarrow \Ps_{fin}(Q\times\Gamma^\star)$ 
+    е функция на преходите;    
+  \item
+    $F\subseteq Q$ е множество от заключителни състояния.
+  \end{itemize}
+\end{dfn}
+
+Нека $P$ е стеков автомат. Тогава
+\begin{itemize}
+\item
+  $\L_F(P)$ е езика, който се разпознава от $P$ {\bfс финално състояние},
+  \[\L_F(P) = \{w\mid (q_0,w,\#) \vdash^\star_P (q,\varepsilon,\alpha)\ \&\ q \in F\}.\]    
+\item
+  $\L_S(P)$ е езика, който се разпознава от $P$  {\bf с празен стек},
+  \[\L_S(P) = \{w\mid (q_0,w,\#) \vdash^\star_P (q,\varepsilon,\varepsilon)\}.\]    
+\end{itemize}
+
+\begin{example}
+  За езика $L = \{a^nb^n\mid n\in\Nat\}$ съществува стеков автомат $P$, такъв че
+  $L = \L_S(P)$.
+  Да разгледаме $P = \PDA$, където
+  \begin{itemize}
+  \item
+    $Q = \{q\}$;
+  \item
+    $\Sigma = \{a,b\}$;
+  \item
+    $\Gamma = \{\#,A\}$;
+  \item
+    $F = \emptyset$;
+  \item 
+    $\Delta(q,a,\#) = \{(q,\# A)\}$;
+  \item 
+    $\Delta(q,\varepsilon,\#) = \{(q,\varepsilon)\}$;
+  \item 
+    $\Delta(q,b,A) = \{(q,\varepsilon)\}$;
+  \end{itemize}
+\end{example}
+
+\begin{example}
+  За езика $L = \{\omega\omega^R \mid \omega \in \{a,b\}^\star\}$ съществува стеков автомат $P$, такъв че
+  $L = \L_S(P)$.  
+  Нека $P = \PDA$, където:
+  \begin{itemize}
+  \item 
+    $\Delta(q, a, \#) = \{(q, A\#)\}$;
+  \item 
+    $\Delta(q, b, \#) = \{(q, B\#)\}$;
+  \item
+    $\Delta(q, a, A) = \{(q, AA), (p, \varepsilon)\}$;
+  \item
+    $\Delta(q, a, B) = \{(q, AB)\}$;
+  \item
+    $\Delta(q, b, B) = \{(q, BB), (p, \varepsilon)\}$;
+  \item
+    $\Delta(q, b, A) = \{(q, BA)\}$;
+  \item
+    $\Delta(p, a, A) = \{(p,\varepsilon)\}$;
+  \item
+    $\Delta(p, b, B) = \{(p,\varepsilon)\}$;
+  \item
+    $\Delta(q, \varepsilon, \#) = \{(q,\varepsilon)\}$;
+  \item
+    $\Delta(p, \varepsilon, \#) = \{(p,\varepsilon)\}$;
+  \end{itemize}
+\end{example}
+
+
+\begin{thm}
+  \marginpar{(\cite{hopcroft1}, стр. 114) }
+  Нека $L$ е произволен език над азбука $\Sigma$.
+  \begin{enumerate}[1)]
+  \item 
+    Ако съществува НСА $P$, за който $L = \L_F(P)$, то съществува НСА $P^\prime$, за който $L = \L_S(P^\prime)$.
+  \item
+    Ако съществува НСА $P$, за който $L = \L_S(P)$, то съществува НСА $P^\prime$, за който $L = \L_F(P^\prime)$.
+  \end{enumerate}
+  С други думи, езиците разпознавани от НСА с празен стек са точно езиците разпознавани от НСА с финално състояние.
+\end{thm}
+\begin{proof}
+  \begin{enumerate}[1)]
+  \item 
+    Нека $L = \L_F(P)$, където $P = \PDA$.
+    Ще построим $P^\prime$, така че да симулира $P$ и като отидем във финално състояние, искаме да изпразним стека.
+    \[P^\prime = \langle{Q\cup\{q_e,s^\prime\},\Sigma,\Gamma \cup \{\$\},\$,s^\prime,\Delta^\prime,\emptyset}\rangle\]
+    Важно е $P^\prime$ да има собствен нов символ за дъно на стека, защото е възможно за някоя дума $\alpha \not\in \L_F(P)$
+    стековият автомат $P$ да си изчисти стека.
+    \begin{itemize}
+    \item 
+      \marginpar{- започваме симулацията}
+      $\Delta^\prime(s^\prime,\varepsilon,\$) = \{(s,\#\$)\}$;
+    \item
+      \marginpar{- симулираме $P$}
+      $\Delta^\prime(q,a,X)$ включва множеството $\Delta(q,a,X)$, за всяко $q\in Q$, $a\in\Sigma_\varepsilon$, $X\in\Gamma$;
+    \item
+      \marginpar{- ако сме във финално, започваме да чистим стека}
+      $\Delta^\prime(q,\varepsilon,X)$ съдържа също и елемента $(q_e,\varepsilon)$, за всяко $q\in F$, $X \in \Gamma \cup \{\$\}$;
+    \item
+      \marginpar{- изчистваме стека}
+      $\Delta^\prime(q_e,\varepsilon,X) = \{(q_e,\varepsilon)\}$, за всяко $X \in \Gamma \cup \{\$\}$.
+    \end{itemize}
+  \item
+    Нека $L = \L_S(P)$, където $P = \langle{Q,\Sigma,\Gamma,\#,s,\Delta,\emptyset}\rangle$.
+    \[P^\prime = \langle{Q\cup\{s^\prime,q_f\}, \Sigma, \Gamma \cup \{\$\}, \Delta^\prime, \$, \{q_f\}}\rangle\]
+    $P^\prime$ ще симулира $P$ като ще внимаваме кога $P$ изчиства символа $\#$. Тогава ще искаме да отидем във финалното състояние $q_f$.
+    \begin{itemize}
+    \item 
+      \marginpar{- започваме симулацията}
+      $\Delta^\prime(s^\prime,\varepsilon,\$) = \{(s, \#\$)\}$;
+    \item
+      \marginpar{- симулираме $P$}
+      $\Delta^\prime(q,a,X) = \Delta(q,a,X)$, за всяко $q \in Q$, $a \in \Sigma_\varepsilon$, $X \in \Gamma$;
+    \item
+      \marginpar{- щом сме стигнали до $\$$, значи $P$ е изчистил стека си}
+      $\Delta^\prime(q,\varepsilon,\$) = \{(q_f,\varepsilon)\}$.
+    \end{itemize}
+  \end{enumerate}
+\end{proof}
+
+\begin{thm}
+  \marginpar{(\cite{hopcroft1}, стр. 117)}
+  Класът на езиците, които се разпознават от краен стеков автомат, съвпада с
+  класа на безконтекстните езици.
+\end{thm}
+\begin{proof}
+  \begin{enumerate}[1)]
+  \item 
+    Нека е дадена безконтекстна граматика $G = \CFG$.
+    Нашата цел е да построим стеков автомат $P$, така че $\L_S(P) = \L(G)$.
+    Нека  \[P = \langle{\{q\},\Sigma,\Sigma\cup V,S,q,\Delta,\emptyset}\rangle,\]
+    където функцията на преходите е:
+    \begin{align*}
+      & \Delta(q,\varepsilon,A) = \{(q,\alpha)\mid A\to\alpha\mbox{ е правило в }R\}\\
+      & \Delta(q,a,a) = \{(q,\varepsilon)\}
+    \end{align*}
+  \item
+    Нека имаме $P = \langle{Q, \Sigma, \Gamma, \Delta, s, \#, \emptyset}\rangle$.
+    Ще дефинираме безконтекстна граматика $G$, за която $\L_S(P) = \L(G)$.
+    Променливите на граматика са 
+    \[V = \{[q,A,p] \mid q,p \in Q, A \in \Gamma\}.\]
+    Правилата на $G$ са следните:
+    \begin{itemize}
+    \item
+      $S \to [s,\#,q]$, за всяко $q \in Q$;
+    \item
+      $[q,A,q_{m+1}] \to a[q_1,B_1,q_2][q_2,B_2,q_3]\dots [q_m,B_m,q_{m+1}]$,
+      където 
+      \[(q_1,B_1\dots B_m) \in \Delta(q, a, A)\]
+      и произволни $q,q_1,\dots,q_{m+1} \in Q$,
+      $a \in \Sigma_\varepsilon$.
+    \item
+      Ако $m = 0$, т.е. $(q_1,\varepsilon) \in \Delta(q, a, A)$,  то имаме правилото $[q,A,q_{1}] \to a$, където $a \in \Sigma_\varepsilon$.
+    \end{itemize}
+    Трябва да докажем, че:
+    \[[q,A,p] \Rightarrow^\star_G \alpha\ \iff\ (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
+    \begin{itemize}
+    \item 
+      С индукция по $i$, ще докажем, че 
+      \[(q,\alpha,A) \vdash^i_P (p,\varepsilon,\varepsilon)\ \rightarrow\ [q,A,p] \Rightarrow^\star_G \alpha.\]
+      Ако $i = 1$, то е лесно, защото $\alpha = a$ или $\alpha = \varepsilon$, в случай, че $m = 0$.
+      Ако $i > 1$, нека $\alpha = a\beta$. Тогава:
+      \[(q,a\beta,A) \vdash_P (q_1,\beta,B_1\dots B_n) \vdash^{i-1}_P (p, \varepsilon, \varepsilon)\]
+      Нека $\beta = \beta_1\cdots \beta_n$, със свойството, че след като прочетем $\beta_i$, то 
+      сме премахнали променливата $B_i$ от върха на стека. Това означава, че:
+      \[(q_j, \beta_j, B_j) \vdash^{i_j}_P (q_{j+1},\varepsilon,\varepsilon),\]
+      където $i_j < i$.
+    \item
+      Отново с индукция по $i$ ще докажем, че
+      \[[q,A,p] \Rightarrow^i_G \alpha\ \rightarrow\ (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
+      Ако $i = 1$, то имаме $[q,A,p] \Rightarrow \alpha$, където $\alpha = a$ или $\alpha = \varepsilon$.
+      Ако $i > 1$, то имаме, че $\alpha = a\beta$ и 
+      \[[q,A,p] \Rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,q_{n+1}] \Rightarrow^{i-1}_G \beta.\]
+      Отново $\beta = \beta_1\dots \beta_n$, където
+      \[[q_j,B_j,q_{j+1}] \Rightarrow^{i_j}_G \beta_j,\]
+      $i_j < i$.
+      Получаваме, че 
+      \[[q_j,B_j,q_{j+1}] \Rightarrow^{i_j}_G \beta_j\ \rightarrow\ (q_j,\beta_j,B_j) \vdash^\star_P (q_{j+1},\varepsilon,\varepsilon).\]
+    \end{itemize}
+  \end{enumerate}
+\end{proof}
+
+\begin{problem}
+  Нека е дадена граматиката $G = \pair{\{S,A,B\},\{a,b\},S,R\}}$.
+  Постройте стеков автомат $P = \PDA$, такъв че $L_S(P) = L(G)$, където правилата $R$ на граматиката $G$ са зададени като:
+  \begin{enumerate}[a)]
+    % За едно тези двете да се даде пример как става 
+  \item
+    $R = \{S\rightarrow ASB\vert \varepsilon, A\rightarrow aAa\vert a, B\rightarrow bBb\vert b\}$;
+  \item
+    $R = \{S\rightarrow ASB\vert \varepsilon, A\rightarrow aA\vert a, B\rightarrow Bb\vert b\}$;
+  \item
+    $R =\{S\rightarrow SA|\varepsilon,A\rightarrow BSa|B, B\rightarrow b|BS|ab\}$;
+  \item
+    $R = \{S\rightarrow AS|\varepsilon,A\rightarrow SaBB|A, B\rightarrow b|BBbS|AA\}$;
+  \end{enumerate}
+\end{problem}
+
+\begin{thm}
+  \marginpar{(стр. 144 от \cite{papadimitriou})}
+  Нека $L$ e безконтекстен език и $R$ е регулярен език.
+  Тогава тяхното сечение $L \cap R$ е безконтекстен език.
+\end{thm}
+\begin{proof}
+  Нека имаме стеков автомат
+  \[M_1 = \PDAn{1}, \text{ където } \L_F(M_1) = L,\]
+  и краен детерминиран автомат 
+  \[M_2 = \FAn{2}, \text{ където } \L(M_2) = R.\]
+  Ще определим нов стеков автомат $M = \PDA$, където
+  \begin{itemize}
+  \item 
+    $Q = Q_1 \times Q_2$;
+  \item
+    $s = \pair{s_1,s_2}$;
+  \item
+    $F = F_1 \times F_2$;
+  \item 
+    Функцията на преходите $\Delta$ е дефинирана както следва:
+    \begin{itemize}
+    \item 
+      Ако $\Delta_1(q_1, a, b) \ni \pair{r_1,c}$
+      и $\delta_2(q_2,a) = r_2$, то
+      \[\Delta(\pair{q_1,q_2},a,b) \ni \pair{\pair{r_1,r_2}, c}.\]
+    \item
+      Ако $\Delta_1(q_1,\varepsilon,b) \ni \pair{r_1,c}$,
+      то за всяко $q_2 \in Q_2$,
+      \[\Delta(\pair{q_1,q_2},\varepsilon,b) \ni \pair{\pair{r_1,q_2},c}.\]    
+    \end{itemize}   
+  \end{itemize}
+  На практика $M$ симулира едновременно и двата автомата $M_1$ и $M_2$.
+\end{proof}
+
+\begin{example}
+  Езикът $L = \{w \in \{a,b,c\}^\star \mid n_a(w) = n_b(w) = n_c(w)\}$ не е безконтекстен.
+\end{example}
+\begin{proof}
+  Да допуснем, че $L$ е безконтекстен език.
+  Тогава \[L^\prime = L \cap a^\star b^\star c^\star\] също е безконтекстен език.
+  Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем, че {\em не} е безконтекстен.
+  Достигнахме до противоречие. Следователно, $L$ не е безконтекстни език.
+\end{proof}
+
+\section{Свойства}
+
+Безконтекстните езици са:
+\begin{itemize}
+\item 
+  затворени относно операцията {\em обединение}, т.е.
+  ако $L_1, L_2$ са безконтекстни, то езикът $L_1 \cup L_2$ е безконтекстен; 
+\item
+  затворени относно операцията {\em конкатенация}, т.е.
+  ако $L_1, L_2$ са безконтекстни, то езикът $L_1 \cdot L_2$ е безконтекстен; 
+\item
+  затворени относно операцията {\em звезда} на Клини, т.е.
+  ако $L$ е безконтекстен, то езикът $L^\star = \bigcup_{n\in\Nat} L^n$ е безконтекстен; 
+\item
+  затворени относно {\em сечение} с регулярен език, т.е.
+  ако $L$ е безконтекстен език и $R$ е регулярен език, то езикът $L = L \cap R$ е безконтекстен; 
+\item
+  {\bf не} са затворени относно операцията {\em сечение}, т.е.
+  съществуват контекстно-свободни езици $L_1, L_2$, за които езикът $L_1 \cap L_2$ {\bf не} е безконтекстен; 
+\item
+  {\bf не} са затворени относно операцията {\em допълнение}, т.е.
+  съществува безконтекстен език $L$, за който езикът $\Sigma^\star\setminus L$ {\bf не} е безконтекстен; 
+% \item
+%   те са затворени относно хомоморфизми, т.е.
+%   ако $L \subseteq \Sigma^\star_1$ е безконтекстен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
+%   то езикът $h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}$
+%   е безконтекстен.
+% \item
+%   те са затворени относно обратни хомоморфизми, т.е.
+%   ако $L\subseteq \Sigma^\star_2$ е безконтекстен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
+%   то езикът $h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}$
+%   е безконтекстен.
+\end{itemize}
+
+% \section{Въпроси}
+% Вярно ли е, че:
+% \begin{itemize}
+% \item
+% %  \marginpar{Да} 
+%   ако $L$ е безконтекстен език, то езикът $L \cap \{a^{2n}b^{2k}\mid n,k\in\Nat\}$ е безконтекстен ?
+% \item
+%  % \marginpar{Да}
+%   ако $L$ е безкраен безконтекстен език, то съществува безкрайна редица от регулярни езици $L_1,L_2,\dots$,
+%   за които $L = \bigcup_{i\in\Nat}L_i$ ?
+% \item
+%   \marginpar{Не}
+%   за всяка безкрайна редица от регулярни езици $L_1,L_2,\dots$, то 
+%   езикът $L = \bigcup_{i\in\Nat}L_i$ е безконтекстен ?
+% \item
+%   %\marginpar{Да}
+%   за всеки регулярен език $R$ и всеки безконтекстен език $L$, то $L \cap R$ е безконтекстен ?
+% \item
+%   за всеки регулярен език $R$ и всеки безконтекстен език $L$, то $L \cup R$ е безконтекстен ?
+% \item
+%   за всеки регулярен език $R$ и всеки безконтекстен език $L$, то $L \setminus R$ е безконтекстен ?
+% \item
+%   за всеки регулярен език $R$ и всеки безконтекстен език $L$, то $R \setminus L$ е безконтекстен ?
+% \item
+%   съществува регулярен език $R$ и безконтекстен език $L$, за които $L \cap R$ не е безконтекстен ?
+% \item
+%   съществува регулярен език $R$ и нерегулярен, но безконтекстен език $L$, за които $L \cap R$ е регулярен ?
+% \item
+%   за всеки два нерегулярни, но контекстно-свободни езика $L_1,L_2$, то $L_1\cup L_2$ е регулярен ?
+% \item
+%   съществуват два нерегулярни, но безконтекстни езика $L_1,L_2$, за които $L_1\setminus L_2$ е регулярен ?
+% \item
+%   съществуват два нерегулярни, но безконтекстни езика $L_1,L_2$, за които $L_1\cap L_2$ е регулярен ?
+% \item
+%   съществуват два нерегулярни, но безконтекстни езика $L_1,L_2$, за които $L_1\cup L_2$ е регулярен ?
+% \item
+%   съществува регулярен език $R$, който може да се представи като $R = L_1 \cup L_2$, където
+%   $L_1 \cap L_2 = \emptyset$, $L_1,L_2$ са нерегулярни, но контекстно-свободни ?
+% \item
+%   езикът $\{a,b\}^\star \setminus \{a^nb^n \mid n\in\Nat\}$ е регулярен ?
+% \item
+%   езикът $\{a,b\}^\star \setminus \{a^nb^n \mid n\in\Nat\}$ е безконтекстен ?
+% \item
+%   езикът $\{a,b\}^\star \setminus \{a^nb^{2k+1} \mid n,k\in\Nat\}$ е регулярен ?
+% \item
+%   езикът $\{a,b\}^\star \setminus \{a^nb^{k} \mid n > k\}$ е регулярен ?
+% \item
+%   езикът $\{a,b\}^\star \setminus \{a^nbba^{n} \mid n \in \Nat\}$ е регулярен ?
+% \item
+%   езикът $\{a,b\}^\star \setminus \{a^nb^n \mid n\in\Nat\}$ е безконтекстен ?
+% \item
+%   езикът $\{a,b,c\}^\star \setminus \{a^nb^mc^k \mid m < n\ \&\ m < k\}$ е безконтекстен ?
+% \item
+%   \marginpar{Не. $\alpha = b^pa^pbba^p$.}
+%   езикът $L = \{uvv^R \mid u,v \in \{a,b\}^\star\ \&\ \abs{u} \leq \abs{v}\}$ е регулярен ?
+% \item
+%   \marginpar{Да.}
+%   езикът $L = \{uvv^R \mid u,v \in \{a,b\}^\star\ \&\ \abs{u} \leq \abs{v}\}$ е безконтекстен ?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\L(r) = \L(G)$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\L(r) \cap \L(G) = \emptyset$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\abs{\L(r) \cap \L(G)} < \infty$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\abs{\L(r) \cap \L(G)} = \infty$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$, безконтекстна граматика $G$
+%   и число $k$, проверява дали $\abs{\L(r) \cap \L(G)} = k$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\L(r) \setminus \L(G) = \emptyset$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\L(G) \setminus \L(r) = \emptyset$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\abs{\L(r) \setminus \L(G)} < \infty$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\abs{\L(G) \setminus \L(r)} < \infty$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\abs{\L(r) \setminus \L(G)} = \infty$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
+%   проверява дали $\abs{\L(G) \setminus \L(r)} = \infty$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$, безконтекстна граматика $G$
+%   и число $k$, проверява дали $\abs{\L(r) \setminus \L(G)} = k$?
+% \item
+%   съществува алгоритъм, който за даден вход регулярен израз $r$, безконтекстна граматика $G$
+%   и число $k$, проверява дали $\abs{\L(G) \setminus \L(r)} = k$?
+% \end{itemize}
+
+% Нека е дадена безконтекстна граматика $G$ с правила \[S\rightarrow a\vert AB \vert AC, A \rightarrow a, B\rightarrow b, C\rightarrow SB.\]
+% Вярно ли е, че ако приложим CYK алгоритъма върху думата $\alpha$, където
+% \begin{itemize}
+% \item 
+%   $\alpha = aabb$, то $N[1,1] = \{S\}$.
+% \item 
+%   $\alpha = aabb$, то $N[3,3] = \{B\}$.
+% \item 
+%   $\alpha = aabb$, то $N[1,4] = \{\}$.
+% \item
+%   $\alpha = baab$, то $N[2,4] = \{\}$.
+% \item
+%   $\alpha = baab$, то $N[1,3] = \{\}$.
+% \end{itemize}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "EAI"
+%%% End: 
