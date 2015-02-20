@@ -1,0 +1,1748 @@
+\chapter{Езици и автомати}
+
+Основни източници в тази глава са:
+\begin{itemize}
+\item 
+  глави 2 и 3 от \cite{hopcroft1}, глави 2,3 и 4 от \cite{hopcroft2};
+\item
+  глава 1 от \cite{sipser};
+\item
+  глава 2 от \cite{papadimitriou}.
+\end{itemize}
+
+\section{Автоматни езици}
+
+% Един от източниците е втора и трета глава от книгата на Сипсер, \cite{sipser}.
+% Друг основен източник е книгата на Пападимитриу и Люис, \cite{papadimitriou}.
+%По Сипсер, стр. 35
+\begin{dfn}
+  Краен автомат е петорка $\A = \FA$, където
+  \begin{enumerate}[1)]
+  \item
+    $Q$ е крайно множество, наречено състояния;
+  \item
+    $\Sigma$ е крайно множество, наречено азбука;
+  \item
+    \marginpar{Тук нямаме $\varepsilon$-преходи}
+    $\delta:Q\times\Sigma\to Q$ е (частична) функция на преходите;
+  \item
+    $s\in Q$ е начално състояние;
+  \item
+    $F\subseteq Q$ е множеството от финални състояния.
+  \end{enumerate}
+\end{dfn}
+
+\index{тотален!автомат}
+Ако функцията на преходите $\delta$ е {\bf тотална} функция, то казваме, 
+че автоматът $\A$ е {\bf тотален}. Това означава, че за всяка двойка от вида $(a,q)$,
+където $a$ е буква, а $q$ състояние, функцията $\delta$ е дефинирана.
+
+Нека имаме една дума $\alpha \in \Sigma^\star$, $\alpha = a_1a_2\cdots a_n$.
+Казваме, че $\alpha$ се {\bf разпознава} от автомата $\A$, ако
+съществува редица от състояния $q_0,q_1,q_2,\dots,q_n$, такива че:
+\begin{itemize}
+\item
+  $q_0 = s$;
+\item
+  $\delta(q_i,a_{i+1}) = q_{i+1}$, за всяко $i = 0, \dots, n-1$;
+\item
+  $q_n \in F$.
+\end{itemize}
+
+% Алтернативен запис е следния:
+% $(q,a\beta) \vdash (p,\beta)$, ако $\delta(q,a) = p$.
+% $(q,\alpha\beta) \vdash^\star (p,\beta)$, ако $\delta^\star(q,\alpha) = p$.
+% Тогава една дума $\alpha$ се разпознава от автомата, ако $(s,\alpha) \vdash^\star (p,\varepsilon)$ и $p \in F$.
+
+Казваме, че $\A$ {\bf разпознава} езика $L$, ако $\A$ разпознава точно думите от $L$, т.е.
+$L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
+Обикновено означаваме езика, който се разпознава от даден автомат $\A$ с $L(\A)$.
+\index{език!автоматен}
+В такъв случай ще казваме, че езикът $L$ е {\bf автоматен}.
+
+При дадена (частична) функция на преходите $\delta$,
+често е удобно да разглеждаме (частичната) функция $\delta^\star:Q\times\Sigma^\star \to Q$, кято е дефинирана по следния начин:
+\marginpar{Това е пример за рекурсивна (индуктивна) дефиниция по дължината на думата $\alpha$}
+\begin{itemize}
+\item 
+  $\delta^\star(q,\varepsilon) = q$, за всяко $q\in Q$;
+\item
+  $\delta^\star(q,a\beta) = \delta^\star(\delta(q,a),\beta)$, за всяко $q\in Q$, всяко $a\in\Sigma$ и $\beta\in\Sigma^\star$.
+\end{itemize}
+Тогава една дума $\alpha$ се {\em разпознава} от автомата $\A$ точно тогава, когато $\delta^\star(s,\alpha) \in F$.
+Оттук следва, че
+\[L(\A) = \{\alpha\in\Sigma^\star \mid \delta^\star(s,\alpha) \in F\}.\]
+
+\begin{prop}
+  $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
+\end{prop}
+\begin{proof}
+  \marginpar{\ding{45} Напише доказателството!}
+  Индукция по дължината на $\alpha$.
+\end{proof}
+
+Нашата дефиниция на автомат позволява $\delta$ да бъде частична функция, т.е.
+може да има $q\in Q$ и $a\in\Sigma$, за които $\delta(q,a)$ не е дефинирана.
+Следващото твърдение ни казва, че ние съвсем спокойно можем да разглеждаме автомати
+само с тотални функции на преходите  $\delta$.
+\begin{prop}
+  За всеки краен автомат $\A$, съществува {\em тотален} краен автомат $\A'$,
+  за който $L(\A) = L(\A')$.
+\end{prop}
+\begin{proof}
+  Нека $\A = \FA$.
+  Дефинираме тоталния автомат 
+  \[\A' = \pair{Q\cup\{q_e\}, \Sigma, \delta', s, F},\]
+  като за всеки преход $(q,a)$, за който $\delta$ не е дефинирана, 
+  дефинираме $\delta'$ да отива в новото състояние $q_e$.
+  Ето и цялата дефиниция на новата функция на преходите $\delta'$:
+  \begin{itemize}
+  \item 
+    $\delta'(q_e,a) = q_e$, за всяко $a\in\Sigma$;
+  \item
+    За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a) = p$, то
+    $\delta'(q,a) = p$;
+  \item
+    За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a)$ не е дефинирано, то
+    $\delta'(q,a) = q_e$.
+  \end{itemize}
+  \marginpar{\ding{45} Довършете доказателството!}
+  Сега лесно може да се докаже, че $L(\A) = L(\A')$.
+\end{proof}
+
+\begin{prop}
+  \label{pr:automata-union}
+  Класът на автоматните езици е затворен относно операцията {\bf обединение}.
+  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cup L_2$
+  също е автоматен език.
+\end{prop}
+\begin{proof}
+  \marginpar{Защо изискваме $\A_1$ и $\A_2$ да са тотални?}
+  Нека $L_1 = L(\A_1)$ и $L_2 = L(\A_2)$, 
+  където $\A_1 = \FAn{1}$ и $\A_2 = \FAn{2}$ са {\bf тотални}.
+  Определяме автомата $\A = \FA$, който разпознава $L_1\cup L_2$.
+  \begin{itemize}
+  \item
+    $Q = Q_1\times Q_2$;
+  \item
+    Определяме за всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
+    \[\delta(\pair{r_1,r_2},a) = \pair{\delta_1(r_1,a),\delta_2(r_2,a)};\]
+  \item
+    $s = \pair{s_1,s_2}$;
+  \item
+    $F = \{\pair{r_1,r_2}\mid r_1\in F_1\vee r_2 \in F_2\} = (F_1\times Q_2)\cup (Q_1\times F_2)$.
+  \end{itemize}
+  Проверете, че $L(\A) = L(\A_1)\cup L(\A_2)$ !
+\end{proof}
+
+\begin{cor}
+  Класът на автоматните езици е затворен относно операцията {\bf сечение}.
+  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
+  също е автоматен език.
+\end{cor}
+\begin{proof}
+  Използвайте конструкцията на автомата $\A = \FA$ от \Prop{automata-union},
+  с единствената разлика, че тук избираме финалните състояния да бъдат множеството:
+  \[F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2.\]
+\end{proof}
+
+\begin{prop}
+  Нека $L$ е автоматен език.
+  Тогава $\Sigma^\star\setminus L$ също е автоматен език.
+\end{prop}
+\begin{proof}
+  Нека $L = L(\A)$, където $\A = \FA$ е тотален.
+  Да вземем автомата $\A' = \pair{Q,\Sigma,s,\delta,Q\setminus F}$,
+  т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
+  са тези състояния, които {\bf не} са финални в $\A$.
+  Проверете, че наистина $\Sigma^\star\setminus L = L(\A^\prime)$!
+\end{proof}
+
+
+\begin{problem}
+  За всеки от следните езици $L$, постройте автомат $\A$, който разпознава езика $L$.
+  \begin{enumerate}[a)]
+  \item 
+    $L = \{a^nb\mid n \geq 0\}$;
+  \item
+    $L = \{\varepsilon, a,b\}$;
+  \item
+    $L = \emptyset$;
+  \item
+    $L = \{a,b\}^\star\setminus\{\varepsilon\}$;
+  \item
+    $L = \{a^nb^m\mid n,m \geq 0\}$;
+  \item
+    $L = \{a^nb^m\mid n,m \geq 1\}$;
+  \item
+    $L = \{a,b\}^\star \setminus \{a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\}$;
+  \item
+    \marginpar{(сечение на два автоматни езика)}
+    $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\mbox{ и поне едно }b\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \mbox{на всяка нечетна позиция на }w\mbox{ е буквата }a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w\mbox{ съдържа четен брой }a\mbox{ и най-много едно }b\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star\mid \abs{w} \leq 3\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ започва с }ab\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ завършва с }ab\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа }bab\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ не съдържа }bab\}$;
+  \item
+    \marginpar{(решена е по-долу)}
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ няма две последователни }a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва и завършва с буквата } a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва и завършва с една и съща буква}\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа точно едно }a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \abs{w} \equiv 0 \bmod 3\}$;
+  \item
+    \marginpar{$N_a(w)$ - броят на срещанията на буквата $a$ в думата $w$}
+    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 3\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid N_b(w) \equiv 1 \bmod 2\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 3\ \&\ N_b(w) \equiv 1 \bmod 2\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 2\ \&\ N_b(w) \equiv 1 \bmod 2\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 2\ \vee\ w \mbox{ съдържа точно две }b\}$;
+  \end{enumerate}
+\end{problem}
+\begin{solution}
+  \begin{itemize}
+  \item
+    Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа }bab\}$.
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+          
+          \node[initial, state]   (0) {$s$};
+          \node[state]            (1) [right of=0]{$q_1$};
+          \node[state]            (2) [right of=1]{$q_2$};
+          \node[state,accepting]  (3) [right of=2]{$q_3$};
+          
+          \path 
+          (0) edge [loop above]   node [above] {$a$}    (0)
+          (0) edge [bend left=15] node [above] {$b$}    (1)
+          (1) edge [loop above]   node [above] {$b$}    (1)
+          (1) edge [bend left=15] node [above] {$a$}    (2)
+          (2) edge [bend left=30] node [below] {$a$}    (0)
+          (2) edge [bend left=15] node [above] {$b$}    (3)
+          (3) edge [loop above]   node [above] {$a,b$}  (3);
+        \end{tikzpicture}
+      \end{center}
+    \end{figure}    
+  \item
+    Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\}$.
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+          
+          \node[initial, state]   (0) {$s$};
+          \node[state]            (1) [right of=0]{$q_1$};
+          \node[state,accepting]  (2) [right of=1]{$q_2$};
+          
+          \path 
+          (0) edge [loop above]   node [above] {$b$}    (0)
+          (0) edge [bend left=15] node [above] {$a$}    (1)
+          (1) edge [loop above]   node [above] {$b$}    (1)
+          (1) edge [bend left=15] node [above] {$a$}    (2)
+          (2) edge [loop above]   node [above] {$a,b$}  (2);
+        \end{tikzpicture}
+      \end{center}
+    \end{figure}    
+  \item 
+    Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$.
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+          
+          \node[initial, accepting, state] (0) {$s$};
+          \node[state]                     (1) [right of=0]{$q_1$};
+          
+          \path 
+          (0) edge [loop above]   node [above] {$b$}   (0)
+          (0) edge [bend left=15] node [above] {$a$}   (1)
+          (1) edge [bend left=15] node [below] {$b$}   (0);
+        \end{tikzpicture}
+      \end{center}
+    \end{figure}
+  \end{itemize}
+\end{solution}
+
+В повечето от горните задачи е лесно да се съобрази, че построения автомат разпознава желания език.
+При по-сложни задачи обаче, ще се наложи да дадем доказателство, като обикновено се прилага 
+{\em метода на математическата индукция} върху дължината на думите.
+Ще разгледаме няколко такива примера.
+
+\begin{problem}
+  Докажете, че езикът $L$ е автоматен, където
+  \[L = \{\alpha \in \{a,b\}^\star\ \mid\ \alpha\mbox{ не съдържа две поредни срещания на }a\}.\]
+\end{problem}
+\begin{proof}
+  Да разгледаме $\A = \FA$ с функция на преходите
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        
+        \node[initial, accepting, state] (0) {$s$};
+        \node[accepting, state]   (1) [right of=0]{$q_1$};
+        \node[state]   (2) [right of=1]{$q_2$};
+        
+        \path 
+        (0) edge [loop above]   node [above] {$b$}   (0)
+        (0) edge [bend left=15] node [above] {$a$}   (1)
+        (1) edge [bend left=15] node [below] {$b$}   (0)
+        (1) edge [bend left=15] node [above] {$a$}   (2)
+        (2) edge [loop above]   node [above] {$a,b$} (2);
+      \end{tikzpicture}
+    \end{center}
+ \end{figure}
+
+ Трябва да докажем, че наистина $L = L(\A)$.
+ Първо ще се концентрираме върху доказателството на $L(\A) \subseteq L$.
+ \marginpar{$\abs{\alpha}$ - дължината на думата $\alpha$}
+ Ще докажем с индукция по дължината на думата $\alpha$, че:
+ \begin{enumerate}[(1)]
+ \item 
+   ако $\delta^\star(s,\alpha) = s$, то
+   $\alpha$ не съдържа две поредни срещания на $a$
+   и ако $\abs{\alpha} > 0$, то $\alpha$ завършва на $b$;
+ \item
+   ако $\delta^\star(s,\alpha) = q_1$, то
+   $\alpha$ не съдържа две поредни срещания на $a$
+   и завършва на $a$.
+ \end{enumerate}
+
+ За $\abs{\alpha} = 0$, то твърденията (1) и (2) са ясни (Защо?).
+ Да приемем, че твърденията $(1)$ и $(2)$ са верни за произволни думи $\alpha$ с дължина $n$.
+ Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, където $\abs{\beta} = n$.
+ Ще докажем (1) и (2) за $\alpha$.
+ \begin{itemize}[-]
+ \item 
+   Нека $\delta^\star(s,\beta x) = s = \delta(\delta^\star(s,\beta),x)$.
+   Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(s,\beta) \in \{s,q_1\}$.
+   Тогава по {\bf И.П.} за (1) и (2), $\beta$ не съдържа две поредни срещания на $a$.
+   Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
+ \item
+   Нека $\delta^\star(s,\beta x) = q_1 = \delta(\delta^\star(s,\beta),x)$.
+   Според дефиницията на $\delta$, $x = a$ и $\delta^\star(s,\beta) = s$.
+   Тогава по {\bf И.П.} за (2), $\beta$ не съдържа две поредни срещания на $a$
+   и завършва на $b$.
+   Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
+ \end{itemize}
+ 
+ Така доказахме с индукция по дължината на думата, че за всяка дума $\alpha$
+ са  изпълнени твърденията $(1)$ и $(2)$. Това означава, че ако $\alpha \in L(\A)$,
+ то $\delta^\star(s,\alpha) \in \{s,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
+ $\alpha$ не съдържа две поредни срещания на буквата $a$, т.е. $\alpha \in L$.
+ С други думи, доказахме, че 
+ \[L(\A) \subseteq L.\]
+
+ Сега ще докажем другата посока, т.е. $L \subseteq L(\A)$.
+ Това означава да докажем, че
+ \[(\forall \alpha \in \Sigma^\star)[\alpha \in L\ \Rightarrow\ \delta^\star(s,\alpha) \in F],\]
+ \marginpar{$p \Rightarrow q \equiv \neg q \Rightarrow \neg  p$}
+ което е еквивалентно на
+ \begin{equation}
+   \label{eq:case2}
+   (\forall \alpha \in \Sigma^\star)[\delta^\star(s,\alpha) \not\in F \ \Rightarrow\ \alpha\not\in L].
+ \end{equation}
+ Това е лесно да се съобрази.
+ Щом $\delta^\star(s,\alpha) \not\in F$, то 
+ $\delta^\star(s,\alpha) = q_2$ и думата $\alpha$ може да се представи по следния начин:
+ \[\alpha = \beta a \gamma\ \&\ \delta^\star(s,\beta) = q_1.\]
+ 
+ Използвайки свойство (2) от по-горе, понеже $\delta^\star(s,\beta) = q_1$, то
+ $\beta$ не съдържа две поредни срещания на $a$, но завършва на $a$.
+ Сега е очевидно, че $\beta a$ съдържа две поредни срещания на $a$ и 
+ щом $\beta a$ е префикс на $\alpha$, то думата $\alpha \not\in L$.
+ С това доказахме Свойство \ref{eq:case2} и следователно и посоката $L\subseteq L(\A)$.
+\end{proof}
+
+\begin{framed}
+  За една дума $\alpha \in \{0,1\}^\star$, 
+  нека с $\alpha_{(2)}$ да означим числото в десетична бройна система, което се представя в двоична бройна система като $\alpha$.
+  Например, $1101_{(2)} = 1 \cdot 2^3+1\cdot 2^2+0\cdot 2^1+1\cdot 2^0 = 13$.
+  Тогава имаме следните свойства:
+  \begin{itemize}
+  \item
+    $\varepsilon_{(2)} = 0$,
+  \item
+    $(\alpha0)_{(2)} = 2\cdot(\alpha)_{(2)}$,
+  \item
+    $(\alpha1)_{(2)} = 2\cdot(\alpha)_{(2)} + 1$.
+  \end{itemize}
+\end{framed}
+
+\begin{problem}
+  Докажете, че $L = \{w \in \{0,1\}^\star \mid w_{(2)} \equiv 2 \mod 3\}$ е автоматен.
+\end{problem}
+\begin{proof}
+  Нашият автомат ще има три състояния $\{q_0,q_1,q_2\}$, като началното състояние ще бъде $q_0$.
+  Целта ни е да дефинираме така автомата, че да имаме следното свойство:
+  \[(\forall\alpha\in\Sigma^\star)(\forall i < 3)[\alpha_{(2)} \equiv i\bmod 3\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i],\]
+  т.е. всяко състояние отговаря на определен остатък при деление на три.
+  Понеже искаме нашия автомат да разпознава тези думи $\alpha$,
+  за които $\alpha_{(2)} \equiv 2\mod 3$, финалното състояние ще бъде $q_2$.
+  Дефинираме функцията $\delta$ следвайки следните свойства:
+  \begin{enumerate}[(1)]
+  \item
+    \marginpar{$\delta(q_0,0) = q_0$}
+    $\alpha_{(2)} \equiv 0 \bmod 3\ \Rightarrow\ (\alpha0)_{(2)} \equiv 0 \bmod 3$;
+  \item 
+    \marginpar{$\delta(q_0,1) = q_1$}
+    $\alpha_{(2)} \equiv 0 \bmod 3\ \Rightarrow\ (\alpha1)_{(2)} \equiv 1 \bmod 3$;
+  \item
+    \marginpar{$\delta(q_1,0) = q_2$}
+    $\alpha_{(2)} \equiv 1 \bmod 3\ \Rightarrow\ (\alpha0)_{(2)} \equiv 2 \bmod 3$;
+  \item 
+    \marginpar{$\delta(q_1,1) = q_0$}
+    $\alpha_{(2)} \equiv 1 \bmod 3\ \Rightarrow\ (\alpha1)_{(2)} \equiv 0 \bmod 3$;
+  \item
+    \marginpar{$\delta(q_2,0) = q_1$}
+    $\alpha_{(2)} \equiv 2 \bmod 3\ \Rightarrow\ (\alpha0)_{(2)} \equiv 1 \bmod 3$;
+  \item 
+    \marginpar{$\delta(q_2,1) = q_2$}
+    $\alpha_{(2)} \equiv 2 \bmod 3\ \Rightarrow\ (\alpha1)_{(2)} \equiv 2 \bmod 3$.
+  \end{enumerate}
+  
+  Ето и картинка на автомата:
+  \begin{figure}[H]
+%    \begin{subfigure}[b]{0.3\textwidth}% [$L_1 = L(M_1)$]{
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        
+        \node[initial,state]      (0) {$q_0$};
+        \node[state]              (1) [right of=0]{$q_1$};
+        \node[accepting, state]   (2) [right of=1]{$q_2$};
+        
+        \path 
+        (0) edge  [loop above]    node [above] {$0$} (0)
+        (0) edge  [bend left=15]  node [above] {$1$} (1)
+        (1) edge  [bend right=15] node [below]  {$0$} (2)
+        (1) edge  [bend left=15]  node [below] {$1$} (0)
+        (2) edge  [bend right=15] node [above] {$0$} (1)
+        (2) edge  [loop right]    node [right] {$1$} (2);
+      \end{tikzpicture}
+      \end{center}
+ %   \end{subfigure}
+ \end{figure}
+  Да разгледаме твърденията:
+  \begin{enumerate}[(1)]
+  \item 
+    $\delta^\star(q_0,\alpha) = q_0\ \Rightarrow\ \alpha_{(2)} \equiv 0 \mod 3$;
+  \item 
+    $\delta^\star(q_0,\alpha) = q_1\ \Rightarrow\ \alpha_{(2)} \equiv 1 \mod 3$;
+  \item 
+    $\delta^\star(q_0,\alpha) = q_2\ \Rightarrow\ \alpha_{(2)} \equiv 2 \mod 3$.
+  \end{enumerate}
+  Ще докажем (1), (2) и (3) {\em едновременно} с индукция по дължината на думата $\alpha$.
+  За $\abs{\alpha} = 0$, всички условия са изпълнени. (Защо?)
+  Да приемем, че (1), (2) и (3) са изпълнени за думи с дължина $n$.
+  Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, $\abs{\beta} = n$.
+  За да приложим индукционното предположение, ще използваме следното свойство:
+  \[\delta^\star(q_0,\beta x) = \delta(\delta^\star(q_0,\beta),x).\]
+  
+  Ще докажем подробно само (3) понеже другите твърдения се доказват по сходен начин.
+  \marginpar{Обърнете внимание, че в доказателството на (3) използваме И.П. не само за (3), но и за (2)}
+  Нека $\delta^\star(q_0,\beta x) = q_2$. 
+  Имаме два случая:
+  \begin{itemize}
+  \item 
+    $x = 0$. 
+    Тогава, по дефиницията на $\delta$, 
+    $\delta(q_1,0) = q_2$ и следователно, $\delta^\star(q_0,\beta) = q_1$.
+    По {\bf И.П.} за (2) с $\beta$,
+    \[\delta^\star(q_0,\beta) = q_1\ \Rightarrow\ \beta_{(2)} \equiv 1 \bmod 3\]
+    Тогава, $(\beta0)_{(2)} \equiv 2 \mod 3$. Така доказахме, че
+    \[\delta^\star(q_0,\beta 0) = q_2\ \Rightarrow\ (\beta 0)_{(2)} \equiv 2 \bmod 3.\]
+  \item
+    $x = 1$.
+    Тогава, по дефиницията на $\delta$, $\delta(q_2,1) = q_2$ и следователно,
+    $\delta^\star(q_0,\beta) = q_2$.
+    По {\bf И.П.} за (3) с $\beta$,
+    \[\delta^\star(q_0,\beta) = q_2\ \Rightarrow\ \beta_{(2)} \equiv 2 \mod 3.\]
+    Тогава, $(\beta1)_{(2)} \equiv 2 \mod 3$. Така доказахме, че
+    \[\delta^\star(q_0,\beta 1) = q_2\ \Rightarrow\ (\beta 1)_{(2)} \equiv 2 \mod 3.\]
+  \end{itemize}
+  
+  За да докажем (1), нека $\delta^\star(q_0,\beta x) = q_0$. 
+  \begin{itemize}
+  \item 
+    $x = 0$. Разсъжденията са аналогични, като използваме {\bf И.П.} за (1).
+  \item
+    $x = 1$. Разсъжденията са аналогични, като използваме {\bf И.П.} за (2).
+  \end{itemize}
+  
+  По същия начин доказваме и (2). Нека $\delta^\star(q_0,\beta x) = q_1$. 
+  \begin{itemize}
+  \item 
+    При $x = 0$, използваме {\bf И.П.} за (3).
+  \item
+    При $x = 1$, използваме {\bf И.П.} за (1).
+  \end{itemize}
+
+  От (1), (2) и (3) следва директно, че $L(\A) \subseteq L$.
+  За другата посока, нека $\alpha \in L$, т.е. $(\alpha)_{(2)} \equiv 2 \mod 3$.
+  Ако допуснем, че $\alpha \not\in L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_2\}$.
+  Но в тези случаи получаваме от твърдения (1) и (2), че $(\alpha)_{(2)} \equiv 0 \mod 3$ или $(\alpha)_{(2)} \equiv 1 \mod 3$.
+  Това е противоречие. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
+\end{proof}
+
+\section{Регулярни езици}
+
+\begin{dfn}
+  \index{регулярен език}
+  \index{регулярен израз}
+  \marginpar{Това е друг пример за рекурсивна (индуктивна) дефиниция.}
+  Нека е дадена азбука $\Sigma$. Дефинираме множеството от
+  {\em регулярни езици} над азбуката $\Sigma$ и едновременно с това 
+  множеството от {\em регулярни изрази}, които разпознават тези езици.
+  \begin{enumerate}[1)]
+  \item
+   за всеки символ $a \in \Sigma$, $\{a\}$ е регулярен език,
+   който се разпознава от регулярния израз $a$;
+  \item
+    $\{\varepsilon\}$ е регулярен език,
+    който се разпознава от регулярния израз $\varepsilon$;
+  \item
+    $\emptyset$ е регулярен език,
+    който се разпознава от регулярния израз $\emptyset$;
+  \item
+    $L_1\cup L_2$, където $L_1$ и $L_2$ са регулярни езици,
+    който се разпознава от регулярния израз $(r_1 + r_2)$,
+    където $r_1$ и $r_2$ са регулярните изрази за $L_1$ и $L_2$.
+    Записваме, че $\L(r_1) \cup \L(r_2) = \L(r_1+r_2)$.
+  \item
+    \marginpar{Конкатенация. Обикновено изпускаме знака $\cdot$}
+    $L_1\cdot L_2 = \{uw\mid u \in L_1\ \&\ w \in L_2\}$, където $L_1$ и $L_2$ са регулярни езици,
+    който се разпознава от регулярния израз $(r_1\cdot r_2)$,
+    където $r_1$ и $r_2$ са регулярните изрази за $L_1$ и $L_2$.
+    Записваме, че $\L(r_1)\cdot\L(r_2) = \L(r_1 \cdot r_2)$.
+  \item
+    \marginpar{Звезда на Клини}
+    $L^\star = \{w_1w_2\cdots w_n\mid n \in \Nat\ \&\ w_i \in L\mbox{ за всяко } i \leq n\}$,  където $L$ е регулярен език,
+    който се разпознава от регулярния израз $(r^\star)$,
+    където $r$ е регулярния израз за $L$.
+    Записваме, че  $\L(r)^\star = \L(r^\star)$.
+    Можем да запишем, че $L^\star = \bigcup_n L^n$, където
+    $L^0 = \{\varepsilon\}$ и $L^{n+1} = L^n\cdot L$.
+  \end{enumerate}
+\end{dfn}
+
+
+\begin{example}
+  Нека да разгледаме няколко примера какво точно представлява прилагането
+  на операцията звезда на Клини върху един език.
+  \begin{itemize}
+  \item 
+    Нека $L = \{0,11\}$. Тогава:
+    \begin{itemize}
+    \item 
+      $L^0 = \{\varepsilon\}$, $L^1 = L$,
+    \item
+      $L^2 = L^1\cdot L^1 = \{00,011,110,1111\}$,
+    \item
+      $L^3 = L^1\cdot L^2 = \{000,0011,0110,01111,1100,11011,11110,111111\}$.
+    \end{itemize}
+  \item
+    Нека $L = \emptyset$.
+    Тогава:
+    \begin{itemize}
+    \item 
+      $L^0 = \{\varepsilon\}$,
+    \item
+      $L^1 = \emptyset$,
+    \item
+      $L^2 = L^1 \cdot L^1 = \emptyset$.
+    \end{itemize}    
+    Получаваме, че $L^\star = \{\varepsilon\}$, т.е. {\em краен} език
+  \item
+    Нека $L = \{0^i\mid i \in \Nat\} = \{\varepsilon, 0, 00, 000, \dots\}$.
+    Тогава лесно може да се види, че $L = L^\star$.
+  \end{itemize}
+\end{example}
+
+\begin{problem}
+  За произволни регулярни изрази $r$ и $s$, 
+  проверете:
+  \begin{enumerate}[a)]
+  \item 
+    $r+s = s + r$;
+  \item
+    $(\varepsilon + r)^\star = r^\star$;
+  \item
+    $\emptyset^\star = \varepsilon$;
+  \item
+    $(r^\star s^\star) = (r+s)^\star$;
+  \item
+    $(r^\star)^\star = r^\star$;
+  \item
+    $(rs + r)^\star r = r(sr+r)^\star$;
+  \item
+    $s(rs+s)^\star r = rr^\star s(rr^\star s)^\star$;
+  \item
+    $(r+s)^\star = r^\star + s^\star$;
+  \item
+    $\emptyset^\star = \varepsilon^\star$;
+  \end{enumerate}
+\end{problem}
+
+\begin{framed}
+\begin{thm}[Клини]
+  \index{Клини}
+  Ако един език е автоматен, то той се описва с регулярен израз.
+\end{thm}
+\end{framed}
+\begin{proof}
+%  \marginpar{стр. 79 от \cite{papadimitriou}, стр. 33 от \cite{hopcroft}}
+  Нека  $L = \L(\M)$, за някой краен детерминиран автомат $\M$.
+  Да фиксираме едно изброяване на състоянията $Q = \{q_1,\dots,q_n\}$,
+  като началното състояние е $q_1$.
+  Ще означаваме с $L(i,j,k)$ множеството от тези думи, които
+  могат да се разпознаят от автомата по път, който започва от $q_i$,
+  завършва в $q_j$, и междинните състояния имат индекси $\leq k$.
+  Например, за думата $\alpha = a_1a_2\cdots a_n$ имаме, че $\alpha \in L(i,j,k)$
+  точно тогава, когато съществуват състояния $q_{l_1},\dots,q_{l_{n-1}}$, като $l_1,\dots,l_{n-1} \leq k$ и
+  \[q_i\stackrel{a_1}{\rightarrow} q_{l_1} \stackrel{a_2}{\rightarrow} q_{l_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{n-1}}{\rightarrow} q_{l_{n-1}}\stackrel{a_n}{\rightarrow} q_j.\]
+  Тогава за $n = \abs{Q}$, 
+  \[L(i,j,n) = \{\alpha\in\Sigma^\star\mid \delta^\star(q_i,\alpha) = q_j\}.\]
+  Така получаваме, че 
+  \[\L(\M) = \bigcup\{L(1,j,n)\mid q_j \in F\} = \bigcup_{q_j\in F}L(1,j,n).\]
+  Ще докажем с {\bf индукция по $k$}, че за всяко $i,j,k$, множествата от думи $L(i,j,k)$
+  се описват с регулярен израз $r^k_{i,j}$
+  \begin{enumerate}[a)]
+  \item
+    Нека $k = 0$. Ще докажем, че за всяко $i,j$, $L(i,j,0)$ се описва с регулярен израз.
+    Имаме да разгледаме два случая.
+    
+    Ако $i = j$, то 
+    \[L(i, j, 0) = \{\varepsilon\}\cup\{a\in\Sigma \mid \delta(q_i,a) = q_j\}.\]
+    Ако $i \neq j$, то
+    \[L(i, j, 0) = \{a\in\Sigma \mid \delta(q_i, a) = q_j\}.\]
+  \item
+    Да предположим, че $k > 0$ и за всяко $i$, $j$, можем да намерим регулярните изрази
+    съответстващи на $L(i,j,k-1)$. Тогава
+    \[L(i,j,k) = L(i,j,k-1)\ \cup\ L(i,k,k-1)\cdot (L(k,k,k-1)^\star) \cdot L(k,j,k-1).\]
+    Тогава по {\bf И.П.} следва, че $L(i,j,k)$ може да се опише с регулярен израз, който е
+    \[r^{k-1}_{i,j} + r^{k-1}_{i,k}\cdot (r^{k-1}_{k,k})^\star\cdot r^{k-1}_{k,j}.\]
+  \end{enumerate}
+  Заключаваме, че за всяко $i,j,k$, $L(i,j,k)$ може да се опише с регулярен израз $r^{k}_{i,j}$.
+  Тогава ако $F = \{q_{i_1},\dots,q_{i_k}\}$, то $\L(\M)$ се описва с регулярния израз
+  \[r^n_{1,i_1} + r^n_{1,i_2} + \dots + r^n_{1,i_k}.\]
+\end{proof}
+
+\begin{example}
+  \label{fig:a1}
+  Да разгледаме следния автомат:
+  
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        
+        \node[initial,state]      (1) {$q_1$};
+        \node[accepting, state]   (2) [right of=1]{$q_2$};
+        
+        \path 
+        (1) edge [loop above]  node [above] {$1$} (1)
+        (1) edge  node [above] {$0$} (2)
+        (2) edge [loop above] node [above] {$0,1$} (2);
+      \end{tikzpicture}
+      \end{center}
+ \end{figure}
+
+ За да намерим регулярния език за автомата от Пример \ref{fig:a1}, 
+ трябва да намерим $r^2_{1,2}$, защото началното състояние е $q_1$, финалното е $q_2$ и 
+ броят на състоянията в автомата е $2$.
+ \begin{align*}
+   r^0_{1,1} =\ & \varepsilon + 1,\\
+   r^0_{1,2} =\ & 0,\\
+   r^0_{2,1} =\ & \emptyset,\\
+   r^0_{2,2} =\ & \varepsilon +  0 + 1,\\
+    r^1_{1,2} =\ & r^0_{1,2} + r^0_{1,1}\cdot(r^0_{1,1})^\star \cdot r^0_{1,2} = 0 + (\varepsilon + 1)(\varepsilon + 1)^\star0 = 1^\star0,\\
+    r^1_{2,2} =\ & r^0_{2,2} + r^0_{2,1} \cdot (r^0_{1,1})^\star\cdot r^0_{1,2} = \varepsilon + 0 + 1 + \emptyset(\varepsilon + 1)^\star0 = \varepsilon + 0 + 1\\
+    r^2_{1,2} =\ & r^{1}_{1,2} + r^{1}_{1,2}(r^1_{2,2})^\star r^1_{2,2} \\
+    =\ & 1^\star0 + 1^\star0 (\varepsilon + 0 + 1)^\star (\varepsilon + 0 + 1) = 1^\star 0 (0 + 1)^\star.
+  \end{align*}
+Ясно е, че $L_1$ се описва с регулярния израз $r^2_{1,2} = 1^\star 0 (0 + 1)^\star$.
+\end{example}
+
+Следващата ни цел е да видим, че имаме и обратната посока на горната лема.
+Ще докажем, че всеки регулярен език е автоматен. За тази цел първо ще 
+въведем едно обобщение на понятието краен детерминиран автомат.
+
+\section{Недетерминирани крайни автомати}
+
+\begin{dfn}
+  \marginpar{Въведени от Рабин и Скот \cite{rabin-scott}}
+  Недетерминиран краен автомат представлява
+  \[\N = \NFA,\]
+  \begin{itemize}
+  \item
+    $Q$ е крайно множество от състояния;
+  \item
+    $\Sigma$ е крайна азбука;
+  \item
+    $\Delta: Q\times\Sigma \to \Ps(Q)$ е функцията на преходите.
+    \marginpar{Да напомним, че $\Ps(Q) = \{R\mid R\subseteq Q\}$, $\abs{\Ps(Q)} = 2^{\abs{Q}}$}
+    Обърнете внимание, че тя е тотална.
+  \item
+    $s \in Q$ е началното състояние;
+  \item
+    $F\subseteq Q$ е множеството от финални състояния.
+  \end{itemize}
+\end{dfn}
+
+\begin{thm}
+  За всеки НKА $\N$ съществува еквивалентен на него ДКА $\D$, т.е. $L(\N) = L(\D)$.
+\end{thm}
+\begin{proof}
+  Нека $\N = \NFA$. Ще построим ДКА $\D = (Q',\Sigma,\delta,s',F')$.
+  Конструкцията е следната:
+  \marginpar{Да отбележим, че детерминираният автомат $\D$ има не повече от $2^{\abs{Q}}$ на брой състояния}
+  \begin{itemize}
+  \item
+    $Q' = \Ps(Q)$;
+  \item
+    $\delta(R,a) = \{q\in Q\mid (\exists r\in R)[q\in\Delta(r,a)]\} = \bigcup_{r\in R}\Delta(r,a)$;
+  \item
+    $s' = \{s\}$;
+  \item
+    $F' = \{R \subseteq Q \mid R\cap F \neq \emptyset\}$.
+  \end{itemize}
+\end{proof}
+
+\begin{lemma}
+  Съществува НКА $\N = \NFA$, който разпознава езика $L(r)$, 
+  където $r = \emptyset$, $r = \varepsilon$ или $r = a$, за $a\in \Sigma$.
+\end{lemma}
+\begin{proof}
+  \begin{figure}[H]
+    \begin{subfigure}[b]{0.3\textwidth}
+      \label{subf:a1}
+      \caption{$L(\emptyset)$}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial,state]      (1) {$s$};
+      \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+      \caption{$L(\varepsilon)$}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial,state,accepting]      (1) {$s$};
+      \end{tikzpicture}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+      \caption{$L(a)$}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial,state]      (1)              {$s$};
+        \node[accepting,state]    (2) [right of=1] {$q$};
+        \path 
+        (1) edge  node [above] {$a$} (2);
+      \end{tikzpicture}
+    \end{subfigure}
+  \end{figure}
+\end{proof}
+
+\begin{lemma}
+  Класът на автоматните езици е затворен относно операцията {\bf конкатенация}.
+  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика, то $L_1\cdot L_2$
+  също е автоматен език.
+\end{lemma}
+\begin{proof}
+  Нека са дадени автоматите:
+  \begin{itemize}
+  \item
+    $\N_1 = \NFAn{1}$, като $L(\N_1) = L_1$;
+  \item
+    $\N_2 = \NFAn{2}$, като $L(\N_2) = L_2$.
+  \end{itemize}
+  Ще дефинираме автомата $\N = \NFA$ като
+  \[L(\N) = L_1\cdot L_2 = L(\N_1)\cdot L(\N_2).\]
+  \begin{itemize}
+  \item
+    $Q = Q_1 \cup Q_2$;
+  \item
+    $s = s_1$;
+  \item
+    $F = 
+    \begin{cases}
+      F_1 \cup F_2, & \text{ ако } s_2 \in F_2\\
+      F_1,          & \text{ иначе}.
+    \end{cases}$
+  \item 
+    $\Delta(q,a) = 
+    \begin{cases}
+      \Delta_1(q,a),                      & \text{ ако }q\in Q_1\setminus F_1\ \&\ a\in\Sigma\\
+      \Delta_2(q,a),                      & \text{ ако }q\in Q_2\ \&\ a\in\Sigma\\
+      \Delta_1(q,a) \cup \Delta_2(s_2,a), & \text{ ако }q \in F_1\ \&\ a\in\Sigma.
+    \end{cases}$
+  \end{itemize}
+\end{proof}
+
+\begin{lemma}
+  Класът от автоматните езици е затворен относно операцията {\bf обединение}.
+\end{lemma}
+\begin{proof}
+  Нека са дадени автоматите:
+  \begin{itemize}
+  \item 
+    $\N_1 = \NFAn{1}$, като $L(\N_1) = L_1$;
+  \item
+    $\N_2=\NFAn{2}$, като $L(\N_2) = L_2$.
+  \end{itemize}
+  Ще дефинираме автомата $\N=\NFA$, така че
+  \[L(\N) = L(\N_1) \cup L(\N_2).\]
+  \begin{itemize}
+  \item 
+    $Q = Q_1 \cup Q_2 \cup \{s\}$;
+  \item
+    $F = 
+    \begin{cases}
+      F_1 \cup F_2 \cup \{s\}, & \text{ ако } s_1 \in F_1 \vee s_2 \in F_2\\
+      F_1 \cup F_2,            & \text{ иначе } 
+    \end{cases}$
+  \item
+    $
+    \Delta(q,a) = 
+    \begin{cases}
+      \Delta_1(q,a),                       & \text{ ако } q\in Q_1\ \&\ a\in\Sigma\\
+      \Delta_2(q,a),                       & \text{ ако } q\in Q_2\ \&\  a\in\Sigma\\
+      \Delta_1(s_1,a) \cup \Delta_2(s_2,a), & \text{ ако } q = s\ \&\  a \in\Sigma.
+    \end{cases}
+    $
+  %   $\Delta(q,a) = \Delta_1(q,a)$, за всяко $q\in Q_1$, $a\in\Sigma$;
+  % \item
+  %   $\Delta(q,a) = \Delta_2(q,a)$, за всяко $q\in Q_2$, $a\in\Sigma$;
+  % \item
+  %   $\Delta(s,a) = \Delta_1(s_1,a) \cup \Delta_2(s_2,a)$, за всяко $a\in\Sigma$;
+  \end{itemize}
+\end{proof}
+\begin{remark}
+  В началното състояние на новопостроения автомат $\N$ не влизат ребра.
+\end{remark}
+
+
+\begin{lemma}
+  Класът от автоматните езици е затворен относно операцията {\bf звезда на Клини}.
+\end{lemma}
+\begin{proof}
+  Нека е даден автомата $\N = \NFA$, за който е изпънено, че
+  $L(\N) = L(r)$.
+  Първата стъпка е да построим $\N_1 = \NFAn{1}$, такъв че 
+  \[L(\N_1) = \bigcup_{n\geq 1} (L(\N))^n = \bigcup_{n\geq 1} (L(r))^n = L(r^+).\]
+  \begin{itemize}
+  \item
+    $Q_1 = Q$;
+  \item
+    $s_1 = s$;
+  \item
+    $F_1 = F$;
+  \item
+    $
+    \Delta_1(q,a) = 
+    \begin{cases}
+      \Delta(q,a), & \text{ ако } q\in Q\setminus F, a \in \Sigma\\
+      \Delta(q,a) \cup \Delta(s,a), & \text{ ако } q\in F, a\in\Sigma.
+    \end{cases}
+    $
+    % $\Delta_1(q,a) = \Delta(q,a)$, за всяко $q\in Q\setminus F$, $a\in\Sigma$;
+  % \item
+  %   $\Delta_1(q,a) = \Delta(q,a) \cup \Delta(s,a)$, за всяко $q\in F$, $a\in\Sigma$;
+  \end{itemize}
+  Накрая строим автомат $\N_2$, за който $L(\N_2) = \{\varepsilon\} \cup L(\N_1)$.
+\end{proof}
+
+% \begin{remark}
+%   Запазваме свойството, че в началното състояние не влизат ребра.
+% \end{remark}
+
+\section{Допълнителни свойства}
+
+Някои свойства на регулярните езици:
+\begin{itemize}
+\item 
+  те са затворени относно хомоморфизми, т.е.
+  ако $L \subseteq \Sigma^\star_1$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
+  то езикът 
+  \[h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}\]
+  е регулярен.
+\item
+  те са затворени относно обратни хомоморфизми, т.е.
+  ако $L\subseteq \Sigma^\star_2$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
+  то езикът
+  \[h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}\]
+  е регулярен.
+\end{itemize}
+
+\begin{problem}
+  Да означим $\mbox{Half}(L) = \{\omega\mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$.
+  Докажете, че ако $L$ е регулярен език, то $\mbox{Half}(L)$ също е регулярен език.
+\end{problem}
+
+\begin{problem}
+  Да означим $\mbox{Pref}(L) = \{\alpha \mid (\exists \beta \in \Sigma^\star)[\alpha\beta \in L]\}$.
+  Докажете, че ако $L$ е регулярен език, то $\mbox{Pref}(L)$ също е регулярен език.
+\end{problem}
+% \begin{proof}
+%   Две доказателства. Едното е с индукция по построението регулярния израз за $L$.
+%   Другото е по автомата за $L$.
+% \end{proof}
+
+\section{Езици, които не са регулярни}
+\begin{lemma}[за нарастването (регулярни езици)]
+  \index{лема за нарастването!регулярни езици}
+  \label{lem:pumping-reg}
+  \marginpar{На англ. се нарича \\ Pumping Lemma}
+  \marginpar{Има подобна лема и за безконтекстни езици}
+  \marginpar{Обърнете внимание, че $0 \in \Nat$ и $xy^0z =  xz$}
+  Нека $L$ да бъде безкраен регулярен език.
+  Съществува число $n\geq 1$, зависещо само от $L$, 
+  за което за всяка дума $\alpha\in L, \abs{\alpha}\geq n$ може да 
+  бъде записана във вида $\alpha = xyz$ и 
+  \begin{enumerate}[1)]
+  \item
+    $|y|\geq 1$;
+  \item
+    $|xy|\leq n$;
+  \item
+    $(\forall i\in\Nat)[xy^iz \in L]$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \marginpar{стр. 88 от \cite{papadimitriou}, стр. 78 от \cite{sipser}}
+  Понеже $L$ е регулярен, той се разпознава от ДКА $\A = \FA$.
+  Нека $n = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq n$.
+  Да разгледаме първите $n$ стъпки от изпълнението на $\alpha$ върху $\A$:
+  \[q_0\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow} \dots \stackrel{a_n}{\rightarrow} q_n.\]
+  Тъй като $\abs{Q} = n$, а по този път участват $n+1$ състояния $q_0,q_1,\dots,q_n$,
+  то съществуват числа $i, j$, за които $0\leq i < j\leq n$ и $q_i = q_j$.
+  Нека разделим думата $\alpha$ на три части по следния начин:
+  \[x = a_1\cdots a_i,\quad y = a_{i+1}\cdots a_j,\quad z = a_{j+1}\cdots a_k.\]
+  Ясно е, че $\abs{y} \geq 1$ и $\abs{xy} = j \leq n$.
+  Освен това, лесно се съобразява, че $xz \in L$ и че за всяко $i > 0$, $xy^iz \in L$.
+\end{proof}
+
+
+\begin{framed}
+  \Lem{pumping-reg} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е регулярен.
+  За целта, доказваме отрицанието на \Lem{pumping-reg} за $L$, т.е.
+  за всяка константа $p$, ние намираме дума $\alpha$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
+  със свойствата $\abs{y} \geq 1$ и $\abs{xy} \leq p$, е изпълнено, че $(\exists i)[xy^iz \not\in L]$.
+  При фиксиран език $L$, условието за нарастване от лемата може формално да се запише така:
+  {\scriptsize  
+    \[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
+  Отрицанието на горната формула може да се запише по следния начин:
+  {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]],\]}
+  което е еквивалентно на:
+  {\scriptsize
+    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+\end{framed}
+
+\begin{example}
+  Езикът $L = \{a^nb^n \mid n\in \Nat\}$ {\bf не} е регулярен.
+\end{example}
+\begin{proof}
+  \marginpar{Това е важен пример. По-късно ще видим, че този език е безконтекстен}
+  Да допуснем, че $L$ е регулярен.
+  Ще достигнем до противоречие като докажем отрицанието на условието на \Lem{pumping-reg},
+  т.е. ще докажем, че
+  {\scriptsize
+    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
+  Доказателството следва стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$ (нямаме власт над избора на $p$).
+  \item
+    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Можем да изберем каквото $\alpha$
+    си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
+    Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$. Очевидно е, че $\abs{\alpha} \geq p$.
+  \item
+    Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
+    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$ (не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства).
+  \item
+    Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
+    Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
+    Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
+    Ясно е, че $xz \not\in L$, защото $p-k < p$.
+  \end{itemize}  
+  Доказахме, че ако $L$ е регулярен език, то свойството за нарастване от \Lem{pumping-reg} не е изпълнено. Следователно, езикът $L$
+  не е регулярен.  
+\end{proof}
+
+\begin{example}
+  Езикът $L = \{a^mb^n \mid m,n\in \Nat\ \&\ m < n\}$ {\bf не} е регулярен.
+\end{example}
+\begin{proof}
+  Да допуснем, че $L$ е регулярен.
+  Следваме същата процедура както в предишния пример.
+  Доказателството следва стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$.
+  \item
+    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Можем да изберем каквото $\alpha$
+    си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
+    Щом имаме тази свобода, нека да изберем думата $\alpha = a^{p}b^{p+1} \in L$. Очевидно е, че $\abs{\alpha} \geq p$.
+  \item
+    Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
+    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$ (не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства).
+  \item
+    Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
+    Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
+    Тогава ако вземем $i = 2$, получаваме 
+    \[xy^2z = a^{p-k}a^{2k}b^{p+1} = a^{p+k}b^{p+1}.\]
+    Ясно е, че $xy^2z \not\in L$, защото $p+k \geq p+1$.
+  \end{itemize}  
+\end{proof}
+
+\begin{example}
+  Езикът $L = \{a^n\ \mid\ n\mbox{ е просто число}\}$ не е регулярен.
+\end{example}
+\begin{proof}
+  Да допуснем, че $L$ е регулярен език. Ще достигнем до противоречие като докажем отрицанието на условието на \Lem{pumping-reg},
+  т.е. ще докажем, че
+  {\scriptsize
+    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
+  Доказателството следва стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$.
+  \item
+    Избираме дума $w \in L$, за която $\abs{w} \geq p$. Можем да изберем каквото $w$ 
+    си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
+    Щом имаме тази власт, нека да изберем думата $w \in L$, такава че $\abs{w} > p+1$.
+    Знаем, че такава дума съществува, защото $L$ е безкраен език. По-долу ще видим защото този избор е важен за нашите разсъждения.
+  \item
+    Разглеждаме произволно разбиване на $w$ на три части, $w = xyz$,
+    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+  \item
+    Ще намерим $i$, за което $xy^iz \not\in L$,
+    т.е. ще намерим $i$, за което 
+    $\abs{xy^iz} = \abs{xz} + i\cdot\abs{y}$ е {\em съставно число}.
+    Понеже $\abs{xy} \leq p$ и $\abs{xyz} > p+1$, то $\abs{z} > 1$.
+    Да изберем $i = \abs{xz} > 1$. Тогава:
+    \[\abs{xy^iz} = \abs{xz} + i.\abs{y} = \abs{xz} + \abs{xz}.\abs{y} = (1 + \abs{y})\abs{xz}\] е съставно число, следователно 
+    $xy^iz \not\in L$.
+  \end{itemize}
+  Доказахме, че ако $L$ е регулярен език, то свойството за нарастване от \Lem{pumping-reg} не е изпълнено. Следователно, езикът $L$
+  не е регулярен.  
+\end{proof}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^{n^2}\ \mid\ n\in\Nat\}$ не е регулярен.  
+\end{problem}
+\begin{proof}
+  Да допуснем, че $L$ е регулярен. Отново ще докажем отрицанието на свойството за нарастване от \Lem{pumping-reg}.
+  Доказателството има стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$.
+  \item
+    Избираме дума $w = a^{p^2}$.
+  \item
+    Разглеждаме произволно разбиване на $w$ на три части, $w = xyz$, 
+    като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+  \item
+    Ще намерим $i$, за което $xy^iz \not\in L$.
+    В нашия случай това означава, че $\abs{xz} + i\cdot\abs{y}$ не е точен квадрат.
+    Тогава за $i = 2$,
+    \[p^2 = \abs{xyz} < \abs{xy^2z} = \abs{xz} + 2\abs{y} \leq p^2 + 2p < (p+1)^2 .\]
+    Получаваме, че $p^2 < \abs{xy^2z} < (p+1)^2$,
+    откъдето следва, че $\abs{xy^2z}$ {\bf не} е точен квадрат.    
+    Следователно, $xy^2z \not\in L$.
+  \end{itemize}
+\end{proof}
+
+\subsection{Следствия от лемата за нарастването}
+
+\begin{prop}
+  Нека е даден автомата $\M = \FA$.
+  Езикът $\L(\M)$ е непразен е {\bf непразен} точно тогава, когато съдържа дума $\alpha, \abs{\alpha} < \abs{Q}$.
+\end{prop}
+\begin{proof}
+  Ще разгледаме двете посоки на твърдението.
+  \begin{description}
+  \item[$(\Rightarrow)$]
+    Нека $L$ е непразен език и нека $m = \min\{\abs{\alpha} \mid \alpha \in L\}$.
+    Ще докажем, че $m < \abs{Q}$.    
+    За целта, да допуснем, че $m \geq \abs{Q}$ и да изберем $\alpha \in L$, за която $\abs{\alpha} = m$.
+    Според \Lem{pumping-reg}, съществува разбиване $xyz = \alpha$, 
+    такова че $xz \in L$.
+    При положение, че $\abs{y} \geq 1$, то $\abs{xz} < m$, което 
+    е противоречие с минималността на $m$.
+    Заключаваме, че нашето допускане е грешно. Тогава $m < \abs{Q}$, откъдето следва, че 
+    съществува дума $\alpha \in L$ с $\abs{\alpha} < \abs{Q}$.
+  \item[$(\Leftarrow)$]
+    Тази посока е тривиална.
+    Ако $L$ съдържа дума $\alpha$, за която $\abs{\alpha} < \abs{Q}$,
+    то е очевидно, че $L$ е непразен език.
+  \end{description}
+\end{proof}
+
+\begin{cor}
+  \marginpar{$(L_1\setminus L_2) \cup (L_2 \setminus L_1) = \emptyset$?}
+  Съществува алгоритъм, който определя дали два автомата $\M_1$ и $\M_2$ разпознават един и същ език.
+\end{cor}
+
+\begin{prop}
+  Регулярният език $L$, 
+  разпознаван от КДА $\M$, е {\bf безкраен} точно тогава, когато съдържа дума $\alpha, \abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
+\end{prop}
+\begin{proof}
+  Да разгледаме двете посоки на твърдението.
+  \begin{description}
+  \item[$(\Leftarrow)$]
+    Нека $L$ е регулярен език, за който съществува дума $\alpha$, такава че $\abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
+    Тогава от \Lem{pumping-reg} следва, че съществува разбиване $\alpha = xyz$ със свойството, че
+    за всяко $i \in \Nat$, $xy^iz \in L$. Следователно, $L$ е безкраен, защото $\abs{y} \geq 1$.
+  \item[$(\Rightarrow)$]
+    Нека $L$ е безкраен език и % да приемем, че няма думи $\alpha$ със
+    % свойството $\abs{Q} \leq \abs{\alpha} <  2\abs{Q}$.
+    да вземем {\em най-късата} дума $\alpha \in L$, за която $\abs{\alpha} \geq 2\abs{Q}$.
+    Понеже $L$ е безкраен, знаем, че такава дума съществува.
+    Тогава отново по \Lem{pumping-reg}, имаме следното разбиване на $\alpha$:
+    \[\alpha = xyz,\ \abs{xy} \leq \abs{Q},\ 1\leq \abs{y},\ xz \in L.\]
+    Но понеже $\abs{xyz} \geq 2\abs{Q}$, а $1 \leq \abs{y} \leq \abs{Q}$, то $\abs{xyz} > \abs{xz} \geq \abs{Q}$ и понеже избрахме $\alpha = xyz$
+    да бъде най-късата дума с дължина поне $2\abs{Q}$, заключаваме, че $\abs{Q} \leq \abs{xz} < 2\abs{Q}$ и $xz \in L$.
+  \end{description}
+\end{proof}
+
+\begin{cor}
+  Съществува алгоритъм, който проверява дали даден регулярен език е безкраен.
+\end{cor}
+
+\subsection{Задачи}
+
+\begin{problem}
+  Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
+  \begin{enumerate}[a)]
+  \item
+    $L = \{\alpha^R \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
+  \item
+    \marginpar{$\alpha = a^pb^p$}
+    $L = \{a^ib^i\ \mid\ i\in\Nat\}$;
+  \item
+    $L = \{a^ib^i\ \mid\ i,j\in\Nat\ \&\ i\neq j\}$;
+  \item
+    \marginpar{$\alpha = a^{p+1}b^p$.}
+    $L = \{a^ib^j\ \mid\ i > j\}$;
+  \item
+    $L = \{a^nb^m \mid n\mbox{ дели }m\}$.
+  \item
+    $L = \{a^{2n}\ \mid\ n\geq 1\}$;
+  \item
+    $L = \{a^mb^na^{m+n}\ \mid\ m\geq 1\ \&\ n\geq 1\}$;
+  \item
+    $L = \{a^{n.m}\mid n,m\mbox{ са прости числа}\}$;
+  \item
+    $L = \{\omega\in\{a,b\}^\star \mid N_a(\omega) = N_b(\omega)\}$;
+  \item
+    \marginpar{$\alpha = a^pba^pb$}
+    $L = \{\omega\omega\mid \omega\in\{a,b\}^\star\}$;
+  \item
+    $L = \{\omega\omega^R\mid \omega\in\{a,b\}^\star\}$;
+  \item
+    $L = \{\alpha\beta\beta \in \{a,b\}^\star\mid \beta \neq \varepsilon\}$;
+  \item
+    $L = \{a^nb^nc^n\mid n\geq 0\}$;
+  \item
+    $L = \{\omega\omega\omega\mid \omega\in \Sigma^\star\}$;
+  \item
+    $L = \{a^{2^n}\mid n\geq 0\}$;
+  \item
+    $L = \{a^mb^n\mid n\neq m\}$;
+  \item
+    $L = \{a^{n!}b^{n!}\mid n\neq 1\}$;
+  \item
+    $L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{n_a(\alpha) - n_b(\alpha)} \leq 2\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \alpha\beta\alpha\ \&\ \abs{\beta} \leq \abs{\alpha}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta\gamma\gamma^R\ \&\ \abs{\beta} \leq \abs{\gamma}\}$;
+  \item
+    $L = \{c^ka^nb^m \mid k,m,n > 0\ \&\ n \neq m\}$;
+  \item
+    $L = \{c^ka^nb^n \mid k > 0\ \&\ n \geq 0\}\cup\{a,b\}^\star$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ не дели }N_b(\omega)\}$;
+  \end{enumerate}
+\end{problem}
+
+\subsection*{Примери, когато лемата не е  приложима}
+
+\begin{problem}
+  \marginpar{Например, разгледайте $c^+\{a^nb^n\mid n\in\Nat\}\cup (a\vert b)^\star$}
+  Да се даде пример за език $L$, който {\bf не} е регулярен, но удовлетворява
+  условието на \Lem{pumping-reg}.
+\end{problem}
+
+
+
+\begin{problem}
+  Езикът $L = \{c^ka^nb^m\mid k,n,m \in \Nat\ \&\ k = 1\implies m = n\}$
+  {\bf не} е регулярен, но условието на  \Lem{pumping-reg} е изпълнена за него.
+\end{problem}
+\begin{proof}
+  Да допуснем, че $L$ е регулярен.
+  Тогава ще следва, че 
+  \[L_1 = L\cap ca^\star b^\star = \{ca^nb^n \mid n\in\Nat\}\]
+  е регулярен,
+  но с лемата за разрастването лесно се вижда, че $L_1$ не е.
+
+  Сега да проверим, че условието на \Lem{pumping-reg} е изпълнена за $L$.
+  Да изберем константа $p = 2$.
+  Сега трябва да разгледаме всички думи $\alpha \in L$, $\abs{\alpha} \geq 2$
+  и за всяка $\alpha$ да посочим разбиване $xyz = \alpha$, за което са изпълнени трите свойства от лемата.
+  \marginpar{Условията за $x,y,z$ са:
+    \begin{align*}
+      & \abs{xy} \leq 2\\
+      & \abs{y} \geq 1\\
+      & (\forall i\in\Nat)(xy^iz \in L)
+    \end{align*}}
+
+  \begin{itemize}
+  \item
+    Ако $\alpha = a^n$ или $\alpha = b^n$, $n\geq 2$, то е  очевидно, че можем да
+    намерим такова разбиване.
+  \item
+    $\alpha = a^nb^m$ и $n+m \geq 2$, $n \geq 1$.
+    Избираме $x = \varepsilon$, $y = a$, $z = a^{n-1}b^m$.
+  \item
+    $\alpha = ca^nb^n$, $n\geq 1$.
+    Избираме $x = \varepsilon$, $y = c$, $z = a^nb^n$.
+  \item
+    $\alpha = c^2a^nb^m$. 
+    Избираме $x = \varepsilon$, $y = c^2$, $z = a^nb^m$.
+  \item
+    $\alpha = c^ka^nb^m$, $k \geq 3$.
+    Избираме $x = \varepsilon$, $y = c$, $z = c^{k-1}a^nb^m$.
+  \end{itemize}
+\end{proof}
+
+\newpage
+\section{Минимизация на ДКА}
+
+%\marginpar{\href{http://en.wikipedia.org/wiki/DFA_minimization}{Уикипедия}}
+
+\begin{itemize}
+\item
+  Нека $L \subseteq \Sigma^\star$ е език и нека $x,y \in \Sigma^\star$.
+  Казваме, че $x$ и $y$ са {\bf еквивалентни относно} $L$, което записваме 
+  като $x \approx_L y$, ако е изпълнено:
+  \[(\forall z \in \Sigma^\star)[xz \in L \iff yz \in L].\]
+  Това означава, че $x\approx_L y$ ако или и две думи са в $L$ или и двете не са в $L$
+  и освен това, като прибавим произволна дума на края на $x$ и $y$, новополучените
+  думи са или и двете в $L$ или и двете не са в $L$.  
+\item
+  Нека да означим класовете на еквивалентност на $\approx_L$ с $[\alpha]_L$, за $\alpha \in \Sigma^\star$,
+  а с $\abs{\approx_L}$ ще означаваме броя на класовете на еквивалентност на релацията $\approx_L$.
+\item
+  \marginpar{$\M$ е тотален}
+  Нека $\M = \FA$ е ДКА.
+  Казваме, че две думи $\alpha,\beta \in \Sigma^\star$ са {\bf еквивалентни относно $\M$},
+  което означаваме с $\alpha \sim_\M \beta$, ако $\delta^\star(s,\alpha) = \delta^\star(s,\beta)$.
+\item
+  Нека да означим класовете на еквивалентност на $\sim_\M$ с $[\alpha]_\M$, за $\alpha \in \Sigma^\star$,
+  а с $\abs{\sim_\M}$ ще означаваме броя на класовете на еквивалентност на релацията $\sim_\M$.
+\item
+  Проверете, че $\approx_L$ и $\sim_\M$ са {\bf релации на еквивалентност}, т.е.
+  те са рефлексивни, транзитивни и симетрични.
+\item
+  Съобразете, че всяко състояние на $\M$, което е достижимо от началното състояние $s$, определя клас на еквивалентност относно 
+  релацията $\sim_\M$.  
+\item
+  $\sim_\M$ е дясно-инвариантна, т.е.
+  \[\alpha \sim_\M \beta\ \rightarrow\ (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\M \beta\gamma].\]
+\end{itemize}
+
+\begin{thm}
+  \label{th:rel-finer}
+  Нека е даден ДКА $\M = \FA$ и $\L(\M)$ е езика, разпознаван от $\M$. Тогава е изпълнено
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\M\beta\ \rightarrow\ \alpha\approx_{\L(\M)}\beta].\]
+\end{thm}
+\begin{proof}
+%  \marginpar{стр. 95 от \cite{papadimitriou}}
+  Да означим $q_\alpha = \delta^\star(s, \alpha)$.
+  Лесно се съобразява, че 
+  \[\alpha \sim_\M \beta\quad\Leftrightarrow\quad q_\alpha = q_\beta.\]
+  Освен това, 
+  \[\alpha\gamma \in \L(\M)\quad \Leftrightarrow\quad \delta^\star(q_\alpha, \gamma) \in F.\]
+  Тогава, ако $\alpha \sim_\M \beta$, то  $\alpha \approx_{\Ls(\M)}\beta$, защото за произволно $\gamma \in \Sigma^\star$,
+  \[\alpha\gamma \in \L(\M)\ \Leftrightarrow\ \delta^\star(q_\alpha,\gamma) \in F\ \Leftrightarrow\ \delta^\star(q_\beta, \gamma)\in F\ \Leftrightarrow\ \beta\gamma \in \L(\M).\]  
+\end{proof}
+
+\begin{cor}
+  Нека $L$ е регулярен език, и $L = \L(\M)$.
+  Тогава 
+  \[\abs{\approx_L} \leq \abs{\sim_\M}.\]
+\end{cor}
+\begin{proof}
+  Нека $A = \{[\alpha]_L \mid \alpha\in\Sigma^\star\}$ и $B = \{[\alpha]_\M \mid \alpha\in\Sigma^\star\}$
+  Да разгледаме изображението $f:B\to A$ определено като $f([\alpha]_\M) = [\alpha]_L$.
+  \begin{itemize}
+  \item 
+    \marginpar{Трябва да проверим, че $(\forall b,b')(f(b) \neq f(b')\ \rightarrow b \neq b')$}
+    $f$ е функция, защото за $[\alpha]_\M = [\beta]_\M$, 
+    $\alpha \sim_\M \beta$ и от \Th{rel-finer} веднага следва, че $[\alpha]_L = [\beta]_L$.
+  \item
+    \marginpar{$(\forall a)(\exists b)(f(b) = a)$}
+    $f$ е сюрекция, защото за всеки клас $[\alpha]_L$ съответства класа $[\alpha]_\M$.
+  \item
+    От това, че $f$ е сюрекция следва директно, че $\abs{\sim_\M} \geq \abs{\approx_L}$.
+  \end{itemize}
+\end{proof}
+
+\begin{cor}
+  Един регулярен език $L$ се разпознава от ДМА $\M$ със свойството
+  \[\abs{Q} \geq \abs{\approx_L}.\]
+\end{cor}
+\begin{proof}
+  Нека $\M$ бъде такъв, че да {\bf няма недостижими състояния}.
+  Тъй като всяко достижимо състояние определя клас на еквивалентност относно $\sim_\M$,
+  то получаваме, че $\abs{Q} = \abs{\sim_\M}$.
+  Комбинирайки с предишното следствие, 
+  \[\abs{Q} = \abs{\sim_\M} \geq \abs{\approx_L}.\]
+\end{proof}
+Така получаваме {\em долна граница} за броя на състоянията в минималнен автомат за езика $L$,
+Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
+
+{\bf Сега ще отговорим на въпроса дали тази долна граница може да бъде достигната.}
+
+
+\subsection{Теорема за съществуване на МДКА}
+% Да приемем, че сме фиксирали азбуката $\Sigma$.
+\begin{thm}[Майхил-Нероуд]
+  \label{th:myhill-nerode}
+  \index{теорема!Майхил-Нероуд}
+  \index{Майхил}
+  \index{Нероуд}
+  \marginpar{на англ. Myhill-Nerode}
+  Нека $\L\subseteq \Sigma^\star$ е регулярен език.
+  Тогава съществува ДКА $\M = \FA$, който разпознава $\L$,
+  с точно толкова състояния, колкото са класовете на еквивалентност на релацията $\approx_\L$,
+  т.е. $\abs{Q} = \abs{\approx_\L}$.
+\end{thm}
+\begin{proof}
+%  \marginpar{стр. 96 от \cite{papadimitriou}}
+  При даден регулярен език $L$, ние определяме ДКА $\M = \FA$, за който $L = \L(\M)$ като
+  \begin{itemize}
+  \item
+    \marginpar{Трябва да проверим, че $Q$ е крайно.}
+    $Q = \{[\alpha]_L\mid \alpha\in \Sigma^\star\}$;
+  \item
+    $s = [\varepsilon]_L$;
+  \item
+    $F = \{[\alpha]_L\mid \alpha\in L\}$;
+  \item
+    \marginpar{Трябва да проверим, че $\delta$ е функция.}
+    Определяме изображението $\delta$ като 
+    за всяка буква $a \in \Sigma$ и всяко състояние $[\alpha]_L\in Q$, 
+    \[\delta([\alpha]_L,a) = [\alpha a]_L.\]
+  \end{itemize}
+  
+  Първо, трябва да се уверим, че множеството от състояния $Q$ е крайно, т.е.
+  релацията $\approx_\L$ има крайно много класове на еквивалентност.
+  И така, тъй като $\L$ е регулярен език, то той се разпознава от някой ДКА $\M^\prime$,
+  за който е изпълнено свойството, че $\abs{Q^{\M'}} \geq \abs{\approx_L}$.
+  Понеже $Q^{\M'}$ е крайно множество, то $\approx_L$ има крайно много класове и 
+  следователно $Q$ също е крайно множество.
+
+  Второ, трябва да се уверим, че изображението $\delta$ задава функция, т.е. 
+  да проверим, че
+  \[[\alpha]_L = [\beta]_L\ \Rightarrow\ \delta([\alpha]_L,a) = \delta([\beta]_L,a).\]
+  Но това се вижда веднага, защото от определението на релацията $\approx_L$ следва, че
+  ако $\alpha \approx_L \beta$, то за всяка буква $a$, $\alpha a \approx_L \beta a$,
+  т.е. $[\alpha a]_L = [\beta a]_L$ и 
+  \begin{align*}
+    [\alpha]_L = [\beta]_L & \Rightarrow\ [\alpha a]_L = [\beta a]_L & (\text{свойство на }\approx_L)\\
+    & \Rightarrow\ \delta([\alpha]_L,a) = \delta([\beta]_L,a) & (\text{деф. на }\delta)
+  \end{align*}
+  
+  Така вече сме показали, че $\M$ е коректно зададен ДКА.
+  Остава да покажем, че $\M$ разпознава езика $L$, т.е. $\L(\M) = L$.
+  \begin{prop}
+    За всеки две думи $\alpha,\beta\in\Sigma^\star$,
+    $\delta^\star([\alpha]_L,\beta) = [\alpha\beta]_L$.
+  \end{prop}
+  \begin{proof}
+    Ще докажем това свойство с индукция по дължината на думата $\beta$.
+    \begin{enumerate}[a)]
+    \item
+      $\beta = \varepsilon$, директно от дефиницията на $\delta^\star$, защото
+      $\delta^\star([x]_L,\varepsilon) = [x\varepsilon]_L = [x]_L$.
+    \item
+      Нека $\beta$ има дължина $n+1$ и сме доказали твърдението за думи с дължина $\leq n$.
+      Тогава $\beta = \gamma a$, където $\gamma$ има дължина $n$.
+      \begin{align*}
+        \delta^\star([\alpha]_L, \gamma a) & = \delta(\delta^\star([\alpha]_L,\gamma),a) & (\text{деф. на }\delta)\\
+                                          & = \delta([\alpha\gamma]_L,a) & (\text{от И.П.})\\
+                                          & = [\alpha\gamma a]_L & (\text{от деф. на }\delta)\\
+                                          & = [\alpha\beta]_L & (\beta = \gamma a).
+      \end{align*}
+    \end{enumerate}
+  \end{proof}
+  Сега сме готови да докажем, че $L = \L(\M)$.
+  \begin{align*}
+    \alpha\in \L(\M) & \iff \delta^\star(s,\alpha) \in F & (\text{от деф. на }\L(\M))\\
+                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\text{от деф. на }s)\\
+                     & \iff \delta^\star([\varepsilon]_L,\alpha) = [\alpha]_L\ \&\ \alpha\in L & (\text{от деф. на }F)\\
+                     & \iff \alpha \in L & (\text{от последното твърдение}).
+  \end{align*}
+  
+\end{proof}
+
+Ако $M = \FA$ е автомат, за който $\abs{Q} = \abs{\approx_\L}$, то ще казваме, че
+$M$ е {\bf минимален} за езика $\Ls$.
+
+\subsection{Проверка за регулярност на език}
+
+\begin{framed}
+  \begin{cor}
+    Езикът $L$ е регулярен точно тогава, когато релацията $\approx_L$ има {\em крайно много} класове на еквивалентност.
+  \end{cor}
+\end{framed}
+\begin{proof}
+  Ако $L$ е регулярен, то той се разпознава от някой ДКА $\M$, който има крайно много състояния 
+  и следователно крайно много класове на еквивалентност относно $\sim_\M$.
+  Релацията $\approx_L$ е по-груба от $\sim_\M$ и има по-малко класове на еквивалентност.
+  Следователно, $\approx_L$ има крайно много класове на еквивалентност.
+  
+  За другата посока, ако $\approx_L$ има крайно много класове на еквивалентност, то можем да 
+  построим ДКА $\M$ както в доказателството на \Th{myhill-nerode}, който разпознава $L$.
+\end{proof}
+
+Това следствие ни дава още един начин за проверка дали даден език е регулярен.
+За разлика от \Lem{pumping-reg}, сега имаме {\bf необходимо и достатъчно условие}.
+При даден език $L$, ние разглеждаме неговата релация $\approx_L$.
+Ако тя има крайно много класове, то езикът $L$ е регулярен.
+В противен случай, езикът $L$ не е регулярен.
+
+\begin{example}
+  За езика $L = \{a^nb^n\mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
+  защото \[(\forall k,j\in\Nat)[k \neq j\ \rightarrow\ [a^kb]_L \neq [a^jb]_L].\]
+  Проверете, че $[a^kb]_L = \{a^kb,a^{k+1}b^{2},\dots,a^{k+l}b^{l+1},\dots\}$.
+  Така получаваме, че релацията $\approx_L$ има безкрайно много класове на еквивалентност
+  и следователно този език {\bf не} е регулярен.
+\end{example}
+
+\begin{example}
+  За езика $L = \{a^{n^2} \mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
+  защото \[(\forall m,n\in\Nat)[m \neq n\ \rightarrow\ [a^{n^2}]_L \neq [a^{m^2}]_L].\]
+  
+  Без ограничение на общността, да разгледаме $n < m$ и думата $\gamma = a^{2n+1}$.
+  Тогава $a^{n^2}\gamma = a^{(n+1)^2} \in L$, но 
+  $m^2 < m^2 + 2n + 1 < (m+1)^2$ и следователно $a^{m^2}\gamma = a^{m^2+2n+1}\not\in L$.
+\end{example}
+
+\begin{dfn}
+  Нека $\M_1 = \FAn{1}$ и $\M_2 = \FAn{2}$.
+  Казваме, че $\M_1$ и $\M_2$ са изоморфни, което означаваме с $\M_1 \cong \M_2$, ако
+  съществува биекция $f: Q_1\to Q_2$, за която:
+  \begin{itemize}
+  \item
+    $f(s_1) = s_2$;
+  \item
+    $f[F_1] = \{f(q)\mid q\in F_1\} = F_2$;
+  \item
+    $(\forall a\in\Sigma)(\forall q\in Q_1)[f(\delta_1(q,a)) = \delta_2(f(q),a)]$.
+  \end{itemize}
+  Ще казваме, че $f$ задава изоморфизъм на $\M_1$ върху $\M_2$.
+\end{dfn}
+
+\begin{cor}
+  Нека е даден регулярния език $L$.
+  Всички минимални автомати за $L$ са изоморфни на $\M_0$, автомата построен в теоремата на Нерод-Майхил.
+\end{cor}
+\begin{proof}
+  Нека $\M = \FA$ е произволен автомат, за който $\L(\M) = L$ и $\abs{Q_\M} = \abs{\approx_L}$.
+  Съобразете, че $\M$ е {\em свързан}, т.е. всяко състояние на $\M$ е достижимо от началното.
+  Искаме да докажем, че $\M \cong \M_0$.
+  Понеже $\M$ е свързан, за всяко състояние $q\in Q$ можем да намерим дума $w_q\in\Sigma^\star$,
+  за която $\delta^\star(s,w_q) = q$.
+  \begin{itemize}
+  \item
+    Да дефинираме изображението $f:Q\to [\approx_L]$ като $f(q) = [w_q]_L$.
+    Ще докажем, че
+    $f$ задава изоморфизъм на $\M$ върху $\M_0$. 
+  \item
+    Първо да съобразим, че ако $\delta^\star_\M(s,\alpha) = q$, то $[w_q]_L = [\alpha]_L$.
+    Понеже $w_q \sim_\M \alpha$, от \Th{rel-finer} следва директно, че $[w_q]_L = [\alpha]_L$.
+    Това означава, че $f$ е определена коректно, т.е. $f$ е {\bf функция}.
+  % \item
+%    \marginpar{$(\forall p,q)(f(p) \neq f(q)\ \rightarrow\ p \neq q)$}
+    % Ще проверим, че $f$ е определена коректно, т.е. $f$ е {\bf функция}.
+    % За целта, нека $q\in Q$ и $\alpha,\beta$ са две думи, за които
+    % \[\delta^\star(s,\alpha) = q = \delta^\star(s,\beta).\]
+    % Тогава $\alpha\sim_M \beta$ и от \Th{rel-finer} следва, 
+    % че $\alpha \approx_\Ls \beta$ и $[\alpha]_\Ls = [\beta]_\Ls$.
+    % Така доказахме, че 
+    % \[(\forall p,q\in Q)[f(q) \neq f(p)\ \rightarrow p \neq q].\]
+  \item
+    Ще проверим, че $f$ е {\bf инективна}, т.е.
+    \[(\forall q_1,q_2 \in Q)[q_1\neq q_2\ \rightarrow\ f(q_1) \neq f(q_2)].\]
+    Да допуснем, че има състояния $q_1 \neq q_2$, за които $f(q_1) = [w_{q_1}]_L = [w_{q_2}]_L = f(q_2)$.
+    Тогава $w_{q_1} \not\sim_\M w_{q_2}$ и $w_{q_1} \approx_L w_{q_2}$.
+    Но това означава, че $\abs{\sim_\M} > \abs{\approx_L}$,
+    което противоречи с минималността на $\M$.
+  \item
+    За да бъде $f$ е {\bf сюрективна} трябва за всеки клас $[\beta]_L \in [\approx_L]$, съществува $q \in Q$, за което $f(q) = [\beta]_L$.
+    Следва от факта, че за състоянието $q$, $\delta^\star_\M(s,\beta) = q$, е изпълнено $[\beta]_L = [w_q]_L = f(q)$.
+  \item
+    Последно да проверим, че $f$ е наистина {\bf изоморфизъм}:
+    \begin{align*}
+      f(\delta_\M(q,a)) & = f(\delta_\M(\delta^\star_\M(s,w_q),a)) & (\text{от деф. на }w_q)\\
+      & = f(\delta^\star_\M(s,w_qa)) \\
+      & = [w_qa]_L & (\text{от деф. на }f)\\
+      & = \delta^\star_{\M_0}([\varepsilon]_L, w_qa) & (\text{от деф. на }\M_0)\\ 
+      & = \delta_{\M_0}([w_q]_L, a) & \\
+      & = \delta_{\M_0}(f(q), a) & ( f(q) = [w_q]_L).
+    \end{align*}
+  \end{itemize}
+\end{proof}
+
+\subsection{Алгоритъм за намиране на МДКА.}
+\begin{itemize}
+% \item
+%   Нека $M = \FA$ да бъде ДКА. Определяме
+%   \[A_M = \{\pair{q,w} \mid q\in Q\ \&\ w\in\Sigma^\star\ \&\ \delta^\star(q,w) \in F\}.\]
+\item
+  Казваме, че две състояния $p,q$ са {\bf еквивалентни}, означаваме $p\equiv_\M q$,
+  % \footnote{В общия случай, $\approx_L \supseteq \sim_M$, т.е. $\sim_M$ е по-фина от $\approx_L$.
+  %   Нека $\equiv\ =\  \approx_L/\sim_M$, където $[\alpha]_{\sim_M} \equiv [\beta]_{\sim_M} \iff \alpha \approx_L \beta$. Тогава $\abs{\approx_L} = \abs{\equiv}$.}
+  ако \[p \equiv q\ \iff\ (\forall \gamma\in \Sigma^\star)[\delta^\star(p,\gamma) \in F\ \iff\ \delta^\star(q,\gamma) \in F].\]
+\item
+  Релацията $\equiv$ между състояния на автомата $\M$ е релация на еквивалентност. 
+\item
+  Нека $q_\alpha$ е състоянието, което съответства на думата $\alpha$ в $\M$, т.е.
+  $\delta^\star_\M(s,\alpha) = q_\alpha$. Тогава:
+  \[q_\alpha \equiv q_\beta\ \iff\ \alpha\approx_{\L(\M)} \beta.\]
+  Това означава, че ако в $\M$ няма недостижими състояния от началното състояние $s$, то $\abs{\equiv} = \abs{\approx_{\L(\M)}}$.
+\end{itemize}
+
+При даден език $\L$ и ДКА $\M = \FA$, който го разпознава, нашата цел е да построим нов ДКА $\M_0$,
+който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_\L$.
+Това ще направим като ``слеем'' състоянията на $\M$, които са еквивалентни относно релацията $\equiv$.
+Това означава, че всяко състояние на $\M_0$ ще отговаря на един клас на еквивалентност на релацията $\equiv$.
+Проблемът с намирането на класовете на еквивалентност на релацията $\equiv$ е кванторът $\forall \gamma \in \Sigma^\star$
+в нейната дефиницията.
+
+Алгоритъмът представлява намирането на релации $\equiv_n$, където
+\[p\equiv_n q \iff (\forall\gamma\in\Sigma^\star)[\abs{\gamma}\leq n\ \rightarrow\ (\delta^\star(p,\gamma) \in F\ \iff\ \delta^\star(q,\gamma) \in F)].\]
+
+Обърнете внимание, че за всяко $n$, $\equiv_n$ е {\em по-груба} релация от $\equiv_{n+1}$, 
+която на свой ред е по-груба от $\equiv$.
+Алгоритъмът строи $\equiv_n$ докато $\equiv_n\ \neq\ \equiv_{n+1}$.
+Тъй като броят на класовете на еквивалентност на $\equiv_n$ е краен, и не по-голям от $\abs{Q}$, то 
+със сигурност ще намерим $n$, за което $\equiv_n = \equiv_{n+1}$.
+Тогава заключаваме, че $\equiv\ =\ \equiv_n$.
+
+Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
+лесно се съобразява, че $\equiv_0$ има два класа на еквивалентност.
+Единият е $F$, а другият е $Q\setminus F$.
+
+\begin{prop}
+  За всеки две състояния $p,q \in Q$, и всяко $n$, $p \equiv_{n+1} q$ точно тогава, когато
+  \begin{enumerate}[a)]
+  \item
+    $p \equiv_{n} q$ и
+  \item
+    $(\forall a \in \Sigma)[\delta(q,a) \equiv_{n} \delta(p,a)]$.
+  \end{enumerate}
+\end{prop}
+\begin{proof}%[стр. 99 от \cite{papadimitriou}]
+  Индукция по $n$.
+  
+  По условие имаме, че $p\equiv_{n+1} q$ точно тогава, когато
+  $p\equiv_n q$ и за всяка дума $\gamma$ с дължина $n+1$,
+  \[\delta^\star(p,\gamma) \in F \iff \delta^\star(q,\gamma)\in F.\]
+  Да разгледаме една такава дума $\gamma = a\beta$, $\abs{\beta} = n$.
+  Получаваме, че 
+  \[\delta^\star(\delta(p,a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F.\]
+  Тъй като това е вярно за всяка дума $\gamma$, то
+  \[(\forall a\in\Sigma)[\delta(p,a) \equiv_{n} \delta(q, a)].\]
+  
+\end{proof}
+
+Нека е даден автомата $M = \FA$.
+След като сме намерили релацията $\equiv$ за $M$, 
+строим автомата $M^\prime = (Q^\prime,\Sigma,s^\prime,\delta^\prime,F^\prime)$, където:
+\begin{enumerate}[1)]
+\item
+  $Q^\prime = \{[q]_\equiv \mid q\in Q\}$;
+\item
+  $s^\prime = [s]_\equiv$;
+\item
+  $\delta^\prime([q]_\equiv, a) = [\delta(q,a)]_\equiv$;
+\item
+  $F^\prime = \{[q]_\equiv\mid F\cap [q]_\equiv \neq \emptyset\}$;
+\end{enumerate}
+
+
+% % \begin{figure}
+% %   \begin{subfigure}[b]{0.3\textwidth}%[НКА с $\varepsilon$-преходи]{
+% %     \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+% %       \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+      
+% %       \node[initial,state] (0) {$0$};
+% %       \node[state]         (1) [right of=0]{$1$};
+% %       \node[state]   (2) [right of=1]{$2$};
+% %       \node[state]   (3) [right of=2]{$3$};
+% %       \node[accepting, state]   (4) [right of=3]{$4$};
+      
+% %       \path 
+% %       (0) edge  node [above] {$\varepsilon$} (1)
+% %       (1) edge  node [above] {$a$} (2)
+% %       (2) edge  node [above] {$b$} (3) 
+% %       (3) edge  node [above] {$a,\varepsilon$} (4) 
+% %       (1) edge  [bend right=30] node [below] {$a$} (3)
+% %       (2) edge  [bend right=45] node [above] {$\varepsilon$} (1)
+% %       (3) edge  [bend right=45] node [above] {$\varepsilon$} (2);
+% %     \end{tikzpicture}
+% %   \end{subfigure}
+% %   \begin{subfigure}[b]{0.3\textwidth}
+% %   % \subfigure[получения от него ДКА]{
+% %     \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
+% %       \tikzstyle{every state}=[circle,font=\small]
+      
+% %       \node[initial,state] (0) {$\{0,1\}$};
+% %       \node[accepting,state]         (1) [above right of=0]{$\{1,2,3,4\}$};
+% %       \node[state]   (2) [below right of=0]{$\emptyset$};
+      
+% %       \path 
+% %       (0) edge [] node [above] {$a$} (1)
+% %       (0) edge node [above] {$b$} (2)
+% %       (1) edge [loop right] node [right] {$a,b$} (1)
+% %       (2) edge [loop right] node [right] {$a,b$} (2);
+% %     \end{tikzpicture}
+% %   \end{subfigure}
+% %   \caption{}
+% % \end{figure}
+
+
+% \newpage
+% \cite{min-hopcroft}
+% \section{Въпроси}
+
+% Вярно ли е, че:
+% \begin{itemize}
+%   % \item
+% %   \marginpar{Не}
+% %   езикът $\{a^nb^n\mid n \in \Nat \}$ е регулярен?
+% % \item
+% %   \marginpar{Не}
+% %   езикът $\{a^nb^k\mid n > k\}$ е регулярен?
+% % \item
+% %   \marginpar{Не}
+% %   езикът $\{a^{n^2}\mid n \in \Nat\}$ е регулярен?
+% \item
+%   \marginpar{Да}
+%   за всеки два регулярни езика $R_1, R_2$, то $R_1 \setminus R_2$ е регулярен ?
+% \item
+%   \marginpar{Да}
+%   за всеки краен език $F$ и всеки регулярен $R$, то $R\setminus F$ е регулярен ?
+% \item
+%   \marginpar{Да}
+%   за всеки краен език $F$ и всеки рег. $R$, то $R\cup (\Sigma^\star \setminus F)$ е регулярен ?
+% \item
+%   \marginpar{Да}
+%   съществува регулярен език $R$ и нерегулярен $K$, за които $R\cap K$ не е регулярен ?
+% \item
+%   \marginpar{Да}
+%   съществува регулярен език $R$ и нерегулярен $K$, за които $R\setminus K$ не е регулярен ?
+% \item
+%   \marginpar{Не}
+%   за всеки регулярен език $R$ и всеки $K \subseteq R$, то $R\setminus K$ е регулярен ?
+% \item
+%   \marginpar{Не}
+%   Езикът $L = \{\omega \in \{a,b\}^\star \mid n_a(\omega) \text{ не дели }n_b(\omega)\}$ е регулярен?
+% \item
+%   \marginpar{Да}
+%   съществува алгоритъм, който може да провери дали за даден регулярен израз $r$
+%   е изпълнено, че $\abs{\L(r)} = 0$.
+% \item
+%   \marginpar{Да}
+%   съществува алгоритъм, който може да провери дали за даден регулярен израз $r$
+%   е изпълнено, че $\abs{\L(r)} < \infty$.
+% \item
+%   \marginpar{Да}
+%   съществува алгоритъм, който може да провери дали за даден регулярен израз $r$
+%   е изпълнено, че $\abs{\L(r)} = \infty$.
+% \item
+%   \marginpar{Да}
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) = \L(r_2)$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \neq \L(r_2)$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \subseteq \L(r_2)$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \subsetneq \L(r_2)$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \cap \L(r_2) = \emptyset$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \cap \L(r_2) \neq \emptyset$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \cup \L(r_2) = \emptyset$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \cup \L(r_2) \neq \emptyset$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \setminus \L(r_2) = \emptyset$.
+% \item
+%   съществува алгоритъм, който може да провери дали за дадени регулярни изрази $r_1$ и $r_2$
+%   е изпълнено, че $\L(r_1) \setminus \L(r_2) \neq \emptyset$.
+% \end{itemize}
+
+% \section{Домашна работа}
+
+% \begin{itemize}
+% \item
+%   Вход - файл, в който е записан регулярен израз
+% \item
+%   Преобразуване на регулярния израз в обратен полски запис.
+%   (\href{http://en.wikipedia.org/wiki/Shunting-yard_algorithm}{тук} 
+%   добре е обяснено как става за произволни аритмечни изрази)
+% \item
+%   Строене на краен детерминиран автомат по регулярния израз.
+% \item
+%   Извеждане на автомата във формат за програмата \href{http://graphviz.org}{graphviz}.
+%   (вижте \href{http://sundarpillay.blogspot.com/2012/02/graphviz-and-finite-automata-diagrams_05.html}{пример})
+% \end{itemize}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "EAI"
+%%% End: 
