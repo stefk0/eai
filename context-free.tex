@@ -865,17 +865,26 @@
   \end{itemize}
 \end{dfn}
 
-Нека $P$ е стеков автомат. Тогава
+Тройките от вида $(q,\alpha,\gamma) \in Q\times\Sigma^\star\times\Gamma^\star$ описват моментното описание
+на стековия автомат, т.е. автоматът се намира в състояние $q$, думата, която остава да се прочете е $\alpha$,
+а съдържанието на стека е думата $\gamma$.
+Удобно е да въведем бинарната релация $\vdash_P$ над $Q\times\Sigma^\star\times\Gamma^\star$,
+която ще ни казва как моментното описание на автомата $P$ се променя след изпълнение на една стъпка:
+\[(q,x\alpha,Y\gamma) \vdash_P (p,\alpha,\beta\gamma), \text{ ако } \Delta(q,x,Y) \ni (p,\beta).\]
+Важно е да отбележим, че е възможно $x = \varepsilon$.
+Рефлексивното и транзитивно затваряне на $\vdash_P$ ще означаваме с $\vdash^\star_P$.
+Сега вече можем да дадем дефиниция на език, разпознаван от стеков автомат $P$.
 \begin{itemize}
 \item
   $\L_F(P)$ е езика, който се разпознава от $P$ {\bfс финално състояние},
-  \[\L_F(P) = \{w\mid (q_0,w,\#) \vdash^\star_P (q,\varepsilon,\alpha)\ \&\ q \in F\}.\]    
+  \[\L_F(P) = \{\omega \mid (q_0,\omega,\#) \vdash^\star_P (q,\varepsilon,\alpha)\ \&\ q \in F\}.\]    
 \item
   $\L_S(P)$ е езика, който се разпознава от $P$  {\bf с празен стек},
   \[\L_S(P) = \{w\mid (q_0,w,\#) \vdash^\star_P (q,\varepsilon,\varepsilon)\}.\]    
 \end{itemize}
 
 \begin{example}
+  \label{ex:anbn}
   За езика $L = \{a^nb^n\mid n\in\Nat\}$ съществува стеков автомат $P$, такъв че
   $L = \L_S(P)$.
   Да разгледаме $P = \PDA$, където
@@ -889,17 +898,26 @@
   \item
     $F = \emptyset$;
   \item 
-    $\Delta(q,a,\#) = \{(q,\# A)\}$;
+    $\Delta(q,a,\#) = \{(q, A\#)\}$;
   \item 
     $\Delta(q,\varepsilon,\#) = \{(q,\varepsilon)\}$;
   \item 
-    $\Delta(q,b,A) = \{(q,\varepsilon)\}$;
+    $\Delta(q,b,A) = \{(q,\varepsilon)\}$.
   \end{itemize}
+  Вместо доказтелство, да видим как думата $a^2b^2$ се разпознава от автомата с празен стек:
+  \begin{align*}
+    (q,a^2b^2,\#) & \vdash_P (q,ab^2,A\#) \\
+    & \vdash_P (q,b^2, AA\#)\\
+    & \vdash_P (q,b,A\#)\\
+    & \vdash_P (q,\varepsilon,\#)\\
+    & \vdash_P (q,\varepsilon,\varepsilon).
+  \end{align*}
 \end{example}
 
 \begin{example}
+  \marginpar{$(abb)^R = bba$}
   За езика $L = \{\omega\omega^R \mid \omega \in \{a,b\}^\star\}$ съществува стеков автомат $P$, такъв че
-  $L = \L_S(P)$.  
+  $L = \L_S(P)$.
   Нека $P = \PDA$, където:
   \begin{itemize}
   \item 
@@ -923,6 +941,31 @@
   \item
     $\Delta(p, \varepsilon, \#) = \{(p,\varepsilon)\}$;
   \end{itemize}
+  Основното наблюдение, което трябва да направим за да разберем конструкцията на автомата е, че
+  всяка дума от вида $\omega\omega^R$ може да се запише като $\omega_1aa\omega^R_1$ или $\omega_1bb\omega^R_1$.
+  Да видим защо $P$ разпознава думата $abaaba$.
+  Започваме по следния начин:
+  \begin{align*}
+    (q,abaaba,\#) & \vdash_P (q,baaba,A\#)\\
+    & \vdash_P (q, aaba, BA\#) \\
+    & \vdash_P (q, aba, ABA\#).
+  \end{align*}
+  Сега можем да направим два избора как да продължим. Състоянието $p$ служи за маркер, което ни казва, че вече сме започнали 
+  да четем $\omega^R$. Поради тази причина, продължаваме така:
+  \begin{align*}
+    (q, aba, ABA\#) & \vdash_P (p, ba, BA\#)\\
+    & \vdash_P (p, a, A\#)\\
+    & \vdash_P (p, \varepsilon, \#) \\
+    & \vdash_P (p,\varepsilon,\varepsilon).
+  \end{align*}
+  Да проиграем още един пример. Да видим защо думата $aba$ не се извежда от автомата.
+  \begin{align*}
+    (q,aba,\#) & \vdash_P (q, ba,A\#)\\
+    & \vdash_P (q, a, BA\#)\\
+    & \vdash_P (q, \varepsilon, ABA\#).
+  \end{align*}
+  От последното моментно състояние на автомата нямаме нито един преход, следователно
+  думата $aba$ не се разпознава от $P$ с празен стек.
 \end{example}
 
 
@@ -941,10 +984,11 @@
   \begin{enumerate}[1)]
   \item 
     Нека $L = \L_F(P)$, където $P = \PDA$.
-    Ще построим $P^\prime$, така че да симулира $P$ и като отидем във финално състояние, искаме да изпразним стека.
+    Ще построим $P^\prime$, така че да симулира $P$ и като отидем във финално състояние ще изпразним стека.
+    Нека
     \[P^\prime = \langle{Q\cup\{q_e,s^\prime\},\Sigma,\Gamma \cup \{\$\},\$,s^\prime,\Delta^\prime,\emptyset}\rangle\]
     Важно е $P^\prime$ да има собствен нов символ за дъно на стека, защото е възможно за някоя дума $\alpha \not\in \L_F(P)$
-    стековият автомат $P$ да си изчисти стека.
+    стековият автомат $P$ да си изчисти стека и така да разпознаем повече думи.
     \begin{itemize}
     \item 
       \marginpar{- започваме симулацията}
@@ -960,8 +1004,9 @@
       $\Delta^\prime(q_e,\varepsilon,X) = \{(q_e,\varepsilon)\}$, за всяко $X \in \Gamma \cup \{\$\}$.
     \end{itemize}
   \item
-    Нека $L = \L_S(P)$, където $P = \langle{Q,\Sigma,\Gamma,\#,s,\Delta,\emptyset}\rangle$.
-    \[P^\prime = \langle{Q\cup\{s^\prime,q_f\}, \Sigma, \Gamma \cup \{\$\}, \Delta^\prime, \$, \{q_f\}}\rangle\]
+    Сега имаме $L = \L_S(P)$, където $P = \langle{Q,\Sigma,\Gamma,\#,s,\Delta,\emptyset}\rangle$. 
+    Да положим
+    \[P^\prime = \langle{Q\cup\{s^\prime,q_f\}, \Sigma, \Gamma \cup \{\$\}, \Delta^\prime, \$, \{q_f\}}\rangle.\]
     $P^\prime$ ще симулира $P$ като ще внимаваме кога $P$ изчиства символа $\#$. Тогава ще искаме да отидем във финалното състояние $q_f$.
     \begin{itemize}
     \item 
@@ -977,11 +1022,18 @@
   \end{enumerate}
 \end{proof}
 
+\begin{problem}
+  Като използвате стековия автомат от Пример \ref{ex:anbn}, дефинирайте автомат $P'$, за който
+  $\L_F(P') = \{a^nb^n \mid n\in\Nat\}$.
+\end{problem}
+
+\begin{framed}
 \begin{thm}
-  \marginpar{(\cite{hopcroft1}, стр. 117)}
   Класът на езиците, които се разпознават от краен стеков автомат, съвпада с
   класа на безконтекстните езици.
 \end{thm}
+\end{framed}
+%\marginpar{(\cite{hopcroft1}, стр. 117)}
 \begin{proof}
   \begin{enumerate}[1)]
   \item 
@@ -990,7 +1042,7 @@
     Нека  \[P = \langle{\{q\},\Sigma,\Sigma\cup V,S,q,\Delta,\emptyset}\rangle,\]
     където функцията на преходите е:
     \begin{align*}
-      & \Delta(q,\varepsilon,A) = \{(q,\alpha)\mid A\to\alpha\mbox{ е правило в }R\}\\
+      & \Delta(q,\varepsilon,A) = \{(q,\alpha)\mid A\to\alpha\mbox{ е правило в граматиката }G\}\\
       & \Delta(q,a,a) = \{(q,\varepsilon)\}
     \end{align*}
   \item
@@ -1012,30 +1064,56 @@
       Ако $m = 0$, т.е. $(q_1,\varepsilon) \in \Delta(q, a, A)$,  то имаме правилото $[q,A,q_{1}] \to a$, където $a \in \Sigma_\varepsilon$.
     \end{itemize}
     Трябва да докажем, че:
-    \[[q,A,p] \Rightarrow^\star_G \alpha\ \iff\ (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
-    \begin{itemize}
-    \item 
-      С индукция по $i$, ще докажем, че 
-      \[(q,\alpha,A) \vdash^i_P (p,\varepsilon,\varepsilon)\ \rightarrow\ [q,A,p] \Rightarrow^\star_G \alpha.\]
+    \[[q,A,p] \rightarrow^\star_G \alpha\ \iff\ (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
+    \begin{description}
+    \item[$(\Rightarrow)$]
+      С пълна индукция по $i$, ще докажем, че 
+      \[(q,\alpha,A) \vdash^i_P (p,\varepsilon,\varepsilon)\ \implies\ [q,A,p] \Rightarrow^\star_G \alpha.\]
       Ако $i = 1$, то е лесно, защото $\alpha = a$ или $\alpha = \varepsilon$, в случай, че $m = 0$.
       Ако $i > 1$, нека $\alpha = a\beta$. Тогава:
       \[(q,a\beta,A) \vdash_P (q_1,\beta,B_1\dots B_n) \vdash^{i-1}_P (p, \varepsilon, \varepsilon)\]
-      Нека $\beta = \beta_1\cdots \beta_n$, със свойството, че след като прочетем $\beta_i$, то 
-      сме премахнали променливата $B_i$ от върха на стека. Това означава, че:
-      \[(q_j, \beta_j, B_j) \vdash^{i_j}_P (q_{j+1},\varepsilon,\varepsilon),\]
-      където $i_j < i$.
-    \item
-      Отново с индукция по $i$ ще докажем, че
-      \[[q,A,p] \Rightarrow^i_G \alpha\ \rightarrow\ (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
+      Да разбием думата $\beta$ на $n$ части, $\beta = \beta_1\cdots \beta_n$, със свойството, че след като прочетем $\beta_i$, то 
+      сме премахнали променливата $B_i$ от върха на стека. Това означава, че :
+      \begin{align*}
+        & (q_j, \beta_j, B_j) \vdash^{i_j}_P (q_{j+1},\varepsilon,\varepsilon), \text{ за }j = 1,\dots,n-1,\\
+        & (q_n, \beta_n, B_n) \vdash^{i_n}_P (p,\varepsilon,\varepsilon),
+      \end{align*}
+      където $i_1+i_2+\cdots+i_n = i-1$.
+      Сега по {\bf И.П.}, 
+      \begin{align*}
+        & (q_j, \beta_j, B_j) \vdash^{i_j}_P (q_{j+1},\varepsilon,\varepsilon) \implies [q_j,B_j, q_{j+1}] \rightarrow^\star_G \beta_j, \text{ за }за j = 1,\dots,n-1,\\
+        & (q_n, \beta_n, B_n) \vdash^{i_n}_P (p,\varepsilon,\varepsilon) \implies [q_n,B_n, p] \rightarrow^\star_G \beta_n.
+      \end{align*}
+      Обединявайки тези изводи с правилото
+      \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2]\dots[q_n,B_n,p],\]
+      получаваме извода
+      \[[q,A,p] \rightarrow^\star_G a\beta.\]
+    \item[$(\Leftarrow)$]
+      Отново с пълна индукция по $i$ ще докажем, че
+      \[[q,A,p] \rightarrow^i_G \alpha \implies (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
       Ако $i = 1$, то имаме $[q,A,p] \Rightarrow \alpha$, където $\alpha = a$ или $\alpha = \varepsilon$.
-      Ако $i > 1$, то имаме, че $\alpha = a\beta$ и 
-      \[[q,A,p] \Rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,q_{n+1}] \Rightarrow^{i-1}_G \beta.\]
-      Отново $\beta = \beta_1\dots \beta_n$, където
-      \[[q_j,B_j,q_{j+1}] \Rightarrow^{i_j}_G \beta_j,\]
-      $i_j < i$.
-      Получаваме, че 
-      \[[q_j,B_j,q_{j+1}] \Rightarrow^{i_j}_G \beta_j\ \rightarrow\ (q_j,\beta_j,B_j) \vdash^\star_P (q_{j+1},\varepsilon,\varepsilon).\]
-    \end{itemize}
+      Ако $i > 1$, то имаме, че $\alpha = a\beta$ и за някое $n$, 
+      \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,p] \rightarrow^{i-1}_G \beta.\]
+      Отново нека $\beta = \beta_1\dots \beta_n$, където 
+      \begin{align*}
+        & [q_j,B_j,q_{j+1}] \rightarrow^{i_j}_G \beta_j, \text{ за } j = 1,\dots,n-1,\\
+        & [q_{n},B_n,p ] \rightarrow^{i_n}_G \beta_n,
+      \end{align*}
+      където $i_1 + i_2 + \cdots + i_n = i-1$.
+      От {\bf И.П.} получаваме, че 
+      \begin{align*}
+        & [q_j,B_j,q_{j+1}] \rightarrow^{i_j}_G \beta_j \implies (q_j,\beta_j,B_j) \vdash^\star_P (q_{j+1},\varepsilon,\varepsilon),\ j = 1,\dots,n-1\\
+        & [q_n,B_n,p] \rightarrow^{i_n}_G \beta_n \implies (q_n,\beta_n,B_n) \vdash^\star_P (p,\varepsilon,\varepsilon),
+      \end{align*}
+      Обединявайки всичко, което знаем, получаваме:
+      \begin{align*}
+        (q, a\beta, A) & \vdash_P (q_1, \beta_1\cdots\beta_n, B_1\cdots B_n)\\
+        & \vdash^\star_P (q_2, \beta_{2}\cdots\beta_n, B_2\cdots B_n)\\
+        & \dots\\
+        & \vdash^\star_P (q_n, \beta_n, B_n)\\
+        & \vdash^\star_P (p, \varepsilon, \varepsilon)
+      \end{align*}
+    \end{description}
   \end{enumerate}
 \end{proof}
 
