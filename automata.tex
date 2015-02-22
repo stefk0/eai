@@ -933,8 +933,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{lemma}
 \begin{proof}
   \marginpar{стр. 88 от \cite{papadimitriou}, стр. 78 от \cite{sipser}}
-  Понеже $L$ е регулярен, той се разпознава от ДКА $\A = \FA$.
-  Нека $n = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq n$.
+  Понеже $L$ е регулярен, той се разпознава от $\A = \FA$.
+  Да положим $n = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq n$.
   Да разгледаме първите $n$ стъпки от изпълнението на $\alpha$ върху $\A$:
   \[q_0\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow} \dots \stackrel{a_n}{\rightarrow} q_n.\]
   Тъй като $\abs{Q} = n$, а по този път участват $n+1$ състояния $q_0,q_1,\dots,q_n$,
@@ -942,9 +942,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Нека разделим думата $\alpha$ на три части по следния начин:
   \[x = a_1\cdots a_i,\quad y = a_{i+1}\cdots a_j,\quad z = a_{j+1}\cdots a_k.\]
   Ясно е, че $\abs{y} \geq 1$ и $\abs{xy} = j \leq n$.
-  Освен това, лесно се съобразява, че $xz \in L$ и че за всяко $i > 0$, $xy^iz \in L$.
+  \marginpar{\ding{45} Докажете!}
+  Освен това, лесно се съобразява, че за всяко $i \in\Nat$,
+  $xy^iz \in L$. Да разгледаме само случая за $i = 0$.
+  Думата $xy^0z = xz \in L$, защото имаме следното изчисление:
+  \[q_0\stackrel{a_1}{\rightarrow} \cdots \stackrel{a_i}{\rightarrow} q_i\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{n}}{\rightarrow}q_n\in F,\]
+  защото $q_i = q_j$.
 \end{proof}
-
 
 \begin{framed}
   \Lem{pumping-reg} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е регулярен.
@@ -1196,17 +1200,15 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \subsection*{Примери, когато лемата не е  приложима}
 
 \begin{problem}
-  \marginpar{Например, разгледайте $c^+\{a^nb^n\mid n\in\Nat\}\cup (a\vert b)^\star$}
+  \marginpar{Например, $c^+\{a^nb^n\mid n\in\Nat\}\cup (a\vert b)^\star$}
   Да се даде пример за език $L$, който {\bf не} е регулярен, но удовлетворява
   условието на \Lem{pumping-reg}.
 \end{problem}
 
-
-
-\begin{problem}
+\begin{example}
   Езикът $L = \{c^ka^nb^m\mid k,n,m \in \Nat\ \&\ k = 1\implies m = n\}$
-  {\bf не} е регулярен, но условието на  \Lem{pumping-reg} е изпълнена за него.
-\end{problem}
+  {\bf не} е регулярен, но условието за нарастване от \Lem{pumping-reg} е изпълнено за него.
+\end{example}
 \begin{proof}
   Да допуснем, че $L$ е регулярен.
   Тогава ще следва, че 
@@ -1214,7 +1216,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   е регулярен,
   но с лемата за разрастването лесно се вижда, че $L_1$ не е.
 
-  Сега да проверим, че условието на \Lem{pumping-reg} е изпълнена за $L$.
+  Сега да проверим, че условието за нарастване от \Lem{pumping-reg} е изпълнено за $L$.
   Да изберем константа $p = 2$.
   Сега трябва да разгледаме всички думи $\alpha \in L$, $\abs{\alpha} \geq 2$
   и за всяка $\alpha$ да посочим разбиване $xyz = \alpha$, за което са изпълнени трите свойства от лемата.
@@ -1273,17 +1275,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Проверете, че $\approx_L$ и $\sim_\M$ са {\bf релации на еквивалентност}, т.е.
   те са рефлексивни, транзитивни и симетрични.
 \item
-  Съобразете, че всяко състояние на $\M$, което е достижимо от началното състояние $s$, определя клас на еквивалентност относно 
+  Съобразете, че всяко състояние на $\M$, което е достижимо от началното състояние, определя клас на еквивалентност относно 
   релацията $\sim_\M$.  
 \item
-  $\sim_\M$ е дясно-инвариантна, т.е.
-  \[\alpha \sim_\M \beta\ \rightarrow\ (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\M \beta\gamma].\]
+  $\sim_\M$ е дясно-инвариантна, т.е. за всеки две думи $\alpha$ и $\beta$,
+  \[\alpha \sim_\M \beta \implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\M \beta\gamma].\]
 \end{itemize}
 
 \begin{thm}
   \label{th:rel-finer}
   Нека е даден ДКА $\M = \FA$ и $\L(\M)$ е езика, разпознаван от $\M$. Тогава е изпълнено
-  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\M\beta\ \rightarrow\ \alpha\approx_{\L(\M)}\beta].\]
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\M\beta \implies \alpha\approx_{\L(\M)}\beta].\]
 \end{thm}
 \begin{proof}
 %  \marginpar{стр. 95 от \cite{papadimitriou}}
@@ -1297,38 +1299,39 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{proof}
 
 \begin{cor}
-  Нека $L$ е регулярен език, и $L = \L(\M)$.
-  Тогава 
-  \[\abs{\approx_L} \leq \abs{\sim_\M}.\]
+  За всеки ДКА $\M$ е изпълнено, че
+  \[\abs{\approx_{\L(\M)}} \leq \abs{\sim_\M}.\]
 \end{cor}
 \begin{proof}
-  Нека $A = \{[\alpha]_L \mid \alpha\in\Sigma^\star\}$ и $B = \{[\alpha]_\M \mid \alpha\in\Sigma^\star\}$
-  Да разгледаме изображението $f:B\to A$ определено като $f([\alpha]_\M) = [\alpha]_L$.
+  Нека $A = \{[\alpha]_{\L(\M)} \mid \alpha\in\Sigma^\star\}$ и $B = \{[\alpha]_\M \mid \alpha\in\Sigma^\star\}$.
+  Да разгледаме изображението $f:B\to A$, определено като $f([\alpha]_\M) = [\alpha]_{\L(\M)}$.
   \begin{itemize}
   \item 
-    \marginpar{Трябва да проверим, че $(\forall b,b')(f(b) \neq f(b')\ \rightarrow b \neq b')$}
-    $f$ е функция, защото за $[\alpha]_\M = [\beta]_\M$, 
-    $\alpha \sim_\M \beta$ и от \Th{rel-finer} веднага следва, че $[\alpha]_L = [\beta]_L$.
+    Първо ще проверим, че $f$ е {\bf функция}. Да допуснем, че $f$ не е функция.
+    Това означава, че съществуват думи $\alpha$ и $\beta$, такива че
+    $[\alpha]_{\M} = [\beta]_{\M}$, но $f([\alpha]_{\M}) = [\alpha]_{\L(\M)} \neq [\beta]_{\L(\M)} = f([\beta]_{\M})$.
+    От \Th{rel-finer} следва веднага, че това е невъзможно.
   \item
-    \marginpar{$(\forall a)(\exists b)(f(b) = a)$}
-    $f$ е сюрекция, защото за всеки клас $[\alpha]_L$ съответства класа $[\alpha]_\M$.
+    \marginpar{$(\forall a\in A)(\exists b\in B)(f(b) = a)$}
+    Очевидно е, че $f$ е {\bf сюрекция}, защото за всеки клас $[\alpha]_{\L(\M)}$ съответства класа $[\alpha]_\M$.
   \item
-    От това, че $f$ е сюрекция следва директно, че $\abs{\sim_\M} \geq \abs{\approx_L}$.
+    От това, че $f:B\to A$ е сюрективна функция следва директно, че $\abs{B} \leq \abs{A}$.
   \end{itemize}
 \end{proof}
 
 \begin{cor}
+  \label{cor:upper-bound}
   Един регулярен език $L$ се разпознава от ДМА $\M$ със свойството
   \[\abs{Q} \geq \abs{\approx_L}.\]
 \end{cor}
 \begin{proof}
-  Нека $\M$ бъде такъв, че да {\bf няма недостижими състояния}.
+  Да изберем $\M$, който разпознава $L$, бъде такъв, че да {\bf няма недостижими състояния}.
   Тъй като всяко достижимо състояние определя клас на еквивалентност относно $\sim_\M$,
   то получаваме, че $\abs{Q} = \abs{\sim_\M}$.
   Комбинирайки с предишното следствие, 
   \[\abs{Q} = \abs{\sim_\M} \geq \abs{\approx_L}.\]
 \end{proof}
-Така получаваме {\em долна граница} за броя на състоянията в минималнен автомат за езика $L$,
+Така получаваме {\em долна граница} за броя на състоянията в минималнен автомат за езика $L$.
 Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
 
 {\bf Сега ще отговорим на въпроса дали тази долна граница може да бъде достигната.}
@@ -1352,14 +1355,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   При даден регулярен език $L$, ние определяме ДКА $\M = \FA$, за който $L = \L(\M)$ като
   \begin{itemize}
   \item
-    \marginpar{Трябва да проверим, че $Q$ е крайно.}
     $Q = \{[\alpha]_L\mid \alpha\in \Sigma^\star\}$;
   \item
     $s = [\varepsilon]_L$;
   \item
     $F = \{[\alpha]_L\mid \alpha\in L\}$;
   \item
-    \marginpar{Трябва да проверим, че $\delta$ е функция.}
     Определяме изображението $\delta$ като 
     за всяка буква $a \in \Sigma$ и всяко състояние $[\alpha]_L\in Q$, 
     \[\delta([\alpha]_L,a) = [\alpha a]_L.\]
@@ -1367,20 +1368,20 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   
   Първо, трябва да се уверим, че множеството от състояния $Q$ е крайно, т.е.
   релацията $\approx_\L$ има крайно много класове на еквивалентност.
-  И така, тъй като $\L$ е регулярен език, то той се разпознава от някой ДКА $\M^\prime$,
-  за който е изпълнено свойството, че $\abs{Q^{\M'}} \geq \abs{\approx_L}$.
+  И така, тъй като $\L$ е регулярен език, то той се разпознава от някой автомат $\M^\prime$.
+  От \Cor{upper-bound} имаме, че $\abs{Q^{\M'}} \geq \abs{\approx_L}$.
   Понеже $Q^{\M'}$ е крайно множество, то $\approx_L$ има крайно много класове и 
   следователно $Q$ също е крайно множество.
 
   Второ, трябва да се уверим, че изображението $\delta$ задава функция, т.е. 
-  да проверим, че
-  \[[\alpha]_L = [\beta]_L\ \Rightarrow\ \delta([\alpha]_L,a) = \delta([\beta]_L,a).\]
+  да проверим, че за всеки две думи $\alpha$, $\beta$ и всяка буква $c$,
+  \[[\alpha]_L = [\beta]_L \implies \delta([\alpha]_L,c) = \delta([\beta]_L,c).\]
   Но това се вижда веднага, защото от определението на релацията $\approx_L$ следва, че
-  ако $\alpha \approx_L \beta$, то за всяка буква $a$, $\alpha a \approx_L \beta a$,
-  т.е. $[\alpha a]_L = [\beta a]_L$ и 
+  ако $\alpha \approx_L \beta$, то за всяка буква $c$, $\alpha c \approx_L \beta c$,
+  т.е. $[\alpha c]_L = [\beta c]_L$ и 
   \begin{align*}
-    [\alpha]_L = [\beta]_L & \Rightarrow\ [\alpha a]_L = [\beta a]_L & (\text{свойство на }\approx_L)\\
-    & \Rightarrow\ \delta([\alpha]_L,a) = \delta([\beta]_L,a) & (\text{деф. на }\delta)
+    [\alpha]_L = [\beta]_L & \implies [\alpha c]_L = [\beta c]_L & (\text{свойство на }\approx_L)\\
+    & \implies \delta([\alpha]_L,c) = \delta([\beta]_L,c) & (\text{деф. на }\delta)
   \end{align*}
   
   Така вече сме показали, че $\M$ е коректно зададен ДКА.
@@ -1390,34 +1391,34 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $\delta^\star([\alpha]_L,\beta) = [\alpha\beta]_L$.
   \end{prop}
   \begin{proof}
-    Ще докажем това свойство с индукция по дължината на думата $\beta$.
-    \begin{enumerate}[a)]
+    Ще докажем това свойство с индукция по дължината на $\beta$.
+    \begin{itemize}
     \item
-      $\beta = \varepsilon$, директно от дефиницията на $\delta^\star$, защото
-      $\delta^\star([x]_L,\varepsilon) = [x\varepsilon]_L = [x]_L$.
+      За $\beta = \varepsilon$ свойството следва директно от дефиницията на $\delta^\star$, защото
+      $\delta^\star([\alpha]_L,\varepsilon) = [\alpha]_L$.
     \item
-      Нека $\beta$ има дължина $n+1$ и сме доказали твърдението за думи с дължина $\leq n$.
-      Тогава $\beta = \gamma a$, където $\gamma$ има дължина $n$.
+      Нека $\beta$ има дължина $n+1$ и да приемем, че сме доказали твърдението за думи с дължина $\leq n$.
+      Тогава $\beta = \gamma a$, където $\abs{\gamma} = n$. Свойството следва от следните равенства:
       \begin{align*}
-        \delta^\star([\alpha]_L, \gamma a) & = \delta(\delta^\star([\alpha]_L,\gamma),a) & (\text{деф. на }\delta)\\
-                                          & = \delta([\alpha\gamma]_L,a) & (\text{от И.П.})\\
+        \delta^\star([\alpha]_L, \gamma a) & = \delta(\delta^\star([\alpha]_L,\gamma),a) & (\text{деф. на }\delta^\star)\\
+                                          & = \delta([\alpha\gamma]_L,a) & (\text{от {\bf И.П.}})\\
                                           & = [\alpha\gamma a]_L & (\text{от деф. на }\delta)\\
                                           & = [\alpha\beta]_L & (\beta = \gamma a).
       \end{align*}
-    \end{enumerate}
+    \end{itemize}
   \end{proof}
-  Сега сме готови да докажем, че $L = \L(\M)$.
+  \noindent За да се убедим, че $L = \L(\M)$ е достатъчно да проследим еквивалентностите:
   \begin{align*}
     \alpha\in \L(\M) & \iff \delta^\star(s,\alpha) \in F & (\text{от деф. на }\L(\M))\\
-                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\text{от деф. на }s)\\
+                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\text{от деф. на }s = [\varepsilon]_L)\\
                      & \iff \delta^\star([\varepsilon]_L,\alpha) = [\alpha]_L\ \&\ \alpha\in L & (\text{от деф. на }F)\\
                      & \iff \alpha \in L & (\text{от последното твърдение}).
   \end{align*}
   
 \end{proof}
 
-Ако $M = \FA$ е автомат, за който $\abs{Q} = \abs{\approx_\L}$, то ще казваме, че
-$M$ е {\bf минимален} за езика $\Ls$.
+Ако $\M = \FA$ е автомат, за който $\abs{Q_\M} = \abs{\approx_L}$, то ще казваме, че
+$\M$ е {\bf минимален} за езика $L$.
 
 \subsection{Проверка за регулярност на език}
 
@@ -1461,7 +1462,7 @@ $M$ е {\bf минимален} за езика $\Ls$.
 
 \begin{dfn}
   Нека $\M_1 = \FAn{1}$ и $\M_2 = \FAn{2}$.
-  Казваме, че $\M_1$ и $\M_2$ са изоморфни, което означаваме с $\M_1 \cong \M_2$, ако
+  Казваме, че $\M_1$ и $\M_2$ са {\bf изоморфни}, което означаваме с $\M_1 \cong \M_2$, ако
   съществува биекция $f: Q_1\to Q_2$, за която:
   \begin{itemize}
   \item
@@ -1474,53 +1475,51 @@ $M$ е {\bf минимален} за езика $\Ls$.
   Ще казваме, че $f$ задава изоморфизъм на $\M_1$ върху $\M_2$.
 \end{dfn}
 
+Това означава, че два автомата $\M_1$ и $\M_2$ са изоморфни, ако можем да получим $\M_2$
+като преименуваме състоянията на $\M_1$.
+
 \begin{cor}
   Нека е даден регулярния език $L$.
   Всички минимални автомати за $L$ са изоморфни на $\M_0$, автомата построен в теоремата на Нерод-Майхил.
 \end{cor}
 \begin{proof}
-  Нека $\M = \FA$ е произволен автомат, за който $\L(\M) = L$ и $\abs{Q_\M} = \abs{\approx_L}$.
+  Нека $\M = \FA$ е произволен автомат, за който $\L(\M) = L$ и $\abs{Q} = \abs{\approx_L}$.
   Съобразете, че $\M$ е {\em свързан}, т.е. всяко състояние на $\M$ е достижимо от началното.
   Искаме да докажем, че $\M \cong \M_0$.
-  Понеже $\M$ е свързан, за всяко състояние $q\in Q$ можем да намерим дума $w_q\in\Sigma^\star$,
-  за която $\delta^\star(s,w_q) = q$.
+  Понеже $\M$ е свързан, за всяко състояние $q$ можем да намерим дума $\omega_q$,
+  за която $\delta^\star(s,\omega_q) = q$.
+  Да дефинираме изображението $f:Q\to [\approx_L]$ като $f(q) = [\omega_q]_L$.
+  Ще докажем, че
+  $f$ задава изоморфизъм на $\M$ върху $\M_0$. 
   \begin{itemize}
   \item
-    Да дефинираме изображението $f:Q\to [\approx_L]$ като $f(q) = [w_q]_L$.
-    Ще докажем, че
-    $f$ задава изоморфизъм на $\M$ върху $\M_0$. 
-  \item
-    Първо да съобразим, че ако $\delta^\star_\M(s,\alpha) = q$, то $[w_q]_L = [\alpha]_L$.
-    Понеже $w_q \sim_\M \alpha$, от \Th{rel-finer} следва директно, че $[w_q]_L = [\alpha]_L$.
+    Първо да съобразим, че ако $\delta^\star_\M(s,\alpha) = q$, то $[\omega_q]_L = [\alpha]_L$.
+    Понеже $\delta^\star_\M(s,\alpha) = q = \delta^\star_\M(s,\omega_q)$, то $\omega_q \sim_\M \alpha$
+    Сега от \Th{rel-finer} следва директно, че $[\omega_q]_L = [\alpha]_L$.
     Това означава, че $f$ е определена коректно, т.е. $f$ е {\bf функция}.
-  % \item
-%    \marginpar{$(\forall p,q)(f(p) \neq f(q)\ \rightarrow\ p \neq q)$}
-    % Ще проверим, че $f$ е определена коректно, т.е. $f$ е {\bf функция}.
-    % За целта, нека $q\in Q$ и $\alpha,\beta$ са две думи, за които
-    % \[\delta^\star(s,\alpha) = q = \delta^\star(s,\beta).\]
-    % Тогава $\alpha\sim_M \beta$ и от \Th{rel-finer} следва, 
-    % че $\alpha \approx_\Ls \beta$ и $[\alpha]_\Ls = [\beta]_\Ls$.
-    % Така доказахме, че 
-    % \[(\forall p,q\in Q)[f(q) \neq f(p)\ \rightarrow p \neq q].\]
   \item
     Ще проверим, че $f$ е {\bf инективна}, т.е.
     \[(\forall q_1,q_2 \in Q)[q_1\neq q_2\ \rightarrow\ f(q_1) \neq f(q_2)].\]
-    Да допуснем, че има състояния $q_1 \neq q_2$, за които $f(q_1) = [w_{q_1}]_L = [w_{q_2}]_L = f(q_2)$.
-    Тогава $w_{q_1} \not\sim_\M w_{q_2}$ и $w_{q_1} \approx_L w_{q_2}$.
-    Но това означава, че $\abs{\sim_\M} > \abs{\approx_L}$,
+    Да допуснем, че има състояния $q_1 \neq q_2$, за които 
+    \[f(q_1) = [\omega_{q_1}]_L = [\omega_{q_2}]_L = f(q_2).\]
+    Тогава $\omega_{q_1} \not\sim_\M \omega_{q_2}$ и $\omega_{q_1} \approx_L \omega_{q_2}$.
+    Но тогава \Cor{upper-bound} получаваме, че $\abs{\sim_\M} > \abs{\approx_L}$,
     което противоречи с минималността на $\M$.
   \item
-    За да бъде $f$ е {\bf сюрективна} трябва за всеки клас $[\beta]_L \in [\approx_L]$, съществува $q \in Q$, за което $f(q) = [\beta]_L$.
-    Следва от факта, че за състоянието $q$, $\delta^\star_\M(s,\beta) = q$, е изпълнено $[\beta]_L = [w_q]_L = f(q)$.
+    За да бъде $f$ {\bf сюрективна} трябва за всеки клас $[\beta]_L$ да съществува състояние $q$, за което $f(q) = [\beta]_L$.
+    Понеже $\M$ е свързан, съществува състояние $q$, за което $\delta^\star_\M(s,\beta) = q$.
+    Вече се убедихме, че в този случай $\beta \approx_L \omega_q$.
+    Тогава $f(q) = [\omega_q]_L = [\beta]_L$.
   \item
-    Последно да проверим, че $f$ е наистина {\bf изоморфизъм}:
+    За последно оставихме проверката, че $f$ наистина е {\bf изоморфизъм}:
     \begin{align*}
-      f(\delta_\M(q,a)) & = f(\delta_\M(\delta^\star_\M(s,w_q),a)) & (\text{от деф. на }w_q)\\
-      & = f(\delta^\star_\M(s,w_qa)) \\
-      & = [w_qa]_L & (\text{от деф. на }f)\\
-      & = \delta^\star_{\M_0}([\varepsilon]_L, w_qa) & (\text{от деф. на }\M_0)\\ 
-      & = \delta_{\M_0}([w_q]_L, a) & \\
-      & = \delta_{\M_0}(f(q), a) & ( f(q) = [w_q]_L).
+      f(\delta_\M(q,a)) & = f(\delta_\M(\delta^\star_\M(s,\omega_q),a)) & (\text{от избора на }\omega_q)\\
+      & = f(\delta^\star_\M(s,\omega_qa)) & (\text{от деф. на }\delta^\star_\M)\\
+      & = [\omega_qa]_L & (\text{от деф. на }f)\\
+      & = \delta^\star_{\M_0}([\varepsilon]_L, \omega_qa) & (\text{от деф. на }\M_0)\\ 
+      & = \delta_{\M_0}(\delta^\star_{\M_0}([\varepsilon]_L, \omega_q),a) & (\text{от деф. на }\delta^\star_{\M_0})\\
+      & = \delta_{\M_0}([\omega_q]_L, a) & (\text{свойство на }\delta_{\M_0})\\
+      & = \delta_{\M_0}(f(q), a) & ( f(q) = [\omega_q]_L).
     \end{align*}
   \end{itemize}
 \end{proof}
