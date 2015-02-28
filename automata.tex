@@ -1029,12 +1029,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
       \tikzstyle{every state}=[circle,minimum size=15pt,auto]
       \node[initial,state,accepting]      (0) {$s_0$};
-        \node[state,accepting]      (4) [below right of=0]{$s_2$};
-        \node[state]      (1) [above right of=0] {$s_1$};
+        \node[state,accepting]      (4) [above right=0cm and 2cm of 0]{$s_2$};
+        \node[state]      (1) [below right of=0] {$s_1$};
         \node[state]              (2) [right of=1] {$q_1$};
         \node[state,accepting]    (3) [right of=2] {$q_2$};
         \path
-        (0) edge [dashed, bend right=30] node [below] {$a$} (2)
+        (0) edge [dashed, bend left=15] node [above] {$a$} (2)
         (1) edge node [above] {$a$} (2)
         (2) edge node [below] {$b$} (3)
         (3) edge [bend left=45] node [below] {$b$} (1)
@@ -1042,7 +1042,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \end{tikzpicture}
     \end{figure}
     
-    $\L(\N_1) = \{(abb)^n ab\mid n\in\Nat\}$.
+    $\L(\N_1) = \{(abb)^nab\mid n\in\Nat\}$.
     Формално погледнато, след като построим автомат за езика $\L(\N_1)^+$, трябва да приложим
     конструкцията за обединение на $\L(\N_1)^+$ с $\{\varepsilon\}$.
     Защо трябва да добавим ново начално състояние $s_0$?
