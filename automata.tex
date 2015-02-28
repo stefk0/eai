@@ -1,15 +1,5 @@
 \chapter{Езици и автомати}
 
-Основни източници в тази глава са:
-\begin{itemize}
-\item 
-  глави 2 и 3 от \cite{hopcroft1}, глави 2,3 и 4 от \cite{hopcroft2};
-\item
-  глава 1 от \cite{sipser};
-\item
-  глава 2 от \cite{papadimitriou}.
-\end{itemize}
-
 \section{Автоматни езици}
 
 % Един от източниците е втора и трета глава от книгата на Сипсер, \cite{sipser}.
@@ -71,7 +61,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{itemize}
 Тогава една дума $\alpha$ се {\em разпознава} от автомата $\A$ точно тогава, когато $\delta^\star(s,\alpha) \in F$.
 Оттук следва, че
-\[L(\A) = \{\alpha\in\Sigma^\star \mid \delta^\star(s,\alpha) \in F\}.\]
+\[\L(\A) = \{\alpha\in\Sigma^\star \mid \delta^\star(s,\alpha) \in F\}.\]
 
 \begin{prop}
   $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
@@ -80,6 +70,16 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \marginpar{\ding{45} Напише доказателството!}
   Индукция по дължината на $\alpha$.
 \end{proof}
+
+{\em Моментното описание} на изчисление със краен автомат, 
+което представлява двойка от вида $(q,\alpha) \in Q\times\Sigma^\star$,
+т.е. автоматът се намира в състояние $q$, а думата, която остава да се прочете е $\alpha$.
+Удобно е да въведем бинарната релация $\vdash_\A$ над $Q\times\Sigma^\star$,
+която ще ни казва как моментното описание на автомата $\A$ се променя след изпълнение на една стъпка:
+\[(q,x\alpha) \vdash_\A (p,\alpha), \text{ ако } \delta(q,x) = p.\]
+Рефлексивното и транзитивно затваряне на $\vdash_\A$ ще означаваме с $\vdash^\star_\A$.
+Получаваме, че 
+\[\L(\A) = \{\alpha\in\Sigma^\star \mid (s,\alpha) \vdash^\star_\A(p,\varepsilon)\ \&\ p \in F\}.\]
 
 Нашата дефиниция на автомат позволява $\delta$ да бъде частична функция, т.е.
 може да има $q\in Q$ и $a\in\Sigma$, за които $\delta(q,a)$ не е дефинирана.
@@ -158,7 +158,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Проверете, че наистина $\Sigma^\star\setminus L = L(\A^\prime)$!
 \end{proof}
 
-
 \begin{problem}
   За всеки от следните езици $L$, постройте автомат $\A$, който разпознава езика $L$.
   \begin{enumerate}[a)]
@@ -221,70 +220,91 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 2\ \vee\ w \mbox{ съдържа точно две }b\}$;
   \end{enumerate}
 \end{problem}
-\begin{solution}
-  \begin{itemize}
-  \item
-    Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа }bab\}$.
-    \begin{figure}[H]
-      \begin{center}
-        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-          
-          \node[initial, state]   (0) {$s$};
-          \node[state]            (1) [right of=0]{$q_1$};
-          \node[state]            (2) [right of=1]{$q_2$};
-          \node[state,accepting]  (3) [right of=2]{$q_3$};
-          
-          \path 
-          (0) edge [loop above]   node [above] {$a$}    (0)
-          (0) edge [bend left=15] node [above] {$b$}    (1)
-          (1) edge [loop above]   node [above] {$b$}    (1)
-          (1) edge [bend left=15] node [above] {$a$}    (2)
-          (2) edge [bend left=30] node [below] {$a$}    (0)
-          (2) edge [bend left=15] node [above] {$b$}    (3)
-          (3) edge [loop above]   node [above] {$a,b$}  (3);
-        \end{tikzpicture}
-      \end{center}
-    \end{figure}    
-  \item
-    Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\}$.
-    \begin{figure}[H]
-      \begin{center}
-        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-          
-          \node[initial, state]   (0) {$s$};
-          \node[state]            (1) [right of=0]{$q_1$};
-          \node[state,accepting]  (2) [right of=1]{$q_2$};
-          
-          \path 
-          (0) edge [loop above]   node [above] {$b$}    (0)
-          (0) edge [bend left=15] node [above] {$a$}    (1)
-          (1) edge [loop above]   node [above] {$b$}    (1)
-          (1) edge [bend left=15] node [above] {$a$}    (2)
-          (2) edge [loop above]   node [above] {$a,b$}  (2);
-        \end{tikzpicture}
-      \end{center}
-    \end{figure}    
-  \item 
-    Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$.
-    \begin{figure}[H]
-      \begin{center}
-        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-          
-          \node[initial, accepting, state] (0) {$s$};
-          \node[state]                     (1) [right of=0]{$q_1$};
-          
-          \path 
-          (0) edge [loop above]   node [above] {$b$}   (0)
-          (0) edge [bend left=15] node [above] {$a$}   (1)
-          (1) edge [bend left=15] node [below] {$b$}   (0);
-        \end{tikzpicture}
-      \end{center}
-    \end{figure}
-  \end{itemize}
-\end{solution}
+  
+\marginpar{\ding{45} За всички тези автомати, дефинирайте функцията на преходите им!}
+\begin{itemize}
+\item
+  Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа }bab\}$.
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[initial, state]   (0) {$s$};
+        \node[state]            (1) [right of=0]{$q_1$};
+        \node[state]            (2) [right of=1]{$q_2$};
+        \node[state,accepting]  (3) [right of=2]{$q_3$};
+        
+        \path 
+        (0) edge [loop above]   node [above] {$a$}    (0)
+        (0) edge [bend left=15] node [above] {$b$}    (1)
+        (1) edge [loop above]   node [above] {$b$}    (1)
+        (1) edge [bend left=15] node [above] {$a$}    (2)
+        (2) edge [bend left=30] node [below] {$a$}    (0)
+        (2) edge [bend left=15] node [above] {$b$}    (3)
+        (3) edge [loop above]   node [above] {$a,b$}  (3);
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}    
+\item
+  Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\}$.
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[initial, state]   (0) {$s$};
+        \node[state]            (1) [right of=0]{$q_1$};
+        \node[state,accepting]  (2) [right of=1]{$q_2$};
+        
+        \path 
+        (0) edge [loop above]   node [above] {$b$}    (0)
+        (0) edge [bend left=15] node [above] {$a$}    (1)
+        (1) edge [loop above]   node [above] {$b$}    (1)
+        (1) edge [bend left=15] node [above] {$a$}    (2)
+        (2) edge [loop above]   node [above] {$a,b$}  (2);
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}    
+\item 
+  Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$.
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[initial, accepting, state] (0) {$s$};
+        \node[state]                     (1) [right of=0]{$q_1$};
+        
+        \path 
+        (0) edge [loop above]   node [above] {$b$}   (0)
+        (0) edge [bend left=15] node [above] {$a$}   (1)
+        (1) edge [bend left=15] node [below] {$b$}   (0);
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+\item
+  Да разгледаме $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0\ (\bmod\ 3)\}$.
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[initial, state, accepting]   (0) {$s$};
+        \node[state]                       (1) [right of=0]{$q_1$};
+        \node[state]                       (2) [right of=1]{$q_2$};
+        
+        \path 
+        (0) edge [loop above]   node   [above] {$b$}    (0)
+        (0) edge [bend left=15] node   [above] {$a$}    (1)
+        (1) edge [loop above]   node   [above] {$b$}    (1)
+        (1) edge [bend left=15] node   [above] {$a$}    (2)
+        (2) edge [loop above]   node   [above] {$b$}    (2)
+        (2) edge [bend left=30] node   [below] {$a$}    (0);
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}    
+\end{itemize}
 
 В повечето от горните задачи е лесно да се съобрази, че построения автомат разпознава желания език.
 При по-сложни задачи обаче, ще се наложи да дадем доказателство, като обикновено се прилага 
@@ -318,7 +338,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
  Трябва да докажем, че наистина $L = L(\A)$.
  Първо ще се концентрираме върху доказателството на $L(\A) \subseteq L$.
- \marginpar{$\abs{\alpha}$ - дължината на думата $\alpha$}
+ \marginpar{Озн. $\abs{\alpha}$ - дължината на думата $\alpha$}
  Ще докажем с индукция по дължината на думата $\alpha$, че:
  \begin{enumerate}[(1)]
  \item 
@@ -615,7 +635,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{framed}
 \begin{proof}
 %  \marginpar{стр. 79 от \cite{papadimitriou}, стр. 33 от \cite{hopcroft}}
-  Нека  $L = \L(\M)$, за някой краен детерминиран автомат $\M$.
+  Нека  $L = \L(\A)$, за някой краен детерминиран автомат $\A$.
   Да фиксираме едно изброяване на състоянията $Q = \{q_1,\dots,q_n\}$,
   като началното състояние е $q_1$.
   Ще означаваме с $L(i,j,k)$ множеството от тези думи, които
@@ -627,7 +647,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Тогава за $n = \abs{Q}$, 
   \[L(i,j,n) = \{\alpha\in\Sigma^\star\mid \delta^\star(q_i,\alpha) = q_j\}.\]
   Така получаваме, че 
-  \[\L(\M) = \bigcup\{L(1,j,n)\mid q_j \in F\} = \bigcup_{q_j\in F}L(1,j,n).\]
+  \[\L(\A) = \bigcup\{L(1,j,n)\mid q_j \in F\} = \bigcup_{q_j\in F}L(1,j,n).\]
   Ще докажем с {\bf индукция по $k$}, че за всяко $i,j,k$, множествата от думи $L(i,j,k)$
   се описват с регулярен израз $r^k_{i,j}$
   \begin{enumerate}[a)]
@@ -647,7 +667,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \[r^{k-1}_{i,j} + r^{k-1}_{i,k}\cdot (r^{k-1}_{k,k})^\star\cdot r^{k-1}_{k,j}.\]
   \end{enumerate}
   Заключаваме, че за всяко $i,j,k$, $L(i,j,k)$ може да се опише с регулярен израз $r^{k}_{i,j}$.
-  Тогава ако $F = \{q_{i_1},\dots,q_{i_k}\}$, то $\L(\M)$ се описва с регулярния израз
+  Тогава ако $F = \{q_{i_1},\dots,q_{i_k}\}$, то $\L(\A)$ се описва с регулярния израз
   \[r^n_{1,i_1} + r^n_{1,i_2} + \dots + r^n_{1,i_k}.\]
 \end{proof}
 
@@ -790,7 +810,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $F = 
     \begin{cases}
       F_1 \cup F_2, & \text{ ако } s_2 \in F_2\\
-      F_1,          & \text{ иначе}.
+      F_2,          & \text{ иначе}.
     \end{cases}$
   \item 
     $\Delta(q,a) = 
@@ -801,6 +821,78 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \end{cases}$
   \end{itemize}
 \end{proof}
+
+  Да разгледаме следните два автомата $\N_1$ и $\N_2$.
+  \begin{figure}[H]
+    \begin{subfigure}[H]{0.3\textwidth}
+      \label{subf:a1}
+      \caption{автомат $\N_1$}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial,state,accepting]      (1) {$s_1$};
+        \node[state]                        (2) [right of=1] {$q_1$};
+        \node[state]                        (3) [above right of=2] {$q_2$};
+        \node[state,accepting]              (4) [below right of=2] {$q_3$};
+        \path
+        (1) edge node [above] {$a$} (2)
+        (2) edge node [above] {$a$} (3)
+        (2) edge node [below] {$b$} (4)
+        (3) edge [bend right=30] node [above] {$a$} (1)
+        (4) edge [bend left=30] node [below] {$b$} (1);
+      \end{tikzpicture}
+    \end{subfigure}
+    \qquad
+    \qquad
+    \qquad
+    \begin{subfigure}[H]{0.3\textwidth}
+      \caption{автомат $\N_2$}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial,state]      (1) {$s_2$};
+        \node[state]     [above right of=1] (2) {$q_4$};
+        \node[state,accepting]     [below right of=1] (3) {$q_5$};
+        \path
+        (1) edge [bend left=15] node  [above] {$a$} (2)
+        (2) edge [bend left=15] node  [right] {$a$} (3)
+        (1) edge [bend right=15] node [below] {$b$} (3);
+      \end{tikzpicture}
+    \end{subfigure}
+  \end{figure}
+
+\begin{example}
+    За да построим автомат, който разпознава конкатенацията на $\L(\N_1)$ и $\L(\N_2)$,
+    трябва да свържем финалните състояния на $\N_1$ с изходящите от $s_2$ състояния на $\N_2$.
+    
+    \begin{figure}[H]
+      % \begin{subfigure}[b]{0.3\textwidth}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=2cm]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial,state]      (1) {$s_1$};
+        \node[state]                        (2) [right of=1] {$q_1$};
+        \node[state]                        (3) [above right of=2] {$q_2$};
+        \node[state]              (4) [below right of=2] {$q_3$};
+        \node[state]               [right=4cm of 1] (5) {$s_2$};
+        \node[state]     [above right of=5] (6) {$q_4$};
+        \node[state,accepting]     [below right of=5] (7) {$q_5$};
+        \path
+        (1) edge node [above]                  {$a$} (2)
+        (2) edge node [above]                  {$a$} (3)
+        (2) edge node [below]                  {$b$} (4)
+        (3) edge [bend right=15] node [above]  {$a$} (1)
+        (4) edge [bend left=15]  node [below]  {$b$} (1)
+        (5) edge [bend left=15] node [below]   {$a$} (6)
+        (6) edge [bend left=15] node  [right] {$a$} (7)
+        (5) edge [bend right=15] node [above]  {$b$} (7)
+        (1) edge [dashed, bend left=45]  node [above] {$a$} (6)
+        (1) edge [dashed, bend right=45]  node [below] {$b$} (7)
+        (4) edge [dashed, bend left=45]  node [above] {$a$} (6)
+        (4) edge [dashed, bend left=10]  node [above] {$b$} (7);
+      \end{tikzpicture}
+%      \caption{$\L(\N) = \L(\N_1)\cdot\L(\N_2)$}
+  \end{figure}  
+  Обърнете внимание, че $\N_1$ и $\N_2$ са детерминирани автомати, но $\N$ е недетерминиран.
+\end{example}
+
 
 \begin{lemma}
   Класът от автоматните езици е затворен относно операцията {\bf обединение}.
@@ -833,7 +925,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \Delta_1(s_1,a) \cup \Delta_2(s_2,a), & \text{ ако } q = s\ \&\  a \in\Sigma.
     \end{cases}
     $
-  %   $\Delta(q,a) = \Delta_1(q,a)$, за всяко $q\in Q_1$, $a\in\Sigma$;
+    % $\Delta(q,a) = \Delta_1(q,a)$, за всяко $q\in Q_1$, $a\in\Sigma$;
   % \item
   %   $\Delta(q,a) = \Delta_2(q,a)$, за всяко $q\in Q_2$, $a\in\Sigma$;
   % \item
@@ -844,6 +936,41 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   В началното състояние на новопостроения автомат $\N$ не влизат ребра.
 \end{remark}
 
+
+\begin{example}
+    За да построим автомат, който разпознава обединението на $\L(\N_1)$ и $\L(\N_2)$,
+    трябва да свържем финалните състояния на $\N_1$ с изходящите от $s_2$ състояния на $\N_2$.
+    
+    \begin{figure}[H]
+      % \begin{subfigure}[b]{0.3\textwidth}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=2cm]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial,state,accepting]      (0) {$s$};
+        \node[state,accepting]    [above right of=0]        (1) {$s_1$};
+        \node[state]    [right of=1]        (2) {$q_1$};
+        \node[state]                        (3) [above right of=2] {$q_2$};
+        \node[state,accepting]                        (4) [below right of=2] {$q_3$};
+        \node[state]    [below right=2cm of 0] (5) {$s_2$};
+        \node[state]     [above right of=5] (6) {$q_4$};
+        \node[state,accepting]     [below right of=5] (7) {$q_5$};
+        \path
+        (1) edge node [above]                  {$a$} (2)
+        (2) edge node [above]                  {$a$} (3)
+        (2) edge node [below]                  {$b$} (4)
+        (3) edge [bend right=15] node [above]  {$a$} (1)
+        (4) edge [bend left=15]  node [below]  {$b$} (1)
+        (5) edge [bend left=15] node [below]   {$a$} (6)
+        (6) edge [bend left=15] node  [right] {$a$} (7)
+        (5) edge [bend right=15] node [above]  {$b$} (7)
+        (0) edge [dashed, bend right=15] node [below]  {$a$} (2)
+        (0) edge [dashed, bend right=15] node [below]  {$a$} (6)
+        (0) edge [dashed, bend right=45] node [below]  {$b$} (7);
+      \end{tikzpicture}
+      \caption{$\L(\N) = \L(\N_1)\cup\L(\N_2)$}
+  \end{figure}  
+  Обърнете внимание, че $\N_1$ и $\N_2$ са детерминирани автомати, но $\N$ е недетерминиран.
+  Освен това, новото състояние $s$ трябва да бъде маркирано като финално, защото $s_1$ е финално.
+\end{example}
 
 \begin{lemma}
   Класът от автоматните езици е затворен относно операцията {\bf звезда на Клини}.
@@ -875,6 +1002,55 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Накрая строим автомат $\N_2$, за който $L(\N_2) = \{\varepsilon\} \cup L(\N_1)$.
 \end{proof}
 
+\begin{example}
+  Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\N_1)^\star$.
+  
+  \begin{figure}[H]
+    %\begin{subfigure}[H]{0.3\textwidth}
+    \label{subf:a1}
+    \caption{автомат $\N_1$}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial,state]      (1) {$s_1$};
+        \node[state]              (2) [right of=1] {$q_1$};
+        \node[state,accepting]    (3) [right of=2] {$q_2$};
+        \path
+        (1) edge node [above] {$a$} (2)
+        (2) edge node [above] {$b$} (3)
+        (3) edge [bend left=45] node [below] {$b$} (1);
+      \end{tikzpicture}
+    \end{figure}
+
+
+  \begin{figure}[H]
+    %\begin{subfigure}[H]{0.3\textwidth}
+    \label{subf:a1}
+    \caption{$\L(\N) = \L(\N_1)^\star = \L(\N_1)^+ \cup \{\varepsilon\}$}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+      \node[initial,state,accepting]      (0) {$s_0$};
+        \node[state,accepting]      (4) [below right of=0]{$s_2$};
+        \node[state]      (1) [above right of=0] {$s_1$};
+        \node[state]              (2) [right of=1] {$q_1$};
+        \node[state,accepting]    (3) [right of=2] {$q_2$};
+        \path
+        (0) edge [dashed, bend right=30] node [below] {$a$} (2)
+        (1) edge node [above] {$a$} (2)
+        (2) edge node [below] {$b$} (3)
+        (3) edge [bend left=45] node [below] {$b$} (1)
+        (3) edge [dashed, bend right=45] node [above] {$a$} (2);        
+      \end{tikzpicture}
+    \end{figure}
+    
+    $\L(\N_1) = \{(abb)^n ab\mid n\in\Nat\}$.
+    Формално погледнато, след като построим автомат за езика $\L(\N_1)^+$, трябва да приложим
+    конструкцията за обединение на $\L(\N_1)^+$ с $\{\varepsilon\}$.
+    Защо трябва да добавим ново начално състояние $s_0$?
+    Да допуснем, че вместо това сме направили $s_1$ финално.
+    Тогава има опасност да разпознаем повече думи. Например, думата $abb$ би се разпонала от този автомат,
+    но $abb \not\in\L(\N_1)^\star$.
+    
+\end{example}
 % \begin{remark}
 %   Запазваме свойството, че в началното състояние не влизат ребра.
 % \end{remark}
@@ -1028,8 +1204,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{proof}
   Да допуснем, че $L$ е регулярен език. Ще достигнем до противоречие като докажем отрицанието на условието на \Lem{pumping-reg},
   т.е. ще докажем, че
-  {\scriptsize
-    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
+  % {\scriptsize
+  \begin{align*}
+    (\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[ & (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow\\
+    & (\exists i\in\Nat)[xy^iz \not\in L]].
+  \end{align*}
+  % }
   Доказателството следва стъпките:
   \begin{itemize}
   \item 
@@ -1075,7 +1255,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Тогава за $i = 2$,
     \[p^2 = \abs{xyz} < \abs{xy^2z} = \abs{xz} + 2\abs{y} \leq p^2 + 2p < (p+1)^2 .\]
     Получаваме, че $p^2 < \abs{xy^2z} < (p+1)^2$,
-    откъдето следва, че $\abs{xy^2z}$ {\bf не} е точен квадрат.    
+    откъдето следва, че $\abs{xy^2z}$ не е точен квадрат.
     Следователно, $xy^2z \not\in L$.
   \end{itemize}
 \end{proof}
@@ -1083,8 +1263,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \subsection{Следствия от лемата за нарастването}
 
 \begin{prop}
-  Нека е даден автомата $\M = \FA$.
-  Езикът $\L(\M)$ е непразен е {\bf непразен} точно тогава, когато съдържа дума $\alpha, \abs{\alpha} < \abs{Q}$.
+  Нека е даден автомата $\A = \FA$.
+  Езикът $\L(\A)$ е непразен е {\bf непразен} точно тогава, когато съдържа дума $\alpha, \abs{\alpha} < \abs{Q}$.
 \end{prop}
 \begin{proof}
   Ще разгледаме двете посоки на твърдението.
@@ -1108,12 +1288,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \begin{cor}
   \marginpar{$(L_1\setminus L_2) \cup (L_2 \setminus L_1) = \emptyset$?}
-  Съществува алгоритъм, който определя дали два автомата $\M_1$ и $\M_2$ разпознават един и същ език.
+  Съществува алгоритъм, който определя дали два автомата $\A_1$ и $\A_2$ разпознават един и същ език.
 \end{cor}
 
 \begin{prop}
   Регулярният език $L$, 
-  разпознаван от КДА $\M$, е {\bf безкраен} точно тогава, когато съдържа дума $\alpha, \abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
+  разпознаван от КДА $\A$, е {\bf безкраен} точно тогава, когато съдържа дума $\alpha, \abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
 \end{prop}
 \begin{proof}
   Да разгледаме двете посоки на твърдението.
@@ -1264,38 +1444,38 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Нека да означим класовете на еквивалентност на $\approx_L$ с $[\alpha]_L$, за $\alpha \in \Sigma^\star$,
   а с $\abs{\approx_L}$ ще означаваме броя на класовете на еквивалентност на релацията $\approx_L$.
 \item
-  \marginpar{$\M$ е тотален}
-  Нека $\M = \FA$ е ДКА.
-  Казваме, че две думи $\alpha,\beta \in \Sigma^\star$ са {\bf еквивалентни относно $\M$},
-  което означаваме с $\alpha \sim_\M \beta$, ако $\delta^\star(s,\alpha) = \delta^\star(s,\beta)$.
+  \marginpar{$\A$ е тотален}
+  Нека $\A = \FA$ е ДКА.
+  Казваме, че две думи $\alpha,\beta \in \Sigma^\star$ са {\bf еквивалентни относно $\A$},
+  което означаваме с $\alpha \sim_\A \beta$, ако $\delta^\star(s,\alpha) = \delta^\star(s,\beta)$.
 \item
-  Нека да означим класовете на еквивалентност на $\sim_\M$ с $[\alpha]_\M$, за $\alpha \in \Sigma^\star$,
-  а с $\abs{\sim_\M}$ ще означаваме броя на класовете на еквивалентност на релацията $\sim_\M$.
+  Нека да означим класовете на еквивалентност на $\sim_\A$ с $[\alpha]_\A$, за $\alpha \in \Sigma^\star$,
+  а с $\abs{\sim_\A}$ ще означаваме броя на класовете на еквивалентност на релацията $\sim_\A$.
 \item
-  Проверете, че $\approx_L$ и $\sim_\M$ са {\bf релации на еквивалентност}, т.е.
+  Проверете, че $\approx_L$ и $\sim_\A$ са {\bf релации на еквивалентност}, т.е.
   те са рефлексивни, транзитивни и симетрични.
 \item
-  Съобразете, че всяко състояние на $\M$, което е достижимо от началното състояние, определя клас на еквивалентност относно 
-  релацията $\sim_\M$.  
+  Съобразете, че всяко състояние на $\A$, което е достижимо от началното състояние, определя клас на еквивалентност относно 
+  релацията $\sim_\A$.  
 \item
-  $\sim_\M$ е дясно-инвариантна, т.е. за всеки две думи $\alpha$ и $\beta$,
-  \[\alpha \sim_\M \beta \implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\M \beta\gamma].\]
+  $\sim_\A$ е дясно-инвариантна, т.е. за всеки две думи $\alpha$ и $\beta$,
+  \[\alpha \sim_\A \beta \implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\A \beta\gamma].\]
 \end{itemize}
 
 \begin{thm}
   \label{th:rel-finer}
-  Нека е даден ДКА $\M = \FA$ и $\L(\M)$ е езика, разпознаван от $\M$. Тогава е изпълнено
-  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\M\beta \implies \alpha\approx_{\L(\M)}\beta].\]
+  Нека е даден ДКА $\A = \FA$ и $\L(\A)$ е езика, разпознаван от $\A$. Тогава е изпълнено
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{\L(\A)}\beta].\]
 \end{thm}
 \begin{proof}
 %  \marginpar{стр. 95 от \cite{papadimitriou}}
-  Да означим $q_\alpha = \delta^\star(s, \alpha)$.
+  Да означим $q_\alpha = \delta^\star_\A(s, \alpha)$.
   Лесно се съобразява, че 
-  \[\alpha \sim_\M \beta\quad\Leftrightarrow\quad q_\alpha = q_\beta.\]
+  \[\alpha \sim_\A \beta\quad\Leftrightarrow\quad q_\alpha = q_\beta.\]
   Освен това, 
-  \[\alpha\gamma \in \L(\M)\quad \Leftrightarrow\quad \delta^\star(q_\alpha, \gamma) \in F.\]
-  Тогава, ако $\alpha \sim_\M \beta$, то  $\alpha \approx_{\Ls(\M)}\beta$, защото за произволно $\gamma \in \Sigma^\star$,
-  \[\alpha\gamma \in \L(\M)\ \Leftrightarrow\ \delta^\star(q_\alpha,\gamma) \in F\ \Leftrightarrow\ \delta^\star(q_\beta, \gamma)\in F\ \Leftrightarrow\ \beta\gamma \in \L(\M).\]  
+  \[\alpha\gamma \in \L(\A)\quad \Leftrightarrow\quad \delta^\star_\A(q_\alpha, \gamma) \in F.\]
+  Тогава, ако $\alpha \sim_\A \beta$, то  $\alpha \approx_{\L(\A)}\beta$, защото за произволно $\gamma \in \Sigma^\star$,
+  \[\alpha\gamma \in \L(\A)\ \Leftrightarrow\ \delta^\star(q_\alpha,\gamma) \in F\ \Leftrightarrow\ \delta^\star(q_\beta, \gamma)\in F\ \Leftrightarrow\ \beta\gamma \in \L(\A).\]  
 \end{proof}
 
 \begin{cor}
@@ -1600,6 +1780,20 @@ $\M$ е {\bf минимален} за езика $L$.
 \item
   $F^\prime = \{[q]_\equiv\mid F\cap [q]_\equiv \neq \emptyset\}$;
 \end{enumerate}
+
+
+\section*{Библиография}
+
+Основни източници в тази глава са:
+\begin{itemize}
+\item 
+  глави 2 и 3 от \cite{hopcroft1}, глави 2,3 и 4 от \cite{hopcroft2};
+\item
+  глава 1 от \cite{sipser};
+\item
+  глава 2 от \cite{papadimitriou}.
+\end{itemize}
+
 
 
 % % \begin{figure}
