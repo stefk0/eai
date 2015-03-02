@@ -14,6 +14,7 @@
     $\Sigma$ е крайно множество, наречено азбука;
   \item
     \marginpar{Тук нямаме $\varepsilon$-преходи}
+    \marginpar{Sipser разглежда тотални $\delta$ функции}
     $\delta:Q\times\Sigma\to Q$ е (частична) функция на преходите;
   \item
     $s\in Q$ е начално състояние;
@@ -187,7 +188,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     $L = \{w \in \{a,b\}^\star\mid \abs{w} \leq 3\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w \mbox{ започва с }ab\}$;
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ не започва с }ab\}$;
   \item
     $L = \{w \in \{a,b\}^\star \mid w \mbox{ завършва с }ab\}$;
   \item
@@ -320,7 +321,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \begin{figure}[H]
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial, accepting, state] (0) {$s$};
         \node[accepting, state]   (1) [right of=0]{$q_1$};
@@ -413,7 +414,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{framed}
 
 \begin{problem}
-  Докажете, че $L = \{w \in \{0,1\}^\star \mid w_{(2)} \equiv 2 \mod 3\}$ е автоматен.
+  Докажете, че $L = \{\omega \in \{0,1\}^\star \mid \omega_{(2)} \equiv 2 \mod 3\}$ е автоматен.
 \end{problem}
 \begin{proof}
   Нашият автомат ще има три състояния $\{q_0,q_1,q_2\}$, като началното състояние ще бъде $q_0$.
@@ -456,12 +457,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         \node[accepting, state]   (2) [right of=1]{$q_2$};
         
         \path 
-        (0) edge  [loop above]    node [above] {$0$} (0)
-        (0) edge  [bend left=15]  node [above] {$1$} (1)
-        (1) edge  [bend right=15] node [below]  {$0$} (2)
-        (1) edge  [bend left=15]  node [below] {$1$} (0)
-        (2) edge  [bend right=15] node [above] {$0$} (1)
-        (2) edge  [loop right]    node [right] {$1$} (2);
+        (0) edge  [loop above]    node [above]  {$0$} (0)
+        (0) edge  [bend left=15]  node [above]  {$1$} (1)
+        (2) edge  [bend left=15] node [below]  {$0$} (1)
+        (1) edge  [bend left=15]  node [below]  {$1$} (0)
+        (1) edge  [bend left=15] node [above]  {$0$} (2)
+        (2) edge  [loop above]    node [above]  {$1$} (2);
       \end{tikzpicture}
       \end{center}
  %   \end{subfigure}
@@ -526,6 +527,126 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Ако допуснем, че $\alpha \not\in L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_2\}$.
   Но в тези случаи получаваме от твърдения (1) и (2), че $(\alpha)_{(2)} \equiv 0 \mod 3$ или $(\alpha)_{(2)} \equiv 1 \mod 3$.
   Това е противоречие. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
+\end{proof}
+
+\begin{problem}
+  \marginpar{Да се премести при недетерминирани автомати.}
+  \marginpar{Нека $\A$, $L = \L(\A)$, е само с едно финално състояние. }
+  Докажете, че ако $L$ е автоматен език, то $L^R = \{\omega^R \mid \omega \in L\}$
+  също е автоматен.
+\end{problem}
+% \begin{proof}
+%   Нека $L = \L(\A)$ като $\A$ има само едно финално състояние.
+% \end{proof}
+
+
+
+\begin{problem}
+  Да разгледаме азбуката:
+  \[\Sigma_2 = \left\{\begin{bmatrix} 0\\0\end{bmatrix},\begin{bmatrix} 0\\1\end{bmatrix},\begin{bmatrix} 1\\0\end{bmatrix},\begin{bmatrix} 1\\1\end{bmatrix}\right\}.\]
+  Една дума над азбуката $\Sigma_2$ ни дава два реда от $0$-ли и $1$-ци, които ще разглеждаме като числа в двоична бройна система.
+  Да разгледаме езиците:
+  \begin{itemize}
+  \item 
+    $L_1 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е по-голямо число от горния ред}\}$;
+  \item
+    $L_2 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е три пъти по-голямо число от горния}\}$;
+  \item
+    $L_3 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е обратния низ на горния ред}\}$.
+  \end{itemize}
+  Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
+\end{problem}
+\begin{proof}
+  Ще построим автомат $\A = \FA$ за езика $L^R_1$.
+  Ще  пишем, че $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
+  $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
+  $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
+  Основното наблюдение е, че дори $\alpha > \beta$, то $\alpha 0 < \beta 1$.
+
+  Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
+  Искаме да е изпълнено свойствата:
+  \begin{itemize}
+  \item 
+    За всяко $q \in Q$,
+    $\delta^\star(q, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$ точно тогава, когато $\alpha \equiv \beta$;
+  \item 
+    За всяко $q \in Q$,
+    $\delta^\star(q, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$ точно тогава, когато $\alpha < \beta$;
+  \item 
+    За всяко $q \in Q$,
+    $\delta^\star(q, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$ точно тогава, когато $\alpha > \beta$.
+  \end{itemize}
+  Функцията на преходите има следната дефиниция:
+  \begin{itemize}
+  \item 
+    $\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$,
+    $\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$, $\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$;
+  \item
+    $\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$,
+    $\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$;
+  \item
+    $\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$,
+    $\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$.
+  \end{itemize}
+  Множеството от финални състояния е $F = \{q_{\scriptscriptstyle{<}}\}$, а началното състояние $s = q_{\scriptscriptstyle{=}}$.
+\end{proof}
+
+
+\begin{problem}
+  Да разгледаме азбуката:
+  \[\Sigma_3 = \left\{\begin{bmatrix} 0\\0\\0\end{bmatrix},\begin{bmatrix} 0\\0\\1\end{bmatrix},\begin{bmatrix} 0\\1\\0\end{bmatrix},\begin{bmatrix} 0\\1\\1\end{bmatrix},\dots,\begin{bmatrix} 1\\1\\1\end{bmatrix}\right\}.\]
+  Докажете, че 
+  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}\right\}$
+  е автоматен език.
+\end{problem}
+\begin{proof}
+  Отново по-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
+  Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
+  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \alpha + \beta = \gamma.\]
+  Понеже за $\varepsilon + \varepsilon = \varepsilon$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
+  \begin{itemize}
+  \item 
+    Нека $\alpha+\beta = \gamma$. Тогава:
+    \begin{itemize}
+    \item 
+      $0\alpha + 0\beta = 0\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $0\alpha + 1\beta = 1\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $1\alpha + 0\beta = 1\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $1\alpha + 1\beta = 10\gamma$; 
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1$}
+    \item
+      За останалите $x \in \Sigma_3$, $\delta(q_{\scriptscriptstyle{=}},x) = q_{err}$.
+      % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix}}) = q_{err}$;
+    \end{itemize}
+  \item
+    Горните разглеждания ни подсказват, че ще ни трябва и състояние $q_1$, за което искаме да е изпълнено свойството,
+    че за произволно $q$,
+    \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha + \beta = 1\gamma.\]
+    Да разгледаме сега случая $\alpha + \beta = 1\gamma$. Тогава:
+    \begin{itemize}
+    \item 
+      Очевидно е, че $0\alpha + 0\beta = 1\gamma$;
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $1\alpha + 1\beta = 11\gamma$;
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}$}
+    \item
+      $1\alpha + 0\beta = 10\gamma$;
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = q_{1}$}
+    \item
+      Аналогично, $0\alpha + 1\beta = 10\gamma$;
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}$}
+    \item
+      За останалите $x \in \Sigma_3$, $\delta(q_{1},x) = q_{err}$.
+      % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix}}) = q_{err}$;
+    \end{itemize}
+  \end{itemize}
 \end{proof}
 
 \section{Регулярни езици}
@@ -725,6 +846,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     $\Delta: Q\times\Sigma \to \Ps(Q)$ е функцията на преходите.
     \marginpar{Да напомним, че $\Ps(Q) = \{R\mid R\subseteq Q\}$, $\abs{\Ps(Q)} = 2^{\abs{Q}}$}
+    \marginpar{Sipser позволява $\epsilon$-преходи}
     Обърнете внимание, че тя е тотална.
   \item
     $s \in Q$ е началното състояние;
