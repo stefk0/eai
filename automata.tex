@@ -424,7 +424,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Понеже искаме нашия автомат да разпознава тези думи $\alpha$,
   за които $\alpha_{(2)} \equiv 2\mod 3$, финалното състояние ще бъде $q_2$.
   Дефинираме функцията $\delta$ следвайки следните свойства:
-  \begin{enumerate}[(1)]
+  \begin{itemize}
   \item
     \marginpar{$\delta(q_0,0) = q_0$}
     $\alpha_{(2)} \equiv 0 \bmod 3\ \Rightarrow\ (\alpha0)_{(2)} \equiv 0 \bmod 3$;
@@ -443,7 +443,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item 
     \marginpar{$\delta(q_2,1) = q_2$}
     $\alpha_{(2)} \equiv 2 \bmod 3\ \Rightarrow\ (\alpha1)_{(2)} \equiv 2 \bmod 3$.
-  \end{enumerate}
+  \end{itemize}
   
   Ето и картинка на автомата:
   \begin{figure}[H]
@@ -523,130 +523,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 
   От (1), (2) и (3) следва директно, че $L(\A) \subseteq L$.
-  За другата посока, нека $\alpha \in L$, т.е. $(\alpha)_{(2)} \equiv 2 \mod 3$.
-  Ако допуснем, че $\alpha \not\in L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_2\}$.
-  Но в тези случаи получаваме от твърдения (1) и (2), че $(\alpha)_{(2)} \equiv 0 \mod 3$ или $(\alpha)_{(2)} \equiv 1 \mod 3$.
-  Това е противоречие. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
-\end{proof}
-
-\begin{problem}
-  \marginpar{Да се премести при недетерминирани автомати.}
-  \marginpar{Нека $\A$, $L = \L(\A)$, е само с едно финално състояние. }
-  Докажете, че ако $L$ е автоматен език, то $L^R = \{\omega^R \mid \omega \in L\}$
-  също е автоматен.
-\end{problem}
-% \begin{proof}
-%   Нека $L = \L(\A)$ като $\A$ има само едно финално състояние.
-% \end{proof}
-
-
-
-\begin{problem}
-  Да разгледаме азбуката:
-  \[\Sigma_2 = \left\{\begin{bmatrix} 0\\0\end{bmatrix},\begin{bmatrix} 0\\1\end{bmatrix},\begin{bmatrix} 1\\0\end{bmatrix},\begin{bmatrix} 1\\1\end{bmatrix}\right\}.\]
-  Една дума над азбуката $\Sigma_2$ ни дава два реда от $0$-ли и $1$-ци, които ще разглеждаме като числа в двоична бройна система.
-  Да разгледаме езиците:
-  \begin{itemize}
-  \item 
-    $L_1 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е по-голямо число от горния ред}\}$;
-  \item
-    $L_2 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е три пъти по-голямо число от горния}\}$;
-  \item
-    $L_3 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е обратния низ на горния ред}\}$.
-  \end{itemize}
-  Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
-\end{problem}
-\begin{proof}
-  Ще построим автомат $\A = \FA$ за езика $L^R_1$.
-  Ще  пишем, че $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
-  $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
-  $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
-  Основното наблюдение е, че дори $\alpha > \beta$, то $\alpha 0 < \beta 1$.
-
-  Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
-  Искаме да е изпълнено свойствата:
-  \begin{itemize}
-  \item 
-    За всяко $q \in Q$,
-    $\delta^\star(q, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$ точно тогава, когато $\alpha \equiv \beta$;
-  \item 
-    За всяко $q \in Q$,
-    $\delta^\star(q, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$ точно тогава, когато $\alpha < \beta$;
-  \item 
-    За всяко $q \in Q$,
-    $\delta^\star(q, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$ точно тогава, когато $\alpha > \beta$.
-  \end{itemize}
-  Функцията на преходите има следната дефиниция:
-  \begin{itemize}
-  \item 
-    $\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$,
-    $\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$, $\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$;
-  \item
-    $\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$,
-    $\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$;
-  \item
-    $\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$,
-    $\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$.
-  \end{itemize}
-  Множеството от финални състояния е $F = \{q_{\scriptscriptstyle{<}}\}$, а началното състояние $s = q_{\scriptscriptstyle{=}}$.
-\end{proof}
-
-
-\begin{problem}
-  Да разгледаме азбуката:
-  \[\Sigma_3 = \left\{\begin{bmatrix} 0\\0\\0\end{bmatrix},\begin{bmatrix} 0\\0\\1\end{bmatrix},\begin{bmatrix} 0\\1\\0\end{bmatrix},\begin{bmatrix} 0\\1\\1\end{bmatrix},\dots,\begin{bmatrix} 1\\1\\1\end{bmatrix}\right\}.\]
-  Докажете, че 
-  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}\right\}$
-  е автоматен език.
-\end{problem}
-\begin{proof}
-  Отново по-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
-  Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
-  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \alpha + \beta = \gamma.\]
-  Понеже за $\varepsilon + \varepsilon = \varepsilon$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
-  \begin{itemize}
-  \item 
-    Нека $\alpha+\beta = \gamma$. Тогава:
-    \begin{itemize}
-    \item 
-      $0\alpha + 0\beta = 0\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-    \item
-      $0\alpha + 1\beta = 1\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-    \item
-      $1\alpha + 0\beta = 1\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-    \item
-      $1\alpha + 1\beta = 10\gamma$; 
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1$}
-    \item
-      За останалите $x \in \Sigma_3$, $\delta(q_{\scriptscriptstyle{=}},x) = q_{err}$.
-      % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix}}) = q_{err}$;
-    \end{itemize}
-  \item
-    Горните разглеждания ни подсказват, че ще ни трябва и състояние $q_1$, за което искаме да е изпълнено свойството,
-    че за произволно $q$,
-    \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha + \beta = 1\gamma.\]
-    Да разгледаме сега случая $\alpha + \beta = 1\gamma$. Тогава:
-    \begin{itemize}
-    \item 
-      Очевидно е, че $0\alpha + 0\beta = 1\gamma$;
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-    \item
-      $1\alpha + 1\beta = 11\gamma$;
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}$}
-    \item
-      $1\alpha + 0\beta = 10\gamma$;
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = q_{1}$}
-    \item
-      Аналогично, $0\alpha + 1\beta = 10\gamma$;
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}$}
-    \item
-      За останалите $x \in \Sigma_3$, $\delta(q_{1},x) = q_{err}$.
-      % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix}}) = q_{err}$;
-    \end{itemize}
-  \end{itemize}
+  За другата посока, нека $\alpha \in L$, т.е. $(\alpha)_{(2)} \equiv 2 \bmod 3$.
+  Ако допуснем, че $\alpha \not\in L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_1\}$.
+  Но в тези случаи получаваме от твърдения (1) и (2), че $(\alpha)_{(2)} \equiv 0 \bmod 3$ или $(\alpha)_{(2)} \equiv 1 \bmod 3$.
+  Това е противоречие с избора на $\alpha$. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
 \end{proof}
 
 \section{Регулярни езици}
@@ -874,6 +754,20 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 \end{proof}
 
+\begin{problem}
+  За дума $\alpha = a_1a_2\cdots a_n$, дефинираме $\alpha^R = a_na_{n-1}\cdots a_1$.
+  \marginpar{Индукция по $\abs{\beta}$.}
+  Докажете, че
+  \[(\forall \alpha,\beta\in\Sigma^\star)[(\alpha\beta)^R = \beta^R\alpha^R].\]
+\end{problem}
+
+
+\begin{problem}
+  \marginpar{Нека $\A$, $L = \L(\A)$, е само с едно финално състояние. }
+  Докажете, че ако $L$ е автоматен език, то $L^R = \{\omega^R \mid \omega \in L\}$
+  също е автоматен.
+\end{problem}
+
 \begin{lemma}
   Съществува НКА $\N = \NFA$, който разпознава езика $L(r)$, 
   където $r = \emptyset$, $r = \varepsilon$ или $r = a$, за $a\in \Sigma$.
@@ -882,21 +776,20 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \begin{figure}[H]
     \begin{subfigure}[b]{0.3\textwidth}
       \label{subf:a1}
-      \caption{$L(\emptyset)$}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial,state]      (1) {$s$};
       \end{tikzpicture}
+      \caption{$L(\emptyset)$}
     \end{subfigure}
     \begin{subfigure}[b]{0.3\textwidth}
-      \caption{$L(\varepsilon)$}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial,state,accepting]      (1) {$s$};
       \end{tikzpicture}
+      \caption{$L(\varepsilon)$}
     \end{subfigure}
     \begin{subfigure}[b]{0.3\textwidth}
-      \caption{$L(a)$}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial,state]      (1)              {$s$};
@@ -904,6 +797,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         \path 
         (1) edge  node [above] {$a$} (2);
       \end{tikzpicture}
+      \caption{$L(a)$}
     \end{subfigure}
   \end{figure}
 \end{proof}
@@ -944,50 +838,51 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 \end{proof}
 
-  Да разгледаме следните два автомата $\N_1$ и $\N_2$.
-  \begin{figure}[H]
-    \begin{subfigure}[H]{0.3\textwidth}
-      \label{subf:a1}
-      \caption{автомат $\N_1$}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-        \node[initial,state,accepting]      (1) {$s_1$};
-        \node[state]                        (2) [right of=1] {$q_1$};
-        \node[state]                        (3) [above right of=2] {$q_2$};
-        \node[state,accepting]              (4) [below right of=2] {$q_3$};
-        \path
-        (1) edge node [above] {$a$} (2)
-        (2) edge node [above] {$a$} (3)
-        (2) edge node [below] {$b$} (4)
-        (3) edge [bend right=30] node [above] {$a$} (1)
-        (4) edge [bend left=30] node [below] {$b$} (1);
-      \end{tikzpicture}
-    \end{subfigure}
-    \qquad
-    \qquad
-    \qquad
-    \begin{subfigure}[H]{0.3\textwidth}
-      \caption{автомат $\N_2$}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-        \node[initial,state]      (1) {$s_2$};
-        \node[state]     [above right of=1] (2) {$q_4$};
-        \node[state,accepting]     [below right of=1] (3) {$q_5$};
-        \path
-        (1) edge [bend left=15] node  [above] {$a$} (2)
-        (2) edge [bend left=15] node  [right] {$a$} (3)
-        (1) edge [bend right=15] node [below] {$b$} (3);
-      \end{tikzpicture}
-    \end{subfigure}
-  \end{figure}
+\begin{figure}[H]
+  \center
+  \begin{subfigure}[b]{0.3\textwidth}
+    \label{subf:a1}
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+      \node[initial,state,accepting]      (1) {$s_1$};
+      \node[state]                        (2) [right of=1] {$q_1$};
+      \node[state]                        (3) [above right of=2] {$q_2$};
+      \node[state,accepting]              (4) [below right of=2] {$q_3$};
+      \path
+      (1) edge node [above] {$a$} (2)
+      (2) edge node [above] {$a$} (3)
+      (2) edge node [below] {$b$} (4)
+      (3) edge [bend right=30] node [above] {$a$} (1)
+      (4) edge [bend left=30] node [below] {$b$} (1);
+    \end{tikzpicture}
+    \caption{автомат $\N_1$}
+  \end{subfigure}
+  \qquad
+  \qquad
+  \qquad
+  \begin{subfigure}[b]{0.3\textwidth}
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+      \node[initial,state]      (1) {$s_2$};
+      \node[state]     [above right of=1] (2) {$q_4$};
+      \node[state,accepting]     [below right of=1] (3) {$q_5$};
+      \path
+      (1) edge [bend left=15] node  [above] {$a$} (2)
+      (2) edge [bend left=15] node  [right] {$a$} (3)
+      (1) edge [bend right=15] node [below] {$b$} (3);
+    \end{tikzpicture}
+    \caption{автомат $\N_2$}
+  \end{subfigure}
+\end{figure}
 
 \begin{example}
     За да построим автомат, който разпознава конкатенацията на $\L(\N_1)$ и $\L(\N_2)$,
     трябва да свържем финалните състояния на $\N_1$ с изходящите от $s_2$ състояния на $\N_2$.
     
     \begin{figure}[H]
+      \center
       % \begin{subfigure}[b]{0.3\textwidth}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=2cm]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=2cm]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial,state]      (1) {$s_1$};
         \node[state]                        (2) [right of=1] {$q_1$};
@@ -1010,7 +905,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (4) edge [dashed, bend left=45]  node [above] {$a$} (6)
         (4) edge [dashed, bend left=10]  node [above] {$b$} (7);
       \end{tikzpicture}
-%      \caption{$\L(\N) = \L(\N_1)\cdot\L(\N_2)$}
+      \caption{$\L(\N) = \L(\N_1)\cdot\L(\N_2)$}
   \end{figure}  
   Обърнете внимание, че $\N_1$ и $\N_2$ са детерминирани автомати, но $\N$ е недетерминиран.
 \end{example}
@@ -1064,9 +959,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     трябва да свържем финалните състояния на $\N_1$ с изходящите от $s_2$ състояния на $\N_2$.
     
     \begin{figure}[H]
+      \center
       % \begin{subfigure}[b]{0.3\textwidth}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=2cm]
-        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=2cm]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         \node[initial,state,accepting]      (0) {$s$};
         \node[state,accepting]    [above right of=0]        (1) {$s_1$};
         \node[state]    [right of=1]        (2) {$q_1$};
@@ -1124,60 +1020,64 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Накрая строим автомат $\N_2$, за който $L(\N_2) = \{\varepsilon\} \cup L(\N_1)$.
 \end{proof}
 
+\begin{figure}[H]
+  %\begin{subfigure}[H]{0.3\textwidth}
+  \label{subf:a1}
+  \center  
+  \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+    \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+    \node[initial,state]      (1) {$s_1$};
+    \node[state]              (2) [right of=1] {$q_1$};
+    \node[state,accepting]    (3) [right of=2] {$q_2$};
+    \path
+    (1) edge node [above] {$a$} (2)
+    (2) edge node [above] {$b$} (3)
+    (3) edge [bend left=45] node [below] {$b$} (1);
+  \end{tikzpicture}
+  \caption{автомат $\N_3$}
+\end{figure}
+
 \begin{example}
-  Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\N_1)^\star$.
+  Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\N_3)^\star$.
+
+  \begin{figure}[H]
+    \label{subf:a1}
+    \center
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      \node[initial,state,accepting]      (0) {$s$};
+      \node[state,accepting]      (4) [above right=0cm and 2cm of 0]{$s_2$};
+      \node[state]      (1) [below right of=0] {$s_1$};
+      \node[state]              (2) [right of=1] {$q_1$};
+      \node[state,accepting]    (3) [right of=2] {$q_2$};
+      \path
+      (0) edge [dashed, bend left=15] node [above] {$a$} (2)
+      (1) edge node [above] {$a$} (2)
+      (2) edge node [below] {$b$} (3)
+      (3) edge [bend left=45] node [below] {$b$} (1)
+      (3) edge [dashed, bend right=45] node [above] {$a$} (2);        
+    \end{tikzpicture}
+    \caption{$\L(\N) = \L(\N_3)^\star = \L(\N_3)^+ \cup \{\varepsilon\}$}
+  \end{figure}
+    
+  Лесно се вижда, че $\L(\N_1) = \{(abb)^nab\mid n\in\Nat\}$.
+  Формално погледнато, след като построим автомат за езика $\L(\N_1)^+$, трябва да приложим
+  конструкцията за обединение на автомата за езика $\L(\N_1)^+$ с автомата за езика $\{\varepsilon\}$.
+  Защо трябва да добавим ново начално състояние $s$?
+  Да допуснем, че вместо това сме направили $s_1$ финално.
+  Тогава има опасност да разпознаем повече думи. Например, думата $abb$ би се разпонала от този автомат,
+  но $abb \not\in\L(\N_1)^\star$.
   
-  \begin{figure}[H]
-    %\begin{subfigure}[H]{0.3\textwidth}
-    \label{subf:a1}
-    \caption{автомат $\N_1$}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-        \node[initial,state]      (1) {$s_1$};
-        \node[state]              (2) [right of=1] {$q_1$};
-        \node[state,accepting]    (3) [right of=2] {$q_2$};
-        \path
-        (1) edge node [above] {$a$} (2)
-        (2) edge node [above] {$b$} (3)
-        (3) edge [bend left=45] node [below] {$b$} (1);
-      \end{tikzpicture}
-    \end{figure}
-
-
-  \begin{figure}[H]
-    %\begin{subfigure}[H]{0.3\textwidth}
-    \label{subf:a1}
-    \caption{$\L(\N) = \L(\N_1)^\star = \L(\N_1)^+ \cup \{\varepsilon\}$}
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-      \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-      \node[initial,state,accepting]      (0) {$s_0$};
-        \node[state,accepting]      (4) [above right=0cm and 2cm of 0]{$s_2$};
-        \node[state]      (1) [below right of=0] {$s_1$};
-        \node[state]              (2) [right of=1] {$q_1$};
-        \node[state,accepting]    (3) [right of=2] {$q_2$};
-        \path
-        (0) edge [dashed, bend left=15] node [above] {$a$} (2)
-        (1) edge node [above] {$a$} (2)
-        (2) edge node [below] {$b$} (3)
-        (3) edge [bend left=45] node [below] {$b$} (1)
-        (3) edge [dashed, bend right=45] node [above] {$a$} (2);        
-      \end{tikzpicture}
-    \end{figure}
-    
-    $\L(\N_1) = \{(abb)^nab\mid n\in\Nat\}$.
-    Формално погледнато, след като построим автомат за езика $\L(\N_1)^+$, трябва да приложим
-    конструкцията за обединение на $\L(\N_1)^+$ с $\{\varepsilon\}$.
-    Защо трябва да добавим ново начално състояние $s_0$?
-    Да допуснем, че вместо това сме направили $s_1$ финално.
-    Тогава има опасност да разпознаем повече думи. Например, думата $abb$ би се разпонала от този автомат,
-    но $abb \not\in\L(\N_1)^\star$.
-    
 \end{example}
 % \begin{remark}
 %   Запазваме свойството, че в началното състояние не влизат ребра.
 % \end{remark}
 
-\section{Допълнителни свойства}
+\section{Допълнителни свойства и задачи}
+
+\begin{dfn}
+  Хомоморфизъм
+\end{dfn}
 
 Някои свойства на регулярните езици:
 \begin{itemize}
@@ -1196,18 +1096,201 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{itemize}
 
 \begin{problem}
-  Да означим $\mbox{Half}(L) = \{\omega\mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$.
-  Докажете, че ако $L$ е регулярен език, то $\mbox{Half}(L)$ също е регулярен език.
+  \marginpar{\cite{papadimitriou} стр. 84}
+  При дадени езици $L$, $L'$ над азбуката $\Sigma$, да разгледаме:
+  \begin{enumerate}[a)]
+  \item
+    $\mbox{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \beta \in \Sigma^\star)[\alpha\beta \in L]\}$;
+  \item
+    $\mbox{Suf}(L) = \{\beta \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\alpha\beta \in L]\}$;
+  \item 
+     $\mbox{Half}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$;
+   \item
+     $L/L' = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L]\}$;
+   \item
+     $\mbox{Max}(L) = \{\alpha \in \Sigma^\star \mid (\forall \beta\in\Sigma^\star)[\beta \neq \varepsilon\implies \alpha\beta \not\in L]\}$.
+  \end{enumerate}
+  За всички тези езици, докажете, че са регулярни при условие, че $L$ и $L'$ са регулярни.
+  Освен това, докажете, че $L/L'$ е регулярен и при условието, че $L$ е регулярен, но $L'$ е произволен език.
 \end{problem}
 
 \begin{problem}
-  Да означим $\mbox{Pref}(L) = \{\alpha \mid (\exists \beta \in \Sigma^\star)[\alpha\beta \in L]\}$.
-  Докажете, че ако $L$ е регулярен език, то $\mbox{Pref}(L)$ също е регулярен език.
+  \marginpar{\cite{sipser1}, стр. 90}
+  Да разгледаме езика
+  \[L = \{\omega \in \{0,1\}^\star \mid \omega\text{ съдържа равен брой поднизове }01\text{ и }10\}.\]
+  Например, $101 \in L$, защото съдържа по веднъж $10$ и $01$.
+  $1010 \not\in  L$, защото съдържа два пъти $10$ и само веднъж $01$.
+  Докажете, че $L$ е регулярен.
 \end{problem}
-% \begin{proof}
-%   Две доказателства. Едното е с индукция по построението регулярния израз за $L$.
-%   Другото е по автомата за $L$.
-% \end{proof}
+
+\begin{problem}
+  За момента ще разглеждаме езици над азбука само с един символ $\Sigma = \{a\}$.
+  Да положим за всяко $p,q\in\Nat$, 
+  \[L(p,q) = \{a^l \mid (\exists n\in\Nat)[l = p+q\cdot n]\},\]
+  т.е. дължините на думите образуват аритметична прогресия.
+  Такива езици ще наричаме {\em породени от аритметична прогресия}.
+  Докажете, че $L \subseteq \{a\}^\star$ е регулярен точно тогава, когато $L$
+  е обединение на крайно много езици породени от артиметична прогресия.
+  
+  За произволна азбука $\Sigma$, докажете, че ако $L \subseteq \Sigma^\star$ е регулярен език, 
+  то множеството $\{\abs{\omega}\mid \omega \in L\}$ може да се представи като обединение 
+  на крайно много аритметични прогресии.
+\end{problem}
+\begin{hint}
+  \begin{itemize}
+  \item 
+    Докажете, че за всяко $p,q \in \Nat$, $L(p,q)$ е регулярен език.
+  \item
+    Докажете, че за крайно много $p_0,\dots,p_k$, $q_0,\dots,q_k$,
+    $\bigcup_{i \leq k}L(p_i,q_i)$ е регулярен език.
+  \item
+    С индукция по построението на регулярните езици, 
+    докажете, че ако $L$ е регулярен, то $L$ може да се представи
+    като крайно обединение на езици породени от аритметични прогресии.
+    Съществената част от доказателството се състои в следното:
+    \begin{itemize}
+    \item 
+      \marginpar{$L(p_1,q_1)\cdot L(p_2,q_2) = L(p_1+p_2,\mbox{НОД}(q_1,q_2))\setminus F$, където $F$ е крайно м-во, и ако $q_1 = q_2$, то $F = \emptyset$}
+      езикът $L(p_1,q_1) \cdot L(p_2,q_2)$ може да се представи като крайно обединение 
+      на езици породени от артиметични прогресии.
+    \item
+      езикът $L(p,q)^\star$ може да се представи като крайно обединение 
+      на езици породени от артиметични прогресии.
+    \end{itemize}
+  \end{itemize}
+\end{hint}
+
+\begin{problem}
+  Да разгледаме азбуката:
+  \[\Sigma_3 = \left\{\begin{bmatrix} 0\\0\\0\end{bmatrix},\begin{bmatrix} 0\\0\\1\end{bmatrix},\begin{bmatrix} 0\\1\\0\end{bmatrix},\begin{bmatrix} 0\\1\\1\end{bmatrix},\dots,\begin{bmatrix} 1\\1\\1\end{bmatrix}\right\}.\]
+  Докажете, че 
+  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}\right\}$
+  е автоматен език.
+\end{problem}
+\begin{hint}
+  Отново по-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
+  Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
+  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = \gamma^R_{(2)}.\]
+  Понеже за $\varepsilon + \varepsilon = \varepsilon$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
+  \begin{itemize}
+  \item 
+    Нека $\alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}$. Тогава:
+    \begin{itemize}
+    \item 
+      $0\alpha + 0\beta = 0\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $0\alpha + 1\beta = 1\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $1\alpha + 0\beta = 1\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $1\alpha + 1\beta = 10\gamma$. Този случай е по-специален и трябва да бъде разгледан отделно.
+      Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца.
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1$}
+    \item
+      За останалите $x \in \Sigma_3$, $\delta(q_{\scriptscriptstyle{=}},x) = q_{err}$,
+      където $q_{err}$ е състоянието, от което не можем да излезем.
+      % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix}}) = q_{err}$;
+    \end{itemize}
+  \item
+    Горните разглеждания ни подсказват, че ще ни трябва и състояние $q_1$, за което искаме да е изпълнено свойството,
+    че за произволно $q$,
+    \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = 1\gamma^R_{(2)}.\]
+    Да разгледаме сега случая $\alpha + \beta = 1\gamma$. Тогава:
+    \begin{itemize}
+    \item 
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+      Очевидно е, че $0\alpha + 0\beta = 1\gamma$;
+    \item
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}$}
+      $1\alpha + 1\beta = 11\gamma$;
+    \item
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = q_{1}$}
+      $1\alpha + 0\beta = 10\gamma$;
+    \item
+      Аналогично, $0\alpha + 1\beta = 10\gamma$;
+    \item
+      За останалите $x \in \Sigma_3$, $\delta(q_{1},x) = q_{err}$.
+    \end{itemize}    
+    \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}$}
+  \end{itemize}
+\end{hint}
+
+\begin{problem}
+  Да разгледаме азбуката:
+  \[\Sigma_2 = \left\{\begin{bmatrix} 0\\0\end{bmatrix},\begin{bmatrix} 0\\1\end{bmatrix},\begin{bmatrix} 1\\0\end{bmatrix},\begin{bmatrix} 1\\1\end{bmatrix}\right\}.\]
+  Една дума над азбуката $\Sigma_2$ ни дава два реда от $0$-ли и $1$-ци, които ще разглеждаме като числа в двоична бройна система.
+  Да разгледаме езиците:
+  \begin{itemize}
+  \item 
+    $L_1 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е по-голямо число от горния ред}\}$;
+  \item
+    $L_2 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е три пъти по-голямо число от горния}\}$;
+  \item
+    $L_3 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е обратния низ на горния ред}\}$.
+  \end{itemize}
+  Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
+\end{problem}
+\begin{hint}
+  Ще построим автомат $\A = \FA$ за езика $L^R_1$.
+  За улеснение, в рамките на тази задача ще пишем, че $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
+  $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
+  $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
+
+  Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
+  Искаме да е изпълнено свойствата:
+  \begin{itemize}
+  \item 
+    % За всяко $q \in Q$,
+    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$ точно тогава, когато $\alpha \equiv \beta$;
+  \item 
+    % За всяко $q \in Q$,
+    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$ точно тогава, когато $\alpha < \beta$;
+  \item 
+    % За всяко $q \in Q$,
+    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$ точно тогава, когато $\alpha > \beta$.
+  \end{itemize}
+  Множеството от финални състояния ще бъде $F = \{q_{\scriptscriptstyle{<}}\}$, а началното състояние $s = q_{\scriptscriptstyle{=}}$.
+  За да дефинираме функцията на преходите, трябва да разгледа няколко случая, в зависимост от това какво е отношението между $\alpha$ и $\beta$.
+  \begin{itemize}
+  \item
+    Нека $\alpha \equiv \beta$. Тогава:  
+    \begin{itemize}
+    \item 
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$}
+      $\alpha 0 \equiv \beta 0$, $\alpha 1 \equiv \beta 1$;
+    \item
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+      $\alpha 0 < \beta 1$;
+    \item
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+      $\alpha 1 < \beta 0$;
+    \end{itemize}
+  \item 
+    Нека $\alpha < \beta$. Тогава:
+    \begin{itemize}
+    \item 
+      \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+      $\alpha 0 < \beta 0$, $\alpha 1 < \beta 1$, $\alpha 0 < \beta 1$;
+    \item
+      \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+      $\alpha 1 > \beta 0$;
+    \end{itemize}    
+  \item
+    Нека $\alpha > \beta$. Тогава:
+    \begin{itemize}
+    \item 
+      \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+      $\alpha 0 > \beta 0$, $\alpha 1 > \beta 1$, $\alpha 1 > \beta 0$;
+    \item
+      $\alpha 0 < \beta 1$;
+    \end{itemize}
+  \end{itemize}
+  Докажете, че за така дефинирания автомат $\A$, $\L(\A) = L^R_1$.
+  \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+\end{hint}
 
 \section{Езици, които не са регулярни}
 \begin{lemma}[за нарастването (регулярни езици)]
@@ -1230,7 +1313,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{enumerate}
 \end{lemma}
 \begin{proof}
-  \marginpar{стр. 88 от \cite{papadimitriou}, стр. 78 от \cite{sipser}}
+  \marginpar{стр. 88 от \cite{papadimitriou}, стр. 78 от \cite{sipser1}}
   Понеже $L$ е регулярен, той се разпознава от $\A = \FA$.
   Да положим $n = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq n$.
   Да разгледаме първите $n$ стъпки от изпълнението на $\alpha$ върху $\A$:
@@ -1911,7 +1994,7 @@ $\M$ е {\bf минимален} за езика $L$.
 \item 
   глави 2 и 3 от \cite{hopcroft1}, глави 2,3 и 4 от \cite{hopcroft2};
 \item
-  глава 1 от \cite{sipser};
+  глава 1 от \cite{sipser1};
 \item
   глава 2 от \cite{papadimitriou}.
 \end{itemize}
