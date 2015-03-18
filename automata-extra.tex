@@ -1,0 +1,223 @@
+\section{Допълнителни свойства и задачи}
+
+\begin{dfn}
+  Хомоморфизъм
+\end{dfn}
+
+Някои свойства на регулярните езици:
+\begin{itemize}
+\item 
+  те са затворени относно хомоморфизми, т.е.
+  ако $L \subseteq \Sigma^\star_1$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
+  то езикът 
+  \[h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}\]
+  е регулярен.
+\item
+  те са затворени относно обратни хомоморфизми, т.е.
+  ако $L\subseteq \Sigma^\star_2$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
+  то езикът
+  \[h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}\]
+  е регулярен.
+\end{itemize}
+
+\begin{problem}
+  \marginpar{\cite{papadimitriou} стр. 84}
+  При дадени езици $L$, $L'$ над азбуката $\Sigma$, да разгледаме:
+  \begin{enumerate}[a)]
+  \item
+    $\mbox{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \beta \in \Sigma^\star)[\alpha\beta \in L]\}$;
+  \item
+    $\mbox{Suf}(L) = \{\beta \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\alpha\beta \in L]\}$;
+  \item 
+     $\mbox{Half}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$;
+   \item
+     $L/L' = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L]\}$;
+   \item
+     $\mbox{Max}(L) = \{\alpha \in \Sigma^\star \mid (\forall \beta\in\Sigma^\star)[\beta \neq \varepsilon\implies \alpha\beta \not\in L]\}$.
+  \end{enumerate}
+  За всички тези езици, докажете, че са регулярни при условие, че $L$ и $L'$ са регулярни.
+  Освен това, докажете, че $L/L'$ е регулярен и при условието, че $L$ е регулярен, но $L'$ е произволен език.
+\end{problem}
+
+\begin{problem}
+  \marginpar{\cite{sipser1}, стр. 90}
+  Да разгледаме езика
+  \[L = \{\omega \in \{0,1\}^\star \mid \omega\text{ съдържа равен брой поднизове }01\text{ и }10\}.\]
+  Например, $101 \in L$, защото съдържа по веднъж $10$ и $01$.
+  $1010 \not\in  L$, защото съдържа два пъти $10$ и само веднъж $01$.
+  Докажете, че $L$ е регулярен.
+\end{problem}
+
+\begin{problem}
+  За момента ще разглеждаме езици над азбука само с един символ $\Sigma = \{a\}$.
+  Да положим за всяко $p,q\in\Nat$, 
+  \[L(p,q) = \{a^l \mid (\exists n\in\Nat)[l = p+q\cdot n]\},\]
+  т.е. дължините на думите образуват аритметична прогресия.
+  Такива езици ще наричаме {\em породени от аритметична прогресия}.
+  Докажете, че $L \subseteq \{a\}^\star$ е регулярен точно тогава, когато $L$
+  е обединение на крайно много езици породени от артиметична прогресия.
+  
+  За произволна азбука $\Sigma$, докажете, че ако $L \subseteq \Sigma^\star$ е регулярен език, 
+  то множеството $\{\abs{\omega}\mid \omega \in L\}$ може да се представи като обединение 
+  на крайно много аритметични прогресии.
+\end{problem}
+\begin{hint}
+  \begin{itemize}
+  \item 
+    Докажете, че за всяко $p,q \in \Nat$, $L(p,q)$ е регулярен език.
+  \item
+    Докажете, че за крайно много $p_0,\dots,p_k$, $q_0,\dots,q_k$,
+    $\bigcup_{i \leq k}L(p_i,q_i)$ е регулярен език.
+  \item
+    С индукция по построението на регулярните езици, 
+    докажете, че ако $L$ е регулярен, то $L$ може да се представи
+    като крайно обединение на езици породени от аритметични прогресии.
+    Съществената част от доказателството се състои в следното:
+    \begin{itemize}
+    \item 
+      \marginpar{$L(p_1,q_1)\cdot L(p_2,q_2) = L(p_1+p_2,\mbox{НОД}(q_1,q_2))\setminus F$, където $F$ е крайно м-во, и ако $q_1 = q_2$, то $F = \emptyset$}
+      езикът $L(p_1,q_1) \cdot L(p_2,q_2)$ може да се представи като крайно обединение 
+      на езици породени от артиметични прогресии.
+    \item
+      езикът $L(p,q)^\star$ може да се представи като крайно обединение 
+      на езици породени от артиметични прогресии.
+    \end{itemize}
+  \end{itemize}
+\end{hint}
+
+\begin{problem}
+  Да разгледаме азбуката:
+  \[\Sigma_3 = \left\{\begin{bmatrix} 0\\0\\0\end{bmatrix},\begin{bmatrix} 0\\0\\1\end{bmatrix},\begin{bmatrix} 0\\1\\0\end{bmatrix},\begin{bmatrix} 0\\1\\1\end{bmatrix},\dots,\begin{bmatrix} 1\\1\\1\end{bmatrix}\right\}.\]
+  Докажете, че 
+  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}\right\}$
+  е автоматен език.
+\end{problem}
+\begin{hint}
+  Отново по-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
+  Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
+  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = \gamma^R_{(2)}.\]
+  Понеже за $\varepsilon + \varepsilon = \varepsilon$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
+  \begin{itemize}
+  \item 
+    Нека $\alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}$. Тогава:
+    \begin{itemize}
+    \item 
+      $0\alpha + 0\beta = 0\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $0\alpha + 1\beta = 1\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $1\alpha + 0\beta = 1\gamma$;
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+    \item
+      $1\alpha + 1\beta = 10\gamma$. Този случай е по-специален и трябва да бъде разгледан отделно.
+      Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца.
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1$}
+    \item
+      За останалите $x \in \Sigma_3$, $\delta(q_{\scriptscriptstyle{=}},x) = q_{err}$,
+      където $q_{err}$ е състоянието, от което не можем да излезем.
+      % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix}}) = q_{err}$;
+    \end{itemize}
+  \item
+    Горните разглеждания ни подсказват, че ще ни трябва и състояние $q_1$, за което искаме да е изпълнено свойството,
+    че за произволно $q$,
+    \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = 1\gamma^R_{(2)}.\]
+    Да разгледаме сега случая $\alpha + \beta = 1\gamma$. Тогава:
+    \begin{itemize}
+    \item 
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+      Очевидно е, че $0\alpha + 0\beta = 1\gamma$;
+    \item
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}$}
+      $1\alpha + 1\beta = 11\gamma$;
+    \item
+      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = q_{1}$}
+      $1\alpha + 0\beta = 10\gamma$;
+    \item
+      Аналогично, $0\alpha + 1\beta = 10\gamma$;
+    \item
+      За останалите $x \in \Sigma_3$, $\delta(q_{1},x) = q_{err}$.
+    \end{itemize}    
+    \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}$}
+  \end{itemize}
+\end{hint}
+
+\begin{problem}
+  Да разгледаме азбуката:
+  \[\Sigma_2 = \left\{\begin{bmatrix} 0\\0\end{bmatrix},\begin{bmatrix} 0\\1\end{bmatrix},\begin{bmatrix} 1\\0\end{bmatrix},\begin{bmatrix} 1\\1\end{bmatrix}\right\}.\]
+  Една дума над азбуката $\Sigma_2$ ни дава два реда от $0$-ли и $1$-ци, които ще разглеждаме като числа в двоична бройна система.
+  Да разгледаме езиците:
+  \begin{itemize}
+  \item 
+    $L_1 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е по-голямо число от горния ред}\}$;
+  \item
+    $L_2 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е три пъти по-голямо число от горния}\}$;
+  \item
+    $L_3 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е обратния низ на горния ред}\}$.
+  \end{itemize}
+  Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
+\end{problem}
+\begin{hint}
+  Ще построим автомат $\A = \FA$ за езика $L^R_1$.
+  За улеснение, в рамките на тази задача ще пишем, че $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
+  $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
+  $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
+
+  Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
+  Искаме да е изпълнено свойствата:
+  \begin{itemize}
+  \item 
+    % За всяко $q \in Q$,
+    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$ точно тогава, когато $\alpha \equiv \beta$;
+  \item 
+    % За всяко $q \in Q$,
+    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$ точно тогава, когато $\alpha < \beta$;
+  \item 
+    % За всяко $q \in Q$,
+    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$ точно тогава, когато $\alpha > \beta$.
+  \end{itemize}
+  Множеството от финални състояния ще бъде $F = \{q_{\scriptscriptstyle{<}}\}$, а началното състояние $s = q_{\scriptscriptstyle{=}}$.
+  За да дефинираме функцията на преходите, трябва да разгледа няколко случая, в зависимост от това какво е отношението между $\alpha$ и $\beta$.
+  \begin{itemize}
+  \item
+    Нека $\alpha \equiv \beta$. Тогава:  
+    \begin{itemize}
+    \item 
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$}
+      $\alpha 0 \equiv \beta 0$, $\alpha 1 \equiv \beta 1$;
+    \item
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+      $\alpha 0 < \beta 1$;
+    \item
+      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+      $\alpha 1 < \beta 0$;
+    \end{itemize}
+  \item 
+    Нека $\alpha < \beta$. Тогава:
+    \begin{itemize}
+    \item 
+      \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+      $\alpha 0 < \beta 0$, $\alpha 1 < \beta 1$, $\alpha 0 < \beta 1$;
+    \item
+      \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+      $\alpha 1 > \beta 0$;
+    \end{itemize}    
+  \item
+    Нека $\alpha > \beta$. Тогава:
+    \begin{itemize}
+    \item 
+      \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+      $\alpha 0 > \beta 0$, $\alpha 1 > \beta 1$, $\alpha 1 > \beta 0$;
+    \item
+      $\alpha 0 < \beta 1$;
+    \end{itemize}
+  \end{itemize}
+  Докажете, че за така дефинирания автомат $\A$, $\L(\A) = L^R_1$.
+  \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+\end{hint}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "EAI"
+%%% End: 
