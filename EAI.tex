@@ -1,11 +1,28 @@
-\documentclass[a4paper,10pt]{report}
+\documentclass[a4paper, 10pt]{report}
+%\usepackage[paperwidth=9cm, paperheight=12cm, top=0.5cm, bottom=0.5cm, left=0.0cm, right=0.5cm]{geometry}
+%\special{papersize=9cm,12cm}
 
-% \setlength{\oddsidemargin}{4cm}
-% \setlength{\evensidemargin}{4cm}
+
+%%%%%%%%%%%%%
+%% MARGINS %%
+%%%%%%%%%%%%%
+
+\setlength{\marginparsep}{0.5cm}
+\setlength{\oddsidemargin}{0.3cm}
+\setlength{\hoffset}{0cm}
+\setlength{\marginparwidth}{110pt}
+
+\let\oldmarginpar\marginpar
+
+\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\scriptsize #1]%
+{\raggedright\scriptsize #1}}
+%\renewcommand\marginpar[1]{\oldmarginpar{\scriptsize #1}}
+
+%%%%%%%%%%%%%%
+
 %\usepackage{ucs}
 
 
-% \usepackage[bindingoffset=2cm]{geometry}
 \usepackage[english,bulgarian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[colorlinks=true, linkcolor=blue,pdfstartview=FitV,
@@ -22,16 +39,18 @@ citecolor=green, urlcolor=blue]{hyperref}
 \usepackage{layout}
 \usepackage{framed}
 \usepackage{bussproofs}
-
 \usepackage{algorithm}
 %\usepackage{algorithmic}
 \usepackage[noend]{algpseudocode}
 %\usepackage{algpseudocode}
+\usepackage{float}
 
 %%%%%%%%%%%%%%% TIKZ Package %%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{tikz}
 \usepackage{pgf}
 \usetikzlibrary{arrows,automata}
+\usetikzlibrary{positioning}
+\usetikzlibrary{backgrounds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{caption}
 \usepackage{subcaption}
@@ -48,6 +67,7 @@ citecolor=green, urlcolor=blue]{hyperref}
 \newtheorem{question}{Въпрос}
 \newtheorem*{remark}{Забележка}
 \renewenvironment{proof}{\noindent{\bf Док.}\hspace*{1em}}{\qed\par}
+\newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par}
 \newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par}
 
 \newcommand{\A}{\mathcal{A}}
@@ -91,26 +111,18 @@ citecolor=green, urlcolor=blue]{hyperref}
 \newcommand{\PDA}{\langle{Q,\Sigma,\Gamma,\#,s,\Delta,F}\rangle}
 \newcommand{\PDAn}[1]{\langle{Q_#1,\Sigma,\Gamma,\#,s_#1,\Delta_#1,F_#1}\rangle}
 \newcommand{\CFG}{\langle{V,\Sigma,R,S}\rangle}
-\newcommand{\TM}{\langle{Q,\Sigma,\Gamma,\delta,s,\bot,F}\rangle}
+\newcommand{\TM}{\langle{Q,\Sigma,\Gamma,\delta,s,\blank,F}\rangle}
 
 \renewcommand{\iff}{\ \leftrightarrow\ }
 
 \newcommand{\Th}[1]{{\em Теорема~\ref{th:#1}}}
 \newcommand{\Lem}[1]{{\em Лема~\ref{lem:#1}}}
+\newcommand{\Cor}[1]{{\em Следствие~\ref{cor:#1}}}
 \newcommand{\Prob}[1]{{\em Задача~\ref{pr:#1}}}
 \newcommand{\Prop}[1]{{\em Твърдение~\ref{pr:#1}}}
 
-\setlength{\marginparsep}{0.5cm}
-\setlength{\oddsidemargin}{0.3cm}
-\setlength{\hoffset}{0cm}
-\setlength{\marginparwidth}{110pt}
-\let\oldmarginpar\marginpar
-
-% \renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\footnotesize #1]%
-% {\raggedright\footnotesize #1}}
-\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\scriptsize #1]%
-{\raggedright\scriptsize #1}}
-%\renewcommand\marginpar[1]{\oldmarginpar{\scriptsize #1}}
+%\newcommand*{\blank}{\allowbreak\textvisiblespace\allowbreak} % visible space
+\newcommand*{\blank}{\sqcup}
 
 \title{Езици, автомати, изчислимост}
 \author{Стефан Вътев\thanks{ел. поща: \href{mailto:stefanv@fmi.uni-sofia.bg}{stefanv@fmi.uni-sofia.bg}}}
@@ -123,15 +135,19 @@ citecolor=green, urlcolor=blue]{hyperref}
 
 \tableofcontents
 
+\include{intro}
+
 \include{automata}
+
+\include{automata-extra}
 
 \include{context-free}
 
-%\include{computability}
+\include{turing}
 
 
-% \bibliographystyle{amsalpha}
-% \bibliography{discrete-math}
+\bibliographystyle{amsalpha}
+\bibliography{EAI}
 
 \printindex
 
