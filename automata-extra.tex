@@ -1,24 +1,31 @@
 \section{Допълнителни свойства и задачи}
 
 \begin{dfn}
-  Хомоморфизъм
+  Да фиксираме две азбуки $\Sigma_1$ и $\Sigma_2$.
+  Хомоморфизъм е изображение $h:\Sigma^\star_1 \to \Sigma^\star_2$ със свойството, че
+  за всеки две думи $\alpha,\beta\in\Sigma^\star_1$,
+  \[h(\alpha\beta) = h(\alpha)\cdot h(\beta).\]
 \end{dfn}
 
-Някои свойства на регулярните езици:
-\begin{itemize}
-\item 
-  те са затворени относно хомоморфизми, т.е.
-  ако $L \subseteq \Sigma^\star_1$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
-  то езикът 
-  \[h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}\]
-  е регулярен.
-\item
-  те са затворени относно обратни хомоморфизми, т.е.
-  ако $L\subseteq \Sigma^\star_2$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
-  то езикът
-  \[h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}\]
-  е регулярен.
-\end{itemize}
+Лесно се съобразява, че за всеки хомоморфизъм $h$, $h(\varepsilon) = \varepsilon$.
+
+\begin{problem}
+  Нека $L \subseteq \Sigma^\star_1$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм.
+  Тогава 
+  $h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}$ е регулярен.
+\end{problem}
+\begin{hint}
+  Индукция по построението на регулярни езици.
+\end{hint}
+
+\begin{problem}
+  Нека $L\subseteq \Sigma^\star_2$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм.
+  Тогава езикът
+  $h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}$ е регулярен.  
+\end{problem}
+\begin{hint}
+  Конструкция на автомат за $h^{-1}(L)$ при даден автомат за $L$.
+\end{hint}
 
 \begin{problem}
   \marginpar{\cite{papadimitriou} стр. 84}
@@ -29,15 +36,24 @@
   \item
     $\mbox{Suf}(L) = \{\beta \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\alpha\beta \in L]\}$;
   \item 
-     $\mbox{Half}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$;
-   \item
-     $L/L' = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L]\}$;
-   \item
-     $\mbox{Max}(L) = \{\alpha \in \Sigma^\star \mid (\forall \beta\in\Sigma^\star)[\beta \neq \varepsilon\implies \alpha\beta \not\in L]\}$.
+    $\mbox{Half}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$;
+  \item
+    $L/L' = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L]\}$;
+  \item
+    $\mbox{Max}(L) = \{\alpha \in \Sigma^\star \mid (\forall \beta\in\Sigma^\star)[\beta \neq \varepsilon\implies \alpha\beta \not\in L]\}$.
   \end{enumerate}
   За всички тези езици, докажете, че са регулярни при условие, че $L$ и $L'$ са регулярни.
   Освен това, докажете, че $L/L'$ е регулярен и при условието, че $L$ е регулярен, но $L'$ е произволен език.
 \end{problem}
+\begin{hint}
+  \begin{enumerate}[a)]
+  \item 
+    Индукция по дефиницията на регулярен израз.
+  \item[в)]
+    Конструкция с автомат за $L$ и автомат за $L^R$.
+  \end{enumerate}
+\end{hint}
+
 
 \begin{problem}
   \marginpar{\cite{sipser1}, стр. 90}
@@ -49,7 +65,7 @@
 \end{problem}
 
 \begin{problem}
-  За момента ще разглеждаме езици над азбука само с един символ $\Sigma = \{a\}$.
+  Да фиксираме азбука само с един символ $\Sigma = \{a\}$.
   Да положим за всяко $p,q\in\Nat$, 
   \[L(p,q) = \{a^l \mid (\exists n\in\Nat)[l = p+q\cdot n]\},\]
   т.е. дължините на думите образуват аритметична прогресия.
