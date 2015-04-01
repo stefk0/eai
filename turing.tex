@@ -1,8 +1,9 @@
 \chapter{Машини на Тюринг}
 
-\newcommand{\tape}[1]{\dots\bot\bot\bot{#1}\bot\bot\bot\dots}
-$\M = \TM$
+\newcommand{\tape}[1]{\dots\blank\blank\blank{#1}\blank\blank\blank\dots}
 
+Машина на Тюринг ще наричаме седморка от вида $\M = \TM$, където:
+\marginpar{Sipser дава малко по-различна дефиниция - с едно финално приемащо и едно финално отхвърлящо.}
 \begin{itemize}
 \item 
   $Q$ - състояния;
@@ -11,45 +12,114 @@ $\M = \TM$
 \item
   $\Gamma$ - азбука за лентата, $\Sigma \subseteq \Gamma$;
 \item
-  $\delta:Q\times\Gamma \to Q\times \Gamma \times \{L,R\}$ - (частична) функция на преходите;
+  $\delta:Q\times\Gamma \to Q\times \Gamma \times \{L,R,N\}$ - (частична) функция на преходите;
 \item
   $s$ - начално състояние, $s \in Q$;
 \item
-  $\bot$ - празен символ,  $\bot \in \Gamma \setminus \Sigma$;
+  $\blank$ - празен символ,  $\blank \in \Gamma \setminus \Sigma$;
 \item
   $F$ - финални състояния, $F \subseteq Q$.
-\end{itemize}
-
-\begin{itemize}
 \item 
-  Първоначално, лентата съдържа входа, който е обграден от безкрайно много символи $\bot$ и в двете посоки.
+  Първоначално, лентата съдържа входа, който е обграден от безкрайно много символи $\blank$ и в двете посоки.
 \item
   МТ се намира в началното състояние $s$ и главата е върху най-левия символ от входа.
-\item
-  Работим с конфигурации $(\alpha, q, \beta) \in \Gamma^\star\times Q \times \Gamma^\star$. Това означава, че
-  машината се намира в състояние $q$ и лентата има вида
-  \[\tape{\alpha\beta}\]
-\item
-  Ако $\delta(q,Z) = (p,Y,R)$, то пишем
-  $(\alpha, q, Z\beta) \vdash (\alpha Y, p, \beta)$.
-  При $Z = \bot$, също така можем да запишем 
-  $(\alpha, q, \varepsilon) \vdash (\alpha Y, p, \varepsilon)$
-
-  Ако $\delta(q,Z) = (p,Y,L)$, то пишем
-  $(\alpha X, q, Z\beta) \vdash (\alpha , p, XY\beta)$.
-  При $X = \bot$, $(\varepsilon, q, Z\beta) \vdash (\varepsilon, p, BY\beta)$.
-\item
-  Езикът, който се {\bf разпознава чрез финални състояния} от машината $M$ е:
-  \[L_F(M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star (\beta, q, \gamma)\ \&\ q\in F\ \&\ \beta,\gamma\in\Gamma^\star\}.\]
-\item
-  Езикът, който се {\bf разпознава чрез спиране} от $M$ е:
-  \[L_H(M) = \{\alpha \in \Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star (\beta, q, X\gamma)\ \&\ \neg !\delta(q,X)\}\]
 \end{itemize}
+
+{\em Моментно описание} на едно изчисление на МТ е тройка от вида $(\alpha, q, \beta) \in \Gamma^\star\times Q \times \Gamma^\star$. Това означава, че
+машината се намира в състояние $q$ и лентата има вида
+\[\tape{\alpha\beta},\]
+като главата на мишната е поставена върху първия символ на $\beta$.
+
+Както за автомати, удобно е да дефинираме бинарна релация $\vdash_\M$,
+която ще казва как моментното състояние на машината $\M$ се променя при 
+изпълнение на една стъпка от изчислението.
+\begin{itemize}
+\item
+  Ако $\delta_\M(q,Z) = (p,Y,R)$, то пишем
+  $(\alpha, q, Z\beta) \vdash_\M (\alpha Y, p, \beta)$.
+  При $Z = \blank$, също така можем да запишем 
+  $(\alpha, q, \varepsilon) \vdash_\M (\alpha Y, p, \varepsilon)$
+\item 
+  Ако $\delta_\M(q,Z) = (p,Y,L)$, то пишем
+  $(\alpha X, q, Z\beta) \vdash_\M (\alpha , p, XY\beta)$.
+  При $X = \blank$, $(\varepsilon, q, Z\beta) \vdash_\M (\varepsilon, p, \blank Y\beta)$.
+\end{itemize}
+С $\vdash^\star_\M$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\M$.
+
+Езикът, който се {\bf разпознава чрез финални състояния} от машината $M$ е:
+\[\L_F(\M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star (\beta, q, \gamma)\ \&\ q\in F\ \&\ \beta,\gamma\in\Gamma^\star\}.\]
+
+\marginpar{Това трябва ли ми ?}
+Езикът, който се {\bf разпознава чрез спиране} от $M$ е:
+\[\L_H(\M) = \{\alpha \in \Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star (\beta, q, X\gamma)\ \&\ \neg !\delta(q,X)\}\]
 
 Може да се докаже, че се разпознават едни и същи езици.
 
 \index{език!полуразрешим}
 Езиците, които се разпознават от МТ се наричат {\bf полуразрешими езици}.
+Един език $L$ се нарича разрешим, ако за него съществува $\M$, $L = \L_F(\M)$
+и освен това $\M$ завършва върху всички входни думи.
+
+\section{Примери}
+
+\subsection*{Удвояване на броя на единиците}
+
+\[\stackrel{1}{1}11\ \Rightarrow\ \stackrel{2}{\blank} 111\ \Rightarrow\ \stackrel{3}{\blank}\blank 111\ \Rightarrow\ \stackrel{4}{\blank}1\blank 111\ \Rightarrow\ 1\stackrel{5}{1}\blank 111\ \Rightarrow\  11\stackrel{5}{\blank}111\ \Rightarrow\  11 \blank \stackrel{6}{1}11\]
+\[\dots \Rightarrow\ 11\blank 111\stackrel{6}{\blank}\ \Rightarrow\ 11\blank 11\stackrel{7}{1}\blank\ \Rightarrow\ 11\blank 1\stackrel{8}{1}\blank\blank\ \Rightarrow\ 11\blank \stackrel{9}{1}1\blank\blank\ \Rightarrow\  1\stackrel{10}{1}\blank 11\blank\blank\]
+\[\dots \Rightarrow\ \stackrel{10}{\blank}11\blank 11\blank\blank\ \Rightarrow\ \stackrel{2}{1}1\blank 11\blank\blank\ \Rightarrow\ \cdots\]
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.7]
+      
+      \node[state]   (1) {$1$};
+      \node[state]            (2) [right of=1]{$2$};
+      \node[state]            (3) [right of=2]{$3$};
+      \node[state]            (4) [right of=3]{$4$};
+      \node[state]            (5) [right of=4]{$5$};
+      \node[state]            (6) [right of=5]{$6$};
+      \node[state]            (7) [right of=6]{$7$};
+      \node[state]            (8) [right of=7]{$8$};
+      \node[state]            (9) [right of=8]{$9$};
+      \node[state]            (10) [right of=9]{$10$};
+      \node[state]            (11) [below of=8]{$11$};
+      \node[state,accepting]  (12) [below of=11]{$12$};
+      
+      \begin{scope}[every node/.style={scale=.8}]
+      \path
+      (1) edge [bend left=15] node [above] {$1;L$} (2)
+      (2) edge [bend left=15] node [above] {$1;L$} (3)
+      (2) edge [bend right=15] node [below] {$\blank;L$} (3)
+      % (3) edge [bend left=15] node [above] {$1/1;L$} (4)
+      (3) edge [bend left=15] node [above] {$\blank/1;L$} (4)
+      (4) edge [bend left=15] node [above] {$\blank/1;R$} (5)
+      % (4) edge [bend right=15] node [below] {$1/1;R$} (5)
+      (5) edge [loop below] node [below] {$1;R$} (5)
+      (5) edge [bend left=15] node [above] {$\blank;R$} (6)
+      (6) edge [loop below] node [below] {$1;R$} (6)
+      (6) edge [bend left=15] node [above] {$\blank;L$} (7)
+      (7) edge [bend left=15] node [above] {$1/\blank;L$} (8)
+      % (7) edge [bend right=15] node [below] {$\blank;L$} (8)
+      (8) edge [bend left=15] node [above] {$1;L$} (9)
+      (9) edge [loop below] node [below] {$1;L$} (9)
+      (9) edge [bend right=15] node [below] {$\blank;L$} (10)
+      (10) edge [loop below] node [below] {$1;L$} (10)
+      (10) edge [bend right=30] node [above] {$\blank;R$} (2)
+      (8) edge [] node [right] {$\blank;L$} (11)
+      (11) edge [loop left] node [left] {$1;L$} (11)
+      (11) edge [] node [right] {$\blank;R$} (12);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+\end{figure}    
+
+\begin{problem}
+  За произволно естествено число $n$, дефинирайте МТ $\M_n$ с $n+11$ състояние, за която,
+  ако главата е на най-лявата $1$-ца върху блок от $1$-ци, то $\M_n$
+  завършва като записва $2n$ единици на лентата и завършва в стандартна конфигурация.
+\end{problem}
+
 
 \subsection*{Канонична подредба на $\Sigma^\star$}
 
@@ -57,23 +127,57 @@ $\M = \TM$
 Подреждаме думите по ред на тяхната дължина.
 Думите с еднаква дължина подреждаме по техния числов ред, т.е.
 гледаме на буквите $a_i$ като числото $i$ в $k$-ична бройна система.
-Тогава подреждаме думите с дължина $n$, са числата от $0$ до $k^n-1$,
-записани в $k$-ична бройна система.
-Да означим с $w_i$ $i$-тата дума в $\Sigma^\star$ при тази подредба.
+Тогава думите с дължина $n$ са числата от $0$ до $k^n-1$ записани в $k$-ична бройна система.
+Ще означаваме с $\omega_i$ $i$-тата дума в $\Sigma^\star$ при тази подредба.
 
 \begin{example}
   Ако $\Sigma = \{0,1\}$, то наредбата започва така:
-  \[\varepsilon, 0, 1, \underbrace{00, 01, 10, 11}_{\text{от $0$ до $3$}}, \underbrace{000, 001, 010, 011, 100, 101, 110, 111}_{\text{от $0$ до $7$}}, 0000, 0001, \dots\]  
+  \[\varepsilon, 0, 1, \underbrace{00, 01, 10, 11}_{\text{от $0$ до $3$}}, \underbrace{000, 001, 010, 011, 100, 101, 110, 111}_{\text{от $0$ до $7$}}, 0000, 0001, \dots\]
+  В този случай, $\omega_0 = \varepsilon$, $\omega_7 = 000$, $\omega_{13} = 110$.
 \end{example}
 
 \subsection*{Многолентови машини на Тюринг}
 
+Това е просто като имаш shift.
+Използват се при недет. машини
+
+Машина на Тюринг с $k$ ленти има същата дефиниция като еднолентова МТ
+с единствената разлика, че
+\[\delta: Q^k \times \Gamma^k\to Q^k \times \Gamma^k \times \{L,R\}^k.\]
+
+\begin{prop}
+  За всяка $k$-лентова МТ $\M$ съществува еднолентова МТ $\M'$,
+  такава че $\L(\M) = \L(\M')$.
+\end{prop}
+\begin{proof}
+  $\Gamma' = \{\sharp\} \cup \Gamma \cup \{\hat{X} \mid X \in \Gamma\}$.
+\end{proof}
+
+
+
 \subsection*{Недетерминистични машини на Тюринг}
 
 \begin{thm}
-  Ако $L$ се разпознава от НМТ $\M_1$, до $L$
-  също се разпознава и от ДМТ $\M_2$.
+  Ако $L$ се разпознава от НМТ $\N$, до $L$
+  също се разпознава и от ДМТ $\D$.
 \end{thm}
+\begin{proof}
+  Понеже функцията $\Delta_\D$ е крайна, нека с $r$ да означим 
+  максималния брой избори за следваща стъпка в произволно изчисление на $\D$.
+  $\D$ има три ленти.
+  \begin{itemize}
+  \item 
+    На първата лента съхраняваме входящия низ и тя никога не се променя.
+  \item
+    На втората лента помним мястото на $\D$ в дървото на недетерминистичните изчисления на $\N$.  
+  \item
+    На третата лента съхраняваме лентата на $\N$ за детерминистичното изчисление на $\N$, 
+    определено от втората лента. Например, ако съдържанието на втората лента е $3,1,2$,
+    това означава, че симулираме изчисление от три стъпки като на първата стъпка избираме третия 
+    клон, на втората стъпка избираме първия клон, на третата стъпка избираме втория клон.
+  \end{itemize}
+\end{proof}
+
 
 \subsection*{Полуразрешими и разрешими езици}
 
@@ -81,11 +185,19 @@ $\M = \TM$
   Ако $L$ и $\Sigma^\star \setminus L$ са полуразрешими езици, то $L$ е разрешим език.
 \end{thm}
 
+\subsection*{Busy Beaver}
+
+Тук разглеждаме азбука $\Sigma = \{1,\blank\}$.
+\marginpar{\cite{tibor-rado}}
+
+
+\subsection*{Тезис на Чърч-Тюринг}
+
 \section{Универсална машина на Тюринг}
-За простота, нека $\Sigma = \{0,1\}$ и $\Gamma = \{0,1,\bot\}$.
+За простота, нека $\Sigma = \{0,1\}$ и $\Gamma = \{0,1,\blank\}$.
 \begin{itemize}
 \item 
-  $X_1 = 0$, $X_2 = 1$, $X_3 = \bot$;
+  $X_1 = 0$, $X_2 = 1$, $X_3 = \blank$;
 \item
   $D_1 = L$, $D_2 = R$
 \end{itemize}
@@ -94,7 +206,7 @@ $\M = \TM$
 Да разгледаме прехода $\delta(q_i,X_j) = (q_k,X_l,D_m)$.
 Кодираме този преход по следния начин:
 \[0^i10^j10^k10^l10^m\]
-Да Обърнем внимание, че в този двоичен код няма последователни единици и той 
+Да обърнем внимание, че в този двоичен код няма последователни единици и той 
 започва и завършва с нула.
 \subsection*{Кодиране на машина на Тюринг}
 За да кодираме една машина на Тюринг $\M$ е достатъчно да кодираме функцията на преходите $\delta$.
@@ -114,6 +226,46 @@ $\M = \TM$
   Просто започваме да четем двоичния запис на $r$ докато не срещнем за втори път $111$.
   След това започва думата $w$.
 \end{itemize}
+
+
+\section{Изчислими функции}
+
+Нека е дадена функцията $f:\Nat^k \to \Nat$.
+Ще казваме, че $f$ е изчислима с машината на Тюринг $\M$,
+ако за всяко $n_1,\dots,n_k$ е изпълнено:
+\begin{itemize}
+\item 
+  Представяме всяко от числата $n_1,\dots,n_k$ в монадична бройна система
+  като лентата на $\M$ има вида:  
+  \[\dots \blank \blank \underbrace{1111\dots 11}_{n} \blank\blank\dots,\]
+  като изискваме главата на $\M$ да е позиционирана върху най-лявата единица.
+  Такава конфигурация ще наричаме {\bf стандартна начална конфигурация}.
+\item
+  Ако $f(n_1,\dots,n_k) = m$, то $\M$ завършва с резултат върху лентата
+  \[\dots \blank \blank \underbrace{1111\dots 11}_{m} \blank\blank\dots,\]
+  като главата на $\M$ е върху най-лявата 1-ца.
+  Такава конфигурация се нарича {\bf стандартна финална конфигурация}.
+\item
+  Ако $f(n_1,\dots,n_k)$ е недефенирана, то $\M$ няма да завърши в стандартна конфигурация, т.е.
+  или $\M$ ще работи безкрайно време, или ще завърши в конфигурация, която не е стандартна.
+\end{itemize}
+
+% За фунция от вида $f:\Nat^k\to \Nat$, дефинираме аналогично какво означава $f$
+% да е изчислима с машина на Тюринг $\M$, като тук за да изчислим $f(n_1,\dots,n_k)$, входната лента има вида:
+% \[\dots \blank \blank \underbrace{11\dots 1}_{n_1}\blank  \underbrace{11\dots 11}_{n_2} \blank \dots \blank  \underbrace{11\dots 11}_{n_k} \blank\blank\dots\]
+
+\begin{thm}
+  За всяко $k$, съществуват функции от вида $f:\Nat^k\to\Nat$, които не са изчислими с МТ.
+\end{thm}
+\begin{proof}
+  Знаем, че всяка МТ може да се кодира с естествено число.
+  Това означава, че съществуват изброимо безкрайно много различни машини на Тюринг.
+  Също така, ние знаем, че съществуват неизброимо много различни функции от вида $f:\Nat^k\to\Nat$.
+  Заключаваме, че със сигурност съществуват функции, които не са изчислими с МТ.
+\end{proof}
+
+
+
 
 \section{Пример за език, който не се разпознава от МТ}
 
@@ -151,6 +303,11 @@ $\M = \TM$
 \subsection*{MPCP}
 
 \section{Разрешими и полуразрешими езици}
+
+
+
+
+\section{Теорема на Райс-Успенски}
 
 \section{Проблеми за безконтекстни езици}
 
@@ -224,7 +381,9 @@ $\M = \TM$
 % \item
 %   за произволна безконтекстна граматика $G$, проверява дали $\L(G)$ е регулярен език?
 \end{itemize}
+
+
 %%% Local Variables: 
 %%% mode: latex
-%%% TeX-master: "discrete-math"
+%%% TeX-master: "EAI"
 %%% End: 
