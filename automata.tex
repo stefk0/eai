@@ -13,7 +13,7 @@
   \item
     $\Sigma$ е крайно множество, наречено азбука;
   \item
-    \marginpar{Тук нямаме $\varepsilon$-преходи}
+    % \marginpar{Тук нямаме $\varepsilon$-преходи}
     \marginpar{Sipser разглежда тотални $\delta$ функции}
     $\delta:Q\times\Sigma\to Q$ е (частична) функция на преходите;
   \item
@@ -265,7 +265,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (2) edge [loop above]   node [above] {$a,b$}  (2);
       \end{tikzpicture}
     \end{center}
-  \end{figure}    
+  \end{figure}
 \item 
   Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$.
   \begin{figure}[H]
@@ -761,8 +761,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{problem}
 
 \begin{problem}
-  За всеки НКА $\A$ съществува НКА $\A'$ с едно финално състояние, 
-  за който $\L(\A) = \L(\A')$.
+  За всеки НКА $\N$ съществува НКА $\N'$ с едно финално състояние, 
+  за който $\L(\N) = \L(\N')$.
 \end{problem}
 \begin{hint}
   Вместо формална конструкция, да разгледаме един пример, който илюстрира идеята.
@@ -808,19 +808,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{subfigure}
 \end{figure}  
 За произволен автомат $\N$, формулирайте точно конструкцията на $\N'$ с едно финално състояние и докажете, че наистина $\L(\N) = \L(\N')$.
-Обърнете внимание, че $\N$ е детерминиран, но $\N'$ е недетерминиран.
+Обърнете внимание, че примера показва, че е възможно $\N$ да е детерминиран автомат, но полученият $\N'$ да бъде недетерминиран.
 \end{hint}
-
 
 \begin{problem}
   \marginpar{Нека $\A$, $L = \L(\A)$, е само с едно финално състояние. }
   Докажете, че ако $L$ е автоматен език, то $L^R = \{\omega^R \mid \omega \in L\}$
   също е автоматен.
 \end{problem}
-\begin{hint}
-  Нека $\A$ е НКА с едно финално състояние.
-  
-\end{hint}
+% \begin{hint}
+%   Нека $\N$ е НКА с едно финално състояние.
+% \end{hint}
 
 \begin{lemma}
   Съществува НКА $\N = \NFA$, който разпознава езика $L(r)$, 
@@ -1169,8 +1167,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \begin{framed}
   \Lem{pumping-reg} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е регулярен.
-  За целта, доказваме отрицанието на \Lem{pumping-reg} за $L$, т.е.
-  за всяка константа $p$, ние намираме дума $\alpha$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
+  За да постигнем това, ние доказваме отрицанието на условията от \Lem{pumping-reg} за $L$, т.е.
+  за всяка константа $p$, намираме дума $\alpha$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
   със свойствата $\abs{y} \geq 1$ и $\abs{xy} \leq p$, е изпълнено, че $(\exists i)[xy^iz \not\in L]$.
   При фиксиран език $L$, условието за нарастване от лемата може формално да се запише така:
   {\scriptsize  
@@ -1300,6 +1298,31 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Следователно, $xy^2z \not\in L$.
   \end{itemize}
 \end{proof}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^{n!}\ \mid\ n\in\Nat\}$ не е регулярен.  
+\end{problem}
+\begin{proof}
+    \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$.
+  \item
+    Избираме достатъчно дълга дума. Например, нека $\omega = a^{(p+2)!}$.
+  \item
+    Разглеждаме произволно разбиване на $\omega$ на три части, $\omega = xyz$, 
+    като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+    Да обърнем внимание, че $1 \leq \abs{y} \leq p$
+  \item
+    Ще намерим $i$, за което $xy^iz \not\in L$.
+    В нашия случай това означава, че $\abs{xz} + i\cdot\abs{y}$ не е от вида $n!$.
+    Възможно ли е $xy^0z \in L$?
+    Понеже $\abs{xyz} = (p+2)!$, това означава, че $\abs{xz} = k!$, за някое $k \leq p+1$.
+    Тогава 
+    \[\abs{y} = \abs{xyz} - \abs{xz} = (p+2)! - k! \geq (p+2)! - (p+1)! = (p+1).(p+1)! > p.\]
+    Достигнахме до противоречие.
+  \end{itemize}
+\end{proof}
+
 
 \subsection{Следствия от лемата за нарастването}
 
@@ -1474,6 +1497,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \begin{itemize}
 \item
+  \marginpar{$\approx_L$ е известна като релация на Майхил-Нероуд}
   Нека $L \subseteq \Sigma^\star$ е език и нека $x,y \in \Sigma^\star$.
   Казваме, че $x$ и $y$ са {\bf еквивалентни относно} $L$, което записваме 
   като $x \approx_L y$, ако е изпълнено:
@@ -1510,49 +1534,64 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{thm}
 \begin{proof}
 %  \marginpar{стр. 95 от \cite{papadimitriou}}
-  Да означим $q_\alpha = \delta^\star_\A(s, \alpha)$.
-  Лесно се съобразява, че 
-  \[\alpha \sim_\A \beta\quad\Leftrightarrow\quad q_\alpha = q_\beta.\]
-  Освен това, 
-  \[\alpha\gamma \in \L(\A)\quad \Leftrightarrow\quad \delta^\star_\A(q_\alpha, \gamma) \in F.\]
-  Тогава, ако $\alpha \sim_\A \beta$, то  $\alpha \approx_{\L(\A)}\beta$, защото за произволно $\gamma \in \Sigma^\star$,
-  \[\alpha\gamma \in \L(\A)\ \Leftrightarrow\ \delta^\star(q_\alpha,\gamma) \in F\ \Leftrightarrow\ \delta^\star(q_\beta, \gamma)\in F\ \Leftrightarrow\ \beta\gamma \in \L(\A).\]  
+  Да означим за всяка дума $\alpha$, $q_\alpha = \delta^\star_\A(s, \alpha)$.
+  Лесно се съобразява, че за всеки две думи $\alpha$ и $\beta$ имаме 
+  \begin{align*}
+    \alpha \sim_\A \beta & \iff \delta^\star(s,\alpha) = \delta^\star(s,\beta) & (\text{по деф. на }\sim_\A)\\
+    & \iff q_\alpha = q_\beta.
+  \end{align*}
+  Нека $\alpha \sim_\A \beta$. Тогава за произволно $\gamma \in \Sigma^\star$ имаме:
+  \begin{align*}
+    \alpha\gamma \in \L(\A) & \iff \delta^\star(s,\alpha\gamma)\in F & (\text{по деф. на }\L(\A))\\
+    & \iff \delta^\star(\delta^\star(s,\alpha),\gamma) \in F & (\text{по деф. на }\delta^\star)\\
+    & \iff \delta^\star(q_\alpha, \gamma) \in F & (q_\alpha = \delta^\star(s,\alpha))\\
+    & \iff \delta^\star(q_\beta, \gamma) \in F & (q_\alpha = q_\beta, \text{ защото }\alpha \sim_\A \beta)\\
+    & \iff \delta^\star(\delta^\star(s,\beta),\gamma) \in F & (q_\beta = \delta^\star(s,\beta))\\
+    & \iff \delta^\star(s,\beta\gamma) \in F & (\text{по деф. на }\delta^\star)\\
+    & \iff \beta\gamma \in \L(\A) & (\text{по деф. на }\L(\A)).
+  \end{align*}
+  Заключаваме, че 
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{\L(\A)}\beta].\]
 \end{proof}
 
 \begin{cor}
-  За всеки ДКА $\M$ е изпълнено, че
-  \[\abs{\approx_{\L(\M)}} \leq \abs{\sim_\M}.\]
+  \label{cor:approx-less-sim}
+  За всеки ДКА $\A$ е изпълнено, че
+  \[\abs{\approx_{\L(\A)}} \leq \abs{\sim_\A}.\]
 \end{cor}
 \begin{proof}
-  Нека $A = \{[\alpha]_{\L(\M)} \mid \alpha\in\Sigma^\star\}$ и $B = \{[\alpha]_\M \mid \alpha\in\Sigma^\star\}$.
-  Да разгледаме изображението $f:B\to A$, определено като $f([\alpha]_\M) = [\alpha]_{\L(\M)}$.
+  Нека $A = \{[\alpha]_{\L(\A)} \mid \alpha\in\Sigma^\star\}$ и $B = \{[\alpha]_\A \mid \alpha\in\Sigma^\star\}$.
+  Да разгледаме изображението $f:B\to A$, определено като $f([\alpha]_\A) = [\alpha]_{\L(\A)}$.
   \begin{itemize}
   \item 
     Първо ще проверим, че $f$ е {\bf функция}. Да допуснем, че $f$ не е функция.
     Това означава, че съществуват думи $\alpha$ и $\beta$, такива че
-    $[\alpha]_{\M} = [\beta]_{\M}$, но $f([\alpha]_{\M}) = [\alpha]_{\L(\M)} \neq [\beta]_{\L(\M)} = f([\beta]_{\M})$.
-    От \Th{rel-finer} следва веднага, че това е невъзможно.
+    $[\alpha]_{\A} = [\beta]_{\A}$, но $f([\alpha]_{\A}) = [\alpha]_{\L(\A)} \neq [\beta]_{\L(\A)} = f([\beta]_{\A})$.
+    От \Th{rel-finer} следва веднага, че това е невъзможно, защото ако $[\alpha]_\A = [\beta]_\A$, 
+    то имаме, че $[\alpha]_{\L(\A)} = [\beta]_{\L(\A)}$.    
   \item
     \marginpar{$(\forall a\in A)(\exists b\in B)(f(b) = a)$}
     Очевидно е, че $f$ е {\bf сюрекция}, защото за всеки клас $[\alpha]_{\L(\M)}$ съответства класа $[\alpha]_\M$.
   \item
+    \marginpar{Защо?\\ \ding{45} Обяснете!}
     От това, че $f:B\to A$ е сюрективна функция следва директно, че $\abs{B} \leq \abs{A}$.
   \end{itemize}
 \end{proof}
 
 \begin{cor}
   \label{cor:upper-bound}
-  Един регулярен език $L$ се разпознава от ДМА $\M$ със свойството
+  Нека $L$ е произволен регулярен език $L$.  
+  Всеки ДКА $\A$, който разпознава $L$ има свойството
   \[\abs{Q} \geq \abs{\approx_L}.\]
 \end{cor}
 \begin{proof}
-  Да изберем $\M$, който разпознава $L$, бъде такъв, че да {\bf няма недостижими състояния}.
-  Тъй като всяко достижимо състояние определя клас на еквивалентност относно $\sim_\M$,
-  то получаваме, че $\abs{Q} = \abs{\sim_\M}$.
-  Комбинирайки с предишното следствие, 
-  \[\abs{Q} = \abs{\sim_\M} \geq \abs{\approx_L}.\]
+  Да изберем $\A$, който разпознава $L$, бъде такъв, че да {\bf няма недостижими състояния}.
+  Тъй като всяко достижимо състояние определя клас на еквивалентност относно $\sim_\A$,
+  то получаваме, че $\abs{Q} = \abs{\sim_\A}$.
+  Комбинирайки със \Cor{approx-less-sim},
+  \[\abs{Q} = \abs{\sim_\A} \geq \abs{\approx_L}.\]
 \end{proof}
-Така получаваме {\em долна граница} за броя на състоянията в минималнен автомат за езика $L$.
+Така получаваме {\em долна граница} за броя на състоянията в автомат разпознаващ езика $L$.
 Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
 
 {\bf Сега ще отговорим на въпроса дали тази долна граница може да бъде достигната.}
@@ -1566,14 +1605,14 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \index{Майхил}
   \index{Нероуд}
   \marginpar{на англ. Myhill-Nerode}
-  Нека $\L\subseteq \Sigma^\star$ е регулярен език.
-  Тогава съществува ДКА $\M = \FA$, който разпознава $\L$,
-  с точно толкова състояния, колкото са класовете на еквивалентност на релацията $\approx_\L$,
-  т.е. $\abs{Q} = \abs{\approx_\L}$.
+  Нека $L\subseteq \Sigma^\star$ е регулярен език.
+  Тогава съществува ДКА $\A = \FA$, който разпознава $L$,
+  с точно толкова състояния, колкото са класовете на еквивалентност на релацията $\approx_L$,
+  т.е. $\abs{Q} = \abs{\approx_L}$.
 \end{thm}
 \begin{proof}
 %  \marginpar{стр. 96 от \cite{papadimitriou}}
-  При даден регулярен език $L$, ние определяме ДКА $\M = \FA$, за който $L = \L(\M)$ като
+  При даден регулярен език $L$, ние определяме ДКА $\A = \FA$, за който $L = \L(\A)$ като
   \begin{itemize}
   \item
     $Q = \{[\alpha]_L\mid \alpha\in \Sigma^\star\}$;
@@ -1583,15 +1622,15 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $F = \{[\alpha]_L\mid \alpha\in L\}$;
   \item
     Определяме изображението $\delta$ като 
-    за всяка буква $a \in \Sigma$ и всяко състояние $[\alpha]_L\in Q$, 
-    \[\delta([\alpha]_L,a) = [\alpha a]_L.\]
+    за всяка буква $x \in \Sigma$ и всяко състояние $[\alpha]_L\in Q$, 
+    \[\delta([\alpha]_L,x) = [\alpha x]_L.\]
   \end{itemize}
   
   Първо, трябва да се уверим, че множеството от състояния $Q$ е крайно, т.е.
   релацията $\approx_\L$ има крайно много класове на еквивалентност.
-  И така, тъй като $\L$ е регулярен език, то той се разпознава от някой автомат $\M^\prime$.
-  От \Cor{upper-bound} имаме, че $\abs{Q^{\M'}} \geq \abs{\approx_L}$.
-  Понеже $Q^{\M'}$ е крайно множество, то $\approx_L$ има крайно много класове и 
+  И така, тъй като $\L$ е регулярен език, то той се разпознава от някой автомат $\A'$.
+  От \Cor{upper-bound} имаме, че $\abs{Q^{\A'}} \geq \abs{\approx_L}$.
+  Понеже $Q^{\A'}$ е крайно множество, то $\approx_L$ има крайно много класове и 
   следователно $Q$ също е крайно множество.
 
   Второ, трябва да се уверим, че изображението $\delta$ задава функция, т.е. 
@@ -1602,13 +1641,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   т.е. $[\alpha c]_L = [\beta c]_L$ и 
   \begin{align*}
     [\alpha]_L = [\beta]_L & \implies [\alpha c]_L = [\beta c]_L & (\text{свойство на }\approx_L)\\
-    & \implies \delta([\alpha]_L,c) = \delta([\beta]_L,c) & (\text{деф. на }\delta)
+    & \implies \delta([\alpha]_L,c) = [\alpha c]_L = [\beta c]_L = \delta([\beta]_L,c) & (\text{деф. на }\delta)
   \end{align*}
   
-  Така вече сме показали, че $\M$ е коректно зададен ДКА.
-  Остава да покажем, че $\M$ разпознава езика $L$, т.е. $\L(\M) = L$.
+  Така вече сме показали, че $\A$ е коректно зададен ДКА.
+  Остава да покажем, че $\A$ разпознава езика $L$, т.е. $\L(\A) = L$.
   \begin{prop}
-    За всеки две думи $\alpha,\beta\in\Sigma^\star$,
+    За всеки две думи $\alpha$ и $\beta$,
     $\delta^\star([\alpha]_L,\beta) = [\alpha\beta]_L$.
   \end{prop}
   \begin{proof}
@@ -1628,34 +1667,34 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \end{align*}
     \end{itemize}
   \end{proof}
-  \noindent За да се убедим, че $L = \L(\M)$ е достатъчно да проследим еквивалентностите:
+  \noindent За да се убедим, че $L = \L(\A)$ е достатъчно да проследим еквивалентностите:
   \begin{align*}
-    \alpha\in \L(\M) & \iff \delta^\star(s,\alpha) \in F & (\text{от деф. на }\L(\M))\\
-                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\text{от деф. на }s = [\varepsilon]_L)\\
+    \alpha\in \L(\A) & \iff \delta^\star(s,\alpha) \in F & (\text{от деф. на }\L(\A))\\
+                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\text{по деф. }s = [\varepsilon]_L)\\
                      & \iff \delta^\star([\varepsilon]_L,\alpha) = [\alpha]_L\ \&\ \alpha\in L & (\text{от деф. на }F)\\
                      & \iff \alpha \in L & (\text{от последното твърдение}).
   \end{align*}
   
 \end{proof}
 
-Ако $\M = \FA$ е автомат, за който $\abs{Q_\M} = \abs{\approx_L}$, то ще казваме, че
-$\M$ е {\bf минимален} за езика $L$.
+Ако $\A = \FA$ е автомат, за който $\abs{Q_\A} = \abs{\approx_L}$, то ще казваме, че
+$\A$ е {\bf минимален} за езика $L$.
 
 \subsection{Проверка за регулярност на език}
 
 \begin{framed}
-  \begin{cor}
+  \begin{prop}
     Езикът $L$ е регулярен точно тогава, когато релацията $\approx_L$ има {\em крайно много} класове на еквивалентност.
-  \end{cor}
+  \end{prop}
 \end{framed}
 \begin{proof}
-  Ако $L$ е регулярен, то той се разпознава от някой ДКА $\M$, който има крайно много състояния 
-  и следователно крайно много класове на еквивалентност относно $\sim_\M$.
-  Релацията $\approx_L$ е по-груба от $\sim_\M$ и има по-малко класове на еквивалентност.
+  Ако $L$ е регулярен, то той се разпознава от някой ДКА $\A$, който има крайно много състояния 
+  и следователно крайно много класове на еквивалентност относно $\sim_\A$.
+  Релацията $\approx_L$ е по-груба от $\sim_\A$ и има по-малко класове на еквивалентност.
   Следователно, $\approx_L$ има крайно много класове на еквивалентност.
   
   За другата посока, ако $\approx_L$ има крайно много класове на еквивалентност, то можем да 
-  построим ДКА $\M$ както в доказателството на \Th{myhill-nerode}, който разпознава $L$.
+  построим ДКА $\A$ както в доказателството на \Th{myhill-nerode}, който разпознава $L$.
 \end{proof}
 
 Това следствие ни дава още един начин за проверка дали даден език е регулярен.
@@ -1666,24 +1705,40 @@ $\M$ е {\bf минимален} за езика $L$.
 
 \begin{example}
   За езика $L = \{a^nb^n\mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
-  защото \[(\forall k,j\in\Nat)[k \neq j\ \rightarrow\ [a^kb]_L \neq [a^jb]_L].\]
+  защото \[(\forall k,j\in\Nat)[k \neq j \implies [a^kb]_L \neq [a^jb]_L].\]
   Проверете, че $[a^kb]_L = \{a^kb,a^{k+1}b^{2},\dots,a^{k+l}b^{l+1},\dots\}$.
-  Така получаваме, че релацията $\approx_L$ има безкрайно много класове на еквивалентност
-  и следователно този език {\bf не} е регулярен.
+  Така получаваме, че релацията $\approx_L$ има безкрайно много класове на еквивалентност.
+  Заключаваме, че този език {\bf не} е регулярен.
 \end{example}
 
 \begin{example}
   За езика $L = \{a^{n^2} \mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
-  защото \[(\forall m,n\in\Nat)[m \neq n\ \rightarrow\ [a^{n^2}]_L \neq [a^{m^2}]_L].\]
+  защото \[(\forall m,n\in\Nat)[m \neq n \implies [a^{n^2}]_L \neq [a^{m^2}]_L].\]
   
   Без ограничение на общността, да разгледаме $n < m$ и думата $\gamma = a^{2n+1}$.
   Тогава $a^{n^2}\gamma = a^{(n+1)^2} \in L$, но 
   $m^2 < m^2 + 2n + 1 < (m+1)^2$ и следователно $a^{m^2}\gamma = a^{m^2+2n+1}\not\in L$.
 \end{example}
 
+\begin{example}
+  За езика $L = \{a^{n!} \mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
+  защото \[(\forall m,n\in\Nat)[m \neq n \implies [a^{n!}]_L \neq [a^{m!}]_L].\]
+  
+  Без ограничение на общността, да разгледаме $n < m$ и думата $\gamma = a^{(n!)n}$.
+  Тогава $a^{n!}\gamma = a^{(n+1)!} \in L$, но 
+  $m! < m! + (n!)n < m! + (m!)m = (m+1)!$ и следователно $a^{m!}\gamma = a^{m!+(n!)n}\not\in L$.
+\end{example}
+
+\begin{problem}
+  Да разгледаме езика
+  \[L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}.\]
+  Докажете, че $\abs{\approx_L} = \infty$.
+\end{problem}
+
+
 \begin{dfn}
-  Нека $\M_1 = \FAn{1}$ и $\M_2 = \FAn{2}$.
-  Казваме, че $\M_1$ и $\M_2$ са {\bf изоморфни}, което означаваме с $\M_1 \cong \M_2$, ако
+  Нека $\A_1 = \FAn{1}$ и $\A_2 = \FAn{2}$.
+  Казваме, че $\A_1$ и $\A_2$ са {\bf изоморфни}, което означаваме с $\A_1 \cong \A_2$, ако
   съществува биекция $f: Q_1\to Q_2$, за която:
   \begin{itemize}
   \item
@@ -1693,93 +1748,91 @@ $\M$ е {\bf минимален} за езика $L$.
   \item
     $(\forall a\in\Sigma)(\forall q\in Q_1)[f(\delta_1(q,a)) = \delta_2(f(q),a)]$.
   \end{itemize}
-  Ще казваме, че $f$ задава изоморфизъм на $\M_1$ върху $\M_2$.
+  Ще казваме, че $f$ задава изоморфизъм на $\A_1$ върху $\A_2$.
 \end{dfn}
 
-Това означава, че два автомата $\M_1$ и $\M_2$ са изоморфни, ако можем да получим $\M_2$
-като преименуваме състоянията на $\M_1$.
+Това означава, че два автомата $\A_1$ и $\A_2$ са изоморфни, ако можем да получим $\A_2$
+като преименуваме състоянията на $\A_1$.
 
 \begin{cor}
   Нека е даден регулярния език $L$.
-  Всички минимални автомати за $L$ са изоморфни на $\M_0$, автомата построен в теоремата на Нерод-Майхил.
+  Всички минимални автомати за $L$ са изоморфни на $\A_0$, автомата построен в теоремата на Нерод-Майхил.
 \end{cor}
 \begin{proof}
-  Нека $\M = \FA$ е произволен автомат, за който $\L(\M) = L$ и $\abs{Q} = \abs{\approx_L}$.
-  Съобразете, че $\M$ е {\em свързан}, т.е. всяко състояние на $\M$ е достижимо от началното.
-  Искаме да докажем, че $\M \cong \M_0$.
-  Понеже $\M$ е свързан, за всяко състояние $q$ можем да намерим дума $\omega_q$,
+  Нека $\A = \FA$ е произволен автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\approx_L}$.
+  Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
+  Искаме да докажем, че $\A \cong \A_0$.
+  Понеже $\A$ е свързан, за всяко състояние $q$ можем да намерим дума $\omega_q$,
   за която $\delta^\star(s,\omega_q) = q$.
   Да дефинираме изображението $f:Q\to [\approx_L]$ като $f(q) = [\omega_q]_L$.
   Ще докажем, че
-  $f$ задава изоморфизъм на $\M$ върху $\M_0$. 
+  $f$ задава изоморфизъм на $\A$ върху $\A_0$. 
   \begin{itemize}
   \item
-    Първо да съобразим, че ако $\delta^\star_\M(s,\alpha) = q$, то $[\omega_q]_L = [\alpha]_L$.
-    Понеже $\delta^\star_\M(s,\alpha) = q = \delta^\star_\M(s,\omega_q)$, то $\omega_q \sim_\M \alpha$
-    Сега от \Th{rel-finer} следва директно, че $[\omega_q]_L = [\alpha]_L$.
-    Това означава, че $f$ е определена коректно, т.е. $f$ е {\bf функция}.
+    Първо да съобразим, че ако $\delta^\star_\A(s,\alpha) = q$, то $[\omega_q]_L = [\alpha]_L$.
+    Понеже $\delta^\star_\A(s,\alpha) = q = \delta^\star_\A(s,\omega_q)$, то $\omega_q \sim_\A \alpha$.
+    От \Th{rel-finer} имаме, че
+    \[\omega_q \sim_\A \alpha \implies \omega_q \approx_L \alpha.\]
+    Това означава, $[\omega_q]_L = [\alpha]_L$ и следователно $f$ е определена коректно, т.е. $f$ е {\bf функция}.
   \item
     Ще проверим, че $f$ е {\bf инективна}, т.е.
     \[(\forall q_1,q_2 \in Q)[q_1\neq q_2\ \rightarrow\ f(q_1) \neq f(q_2)].\]
     Да допуснем, че има състояния $q_1 \neq q_2$, за които 
     \[f(q_1) = [\omega_{q_1}]_L = [\omega_{q_2}]_L = f(q_2).\]
-    Тогава $\omega_{q_1} \not\sim_\M \omega_{q_2}$ и $\omega_{q_1} \approx_L \omega_{q_2}$.
-    Но тогава \Cor{upper-bound} получаваме, че $\abs{\sim_\M} > \abs{\approx_L}$,
-    което противоречи с минималността на $\M$.
+    Тогава $\omega_{q_1} \not\sim_\A \omega_{q_2}$ и $\omega_{q_1} \approx_L \omega_{q_2}$.
+    Но тогава от \Cor{upper-bound} получаваме, че $\abs{\sim_\A} > \abs{\approx_L}$,
+    което противоречи с минималността на $\A$.
   \item
     За да бъде $f$ {\bf сюрективна} трябва за всеки клас $[\beta]_L$ да съществува състояние $q$, за което $f(q) = [\beta]_L$.
-    Понеже $\M$ е свързан, съществува състояние $q$, за което $\delta^\star_\M(s,\beta) = q$.
-    Вече се убедихме, че в този случай $\beta \approx_L \omega_q$.
+    Понеже $\A$ е свързан, съществува състояние $q$, за което $\delta^\star_\A(s,\beta) = q$.
+    Вече се убедихме, че в този случай $\beta \approx_L \omega_q$, защото $\beta \sim_\A \omega_q$.
     Тогава $f(q) = [\omega_q]_L = [\beta]_L$.
   \item
     За последно оставихме проверката, че $f$ наистина е {\bf изоморфизъм}:
     \begin{align*}
-      f(\delta_\M(q,a)) & = f(\delta_\M(\delta^\star_\M(s,\omega_q),a)) & (\text{от избора на }\omega_q)\\
-      & = f(\delta^\star_\M(s,\omega_qa)) & (\text{от деф. на }\delta^\star_\M)\\
+      f(\delta_\A(q,a)) & = f(\delta_\A(\delta^\star_\A(s,\omega_q),a)) & (\text{от избора на }\omega_q)\\
+      & = f(\delta^\star_\A(s,\omega_qa)) & (\text{от деф. на }\delta^\star_\A)\\
       & = [\omega_qa]_L & (\text{от деф. на }f)\\
-      & = \delta^\star_{\M_0}([\varepsilon]_L, \omega_qa) & (\text{от деф. на }\M_0)\\ 
-      & = \delta_{\M_0}(\delta^\star_{\M_0}([\varepsilon]_L, \omega_q),a) & (\text{от деф. на }\delta^\star_{\M_0})\\
-      & = \delta_{\M_0}([\omega_q]_L, a) & (\text{свойство на }\delta_{\M_0})\\
-      & = \delta_{\M_0}(f(q), a) & ( f(q) = [\omega_q]_L).
+      & = \delta^\star_{\A_0}([\varepsilon]_L, \omega_qa) & (\text{от деф. на }\A_0)\\ 
+      & = \delta_{\A_0}(\delta^\star_{\A_0}([\varepsilon]_L, \omega_q),a) & (\text{от деф. на }\delta^\star_{\A_0})\\
+      & = \delta_{\A_0}([\omega_q]_L, a) & (\text{свойство на }\delta_{\A_0})\\
+      & = \delta_{\A_0}(f(q), a) & ( f(q) = [\omega_q]_L).
     \end{align*}
   \end{itemize}
 \end{proof}
 
 \subsection{Алгоритъм за намиране на МДКА.}
 \begin{itemize}
-% \item
-%   Нека $M = \FA$ да бъде ДКА. Определяме
-%   \[A_M = \{\pair{q,w} \mid q\in Q\ \&\ w\in\Sigma^\star\ \&\ \delta^\star(q,w) \in F\}.\]
 \item
-  Казваме, че две състояния $p,q$ са {\bf еквивалентни}, означаваме $p\equiv_\M q$,
-  % \footnote{В общия случай, $\approx_L \supseteq \sim_M$, т.е. $\sim_M$ е по-фина от $\approx_L$.
-  %   Нека $\equiv\ =\  \approx_L/\sim_M$, където $[\alpha]_{\sim_M} \equiv [\beta]_{\sim_M} \iff \alpha \approx_L \beta$. Тогава $\abs{\approx_L} = \abs{\equiv}$.}
-  ако \[p \equiv q\ \iff\ (\forall \gamma\in \Sigma^\star)[\delta^\star(p,\gamma) \in F\ \iff\ \delta^\star(q,\gamma) \in F].\]
+  Да фиксираме произволен ДКА $\A = \FA$.
 \item
-  Релацията $\equiv$ между състояния на автомата $\M$ е релация на еквивалентност. 
+  Казваме, че две състояния $p,q$ на автомата  са {\bf еквивалентни}, означаваме $p\equiv_\A q$,
+  ако \[p \equiv_\A q\ \iff\ (\forall \gamma\in \Sigma^\star)[\delta^\star(p,\gamma) \in F\ \iff\ \delta^\star(q,\gamma) \in F].\]
 \item
-  Нека $q_\alpha$ е състоянието, което съответства на думата $\alpha$ в $\M$, т.е.
-  $\delta^\star_\M(s,\alpha) = q_\alpha$. Тогава:
-  \[q_\alpha \equiv q_\beta\ \iff\ \alpha\approx_{\L(\M)} \beta.\]
-  Това означава, че ако в $\M$ няма недостижими състояния от началното състояние $s$, то $\abs{\equiv} = \abs{\approx_{\L(\M)}}$.
+  Релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност. 
+\item
+  Нека $q_\alpha$ е състоянието, което съответства на думата $\alpha$ в $\A$, т.е.
+  $\delta^\star_\A(s,\alpha) = q_\alpha$. Тогава:
+  \[q_\alpha \equiv_\A q_\beta\ \iff\ \alpha\approx_{\L(\A)} \beta.\]
+  Това означава, че ако в $\A$ няма недостижими състояния от началното състояние $s$, то $\abs{\equiv_\A} = \abs{\approx_{\L(\A)}}$.
 \end{itemize}
 
-При даден език $\L$ и ДКА $\M = \FA$, който го разпознава, нашата цел е да построим нов ДКА $\M_0$,
+При даден език $L$ и ДКА $\A = \FA$, който го разпознава, нашата цел е да построим нов ДКА $\A_0$,
 който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_\L$.
-Това ще направим като ``слеем'' състоянията на $\M$, които са еквивалентни относно релацията $\equiv$.
-Това означава, че всяко състояние на $\M_0$ ще отговаря на един клас на еквивалентност на релацията $\equiv$.
-Проблемът с намирането на класовете на еквивалентност на релацията $\equiv$ е кванторът $\forall \gamma \in \Sigma^\star$
+Това ще направим като ``слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
+Това означава, че всяко състояние на $\A_0$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
+Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \gamma \in \Sigma^\star$
 в нейната дефиницията.
 
 Алгоритъмът представлява намирането на релации $\equiv_n$, където
 \[p\equiv_n q \iff (\forall\gamma\in\Sigma^\star)[\abs{\gamma}\leq n\ \rightarrow\ (\delta^\star(p,\gamma) \in F\ \iff\ \delta^\star(q,\gamma) \in F)].\]
-
+Релациите $\equiv_n$ представляват апроксимират релацията $\equiv_\A$.
 Обърнете внимание, че за всяко $n$, $\equiv_n$ е {\em по-груба} релация от $\equiv_{n+1}$, 
-която на свой ред е по-груба от $\equiv$.
+която на свой ред е по-груба от $\equiv_\A$.
 Алгоритъмът строи $\equiv_n$ докато $\equiv_n\ \neq\ \equiv_{n+1}$.
 Тъй като броят на класовете на еквивалентност на $\equiv_n$ е краен, и не по-голям от $\abs{Q}$, то 
-със сигурност ще намерим $n$, за което $\equiv_n = \equiv_{n+1}$.
-Тогава заключаваме, че $\equiv\ =\ \equiv_n$.
+със сигурност ще намерим $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
+Тогава заключаваме, че $\equiv_\A\ =\ \equiv_n$.
 
 Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
 лесно се съобразява, че $\equiv_0$ има два класа на еквивалентност.
@@ -1794,33 +1847,215 @@ $\M$ е {\bf минимален} за езика $L$.
     $(\forall a \in \Sigma)[\delta(q,a) \equiv_{n} \delta(p,a)]$.
   \end{enumerate}
 \end{prop}
-\begin{proof}%[стр. 99 от \cite{papadimitriou}]
-  Индукция по $n$.
-  
-  По условие имаме, че $p\equiv_{n+1} q$ точно тогава, когато
-  $p\equiv_n q$ и за всяка дума $\gamma$ с дължина $n+1$,
-  \[\delta^\star(p,\gamma) \in F \iff \delta^\star(q,\gamma)\in F.\]
-  Да разгледаме една такава дума $\gamma = a\beta$, $\abs{\beta} = n$.
-  Получаваме, че 
-  \[\delta^\star(\delta(p,a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F.\]
-  Тъй като това е вярно за всяка дума $\gamma$, то
-  \[(\forall a\in\Sigma)[\delta(p,a) \equiv_{n} \delta(q, a)].\]
-  
+\begin{proof}
+  \marginpar{(стр. 99 от \cite{papadimitriou})}
+  \begin{align*}
+    p \equiv_{n+1} q \iff & (\forall \gamma\in\Sigma^{\leq n+1})[\delta^\star(p,\gamma)\in F \iff \delta^\star(q,\gamma) \in F]\\
+    \iff & (\forall \gamma\in\Sigma^{\leq n})[\delta^\star(p,\gamma)\in F \iff \delta^\star(q,\gamma) \in F]\ \wedge\ \\
+    & (\forall a\in\Sigma)(\forall \gamma\in\Sigma^{\leq n})[\delta^\star(p, a\gamma)\in F \iff \delta^\star(q, a\gamma) \in F]\\
+    \iff & p \equiv_n q\ \&\ (\forall a\in\Sigma)[\delta(p,a) \equiv_n \delta(q,a)].
+  \end{align*}
 \end{proof}
 
-Нека е даден автомата $M = \FA$.
-След като сме намерили релацията $\equiv$ за $M$, 
-строим автомата $M^\prime = (Q^\prime,\Sigma,s^\prime,\delta^\prime,F^\prime)$, където:
+Нека е даден автомата $A = \FA$.
+След като сме намерили релацията $\equiv_\A$ за $\A$, 
+строим автомата $\A' = (Q',\Sigma,s',\delta',F')$, където:
 \begin{enumerate}[1)]
 \item
-  $Q^\prime = \{[q]_\equiv \mid q\in Q\}$;
+  $Q' = \{[q]_{\equiv_\A} \mid q\in Q\}$;
 \item
-  $s^\prime = [s]_\equiv$;
+  $s' = [s]_{\equiv_\A}$;
 \item
-  $\delta^\prime([q]_\equiv, a) = [\delta(q,a)]_\equiv$;
+  $\delta'([q]_{\equiv_\A}, a) = [\delta(q,a)]_{\equiv_\A}$;
 \item
-  $F^\prime = \{[q]_\equiv\mid F\cap [q]_\equiv \neq \emptyset\}$;
+  $F' = \{[q]_{\equiv_\A}\mid F\cap [q]_{\equiv_\A} \neq \emptyset\}$;
 \end{enumerate}
+
+От всичко казано дотук знаем, че $\A'$ е минимален автомат разпознаващ езика $\L(\A)$.
+
+\begin{example}
+  Да разгледаме следния краен детерминиран автомат $\A$.
+  \begin{figure}[H]
+    \begin{subfigure}[b]{.4\textwidth}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[initial above, state]   (0) {$0$};
+        \node[state]            (1) [above right of=0]{$1$};
+        \node[state]            (2) [below right of=0]{$2$};
+        \node[state,accepting]  (3) [right of=1]{$3$};
+        \node[state,accepting]  (4) [right of=2]{$4$};
+        \node[state,accepting]  (5) [below right of=3]{$5$};
+        
+        
+        \path 
+        (0) edge  node [above] {$a$}   (1)
+        (0) edge  node [below] {$b$}   (2)
+        (1) edge node [above] {$a$}    (3)
+        (1) edge [bend left=15] node [below] {$b$}    (4)
+        (2) edge [bend left=15] node [left] {$b$}    (3)
+        (2) edge node [below] {$a$}   (4)
+        (4) edge  node [below] {$a,b$} (5)
+        (3) edge  node [left] {$a,b$}  (5)
+        (5) edge [loop above]   node [above] {$a,b$}  (5);
+      \end{tikzpicture}
+      \caption{Ще построим минимален автомат разпознаващ $\L(\A)$}
+    \end{subfigure}
+    \begin{subtable}[b]{0.4\textwidth}
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+          \hline
+          $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
+          \hline
+          \hline
+          $\equiv_0$ & $A^0_0$ & $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
+          \hline
+          $a$ & $A^0_0$& $A^1_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
+          \hline
+          $b$ & $A^0_0$& $A^1_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
+          \hline
+          \hline
+          $\equiv_1$ & $A^0_1$ & $A^1_1$ & $A^1_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
+          \hline
+          $a$ & $A^1_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
+          \hline
+          $b$ & $A^1_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
+          \hline
+        \end{tabular}        
+        \caption{Класовете на еквивалентност относно релацията $\equiv_n$. Получаваме, че $\equiv_1\ =\ \equiv_2$}
+      \end{subtable}
+      \begin{subfigure}[H]{0.5\textwidth}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+          
+          \node[initial, state]   (0) {$A^0_1$};
+          \node[state]            (1) [right of=0]{$A^1_1$};
+          \node[state,accepting]  (2) [right of=1]{$A^2_1$};
+          
+          \path 
+          (0) edge [bend left=15] node [above] {$a,b$}   (1)
+          (1) edge [bend left=15] node [above] {$a,b$}   (2)
+        (2) edge [loop above] node [above] {$a,b$}   (2);
+      \end{tikzpicture}
+      \caption{Получаваме следния минимален автомат $\A_0$, $\L(\A_0) = \L(\A)$}
+  \end{subfigure}
+\end{figure}
+
+\marginpar{Съобразете, че $\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
+
+\end{example}
+
+\begin{example}
+  Да разгледаме следния краен детерминиран автомат $\A$.
+  \begin{figure}[H]
+    %\begin{center}
+      \begin{subfigure}[b]{0.4\textwidth}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[initial above, state]   (0) {$0$};
+        \node[state,accepting]  (1) [above right of=0]{$1$};
+        \node[state,accepting]  (2) [below right of=0]{$2$};
+        \node[state]            (3) [right of=1]{$3$};
+        \node[state]            (4) [right of=2]{$4$};
+        \node[state,accepting]  (5) [below right of=3]{$5$};
+        
+        
+        \path 
+        (0) edge node [below] {$a$}   (1)
+        (0) edge node [below] {$b$}   (2)
+        (1) edge node [above] {$a$}    (3)
+        (1) edge [bend left=15] node [below] {$b$}    (4)
+        (2) edge [bend left=15] node [left] {$b$}    (3)
+        (2) edge node [below] {$a$}   (4)
+        (4) edge node [below] {$a,b$} (5)
+        (3) edge node [left] {$a,b$}  (5)
+        (5) edge [loop above]   node [above] {$a,b$}  (5);
+      \end{tikzpicture}
+      \caption{Ще построим минимален автомат разпознаващ $\L(\A)$}
+    \end{subfigure}
+    \qquad
+    \qquad
+    \begin{subfigure}[b]{0.4\textwidth}
+      \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+        \hline
+        \hline
+        $\equiv_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^0_0$ & $A^0_0$ & $A^1_0$\\
+        \hline
+        $a$ & $A^1_0$& $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
+        \hline
+        $b$ & $A^1_0$& $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
+        \hline
+        \hline
+        $\equiv_1$ & $A^0_1$ & $A^1_1$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$\\
+        \hline
+        $a$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
+        \hline
+        $b$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
+        \hline
+        \hline
+        $\equiv_2$ & $A^0_2$ & $A^1_2$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$\\
+        \hline
+        $a$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$ & $A^3_2$ & $A^3_2$\\
+        \hline
+        $b$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$ & $A^3_2$ & $A^3_2$\\
+        \hline
+      \end{tabular}
+      \caption{Класовете на еквивалентност относно релацията $\equiv_n$. Получаваме, че $\equiv_2\ =\ \equiv_3$}
+    \end{subfigure}
+  \end{figure}
+
+  \marginpar{Съобразете, че $\L(\A) = \{a,b\} \cup \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 3\}$.}
+  % \begin{tabular}{|c|c|c|c|c|c|c|}
+  %   \hline
+  %   $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+  %   \hline
+  %   \hline
+  %   $\equiv_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^0_0$ & $A^0_0$ & $A^1_0$\\
+  %   \hline
+  %   $a$ & $A^1_0$& $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
+  %   \hline
+  %   $b$ & $A^1_0$& $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
+  %   \hline
+  %   \hline
+  %   $\equiv_1$ & $A^0_1$ & $A^1_1$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$\\
+  %   \hline
+  %   $a$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
+  %   \hline
+  %   $b$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
+  %   \hline
+  %   \hline
+  %   $\equiv_2$ & $A^0_2$ & $A^1_2$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$\\
+  %   \hline
+  %   $a$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$ & $A^3_2$ & $A^3_2$\\
+  %   \hline
+  %   $b$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$ & $A^3_2$ & $A^3_2$\\
+  %   \hline
+  % \end{tabular}
+  
+  Получаваме следния минимален автомат $\A_0$ разпознаващ езика $\L(\A)$.
+
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[initial, state]   (0) {$A^0_2$};
+        \node[state,accepting]  (1) [right of=0]{$A^1_2$};
+        \node[state]            (2) [right of=1]{$A^2_2$};
+        \node[state,accepting]  (3) [right of=2]{$A^3_2$};
+                
+        \path 
+        (0) edge [bend left=15] node [above] {$a,b$}   (1)
+        (1) edge [bend left=15] node [above] {$a,b$}   (2)
+        (2) edge [bend left=15] node [above] {$a,b$}   (3)
+        (3) edge [loop above]   node [above] {$a,b$}   (3);
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+
+\end{example}
 
 
 \section*{Библиография}
@@ -1828,54 +2063,17 @@ $\M$ е {\bf минимален} за езика $L$.
 Основни източници в тази глава са:
 \begin{itemize}
 \item 
-  глави 2 и 3 от \cite{hopcroft1}, глави 2,3 и 4 от \cite{hopcroft2};
+  глави 2 и 3 от \cite{hopcroft1}.
 \item
-  глава 1 от \cite{sipser1};
+  глави 2,3 и 4 от \cite{hopcroft2}.
+\item
+  Глава 1 от \cite{sipser1}.
 \item
   глава 2 от \cite{papadimitriou}.
+\item
+  Първа част на \cite{kozen}. Въпросът за минимизация на автомат е разгледан подробно.
 \end{itemize}
 
-
-
-% % \begin{figure}
-% %   \begin{subfigure}[b]{0.3\textwidth}%[НКА с $\varepsilon$-преходи]{
-% %     \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-% %       \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-      
-% %       \node[initial,state] (0) {$0$};
-% %       \node[state]         (1) [right of=0]{$1$};
-% %       \node[state]   (2) [right of=1]{$2$};
-% %       \node[state]   (3) [right of=2]{$3$};
-% %       \node[accepting, state]   (4) [right of=3]{$4$};
-      
-% %       \path 
-% %       (0) edge  node [above] {$\varepsilon$} (1)
-% %       (1) edge  node [above] {$a$} (2)
-% %       (2) edge  node [above] {$b$} (3) 
-% %       (3) edge  node [above] {$a,\varepsilon$} (4) 
-% %       (1) edge  [bend right=30] node [below] {$a$} (3)
-% %       (2) edge  [bend right=45] node [above] {$\varepsilon$} (1)
-% %       (3) edge  [bend right=45] node [above] {$\varepsilon$} (2);
-% %     \end{tikzpicture}
-% %   \end{subfigure}
-% %   \begin{subfigure}[b]{0.3\textwidth}
-% %   % \subfigure[получения от него ДКА]{
-% %     \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
-% %       \tikzstyle{every state}=[circle,font=\small]
-      
-% %       \node[initial,state] (0) {$\{0,1\}$};
-% %       \node[accepting,state]         (1) [above right of=0]{$\{1,2,3,4\}$};
-% %       \node[state]   (2) [below right of=0]{$\emptyset$};
-      
-% %       \path 
-% %       (0) edge [] node [above] {$a$} (1)
-% %       (0) edge node [above] {$b$} (2)
-% %       (1) edge [loop right] node [right] {$a,b$} (1)
-% %       (2) edge [loop right] node [right] {$a,b$} (2);
-% %     \end{tikzpicture}
-% %   \end{subfigure}
-% %   \caption{}
-% % \end{figure}
 
 
 % \newpage
