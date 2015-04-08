@@ -1,12 +1,112 @@
 \chapter{Увод}
 
 \section{Съждително смятане}
+\label{sect:propositional}
+\marginpar{На англ. Propositional calculus}
+
+Съждителното смятане наподобява аритметичното смятане, като вместо аритметичните операции $+,-,\cdot,/$, 
+имаме съждителни операции като $\neg, \wedge, \vee$.
+Например, $(p\vee q) \wedge \neg  r$ е съждителен израз.
+Освен това, докато аритметичните променливи приемат стойности произволни числа, то
+съждителните променливи приемат само стойности {\bf истина (1)} или {\bf неистина (0)}.
+
+{\bf Съждителен израз} наричаме съвкупността от съждителни променливи $p,q,r,\dots$, свързани със знаците за логически операции
+$\neg, \vee, \wedge, \rightarrow, \leftrightarrow$ и скоби, определящи реда на операциите.
+
+\subsection*{Съждителни операции}
+
+\begin{itemize}
+\item
+  Отрицание $\neg$
+\item 
+  Дизюнкция $\vee$
+\item
+  Конюнкция $\wedge$
+\item
+  Импликация $\rightarrow$
+\item
+  Еквивалентност $\iff$
+\end{itemize}
+
+Ще използваме таблица за истинност за да определим стойностите на основните съждителни операции
+при всички възможни набори на стойностите на променливите.
+
+\[
+\begin{array}{|c|c|c|c|c|c|c|c|c|}
+  \hline
+  p & q & \neg p & p \vee q & p \wedge q & p \rightarrow q & \neg p \vee q & p \iff q & (\neg{p}\wedge q)\ \vee\ (p\wedge \neg q) \\
+  \hline
+  0 & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 1\\
+  \hline
+  0 & 1 & 1 & 1 & 0 & 1 & 1 & 0 & 0\\
+  \hline
+  1 & 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0\\
+  \hline
+  1 & 1 & 0 & 1 & 1 & 1 & 1 & 1 & 1\\
+  \hline
+\end{array}
+\]
+
+
+{\bf Съждително верен} (валиден) е този логически израз, който има верностна стойност {\bf 1} при всички възможни набори на
+стойностите на съждителните променливи в израза, т.е. стълбът на израза в таблицата за истинност трябва да съдържа само 
+стойности {\bf 1}. 
+
+Два съждителни израза $\varphi$ и $\psi$ са {\bf еквивалентни}, което означаваме $\varphi \equiv \psi$, ако са съставени от 
+едни и същи съждителни променливи и двата израза имат едни и същи верностни стойности при всички комбинации от верностни 
+стойности на променливите. С други думи, колоните на двата израза в съответните им таблици за истинност трябва да съвпадат.
+Така например, от горната таблица се вижда, че 
+$p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\wedge \neg q)$.
+
+\subsection*{Съждителни закони}
+
+\begin{enumerate}[I)]
+  \item
+    {\bf Комутативен закон}
+    \[p\vee q \equiv q\vee p\] 
+    \[p \wedge q \equiv q \wedge p\]
+  \item
+    {\bf Асоциативен закон}
+    \[(p\vee q)\vee r \equiv p\vee(q\vee r)\]
+    \[(p\ \wedge\ q)\ \wedge\ r \equiv p\ \wedge\ (q\ \wedge\ r)\]
+  \item
+    {\bf Дистрибутивен закон}
+    \[p\ \wedge\ (q \vee r) \equiv (p\ \wedge q)\vee (p\ \wedge\ r)\]
+    \[p\vee (q\ \wedge\ r) \equiv (p\vee q)\ \wedge\ (p\vee r)\]
+  \item
+    {\bf Закони на де Морган}
+    \[\neg(p \wedge q) \equiv (\neg p \vee \neg q)\]
+    \[\neg(p\vee q) \equiv (\neg p \wedge \neg q)\]
+  \item
+    {\bf Закон за контрапозицията}
+    \[p\rightarrow q \equiv \neg q \rightarrow \neg p\]
+  \item
+    {\bf Обобщен закон за контрапозицията}
+    \[(p \wedge q)\rightarrow r \equiv (p \wedge \neg r) \rightarrow \neg q\]
+  \item
+    {\bf Закон за изключеното трето}
+    \[p\vee \neg p \equiv {\mathbf 1}\]
+  \item
+    {\bf Закон за силогизма (транзитивност)}
+    \[[(p\rightarrow q)\ \wedge\ (q\rightarrow r)] \rightarrow (p\rightarrow r) \equiv {\mathbf 1}\]
+\end{enumerate}
+
+Лесно се проверява с таблиците за истинност, че законите са валидни.
+
 
 \section{Предикатно смятане}
 
 \section{Индукция}
 
 \section{Азбуки, думи, езици}
+
+\section*{Библиография}
+
+\begin{itemize}
+\item 
+  Глава 1 от \cite{rosen}
+\end{itemize}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "EAI"
