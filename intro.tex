@@ -100,11 +100,107 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
 
 \section{Азбуки, думи, езици}
 
+\subsection*{Основни понятия}
+
+\begin{itemize}
+\item 
+  \index{азбука}
+  {\bf Азбука} ще наричаме всяко крайно множество,
+  като обикновено ще я означаваме със $\Sigma$.
+  \marginpar{Често ще използваме буквите $a$, $b$, $c$ за да означаваме букви.}
+  Елементите на азбуката $\Sigma$ ще наричаме {\bf букви} или символи.
+\item
+  \index{дума}
+  {\bf Дума} над азбуката $\Sigma$ е произволна крайна редица от елементи на $\Sigma$.
+  Например, за $\Sigma = \{a,b\}$, $aababba$ е дума над $\Sigma$ с дължина $7$.
+  С $\abs{\alpha}$ ще означаваме дължината на думата $\alpha$.
+  \marginpar{Обикновено ще означаваме думите с $\alpha$, $\beta$, $\gamma$, $\omega$.}
+\item
+  Обърнете внимание, че имаме единствена дума с дължина $0$.
+  Тази дума ще означаваме с $\varepsilon$ и ще я наричаме {\bf празната дума},
+  т.е. $\abs{\varepsilon} = 0$.
+\item
+  С $a^n$ ще означаваме думата съставена от $n$ $a$-та.
+  Формалната индуктивна дефиниция е следната:
+  \begin{align*}
+    a^0 & = \varepsilon,\\
+    a^{n+1} & = a^na.
+  \end{align*}
+\item
+  Множеството от всички думи над азбуката $\Sigma$ ще означаваме със $\Sigma^\star$.
+  Например, за $\Sigma = \{a,b\}$,
+  \[\Sigma^\star = \{\varepsilon,a,b,aa,ab,ba,bb,aaa,aab,\dots\}.\]
+  Обърнете внимание, че $\emptyset^\star = \{\varepsilon\}$.
+\end{itemize}
+
+\subsection*{Операции върху думи}
+
+\begin{itemize}
+\item 
+  \index{конкатенация}
+  Операцията {\bf конкатенация} взима две думи $\alpha$ и $\beta$ и образува 
+  новата дума $\alpha\cdot\beta$ като слепва двете думи.
+  Например $aba\cdot bb = ababb$.
+  Обърнете внимание, че в общия 
+  случай $\alpha\cdot\beta \neq \beta\cdot\alpha$. 
+  \marginpar{Често ще пишем $\alpha\beta$ вместо $\alpha\cdot\beta$}
+  Можем да дадем формална индуктивна дефиниция на операцията конкатенация по
+  дължината на думата $\beta$.
+  \begin{itemize}
+  \item 
+    Ако $\abs{\beta} = 0$, то $\beta = \varepsilon$.
+    Тогава $\alpha\cdot \varepsilon \df \alpha$.
+  \item
+    Ако $\abs{\beta} = n+1$, то $\beta = \gamma b$, $\abs{\gamma} = n$.
+    Тогава $\alpha\cdot\beta \df (\alpha\cdot\gamma)b$.
+  \end{itemize}
+\item
+  \marginpar{Обърнете внимание, че $\emptyset\cdot A = A\cdot\emptyset = \emptyset$}
+  \marginpar{Също така, $\{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A$}
+  Нека $A$ и $B$ са множества от думи.
+  Дефинираме конкатенацията на $A$ и $B$ като
+  \[A\cdot B \df \{\alpha\cdot\beta \mid \alpha\in A\ \&\ \beta \in B\}.\]
+\item
+  Сега за едно множество от думи $A$, дефинираме $A^n$ индуктивно:
+  \begin{align*}
+    A^0 & \df \{\varepsilon\},\\
+    A^{n+1} & \df A^n \cdot A.
+  \end{align*}
+  Ако $A = \{ab, ba\}$, то
+  $A^0 = \{\varepsilon\}$, $A^1 = A$, $A^2 = \{abab, abba, baba, baab\}$.
+  Ако $A = \{a,b\}$, то $A^n = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} = n\}$.
+\item
+  За едно множеството от думи $A$, дефинираме:
+  \begin{align*}
+    A^\star & \df \bigcup_{n\geq 0} A^n\\
+    & = A^0 \cup A^1 \cup A^2 \cup A^3 \cup \dots\\
+    A^+ & \df A\cdot A^\star.
+  \end{align*}
+\end{itemize}
+
+\begin{problem}
+  Докажете, че:
+  \begin{enumerate}[a)]
+  \item 
+    операцията конкатенация е {\em асоциативна}, т.е. за всеки три думи $\alpha$, $\beta$, $\gamma$,
+    \[(\alpha\cdot\beta)\cdot\gamma = \alpha\cdot(\beta\cdot\gamma);\]
+  \item
+    за множествата от думи $A$, $B$ и $C$,
+    \[(A\cdot B)\cdot C = A\cdot (B\cdot C);\]
+  \item
+    за произволно множество от думи $A$,
+    $A^\star = A^\star\cdot A^\star$ и $(A^\star)^\star = A^\star$.
+  \end{enumerate}
+\end{problem}
+
+
 \section*{Библиография}
 
 \begin{itemize}
 \item 
   Глава 1 от \cite{rosen}
+\item
+  На практика следваме Глава 2 от \cite{kozen} в описанието на думи и азбуки.
 \end{itemize}
 
 %%% Local Variables: 
