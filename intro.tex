@@ -360,7 +360,7 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
 \item
   {\bf Композиция} на две релации $R \subseteq B\times C$ и $P \subseteq A\times B$ е релацията $R\circ P \subseteq A\times C$,
   определена като:
-  \[R\circ P \df \{\langle{a,c} \in A\times C\rangle \mid (\exists b \in B)[\pair{a,b}\in P\ \&\ \pair{b,c} \in R]\}.\]
+  \[R\circ P \df \{\pair{a,c} \in A\times C \mid (\exists b \in B)[\pair{a,b}\in P\ \&\ \pair{b,c} \in R]\}.\]
 \item
   {\bf Обръщане} на релацията $R \subseteq A\times B$ е релацията $R^{-1}\subseteq B\times A$, 
   определена като:
@@ -368,7 +368,7 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
 \item
   \marginpar{Очевидно е, че $P$ е рефлексивна релация, дори ако $R$ не е.}
   {\bf Рефлексивно затваряне} на релацията $R \subseteq A\times A$ е релацията
-  \[P \df = R \cup A\times A.\]
+  \[P \df R \cup (A\times A).\]
 \item
   {\bf Итерация} на релацията $R \subseteq A\times A$ дефинираме като за всяко естествено число $n$,
   дефинираме релацията $R^n$ по следния начин:
@@ -380,7 +380,7 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
 \item
   \marginpar{\ding{45} Проверете, че $R^+$ е транзитивна релация!}
   {\bf Транзитивно затваряне} на $R \subseteq A\times A$ е релацията
-  \[R^+ = \bigcup_{n\geq 1} R^n.\]
+  \[R^+ \df \bigcup_{n\geq 1} R^n.\]
 \end{enumerate}
 
 За дадена релация $R$, с $R^\star$ ще означаваме нейното рефлексивно и транзитивно затваряне.
