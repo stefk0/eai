@@ -236,25 +236,27 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
   Докажете, че горните дефиниции наистина изпълняват харектеристичното свойство за наредени двойки.
 \end{problem}
 
-\begin{remark}
+\begin{dfn}
   \marginpar{Пример за индуктивна (рекурсивна) дефиниция}
-  Сега можем да въведем понятието наредена $n$-орка $\pair{a_1,\dots,a_n}$ за всяко естествено число $n \geq 1$:
+  Сега можем, за всяко естествено число $n \geq 1$,
+  да въведем понятието наредена $n$-орка $\pair{a_1,\dots,a_n}$:
   \begin{align*}
     & \pair{a_1} \df a_1,\\
     & \pair{a_1,a_2,\dots,a_n} \df \pair{a_1,\pair{a_2,\dots,a_n}}
   \end{align*}
-\end{remark}
+\end{dfn}
+
+Оттук нататък ще считаме, че имаме операцията наредена $n$-орка, без да се интересуваме от нейната формална дефиниция.
  
 \subsection*{Декартово произведение}
 \marginpar{На англ. cartesian product}
 \index{декартово произведение}
 \marginpar{Считаме, че $(A\times B)\times C = A\times (B\times C) = A\times B \times C$}
+
 За две множества $A$ и $B$, определяме тяхното декартово произведение като
 \[A\times B = \{\pair{a,b}\mid a\in A\ \&\ b\in B\}.\]
 За краен брой множества $A_1,A_2,\dots,A_n$, определяме
 \[A_1\times A_2\times\cdots\times A_n = \{\pair{a_1,a_2,\dots,a_n}\mid a_1 \in A_1\ \&\ a_2\in A_2\ \&\ \dots\ \&\ a_n \in A_n\}.\]
-
-Подмножествата $R$ от вида $R \subseteq A\times A\times\cdots\times A$ се наричат релации.
 
 \begin{problem}
   Преверете, че:
@@ -276,6 +278,8 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
 
 \subsection*{Основни видове бинарни релации}
 % \marginpar{Бинарни релации}
+
+Подмножествата $R$ от вида $R \subseteq A\times A\times\cdots\times A$ се наричат релации.
 Релациите от вида $R\ \subseteq\ A\times A$ са важен клас, който ще срещаме често.
 Да разгледаме няколко основни видове релации от този клас:
 \begin{enumerate}[I)]
@@ -333,8 +337,54 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
   Една бинарна релация $R$ над множеството $A$ се нарича {\bf релация на еквивалентност}, 
   ако $R$ е рефлексивна, транзитивна и симетрична.
 \item 
-  {\bf Клас на еквивалентност} $[a]_R = \{b\in A \mid \pair{a,b} \in R\}$.
+  За всеки елемент $a \in A$, определяме неговия 
+  {\bf клас на еквивалентност} относно релацията на еквивалентност $R$ по следния начин:
+  \[[a]_R \df \{b\in A \mid \pair{a,b} \in R\}.\]
 \end{itemize}
+
+\begin{remark}
+  Лесно се съобразява, че за всеки два елемента $a, b\in A$,
+  \[\pair{a,b} \in R \iff [a]_R = [b]_R.\]
+\end{remark}
+
+\begin{example}
+  За всяко естествено число $n\geq 2$, дефинираме релацията $R_n$ като
+  \[\pair{x,y}\in R_n \iff x \equiv y\ (\bmod\ n).\]
+  Ясно е, че $R_n$ са релации на еквивалентност.
+\end{example}
+
+
+\subsection*{Операции върху бинарни релации}
+
+\begin{enumerate}[I)]
+\item
+  {\bf Композиция} на две релации $R \subseteq B\times C$ и $P \subseteq A\times B$ е релацията $R\circ P \subseteq A\times C$,
+  определена като:
+  \[R\circ P \df \{\langle{a,c} \in A\times C\rangle \mid (\exists b \in B)[\pair{a,b}\in P\ \&\ \pair{b,c} \in R]\}.\]
+\item
+  {\bf Обръщане} на релацията $R \subseteq A\times B$ е релацията $R^{-1}\subseteq B\times A$, 
+  определена като:
+  \[R^{-1} \df \{\pair{x,y} \in B\times A \mid \pair{y,x} \in R\}.\]
+\item
+  \marginpar{Очевидно е, че $P$ е рефлексивна релация, дори ако $R$ не е.}
+  {\bf Рефлексивно затваряне} на релацията $R \subseteq A\times A$ е релацията
+  \[P \df = R \cup A\times A.\]
+\item
+  {\bf Итерация} на релацията $R \subseteq A\times A$ дефинираме като за всяко естествено число $n$,
+  дефинираме релацията $R^n$ по следния начин:
+  \marginpar{Лесно се вижда, че  $R^1 = R$}
+  \begin{align*}
+    R^0 & \df A\times A\\
+    R^{n+1} & \df R^n \circ R.
+  \end{align*}
+\item
+  \marginpar{\ding{45} Проверете, че $R^+$ е транзитивна релация!}
+  {\bf Транзитивно затваряне} на $R \subseteq A\times A$ е релацията
+  \[R^+ = \bigcup_{n\geq 1} R^n.\]
+\end{enumerate}
+
+За дадена релация $R$, с $R^\star$ ще означаваме нейното рефлексивно и транзитивно затваряне.
+От дефинициите е ясно, че \[R^\star = \bigcup_{n\geq 0} R^n.\]
 
 \section{Азбуки, думи, езици}
 
