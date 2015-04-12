@@ -96,7 +96,245 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
 
 \section{Предикатно смятане}
 
-\section{Индукция}
+\section{Доказателства на твърдения}
+
+\subsection*{Допускане на противното}
+
+Да приемем, че искаме да докажем, че свойството $P(x)$
+е вярно за всяко естествено число.
+Един начин да направим това е следния:
+\begin{itemize}
+\item 
+  Допускаме, че съществува елемент $n$, за който $\neg P(n)$.
+\item
+  Използвайки, че $\neg P(n)$ правим извод, от който следва факт, за който знаем, че винаги е лъжа.
+  Това означава, че доказваме следното твърдение
+  \[\exists x \neg P(x) \rightarrow \mathbf{0}.\]
+\item
+  Тогава можем да заключим, че $\forall x P(x)$, защото имаме следния извод:
+  \begin{prooftree}
+    \AxiomC{$\exists x \neg P(x) \rightarrow \mathbf{0}$}
+    \UnaryInfC{$\mathbf{1} \rightarrow \neg \exists x \neg P(x)$}
+    \UnaryInfC{$\neg \exists x \neg P(x)$}
+    \UnaryInfC{$\forall x P(x)$}
+  \end{prooftree}
+\end{itemize}
+
+Ще илюстрираме този метод на доказателство като решим няколко прости задачи.
+
+\begin{problem}
+  \label{prob:even-number-square}
+  За всяко $a \in \Int$, ако $a^2$ е четно, то $a$ е четно.
+\end{problem}
+\begin{proof}
+  Твърдението може да се запише като
+  \[(\forall a\in\Z)[a^2\mbox{ е четно}\ \rightarrow\ a\mbox{ е четно}].\]
+  \marginpar{$\neg (\forall x)(A(x) \rightarrow B(x))$ е еквивалентно на $ \equiv (\exists x)(A(x) \wedge \neg B(x))$}
+  Да допуснем противното, т.е.
+  \[(\exists a\in\Z)[a^2\mbox{ е четно}\ \wedge\ a\mbox{ не е четно}].\]
+  Да вземем едно такова нечетно $a$, за което $a^2$ е четно.
+  Това означава, че $a = 2k+1$, за някое $k \in \Z$,
+  и \[a^2 = (2k+1)^2 = 4k^2 + 4k + 1,\]
+  което очевидно е нечетно число.
+  Но ние допуснахме, че $a^2$ е четно.
+  Така достигаме до противоречие, следователно нашето допускане е грешно 
+  и 
+  \[(\forall a\in\Z)[a^2\mbox{ е четно}\ \rightarrow\ a\mbox{ е четно}].\]
+\end{proof}
+
+\begin{problem}
+  Докажете, $\sqrt{2}$ {\bf не} е рационално число.
+\end{problem}
+\begin{proof}
+  Да допуснем, че $\sqrt{2}$ е рационално число. Тогава  съществуват $a,b \in \Z$, такива че
+  \[\sqrt{2} = \frac{a}{b}.\]
+  Без ограничение, можем да приемем, че $a$ и $b$ са естествени числа,
+  които нямат общи делители, т.е. не можем да съкратим дробта $\frac{a}{b}$.
+  Получаваме, че \[2b^2 = a^2.\]
+  Тогава $a^2$ е четно число и от Задача \ref{prob:even-number-square}, $a$ е четно число.
+  Нека $a = 2k$. Получаваме, че
+  \[2b^2 = 4k^2,\]
+  от което следва, че
+  \[b^2 = 2k^2.\]
+  Това означава, че $b$ също е четно число, $b = 2n$, за някое $n \in \Z$.
+  Следователно, $a$ и $b$ са четни числа и имат общ делител $2$,
+  което е противоречие с нашето допускане, че $a$ и $b$ нямат общи делители.
+  Така достигаме до противоречие.
+  Накрая заключаваме, че $\sqrt{2}$ не е рационално число.
+\end{proof}
+
+
+\subsection*{Индукция върху естествените числа}
+
+\begin{problem}
+  \label{prob:number-prod-prime}  
+  Всяко естествено число $n \geq 2$ може да се запише като произведение на прости числа.
+\end{problem}
+\begin{proof}
+  Доказателството протича с индукция по $n \geq 2$.
+  \begin{enumerate}[a)]
+  \item 
+    За $n = 2$  е ясно.
+  \item
+    Ако $n+1$ е просто число, то всичко е ясно.
+    Ако $n+1$ е съставно, то \[n + 1 = n_1\cdot n_2.\]
+    Тогава $n_1 = p^{n_1}_1\cdots p^{n_k}_k$ и $n_2 = q^{m_1}_1\cdots q^{m_r}_r$,
+    където $p_1,\dots,p_k$ и $q_1,\dots,q_r$ са прости числа.
+    Тогава е ясно, че $n+1$ също е произведение на прости числа.
+  \end{enumerate}
+\end{proof}
+
+\begin{problem}
+  Докажете, че за всяко $n$, 
+  \[\sum^n_{i=0} 2^i = 2^{n+1} - 1.\]
+\end{problem}
+\begin{proof}
+  Доказателството протича с индукция по $n$.
+  \begin{itemize}
+  \item 
+    За $n = 0$, $\sum^0_{i=0}2^i = 1 = 2^{1} - 1$.
+  \item
+    Нека твърдението е вярно за $n$.
+    Ще докажем, че твърдението е вярно за $n+1$.
+    \begin{align*}
+      \sum^{n+1}_{i=0} 2^i & = \sum^{n}_{i=0}2^i + 2^{n+1}\\
+      & = 2^{n+1} - 1 + 2^{n+1} & (\text{от И.П.})\\
+      & = 2.2^{n+1} - 1 \\
+      & = 2^{(n+1)+1} - 1.
+    \end{align*}
+  \end{itemize}
+\end{proof}
+
+%\subsection*{Пълна индукция върху естествените числа}
+
+\section{Множества, релации, функции}
+
+За да дадем определение на понятието релация, трябва първо 
+да въведем понятието декартово произведение на множества,
+което пък от своя страна се основава на понятието наредена двойка.
+
+\subsection*{Наредена двойка}
+\index{наредена двойка}
+За два елемента $a$ и $b$ въвеждаме опрецията {\bf наредена двойка} $\pair{a,b}$.
+Наредената двойка $\pair{a,b}$ има следното характеристичното свойство:
+\[a_1 = a_2\ \wedge\ b_1 = b_2\ \iff\ \pair{a_1,b_1} = \pair{a_2,b_2}.\]
+Понятието наредена двойка може да се дефинира по много начини, стига да изпълнява харектеристичното свойство.
+Ето примери как това може да стане:
+\begin{enumerate}[1)]
+\item
+  \marginpar{Norbert Wiener (1914)}
+  Първото теоретико-множествено определение на понятието наредена двойка е
+  дадено от Норберт Винер:
+  \[\pair{a,b} \df \{\{\{a\},\emptyset\},\{\{b\}\}\}.\]
+\item
+  \marginpar{Kazimierz Kuratowski (1921)}
+  Определението на Куратовски се приема за ,,стандартно'' в наши дни:
+  \[\pair{a,b} \df \{\{a\},\{a,b\}\}.\]
+\end{enumerate}
+
+\begin{problem}
+  Докажете, че горните дефиниции наистина изпълняват харектеристичното свойство за наредени двойки.
+\end{problem}
+
+\begin{remark}
+  \marginpar{Пример за индуктивна (рекурсивна) дефиниция}
+  Сега можем да въведем понятието наредена $n$-орка $\pair{a_1,\dots,a_n}$ за всяко естествено число $n \geq 1$:
+  \begin{align*}
+    & \pair{a_1} \df a_1,\\
+    & \pair{a_1,a_2,\dots,a_n} \df \pair{a_1,\pair{a_2,\dots,a_n}}
+  \end{align*}
+\end{remark}
+ 
+\subsection*{Декартово произведение}
+\marginpar{На англ. cartesian product}
+\index{декартово произведение}
+\marginpar{Считаме, че $(A\times B)\times C = A\times (B\times C) = A\times B \times C$}
+За две множества $A$ и $B$, определяме тяхното декартово произведение като
+\[A\times B = \{\pair{a,b}\mid a\in A\ \&\ b\in B\}.\]
+За краен брой множества $A_1,A_2,\dots,A_n$, определяме
+\[A_1\times A_2\times\cdots\times A_n = \{\pair{a_1,a_2,\dots,a_n}\mid a_1 \in A_1\ \&\ a_2\in A_2\ \&\ \dots\ \&\ a_n \in A_n\}.\]
+
+Подмножествата $R$ от вида $R \subseteq A\times A\times\cdots\times A$ се наричат релации.
+
+\begin{problem}
+  Преверете, че:
+  \begin{enumerate}[1)]
+  \item 
+    $A\times(B\cup C) = (A\times B) \cup (A\times C)$.
+  \item
+    $(A\cup B)\times C = (A\times C)\cup (B\times C)$.
+  \item 
+    $A\times(B\cap C) = (A\times B) \cap (A\times C)$.
+  \item
+    $(A \cap B)\times C = (A \times C)\cap(B\times C)$.
+  \item 
+    $A\times(B\setminus C) = (A\times B) \setminus (A\times C)$.
+  \item
+    $(A\setminus B)\times C = (A\times C)\setminus (B\times C)$.
+  \end{enumerate}
+\end{problem}
+
+\subsection*{Основни видове бинарни релации}
+% \marginpar{Бинарни релации}
+Релациите от вида $R\ \subseteq\ A\times A$ са важен клас, който ще срещаме често.
+Да разгледаме няколко основни видове релации от този клас:
+\begin{enumerate}[I)]
+\item
+  {\bf рефликсивна}, ако
+  \[(\forall x\in A)[\pair{x,x}\in R].\]
+  Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е рефлексивна, защото
+  \[(\forall x\in \Nat)[x \leq x].\]
+% \item
+%   {\bf антирефлексивна}, ако
+%   \[(\forall x\in A)[\pair{x,x}\not\in R].\]
+%   Например, релацията $<\ \subseteq\ \Nat\times\Nat$ е антирефлексивна, защото
+%   \[(\forall x\in \Nat)[x \not< x].\]
+\item
+  {\bf транзитивна}, ако
+  \[(\forall x,y,z\in A)[\pair{x,y}\in R\ \&\ \pair{y,z}\in R \rightarrow \pair{x,z}\in R].\]
+  Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е транзитивна, защото
+  \[(\forall x,y,z\in A)[x \leq y\ \&\ y \leq z\ \rightarrow\ x\leq z].\]
+\item
+  {\bf симетрична}, ако
+  \[(\forall x,y\in A)[\pair{x,y}\in R \rightarrow \pair{y,x}\in R].\]
+  Например, релацията $=\ \subseteq\ \Nat\times\Nat$ е рефлексивна, защото
+  \[(\forall x,y\in \Nat)[x = y\ \rightarrow\ y = x].\]
+\item
+  {\bf антисиметрична}, ако
+  \[(\forall x,y\in A)[\pair{x,y}\in R\ \&\ \pair{y,x}\in R \rightarrow x = y].\]
+  Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е антисиметрична, защото
+  \[(\forall x,y,z\in A)[x \leq y\ \&\ y \leq x\ \rightarrow\ x = y].\]
+% \item
+%   {\bf асиметрична}, ако
+%   \[(\forall x,y)[\pair{x,y}\in R \rightarrow \pair{y,x}\not\in R].\]
+%   Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е асиметрична, защото
+%   \[(\forall x,y\in \Nat)[x < y\ \rightarrow\ y \not< x].\]
+\end{enumerate}
+
+% \begin{remark}
+%   Добре е да запомните как се наричат тези основни видове релации,
+%   защото ще ги използваме често.
+% \end{remark}
+
+% \begin{example}
+%   Да обобщим примерите от по-горе.
+%   \begin{enumerate}[a)]
+%   \item
+%     Релацията $\leq\ \subseteq\ \Nat\times\Nat$ е рефлексивна, транзитивна и антисиметрична.
+%   \item
+%     Релацията $<\ \subseteq\ \Nat\times\Nat$ е антирефлексивна, транзитивна и асиметрична.
+%   \item
+%     Релацията $=\ \subseteq\ \Nat\times\Nat$ е рефлексивна, транзитивна и симетрична.
+%   \end{enumerate}
+% \end{example}
+
+\begin{itemize}
+\item
+  Една бинарна релация $R$ над множеството $A$ се нарича {\bf релация на еквивалентност}, 
+  ако $R$ е рефлексивна, транзитивна и симетрична.
+\item 
+  {\bf Клас на еквивалентност} $[a]_R = \{b\in A \mid \pair{a,b} \in R\}$.
+\end{itemize}
 
 \section{Азбуки, думи, езици}
 
@@ -123,14 +361,16 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
   С $a^n$ ще означаваме думата съставена от $n$ $a$-та.
   Формалната индуктивна дефиниция е следната:
   \begin{align*}
-    a^0 & = \varepsilon,\\
-    a^{n+1} & = a^na.
+    a^0 & \df \varepsilon,\\
+    a^{n+1} & \df a^na.
   \end{align*}
 \item
   Множеството от всички думи над азбуката $\Sigma$ ще означаваме със $\Sigma^\star$.
   Например, за $\Sigma = \{a,b\}$,
   \[\Sigma^\star = \{\varepsilon,a,b,aa,ab,ba,bb,aaa,aab,\dots\}.\]
   Обърнете внимание, че $\emptyset^\star = \{\varepsilon\}$.
+\item
+  {\bf Лексикографска наредба}
 \end{itemize}
 
 \subsection*{Операции върху думи}
@@ -155,6 +395,23 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
     Тогава $\alpha\cdot\beta \df (\alpha\cdot\gamma)b$.
   \end{itemize}
 \item
+  Друга често срещана операция върху думи е {\bf обръщането} на дума.
+  Дефинираме думата $\alpha^R$ като обръщането на $\alpha$ по следния начин.
+  \begin{itemize}
+  \item 
+    Ако $\abs{\alpha} = 0$, то $\alpha = \varepsilon$ и $\alpha^R \df \varepsilon$.
+  \item
+    Ако $\abs{\alpha} = n+1$, то $\alpha = a\beta$, където $\abs{\beta} = n$.
+    Тогава $\alpha^R \df (\beta^R)a$.
+  \end{itemize}
+  Например, $reverse^R = esrever$.
+\item
+  \index{префикс}
+  \index{суфикс}
+  Казваме, че думата $\alpha$ е {\bf префикс} на думата $\beta$,
+  ако съществува дума $\gamma$, такава че $\beta = \alpha\cdot\gamma$.
+  $\alpha$ е {\bf суфикс} на $\beta$, ако $\beta = \gamma\cdot\alpha$, за някоя дума $\gamma$.
+\item
   \marginpar{Обърнете внимание, че $\emptyset\cdot A = A\cdot\emptyset = \emptyset$}
   \marginpar{Също така, $\{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A$}
   Нека $A$ и $B$ са множества от думи.
@@ -171,6 +428,7 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
   Ако $A = \{a,b\}$, то $A^n = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} = n\}$.
 \item
   За едно множеството от думи $A$, дефинираме:
+  \marginpar{Операцията $\star$ е известна като звезда на Клини}
   \begin{align*}
     A^\star & \df \bigcup_{n\geq 0} A^n\\
     & = A^0 \cup A^1 \cup A^2 \cup A^3 \cup \dots\\
@@ -188,17 +446,38 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
     за множествата от думи $A$, $B$ и $C$,
     \[(A\cdot B)\cdot C = A\cdot (B\cdot C);\]
   \item
+    $\{\varepsilon\}^\star = \varepsilon$;
+  \item
     за произволно множество от думи $A$,
-    $A^\star = A^\star\cdot A^\star$ и $(A^\star)^\star = A^\star$.
+    $A^\star = A^\star\cdot A^\star$ и $(A^\star)^\star = A^\star$;
+  \item
+    за произволни букви $a$ и $b$,
+    $\{a,b\}^\star = \{a\}^\star\cdot(\{b\}\cdot\{a\}^\star)$.
   \end{enumerate}
 \end{problem}
 
+\begin{problem}
+  Докажете, че за всеки две думи $\alpha$ и $\beta$ е изпълено:
+  \begin{enumerate}[a)]
+  \item 
+    $(\alpha\cdot\beta)^R = \beta^R\cdot\alpha^R$;
+  \item
+    $\alpha$ е префикс на $\beta$ точно тогава, когато $\alpha^R$ е суфикс на $\beta^R$;
+  \item
+    $(\alpha^R)^R = \alpha$;
+  \item
+    $(\alpha^n)^R = (\alpha^R)^n$, за всяко $n \geq 0$.
+  \end{enumerate}
+\end{problem}
 
 \section*{Библиография}
 
+Повечето книги започват с уводна глава за множества, релации и езици.
 \begin{itemize}
 \item 
-  Глава 1 от \cite{rosen}
+  Глава 1 от \cite{rosen}.
+\item
+  Глава 1 от \cite{papadimitriou}.
 \item
   На практика следваме Глава 2 от \cite{kozen} в описанието на думи и азбуки.
 \end{itemize}
