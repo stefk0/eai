@@ -23,7 +23,7 @@
   \end{enumerate}
 \end{dfn}
 
-\index{тотален!автомат}
+\index{автомат!детерминиран}\index{автомат!тотален детерминиран}
 Ако функцията на преходите $\delta$ е {\bf тотална} функция, то казваме, 
 че автоматът $\A$ е {\bf тотален}. Това означава, че за всяка двойка от вида $(a,q)$,
 където $a$ е буква, а $q$ състояние, функцията $\delta$ е дефинирана.
@@ -531,7 +531,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \section{Регулярни езици}
 
 \begin{dfn}
-  \index{регулярен език}
+  \index{език!регулярен}
   \index{регулярен израз}
   \marginpar{Това е друг пример за рекурсивна (индуктивна) дефиниция.}
   Нека е дадена азбука $\Sigma$. Дефинираме множеството от
@@ -712,7 +712,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 въведем едно обобщение на понятието краен детерминиран автомат.
 
 \section{Недетерминирани крайни автомати}
-
+\index{автомат!недетерминиран}
 \begin{dfn}
   \marginpar{Въведени от Рабин и Скот \cite{rabin-scott}}
   Недетерминиран краен автомат представлява
@@ -1124,6 +1124,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 % \begin{remark}
 %   Запазваме свойството, че в началното състояние не влизат ребра.
 % \end{remark}
+
+\begin{problem}
+  Да фиксираме една дума $\alpha$ над дадена азбука $\Sigma$.
+  \marginpar{(текстовият файл $\beta \in \Sigma^\star$)}
+  Опишете алгоритъм, който за вход произволен текстов файл $\beta$,
+  отговаря дали думата $\alpha$ се среща в $\beta$.
+\end{problem}
 
 
 \section{Езици, които не са регулярни}
@@ -1901,33 +1908,13 @@ $\A$ е {\bf минимален} за езика $L$.
       \end{tikzpicture}
       \caption{Ще построим минимален автомат разпознаващ $\L(\A)$}
     \end{subfigure}
-    \begin{subtable}[b]{0.4\textwidth}
-        \begin{tabular}{|c|c|c|c|c|c|c|}
-          \hline
-          $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
-          \hline
-          \hline
-          $\equiv_0$ & $A^0_0$ & $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
-          \hline
-          $a$ & $A^0_0$& $A^1_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
-          \hline
-          $b$ & $A^0_0$& $A^1_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
-          \hline
-          \hline
-          $\equiv_1$ & $A^0_1$ & $A^1_1$ & $A^1_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
-          \hline
-          $a$ & $A^1_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
-          \hline
-          $b$ & $A^1_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
-          \hline
-        \end{tabular}        
-        \caption{Класовете на еквивалентност относно релацията $\equiv_n$. Получаваме, че $\equiv_1\ =\ \equiv_2$}
-      \end{subtable}
-      \begin{subfigure}[H]{0.5\textwidth}
-        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+    \qquad
+    \qquad
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+          \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
           
-          \node[initial, state]   (0) {$A^0_1$};
+          \node[initial above, state]   (0) {$A^0_1$};
           \node[state]            (1) [right of=0]{$A^1_1$};
           \node[state,accepting]  (2) [right of=1]{$A^2_1$};
           
@@ -1937,36 +1924,83 @@ $\A$ е {\bf минимален} за езика $L$.
         (2) edge [loop above] node [above] {$a,b$}   (2);
       \end{tikzpicture}
       \caption{Получаваме следния минимален автомат $\A_0$, $\L(\A_0) = \L(\A)$}
-  \end{subfigure}
-\end{figure}
+      \label{sub:min1}
+    \end{subfigure}
+  \end{figure}
+  \marginpar{Съобразете, че $\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
 
-\marginpar{Съобразете, че $\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
+Ще приложим алгоритъма за минимизация за да получим минималния автомат за езика $L$.
+За всяко $n = 0,1,2,\dots$, ще намерим класовете на еквивалентност на $\equiv_n$,
+докато не намерим $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
 
+\begin{itemize}
+\item 
+  Класовете на еквивалентност на $\equiv_0$ са два.
+  Те са $Q^0_0 = Q\setminus F = \{0,1,2\}$ и $Q^1_0 = F = \{3,4,5\}$.
+\item
+  Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv_0$.
+  
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
+    \hline
+    \hline
+    $\equiv_0$ & $Q^0_0$ & $Q^0_0$ & $Q^0_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+    \hline
+    $a$ & $Q^0_0$& $Q^1_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+    \hline
+    $b$ & $Q^0_0$& $Q^1_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+    \hline
+  \end{tabular}
+
+  Виждаме, че $0 \not\equiv_1 1$ и $1 \equiv_1 2$.
+  Класовете на еквивалентност на $\equiv_1$ са 
+  $Q^0_1 = \{0\}$, $Q^1_1 = \{1,2\}$, $Q^2_1 = \{3,4,5\}$.
+\item
+  Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv_1$.
+  
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
+    \hline
+    \hline
+    $\equiv_1$ & $Q^0_1$ & $Q^1_1$ & $Q^1_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+    \hline
+    $a$ & $Q^1_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+    \hline
+    $b$ & $Q^1_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+    \hline
+  \end{tabular}
+
+  Виждаме, че $\equiv_1\ =\ \equiv_2$.
+  \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv_1$}
+  Следователно, минималният автомат има три състояния.
+  Той е изобразен на Фигура \ref{sub:min1}.  
+\end{itemize}
 \end{example}
 
 \begin{example}
   Да разгледаме следния краен детерминиран автомат $\A$.
   \begin{figure}[H]
-    %\begin{center}
-      \begin{subfigure}[b]{0.4\textwidth}
+    % \begin{center}
+    \begin{subfigure}[b]{0.4\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial above, state]   (0) {$0$};
-        \node[state,accepting]  (1) [above right of=0]{$1$};
-        \node[state,accepting]  (2) [below right of=0]{$2$};
-        \node[state]            (3) [right of=1]{$3$};
-        \node[state]            (4) [right of=2]{$4$};
-        \node[state,accepting]  (5) [below right of=3]{$5$};
-        
+        \node[state,accepting]        (1) [above right of=0]{$1$};
+        \node[state,accepting]        (2) [below right of=0]{$2$};
+        \node[state]                  (3) [right of=1]{$3$};
+        \node[state]                  (4) [right of=2]{$4$};
+        \node[state,accepting]        (5) [below right of=3]{$5$};
         
         \path 
         (0) edge node [below] {$a$}   (1)
-        (0) edge node [below] {$b$}   (2)
+            edge node [below] {$b$}   (2)
         (1) edge node [above] {$a$}    (3)
-        (1) edge [bend left=15] node [below] {$b$}    (4)
+            edge [bend left=15] node [below] {$b$}    (4)
         (2) edge [bend left=15] node [left] {$b$}    (3)
-        (2) edge node [below] {$a$}   (4)
+            edge node [below] {$a$}   (4)
         (4) edge node [below] {$a,b$} (5)
         (3) edge node [left] {$a,b$}  (5)
         (5) edge [loop above]   node [above] {$a,b$}  (5);
@@ -1976,72 +2010,10 @@ $\A$ е {\bf минимален} за езика $L$.
     \qquad
     \qquad
     \begin{subfigure}[b]{0.4\textwidth}
-      \begin{tabular}{|c|c|c|c|c|c|c|}
-        \hline
-        $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
-        \hline
-        \hline
-        $\equiv_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^0_0$ & $A^0_0$ & $A^1_0$\\
-        \hline
-        $a$ & $A^1_0$& $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
-        \hline
-        $b$ & $A^1_0$& $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
-        \hline
-        \hline
-        $\equiv_1$ & $A^0_1$ & $A^1_1$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$\\
-        \hline
-        $a$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
-        \hline
-        $b$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
-        \hline
-        \hline
-        $\equiv_2$ & $A^0_2$ & $A^1_2$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$\\
-        \hline
-        $a$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$ & $A^3_2$ & $A^3_2$\\
-        \hline
-        $b$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$ & $A^3_2$ & $A^3_2$\\
-        \hline
-      \end{tabular}
-      \caption{Класовете на еквивалентност относно релацията $\equiv_n$. Получаваме, че $\equiv_2\ =\ \equiv_3$}
-    \end{subfigure}
-  \end{figure}
-
-  \marginpar{Съобразете, че $\L(\A) = \{a,b\} \cup \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 3\}$.}
-  % \begin{tabular}{|c|c|c|c|c|c|c|}
-  %   \hline
-  %   $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
-  %   \hline
-  %   \hline
-  %   $\equiv_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^0_0$ & $A^0_0$ & $A^1_0$\\
-  %   \hline
-  %   $a$ & $A^1_0$& $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
-  %   \hline
-  %   $b$ & $A^1_0$& $A^0_0$ & $A^0_0$ & $A^1_0$ & $A^1_0$ & $A^1_0$\\
-  %   \hline
-  %   \hline
-  %   $\equiv_1$ & $A^0_1$ & $A^1_1$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$\\
-  %   \hline
-  %   $a$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
-  %   \hline
-  %   $b$ & $A^1_1$ & $A^0_1$ & $A^0_1$ & $A^2_1$ & $A^2_1$ & $A^2_1$\\
-  %   \hline
-  %   \hline
-  %   $\equiv_2$ & $A^0_2$ & $A^1_2$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$\\
-  %   \hline
-  %   $a$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$ & $A^3_2$ & $A^3_2$\\
-  %   \hline
-  %   $b$ & $A^1_2$ & $A^2_2$ & $A^2_2$ & $A^3_2$ & $A^3_2$ & $A^3_2$\\
-  %   \hline
-  % \end{tabular}
-  
-  Получаваме следния минимален автомат $\A_0$ разпознаващ езика $\L(\A)$.
-
-  \begin{figure}[H]
-    \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
         
-        \node[initial, state]   (0) {$A^0_2$};
+        \node[initial above, state]   (0) {$A^0_2$};
         \node[state,accepting]  (1) [right of=0]{$A^1_2$};
         \node[state]            (2) [right of=1]{$A^2_2$};
         \node[state,accepting]  (3) [right of=2]{$A^3_2$};
@@ -2052,9 +2024,80 @@ $\A$ е {\bf минимален} за езика $L$.
         (2) edge [bend left=15] node [above] {$a,b$}   (3)
         (3) edge [loop above]   node [above] {$a,b$}   (3);
       \end{tikzpicture}
-    \end{center}
+      \caption{Получаваме следния минимален автомат $\A_0$, $\L(\A_0) = \L(\A)$}
+      \label{sub:min2}
+    \end{subfigure}
   \end{figure}
 
+  \marginpar{Съобразете, че $\L(\A) = \{a,b\} \cup \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 3\}$.}
+  
+  Отново следваме същата процедура за минимизация.
+  Ще намерим класовете на еквивалентност на $\equiv_n$,
+  докато не намерим $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
+  \begin{itemize}
+  \item
+    Класовете на екиваленост на $\equiv_0$ са 
+    $Q^0_0 = Q\setminus F = \{0,3,4\}$ и $Q^1_0 = F = \{1,2,5\}$.
+  \item
+    Разбиваме класовете на еквивалентност на $\equiv_0$.
+    
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+      \hline
+      $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+      \hline
+      \hline
+      $\equiv_0$ & $Q^0_0$ & $Q^1_0$ & $Q^1_0$ & $Q^0_0$ & $Q^0_0$ & $Q^1_0$\\
+      \hline
+      $a$ & $Q^1_0$& $Q^0_0$ & $Q^0_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+      \hline
+      $b$ & $Q^1_0$& $Q^0_0$ & $Q^0_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+      \hline
+    \end{tabular}
+    
+    Виждаме, че $1 \not\equiv_1 5$ и $1 \equiv_0 5$.
+    Следователно, $\equiv_0\ \neq\ \equiv_1$.
+    Класовете на еквивалентност на $\equiv_1$ са 
+    $Q^0_1 = \{0,3,4\}$, $Q^1_1 = \{1,2\}$, $Q^2_1 = \{5\}$.
+  \item
+    Сега се опитваме да разбием класовете на еквивалентност на $\equiv_1$.
+
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+      \hline
+      $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+      \hline
+      \hline
+      $\equiv_1$ & $Q^0_1$ & $Q^1_1$ & $Q^1_1$ & $Q^0_1$ & $Q^0_1$ & $Q^2_1$\\
+      \hline
+      $a$ & $Q^1_1$ & $Q^0_1$ & $Q^0_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+      \hline
+      $b$ & $Q^1_1$ & $Q^0_1$ & $Q^0_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+      \hline
+    \end{tabular}
+    
+    Имаме, че $0 \equiv_1 3$, но $0 \not\equiv_2 3$. Следователно $\equiv_1\ \neq\ \equiv_2$.
+    Класовете на еквивалентност на $\equiv_2$ са 
+    $Q^0_2 = \{0\}$, $Q^1_2 = \{1,2\}$, $Q^2_2 = \{3,4\}$, $Q^3_2 = \{5\}$.
+  \item
+    Отново, опитваме да разбием класовете на $\equiv_2$.
+
+      \begin{tabular}{|c|c|c|c|c|c|c|}
+        \hline
+        $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+        \hline
+        \hline
+        $\equiv_2$ & $Q^0_2$ & $Q^1_2$ & $Q^1_2$ & $Q^2_2$ & $Q^2_2$ & $Q^3_2$\\
+        \hline
+        $a$ & $Q^1_2$ & $Q^2_2$ & $Q^2_2$ & $Q^3_2$ & $Q^3_2$ & $Q^3_2$\\
+        \hline
+        $b$ & $Q^1_2$ & $Q^2_2$ & $Q^2_2$ & $Q^3_2$ & $Q^3_2$ & $Q^3_2$\\
+        \hline
+      \end{tabular}
+      
+      Виждаме, че не можем да разбием $Q^1_2$ или $Q^2_2$.
+      \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv_2$}
+      Следователно, $\equiv_2\ =\ \equiv_3$ и минималният автомат разпознаващ езика $L$
+      има четири състояния. Вижте Фигура \ref{sub:min2} за преходите на минималния автомат.
+  \end{itemize}
 \end{example}
 
 
@@ -2074,7 +2117,7 @@ $\A$ е {\bf минимален} за езика $L$.
   Първа част на \cite{kozen}. Въпросът за минимизация на автомат е разгледан подробно.
 \end{itemize}
 
-
+%\bibentry{sipser1}
 
 % \newpage
 % \cite{min-hopcroft}
