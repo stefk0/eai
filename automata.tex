@@ -141,9 +141,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   също е автоматен език.
 \end{cor}
 \begin{proof}
+  \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cap L_2$!}
   Използвайте конструкцията на автомата $\A = \FA$ от \Prop{automata-union},
-  с единствената разлика, че тук избираме финалните състояния да бъдат множеството:
-  \[F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2.\]
+  с единствената разлика, че тук избираме финалните състояния да бъдат множеството
+  $F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2$.
 \end{proof}
 
 \begin{prop}
@@ -151,7 +152,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Тогава $\Sigma^\star\setminus L$ също е автоматен език.
 \end{prop}
 \begin{proof}
-  Нека $L = L(\A)$, където $\A = \FA$ е тотален.
+  \marginpar{Защо искаме $\A$ да бъде тотален ?}
+  Нека $L = L(\A)$, където $\A = \FA$ е {\bf тотален}.
   Да вземем автомата $\A' = \pair{Q,\Sigma,s,\delta,Q\setminus F}$,
   т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
   са тези състояния, които {\bf не} са финални в $\A$.
@@ -178,7 +180,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\}$;
   \item
-    \marginpar{(сечение на два автоматни езика)}
     $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\mbox{ и поне едно }b\}$;
   \item
     $L = \{w \in \{a,b\}^\star \mid \mbox{на всяка нечетна позиция на }w\mbox{ е буквата }a\}$;
@@ -202,7 +203,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва и завършва с една и съща буква}\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа точно едно }a\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ \omega \mbox{ съдържа точно едно }a\}$;
   \item
     $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$;
   \item
