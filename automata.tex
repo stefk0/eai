@@ -9,31 +9,31 @@
   Краен автомат е петорка $\A = \FA$, където
   \begin{enumerate}[1)]
   \item
-    $Q$ е крайно множество, наречено състояния;
+    $Q$ е крайно множество от състояния;
   \item
-    $\Sigma$ е крайно множество, наречено азбука;
+    $\Sigma$ е азбука;
   \item
     % \marginpar{Тук нямаме $\varepsilon$-преходи}
-    \marginpar{Sipser разглежда тотални $\delta$ функции}
+    \marginpar{(Sipser разглежда тотални $\delta$ функции)}
     $\delta:Q\times\Sigma\to Q$ е (частична) функция на преходите;
   \item
     $s\in Q$ е начално състояние;
   \item
-    $F\subseteq Q$ е множеството от финални състояния.
+    $F\subseteq Q$ е множеството от финални състояния, $F \neq \emptyset$.
   \end{enumerate}
 \end{dfn}
 
 \index{автомат!детерминиран}\index{автомат!тотален детерминиран}
-Ако функцията на преходите $\delta$ е {\bf тотална} функция, то казваме, 
-че автоматът $\A$ е {\bf тотален}. Това означава, че за всяка двойка от вида $(a,q)$,
-където $a$ е буква, а $q$ състояние, функцията $\delta$ е дефинирана.
+Ако функцията на преходите $\delta$ е тотална функция, то казваме, 
+че автоматът $\A$ е {\bf тотален}. Това означава, че за всяка двойка $(a,q) \in \Sigma\times Q$,
+същесествува $q' \in Q$, за което $\delta(a,q) = q'$.
 
 Нека имаме една дума $\alpha \in \Sigma^\star$, $\alpha = a_1a_2\cdots a_n$.
 Казваме, че $\alpha$ се {\bf разпознава} от автомата $\A$, ако
 съществува редица от състояния $q_0,q_1,q_2,\dots,q_n$, такива че:
 \begin{itemize}
 \item
-  $q_0 = s$;
+  $q_0 = s$, началното състояние на автомата;
 \item
   $\delta(q_i,a_{i+1}) = q_{i+1}$, за всяко $i = 0, \dots, n-1$;
 \item
@@ -47,13 +47,13 @@
 
 Казваме, че $\A$ {\bf разпознава} езика $L$, ако $\A$ разпознава точно думите от $L$, т.е.
 $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
-Обикновено означаваме езика, който се разпознава от даден автомат $\A$ с $L(\A)$.
+Обикновено означаваме езика, който се разпознава от даден автомат $\A$ с $\L(\A)$.
 \index{език!автоматен}
 В такъв случай ще казваме, че езикът $L$ е {\bf автоматен}.
 
 При дадена (частична) функция на преходите $\delta$,
 често е удобно да разглеждаме (частичната) функция $\delta^\star:Q\times\Sigma^\star \to Q$, кято е дефинирана по следния начин:
-\marginpar{Това е пример за рекурсивна (индуктивна) дефиниция по дължината на думата $\alpha$}
+\marginpar{Това е пример за индуктивна (рекурсивна) дефиниция по дължината на думата $\alpha$}
 \begin{itemize}
 \item 
   $\delta^\star(q,\varepsilon) = q$, за всяко $q\in Q$;
@@ -72,7 +72,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Индукция по дължината на $\alpha$.
 \end{proof}
 
-{\em Моментното описание} на изчисление със краен автомат представлява двойка от вида $(q,\alpha) \in Q\times\Sigma^\star$,
+\index{моментно описание}
+{\em Моментното описание} на изчисление с краен автомат представлява двойка от вида $(q,\alpha) \in Q\times\Sigma^\star$,
 т.е. автоматът се намира в състояние $q$, а думата, която остава да се прочете е $\alpha$.
 Удобно е да въведем бинарната релация $\vdash_\A$ над $Q\times\Sigma^\star$,
 която ще ни казва как моментното описание на автомата $\A$ се променя след изпълнение на една стъпка:
@@ -87,7 +88,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 само с тотални функции на преходите  $\delta$.
 \begin{prop}
   За всеки краен автомат $\A$, съществува {\em тотален} краен автомат $\A'$,
-  за който $L(\A) = L(\A')$.
+  за който $\L(\A) = \L(\A')$.
 \end{prop}
 \begin{proof}
   Нека $\A = \FA$.
@@ -98,16 +99,18 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Ето и цялата дефиниция на новата функция на преходите $\delta'$:
   \begin{itemize}
   \item 
+    \marginpar{$q_e$ - error състояние}
     $\delta'(q_e,a) = q_e$, за всяко $a\in\Sigma$;
   \item
+    \marginpar{$\A'$ симулира $\A$}
     За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a) = p$, то
     $\delta'(q,a) = p$;
   \item
     За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a)$ не е дефинирано, то
     $\delta'(q,a) = q_e$.
   \end{itemize}
-  \marginpar{\ding{45} Довършете доказателството!}
-  Сега лесно може да се докаже, че $L(\A) = L(\A')$.
+  \marginpar{\writedown Довършете доказателството!}
+  Сега лесно може да се докаже, че $\L(\A) = \L(\A')$.
 \end{proof}
 
 \begin{prop}
@@ -120,11 +123,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \marginpar{Защо изискваме $\A_1$ и $\A_2$ да са тотални?}
   Нека $L_1 = L(\A_1)$ и $L_2 = L(\A_2)$, 
   където $\A_1 = \FAn{1}$ и $\A_2 = \FAn{2}$ са {\bf тотални}.
-  Определяме автомата $\A = \FA$, който разпознава $L_1\cup L_2$.
+  Определяме автомата $\A = \FA$, който разпознава $L_1\cup L_2$ по следния начин:
   \begin{itemize}
   \item
     $Q = Q_1\times Q_2$;
   \item
+    \marginpar{Едновременно симулираме изчисление и по двата автомата}
     Определяме за всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
     \[\delta(\pair{r_1,r_2},a) = \pair{\delta_1(r_1,a),\delta_2(r_2,a)};\]
   \item
@@ -132,7 +136,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     $F = \{\pair{r_1,r_2}\mid r_1\in F_1\vee r_2 \in F_2\} = (F_1\times Q_2)\cup (Q_1\times F_2)$.
   \end{itemize}
-  Проверете, че $L(\A) = L(\A_1)\cup L(\A_2)$ !
+  \marginpar{По-нататък ще дадем друга конструкция за обединение, която ще бъде по-ефективна.}
+  \marginpar{\writedown Проверете, че $\L(\A) = \L(\A_1)\cup \L(\A_2)$}
 \end{proof}
 
 \begin{cor}
@@ -143,8 +148,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{proof}
   \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cap L_2$!}
   Използвайте конструкцията на автомата $\A = \FA$ от \Prop{automata-union},
-  с единствената разлика, че тук избираме финалните състояния да бъдат множеството
-  $F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2$.
+  с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
+  \[F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2.\]
 \end{proof}
 
 \begin{prop}
@@ -157,7 +162,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Да вземем автомата $\A' = \pair{Q,\Sigma,s,\delta,Q\setminus F}$,
   т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
   са тези състояния, които {\bf не} са финални в $\A$.
-  Проверете, че наистина $\Sigma^\star\setminus L = L(\A^\prime)$!
+  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
 \end{proof}
 
 \begin{problem}
@@ -215,23 +220,22 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $L = \{w \in \{a,b\}^\star \mid N_b(w) \equiv 1 \bmod 2\}$;
   \item
     $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 3\ \&\ N_b(w) \equiv 1 \bmod 2\}$;
+  % \item
+  %   $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 2\ \&\ N_b(w) \equiv 1 \bmod 2\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 2\ \&\ N_b(w) \equiv 1 \bmod 2\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 2\ \vee\ \omega\mbox{ съдържа точно две }b\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 2\ \vee\ w \mbox{ съдържа точно две }b\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа равен брой срещания на }ab\text{ и на }ba\}$.
   \end{enumerate}
 \end{problem}
   
 \marginpar{\ding{45} За всички тези автомати, дефинирайте функцията на преходите им!}
-\begin{itemize}
-\item
-  Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа }bab\}$.
   \begin{figure}[H]
-    \begin{center}
+    \begin{subfigure}[b]{0.5\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
-        \node[initial, state]   (0) {$s$};
+        \node[initial below, state]   (0) {$s$};
         \node[state]            (1) [right of=0]{$q_1$};
         \node[state]            (2) [right of=1]{$q_2$};
         \node[state,accepting]  (3) [right of=2]{$q_3$};
@@ -245,16 +249,14 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (2) edge [bend left=15] node [above] {$b$}    (3)
         (3) edge [loop above]   node [above] {$a,b$}  (3);
       \end{tikzpicture}
-    \end{center}
-  \end{figure}    
-\item
-  Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\}$.
-  \begin{figure}[H]
-    \begin{center}
+      \caption{$\{\omega \in \{a,b\}^\star \mid \omega\mbox{ съдържа }bab\}$}
+    \end{subfigure}
+    \qquad
+    \begin{subfigure}[b]{0.4\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
-        \node[initial, state]   (0) {$s$};
+        \node[initial below, state]   (0) {$s$};
         \node[state]            (1) [right of=0]{$q_1$};
         \node[state,accepting]  (2) [right of=1]{$q_2$};
         
@@ -265,12 +267,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (1) edge [bend left=15] node [above] {$a$}    (2)
         (2) edge [loop above]   node [above] {$a,b$}  (2);
       \end{tikzpicture}
-    \end{center}
-  \end{figure}
-\item 
-  Да разгледаме $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$.
-  \begin{figure}[H]
-    \begin{center}
+      \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\}$}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.5\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -282,12 +281,11 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (0) edge [bend left=15] node [above] {$a$}   (1)
         (1) edge [bend left=15] node [below] {$b$}   (0);
       \end{tikzpicture}
-    \end{center}
-  \end{figure}
-\item
-  Да разгледаме $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0\ (\bmod\ 3)\}$.
-  \begin{figure}[H]
-    \begin{center}
+      \caption{$\{\omega \in \{a,b\}^\star \mid $ всяко $a$ в $\omega$ се следва от поне едно $b\}$ }
+      \end{subfigure}
+      \qquad
+      \qquad
+      \begin{subfigure}[b]{0.5\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -303,9 +301,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (2) edge [loop above]   node   [above] {$b$}    (2)
         (2) edge [bend left=30] node   [below] {$a$}    (0);
       \end{tikzpicture}
-    \end{center}
+      \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0\ (\bmod\ 3)\}$}
+    \end{subfigure}
   \end{figure}    
-\end{itemize}
 
 В повечето от горните задачи е лесно да се съобрази, че построения автомат разпознава желания език.
 При по-сложни задачи обаче, ще се наложи да дадем доказателство, като обикновено се прилага 
@@ -337,8 +335,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \end{center}
  \end{figure}
 
- Трябва да докажем, че наистина $L = L(\A)$.
- Първо ще се концентрираме върху доказателството на $L(\A) \subseteq L$.
+ Ще докажем, че $L = \L(\A)$.
+ Първо ще се концентрираме върху доказателството на $\L(\A) \subseteq L$.
  \marginpar{Озн. $\abs{\alpha}$ - дължината на думата $\alpha$}
  Ще докажем с индукция по дължината на думата $\alpha$, че:
  \begin{enumerate}[(1)]
@@ -354,7 +352,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
  За $\abs{\alpha} = 0$, то твърденията (1) и (2) са ясни (Защо?).
  Да приемем, че твърденията $(1)$ и $(2)$ са верни за произволни думи $\alpha$ с дължина $n$.
- Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, където $\abs{\beta} = n$.
+ Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, където $\abs{\beta} = n$ и $x \in \Sigma$.
  Ще докажем (1) и (2) за $\alpha$.
  \begin{itemize}[-]
  \item 
@@ -371,16 +369,16 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  \end{itemize}
  
  Така доказахме с индукция по дължината на думата, че за всяка дума $\alpha$
- са  изпълнени твърденията $(1)$ и $(2)$. Това означава, че ако $\alpha \in L(\A)$,
+ са  изпълнени твърденията $(1)$ и $(2)$. По дефиниция, ако $\alpha \in \L(\A)$,
  то $\delta^\star(s,\alpha) \in \{s,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
  $\alpha$ не съдържа две поредни срещания на буквата $a$, т.е. $\alpha \in L$.
  С други думи, доказахме, че 
- \[L(\A) \subseteq L.\]
+ \[\L(\A) \subseteq L.\]
 
- Сега ще докажем другата посока, т.е. $L \subseteq L(\A)$.
+ Сега ще докажем другата посока, т.е. $L \subseteq \L(\A)$.
  Това означава да докажем, че
  \[(\forall \alpha \in \Sigma^\star)[\alpha \in L\ \Rightarrow\ \delta^\star(s,\alpha) \in F],\]
- \marginpar{$p \Rightarrow q \equiv \neg q \Rightarrow \neg  p$}
+ \marginpar{Да напомним, че $p \Rightarrow q \equiv \neg q \Rightarrow \neg  p$}
  което е еквивалентно на
  \begin{equation}
    \label{eq:case2}
@@ -395,7 +393,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  $\beta$ не съдържа две поредни срещания на $a$, но завършва на $a$.
  Сега е очевидно, че $\beta a$ съдържа две поредни срещания на $a$ и 
  щом $\beta a$ е префикс на $\alpha$, то думата $\alpha \not\in L$.
- С това доказахме Свойство \ref{eq:case2} и следователно и посоката $L\subseteq L(\A)$.
+ С това доказахме Свойство \ref{eq:case2}, а следователно и посоката $L\subseteq \L(\A)$.
 \end{proof}
 
 \begin{framed}
@@ -412,15 +410,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $(\alpha1)_{(2)} = 2\cdot(\alpha)_{(2)} + 1$.
   \end{itemize}
 \end{framed}
-\marginpar{Да отбележим, че за всяко число $n$ има безкрайно много думи $\alpha$, за които $\alpha_{(2)} = n$}
+\marginpar{Да отбележим, че за всяко число $n$ има безкрайно много думи $\alpha$, за които $\alpha_{(2)} = n$. Например, $10_{(2)} = 010_{(2)} = 0010_{(2)} = \cdots$}
 
 \begin{problem}
-  Докажете, че $L = \{\omega \in \{0,1\}^\star \mid \omega_{(2)} \equiv 2 \mod 3\}$ е автоматен.
+  Докажете, че $L = \{\omega \in \{0,1\}^\star \mid \omega_{(2)} \equiv 2\ (\bmod\ 3)\}$ е автоматен.
 \end{problem}
 \begin{proof}
   Нашият автомат ще има три състояния $\{q_0,q_1,q_2\}$, като началното състояние ще бъде $q_0$.
   Целта ни е да дефинираме така автомата, че да имаме следното свойство:
-  \[(\forall\alpha\in\Sigma^\star)(\forall i < 3)[\alpha_{(2)} \equiv i\bmod 3\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i],\]
+  \begin{equation}
+    (\forall\alpha\in\Sigma^\star)(\forall i < 3)[\alpha_{(2)} \equiv i\ (\bmod\ 3)\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i],
+  \end{equation}
   т.е. всяко състояние отговаря на определен остатък при деление на три.
   Понеже искаме нашия автомат да разпознава тези думи $\alpha$,
   за които $\alpha_{(2)} \equiv 2\mod 3$, финалното състояние ще бъде $q_2$.
@@ -445,9 +445,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \marginpar{$\delta(q_2,1) = q_2$}
     $\alpha_{(2)} \equiv 2 \bmod 3\ \Rightarrow\ (\alpha1)_{(2)} \equiv 2 \bmod 3$.
   \end{itemize}
-  Ето и картинка на автомата:
+  Ето и картинка на автомата $\A$:
   \begin{figure}[H]
-%    \begin{subfigure}[b]{0.3\textwidth}% [$L_1 = L(M_1)$]{
+    % \begin{subfigure}[b]{0.3\textwidth}% [$L_1 = L(M_1)$]{
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
@@ -465,6 +465,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (2) edge  [loop above]    node [above]  {$1$} (2);
       \end{tikzpicture}
       \end{center}
+      \caption{$\L(\A) \stackrel{?}{=} \{\omega\in\{0,1\}^\star \mid \alpha_{(2)} \equiv 2\ (\bmod\ 3)\}$}
  %   \end{subfigure}
  \end{figure}
  \noindent Да разгледаме твърденията:
@@ -522,11 +523,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     При $x = 1$, използваме {\bf И.П.} за (1).
   \end{itemize}
 
-  От (1), (2) и (3) следва директно, че $L(\A) \subseteq L$.
+  От (1), (2) и (3) следва директно, че $\L(\A) \subseteq L$.
+  
   За другата посока, нека $\alpha \in L$, т.е. $(\alpha)_{(2)} \equiv 2 \bmod 3$.
-  Ако допуснем, че $\alpha \not\in L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_1\}$.
+  Ако допуснем, че $\alpha \not\in \L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_1\}$.
   Но в тези случаи получаваме от твърдения (1) и (2), че $(\alpha)_{(2)} \equiv 0 \bmod 3$ или $(\alpha)_{(2)} \equiv 1 \bmod 3$.
-  Това е противоречие с избора на $\alpha$. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
+  Това е противоречие с избора на $\alpha \in L$. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
+  Така доказахме и посоката $L \subseteq \L(\A)$.
 \end{proof}
 
 \section{Регулярни езици}
@@ -534,7 +537,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{dfn}
   \index{език!регулярен}
   \index{регулярен израз}
-  \marginpar{Това е друг пример за рекурсивна (индуктивна) дефиниция.}
+  \marginpar{Това е друг пример за индуктивна (рекурсивна) дефиниция.}
   Нека е дадена азбука $\Sigma$. Дефинираме множеството от
   {\em регулярни езици} над азбуката $\Sigma$ и едновременно с това 
   множеството от {\em регулярни изрази}, които разпознават тези езици.
@@ -736,7 +739,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{dfn}
 
 \begin{thm}
-  За всеки НKА $\N$ съществува еквивалентен на него ДКА $\D$, т.е. $L(\N) = L(\D)$.
+  За всеки НKА $\N$ съществува еквивалентен на него ДКА $\D$, т.е. $\L(\N) = \L(\D)$.
 \end{thm}
 \begin{proof}
   Нека $\N = \NFA$. Ще построим ДКА $\D = (Q',\Sigma,\delta,s',F')$.
@@ -754,12 +757,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 \end{proof}
 
-\begin{problem}
-  За дума $\alpha = a_1a_2\cdots a_n$, дефинираме $\alpha^R = a_na_{n-1}\cdots a_1$.
-  \marginpar{Индукция по $\abs{\beta}$.}
-  Докажете, че
-  \[(\forall \alpha,\beta\in\Sigma^\star)[(\alpha\beta)^R = \beta^R\alpha^R].\]
-\end{problem}
+% \begin{problem}
+%   За дума $\alpha = a_1a_2\cdots a_n$, дефинираме $\alpha^R = a_na_{n-1}\cdots a_1$.
+%   \marginpar{Индукция по $\abs{\beta}$.}
+%   Докажете, че
+%   \[(\forall \alpha,\beta\in\Sigma^\star)[(\alpha\beta)^R = \beta^R\alpha^R].\]
+% \end{problem}
 
 \begin{problem}
   За всеки НКА $\N$ съществува НКА $\N'$ с едно финално състояние, 
@@ -785,6 +788,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \end{tikzpicture}
       \caption{автомат $\N$}
     \end{subfigure}
+    \qquad
     \qquad
     \begin{subfigure}[b]{0.4\textwidth}
       \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
@@ -817,9 +821,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Докажете, че ако $L$ е автоматен език, то $L^R = \{\omega^R \mid \omega \in L\}$
   също е автоматен.
 \end{problem}
-% \begin{hint}
-%   Нека $\N$ е НКА с едно финално състояние.
-% \end{hint}
 
 \begin{lemma}
   Съществува НКА $\N = \NFA$, който разпознава езика $L(r)$, 
@@ -827,7 +828,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{lemma}
 \begin{proof}
   \begin{figure}[H]
-    \begin{subfigure}[b]{0.3\textwidth}
+    \begin{subfigure}[b]{0.2\textwidth}
       \label{subf:a1}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
@@ -835,13 +836,15 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \end{tikzpicture}
       \caption{$L(\emptyset)$}
     \end{subfigure}
-    \begin{subfigure}[b]{0.3\textwidth}
+    \qquad
+    \begin{subfigure}[b]{0.2\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial,state,accepting]      (1) {$s$};
       \end{tikzpicture}
       \caption{$L(\varepsilon)$}
     \end{subfigure}
+    \qquad
     \begin{subfigure}[b]{0.3\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
@@ -864,12 +867,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Нека са дадени автоматите:
   \begin{itemize}
   \item
-    $\N_1 = \NFAn{1}$, като $L(\N_1) = L_1$;
+    $\N_1 = \NFAn{1}$, като $\L(\N_1) = L_1$;
   \item
-    $\N_2 = \NFAn{2}$, като $L(\N_2) = L_2$.
+    $\N_2 = \NFAn{2}$, като $\L(\N_2) = L_2$.
   \end{itemize}
   Ще дефинираме автомата $\N = \NFA$ като
-  \[L(\N) = L_1\cdot L_2 = L(\N_1)\cdot L(\N_2).\]
+  \[\L(\N) = L_1\cdot L_2 = \L(\N_1)\cdot\L(\N_2).\]
   \begin{itemize}
   \item
     $Q = Q_1 \cup Q_2$;
@@ -961,6 +964,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \caption{$\L(\N) = \L(\N_1)\cdot\L(\N_2)$}
   \end{figure}  
   Обърнете внимание, че $\N_1$ и $\N_2$ са детерминирани автомати, но $\N$ е недетерминиран.
+  Също така, в този пример се оказва, че вече $s_2$ е недостижимо състояние, но в общия случай не можем да 
+  го премахнем, защото може да има преходи влизащи в $s_2$.
 \end{example}
 
 
@@ -1131,6 +1136,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \marginpar{(текстовият файл $\beta \in \Sigma^\star$)}
   Опишете алгоритъм, който за вход произволен текстов файл $\beta$,
   отговаря дали думата $\alpha$ се среща в $\beta$.
+  Каква е сложността на този алгоритъм относно дължините на $\alpha$ и $\beta$ ?
 \end{problem}
 
 
@@ -1173,20 +1179,23 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   защото $q_i = q_j$.
 \end{proof}
 
+
+При фиксиран език $L$, условието на \Lem{pumping-reg} може формално да се запише така:
+{\scriptsize
+\[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
+Отрицанието на горната формула може да се запише по следния начин:
+{\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]],\]}
+което е еквивалентно на:
+{\scriptsize
+\[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+
 \begin{framed}
   \Lem{pumping-reg} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е регулярен.
-  За да постигнем това, ние доказваме отрицанието на условията от \Lem{pumping-reg} за $L$, т.е.
-  за всяка константа $p$, намираме дума $\alpha$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
+  За да постигнем това, ние доказваме {\bf отрицанието} на условията от \Lem{pumping-reg} за $L$, т.е.
+  за всяка константа $p \geq 1$, намираме дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
   със свойствата $\abs{y} \geq 1$ и $\abs{xy} \leq p$, е изпълнено, че $(\exists i)[xy^iz \not\in L]$.
-  При фиксиран език $L$, условието за покачване от лемата може формално да се запише така:
-  {\scriptsize  
-    \[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
-  Отрицанието на горната формула може да се запише по следния начин:
-  {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]],\]}
-  което е еквивалентно на:
-  {\scriptsize
-    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
 \end{framed}
+
 
 \begin{example}
   Езикът $L = \{a^nb^n \mid n\in \Nat\}$ {\bf не} е регулярен.
@@ -1203,9 +1212,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item 
     Разглеждаме произволно число $p \geq 1$ (нямаме власт над избора на $p$).
   \item
-    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Можем да изберем каквото $\alpha$
+    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквото $\alpha$
     си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
-    Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$. Очевидно е, че $\abs{\alpha} \geq p$.
+    Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$.
+    Очевидно е, че $\abs{\alpha} \geq p$.
   \item
     Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
     за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$ (не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства).
@@ -1215,7 +1225,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
     Ясно е, че $xz \not\in L$, защото $p-k < p$.
   \end{itemize}  
-  Доказахме, че ако $L$ е регулярен език, то свойството за покачване от \Lem{pumping-reg} не е изпълнено. Следователно, езикът $L$
+  Доказахме, че ако $L$ е регулярен език, то свойствата от \Lem{pumping-reg} не са изпълнени. Следователно, езикът $L$
   не е регулярен.  
 \end{proof}
 
@@ -1446,6 +1456,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $L = \{c^ka^nb^n \mid k > 0\ \&\ n \geq 0\}\cup\{a,b\}^\star$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ не дели }N_b(\omega)\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) < N_b(\omega)\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) = 2N_b(\omega)\}$.
   \end{enumerate}
 \end{problem}
 
@@ -1514,31 +1528,42 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   и освен това, като прибавим произволна дума на края на $x$ и $y$, новополучените
   думи са или и двете в $L$ или и двете не са в $L$.  
 \item
-  Нека да означим класовете на еквивалентност на $\approx_L$ с $[\alpha]_L$, за $\alpha \in \Sigma^\star$,
-  а с $\abs{\approx_L}$ ще означаваме броя на класовете на еквивалентност на релацията $\approx_L$.
-\item
-  \marginpar{$\A$ е тотален}
+  \marginpar{Трябва ли $\A$ да е тотален?}
   Нека $\A = \FA$ е ДКА.
   Казваме, че две думи $\alpha,\beta \in \Sigma^\star$ са {\bf еквивалентни относно $\A$},
-  което означаваме с $\alpha \sim_\A \beta$, ако $\delta^\star(s,\alpha) = \delta^\star(s,\beta)$.
-\item
-  Нека да означим класовете на еквивалентност на $\sim_\A$ с $[\alpha]_\A$, за $\alpha \in \Sigma^\star$,
-  а с $\abs{\sim_\A}$ ще означаваме броя на класовете на еквивалентност на релацията $\sim_\A$.
+  което означаваме с $\alpha \sim_\A \beta$, ако 
+  \[\delta^\star(s,\alpha) = \delta^\star(s,\beta).\]
 \item
   Проверете, че $\approx_L$ и $\sim_\A$ са {\bf релации на еквивалентност}, т.е.
   те са рефлексивни, транзитивни и симетрични.
 \item
-  Съобразете, че всяко състояние на $\A$, което е достижимо от началното състояние, определя клас на еквивалентност относно 
-  релацията $\sim_\A$.  
+  Класът на еквивалентност на думата $\alpha$ относно релацията $\approx_L$ означаваме като
+  \[[\alpha]_L = \{\beta \in \Sigma^\star \mid \alpha \approx_L \beta\}.\]
+  С $\abs{\approx_L}$ ще означаваме броя на класовете на еквивалентност на релацията $\approx_L$.
 \item
-  $\sim_\A$ е дясно-инвариантна, т.е. за всеки две думи $\alpha$ и $\beta$,
-  \[\alpha \sim_\A \beta \implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\A \beta\gamma].\]
+  Класът на еквивалентност на думата $\alpha$ относно релацията $\sim_\A$ означаваме като
+  \[[\alpha]_\A = \{\beta \in \Sigma^\star \mid \alpha \sim_\A \beta\}.\]
+  С $\abs{\sim_\A}$ ще означаваме броя на класовете на еквивалентност на релацията $\sim_\A$.
+\item
+  Съобразете, че всяко състояние на $\A$, което е достижимо от началното състояние, определя клас на еквивалентност относно 
+  релацията $\sim_\A$. Това означава, че ако за всяка дума означим  $q_\alpha = \delta^\star_\A(s,\alpha)$, то
+  $\alpha \sim_\A \beta$ точно тогава, когато $q_\alpha = q_\beta$. Заключаваме, че броят на класовете на еквивалентност
+  на $\sim_\A$ е равен на броя на достижимите от $s$ състояния.
+\item
+  Релациите $\approx_\L$ и $\sim_\A$ са дясно-инвариантни, т.е. за всеки две думи $\alpha$ и $\beta$
+  е изпълнено:
+  \begin{align*}
+    \alpha \sim_\A \beta  &\implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\A \beta\gamma],\\
+    \alpha \approx_\L \beta & \implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \approx_\L \beta\gamma].
+  \end{align*}
 \end{itemize}
 
 \begin{thm}
   \label{th:rel-finer}
   Нека е даден ДКА $\A = \FA$ и $\L(\A)$ е езика, разпознаван от $\A$. Тогава е изпълнено
   \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{\L(\A)}\beta].\]
+  С други думи, 
+  $[\alpha]_\A \subseteq [\alpha]_{\L(\A)}$, за всяка дума $\alpha \in \Sigma^\star$.
 \end{thm}
 \begin{proof}
 %  \marginpar{стр. 95 от \cite{papadimitriou}}
@@ -1548,7 +1573,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \alpha \sim_\A \beta & \iff \delta^\star(s,\alpha) = \delta^\star(s,\beta) & (\text{по деф. на }\sim_\A)\\
     & \iff q_\alpha = q_\beta.
   \end{align*}
-  Нека $\alpha \sim_\A \beta$. Тогава за произволно $\gamma \in \Sigma^\star$ имаме:
+  Нека $\alpha \sim_\A \beta$. Ще проверим, че  $\alpha \approx_{\L(\A)} \beta$.
+  За произволно $\gamma \in \Sigma^\star$ имаме:
   \begin{align*}
     \alpha\gamma \in \L(\A) & \iff \delta^\star(s,\alpha\gamma)\in F & (\text{по деф. на }\L(\A))\\
     & \iff \delta^\star(\delta^\star(s,\alpha),\gamma) \in F & (\text{по деф. на }\delta^\star)\\
@@ -1564,7 +1590,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \begin{cor}
   \label{cor:approx-less-sim}
-  За всеки ДКА $\A$ е изпълнено, че
+  За всеки тотален ДКА $\A$ е изпълнено, че
   \[\abs{\approx_{\L(\A)}} \leq \abs{\sim_\A}.\]
 \end{cor}
 \begin{proof}
@@ -1572,24 +1598,28 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Да разгледаме изображението $f:B\to A$, определено като $f([\alpha]_\A) = [\alpha]_{\L(\A)}$.
   \begin{itemize}
   \item 
-    Първо ще проверим, че $f$ е {\bf функция}. Да допуснем, че $f$ не е функция.
-    Това означава, че съществуват думи $\alpha$ и $\beta$, такива че
+    Първо ще проверим, че $f$ е {\bf функция}, т.е. трябва да проверим, че 
+    \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \sim_\A \beta \implies f([\alpha]_\A) = f([\beta]_\A)].\]
+    
+    Да допуснем, че съществуват думи $\alpha$ и $\beta$, такива че
     $[\alpha]_{\A} = [\beta]_{\A}$, но $f([\alpha]_{\A}) = [\alpha]_{\L(\A)} \neq [\beta]_{\L(\A)} = f([\beta]_{\A})$.
-    От \Th{rel-finer} следва веднага, че това е невъзможно, защото ако $[\alpha]_\A = [\beta]_\A$, 
-    то имаме, че $[\alpha]_{\L(\A)} = [\beta]_{\L(\A)}$.    
+    Понеже $\sim_\A$ релация на еквивалентност, от $[\alpha]_{\L(\A)} \neq [\beta]_{\L(\A)}$
+    следва, че $[\alpha]_{\L(\A)} \cap [\beta]_{\L(\A)} = \emptyset$.
+    От \Th{rel-finer} следва веднага, че това е невъзможно, защото
+    \[\emptyset \neq [\alpha]_\A = [\beta]_\A \subseteq [\alpha]_{\L(\A)} \cap [\beta]_{\L(\A)}.\]
   \item
     \marginpar{$(\forall a\in A)(\exists b\in B)(f(b) = a)$}
-    Очевидно е, че $f$ е {\bf сюрекция}, защото за всеки клас $[\alpha]_{\L(\M)}$ съответства класа $[\alpha]_\M$.
+    Очевидно е, че $f$ е {\bf сюрекция}, защото на всеки клас $[\alpha]_{\L(\A)}$ съответства класа $[\alpha]_\A$.
   \item
     \marginpar{Защо?\\ \ding{45} Обяснете!}
-    От това, че $f:B\to A$ е сюрективна функция следва директно, че $\abs{B} \leq \abs{A}$.
+    От това, че $f:B\to A$ е сюрективна функция следва, че $\abs{B} \leq \abs{A}$.
   \end{itemize}
 \end{proof}
 
 \begin{cor}
   \label{cor:upper-bound}
   Нека $L$ е произволен регулярен език $L$.  
-  Всеки ДКА $\A$, който разпознава $L$ има свойството
+  Всеки тотален ДКА $\A$, който разпознава $L$ има свойството
   \[\abs{Q} \geq \abs{\approx_L}.\]
 \end{cor}
 \begin{proof}
@@ -1599,94 +1629,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Комбинирайки със \Cor{approx-less-sim},
   \[\abs{Q} = \abs{\sim_\A} \geq \abs{\approx_L}.\]
 \end{proof}
-Така получаваме {\em долна граница} за броя на състоянията в автомат разпознаващ езика $L$.
+Така получаваме {\em долна граница} за броя на състоянията в тотален автомат разпознаващ езика $L$.
 Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
-
-{\bf Сега ще отговорим на въпроса дали тази долна граница може да бъде достигната.}
-
-
-\subsection{Теорема за съществуване на МДКА}
-% Да приемем, че сме фиксирали азбуката $\Sigma$.
-\begin{thm}[Майхил-Нероуд]
-  \label{th:myhill-nerode}
-  \index{теорема!Майхил-Нероуд}
-  \index{Майхил}
-  \index{Нероуд}
-  \marginpar{на англ. Myhill-Nerode}
-  Нека $L\subseteq \Sigma^\star$ е регулярен език.
-  Тогава съществува ДКА $\A = \FA$, който разпознава $L$,
-  с точно толкова състояния, колкото са класовете на еквивалентност на релацията $\approx_L$,
-  т.е. $\abs{Q} = \abs{\approx_L}$.
-\end{thm}
-\begin{proof}
-%  \marginpar{стр. 96 от \cite{papadimitriou}}
-  При даден регулярен език $L$, ние определяме ДКА $\A = \FA$, за който $L = \L(\A)$ като
-  \begin{itemize}
-  \item
-    $Q = \{[\alpha]_L\mid \alpha\in \Sigma^\star\}$;
-  \item
-    $s = [\varepsilon]_L$;
-  \item
-    $F = \{[\alpha]_L\mid \alpha\in L\}$;
-  \item
-    Определяме изображението $\delta$ като 
-    за всяка буква $x \in \Sigma$ и всяко състояние $[\alpha]_L\in Q$, 
-    \[\delta([\alpha]_L,x) = [\alpha x]_L.\]
-  \end{itemize}
-  
-  Първо, трябва да се уверим, че множеството от състояния $Q$ е крайно, т.е.
-  релацията $\approx_\L$ има крайно много класове на еквивалентност.
-  И така, тъй като $\L$ е регулярен език, то той се разпознава от някой автомат $\A'$.
-  От \Cor{upper-bound} имаме, че $\abs{Q^{\A'}} \geq \abs{\approx_L}$.
-  Понеже $Q^{\A'}$ е крайно множество, то $\approx_L$ има крайно много класове и 
-  следователно $Q$ също е крайно множество.
-
-  Второ, трябва да се уверим, че изображението $\delta$ задава функция, т.е. 
-  да проверим, че за всеки две думи $\alpha$, $\beta$ и всяка буква $c$,
-  \[[\alpha]_L = [\beta]_L \implies \delta([\alpha]_L,c) = \delta([\beta]_L,c).\]
-  Но това се вижда веднага, защото от определението на релацията $\approx_L$ следва, че
-  ако $\alpha \approx_L \beta$, то за всяка буква $c$, $\alpha c \approx_L \beta c$,
-  т.е. $[\alpha c]_L = [\beta c]_L$ и 
-  \begin{align*}
-    [\alpha]_L = [\beta]_L & \implies [\alpha c]_L = [\beta c]_L & (\text{свойство на }\approx_L)\\
-    & \implies \delta([\alpha]_L,c) = [\alpha c]_L = [\beta c]_L = \delta([\beta]_L,c) & (\text{деф. на }\delta)
-  \end{align*}
-  
-  Така вече сме показали, че $\A$ е коректно зададен ДКА.
-  Остава да покажем, че $\A$ разпознава езика $L$, т.е. $\L(\A) = L$.
-  \begin{prop}
-    За всеки две думи $\alpha$ и $\beta$,
-    $\delta^\star([\alpha]_L,\beta) = [\alpha\beta]_L$.
-  \end{prop}
-  \begin{proof}
-    Ще докажем това свойство с индукция по дължината на $\beta$.
-    \begin{itemize}
-    \item
-      За $\beta = \varepsilon$ свойството следва директно от дефиницията на $\delta^\star$, защото
-      $\delta^\star([\alpha]_L,\varepsilon) = [\alpha]_L$.
-    \item
-      Нека $\beta$ има дължина $n+1$ и да приемем, че сме доказали твърдението за думи с дължина $\leq n$.
-      Тогава $\beta = \gamma a$, където $\abs{\gamma} = n$. Свойството следва от следните равенства:
-      \begin{align*}
-        \delta^\star([\alpha]_L, \gamma a) & = \delta(\delta^\star([\alpha]_L,\gamma),a) & (\text{деф. на }\delta^\star)\\
-                                          & = \delta([\alpha\gamma]_L,a) & (\text{от {\bf И.П.}})\\
-                                          & = [\alpha\gamma a]_L & (\text{от деф. на }\delta)\\
-                                          & = [\alpha\beta]_L & (\beta = \gamma a).
-      \end{align*}
-    \end{itemize}
-  \end{proof}
-  \noindent За да се убедим, че $L = \L(\A)$ е достатъчно да проследим еквивалентностите:
-  \begin{align*}
-    \alpha\in \L(\A) & \iff \delta^\star(s,\alpha) \in F & (\text{от деф. на }\L(\A))\\
-                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\text{по деф. }s = [\varepsilon]_L)\\
-                     & \iff \delta^\star([\varepsilon]_L,\alpha) = [\alpha]_L\ \&\ \alpha\in L & (\text{от деф. на }F)\\
-                     & \iff \alpha \in L & (\text{от последното твърдение}).
-  \end{align*}
-  
-\end{proof}
-
-Ако $\A = \FA$ е автомат, за който $\abs{Q_\A} = \abs{\approx_L}$, то ще казваме, че
-$\A$ е {\bf минимален} за езика $L$.
 
 \subsection{Проверка за регулярност на език}
 
@@ -1744,7 +1688,96 @@ $\A$ е {\bf минимален} за езика $L$.
 \end{problem}
 
 
+\subsection{Теорема за съществуване на МДКА}
+
+\index{минимален автомат}
 \begin{dfn}
+  Нека $\A$ а тотален ДКА, за който $L = \L(\A)$.
+  Казваме, че $\A$ е {\bf минимален} за езика $L$, ако $\abs{Q_\A} = \abs{\approx_L}$.
+\end{dfn}
+
+% Да приемем, че сме фиксирали азбуката $\Sigma$.
+\begin{thm}[Майхил-Нероуд]
+  \label{th:myhill-nerode}
+  \index{теорема!Майхил-Нероуд}
+  \index{Майхил}
+  \index{Нероуд}
+  \marginpar{на англ. Myhill-Nerode}
+  Нека $L\subseteq \Sigma^\star$ е регулярен език.
+  Тогава съществува ДКА $\A = \FA$, който разпознава $L$,
+  с точно толкова състояния, колкото са класовете на еквивалентност на релацията $\approx_L$,
+  т.е. $\abs{Q} = \abs{\approx_L}$.
+\end{thm}
+\begin{proof}
+%  \marginpar{стр. 96 от \cite{papadimitriou}}
+  Да фиксираме регулярния език $L$.
+  Ще дефинираме тотален ДКА $\A = \FA$, разпознаващ $L$, като:
+  \begin{itemize}
+  \item
+    $Q = \{[\alpha]_L\mid \alpha\in \Sigma^\star\}$;
+  \item
+    $s = [\varepsilon]_L$;
+  \item
+    $F = \{[\alpha]_L\mid \alpha\in L\} = \{[\alpha]_L \mid [\alpha]_L \cap L \neq \emptyset\}$;
+  \item
+    Определяме изображението $\delta$ като 
+    за всяка буква $x \in \Sigma$ и всяко състояние $[\alpha]_L\in Q$, 
+    \[\delta([\alpha]_L,x) = [\alpha x]_L.\]
+  \end{itemize}
+  
+  Първо, трябва да се уверим, че множеството от състояния $Q$ е крайно, т.е.
+  релацията $\approx_\L$ има крайно много класове на еквивалентност.
+  И така, тъй като $\L$ е регулярен език, то той се разпознава от някой тотален ДКА $\A'$.
+  От \Cor{upper-bound} имаме, че $\abs{Q^{\A'}} \geq \abs{\approx_L}$.
+  Понеже $Q^{\A'}$ е крайно множество, то $\approx_L$ има крайно много класове и 
+  следователно $Q$ също е крайно множество.
+
+  Второ, трябва да се уверим, че изображението $\delta$ задава функция, т.е. 
+  да проверим, че за всеки две думи $\alpha$, $\beta$ и всяка буква $x$,
+  \[[\alpha]_L = [\beta]_L \implies \delta([\alpha]_L,x) = \delta([\beta]_L,x).\]
+  Но това се вижда веднага, защото от определението на релацията $\approx_L$ следва, че
+  ако $\alpha \approx_L \beta$, то за всяка буква $x$, $\alpha x \approx_L \beta x$,
+  т.е. $[\alpha x]_L = [\beta x]_L$ и 
+  \begin{align*}
+    [\alpha]_L = [\beta]_L & \implies [\alpha x]_L = [\beta x]_L & (\text{свойство на }\approx_L)\\
+    & \implies \delta([\alpha]_L,x) = [\alpha x]_L = [\beta x]_L = \delta([\beta]_L,x) & (\text{деф. на }\delta)
+  \end{align*}
+  
+  Така вече сме показали, че $\A$ е коректно зададен тотален ДКА.
+  Остава да покажем, че $\A$ разпознава езика $L$, т.е. $\L(\A) = L$.
+  За целта, първо ще докажем едно помощно твърдение.
+  \begin{prop}
+    За всеки две думи $\alpha$ и $\beta$,
+    $\delta^\star([\alpha]_L,\beta) = [\alpha\beta]_L$.
+  \end{prop}
+  \begin{proof}
+    Ще докажем това свойство с индукция по дължината на $\beta$.
+    \begin{itemize}
+    \item
+      За $\beta = \varepsilon$ свойството следва директно от дефиницията на $\delta^\star$ като рефлексивно и транзитивно затваряне на $\delta$,
+      защото $\delta^\star([\alpha]_L,\varepsilon) = [\alpha]_L$.
+    \item
+      Нека $\abs{\beta} = n+1$ и да приемем, че сме доказали твърдението за думи с дължина $n$.
+      Тогава $\beta = \gamma a$, където $\abs{\gamma} = n$. Свойството следва от следните равенства:
+      \begin{align*}
+        \delta^\star([\alpha]_L, \gamma a) & = \delta(\delta^\star([\alpha]_L,\gamma),a) & (\text{деф. на }\delta^\star)\\
+                                          & = \delta([\alpha\gamma]_L,a) & (\text{от {\bf И.П.} за }\gamma)\\
+                                          & = [\alpha\gamma a]_L & (\text{от деф. на }\delta)\\
+                                          & = [\alpha\beta]_L & (\beta = \gamma a).
+      \end{align*}
+    \end{itemize}
+  \end{proof}
+  \noindent За да се убедим, че $L = \L(\A)$ е достатъчно да проследим еквивалентностите:
+  \begin{align*}
+    \alpha\in \L(\A) & \iff \delta^\star(s,\alpha) \in F & (\text{от деф. на }\L(\A))\\
+                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\text{по деф. }s = [\varepsilon]_L)\\
+                     & \iff \delta^\star([\varepsilon]_L,\alpha) = [\alpha]_L\ \&\ \alpha\in L & (\text{от деф. на }F)\\
+                     & \iff \alpha \in L & (\text{от последното твърдение}).
+  \end{align*}
+\end{proof}
+
+\begin{dfn}
+  \index{изоморфизъм}
   Нека $\A_1 = \FAn{1}$ и $\A_2 = \FAn{2}$.
   Казваме, че $\A_1$ и $\A_2$ са {\bf изоморфни}, което означаваме с $\A_1 \cong \A_2$, ако
   съществува биекция $f: Q_1\to Q_2$, за която:
@@ -1767,7 +1800,7 @@ $\A$ е {\bf минимален} за езика $L$.
   Всички минимални автомати за $L$ са изоморфни на $\A_0$, автомата построен в теоремата на Нерод-Майхил.
 \end{cor}
 \begin{proof}
-  Нека $\A = \FA$ е произволен автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\approx_L}$.
+  Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\approx_L}$.
   Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
   Искаме да докажем, че $\A \cong \A_0$.
   Понеже $\A$ е свързан, за всяко състояние $q$ можем да намерим дума $\omega_q$,
@@ -1784,10 +1817,11 @@ $\A$ е {\bf минимален} за езика $L$.
     Това означава, $[\omega_q]_L = [\alpha]_L$ и следователно $f$ е определена коректно, т.е. $f$ е {\bf функция}.
   \item
     Ще проверим, че $f$ е {\bf инективна}, т.е.
-    \[(\forall q_1,q_2 \in Q)[q_1\neq q_2\ \rightarrow\ f(q_1) \neq f(q_2)].\]
+    \[(\forall q_1,q_2 \in Q)[q_1\neq q_2 \implies f(q_1) \neq f(q_2)].\]
     Да допуснем, че има състояния $q_1 \neq q_2$, за които 
     \[f(q_1) = [\omega_{q_1}]_L = [\omega_{q_2}]_L = f(q_2).\]
     Тогава $\omega_{q_1} \not\sim_\A \omega_{q_2}$ и $\omega_{q_1} \approx_L \omega_{q_2}$.
+    \marginpar{\writedown Обяснете!}
     Но тогава от \Cor{upper-bound} получаваме, че $\abs{\sim_\A} > \abs{\approx_L}$,
     което противоречи с минималността на $\A$.
   \item
@@ -1803,7 +1837,7 @@ $\A$ е {\bf минимален} за езика $L$.
       & = [\omega_qa]_L & (\text{от деф. на }f)\\
       & = \delta^\star_{\A_0}([\varepsilon]_L, \omega_qa) & (\text{от деф. на }\A_0)\\ 
       & = \delta_{\A_0}(\delta^\star_{\A_0}([\varepsilon]_L, \omega_q),a) & (\text{от деф. на }\delta^\star_{\A_0})\\
-      & = \delta_{\A_0}([\omega_q]_L, a) & (\text{свойство на }\delta_{\A_0})\\
+      & = \delta_{\A_0}([\omega_q]_L, a) & (\text{свойство на }\delta^\star_{\A_0})\\
       & = \delta_{\A_0}(f(q), a) & ( f(q) = [\omega_q]_L).
     \end{align*}
   \end{itemize}
@@ -1812,7 +1846,7 @@ $\A$ е {\bf минимален} за езика $L$.
 \subsection{Алгоритъм за намиране на МДКА.}
 \begin{itemize}
 \item
-  Да фиксираме произволен ДКА $\A = \FA$.
+  Да фиксираме произволен тотален ДКА $\A = \FA$.
 \item
   Казваме, че две състояния $p,q$ на автомата  са {\bf еквивалентни}, означаваме $p\equiv_\A q$,
   ако \[p \equiv_\A q\ \iff\ (\forall \gamma\in \Sigma^\star)[\delta^\star(p,\gamma) \in F\ \iff\ \delta^\star(q,\gamma) \in F].\]
@@ -1825,7 +1859,7 @@ $\A$ е {\bf минимален} за езика $L$.
   Това означава, че ако в $\A$ няма недостижими състояния от началното състояние $s$, то $\abs{\equiv_\A} = \abs{\approx_{\L(\A)}}$.
 \end{itemize}
 
-При даден език $L$ и ДКА $\A = \FA$, който го разпознава, нашата цел е да построим нов ДКА $\A_0$,
+При даден език $L$ и тотален ДКА $\A = \FA$, който го разпознава, нашата цел е да построим нов ДКА $\A_0$,
 който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_\L$.
 Това ще направим като ``слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
 Това означава, че всяко състояние на $\A_0$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
@@ -1834,12 +1868,12 @@ $\A$ е {\bf минимален} за езика $L$.
 
 Алгоритъмът представлява намирането на релации $\equiv_n$, където
 \[p\equiv_n q \iff (\forall\gamma\in\Sigma^\star)[\abs{\gamma}\leq n\ \rightarrow\ (\delta^\star(p,\gamma) \in F\ \iff\ \delta^\star(q,\gamma) \in F)].\]
-Релациите $\equiv_n$ представляват апроксимират релацията $\equiv_\A$.
+Релациите $\equiv_n$ представляват апроксимации на релацията $\equiv_\A$.
 Обърнете внимание, че за всяко $n$, $\equiv_n$ е {\em по-груба} релация от $\equiv_{n+1}$, 
 която на свой ред е по-груба от $\equiv_\A$.
-Алгоритъмът строи $\equiv_n$ докато $\equiv_n\ \neq\ \equiv_{n+1}$.
-Тъй като броят на класовете на еквивалентност на $\equiv_n$ е краен, и не по-голям от $\abs{Q}$, то 
-със сигурност ще намерим $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
+Алгоритъмът строи $\equiv_n$ докато не срещнем $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
+Тъй като броят на класовете на еквивалентност на $\equiv_\A$ е краен ($\leq \abs{Q}$), то 
+със сигурност ще намерим такова $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
 Тогава заключаваме, че $\equiv_\A\ =\ \equiv_n$.
 
 Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
@@ -1913,15 +1947,15 @@ $\A$ е {\bf минимален} за езика $L$.
     \qquad
     \begin{subfigure}[b]{0.5\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-          \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
-          
-          \node[initial above, state]   (0) {$A^0_1$};
-          \node[state]            (1) [right of=0]{$A^1_1$};
-          \node[state,accepting]  (2) [right of=1]{$A^2_1$};
-          
-          \path 
-          (0) edge [bend left=15] node [above] {$a,b$}   (1)
-          (1) edge [bend left=15] node [above] {$a,b$}   (2)
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
+        
+        \node[initial above, state]   (0) {$Q^0_1$};
+        \node[state]            (1) [right of=0]{$Q^1_1$};
+        \node[state,accepting]  (2) [right of=1]{$Q^2_1$};
+        
+        \path 
+        (0) edge [bend left=15] node [above] {$a,b$}   (1)
+        (1) edge [bend left=15] node [above] {$a,b$}   (2)
         (2) edge [loop above] node [above] {$a,b$}   (2);
       \end{tikzpicture}
       \caption{Получаваме следния минимален автомат $\A_0$, $\L(\A_0) = \L(\A)$}
@@ -2014,10 +2048,10 @@ $\A$ е {\bf минимален} за езика $L$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
         
-        \node[initial above, state]   (0) {$A^0_2$};
-        \node[state,accepting]  (1) [right of=0]{$A^1_2$};
-        \node[state]            (2) [right of=1]{$A^2_2$};
-        \node[state,accepting]  (3) [right of=2]{$A^3_2$};
+        \node[initial above, state]   (0) {$Q^0_2$};
+        \node[state,accepting]  (1) [right of=0]{$Q^1_2$};
+        \node[state]            (2) [right of=1]{$Q^2_2$};
+        \node[state,accepting]  (3) [right of=2]{$Q^3_2$};
                 
         \path 
         (0) edge [bend left=15] node [above] {$a,b$}   (1)
