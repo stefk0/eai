@@ -1,4 +1,4 @@
-\section{Допълнителни свойства и задачи}
+\section{Допълнителни задачи}
 
 \begin{dfn}
   Да фиксираме две азбуки $\Sigma_1$ и $\Sigma_2$.
@@ -10,21 +10,72 @@
 Лесно се съобразява, че за всеки хомоморфизъм $h$, $h(\varepsilon) = \varepsilon$.
 
 \begin{problem}
-  Нека $L \subseteq \Sigma^\star_1$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм.
-  Тогава 
+  Нека $L \subseteq \Sigma^\star_1$ е регулярен език и $h:\Sigma^\star_1\to\Sigma^\star_2$ е хомоморфизъм.
+  Тогава
   $h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}$ е регулярен.
 \end{problem}
 \begin{hint}
   Индукция по построението на регулярни езици.
+  % \begin{itemize}[-]
+  % \item 
+  %   За $L = \{a\}$, $h(L) = \{h(a)\}$.
+  % \item
+  %   $h(\emptyset) = \emptyset$.
+  % \item
+  %   Нека $L_1 = \L(r_1)$ и $L_2 = \L(r_2)$.
+  %   Ще докажем, че $h(\L(r_1\cdot r_2))$ е регулярен.
+  %   \begin{align*}
+  %     h(\L(r_1\cdot r_2)) & = h(L_1\cdot L_2) & (\text{деф. на конкатенация})\\
+  %     & = \{h(\gamma) \mid \gamma \in L_1 \cdot L_2\}\\
+  %     & = \{h(\alpha\beta) \mid \alpha\in L_1\ \&\ \beta\in L_2\}\\
+  %     & = \{h(\alpha)\cdot h(\beta) \mid \alpha \in L_1\ \&\ \beta \in L_2\} & (h\text{ е хомоморфизъм})\\
+  %     & = \{\omega\gamma \mid \omega \in h(L_1)\ \&\ \gamma \in h(L_2)\}\\
+  %     & = h(L_1)\cdot h(L_2).
+  %   \end{align*}
+  %   По И.П. имаме, че $h(L_1)$ и $h(L_2)$ са регулярни езици.
+  %   Следователно, 
+  %   \[h(\L(r_1\cdot r_2)) = h(L_1)\cdot h(L_2)\]
+  %   е регулярен език.
+  % \item
+  %   От горното свойство имаме също, че за всяко $n$, $h(L^n) = h(L)^n$.
+  % \item
+  %   Освен това, 
+  %   \begin{align*}
+  %     h(\bigcup_n L_n) & = \{h(\alpha) \mid (\exists n)[\alpha \in L_n]\}\\
+  %     & = \bigcup \{h(\alpha) \mid \alpha \in L_n\}\\
+  %     & = \bigcup_n h(L_n).
+  %   \end{align*}
+  % \item
+  %   Нека $L = \L(r^\star)$.
+  %   Ще докажем, че $h(L^\star)$ е регулярен език.
+  %   \begin{align*}
+  %     h(L^\star) & = h(\bigcup_n L^n) & (\text{деф. на звезда на Клини})\\
+  %     & = \bigcup_n h(L^n) & (\text{от горното свойство})\\
+  %     & = \bigcup_n h(L)^n & (\text{от по-горното свойство})\\
+  %     & = h(L)^\star & (\text{по деф.}).
+  %   \end{align*}
+  % \end{itemize}
 \end{hint}
 
 \begin{problem}
-  Нека $L\subseteq \Sigma^\star_2$ е регулярен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм.
+  Нека $L\subseteq \Sigma^\star_2$ е регулярен език и $h:\Sigma^\star_1\to\Sigma^\star_2$ е хомоморфизъм.
   Тогава езикът
   $h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}$ е регулярен.  
 \end{problem}
 \begin{hint}
   Конструкция на автомат за $h^{-1}(L)$ при даден автомат за $L$.
+  % Нека $\A$ е КДА разпознаващ езика $L$.
+  % Ще построим $\A' = \pair{Q,\Sigma_1, \delta', s, F}$,
+  % където дефинираме функцията на преходите $\delta'$ като $\delta'(q,a) = \delta^\star(q,h(a))$.
+  % Понеже $h$ е хомоморфизъм, лесно се доказва с индукция по дължината на думата $\alpha \in \Sigma^\star_1$,
+  % че $\delta'^\star(q,\alpha) = \delta^\star(q,h(\alpha))$.
+  % Сега лесно се вижда, че $h^{-1}(\L(\A)) = \L(\A')$, защото:
+  % \begin{align*}
+  %   \alpha \in \L(\A') & \iff \delta'^\star(s,\alpha) \in F\\
+  %   & \iff \delta^\star(s,h(\alpha)) \in F\\
+  %   & \iff h(\alpha) \in \L(\A)\\
+  %   & \iff \alpha \in h^{-1}(\L(\A)).
+  % \end{align*}
 \end{hint}
 
 \begin{problem}
@@ -54,9 +105,8 @@
   \end{enumerate}
 \end{hint}
 
-
 \begin{problem}
-  \marginpar{\cite{sipser1}, стр. 90}
+  \marginpar{(\cite{sipser1}, стр. 90)}
   Да разгледаме езика
   \[L = \{\omega \in \{0,1\}^\star \mid \omega\text{ съдържа равен брой поднизове }01\text{ и }10\}.\]
   Например, $101 \in L$, защото съдържа по веднъж $10$ и $01$.
@@ -64,42 +114,71 @@
   Докажете, че $L$ е регулярен.
 \end{problem}
 
+% \begin{problem}
+%   \marginpar{(\cite{kozen}, стр. 75)}
+%   Да фиксираме азбука само с един символ $\Sigma = \{a\}$.
+%   Множеството $U$ е {\em породен от аритметична прогресия}, ако съществуват числа $q \geq 0$ и $p > 0$,
+%   такива че $(\forall n \geq q)[n \in U\ \iff\ n+p \in U]$.
+%   Докажете, че $L \subseteq \{a\}^\star$ е регулярен точно тогава, когато множеството $\{m \mid a^m \in L\}$
+%   е породено от аритметична прогресия.
+% \end{problem}
+% \begin{hint}
+%   Разгледайте КДА за $L$.
+% \end{hint}
+
 \begin{problem}
+  \marginpar{(\cite{kozen}, стр. 75; \cite{papadimitriou}, стр. 89)}
   Да фиксираме азбука само с един символ $\Sigma = \{a\}$.
   Да положим за всяко $p,q\in\Nat$, 
-  \[L(p,q) = \{a^l \mid (\exists n\in\Nat)[l = p+q\cdot n]\},\]
-  т.е. дължините на думите образуват аритметична прогресия.
-  Такива езици ще наричаме {\em породени от аритметична прогресия}.
-  Докажете, че $L \subseteq \{a\}^\star$ е регулярен точно тогава, когато $L$
-  е обединение на крайно много езици породени от артиметична прогресия.
-  
-  За произволна азбука $\Sigma$, докажете, че ако $L \subseteq \Sigma^\star$ е регулярен език, 
-  то множеството $\{\abs{\omega}\mid \omega \in L\}$ може да се представи като обединение 
-  на крайно много аритметични прогресии.
+  \[L(p,q) = \{a^k \mid (\exists n\in\Nat)[k = p+q\cdot n]\}.\]
+  Ако за един език $L$ съществуват константи $p_1,\dots,p_k$ и $q_1,\dots,q_k$, такива че 
+  \[L = \bigcup_{1\leq i \leq k} L(p_i,q_i),\]
+  то казваме, че $L$ е {\em породен от аритметични прогресии}.
+  \begin{enumerate}[a)]
+  \item 
+    Докажете, че $L \subseteq \{a\}^\star$ е регулярен език точно тогава, когато $L$ е породен от аритметична прогресия.
+  \item
+    За произволна азбука $\Sigma$, докажете, че ако $L \subseteq \Sigma^\star$ е регулярен език,
+    то езикът $\{a^{\abs{\omega}} \mid \omega \in L\}$  е породен от аритметична прогресия.    
+  \end{enumerate}
 \end{problem}
 \begin{hint}
-  \begin{itemize}
+  \begin{enumerate}[a)]
   \item 
-    Докажете, че за всяко $p,q \in \Nat$, $L(p,q)$ е регулярен език.
+    За едната посока, разгледайте КДА за $L$.
   \item
-    Докажете, че за крайно много $p_0,\dots,p_k$, $q_0,\dots,q_k$,
-    $\bigcup_{i \leq k}L(p_i,q_i)$ е регулярен език.
-  \item
-    С индукция по построението на регулярните езици, 
-    докажете, че ако $L$ е регулярен, то $L$ може да се представи
-    като крайно обединение на езици породени от аритметични прогресии.
-    Съществената част от доказателството се състои в следното:
-    \begin{itemize}
-    \item 
-      \marginpar{$L(p_1,q_1)\cdot L(p_2,q_2) = L(p_1+p_2,\mbox{НОД}(q_1,q_2))\setminus F$, където $F$ е крайно м-во, и ако $q_1 = q_2$, то $F = \emptyset$}
-      езикът $L(p_1,q_1) \cdot L(p_2,q_2)$ може да се представи като крайно обединение 
-      на езици породени от артиметични прогресии.
-    \item
-      езикът $L(p,q)^\star$ може да се представи като крайно обединение 
-      на езици породени от артиметични прогресии.
-    \end{itemize}
-  \end{itemize}
+    За втората част, разгледайте $h:\Sigma\to\{a\}$ деф. като $(\forall b\in\Sigma)[h(b) = a]$.
+    Докажете, че $h$ е поражда хомоморфизъм между $\Sigma^\star$ и $\{a\}^\star$.
+    Тогава $h(L) = \{a^{\abs{\omega}} \mid \omega \in L\}$, а
+    ние знаем, че регулярните езици са затворени относно хомоморфни образи.  
+  \end{enumerate}
 \end{hint}
+
+% \begin{hint}
+%   \begin{itemize}
+%   \item 
+%     Докажете, че за всяко $p,q \in \Nat$, $L(p,q)$ е регулярен език.
+%   \item
+%     Докажете, че за крайно много $p_0,\dots,p_k$, $q_0,\dots,q_k$,
+%     $\bigcup_{i \leq k}L(p_i,q_i)$ е регулярен език.
+%   \item
+%     С индукция по построението на регулярните езици, 
+%     докажете, че ако $L$ е регулярен, то $L$ може да се представи
+%     като крайно обединение на езици породени от аритметични прогресии.
+%     Съществената част от доказателството се състои в следното:
+%     \begin{itemize}
+%     \item 
+%       \marginpar{$L(p_1,q_1)\cdot L(p_2,q_2) = L(p_1+p_2,\mbox{НОД}(q_1,q_2))\setminus F$, където $F$ е крайно м-во, и ако $q_1 = q_2$, то $F = \emptyset$}
+%       езикът $L(p_1,q_1) \cdot L(p_2,q_2)$ може да се представи като крайно обединение 
+%       на езици породени от артиметични прогресии.
+%     \item
+%       езикът $L(p,q)^\star$ може да се представи като крайно обединение 
+%       на езици породени от артиметични прогресии.
+%     \end{itemize}
+%   \end{itemize}
+% \end{hint}
+
+
 
 \begin{problem}
   Да разгледаме азбуката:
@@ -109,7 +188,7 @@
   е автоматен език.
 \end{problem}
 \begin{hint}
-  Отново по-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
+  По-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
   Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
   \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = \gamma^R_{(2)}.\]
   Понеже за $\varepsilon + \varepsilon = \varepsilon$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
@@ -176,10 +255,15 @@
 \end{problem}
 \begin{hint}
   Ще построим автомат $\A = \FA$ за езика $L^R_1$.
-  За улеснение, в рамките на тази задача ще пишем, че $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
-  $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
-  $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
-
+  За улеснение, в рамките на тази задача ще пишем:
+  \begin{itemize}
+  \item 
+    $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
+  \item
+    $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
+  \item
+    $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
+  \end{itemize}
   Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
   Искаме да е изпълнено свойствата:
   \begin{itemize}
