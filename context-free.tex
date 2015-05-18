@@ -2,11 +2,14 @@
 
 
 \section{Безконтекстни граматики}
+\index{граматика!безконтекстна}
 % От Сипсер, същото е в слайдовете на Сашка
 % Малко е тъпо, че в Пападимитриу дефиницията е различна. Там \Sigma \subseteq V
+
 \begin{dfn}
-  \marginpar{На англ. context-free grammar}
-  \marginpar{Други срещани наименования са контекстно-свободна, контекстно-независима}
+  \marginpar{На англ. {\bf context-free grammar}}
+  \marginpar{Други срещани наименования на български са {\bf контекстно-свободна}, {\bf контекстно-независима}}
+%  \marginpar{Според йерархията на Чомски, това са граматики тип }
   Безконтекстна граматика e четворка от вида
   \[G = (V,\Sigma,R,S),\]
   където
@@ -22,14 +25,17 @@
   \item
     $S \in V$ е началната променлива. 
   \end{itemize}
-  Обикновено ще пишем $A \rightarrow_G \alpha$ вместо $(A,\alpha) \in R$.
-  Пишем $u \rightarrow_G v$, ако съществуват думи $x,y\in (\Sigma\cup V)^\star$, $A\in V$,
-  правило $A\rightarrow_G v^\prime$ и $u = xAy$, $v = xv^\prime y$.
 \end{dfn}
 
-\marginpar{Да се дефинира $\rightarrow^\star_G$}
+При дадена граматика $G$, за правилата на граматиката обикновено ще пишем $A \rightarrow \alpha$ вместо $(A,\alpha) \in R$.
+Ще въведем и релация между думи $\alpha,\beta\in (V \cup \Sigma)^\star$, която ще казва, че думата $\beta$
+се получаава от $\alpha$ като приложим правло от граматиката.
+За две думи $u,v\in (V\cup\Sigma)^\star$ ще пишем $u \rightarrow_G v$, ако съществуват думи $x,y\in (\Sigma\cup V)^\star$, $A\in V$,
+правило $A\rightarrow \alpha$ и $u = xAy$, $v = x\alpha y$.
+С $\rightarrow^\star_G$ ще означаваме рефлексивното и транзитивно затваряне на релацията $\rightarrow_G$.
+% \marginpar{Да се дефинира $\rightarrow^\star_G$}
 
-Езикът генериран от $G$ е множеството
+Езикът породен от граматиката $G$ е множеството от думи
 \[\L(G) = \{\alpha\in\Sigma^\star\mid S \rightarrow^\star_G \alpha\}.\]
   
 \begin{problem}
@@ -62,7 +68,7 @@
     $B \rightarrow^\star b^nBc^k$.
   \end{itemize}
   За да докажем, че $L \subseteq L(G)$, 
-  да разгледаме една дума $\omega \in L$, т.е. $\omega = a^mb^nc^k$, $m+n \geq k$.
+  да разгледаме една дума $\omega \in L$, т.е. $\omega = a^mb^nc^k$, където $m+n \geq k$.
   Имаме два случая:
   \begin{itemize}
   \item 
@@ -72,19 +78,19 @@
     Обединявайки всичко това, получаваме:
     \[S \rightarrow^\star a^mb^nc^k.\]
   \item
-    $k > m$, т.е. $k = m+l$ и $m+n = m+l+r$.
+    $k > m$, т.е. $k = m+l$, за някое $l > 0$, и $m+n = k+r = m+l+r$, за някое $r$.
     Тогава имаме изводите:
     \[S \rightarrow^\star a^mSc^m,\ S\rightarrow B,\ B\rightarrow^\star b^lBc^l,\ B\rightarrow b^rB,\ B\rightarrow\varepsilon,\]
     и отново получаваме $S \rightarrow^\star a^mb^nc^k$.
   \end{itemize}
-  Така доказахме, че $\omega \in L(G)$.
+  Така доказахме, че $\omega \in \L(G)$.
   
-  Сега ще докажем, че $L(G) \subseteq L$.
+  Сега ще докажем, че $\L(G) \subseteq L$.
   С индукция по дължината на извода $l$,
   ще докажем, че ако $S \stackrel{l}{\rightarrow}\omega$, то $\omega \in M$, където
   \[M = \{a^nSc^k\mid n\geq k\}\cup\{a^nb^mBc^k\mid n+m\geq k\}\cup\{a^nb^mc^k\mid n+m\geq k\}.\]
   
-  Ако $l = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$, $S \in M$.
+  Ако $l = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$ и $S \in M$.
 
   Нека $l > 0$ и $S \stackrel{l-1}{\rightarrow} \alpha \rightarrow \omega$.
   От {\bf И.П.} имаме, че $\alpha \in M$. Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
@@ -94,7 +100,7 @@
   \begin{center}
     \begin{tabular}{| c | c | c |}
       \hline
-      $\alpha$ & $C \rightarrow \gamma$ & $\omega$ \\ \hline
+      $\alpha\in M$ & $C \rightarrow \gamma$ & $\omega \in M?$ \\ \hline
       $a^nSc^k$ & $S \rightarrow aSc$ & $a^{n+1}Sc^{k+1}$ \\ \hline
       $a^nSc^k$ & $S \rightarrow aS$ & $a^{n+1}Sc^{k}$ \\ \hline
       $a^nSc^k$ & $S \rightarrow B$ & $a^{n}Bc^{k}$ \\ \hline
@@ -191,6 +197,12 @@
 \end{proof}
 
 \begin{problem}
+  За произволна дума $\omega \in \{a,b\}^\star$, 
+  докажете, че ако $n_a(\omega) > n_b(\omega)$, то съществуват думи $\omega_1$ и $\omega_2$,
+  за които $\omega = \omega_1 a \omega_2$ и $n_a(\omega_1) \geq n_b(\omega_1)$, $n_a(\omega_2) \geq n_b(\omega_2)$.
+\end{problem}
+
+\begin{problem}
   Да се докаже, че езикът $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) = n_b(\alpha)\}$ 
   е безконтекстен.
 \end{problem}
@@ -203,6 +215,12 @@
   \end{align*}}
   Една възможна граматика $G$ е следната: 
   \[S \rightarrow aSbS\vert bSaS \vert\varepsilon.\]
+  Например, да разгледаме извода на думата $aabbba$ в тази граматика:
+  \begin{align*}
+    S & \to aSbS \to aaSbSbS \to aa\varepsilon bSbS \to aab\varepsilon bS \to aabbbSaS\\
+    & \to aabbb\varepsilon a S \to aabbba.
+  \end{align*}
+  
   Като следствие от \Prob{nanb} може лесно да се изведе, че за думи $\omega$, за които $n_a(\omega) = n_b(\omega)$,
   е изпълнено следното:
   \begin{enumerate}[a)]
@@ -272,6 +290,8 @@
   \item
     $L = \{a^nb^{2n} \mid n \in \Nat\}$;
   \item
+    $L = \{a^nb^{2k} \mid n,k \in \Nat\ \&\ n \neq k\}$;
+  \item
     \marginpar{$S \rightarrow aSb | aS | a$}
     $L = \{a^nb^k \mid n > k\}$;
   \item
@@ -280,23 +300,39 @@
     \marginpar{$S \rightarrow aSc | B,\ B \rightarrow bBc | \varepsilon$}
     $L = \{a^nb^mc^{n+m}\mid n,m \in \Nat\}$;
   \item
+    \marginpar{$S \rightarrow aSc | aS | B$, $B\rightarrow bBc | bB | \varepsilon$}
+    $L = \{a^nb^kc^m \mid n + k \geq m\}$;
+  \item
+    \marginpar{$S \rightarrow aSc | aS | aB | bB$,\\$B\rightarrow bBc | bB | \varepsilon$}
     $L = \{a^nb^kc^m \mid n + k \geq m+1\}$;
   \item
     $L = \{a^nb^kc^m \mid n + k \geq m+2\}$;
   \item
+    \marginpar{$S \rightarrow aSc | aS | B | Bc$,\\$B\rightarrow bBc | bB | \varepsilon$}
     $L = \{a^nb^kc^m \mid n + k + 1 \geq m\}$;
   \item
     $L = \{a^nb^kc^m \mid n + k + 2 \geq m\}$;
   \item
-    $\{a,b\}^\star \setminus \{a^{2n}b^n \mid n\in\Nat\}$;
+    $L = \{a^nb^kc^m \mid n + k \leq m\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid n_a(\omega) = 2n_b(\omega)\}$;
+    $L = \{a^nb^kc^m \mid n + k \leq m+1\}$;
+  \item
+    \marginpar{Обединение на три езика}
+    $L = \{a^nb^mc^k \mid n, m, k \text{ не са страни на триъгълник}\}$.
+  \item
+    $L = \{a,b\}^\star \setminus \{a^{2n}b^n \mid n\in\Nat\}$;
+  \item
+    \marginpar{$S\to EaE$, $E \to aEbE | bEaE | \varepsilon$}
+    $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) = n_b(\alpha) + 1\}$;
+  \item
+    \marginpar{$S\to E | SaS$, $E \to aEbE | bEaE | \varepsilon$}
+    $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) \geq n_b(\alpha)\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) > n_b(\alpha)\}$;
   \item
     $L = \{\omega_1 a \omega_2 b \mid \omega_1,\omega_2 \in \{a,b\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
   \item
     $L = \{\alpha c \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha^R\mbox{ е поддума на }\beta \}$.
-  \item
-    $L = \{a^nb^mc^k \mid n, m, k \text{ не са страни на триъгълник}\}$.
   \end{enumerate}
 \end{problem}
 
@@ -305,7 +341,7 @@
 \begin{lemma}[за покачването (безконтекстни езици)]
   \index{лема за покачването!безконтекстни езици}
   \label{lem:pumping-context} 
-  \marginpar{(\cite{sipser}, стр. 123; \cite{hopcroft1}, стр. 125)}
+  \marginpar{(стр. 123 от \cite{sipser1}; стр. 125 от \cite{hopcroft1})}
   За всеки безконтекстен език $L\neq\{\epsilon\}$ съществува $p>0$, такова
   че ако $\alpha\in L, \abs{\alpha} \geq p$, то съществува разбиване на думата на пет части, $\alpha=xyuvw$,
   за което е изпълнено:
@@ -320,24 +356,26 @@
 \end{lemma}
 \begin{proof}
   Нека $G$ е граматиката за езика $L$.
-  Нека \[b = \max\{\abs{\beta} \mid A\rightarrow\beta\in R\}.\]
+  \marginpar{За простота, можем да си мислим, че $G$ е в НФЧ. Тогава $b=2$.}
+  Нека \[b = \max\{\abs{\beta} \mid A\rightarrow_G \beta\}.\]
   Можем да приемем, че $b \geq 2$.
-  \marginpar{Възлите в дървото са променливи и терминалите са листа}
+  \marginpar{Възлите във вътрешността на дървото са променливи, а листата са букви или $\varepsilon$}
   Това означава, че във всяко дърво на извод, всеки възел има
   не повече от $b$ наследника.
-  Нека $p = b^{\abs{V}}+1$. Ще покажем, че $p$ е константата за разрастването на граматиката $G$.
-  % Тъй като $b \geq 2$, то $p > b^{\abs{V}}$.
+  Нека $p = b^{\abs{V}}+1$. Ще покажем, че $p$ е константа на покачването за граматиката $G$.
   Това означава, че всяка дума с дължина поне $p$ в езика $L$ има дърво на извод с височина
   поне $\abs{V} + 1$.
   
-  Нека $\abs{\alpha} \geq p$ и $T$ е дърво на извода за думата $\alpha$ {\em с минимален брой възли}. 
-  От направените по-горе разсъждения е ясно, че височината на $T$ е поне $\abs{V} + 2$.
-  Следователно, най-дългият път $\pi$ в $T$ има дължина поне $\abs{V}+2$ и 
-  по него има поне $\abs{V}+1$ променливи, защото само листата са терминали.
-  Нека $R$ да бъде променлива, която се среща като възел по пътя $\pi$ и се повтаря по него, като е измежду последните $\abs{V} + 1$
-  възли по $\pi$.
-  Последните две повтаряния на $R$ разделят думата $\alpha$ на пет части, нека
-  $\alpha = чай$.
+  Нека $\abs{\alpha} \geq p$ и $T$ е дърво на извода за думата $\alpha$.
+  Понеже думата $\alpha$ може да има много дървета на извод, нека $T$ също така да бъде {\em с минимален брой възли}. 
+  От направените по-горе разсъждения е ясно, че височината на $T$ е поне $\abs{V} + 1$,
+  Следователно, по най-дългия път $\pi$ в $T$ имаме поне $\abs{V}+2$ възела, от които
+  поне $\abs{V}+1$ са променливи, защото само листата могат да не са променливи.
+  Да разгледаме последните $\abs{V}+1$ променливи по пътя $\pi$.
+  От принципа на Дирихле следва, че измежду тези $\abs{V}+1$ променливи има поне една повтаряща се.
+  Нека $R$ да бъде една такава променлива.
+  Последните две повтаряния на $R$ разделят думата $\alpha$ на пет части.
+  Нека $\alpha = xyuvw$.
   \begin{enumerate}[1)]
   \item
     $\abs{yv}\geq 1$,
@@ -353,7 +391,7 @@
 \end{proof}
 
 \begin{cor}
-  Нека $G$ е безконтекстна граматика и $p$ е константата за разрастването на $G$, $L = \L(G)$.
+  Нека $G$ е безконтекстна граматика и $p$ е константата на покачването за $G$, $L = \L(G)$.
   Тогава $\abs{L} = \infty$ точно тогава, когато съществува $\alpha \in L$, за която $p \leq \abs{\alpha} < 2p$.
 \end{cor}
 \begin{proof}
@@ -361,11 +399,12 @@
   че $\abs{L} = \infty$, защото $\alpha = xyuvw$ и $xy^iuv^iw \in L$, за всяко $i\in\Nat$.
 
   За другата посока, нека сега $\abs{L} = \infty$.
-  Да изберем думата $\alpha \in L$, $\abs{\alpha} \geq p$ и нека тя да бъде минималната с това свойство.
-  Да допуснем, че $\abs{\alpha} \geq 2p$.
-  Тогава от \Lem{pumping-context} следва, че $\alpha = xyuvw$, $\abs{yv} \geq 1$, $\abs{yuv} \leq p$, $xuw \in L$.
-  Ако $\abs{xuw} < p$, то $\abs{yv} > p$, защото $\abs{yv} + \abs{xuw} = \abs{z} \geq 2p$, и следователно $\abs{yuv} > p$, което е противоречие.
-  Следва, че $\abs{z} > \abs{xuw} \geq p$. Противоречие с минималността на $\alpha$.
+  Да изберем най-късата дума $\alpha \in L$, за която $\abs{\alpha} \geq p$.
+  Ще докажем, че $p \leq \abs{\alpha} < 2p$. За целта да допуснем, че $\abs{\alpha} \geq 2p$.
+  Тогава от \Lem{pumping-context} следва, че $\alpha = xyuvw$, $\abs{yv} \geq 1$, $\abs{yuv} \leq p$, $xy^0uv^0w = xuw \in L$.
+  Ако $\abs{xuw} < p$, то $\abs{yv} > p$, защото $\abs{yv} + \abs{xuw} = \abs{\alpha} \geq 2p$, и следователно $\abs{yuv} > p$, което е противоречие.
+  Следва, че $\abs{\alpha} > \abs{xuw} \geq p$.
+  Получихме, че думата $xuw\in L$ и $\abs{xuw} \geq p$. Това е противоречие с минималността на $\alpha$.
 \end{proof}
 
 \begin{framed}
@@ -392,6 +431,8 @@
     $y$ или $v$ е съставена от две букви.
     Тогава е възможно да се окаже, че $xy^2uv^2w$ да има равен брой $a$, $b$ и $c$,
     но тогава редът на буквите е нарушен.
+  \item
+    понеже $\abs{yuv} \leq p$, то не е възможно в $y$ или $v$ да се срещат и трите букви.
   \end{itemize}  
   Разгледахме всички възможни случаи за $y$ и $v$ и във всеки един от тях достигнахме до противоречие.
   Следователно, езикът $L$ не е контекстно-свободен.
@@ -460,10 +501,10 @@
   Безконтекстните езици {\bf не} са затворени относно сечение и допълнение.
 \end{thm}
 \begin{proof}
-  \marginpar{(Виж Пример \ref{example:anbncn})}
   Да разгледаме езика
-  \[L_0 = \{a^nb^nc^n\mid n\in\Nat\},\] за който вече знаем, че не е безконтекстен.
+  \[L_0 = \{a^nb^nc^n\mid n\in\Nat\},\] за който вече знаем от Пример \ref{example:anbncn}, че не е безконтекстен.
   Да вземем също така и безконтекстните езици 
+  \marginpar{\writedown Защо са безконтекстни?}
   \[L_1 = \{a^nb^nc^m\mid n,m\in\Nat\},\ L_2 = \{a^mb^nc^n\mid n,m\in\Nat\},\]
   \begin{itemize}
   \item 
@@ -517,11 +558,15 @@
   \item
     $\{x_1 c x_2 c \dots c x_k\mid k\geq 2\ \&\ x_i\in\{a,b\}^\star\ \&\ (\exists i,j)[i \neq j\ \&\ x_i = x_j]\}$;
   \item
-    $\{a^ib^jc^k\mid i,j,k\geq 0\ \&\ (i = j \vee j = k)\}$;
+    $L = \{a^ib^jc^k\mid i,j,k\geq 0\ \&\ (i = j \vee j = k)\}$;
   \item
-    $\{\alpha \in \{a,b,c\}^\star\mid n_a(\alpha) = n_b(\alpha) = n_c(\alpha)\}$;
+    \marginpar{Разгл. $L' = L \cap L(a^*b^*c^*)$.}
+    $L = \{\alpha \in \{a,b,c\}^\star\mid n_a(\alpha) > n_b(\alpha) > n_c(\alpha)\}$;
   \item
-    $\{a,b\}^\star \setminus \{a^nb^n\mid n\in \Nat\}$;
+    $L = \{a,b\}^\star \setminus \{a^nb^n\mid n\in \Nat\}$;
+  \item
+    \marginpar{Разгл. $L' = L \cap L(a^*b^*a^*)$.}
+    $L = \{\omega \in \{a,b\}^\star \mid n_a(\omega) = 2n_b(\omega)\}$;
   \end{enumerate}
 \end{problem}
 % \begin{proof}
@@ -744,19 +789,19 @@
   \marginpar{За дума $\alpha$, алгоритъмът работи за време $O(\abs{\alpha}^3)$}
 \end{thm}
 % \begin{proof}[стр. 154 от \cite{papadimitriou}]
-Можем да приемем, че $G$ е граматика в нормална форма на Чомски.
+Можем да приемем, че $G = \CFG$ е граматика в нормална форма на Чомски.
 Нека $\alpha = a_1a_2\dots a_n$ е дума, за която искаме да проверим дали $\alpha \in L(G)$.
-\marginpar{Това е алгоритъм на Cocke, Younger и Kasami (CYK), който е пример за динамично програмиране}
+\marginpar{Това е алгоритъм на Cocke, Younger и Kasami (CYK), който е пример за динамично програмиране (стр. 195 от \cite{kozen})}
 \begin{algorithm}[H]
   \caption{Проверка за $\alpha \in L(G)$}
   \label{alg:belongs-to-grammar}
   \begin{algorithmic}[1]
-    \State $n := \abs{\alpha}$
-    \ForAll{$1 \leq i \leq n$}
+    \State $n := \abs{\alpha}$ \Comment{Вход дума $\alpha = a_1\cdots a_n$}
+    \ForAll{$i\in [1,n]$}
     \State $V[i,i] = \{A \in V \mid A\rightarrow a_i\}$
     \EndFor
-    \ForAll{$1 \leq i,j \leq n\ \&\ i \neq j$}
-    \State$V[i,j] = \emptyset$
+    \ForAll{$i,j \in [1,n]\ \&\ i \neq j$}
+    \State $V[i,j] = \emptyset$
     \EndFor      
     \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала}
     \ForAll{$i \in [1, n-s]$}\Comment{Начало на интервала}
@@ -777,17 +822,28 @@
 
 \begin{lemma}
   За дадена граматика в нормална форма на Чомски и дума $\alpha$, 
-  за всяко $0 \leq s < \abs{\alpha}$, след $s$-тата итерация на алгоритъма, за всяко $i = 1,\dots,n-s$,
+  за всяко $0 \leq s < \abs{\alpha}$, след $s$-тата итерация на алгоритъма (редове 6 - 10), за всяка позиция $i = 1,\dots,n-s$,
   \[V[i,i+s] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s}\}.\]
 \end{lemma}
-% \begin{proof}
-%   Пълна индукция по $s$.
-%   За $s = 0$  е ясно.
+\begin{proof}
+  Пълна индукция по $s$.
+  За $s = 0$  е ясно. (Защо?)
 
-%   Нека твърдението е вярно за  $s < n$. Ще докажем, че за всяко $i = 1,\dots,n-s-1$,
-%   \[V[i,i+s+1] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s+1}\}.\]
+  Нека твърдението е вярно за $s < n$. Ще докажем твърдението за $s+1$, т.е. за всяко $i = 1,\dots,n-s-1$,
+  \[V[i,i+s+1] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s+1}\}.\]
+  % Да разгледаме $A \in V[i,i+s+1]$.
+  За едната посока, да разгледаме първoто правило в извода $A \to^\star_G a_i\cdots a_{i+s+1}$.
+  Понеже $G$ е в НФЧ, то е от вида $A \to BC$ и тогава съществува някое $t$, за което 
+  $B \to^\star a_i\cdots a_{i+t}$ и $C \to^\star a_{i+t+1}\cdots a_{i+s+1}$.
+  От И.П. получаваме, че $B \in V[i,i+t]$ и $C \in V[i+t+1,i+s+1]$.
+  Тогава от ред 10 на алгоритъма е ясно, че $A \in V[i,i+s+1]$.
   
-% \end{proof}
+  За другата посока, нека $A \in V[i,i+s+1]$.
+  Единствената стъпка на алгоритъма, при която може да сме добавили $A$ към множеството $V[i,i+s+1]$ е ред 10.
+  Тогава имаме, че съществува $k$, за което $B \in V[i,k]$, $C \in V[k+1,i+s+1]$, и $A\to BC$ е правило в граматиката $G$.
+  От И.П. имаме, че $B \to^\star_G a_i\cdots a_k$ и $C \to^\star_G a_{k+1}\cdots a_{i+s+1}$.
+  Заключаваме веднага, че $A \to^\star_G a_i\cdots a_{i+s+1}$.
+\end{proof}
 
 \begin{problem}
   Нека е дадена граматиката $G = \pair{\{a,b\}, \{S,A,B,C\},S,R}$.
@@ -834,7 +890,7 @@
 \section{Недетерминирани стекови автомати}
 
 \index{автомат!недетерминиран стеков}
-\marginpar{На англ. Push-down automaton}
+\marginpar{На англ. {\bf Push-down automaton} (стр. 157 от \cite{kozen})}
 %Sipser p.102
 \begin{dfn}
   Недетерминиран стеков автомат е 7-орка от вида
@@ -852,7 +908,7 @@
     $s\in Q$ е начално състояние;
   \item
     \marginpar{Озн. $\Ps_{fin}(A)$ - крайните подмножества на $A$}
-    $\Delta:Q\times\Sigma_\varepsilon\times\Gamma\rightarrow \Ps_{fin}(Q\times\Gamma^\star)$ 
+    $\Delta:Q\times(\Sigma \cup \{\varepsilon\})\times\Gamma\rightarrow \Ps_{fin}(Q\times\Gamma^\star)$ 
     е функция на преходите;    
   \item
     $F\subseteq Q$ е множество от заключителни състояния.
@@ -860,13 +916,13 @@
 \end{dfn}
 
 \marginpar{Instanteneous description}
-{\em Моментното описание} на изчисление със стеков автомат представлява тройка от вида $(q,\alpha,\gamma) \in Q\times\Sigma^\star\times\Gamma^\star$,
+{\em Моментно описание} (или конфигурация) на изчислението със стеков автомат представлява тройка от вида $(q,\alpha,\gamma) \in Q\times\Sigma^\star\times\Gamma^\star$,
 т.е. автоматът се намира в състояние $q$, думата, която остава да се прочете е $\alpha$,
 а съдържанието на стека е думата $\gamma$.
 Удобно е да въведем бинарната релация $\vdash_P$ над $Q\times\Sigma^\star\times\Gamma^\star$,
 която ще ни казва как моментното описание на автомата $P$ се променя след изпълнение на една стъпка:
 \[(q,x\alpha,Y\gamma) \vdash_P (p,\alpha,\beta\gamma), \text{ ако } \Delta(q,x,Y) \ni (p,\beta),\]
-като е възможно $x = \varepsilon$.
+\[(q,\alpha,Y\gamma) \vdash_P (p,\alpha,\beta\gamma), \text{ ако } \Delta(q,\varepsilon,Y) \ni (p,\beta).\]
 Рефлексивното и транзитивно затваряне на $\vdash_P$ ще означаваме с $\vdash^\star_P$.
 Сега вече можем да дадем дефиниция на език, разпознаван от стеков автомат $P$.
 \begin{itemize}
@@ -900,6 +956,7 @@
     $\Delta(q,b,A) = \{(q,\varepsilon)\}$.
   \end{itemize}
   Вместо доказтелство, да видим как думата $a^2b^2$ се разпознава от автомата с празен стек:
+  \marginpar{\writedown Докажете, че $L = \L_S(P)$!}
   \begin{align*}
     (q,a^2b^2,\#) & \vdash_P (q,ab^2,A\#) \\
     & \vdash_P (q,b^2, AA\#)\\
@@ -1023,7 +1080,7 @@
 
 \begin{framed}
 \begin{thm}
-  Класът на езиците, които се разпознават от краен стеков автомат, съвпада с
+  Класът на езиците, които се разпознават от краен стеков автомат съвпада с
   класа на безконтекстните езици.
 \end{thm}
 \end{framed}
@@ -1113,7 +1170,7 @@
 
 \begin{problem}
   Нека е дадена граматиката $G = \pair{\{S,A,B\},\{a,b\},S,R\}}$.
-  Постройте стеков автомат $P = \PDA$, такъв че $L_S(P) = L(G)$, където правилата $R$ на граматиката $G$ са зададени като:
+  Постройте стеков автомат $P = \PDA$, такъв че $\L_S(P) = \L(G)$, където правилата $R$ на граматиката $G$ са зададени като:
   \begin{enumerate}[a)]
     % За едно тези двете да се даде пример как става 
   \item
@@ -1149,10 +1206,12 @@
     Функцията на преходите $\Delta$ е дефинирана както следва:
     \begin{itemize}
     \item 
+      \marginpar{симулираме едновременно изчислението и на двата автомата}
       Ако $\Delta_1(q_1, a, b) \ni \pair{r_1,c}$
       и $\delta_2(q_2,a) = r_2$, то
       \[\Delta(\pair{q_1,q_2},a,b) \ni \pair{\pair{r_1,r_2}, c}.\]
     \item
+      \marginpar{празен ход на автомата $M_2$}
       Ако $\Delta_1(q_1,\varepsilon,b) \ni \pair{r_1,c}$,
       то за всяко $q_2 \in Q_2$,
       \[\Delta(\pair{q_1,q_2},\varepsilon,b) \ni \pair{\pair{r_1,q_2},c}.\]    
@@ -1166,8 +1225,8 @@
 \end{example}
 \begin{proof}
   Да допуснем, че $L$ е безконтекстен език.
-  Тогава \[L^\prime = L \cap a^\star b^\star c^\star\] също е безконтекстен език.
-  Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем, че {\em не} е безконтекстен.
+  Тогава \[L^\prime = L \cap \L(a^\star b^\star c^\star)\] също е безконтекстен език.
+  Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от Пример \ref{example:anbncn}, че {\em не} е безконтекстен.
   Достигнахме до противоречие. Следователно, $L$ не е безконтекстни език.
 \end{proof}
 
@@ -1212,7 +1271,7 @@
 \item 
   глава 4 от \cite{hopcroft1}, глави 5, 6 и 7 от \cite{hopcroft2};
 \item
-  глава 2 от \cite{sipser};
+  глава 2 от \cite{sipser1};
 \item
   глава 3 от \cite{papadimitriou}.
 \end{itemize}
