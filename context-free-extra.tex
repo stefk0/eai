@@ -1,0 +1,158 @@
+\section{Допълнителни задачи}
+
+\begin{problem}
+  Проверете дали следните езици са безконтекстни:
+  \begin{enumerate}[a)]
+  \item
+    $\{a^nb^{2n}c^{3n}\ \mid\ n\in\Nat\}$;
+  \item
+    $\{a^nb^{2n}c^{n}\ \mid\ n\in\Nat\}$;
+  \item
+    $\{a^mb^n\mid\ m \neq n\}$;
+  \item
+    $\{a^nb^mc^k\mid n < m < k\}$;
+  \item
+    $\{a^nb^mc^k\mid k = \min\{n,m\}\}$;
+  \item
+    $\{a^nb^nc^m\mid m \leq n\}$;
+  \item
+    $\{a^nb^mc^k\mid k = n\cdot m\}$;
+  \item
+    $L^\star$, където
+    $L = \{\alpha\alpha^R \mid \alpha \in \{a,b\}^\star\}$;
+  \item
+    $\{www\mid w\in \{a,b\}^\star\}$;
+  \item
+    $\{ww^R\mid w\in \{a,b\}^\star\}$;
+  \item
+    $\{a^{n^2}b^n\ \mid n \in \Nat\}$;
+  \item
+    $\{a^p\ \mid\ p\mbox{ е просто }\}$;
+  \item
+    $\{\omega \in \{a,b\}^\star \mid \omega = \omega^R\}$;
+  \item
+    $\{\omega^n \mid \omega \in \{a,b\}^\star\ \&\ n \in \Nat\}$;
+  \item
+    $\{a^{n^3 + 2n^2} \mid n \in \Nat\}$;
+  \item
+    % Дефиниция на подниз
+    $L = \{w c x\mid w,x\in \{a,b\}^\star\ \&\ w\mbox{ е подниз на }x\}$;
+  \item
+    $L = \{x_1 c x_2 c \dots c x_k\mid k\geq 2\ \&\ x_i\in\{a,b\}^\star\ \&\ (\exists i,j)[i \neq j\ \&\ x_i = x_j]\}$;
+  \item
+    $L = \{a^ib^jc^k\mid i,j,k\geq 0\ \&\ (i = j \vee j = k)\}$;
+  \item
+    % \marginpar{Разгл. $L' = L \cap L(a^*b^*c^*)$.}
+    $L = \{\alpha \in \{a,b,c\}^\star\mid n_a(\alpha) > n_b(\alpha) > n_c(\alpha)\}$;
+  \item
+    $L = \{a,b\}^\star \setminus \{a^nb^n\mid n\in \Nat\}$;
+  \item
+%    \marginpar{Разгл. $L' = L \cap L(a^*b^*a^*)$.}
+    $L = \{\omega \in \{a,b\}^\star \mid n_a(\omega) = 2n_b(\omega)\}$;
+  \item
+    $L = \{a^nb^mc^ma^n \mid m,n\in\Nat\ \&\ n = m+42\}$;
+  \item
+    $L = \{babaabaaab\cdots ba^{n-1}ba^nb \mid n \geq 1\}$;
+%   \end{enumerate}
+% \end{problem}
+
+% \begin{problem}
+%   Проверете кои от следните езици са безконтекстен:
+%   \begin{enumerate}[a)]
+  \item
+    $\{a^mb^nc^k\mid m = n \vee n = k \vee m = k\}$;
+  \item
+    $\{a^mb^nc^k\mid m \neq n \vee n \neq k \vee m \neq k\}$;
+  \item
+    $\{a^mb^nc^k\mid m = n \wedge n = k \wedge m = k\}$;
+  \item
+    $\{w \in \{a,b,c\}^\star\mid n_a(w) \neq n_b(w) \vee n_a(w) \neq n_c(w) \vee n_b(w) \neq n_c(w)\}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Докажете, че ако $L$ е безконтекстен език, то $L^R = \{\omega^R \mid \omega \in L\}$ 
+  също е безконтекстен.
+\end{problem}
+
+\begin{problem}
+  \marginpar{от Владислав}
+  Нека $\Sigma = \{a,b,c,d,f,e\}$.
+  Докажете, че езикът $L$ е безконтекстен, където за думите $\omega \in L$ са изпълнени свойствата:
+  \begin{itemize}[-]
+  \item 
+    за всяко $n\in\Nat$, след всяко срещане на $n$ последнователни $a$-та
+    следват $n$ последователни $b$-та, и $b$-та не се срещат по друг повод в $\omega$, и
+  \item
+    за всяко $m\in\Nat$, след всяко срещане на $m$ последнователни $c$-та
+    следват $m$ последователни $d$-та, и $d$-та не се срещат по друг повод в $\omega$, и
+  \item
+    за всяко $k\in\Nat$, след всяко срещане на $k$ последнователни $f$-а
+    следват $k$ последователни $e$-та, и $e$-та не се срещат по друг повод в $\omega$.
+  \end{itemize}
+\end{problem}
+
+\begin{problem}
+  \marginpar{от Владислав}
+  Да разгледаме езиците:
+  \begin{align*}
+    & P = \{\alpha\in\{a,b,c\}^*\,|\, \alpha \text{ е палиндром с четна дължина}\} \\
+    & L =  \{\beta b^n\,|\, n\in\mathbb{N}, \beta\in P^n\}.
+  \end{align*}
+  Да се докаже, че:
+  \begin{enumerate}[a)]
+  \item 
+    $L$ не е регулярен;
+  \item 
+    $L$ е безконтекстен.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  \marginpar{от Владислав}
+  Нека $L_1$ е произволен регулярен език над азбуката $\Sigma$, 
+  а $L_2$ е езика от всички думи палиндроми над $\Sigma$.
+  Докажете, че $L$ е безконтекстен език, където:
+  \[L = \{\alpha_1\alpha_2\cdots\alpha_{3n}\beta_1\cdots\beta_m\gamma_1\cdots\gamma_n \mid \alpha_i,\gamma_j \in L_1, \beta_k\in L_2, m,n \in \Nat\}.\]
+\end{problem}
+
+\begin{problem}
+  \marginpar{от Владислав}
+  Нека $L = \{\omega\in\{a,b\}^\star \mid N_a(\omega) = 2\}$.
+  Да се докаже, че езикът $L' = \{\alpha^n \mid \alpha\in L, n \geq 0\}$ не е безконтекстен.
+\end{problem}
+
+
+\begin{problem}
+  \marginpar{от Владислав}
+  Нека $\Sigma = \{a,b,c\}$ и $L \subseteq \Sigma^\star$ е безконтестен език. Ако имаме дума 
+  $\alpha \in \Sigma^\star$, тогава \emph{L-вариант} на $\alpha$ ще наричаме думата, която се получава като в $\alpha$ всяко едно 
+  срещане на символа $a$ заменим с (евентуално различна) дума от $L$.
+  Тогава, ако $M \subseteq \Sigma^*$ е произволен безконтестен език, да се докаже че езикът
+  \begin{equation*}
+    M' = \{\beta\in\Sigma^\star |\ \beta \text{ е $L$-вариант на } \alpha \in M \}
+  \end{equation*}
+  също е безконтекстен.
+\end{problem}
+
+\begin{problem}
+  Докажете, че всеки безконтекстен език над азбуката $\Sigma = \{a\}$
+  е регулярен.
+\end{problem}
+
+\begin{problem}
+%  \marginpar{\cite{papadimitriou} стр. 149}
+  Да фиксираме азбуката $\Sigma$.
+  Нека $L$ е безконтекстен език, а $R$ е регулярен език.
+  Докажете, че езика
+  $M = \{\omega \in \Sigma^\star \mid (\exists u \in R)[\omega u \in L]\}$
+  е безконтекстен.
+\end{problem}
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "EAI"
+%%% End: 
