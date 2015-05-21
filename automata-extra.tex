@@ -1,21 +1,90 @@
 \section{Допълнителни задачи}
 
 \begin{problem}
-  \marginpar{от Владислав}
-  Да разгледаме езиците:
-  \begin{align*}
-    & P = \{\alpha\in\{a,b,c\}^*\,|\, \alpha \text{ е палиндром с четна дължина}\} \\
-    & L =  \{\beta b^n\,|\, n\in\mathbb{N}, \beta\in P^n\}.
-  \end{align*}
-  Да се докаже, че:
+  Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
   \begin{enumerate}[a)]
-  \item 
-    $L$ не е регулярен;
-  \item 
-    $L$ е безконтекстен.
+  \item
+    $L = \{\alpha^R \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
+  \item
+    \marginpar{$\alpha = a^pb^p$}
+    $L = \{a^ib^i\ \mid\ i\in\Nat\}$;
+  \item
+    $L = \{a^ib^i\ \mid\ i,j\in\Nat\ \&\ i\neq j\}$;
+  \item
+    \marginpar{$\alpha = a^{p+1}b^p$.}
+    $L = \{a^ib^j\ \mid\ i > j\}$;
+  \item
+    $L = \{a^nb^m \mid n\mbox{ дели }m\}$.
+  \item
+    $L = \{a^{2n}\ \mid\ n\geq 1\}$;
+  \item
+    $L = \{a^mb^na^{m+n}\ \mid\ m\geq 1\ \&\ n\geq 1\}$;
+  \item
+    $L = \{a^{n.m}\mid n,m\mbox{ са прости числа}\}$;
+  \item
+    \marginpar{$N_x(\omega)$ - брой срещания на буквата $x$ в думата $\omega$}
+    $L = \{\omega\in\{a,b\}^\star \mid N_a(\omega) = N_b(\omega)\}$;
+  \item
+    \marginpar{$\alpha = a^pba^pb$}
+    $L = \{\omega\omega\mid \omega\in\{a,b\}^\star\}$;
+  \item
+    $L = \{\omega\omega^R\mid \omega\in\{a,b\}^\star\}$;
+  \item
+    $L = \{\alpha\beta\beta \in \{a,b\}^\star\mid \beta \neq \varepsilon\}$;
+  \item
+    $L = \{a^nb^nc^n\mid n\geq 0\}$;
+  \item
+    $L = \{\omega\omega\omega\mid \omega\in \Sigma^\star\}$;
+  \item
+    $L = \{a^{2^n}\mid n\geq 0\}$;
+  \item
+    $L = \{a^mb^n\mid n\neq m\}$;
+  \item
+    $L = \{a^{n!}b^{n!}\mid n\neq 1\}$;
+  \item
+    $L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{n_a(\alpha) - n_b(\alpha)} \leq 2\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \alpha\beta\alpha\ \&\ \abs{\beta} \leq \abs{\alpha}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta\gamma\gamma^R\ \&\ \abs{\beta} \leq \abs{\gamma}\}$;
+  \item
+    $L = \{c^ka^nb^m \mid k,m,n > 0\ \&\ n \neq m\}$;
+  \item
+    $L = \{c^ka^nb^n \mid k > 0\ \&\ n \geq 0\}\cup\{a,b\}^\star$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ не дели }N_b(\omega)\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) < N_b(\omega)\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) = 2N_b(\omega)\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} \leq 3\}$.
   \end{enumerate}
 \end{problem}
 
+\begin{problem}
+  Нека $L$ е регулярен език. Докажете, че 
+  \[\text{Infix}(L) = \{\alpha \mid (\exists \beta,\gamma)[\beta\alpha\gamma \in L]\}\]
+  също е регулярен език.
+\end{problem}
+\begin{hint}
+  Най-лесно е да се построи автомат за $\text{Infix}(L)$ като се използва автомата за $L$.
+\end{hint}
+
+\begin{problem}
+  \marginpar{от Владислав}
+  Нека $\Sigma = \{a,b,c,d\}$.
+  Да се докаже, че езика 
+  \[L = \{a_1a_2\cdots a_{2n} \in \Sigma^\star \mid (\forall j \in [1,n])[a_{2j-1} = a_{2j}]\ \&\ d\text{ се среща $\leq 3$ пъти}\}\]
+  е регулярен.
+\end{problem}
+
+\begin{problem}
+  Нека $L_1$ и $L_2$ са регулярни езици. Докажете, че $L$ също е регулярен език, където
+  \[L = \{\alpha \mid (\exists \beta,\gamma)[\beta\alpha\gamma \in L_1]\ \&\ \alpha \in L_2 \vee \alpha^R \in L_2\}.\]
+\end{problem}
 
 \begin{dfn}
   Да фиксираме две азбуки $\Sigma_1$ и $\Sigma_2$.
@@ -204,56 +273,56 @@
   $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}\right\}$
   е автоматен език.
 \end{problem}
-\begin{hint}
-  По-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
-  Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
-  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = \gamma^R_{(2)}.\]
-  Понеже за $\varepsilon + \varepsilon = \varepsilon$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
-  \begin{itemize}
-  \item 
-    Нека $\alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}$. Тогава:
-    \begin{itemize}
-    \item 
-      $0\alpha + 0\beta = 0\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-    \item
-      $0\alpha + 1\beta = 1\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-    \item
-      $1\alpha + 0\beta = 1\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-    \item
-      $1\alpha + 1\beta = 10\gamma$. Този случай е по-специален и трябва да бъде разгледан отделно.
-      Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца.
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1$}
-    \item
-      За останалите $x \in \Sigma_3$, $\delta(q_{\scriptscriptstyle{=}},x) = q_{err}$,
-      където $q_{err}$ е състоянието, от което не можем да излезем.
-      % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix}}) = q_{err}$;
-    \end{itemize}
-  \item
-    Горните разглеждания ни подсказват, че ще ни трябва и състояние $q_1$, за което искаме да е изпълнено свойството,
-    че за произволно $q$,
-    \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = 1\gamma^R_{(2)}.\]
-    Да разгледаме сега случая $\alpha + \beta = 1\gamma$. Тогава:
-    \begin{itemize}
-    \item 
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-      Очевидно е, че $0\alpha + 0\beta = 1\gamma$;
-    \item
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}$}
-      $1\alpha + 1\beta = 11\gamma$;
-    \item
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = q_{1}$}
-      $1\alpha + 0\beta = 10\gamma$;
-    \item
-      Аналогично, $0\alpha + 1\beta = 10\gamma$;
-    \item
-      За останалите $x \in \Sigma_3$, $\delta(q_{1},x) = q_{err}$.
-    \end{itemize}    
-    \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}$}
-  \end{itemize}
-\end{hint}
+% \begin{hint}
+%   По-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
+%   Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
+%   \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = \gamma^R_{(2)}.\]
+%   Понеже за $\varepsilon + \varepsilon = \varepsilon$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
+%   \begin{itemize}
+%   \item 
+%     Нека $\alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}$. Тогава:
+%     \begin{itemize}
+%     \item 
+%       $0\alpha + 0\beta = 0\gamma$;
+%       \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+%     \item
+%       $0\alpha + 1\beta = 1\gamma$;
+%       \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+%     \item
+%       $1\alpha + 0\beta = 1\gamma$;
+%       \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+%     \item
+%       $1\alpha + 1\beta = 10\gamma$. Този случай е по-специален и трябва да бъде разгледан отделно.
+%       Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца.
+%       \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1$}
+%     \item
+%       За останалите $x \in \Sigma_3$, $\delta(q_{\scriptscriptstyle{=}},x) = q_{err}$,
+%       където $q_{err}$ е състоянието, от което не можем да излезем.
+%       % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix}}) = q_{err}$;
+%     \end{itemize}
+%   \item
+%     Горните разглеждания ни подсказват, че ще ни трябва и състояние $q_1$, за което искаме да е изпълнено свойството,
+%     че за произволно $q$,
+%     \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = 1\gamma^R_{(2)}.\]
+%     Да разгледаме сега случая $\alpha + \beta = 1\gamma$. Тогава:
+%     \begin{itemize}
+%     \item 
+%       \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+%       Очевидно е, че $0\alpha + 0\beta = 1\gamma$;
+%     \item
+%       \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}$}
+%       $1\alpha + 1\beta = 11\gamma$;
+%     \item
+%       \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = q_{1}$}
+%       $1\alpha + 0\beta = 10\gamma$;
+%     \item
+%       Аналогично, $0\alpha + 1\beta = 10\gamma$;
+%     \item
+%       За останалите $x \in \Sigma_3$, $\delta(q_{1},x) = q_{err}$.
+%     \end{itemize}    
+%     \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}$}
+%   \end{itemize}
+% \end{hint}
 
 \begin{problem}
   Да разгледаме азбуката:
@@ -270,69 +339,69 @@
   \end{itemize}
   Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
 \end{problem}
-\begin{hint}
-  Ще построим автомат $\A = \FA$ за езика $L^R_1$.
-  За улеснение, в рамките на тази задача ще пишем:
-  \begin{itemize}
-  \item 
-    $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
-  \item
-    $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
-  \item
-    $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
-  \end{itemize}
-  Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
-  Искаме да е изпълнено свойствата:
-  \begin{itemize}
-  \item 
-    % За всяко $q \in Q$,
-    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$ точно тогава, когато $\alpha \equiv \beta$;
-  \item 
-    % За всяко $q \in Q$,
-    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$ точно тогава, когато $\alpha < \beta$;
-  \item 
-    % За всяко $q \in Q$,
-    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$ точно тогава, когато $\alpha > \beta$.
-  \end{itemize}
-  Множеството от финални състояния ще бъде $F = \{q_{\scriptscriptstyle{<}}\}$, а началното състояние $s = q_{\scriptscriptstyle{=}}$.
-  За да дефинираме функцията на преходите, трябва да разгледа няколко случая, в зависимост от това какво е отношението между $\alpha$ и $\beta$.
-  \begin{itemize}
-  \item
-    Нека $\alpha \equiv \beta$. Тогава:  
-    \begin{itemize}
-    \item 
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$}
-      $\alpha 0 \equiv \beta 0$, $\alpha 1 \equiv \beta 1$;
-    \item
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
-      $\alpha 0 < \beta 1$;
-    \item
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
-      $\alpha 1 < \beta 0$;
-    \end{itemize}
-  \item 
-    Нека $\alpha < \beta$. Тогава:
-    \begin{itemize}
-    \item 
-      \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
-      $\alpha 0 < \beta 0$, $\alpha 1 < \beta 1$, $\alpha 0 < \beta 1$;
-    \item
-      \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
-      $\alpha 1 > \beta 0$;
-    \end{itemize}    
-  \item
-    Нека $\alpha > \beta$. Тогава:
-    \begin{itemize}
-    \item 
-      \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
-      $\alpha 0 > \beta 0$, $\alpha 1 > \beta 1$, $\alpha 1 > \beta 0$;
-    \item
-      $\alpha 0 < \beta 1$;
-    \end{itemize}
-  \end{itemize}
-  Докажете, че за така дефинирания автомат $\A$, $\L(\A) = L^R_1$.
-  \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
-\end{hint}
+% \begin{hint}
+%   Ще построим автомат $\A = \FA$ за езика $L^R_1$.
+%   За улеснение, в рамките на тази задача ще пишем:
+%   \begin{itemize}
+%   \item 
+%     $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
+%   \item
+%     $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
+%   \item
+%     $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
+%   \end{itemize}
+%   Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
+%   Искаме да е изпълнено свойствата:
+%   \begin{itemize}
+%   \item 
+%     % За всяко $q \in Q$,
+%     $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$ точно тогава, когато $\alpha \equiv \beta$;
+%   \item 
+%     % За всяко $q \in Q$,
+%     $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$ точно тогава, когато $\alpha < \beta$;
+%   \item 
+%     % За всяко $q \in Q$,
+%     $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$ точно тогава, когато $\alpha > \beta$.
+%   \end{itemize}
+%   Множеството от финални състояния ще бъде $F = \{q_{\scriptscriptstyle{<}}\}$, а началното състояние $s = q_{\scriptscriptstyle{=}}$.
+%   За да дефинираме функцията на преходите, трябва да разгледа няколко случая, в зависимост от това какво е отношението между $\alpha$ и $\beta$.
+%   \begin{itemize}
+%   \item
+%     Нека $\alpha \equiv \beta$. Тогава:  
+%     \begin{itemize}
+%     \item 
+%       \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$}
+%       $\alpha 0 \equiv \beta 0$, $\alpha 1 \equiv \beta 1$;
+%     \item
+%       \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+%       $\alpha 0 < \beta 1$;
+%     \item
+%       \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+%       $\alpha 1 < \beta 0$;
+%     \end{itemize}
+%   \item 
+%     Нека $\alpha < \beta$. Тогава:
+%     \begin{itemize}
+%     \item 
+%       \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+%       $\alpha 0 < \beta 0$, $\alpha 1 < \beta 1$, $\alpha 0 < \beta 1$;
+%     \item
+%       \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+%       $\alpha 1 > \beta 0$;
+%     \end{itemize}    
+%   \item
+%     Нека $\alpha > \beta$. Тогава:
+%     \begin{itemize}
+%     \item 
+%       \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
+%       $\alpha 0 > \beta 0$, $\alpha 1 > \beta 1$, $\alpha 1 > \beta 0$;
+%     \item
+%       $\alpha 0 < \beta 1$;
+%     \end{itemize}
+%   \end{itemize}
+%   Докажете, че за така дефинирания автомат $\A$, $\L(\A) = L^R_1$.
+%   \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+% \end{hint}
 
 %%% Local Variables: 
 %%% mode: latex

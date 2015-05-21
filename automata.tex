@@ -1400,68 +1400,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Съществува алгоритъм, който проверява дали даден регулярен език е безкраен.
 \end{cor}
 
-\subsection{Задачи}
-
-\begin{problem}
-  Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
-  \begin{enumerate}[a)]
-  \item
-    $L = \{\alpha^R \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
-  \item
-    \marginpar{$\alpha = a^pb^p$}
-    $L = \{a^ib^i\ \mid\ i\in\Nat\}$;
-  \item
-    $L = \{a^ib^i\ \mid\ i,j\in\Nat\ \&\ i\neq j\}$;
-  \item
-    \marginpar{$\alpha = a^{p+1}b^p$.}
-    $L = \{a^ib^j\ \mid\ i > j\}$;
-  \item
-    $L = \{a^nb^m \mid n\mbox{ дели }m\}$.
-  \item
-    $L = \{a^{2n}\ \mid\ n\geq 1\}$;
-  \item
-    $L = \{a^mb^na^{m+n}\ \mid\ m\geq 1\ \&\ n\geq 1\}$;
-  \item
-    $L = \{a^{n.m}\mid n,m\mbox{ са прости числа}\}$;
-  \item
-    $L = \{\omega\in\{a,b\}^\star \mid N_a(\omega) = N_b(\omega)\}$;
-  \item
-    \marginpar{$\alpha = a^pba^pb$}
-    $L = \{\omega\omega\mid \omega\in\{a,b\}^\star\}$;
-  \item
-    $L = \{\omega\omega^R\mid \omega\in\{a,b\}^\star\}$;
-  \item
-    $L = \{\alpha\beta\beta \in \{a,b\}^\star\mid \beta \neq \varepsilon\}$;
-  \item
-    $L = \{a^nb^nc^n\mid n\geq 0\}$;
-  \item
-    $L = \{\omega\omega\omega\mid \omega\in \Sigma^\star\}$;
-  \item
-    $L = \{a^{2^n}\mid n\geq 0\}$;
-  \item
-    $L = \{a^mb^n\mid n\neq m\}$;
-  \item
-    $L = \{a^{n!}b^{n!}\mid n\neq 1\}$;
-  \item
-    $L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{n_a(\alpha) - n_b(\alpha)} \leq 2\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \alpha\beta\alpha\ \&\ \abs{\beta} \leq \abs{\alpha}\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta\gamma\gamma^R\ \&\ \abs{\beta} \leq \abs{\gamma}\}$;
-  \item
-    $L = \{c^ka^nb^m \mid k,m,n > 0\ \&\ n \neq m\}$;
-  \item
-    $L = \{c^ka^nb^n \mid k > 0\ \&\ n \geq 0\}\cup\{a,b\}^\star$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ не дели }N_b(\omega)\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) < N_b(\omega)\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) = 2N_b(\omega)\}$.
-  \end{enumerate}
-\end{problem}
 
 \subsection*{Примери, когато лемата не е  приложима}
 
