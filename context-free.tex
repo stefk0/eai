@@ -122,42 +122,6 @@
 }
   Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k + 1\}$ е безконтекстен.  
 \end{problem}
-% \begin{proof}
-%   Разгледайте граматиката $G$ с правила:
-%   \begin{align*}
-%     & S \to aS \mid aSc \mid aB \mid bB\\
-%     & B \to bB \mid bBc \mid \varepsilon.
-%   \end{align*}
-  % \begin{enumerate}[a)]
-  % \item 
-  %   За посоката $L \subseteq \L(G)$, първо докажете, че:
-  %   \begin{itemize}
-  %   \item 
-  %     $S \to^\star a^{n+k}Sc^k$, за всяко $n,k \in \Nat$;
-  %   \item
-  %     $B \to^\star b^{n+k}Bc^k$, за всяко $n,k \in \Nat$;
-  %   \end{itemize}
-  % \item
-  %   За посоката $\L(G) \subseteq L$, 
-  %   да разгледаме множеството
-  %   \[M = \{a^mSc^k \mid m\geq k\} \cup \{a^mb^nBc^k \mid m+n \geq k+1\} \cup \{a^mb^nc^k \mid m+n \geq k+1\}.\]
-  %   \begin{center}
-  %     \begin{tabular}{| c | c | c |}
-  %       \hline
-  %       $\alpha$ & $C \rightarrow \gamma$ & $\omega$ \\ \hline
-  %       $a^nSc^k$ & $S \rightarrow aSc$ & $a^{n+1}Sc^{k+1}$ \\ \hline
-  %       $a^nSc^k$ & $S \rightarrow aS$ & $a^{n+1}Sc^{k}$ \\ \hline
-  %       $a^nSc^k$ & $S \rightarrow aB$ & $a^{n+1}Bc^{k}$ \\ \hline
-  %       $a^nSc^k$ & $S \rightarrow bB$ & $a^{n}bBc^{k}$ \\ \hline
-  %       $a^nb^mBc^k$ & $B \rightarrow bBc$ & $a^nb^{m+1}Bc^{k+1}$\\ \hline
-  %       $a^nb^mBc^k$ & $B \rightarrow bB$ & $a^nb^{m+1}Bc^{k}$\\ \hline
-  %       $a^nb^mBc^k$ & $B \rightarrow \varepsilon$ & $a^nb^{m}c^{k}$\\ \hline
-  %     \end{tabular}
-  %   \end{center}
-  % \end{enumerate}
-%\end{proof}
-
-
 
 \begin{problem}
   \label{pr:nanb}
@@ -288,7 +252,9 @@
     \marginpar{$S \rightarrow aSa\ \vert\ bSb\ \vert\ a\vert\ b\ \vert\ \varepsilon$}
     $L = \{w \in \{a,b\}^\star \mid w = w^R\}$;
   \item
-    $L = \{a^nb^{2n} \mid n \in \Nat\}$;
+    $L = \{a^nb^{2m}c^{n} \mid m,n \in \Nat\}$;
+  \item
+    $L = \{a^nb^{m}c^{m}d^n \mid m,n \in \Nat\}$;
   \item
     $L = \{a^nb^{2k} \mid n,k \in \Nat\ \&\ n \neq k\}$;
   \item
@@ -334,6 +300,13 @@
   \item
     $L = \{\alpha c \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha^R\mbox{ е поддума на }\beta \}$.
   \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  \marginpar{от Владислав}
+  Да разгледаме граматиката $G = \CFG$, където  $V = \{S,A,B\}$, $\Sigma = \{a,b\}$, а правилата $R$ са
+  \[S \to AA | B, A \to B | bb, B \to aa | aB.\]
+  Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
 
 \section{Езици, които не са безконтекстни}
@@ -391,21 +364,22 @@
 \end{proof}
 
 \begin{cor}
+  \marginpar{\writedown Докажете!}
   Нека $G$ е безконтекстна граматика и $p$ е константата на покачването за $G$, $L = \L(G)$.
   Тогава $\abs{L} = \infty$ точно тогава, когато съществува $\alpha \in L$, за която $p \leq \abs{\alpha} < 2p$.
 \end{cor}
-\begin{proof}
-  Ако съществува дума $\alpha \in L$, за която $\abs{\alpha} \geq p$, то от \Lem{pumping-context} следва,
-  че $\abs{L} = \infty$, защото $\alpha = xyuvw$ и $xy^iuv^iw \in L$, за всяко $i\in\Nat$.
+% \begin{proof}
+%   Ако съществува дума $\alpha \in L$, за която $\abs{\alpha} \geq p$, то от \Lem{pumping-context} следва,
+%   че $\abs{L} = \infty$, защото $\alpha = xyuvw$ и $xy^iuv^iw \in L$, за всяко $i\in\Nat$.
 
-  За другата посока, нека сега $\abs{L} = \infty$.
-  Да изберем най-късата дума $\alpha \in L$, за която $\abs{\alpha} \geq p$.
-  Ще докажем, че $p \leq \abs{\alpha} < 2p$. За целта да допуснем, че $\abs{\alpha} \geq 2p$.
-  Тогава от \Lem{pumping-context} следва, че $\alpha = xyuvw$, $\abs{yv} \geq 1$, $\abs{yuv} \leq p$, $xy^0uv^0w = xuw \in L$.
-  Ако $\abs{xuw} < p$, то $\abs{yv} > p$, защото $\abs{yv} + \abs{xuw} = \abs{\alpha} \geq 2p$, и следователно $\abs{yuv} > p$, което е противоречие.
-  Следва, че $\abs{\alpha} > \abs{xuw} \geq p$.
-  Получихме, че думата $xuw\in L$ и $\abs{xuw} \geq p$. Това е противоречие с минималността на $\alpha$.
-\end{proof}
+%   За другата посока, нека сега $\abs{L} = \infty$.
+%   Да изберем най-късата дума $\alpha \in L$, за която $\abs{\alpha} \geq p$.
+%   Ще докажем, че $p \leq \abs{\alpha} < 2p$. За целта да допуснем, че $\abs{\alpha} \geq 2p$.
+%   Тогава от \Lem{pumping-context} следва, че $\alpha = xyuvw$, $\abs{yv} \geq 1$, $\abs{yuv} \leq p$, $xy^0uv^0w = xuw \in L$.
+%   Ако $\abs{xuw} < p$, то $\abs{yv} > p$, защото $\abs{yv} + \abs{xuw} = \abs{\alpha} \geq 2p$, и следователно $\abs{yuv} > p$, което е противоречие.
+%   Следва, че $\abs{\alpha} > \abs{xuw} \geq p$.
+%   Получихме, че думата $xuw\in L$ и $\abs{xuw} \geq p$. Това е противоречие с минималността на $\alpha$.
+% \end{proof}
 
 \begin{framed}
   \Lem{pumping-context} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е безконтекстен.
@@ -455,7 +429,7 @@
 
 \begin{example}
   Приложете лемата за разрастването за да докажете, че
-  езикът $L$ не е контекстно-свободен, където:
+  езикът $L$ не е безконтекстен, където:
   \begin{enumerate}[a)]
   \item
     $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$;
@@ -539,109 +513,6 @@
   \end{itemize}
 \end{proof}
 
-\begin{problem}
-  Проверете дали следните езици са безконтекстни:
-  \begin{enumerate}[a)]
-  \item
-    $\{a^nb^{2n}c^{3n}\ \mid\ n\in\Nat\}$;
-  \item
-    $\{a^nb^{2n}c^{n}\ \mid\ n\in\Nat\}$;
-  \item
-    $\{a^mb^n\mid\ m \neq n\}$;
-  \item
-    $\{a^nb^mc^k\mid n < m < k\}$;
-  \item
-    $\{a^nb^nc^m\mid m \leq n\}$;
-  \item
-    $L^\star$, където
-    $L = \{\alpha\alpha^R \mid \alpha \in \{a,b\}^\star\}$;
-  \item
-    $\{www\mid w\in \{a,b\}^\star\}$;
-  \item
-    $\{ww^R\mid w\in \{a,b\}^\star\}$;
-  \item
-    $\{a^{n^2}b^n\ \mid n \in \Nat\}$;
-  \item
-    $\{a^p\ \mid\ p\mbox{ е просто }\}$;
-  \item
-    $\{a^nb^na^nb^n\mid n\geq 0\}$;
-  \item
-    $\{w \in \{a,b\}^\star \mid w = w^R\}$;
-  \item
-    % Дефиниция на подниз
-    $\{w c x\mid w,x\in \{a,b\}^\star\ \&\ w\mbox{ е подниз на }x\}$;
-  \item
-    $\{x_1 c x_2 c \dots c x_k\mid k\geq 2\ \&\ x_i\in\{a,b\}^\star\ \&\ (\exists i,j)[i \neq j\ \&\ x_i = x_j]\}$;
-  \item
-    $L = \{a^ib^jc^k\mid i,j,k\geq 0\ \&\ (i = j \vee j = k)\}$;
-  \item
-    \marginpar{Разгл. $L' = L \cap L(a^*b^*c^*)$.}
-    $L = \{\alpha \in \{a,b,c\}^\star\mid n_a(\alpha) > n_b(\alpha) > n_c(\alpha)\}$;
-  \item
-    $L = \{a,b\}^\star \setminus \{a^nb^n\mid n\in \Nat\}$;
-  \item
-    \marginpar{Разгл. $L' = L \cap L(a^*b^*a^*)$.}
-    $L = \{\omega \in \{a,b\}^\star \mid n_a(\omega) = 2n_b(\omega)\}$;
-  \end{enumerate}
-\end{problem}
-% \begin{proof}
-%   \begin{enumerate}
-  % \item
-    % За думата $w = a^pb^pc^p = xyuvw$ разгледайте различните случаи за $y$ и $v$.
-  % \item[2)]
-  %   Разгледайте $w = a^pb^pc^p$.
-  %   \begin{enumerate}[a)]
-  %   \item
-  %     Знаем, че поне една от $y$ и $v$ не е празната дума.
-  %     Имаме три случая за поддумите $y$ и $v$.
-  %     \begin{enumerate}[i)]
-  %     \item
-  %       $a$ не се среща в $y$ и $v$.
-  %       Тогава $xy^0vu^0w$ съдържа повече $a$ от $b$ или $c$.
-  %     \item
-  %       $b$ не се среща в $y$ и $v$.
-  %       Ако $a$ се среща в $y$ или $v$, тогава $xy^2uv^2w$ съдържа повече $a$ от $b$
-  %       Ако $c$ се среща в $y$ или $v$, тогава $xy^0uv^0w$ съдържа по-малко $c$ от $b$.
-  %     \item
-  %       $c$ не се среща в $y$ и $v$.
-  %       Тогава $xy^2uv^2w$ съдържа повече $a$ или $b$ от $c$.
-  %     \end{enumerate}      
-  %   \item
-  %     $y$ или $v$ е съставена от две букви.  Контекстно-свободните езици {\bf не} са затворени относно сечение и допълнение.
-  %     Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
-  %   \end{enumerate}
-  % \item[3)]
-  %   \marginpar{Защо $\alpha = a^pba^pb$ не е добър кандидат?}
-  %   Разгледайте $\alpha = a^pb^pa^pb^p$.
-  %   \begin{enumerate}[a)]
-  %   \item
-  %     Ако $yuv$ е в първата част на думата, то 
-  %     $xy^0uv^0w = a^ib^ja^pb^p \not\in L_3$.
-  %     Аналогично ако $yuv$ е във втората част на думата.
-  %   \item
-  %     Ако $yuv$ е в двете части на думата, то 
-  %     Но $xy^0uv^0w = a^pb^ia^jb^p \not\in L_3$.
-  %   \end{enumerate}
-%   \item[10)]
-%     безконтекстен е. Лесно може да се напише контекстно-свободна граматика за този език.
-%   \item[12)]
-%     Разгледайте езика $L = L_{12} \cap a^\star b^\star c^\star$.
-%   \end{enumerate}
-% \end{proof}
-
-\begin{problem}
-  Проверете кои от следните езици са контекстно-свободни:
-  \begin{enumerate}[a)]
-  \item
-    $\{a^mb^nc^k\mid m = n \vee n = k \vee m = k\}$;
-  \item
-    $\{a^mb^nc^k\mid m \neq n \vee n \neq k \vee m \neq k\}$;
-  \item
-    $\{a^mb^nc^k\mid m = n \wedge n = k \wedge m = k\}$;
-  \item
-    $\{w \in \{a,b,c\}^\star\mid n_a(w) \neq n_b(w) \vee n_a(w) \neq n_c(w) \vee n_b(w) \neq n_c(w)\}$.
-  \end{enumerate}
-\end{problem}
 
 \section{Алгоритми}
 
@@ -1207,6 +1078,7 @@
 \begin{proof}
   Нека имаме стеков автомат
   \[M_1 = \PDAn{1}, \text{ където } \L_F(M_1) = L,\]
+  \marginpar{всъщност няма нужда да е детерминиран}
   и краен детерминиран автомат 
   \[M_2 = \FAn{2}, \text{ където } \L(M_2) = R.\]
   Ще определим нов стеков автомат $M = \PDA$, където
