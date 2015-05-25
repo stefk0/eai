@@ -516,29 +516,135 @@
 
 \section{Алгоритми}
 
-\subsection{Премахване на безполезните променливи}
+\subsection{Опростяване на безконтекстни граматики}
+
+\subsubsection*{Премахване на безполезните променливи}
 
 Нека е дадена безконтекстната граматика $G = \CFG$.
+\marginpar{\cite{hopcroft1} стр. 88}
 Една променлива $A$ се нарича {\bf полезна}, ако съществува извод от следния вид:
 \[S \to^\star \alpha A \beta \to^\star \gamma,\]
 където $\gamma \in \Sigma^\star$, а $\alpha,\beta \in (V \cup \Sigma)^\star$.
+Това означава, че една променлива е полезна, ако участва в извода на някоя дума в езика на граматиката.
 Една променлива се нарича {\bf безполезна}, ако не е полезна.
+Целта ни е да получим еквивалентна граматика $G'$ без безполезни променливи.
+Ще решим задачата като разгледаме две леми.
 
 \begin{lemma}
-  \marginpar{\cite{hopcroft1} стр. 88}
-  Нека е дадена безконтекстната граматика $G = \CFG$ и $L(G) \neq \emptyset$.
+  \label{lem:useless1}
+  Нека е дадена безконтекстната граматика $G = \CFG$ и $\L(G) \neq \emptyset$.
   Съществува алгоритъм, който намира граматика $G' = \pair{V',\Sigma,S,R'}$, за която 
   $\L(G) = \L(G')$, и за всяка променлива $A' \in V'$, съществува дума $\alpha \in \Sigma^\star$,
-  за която $A' \to^\star \alpha$. С други думи, във $V'$ няма безполезни променливи.
+  за която $A' \to^\star \alpha$.
 \end{lemma}
 \begin{proof}
-  Строим множествата $V_i$, докато не стигнем стъпка $i+1$, за която $V_i = V_{i+1}$.
-  Тръгваме от множеството
-  \[V_0 = \{A \in V \mid (\exists a\in \Sigma)[A \to a]\}.\]
-  Нека сме построили $V_i$. Тогава:
-  \[V_{i+1} := V_i \cup \{A \in V \mid (\exists \alpha \in (\Sigma \cup V_i)^\star)[A \to_G \alpha]\}\]
+  Да разгледаме следната проста итеративна процедура.
+  \begin{algorithm}[H]
+    \caption{Намираме $V' = \{A \in V\mid (\exists \alpha \in \Sigma^\star)[A \to^\star \alpha]\}$}
+    \label{alg:useless}
+    \begin{algorithmic}[1]
+      \State $V' := \emptyset$
+      \State $V'' := \{A \in V \mid (\exists \alpha \in \Sigma^\star)[A \to \alpha]\}$
+      \While{$V' \neq V''$}
+      \State $V' := V''$
+      \State $V'' := V' \cup \{A \in V \mid (\exists \alpha \in (\Sigma \cup V')^\star)[A \to \alpha]\}$
+      \EndWhile
+      \State \Return $V'$
+    \end{algorithmic}
+  \end{algorithm}
+  Трябва да докажем, че във $V'$ са точно полезните променливи за $G$.
+  Очевидно е, че ако $A \in V'$, то $A$ е полезна променлива.
+  \marginpar{\writedown Докажете!}
+  За другата посока, с индукция по дължината на извода се доказва, че ако $A \to^\star_G \omega$,
+  то $A \in V'$.
+  
+  Правилата на $G'$ са всички правила на $G$, в които участват променливи от $V'$ и букви от $\Sigma$.
 \end{proof}
 
+\begin{lemma}
+  \label{lem:useless2}
+  Съществува алгоритъм, който по дадена безконтекстна граматика $G = \CFG$, намира $G' = \pair{V',\Sigma',S,R'}$, $\L(G') = \L(G)$,
+  със свойството, че за всяко $x \in V' \cup \Sigma'$ съществуват $\alpha, \beta \in (V'\cup\Sigma')^\star$,
+  за които $S \to^\star \alpha x \beta$,
+  т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
+\end{lemma}
+\begin{proof}
+  Намираме $V'$ и $\Sigma'$ итеративно, като в началото $V' = \{S\}$, $\Sigma' = \emptyset$.
+  Ако $A \in V'$ и имаме правила $A \to \alpha_0 | \alpha_1 | \dots | \alpha_n$ в $G$,
+  то за всяко $i = 0,\dots,n$ добавяме всички променливи на $\alpha_i$ към $V'$ и всички нетерминали на $\alpha_i$ към $\Sigma'$.
+\end{proof}
+
+\begin{thm}
+  Всеки непразен безконтекстен език $L$ се поражда от безконтекстна граматика $G$
+  без безполезни правила.
+\end{thm}
+\begin{proof}
+  \marginpar{Защо е важен реда на прилагане?}
+  Нека е дадена безконтекстна граматика $G$ пораждаща $L$.
+  Прилагаме върху $G$ първо процедурата от \Lem{useless1} и след това върху резултата прилагаме процедурата от \Lem{useless2}.
+\end{proof}
+
+\subsubsection*{Премахване на $\varepsilon$-правила}
+\index{$\varepsilon$-правила}
+За да премахнем правилата от вида $A \to \varepsilon$, следваме процедурата:
+\marginpar{Броят на правилата може да се увеличи експоненциално, защото в най-лошия случай извеждаме всички подмножества на дадено множество от променливи}
+\begin{enumerate}[1)]
+\item 
+  Намираме множеството $E = \{A \in V \mid A \to^\star \varepsilon\}$ по следния начин.
+  Първо, $E := \{A \in V \mid A \to \varepsilon\}$.
+  След това, за всяко правило от вида $B \to X_1\cdots X_k$, 
+  ако всяко $X_i \in E$, то добавяме $B$ към $E$.
+\item
+  Строим множеството от правила $R'$, в което няма правила $\varepsilon$-правила по следния начин.
+  За всяко правило $A \to X_1\cdots X_k$ в $R$,
+  добавяме към $R'$ всички правила от вида $A \to \alpha_1\cdots\alpha_k$, където:
+  \begin{itemize}[-]
+  \item 
+    ако $X_i \not\in E$, то $\alpha_i = X_i$;
+  \item
+    ако $X_i \in E$, то $\alpha_i = X_i$ или $\alpha_i = \varepsilon$;
+  \item
+    не всички $\alpha_i$-та са $\varepsilon$.
+  \end{itemize}
+\end{enumerate}
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила
+  \[S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AA|EC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb.\]
+  Тогава $E = \{X \in V \mid X \rightarrow^\star_G \varepsilon\} = \{A,B,C,E\}$.
+  Това означава, че $\varepsilon \not\in \L(G)$.
+  Граматиката $G'$ без $\varepsilon$-правила, за която $\L(G') = \L(G)$ има следните правила
+  $S \to D, D\to AD|D|b, A \to A|B|C|AB|BC|a,B\to A|E|C|AA|EC, C \to C|A|CA|a, E \to aEb|ab$.
+\end{example}
+
+\subsubsection*{Премахване на преименуващи правила}
+\index{преименуващи правила}
+Преименуващите правила са от вида $A \to B$.
+Нека е дадена граматика $G = \CFG$, в която има преименуващи правила.
+Ще построим еквивалентна граматика $G'$ без преименуващи правила.
+В началото нека в $R'$ да добавим всички правила от $R$, които не са преименуващи.
+След това, за всякa променлива $A$, за която $A \to^\star_G B$,
+ако $B \to \alpha$ е правило в $R$, което не е преименуващо,
+то добавяме към $R'$ правилото $A \to \alpha$.
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила  
+  \[A\rightarrow B|S,B\rightarrow C|BC,C\rightarrow AB|a|b,S\rightarrow B|CC|b.\]
+  Първо добавяме към $R'$ правилата $B \to BC, C \to AB|a|b, S \to CC|b$.
+  \begin{itemize}
+  \item 
+    Лесно се съобразява, че $A \to^\star_G B,S,C$.
+    Добавяме правилата $A \to BC|AB|a|b|CC$.
+  \item
+    Имаме $B \to^\star_G C$.
+    Добавяме правилата $B \to AB|a|b$.
+  \item
+    Имаме $S \to^\star_G B,C$.
+    Добавяме правилата $S \to BC|AB|a|b$.
+  \end{itemize}
+  Накрая получаваме, че граматиката $G'$ има правила
+  $A \to BC|AB|a|b|CC, B \to AB|a|b|BC, C \to AB|a|b, S \to BC|AB|CC|a|b$.
+\end{example}
 
 \subsection{Нормална Форма на Чомски}
 
@@ -569,13 +675,13 @@
   \item
     Добавяме нов начален символ $S_0$ и правило $S_0 \to S$.
   \item
-    \marginpar{Сложност $O(n)$}
+    \marginpar{Време $O(n)$}
     Съкращаваме дължината на правилата.
     Заменяме правилата от вида $A\to u_1\dots u_n$, $n\geq 3$, $u_i \in V\cup\Sigma$, с
     правилата \[A\to u_1A_1,\ A_1\to u_2A_2,\ \dots,\ A_{n-2} \to u_{n-1}u_n.\]
     където $A_i$ са нови променливи.
   \item
-    \marginpar{Сложност $O(n)$}
+    \marginpar{Време $O(n^2)$}
     За всяка променлива $A \neq S_0$ премахваме правилата от вида $A\to\varepsilon$.
     Това правим по следния начин.
     
@@ -592,14 +698,13 @@
     Ако имаме правило от вида $R\to A$, то добавяме правилото $R\to\varepsilon$
     само ако променливата $R$ още не е преминала през процедурата за премахване на $\varepsilon$.
   \item
-    \marginpar{Сложност $O(n^2)$}
+    \marginpar{Време $O(n^2)$}
+    \marginpar{Памет $O(n)$}
     Премахваме преименуващите правила, т.е. правила от вида $A\to B$.
-    Всяко правило от вида $B \to \beta$ го заменяме с $A\to \beta$,
+    Заменяме всяко правило от вида $B \to \beta$ с $A\to \beta$,
     освен ако $A \to \beta$ е вече премахнато преименуващо правило.
   \item
-    % Заменяме правилата от вида $A\to u_1\dots u_n$, $n\geq 3$, $u_i \in V\cup\Sigma$, с
-    % правилата \[A\to u_1A_1,\ A_1\to u_2A_2,\ \dots,\ A_{n-2} \to u_{n-1}u_n.\]
-    % където $A_i$ са нови променливи.
+    \marginpar{Време $O(n)$}
     За правила от вида $A\to u_1 u_2$, където $u_1, u_2 \in V \cup \Sigma$, 
     заменяме всяка буква $u_i$ с новата променлива $U_i$
     и добавяме правилото $U_i\to u_i$.
@@ -611,45 +716,45 @@
 \begin{thm}
   При дадена безконтекстна граматика $G$ с дължина $n$, можем да намерим еквивалентна
   на нея граматика $G'$ в нормална форма на Чомски за време $O(n^2)$,
-  като получената граматика е с дължина $O(n^2)$.
+  като получената граматика е с дължина $O(n)$.
 \end{thm}
 
 
-\begin{problem}
-  Нека е дадена граматиката  $G = \pair{\{S,A,B,C,D,E\}, \{a,b\},S, R}$.
-  \begin{enumerate}[a)]
-  \item
-    Намерете множеството $\{X \in V \mid X \rightarrow^\star_G \varepsilon\}$.
-  \item
-    Вярно ли е, че $\varepsilon \in L(G)$?
-  \item
-    Постройте граматика $G_1$ без $\varepsilon$-правила, за която $L(G_1)=L(G)\setminus\{\varepsilon\}$.
-  \end{enumerate}
-  Множеството от правила $R$ на граматиката $G$ е зададено като:
-  \begin{enumerate}[a)]
-  \item
-    $R = \{S\rightarrow D,D\rightarrow AD|b,A\rightarrow ACB|BC|a, B\rightarrow ABCA|CEC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb\}$;
-  \item
-    $R = \{S \rightarrow aD, D\rightarrow \varepsilon|ABBA|ADD,A\rightarrow DEB|a,B\rightarrow DDD|DC|b,C\rightarrow CCE|a, E\rightarrow \varepsilon|bEa\}$;
-  \item
-    $R = \{ S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AB|CC, C\rightarrow \varepsilon|CA|a, E\rightarrow a|EB\}$;
-  \item
-    $R = \{ S \rightarrow AD|a, D\rightarrow \varepsilon|BB|AD,A\rightarrow DB|a,B\rightarrow DD|DC|b,C\rightarrow CE|a, E\rightarrow AB|b|EA\}$;
-  \item
-    $R =\{S\rightarrow AS|SB|SS,B\rightarrow CA|b, C\rightarrow AA|a|BA,A\rightarrow \varepsilon|BS\}$;
-  % \item
-  %   $R = \{S\rightarrow AB|AC,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a,C\rightarrow CS|a\}$;
-  % \item
-  %   $R = \{S\rightarrow AS|SB|SS,B\rightarrow AC|b, C\rightarrow A|a|AB,A\rightarrow \varepsilon|BS\}$;
-  \item
-    $R = \{S\rightarrow BA|CA,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a, C\rightarrow CS|a\}$;
-  \item
-    $R = \{S\rightarrow AS|b,A\rightarrow AC|BC|a, B\rightarrow BC|CC,C\rightarrow \varepsilon|CA|a\}$;
-  \item
-    $R = \{S\rightarrow \varepsilon|BA|AS,A\rightarrow SB|a,B\rightarrow SS|SC|b,
-    C\rightarrow CC|a\}$; 
-  \end{enumerate}
-\end{problem}
+% \begin{problem}
+%   Нека е дадена граматиката  $G = \pair{\{S,A,B,C,D,E\}, \{a,b\},S, R}$.
+%   \begin{enumerate}[a)]
+%   \item
+%     Намерете множеството $\{X \in V \mid X \rightarrow^\star_G \varepsilon\}$.
+%   \item
+%     Вярно ли е, че $\varepsilon \in L(G)$?
+%   \item
+%     Постройте граматика $G_1$ без $\varepsilon$-правила, за която $L(G_1)=L(G)\setminus\{\varepsilon\}$.
+%   \end{enumerate}
+%   Множеството от правила $R$ на граматиката $G$ е зададено като:
+%   \begin{enumerate}[a)]
+%   \item
+%     $R = \{S\rightarrow D,D\rightarrow AD|b,A\rightarrow ACB|BC|a, B\rightarrow ABCA|CEC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb\}$;
+%   \item
+%     $R = \{S \rightarrow aD, D\rightarrow \varepsilon|ABBA|ADD,A\rightarrow DEB|a,B\rightarrow DDD|DC|b,C\rightarrow CCE|a, E\rightarrow \varepsilon|bEa\}$;
+%   \item
+%     $R = \{ S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AB|CC, C\rightarrow \varepsilon|CA|a, E\rightarrow a|EB\}$;
+%   \item
+%     $R = \{ S \rightarrow AD|a, D\rightarrow \varepsilon|BB|AD,A\rightarrow DB|a,B\rightarrow DD|DC|b,C\rightarrow CE|a, E\rightarrow AB|b|EA\}$;
+%   \item
+%     $R =\{S\rightarrow AS|SB|SS,B\rightarrow CA|b, C\rightarrow AA|a|BA,A\rightarrow \varepsilon|BS\}$;
+%   % \item
+%   %   $R = \{S\rightarrow AB|AC,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a,C\rightarrow CS|a\}$;
+%   % \item
+%   %   $R = \{S\rightarrow AS|SB|SS,B\rightarrow AC|b, C\rightarrow A|a|AB,A\rightarrow \varepsilon|BS\}$;
+%   \item
+%     $R = \{S\rightarrow BA|CA,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a, C\rightarrow CS|a\}$;
+%   \item
+%     $R = \{S\rightarrow AS|b,A\rightarrow AC|BC|a, B\rightarrow BC|CC,C\rightarrow \varepsilon|CA|a\}$;
+%   \item
+%     $R = \{S\rightarrow \varepsilon|BA|AS,A\rightarrow SB|a,B\rightarrow SS|SC|b,
+%     C\rightarrow CC|a\}$; 
+%   \end{enumerate}
+% \end{problem}
 
 \begin{problem}
   Нека е дадена граматиката  $G = \pair{\{S,A,B,C\}, \{a,b\}, S, R}$.
@@ -668,28 +773,10 @@
   \end{enumerate}
 \end{problem}
 
-\begin{problem}
-  Използвайте обща конструкция, за да премахнете преименуващите правила от граматиката $G$ като при това запазите езика,
-  където $G = \pair{\{A,B,C,S\},\{a,b\}, S, R}$ и
-  \begin{enumerate}[a)]
-  \item
-    $R = \{A\rightarrow B|S,B\rightarrow C|BC,C\rightarrow AB|a|b,S\rightarrow B|CC|b\}$;
-  \item
-    $R = \{A\rightarrow B,B\rightarrow S|C|BC,C\rightarrow a|AB,S\rightarrow C|CC|b\}$;
-  \item
-    $R = \{A\rightarrow B|CC|a,B\rightarrow S|AB,C\rightarrow SC|b,S\rightarrow A|CC|b\}$;
-  \item
-    $R = \{A\rightarrow BB|b,B\rightarrow S|SS|b,C\rightarrow B|a,S\rightarrow C|AB|a\}$;
-  \item
-    $R = \{S\rightarrow A|a,A\rightarrow B|C|b, B\rightarrow AB, C\rightarrow CC|a\}$;
-  \item
-    $R = \{S\rightarrow A|B, A\rightarrow a|C|AB, B\rightarrow b|C, C\rightarrow CS|a|b\}$;
-  \end{enumerate}
-\end{problem}
 
-\begin{problem}
-  Намерете безконтекстна граматика в нормална форма на Чомски за езиците от задача 6.
-\end{problem}
+% \begin{problem}
+%   Намерете безконтекстна граматика в нормална форма на Чомски за езиците от задача 6.
+% \end{problem}
 
 
 \subsection{Проблемът за принадлежност}
@@ -755,30 +842,30 @@
   Заключаваме веднага, че $A \to^\star_G a_i\cdots a_{i+s+1}$.
 \end{proof}
 
-\begin{problem}
-  Нека е дадена граматиката $G = \pair{\{a,b\}, \{S,A,B,C\},S,R}$.
-  Използвайте CYK-алгоритъма, за да проверите дали
-  думата $\alpha$ принадлежи на $L(G)$, където правилата на граматиката $R$ и думата $\alpha$
-  са зададени като:
-  \begin{enumerate}[a)]
+\begin{example}
+  Нека е дадена граматиката $G$ с правила 
+  $S\rightarrow a|AB|AC, C\rightarrow SB|AS,A\rightarrow a, B\rightarrow b$.
+  Ще приложим $CYK$ алгоритъма за да проверим дали думата $aaabb \in \L(G)$.
+  \begin{itemize}
+  \item 
+    $V[1,1] = V[2,2] = V[3,3] = \{S,A\}$.
+    $V[4,4] = V[5,5] = \{B\}$.
   \item
-    $R =\{S\rightarrow a| AB|AC, C\rightarrow SB|AS,A\rightarrow a, B\rightarrow b\}$, $\alpha=aaabb$;
+    $V[1,2] = V[2,3] = \{C\}$.
+    $V[3,4] = \{S,C\}$.
+    $V[4,5] = \emptyset$.
   \item
-    $R = \{S\rightarrow BA| CA|a, C\rightarrow BS|SA,A\rightarrow a, B\rightarrow b\}$, $\alpha=bbaaa$;
+    $V[1,3] = \{S\} \cup \emptyset$.
+    $V[2,4] = \{S,C\} \cup \emptyset$.
+    $V[3,5] = \emptyset \cup \{C\}$.
   \item
-    $R =\{S\rightarrow AB|BC, A\rightarrow BA|a,B\rightarrow CC|b, C\rightarrow AB|a\}$, $\alpha=baaba$;
+    $V[1,4] = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$.
+    $V[2,5] = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$
   \item
-    $R = \{S\rightarrow AB, A\rightarrow AC|a|b,B\rightarrow CB|a, C\rightarrow a\}$, $\alpha=babaa$;
-  % \item
-  %   $R = \{S\rightarrow BA|SS|b, A\rightarrow SA|a,B\rightarrow BS|b\}$, $\alpha = bbbaa$;
-  % \item
-  %   $R = \{S\rightarrow AB| BS|b, A\rightarrow SS|a,B\rightarrow BA|b\}$, $\alpha = babab$;
-  % \item
-  %   $R = \{S\rightarrow BA| AS|a, A\rightarrow AB|a,B\rightarrow SS|b\}$, $\alpha = ababa$;
-  % \item
-  %   $R = \{S\rightarrow AB|a, A\rightarrow BA|SS|a,B\rightarrow SS|b\}$, $\alpha = aabba$.
-  \end{enumerate}
-\end{problem}
+    $V[1,5] = \{S,C\} \cup \emptyset \cup \emptyset \cup \{C\}= \{S,C\}$.
+  \end{itemize}
+  Понеже $S \in V[1,5]$, то $aaabb \in \L(G)$.
+\end{example}
 
 \begin{thm}
   \marginpar{\cite{hopcroft1}, стр. 137}
@@ -915,7 +1002,7 @@
   \end{itemize}
   Основното наблюдение, което трябва да направим за да разберем конструкцията на автомата е, че
   всяка дума от вида $\omega\omega^R$ може да се запише като $\omega_1aa\omega^R_1$ или $\omega_1bb\omega^R_1$.
-  Да видим защо $P$ разпознава думата $abaaba$.
+  Да видим защо $P$ разпознава думата $abaaba$ с празен стек.
   Започваме по следния начин:
   \begin{align*}
     (q,abaaba,\#) & \vdash_P (q,baaba,A\#)\\
@@ -936,6 +1023,7 @@
     & \vdash_P (q, a, BA\#)\\
     & \vdash_P (q, \varepsilon, ABA\#).
   \end{align*}
+  \marginpar{\writedown Докажете, че $\L_S(P) = L$ !}
   От последното моментно описание на автомата нямаме нито един преход, следователно
   думата $aba$ не се разпознава от $P$ с празен стек.
 \end{example}
@@ -1005,8 +1093,9 @@
   класа на безконтекстните езици.
 \end{thm}
 \end{framed}
-%\marginpar{(\cite{hopcroft1}, стр. 117)}
 \begin{proof}
+  \marginpar{(\cite{hopcroft1}, стр. 117)}
+  Ще разгледаме двете посоки на твърдението поотделно.
   \begin{enumerate}[1)]
   \item 
     Нека е дадена безконтекстна граматика $G = \CFG$.
@@ -1031,30 +1120,33 @@
       където 
       \[(q_1,B_1\dots B_m) \in \Delta(q, a, A)\]
       и произволни $q,q_1,\dots,q_{m+1} \in Q$,
-      $a \in \Sigma_\varepsilon$.
-    \item
-      Ако $m = 0$, т.е. $(q_1,\varepsilon) \in \Delta(q, a, A)$,  то имаме правилото $[q,A,q_{1}] \to a$, където $a \in \Sigma_\varepsilon$.
+      $a \in \Sigma \cup \{\varepsilon\}$.
+
+      Да обърнем внимание, че е възможно $m = 0$.
+      Това означава, че $(q_1,\varepsilon) \in \Delta(q, a, A)$ и тогава имаме правилото $[q,A,q_{1}] \to a$, където $a \in \Sigma \cup \{\varepsilon\}$.
     \end{itemize}
     Трябва да докажем, че:
-    \[[q,A,p] \rightarrow^\star_G \alpha\ \iff\ (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
+    \[[q,A,p] \rightarrow^\star_G \alpha\ \Leftrightarrow\ (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
     \begin{description}
     \item[$(\Rightarrow)$]
       С пълна индукция по $i$, ще докажем, че 
       \[(q,\alpha,A) \vdash^i_P (p,\varepsilon,\varepsilon)\ \implies\ [q,A,p] \Rightarrow^\star_G \alpha.\]
-      Ако $i = 1$, то е лесно, защото $\alpha = a$ или $\alpha = \varepsilon$, в случай, че $m = 0$.
+      Ако $i = 1$, то е лесно, защото $\alpha \in \Sigma \cup\{\varepsilon\}$ и $m = 0$.
+
       Ако $i > 1$, нека $\alpha = a\beta$. Тогава:
-      \[(q,a\beta,A) \vdash_P (q_1,\beta,B_1\dots B_n) \vdash^{i-1}_P (p, \varepsilon, \varepsilon)\]
-      Да разбием думата $\beta$ на $n$ части, $\beta = \beta_1\cdots \beta_n$, със свойството, че след като прочетем $\beta_i$, то 
+      \marginpar{Възможно е $a = \varepsilon$}
+      \[(q,a\beta,A) \vdash_P (q_1,\beta,B_1\dots B_n) \vdash^{i-1}_P (p, \varepsilon, \varepsilon).\]
+      Да разбием думата $\beta$ на $n$ части, $\beta = \beta_1\cdots \beta_n$, със свойството, че след като прочетем $\beta_i$ 
       сме премахнали променливата $B_i$ от върха на стека. Това означава, че :
       \begin{align*}
-        & (q_j, \beta_j, B_j) \vdash^{i_j}_P (q_{j+1},\varepsilon,\varepsilon), \text{ за }j = 1,\dots,n-1,\\
-        & (q_n, \beta_n, B_n) \vdash^{i_n}_P (p,\varepsilon,\varepsilon),
+        & (q_j, \beta_j, B_j) \vdash^{l_j}_P (q_{j+1},\varepsilon,\varepsilon), \text{ за }j = 1,\dots,n-1,\\
+        & (q_n, \beta_n, B_n) \vdash^{l_n}_P (p,\varepsilon,\varepsilon),
       \end{align*}
-      където $i_1+i_2+\cdots+i_n = i-1$.
-      Сега по {\bf И.П.}, 
+      където $l_1+l_2+\cdots+l_n = i-1$.
+      Сега по {\bf И.П.} получаваме:
       \begin{align*}
-        & (q_j, \beta_j, B_j) \vdash^{i_j}_P (q_{j+1},\varepsilon,\varepsilon) \implies [q_j,B_j, q_{j+1}] \rightarrow^\star_G \beta_j, \text{ за }за j = 1,\dots,n-1,\\
-        & (q_n, \beta_n, B_n) \vdash^{i_n}_P (p,\varepsilon,\varepsilon) \implies [q_n,B_n, p] \rightarrow^\star_G \beta_n.
+        & (q_j, \beta_j, B_j) \vdash^{l_j}_P (q_{j+1},\varepsilon,\varepsilon) \implies [q_j,B_j, q_{j+1}] \rightarrow^\star_G \beta_j, \text{ за }за j = 1,\dots,n-1,\\
+        & (q_n, \beta_n, B_n) \vdash^{l_n}_P (p,\varepsilon,\varepsilon) \implies [q_n,B_n, p] \rightarrow^\star_G \beta_n.
       \end{align*}
       Обединявайки тези изводи с правилото
       \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2]\dots[q_n,B_n,p],\]
@@ -1063,7 +1155,7 @@
     \item[$(\Leftarrow)$]
       Отново с пълна индукция по $i$ ще докажем, че
       \[[q,A,p] \rightarrow^i_G \alpha \implies (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
-      Ако $i = 1$, то имаме $[q,A,p] \Rightarrow \alpha$, където $\alpha = a$ или $\alpha = \varepsilon$.
+      Ако $i = 1$, то имаме $[q,A,p] \rightarrow \alpha$, където $\alpha = a$ или $\alpha = \varepsilon$.
       Ако $i > 1$, то имаме, че $\alpha = a\beta$ и за някое $n$, 
       \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,p] \rightarrow^{i-1}_G \beta.\]
       Отново нека $\beta = \beta_1\dots \beta_n$, където 
