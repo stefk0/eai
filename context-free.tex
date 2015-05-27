@@ -699,7 +699,7 @@
     само ако променливата $R$ още не е преминала през процедурата за премахване на $\varepsilon$.
   \item
     \marginpar{Време $O(n^2)$}
-    \marginpar{Памет $O(n)$}
+    \marginpar{Памет $O(n^2)$}
     Премахваме преименуващите правила, т.е. правила от вида $A\to B$.
     Заменяме всяко правило от вида $B \to \beta$ с $A\to \beta$,
     освен ако $A \to \beta$ е вече премахнато преименуващо правило.
@@ -716,7 +716,7 @@
 \begin{thm}
   При дадена безконтекстна граматика $G$ с дължина $n$, можем да намерим еквивалентна
   на нея граматика $G'$ в нормална форма на Чомски за време $O(n^2)$,
-  като получената граматика е с дължина $O(n)$.
+  като получената граматика е с дължина $O(n^2)$.
 \end{thm}
 
 
@@ -898,7 +898,7 @@
 \section{Недетерминирани стекови автомати}
 
 \index{автомат!недетерминиран стеков}
-\marginpar{На англ. {\bf Push-down automaton} (стр. 157 от \cite{kozen})}
+\marginpar{На англ. {\bf Push-down automaton}}% (стр. 157 от \cite{kozen})}
 %Sipser p.102
 \begin{dfn}
   Недетерминиран стеков автомат е 7-орка от вида
@@ -1046,22 +1046,25 @@
     Нека $L = \L_F(P)$, където $P = \PDA$.
     Ще построим $P^\prime$, така че да симулира $P$ и като отидем във финално състояние ще изпразним стека.
     Нека
-    \[P^\prime = \langle{Q\cup\{q_e,s^\prime\},\Sigma,\Gamma \cup \{\$\},\$,s^\prime,\Delta^\prime,\emptyset}\rangle\]
+    \[P^\prime = \langle{Q\cup\{q_e,s^\prime\},\Sigma,\Gamma \cup \{\$\},\$,s^\prime,\Delta^\prime,\emptyset}\rangle,\]
+    където $\$ \not\in \Gamma$.
     Важно е $P^\prime$ да има собствен нов символ за дъно на стека, защото е възможно за някоя дума $\alpha \not\in \L_F(P)$
     стековият автомат $P$ да си изчисти стека и така да разпознаем повече думи.
     \begin{itemize}
     \item 
       \marginpar{- започваме симулацията}
-      $\Delta^\prime(s^\prime,\varepsilon,\$) = \{(s,\#\$)\}$;
+      $\Delta'(s^\prime,\varepsilon,\$) = \{(s,\#\$)\}$;
     \item
       \marginpar{- симулираме $P$}
-      $\Delta^\prime(q,a,X)$ включва множеството $\Delta(q,a,X)$, за всяко $q\in Q$, $a\in\Sigma_\varepsilon$, $X\in\Gamma$;
+      $\Delta'(q,a,X)$ включва множеството $\Delta(q,a,X)$, за всяко $q\in Q$, $a\in\Sigma_\varepsilon$, $X\in\Gamma$;
     \item
       \marginpar{- ако сме във финално, започваме да чистим стека}
-      $\Delta^\prime(q,\varepsilon,X)$ съдържа също и елемента $(q_e,\varepsilon)$, за всяко $q\in F$, $X \in \Gamma \cup \{\$\}$;
+      $\Delta'(q,\varepsilon,X)$ съдържа също и елемента $(q_e,\varepsilon)$, за всяко $q\in F$, $X \in \Gamma \cup \{\$\}$;
     \item
       \marginpar{- изчистваме стека}
-      $\Delta^\prime(q_e,\varepsilon,X) = \{(q_e,\varepsilon)\}$, за всяко $X \in \Gamma \cup \{\$\}$.
+      $\Delta'(q_e,\varepsilon,X) = \{(q_e,\varepsilon)\}$, за всяко $X \in \Gamma \cup \{\$\}$;
+    \item
+      $\Delta'$ няма други правила.
     \end{itemize}
   \item
     Сега имаме $L = \L_S(P)$, където $P = \langle{Q,\Sigma,\Gamma,\#,s,\Delta,\emptyset}\rangle$. 
@@ -1071,13 +1074,13 @@
     \begin{itemize}
     \item 
       \marginpar{- започваме симулацията}
-      $\Delta^\prime(s^\prime,\varepsilon,\$) = \{(s, \#\$)\}$;
+      $\Delta'(s',\varepsilon,\$) = \{(s, \#\$)\}$;
     \item
       \marginpar{- симулираме $P$}
-      $\Delta^\prime(q,a,X) = \Delta(q,a,X)$, за всяко $q \in Q$, $a \in \Sigma_\varepsilon$, $X \in \Gamma$;
+      $\Delta'(q,a,X) = \Delta(q,a,X)$, за всяко $q \in Q$, $a \in \Sigma_\varepsilon$, $X \in \Gamma$;
     \item
       \marginpar{- щом сме стигнали до $\$$, значи $P$ е изчистил стека си}
-      $\Delta^\prime(q,\varepsilon,\$) = \{(q_f,\varepsilon)\}$.
+      $\Delta'(q,\varepsilon,\$) = \{(q_f,\varepsilon)\}$.
     \end{itemize}
   \end{enumerate}
 \end{proof}
@@ -1089,6 +1092,7 @@
 
 \begin{framed}
 \begin{thm}
+  \label{th:push-down-context-free}
   Класът на езиците, които се разпознават от краен стеков автомат съвпада с
   класа на безконтекстните езици.
 \end{thm}
@@ -1181,21 +1185,54 @@
   \end{enumerate}
 \end{proof}
 
-\begin{problem}
-  Нека е дадена граматиката $G = \pair{\{S,A,B\},\{a,b\},S,R\}}$.
-  Постройте стеков автомат $P = \PDA$, такъв че $\L_S(P) = \L(G)$, където правилата $R$ на граматиката $G$ са зададени като:
-  \begin{enumerate}[a)]
-    % За едно тези двете да се даде пример как става 
+% \begin{problem}
+%   Нека е дадена граматиката $G = \pair{\{S,A,B\},\{a,b\},S,R\}}$.
+%   Постройте стеков автомат $P = \PDA$, такъв че $\L_S(P) = \L(G)$, където правилата $R$ на граматиката $G$ са зададени като:
+%   \begin{enumerate}[a)]
+%     % За едно тези двете да се даде пример как става 
+%   \item
+%     $R = \{S\rightarrow ASB\vert \varepsilon, A\rightarrow aAa\vert a, B\rightarrow bBb\vert b\}$;
+%   \item
+%     $R = \{S\rightarrow ASB\vert \varepsilon, A\rightarrow aA\vert a, B\rightarrow Bb\vert b\}$;
+%   \item
+%     $R =\{S\rightarrow SA|\varepsilon,A\rightarrow BSa|B, B\rightarrow b|BS|ab\}$;
+%   \item
+%     $R = \{S\rightarrow AS|\varepsilon,A\rightarrow SaBB|A, B\rightarrow b|BBbS|AA\}$;
+%   \end{enumerate}
+% \end{problem}
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила 
+  $S\rightarrow ASB\vert \varepsilon, A\rightarrow aAa\vert a, B\rightarrow bBb\vert b$.
+  Ще построим стеков автомат $P = \PDA$, такъв че $\L_S(P) = \L(G)$.
+  \begin{itemize}
   \item
-    $R = \{S\rightarrow ASB\vert \varepsilon, A\rightarrow aAa\vert a, B\rightarrow bBb\vert b\}$;
+    $\Sigma = \{a,b\}$;
+  \item 
+    $\Gamma = \{A,S,B,a,b\}$;
   \item
-    $R = \{S\rightarrow ASB\vert \varepsilon, A\rightarrow aA\vert a, B\rightarrow Bb\vert b\}$;
+    $\# = S$;
   \item
-    $R =\{S\rightarrow SA|\varepsilon,A\rightarrow BSa|B, B\rightarrow b|BS|ab\}$;
+    $Q = \{q\}$;
   \item
-    $R = \{S\rightarrow AS|\varepsilon,A\rightarrow SaBB|A, B\rightarrow b|BBbS|AA\}$;
-  \end{enumerate}
-\end{problem}
+    $F = \emptyset$;
+  \item
+    Дефинираме релацията на преходите, следвайки конструкцията от \Th{push-down-context-free}:
+    \begin{itemize}
+    \item 
+      $\Delta(q,\varepsilon, S) = \{\pair{q,ASB}, \pair{q,\varepsilon}\}$;
+    \item
+      $\Delta(q, \varepsilon, A) = \{\pair{q, aAa}, \pair{q, a}\}$;
+    \item
+      $\Delta(q, \varepsilon, B) = \{\pair{q, bBb}, \pair{q, b}\}$;
+    \item
+      $\Delta(q, a, a) = \{\pair{q,\varepsilon}\}$;
+    \item
+      $\Delta(q, b, b) = \{\pair{q,\varepsilon}\}$.
+    \end{itemize}
+  \end{itemize}
+\end{example}
+
 
 \begin{thm}
   \marginpar{(стр. 144 от \cite{papadimitriou})}
@@ -1204,11 +1241,11 @@
 \end{thm}
 \begin{proof}
   Нека имаме стеков автомат
-  \[M_1 = \PDAn{1}, \text{ където } \L_F(M_1) = L,\]
+  \[\M_1 = \PDAn{1}, \text{ където } \L_F(\M_1) = L,\]
   \marginpar{всъщност няма нужда да е детерминиран}
   и краен детерминиран автомат 
-  \[M_2 = \FAn{2}, \text{ където } \L(M_2) = R.\]
-  Ще определим нов стеков автомат $M = \PDA$, където
+  \[\M_2 = \FAn{2}, \text{ където } \L(\M_2) = R.\]
+  Ще определим нов стеков автомат $\M = \PDA$, където
   \begin{itemize}
   \item 
     $Q = Q_1 \times Q_2$;
@@ -1229,9 +1266,11 @@
       Ако $\Delta_1(q_1,\varepsilon,b) \ni \pair{r_1,c}$,
       то за всяко $q_2 \in Q_2$,
       \[\Delta(\pair{q_1,q_2},\varepsilon,b) \ni \pair{\pair{r_1,q_2},c}.\]    
-    \end{itemize}   
+    \item
+      \marginpar{\writedown Докажете, че $\L(\M) = \L(\M_1) \cap \L(\M_2)$ !}
+      $\Delta$ не съдържа други преходи;
+    \end{itemize}
   \end{itemize}
-  На практика $M$ симулира едновременно и двата автомата $M_1$ и $M_2$.
 \end{proof}
 
 \begin{example}
@@ -1243,40 +1282,6 @@
   Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от Пример \ref{example:anbncn}, че {\em не} е безконтекстен.
   Достигнахме до противоречие. Следователно, $L$ не е безконтекстни език.
 \end{proof}
-
-\section{Свойства}
-
-Безконтекстните езици са:
-\begin{itemize}
-\item 
-  затворени относно операцията {\em обединение}, т.е.
-  ако $L_1, L_2$ са безконтекстни, то езикът $L_1 \cup L_2$ е безконтекстен; 
-\item
-  затворени относно операцията {\em конкатенация}, т.е.
-  ако $L_1, L_2$ са безконтекстни, то езикът $L_1 \cdot L_2$ е безконтекстен; 
-\item
-  затворени относно операцията {\em звезда} на Клини, т.е.
-  ако $L$ е безконтекстен, то езикът $L^\star = \bigcup_{n\in\Nat} L^n$ е безконтекстен; 
-\item
-  затворени относно {\em сечение} с регулярен език, т.е.
-  ако $L$ е безконтекстен език и $R$ е регулярен език, то езикът $L = L \cap R$ е безконтекстен; 
-\item
-  {\bf не} са затворени относно операцията {\em сечение}, т.е.
-  съществуват контекстно-свободни езици $L_1, L_2$, за които езикът $L_1 \cap L_2$ {\bf не} е безконтекстен; 
-\item
-  {\bf не} са затворени относно операцията {\em допълнение}, т.е.
-  съществува безконтекстен език $L$, за който езикът $\Sigma^\star\setminus L$ {\bf не} е безконтекстен; 
-% \item
-%   те са затворени относно хомоморфизми, т.е.
-%   ако $L \subseteq \Sigma^\star_1$ е безконтекстен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
-%   то езикът $h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}$
-%   е безконтекстен.
-% \item
-%   те са затворени относно обратни хомоморфизми, т.е.
-%   ако $L\subseteq \Sigma^\star_2$ е безконтекстен език и $h:\Sigma_1\to\Sigma^\star_2$ е хомоморфизъм, 
-%   то езикът $h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}$
-%   е безконтекстен.
-\end{itemize}
 
 \section*{Библиография}
 
