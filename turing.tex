@@ -2,6 +2,8 @@
 
 \newcommand{\tape}[1]{\dots\blank\blank\blank{#1}\blank\blank\blank\dots}
 
+\section{Основни понятия}
+
 Машина на Тюринг ще наричаме седморка от вида $\M = \TM$, където:
 \marginpar{Sipser дава малко по-различна дефиниция - с едно финално приемащо и едно финално отхвърлящо.}
 \begin{itemize}
@@ -19,30 +21,32 @@
   $\blank$ - празен символ,  $\blank \in \Gamma \setminus \Sigma$;
 \item
   $F$ - финални състояния, $F \subseteq Q$.
-\item 
-  Първоначално, лентата съдържа входа, който е обграден от безкрайно много символи $\blank$ и в двете посоки.
-\item
-  МТ се намира в началното състояние $s$ и главата е върху най-левия символ от входа.
 \end{itemize}
 
-{\em Моментно описание} на едно изчисление на МТ е тройка от вида $(\alpha, q, \beta) \in \Gamma^\star\times Q \times \Gamma^\star$. Това означава, че
+Сега ще опишем как $\M$ работи върху вход думата $\alpha \in \Sigma^\star$.
+Първоначално, безкрайната лента съдържа само $\alpha$. Останалите клетки на лентата съдържат $\blank$.
+Освен това, $\M$ се намира в началното състояние $s$ и главата е върху най-левия символ на $\alpha$.
+Работата $\M$ е описана от функцията на преходите.
+  
+\marginpar{(На англ. instanteneous description)}
+{\em Моментното описание} (или конфигурацията) на едно изчисление на МТ е тройка от вида $(\alpha, q, \beta) \in \Gamma^\star\times Q \times \Gamma^\star$. Това означава, че
 машината се намира в състояние $q$ и лентата има вида
 \[\tape{\alpha\beta},\]
 като главата на мишната е поставена върху първия символ на $\beta$.
 
 Както за автомати, удобно е да дефинираме бинарна релация $\vdash_\M$,
-която ще казва как моментното състояние на машината $\M$ се променя при 
+която ще казва как моментното описание на машината $\M$ се променя при 
 изпълнение на една стъпка от изчислението.
 \begin{itemize}
 \item
-  Ако $\delta_\M(q,Z) = (p,Y,R)$, то пишем
-  $(\alpha, q, Z\beta) \vdash_\M (\alpha Y, p, \beta)$.
+  Ако $\delta_\M(q,Z) = (p,Y,R)$, то $(\alpha, q, Z\beta) \vdash_\M (\alpha Y, p, \beta)$.
   При $Z = \blank$, също така можем да запишем 
   $(\alpha, q, \varepsilon) \vdash_\M (\alpha Y, p, \varepsilon)$
 \item 
-  Ако $\delta_\M(q,Z) = (p,Y,L)$, то пишем
-  $(\alpha X, q, Z\beta) \vdash_\M (\alpha , p, XY\beta)$.
-  При $X = \blank$, $(\varepsilon, q, Z\beta) \vdash_\M (\varepsilon, p, \blank Y\beta)$.
+  Ако $\delta_\M(q,Z) = (p,Y,L)$, то $(\alpha X, q, Z\beta) \vdash_\M (\alpha , p, XY\beta)$.
+  При $X = \blank$, имаме $(\varepsilon, q, Z\beta) \vdash_\M (\varepsilon, p, \blank Y\beta)$.
+\item
+  Ако $\delta_\M(q,Z) = (p,Y,N)$, то ....
 \end{itemize}
 С $\vdash^\star_\M$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\M$.
 
@@ -61,6 +65,94 @@
 и освен това $\M$ завършва върху всички входни думи.
 
 \section{Примери}
+
+\subsection*{Полуразрешим език, който не е безконтекстен}
+
+\begin{example}
+  \marginpar{Знаем, че $L$ не е безконтекстен}
+  Да разгледаме езика $L = \{a^nb^nc^n \mid n\in\Nat\}$.
+  Ще построим машина на Тюринг $\M$, за която $L = \L(\M)$.
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+        \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
+        
+        \node[state,initial]    (1) {$1$};
+        \node[state]            (2) [right of=1]{$2$};
+        \node[state]            (3) [right of=2]{$3$};
+        \node[state]            (4) [right of=3]{$4$};
+        \node[state,accepting]  (5) [below of=1]{$5$};
+        
+        \begin{scope}[every node/.style={scale=.8}]
+          \path
+          (1) edge [loop above] node [above] {$d;R$} (1)
+          (1) edge node [left] {$\blank;N$} (5)
+          (1) edge [bend left=15] node [above] {$a/d;R$} (2)
+          (2) edge [bend left=15] node [above] {$b/d;R$} (3)
+          (2) edge [loop above] node [above] {$\{a,d\};R$} (2)
+          (3) edge [bend left=15] node [above] {$c/d;L$} (4)
+          (3) edge [loop above] node [above] {$\{b,d\};R$} (3)
+          (4) edge [loop above] node [above] {$\{a,b,d\};L$} (4)
+          (4) edge [bend left=30] node [below] {$\blank;R$} (1);
+        \end{scope}
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+
+  Да проследим изчислението на думата $aabbcc$:
+  
+  \[_1aabbcc \vdash d_2abbcc \vdash da_2bbcc \vdash dad_3bcc \vdash dadb_3cc \vdash dad_4bdc \vdash da_4dbdc \vdash \cdots \vdash\]
+  \[_4dadbdc \vdash\ _4\blank dadbdc \vdash\ _1dadbdc \vdash d_1adbdc \vdash dd_2dbdc \vdash ddd_2bdc \vdash dddd_3dc \vdash \]
+  \[ ddddd_3c \vdash dddddd_4 \vdash \cdots \vdash\ _4\blank dddddd \vdash\ _1dddddd \vdash \cdots \vdash dddddd_1\blank \vdash dddddd_5\blank.\]
+\end{example}
+
+\begin{example}
+  Да разгледаме езика $L = \{\omega c \omega \mid \omega\in\{a,b\}^\star\}$.
+  Ще построим машина на Тюринг $\M$, за която $L = \L(\M)$.
+  
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+        \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
+        
+        \node[state,initial]    (1) {$1$};
+        \node[state]            (2) [above right of=1]{$2$};
+        \node[state]            (3) [below right of=1]{$3$};
+        \node[state]            (4) [right of=2]{$4$};
+        \node[state]            (5) [right of=3]{$5$};
+        \node[state]            (6) [below right of=4]{$6$};
+        \node[state]            (7) [above of=6]{$7$};
+        \node[state]            (8) [left of=3]{$8$};
+        \node[state,accepting]  (9) [below left of=3]{$9$};
+        
+        \begin{scope}[every node/.style={scale=.8}]
+          \path
+          (1) edge [bend left=15] node [right] {$a/x;R$} (2)
+              edge [bend right=15] node [right] {$b/x;R$} (3)
+              edge [bend right=15] node [left] {$c;R$} (8)
+          (2) edge [loop above] node [above] {$\{a,b\};R$} (2)
+              edge [bend left=15] node [above] {$c;R$} (4)
+          (3) edge [loop below] node [below] {$\{a,b\};R$} (3)
+              edge [bend right=15] node [below] {$c;R$} (5)
+          (4) edge [loop above] node [above] {$x;R$} (4)
+              edge [bend left=15] node [left] {$a/x;L$} (6)
+          (5) edge [loop below] node [below] {$x;R$} (5)
+              edge [bend right=15] node [right] {$b/x;L$} (6)
+          (6) edge [loop right] node [right] {$\{a,b,x\};L$} (6)
+              edge [bend right=15] node [right] {$c;L$} (7)
+          (7) edge [loop right] node [right] {$\{a,b\};L$} (7)
+              edge [out=130,in=120,above,distance=2.5cm] node [above] {$x;R$} (1)
+          (8) edge [loop left] node [left] {$x;R$} (8)
+              edge [bend right=15] node [left] {$\blank;N$} (9);
+        \end{scope}
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+
+  Да проследим изчислението на думата $abcab$.
+
+\end{example}
+
 
 \subsection*{Удвояване на броя на единиците}
 
@@ -112,7 +204,7 @@
       \end{scope}
     \end{tikzpicture}
   \end{center}
-\end{figure}    
+\end{figure}
 
 \begin{problem}
   За произволно естествено число $n$, дефинирайте МТ $\M_n$ с $n+11$ състояние, за която,
@@ -266,59 +358,147 @@
 
 
 
+\section{Разрешими и полуразрешими езици}
 
-\section{Пример за език, който не се разпознава от МТ}
+\subsection{Диагоналният език $L_d$}
 
+Нека $\omega_0,\omega_1,\dots,\omega_n,\dots$ е каноничната подредба на всички думи над азбуката $\{0,1\}$.
 Да разгледаме безкрайната таблица $\{a_{ij} \mid i,j \in \Nat\}$, където:
 \begin{align*}
   a_{ij} = 
   \begin{cases}
-    1, & \text{ ако } w_i \in L(\M_j), \\
-    0, & \text{ ако } w_i \not\in L(\M_j).
+    1, & \text{ ако } \omega_i \in L(\M_j), \\
+    0, & \text{ ако } \omega_i \not\in L(\M_j).
   \end{cases}
 \end{align*}
-Идеята е да вземем диагонала на тази таблица.
+Идеята е да вземем $0$-ите по диагонала на тази таблица.
 
 \begin{framed}
   Езикът 
-  $L_d = \{w_i \mid w_i \not\in L(\M_i)\}$ не се разпознава от MT.
+  $L_d = \{w_i \mid w_i \not\in L(\M_i)\}$ не се разпознава от MT,
+  т.е. $L_d$ {\bf не} е полуразрешим.
 \end{framed}
-Да допуснем, че $L_d$ се разпознава от МТ, т.е. $L_d = L(\M_i)$, за някоя МТ с код $i$.
+Да допуснем, че $L_d$ се разпознава от МТ, т.е. $L_d = \L(\M_i)$, за някоя МТ с код $i$.
 Тогава:
+\begin{align*}
+  & \omega_i \in L_d \implies \omega_i \in \L(\M_i) \implies \omega_i \not\in L_d,\\
+  & \omega_i \not\in L_d \implies \omega_i \not\in \L(\M_i) \implies \omega_i \in L_d.
+\end{align*}
+Достигаме до противоречие.
+
+\begin{remark}
+  Да обърнем внимание, че $\bar{L}_d = \{\omega_i \mid \omega_i \in \L(\M_i)\}$ е полуразрешим език.
+\end{remark}
+
+\subsection{Универсалният език $L_u$}
+
+Да разгледаме езика $L_u = \{\pair{\M,\omega} \mid \omega\in \L(\M)\}$.
+
+\begin{lemma}
+  $L_u$ е полуразрешим език.
+\end{lemma}
+
+\begin{lemma}
+  $\bar{L}_u = \{\pair{\M,\omega} \mid \omega\not\in \L(\M)\}$ {\bf не} е полуразрешим език.
+\end{lemma}
+
+\begin{framed}
+  \begin{thm}
+    Универсалният език $L_u$ е полуразрешим, но {\bf не} е разрешим.
+  \end{thm}
+\end{framed}
+
+Да допуснем, че $L_u$ е разрешим.
 \begin{itemize}
 \item 
-  Ако
-  $w_i \in L_d\ \rightarrow\ w_i \in L(\M_i)\ \rightarrow\ w_i \not\in L_d$;
+  Вход думата $\omega$;
 \item
-  Ако 
-  $w_i \not\in L_d\ \rightarrow\ w_i \not\in L(\M_i)\ \rightarrow\ w_i \in L_d$.
+  Намираме каноничния индекс $i$ на $\omega$, т.е. $\omega_i = \omega$;
+\item
+  Намираме машината на Тюринг $\M_i$, чиито код е $i$;
+\item
+  Симулираме $\pair{\M_i,\omega_i}$ върху $\M$.
 \end{itemize}
 
-\section{Универсалният език $L_u$}
+Така получваме, че:
+\[\omega_i\in \bar{L}_d \iff \M_i\text{ приема }\omega_i \iff \pair{\M_i,\omega_i} \in L_u.\]
+Заключаваме, че $\bar{L}_d$ е разрешим език, което е противоречие.
 
-Да разгледаме езика $L_u = \{\pair{\M,w} \mid w\in L(\M)\}$.
+% \section{Проблемът за съответствие на Пост (PCP)}
 
-\section{Проблемът за съответствие на Пост (PCP)}
-
-\subsection*{MPCP}
-
-\section{Разрешими и полуразрешими езици}
-
+% \subsection*{MPCP}
 
 
 
 \section{Теорема на Райс-Успенски}
+\marginpar{\cite{hopcroft1}, стр. 188}
 
-\section{Проблеми за безконтекстни езици}
+Нека $\Ss$ е множество от полуразрешими езици над азбуката $\{0,1\}$.
+Ще казваме, че $\Ss$ е свойство на полуразрешимите езици.
+$\Ss$ е тривиално свойство, ако $\Ss = \emptyset$ или $\Ss$ съдържа точно всички полуразрешими езици.
+Нека $L_\Ss = \{\pair{\M} \mid \L(\M) \in \Ss\}$.
+
+\begin{thm}
+  Всяко нетривиално свойство $\Ss$ на полуразрешимите езици е неразрешимо.
+\end{thm}
+\begin{proof}
+  \marginpar{Цел: да сведем $L_u$ към $\Ss$}
+  Без ограничение на общността, нека $\emptyset \not\in \Ss$.
+  Понеже $\Ss$ е нетривиално свойство, да разгледаме $L \in \Ss$,
+  като $\M_L$ е машина на Тюринг, за която $\L(\M_L) = L$.
+  Да разгледаме алгоритъм $A$, който за дадена дума $\pair{\M,w}$
+  връща код на машина на Тюринг $\M'$, за която:
+  \begin{itemize}
+  \item
+    имаме вход - произволна дума $x$;
+  \item
+    първоначално не обръщаме внимание на $x$, а питаме дали $\pair{\M,w} \in L_u$, т.е. дали $\M$ приема думата $w$;
+    \begin{itemize}
+    \item 
+      ако съществува стъпка $s$, за която $\pair{\M,w} \in L^s_u$, то симулираме $\M_L$ върху входната дума $x$;
+      в този случай получаваме $\L(\M') = L$;
+    \item
+      ако не съществува стъпка $s$, за която $\pair{\M,w} \in L^s_u$, то 
+      няма да разпознаем нито една дума;
+      в този случай получаваме $\L(\M') = \emptyset$.      
+    \end{itemize}
+  \end{itemize}
+  От всичко това следва, че:
+  \begin{align*}
+    & \pair{\M,w} \in L_u \implies \L(\M') = L \implies \L(\M') \in \Ss,\\
+    & \pair{\M,w} \not\in L_u \implies \L(\M') = \emptyset \implies \L(\M') \not\in \Ss.
+  \end{align*}
+  Да допуснем, че $\Ss$ е разрешимо множество от полуразрешими езици.
+  Тогава от еквивалентността,
+  \[\pair{\M,w} \in L_u \iff \L(\M') \in \Ss,\]
+  получаваме, че $\L_u$ е разрешимо множество, което е противоречие.
+\end{proof}
+
+\begin{cor}
+  Следните свойства $\Ss$ на полуразрешимите множества {\bf не} са разрешими:
+  \begin{enumerate}[a)]
+  \item 
+    празнота, т.е. $\Ss = \{\pair{\M} \mid \L(\M) = \emptyset\}$;
+  \item
+    крайност, т.е. $\Ss = \{\pair{\M} \mid |\L(\M)| < \infty\}$;
+  \item
+    регулярност, т.е. $\Ss = \{\pair{\M} \mid (\exists \text{ рег. израз }r)[\L(\M) = \L(r)]\}$;
+  \item
+    безконтекстност, т.е. $\Ss = \{\pair{\M} \mid (\exists\text{ безконт. грам. }G)[\L(\M) = \L(G)]\}$.
+  \end{enumerate}
+\end{cor}
+
+\section{Валидни и невалидни изчисления на машини на Тюринг}
+\marginpar{\cite{hopcroft1}, стр. 201}
 
 \begin{lemma}
-  Нека е дадена $\M = \TM$.
-  Тогава езикът 
-  \[L = \{\alpha\sharp\beta^R \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \vdash_\M \beta\}\]
-  е безконтекстен.
+  Множеството от валидни изчисления на машина на Тюринг $\M$ е сечението на два безконтекстни езика $L_1$ и $L_2$.
+  Освен това, граматиките на $L_1$ и $L_2$ могат ефективно да бъдат построени от $\M$.
 \end{lemma}
-\begin{proof}
-  Ще покажем, че съществува стеков автомат $P$, за който $\L_S(P) = L$.
+\begin{hint}
+  Да разгледаме езика
+  \[L_3 = \{\alpha\#\beta^R \mid \alpha \vdash_\M \beta\}.\]
+  Лесно е да построим стеков автомат $P_3$, който разпознава езика $L_3$.
   Четем буквата $X$. Тогава:
   \begin{itemize}
   \item 
@@ -326,52 +506,218 @@
   \item
     ако $\delta_\M(q,X) =(p,Y,L)$, то ако $Z$ е върха на стека, заменяме $Z$ с $pZY$;
   \end{itemize}
-\end{proof}
+  Аналогично разглеждаме безконтекстния език
+  \[L_4 = \{\alpha^R\#\beta \mid \alpha \vdash_\M \beta\}.\]
+  Сега можем да дефинираме езиците
+  \begin{align*}
+    & L_1 = (L_3\#)^\star(\{\varepsilon\}\cup \Gamma^\star F \Gamma^\star\#)\\
+    & L_2 = q_0\Sigma^\star(L_4\#)^\star(\{\varepsilon\}\cup \Gamma^\star F \Gamma^\star\#),
+  \end{align*}
+  за които е ясно, че са безконтекстни.
+\end{hint}
+
+\begin{thm}
+  Въпросът дали две произволни безконтекстни граматики $G_1$ и $G_2$, $\L(G_1) \cap \L(G_2) = \emptyset$,
+  е неразрешим.
+\end{thm}
 
 \begin{lemma}
-  Нека е дадена $\M = \TM$.
-  Тогава езикът 
-  \[L = \{\alpha\sharp\beta^R \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\}\]
-  е безконтекстен.
+  Множеството от невалидни изчисления на машина на Тюринг е безконтекстен език.
 \end{lemma}
 
-
 \begin{thm}
-  Неразрешим е проблемът за проверка дали при дадени две произволни безконтекстни граматики $G_1$ и $G_2$,
-  $\L(G_1) \cap \L(G_2) = \emptyset$.  
+  Въпросът дали за произволна безконтекстна граматика $G$, $\L(G) = \Sigma^\star$,
+  е неразрешим.
 \end{thm}
 
-\begin{thm}
-  Неразрешим е проблемът за проверка дали при дадена произволна безконтекстна граматика $G$,
-  $\L(G) = \Sigma^\star$.  
-\end{thm}
+\begin{cor}
+  Нека $G_1$ и $G_2$ са произволни безконтекстни граматики, а $r$ е произволен регулярен израз.
+  Следните проблеми са неразрешими:
+  \begin{enumerate}
+  \item 
+    $\L(G_1) = \L(G_2)$;
+  \item
+    $\L(G_2) \subseteq \L(G_1)$;
+  \item
+    $\L(G_1) = \L(r)$;
+  \item
+    $\L(r) \subseteq \L(G_1)$.
+  \end{enumerate}
+\end{cor}
+
+\subsection*{Критерии за полуразрешимост}
+
+\begin{lemma}
+  Нека $\Ss$ е свойство на полуразрешимите езици.
+  Ако съществува безкраен език $L_0 \in \Ss$, който няма крайно подмножество в $\Ss$,
+  то $L_\Ss$ не е полуразрешим език.  
+\end{lemma}
+\begin{hint}
+  Нека $L_0 = \L(\M_0)$.
+  Ще опишем алгоритъм, който при вход дума $\pair{\M,\omega}$,
+  извежда код на машина на Тюринг $\M'$, която работи така:
+  \begin{itemize}
+  \item 
+    вход думата $\alpha$;
+  \item
+    за $\abs{\alpha}$ стъпки симулираме $\M$ върху $\omega$.
+    \begin{itemize}
+    \item 
+      ако $\M$ приема $\omega$ за $\leq \abs{x}$ стъпки, то симулираме $\M_0$ върху $\alpha$;
+    \item 
+      ако $\M$ не приема $\omega$ за $\leq \abs{x}$ стъпки, то зацикляме и нищо не връщаме.
+    \end{itemize}
+  \end{itemize}
+
+  Така получаваме, че 
+  \begin{align*}
+    \L(\M') = 
+    \begin{cases}
+      \{\alpha \in L_0 \mid \abs{\alpha} < k\}, & \M\text{ приема }\omega\\
+      L, & \M\text{ не приема }\omega,
+    \end{cases}
+  \end{align*}
+  където $k$ е минималната стъпка, при която $\M$ приема $\omega$.
+  
+  Заключаваме, че 
+  \[\pair{\M,\omega} \not\in L_u \iff \L(\M') \in \Ss.\]
+  Това означава, че ефективно можем да сведем въпрос за принадлежност в $\bar{L}_u$
+  към въпрос за принадлежност в $L_\Ss$.
+  Следователно, ако $L_\Ss$ е полуразрешим език, то $\bar{L}_u$ е полуразрешим език, което е противоречие.
+\end{hint}
+
+\begin{cor}
+  Следните езици {\bf не} са полуразрешими:
+  \begin{itemize}
+  \item 
+    $L = \{\pair{\M} \mid \abs{\L(\M)} = \infty\}$;
+  \item
+    $L = \{\pair{\M} \mid \L(\M) = \Sigma^\star\}$;
+  \item
+    $L = \{\pair{\M} \mid \L(\M)\text{ не е разрешим}\}$;
+  \item
+    $L = \{\pair{\M} \mid \L(\M)\text{ не е полуразрешим}\}$;
+  \item
+    $L = \{\pair{\M} \mid \L(\M)\text{ не е регулярен}\}$.
+  \end{itemize}
+\end{cor}
+
+\begin{lemma}
+  Нека $L_1$ е език в $\Ss$ и нека $L_2$ е полуразрешимо множество, разширяващо $L_1$, и $L_2 \not\in\Ss$.
+  Тогава $L_\Ss$ не е полуразрешимо.
+\end{lemma}
+\begin{hint}
+  Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$.
+  Ще опишем алгоритъм, който при вход дума $\pair{\M,\omega}$,
+  извежда код на машина на Тюринг $\M'$, която работи така:
+  \begin{itemize}
+  \item 
+    вход думата $\alpha$;
+  \item
+    симулираме едновременно две изчисления - $\M_1$ върху $\alpha$ и $\M$ върху $\omega$:
+    \begin{itemize}
+    \item 
+      ако $\M_1$ приеме думата $\alpha$, то обявяваме, че $\M'$ приема $\alpha$ и завършваме.
+    \item
+      ако достигнем стъпка $s$, за която $\M^s_1$ все още не приема думата $\alpha$,
+      но $\M^s$ приема $\omega$, то започваме да симулираме $\M_2$ върху $\alpha$.
+      Ако $\M_2$ приеме $\alpha$, то $\M'$ приема $\alpha$.
+    \end{itemize}
+  \end{itemize}
+  
+  Получаваме, че:
+  \begin{align*}
+    \L(\M') = 
+    \begin{cases}
+      L_2, & \M\text{ приема }\omega\\
+      L_1, & \M\text{ не приема }\omega.
+    \end{cases}
+  \end{align*}
+  Заключаваме, че:
+  \[\pair{\M,\omega} \not\in L_u \iff \L(\M') \in \Ss.\]
+  Това означава, че ефективно можем да сведем въпрос за принадлежност в $\bar{L}_u$
+  към въпрос за принадлежност в $L_\Ss$.
+  Следователно, ако $L_\Ss$ е полуразрешим език, то $\bar{L}_u$ е полуразрешим език, което е противоречие.  
+\end{hint}
+
+\begin{cor}
+  Следните езици {\bf не} са полуразрешими:
+  \begin{itemize}
+  \item 
+    $L = \{\pair{\M} \mid \L(\M) \text{ е регулярен} \}$;
+  \item
+    $L = \{\pair{\M} \mid \L(\M) \text{ е безконтекстен} \}$;
+  \item
+    $L = \{\pair{\M} \mid \L(\M) \text{ е разрешим} \}$;
+  \item
+    $L = \{\pair{\M} \mid \abs{\L(\M)} = 42\}$;
+  \end{itemize}
+\end{cor}
 
 
-\section{Въпроси}
+% \section{Проблеми за безконтекстни езици}
 
-Вярно ли е, че следният проблем е {\em разрешим}:
-\begin{itemize}
-\item
-  за произволна безконтекстна граматика $G$, проверява дали $\L(G) = \emptyset$?
-\item
-  за произволна безконтекстна граматика $G$, проверява дали $\L(G) = \Sigma^\star$?
-\item
-  за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) \cap \L(G_2) = \emptyset$?
-\item
-  за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) \cap \L(G_2) = \Sigma^\star$?
-\item
-  за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) = \L(G_2)$?
-\item
-  за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) \subseteq \L(G_2)$?
-\item
-  за произволна безконтекстна граматика $G$ и произволен регулярен израз $r$,
-  проверява дали $\L(G) = \L(r)$?
-\item
-  за произволна безконтекстна граматика $G$ и произволен регулярен израз $r$,
-  проверява дали $\L(G) \subseteq \L(r)$?
-\item
-  за произволна безконтекстна граматика $G$ и произволен регулярен израз $r$,
-  проверява дали $\L(r) \subseteq \L(G)$?
+% \begin{lemma}
+%   Нека е дадена $\M = \TM$.
+%   Тогава езикът 
+%   \[L = \{\alpha\sharp\beta^R \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \vdash_\M \beta\}\]
+%   е безконтекстен.
+% \end{lemma}
+% \begin{proof}
+%   Ще покажем, че съществува стеков автомат $P$, за който $\L_S(P) = L$.
+%   Четем буквата $X$. Тогава:
+%   \begin{itemize}
+%   \item 
+%     ако $\delta_\M(q,X) =(p,Y,R)$, то слагаме $Yp$ на върха на стека;
+%   \item
+%     ако $\delta_\M(q,X) =(p,Y,L)$, то ако $Z$ е върха на стека, заменяме $Z$ с $pZY$;
+%   \end{itemize}
+% \end{proof}
+
+% \begin{lemma}
+%   Нека е дадена $\M = \TM$.
+%   Тогава езикът 
+%   \[L = \{\alpha\sharp\beta^R \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\}\]
+%   е безконтекстен.
+% \end{lemma}
+
+
+% \begin{thm}
+%   Неразрешим е проблемът за проверка дали при дадени две произволни безконтекстни граматики $G_1$ и $G_2$,
+%   $\L(G_1) \cap \L(G_2) = \emptyset$.  
+% \end{thm}
+
+% \begin{thm}
+%   Неразрешим е проблемът за проверка дали при дадена произволна безконтекстна граматика $G$,
+%   $\L(G) = \Sigma^\star$.  
+% \end{thm}
+
+
+% \section{Въпроси}
+
+% Вярно ли е, че следният проблем е {\em разрешим}:
+% \begin{itemize}
+% \item
+%   за произволна безконтекстна граматика $G$, проверява дали $\L(G) = \emptyset$?
+% \item
+%   за произволна безконтекстна граматика $G$, проверява дали $\L(G) = \Sigma^\star$?
+% \item
+%   за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) \cap \L(G_2) = \emptyset$?
+% \item
+%   за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) \cap \L(G_2) = \Sigma^\star$?
+% \item
+%   за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) = \L(G_2)$?
+% \item
+%   за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) \subseteq \L(G_2)$?
+% \item
+%   за произволна безконтекстна граматика $G$ и произволен регулярен израз $r$,
+%   проверява дали $\L(G) = \L(r)$?
+% \item
+%   за произволна безконтекстна граматика $G$ и произволен регулярен израз $r$,
+%   проверява дали $\L(G) \subseteq \L(r)$?
+% \item
+%   за произволна безконтекстна граматика $G$ и произволен регулярен израз $r$,
+%   проверява дали $\L(r) \subseteq \L(G)$?
 % \item
 %   за произволни безконтекстни граматики $G_1$ и $G_2$, проверява дали $\L(G_1) \subseteq \L(G_2)$ 
 %   е безконтекстен език ?
@@ -380,8 +726,134 @@
 %   е безконтекстен език ?
 % \item
 %   за произволна безконтекстна граматика $G$, проверява дали $\L(G)$ е регулярен език?
-\end{itemize}
+% \end{itemize}
 
+\section{Неограничени граматики}
+\index{граматика!неограничена}
+\marginpar{(стр. 220 от \cite{hopcroft1})}
+
+\begin{dfn}
+  \marginpar{На англ. unrestricted grammar}
+  \marginpar{Според йерархията на Чомски, това е граматика от тип 0}
+  Граматиката $G = (V,\Sigma,R,S)$
+  се нарича неограничена граматика, 
+  ако правилата $R$ са от вида $\alpha \to \beta$,
+  където $\alpha,\beta \in (V\cup\Sigma)^\star$.
+\end{dfn}
+
+\begin{lemma}
+  За всеки полуразрешим език $L$, $L = \L(G)$, за някоя неограничена граматика $G$.  
+\end{lemma}
+\begin{proof}
+  Нека $L = \L(\M)$, където $\M = \TM$ е детерминистична машина на Тюринг,
+  като искаме лентата да е безкрайна само отдясно и входната дума $\alpha$ е
+  поставена в началото на лентата.
+  Ще построим граматика $G$, която 
+  $G = \CFG$, където 
+  \[V = ((\Sigma\cup\{\varepsilon\})\times\Gamma) \cup \{A_1,A_2,A_3\}.\]
+  Правилата на $G$ са следните:
+  \begin{enumerate}[1)]
+  \item 
+    $A_1 \to sA_2$;
+  \item
+    $A_2 \to [a,a]A_2$, за всяка $a\in\Sigma$;
+  \item
+    $A_2 \to A_3$;
+  \item
+    $A_3 \to [\varepsilon,\blank]A_3$;
+  \item
+    $A_3 \to \varepsilon$;
+  \item
+    $q[a,X] \to [a,Y]p$, за всяка $a \in \Sigma\cup\{\varepsilon\}$, всяко $q\in Q$, $X,Y \in\Gamma$, 
+    за които $\delta(q,X) = (p,Y,R)$;
+  \item
+    $q[a,X] \to p[a,Y]$, за всяка $a \in \Sigma\cup\{\varepsilon\}$, всяко $q\in Q$, $X,Y \in\Gamma$, 
+    за които $\delta(q,X) = (p,Y,N)$;
+  \item
+    $[b,Z]q[a,X] \to p[b,Z][z,Y]$, за всяко $X,Y,Z \in \Gamma$, $a,b\in\Sigma\cup\{\varepsilon\}$, $q\in Q$,
+    за които $\delta(q,X) = (p,Y,L)$;
+  \item
+    $[a,X]q \to qaq$, $q[a,X] \to qaq$, $q \to \varepsilon$, за всяко $a\in\Sigma\cup\{\varepsilon\}$, $X\in\Gamma$,
+    и $q \in F$.
+  \end{enumerate}
+  
+  Лесно се вижда, че, използвайки правилата 1) и 2), за всяко $n$, имаме
+  \[A_1 \to^\star s[a_1,a_1]\cdots[a_n,a_n]A_2,\]
+  където $a_i \in \Sigma$.
+
+  Нека сега да приемем, че $\M$ приема думата $\alpha = a_1\cdots a_n$.
+  Това означава, че за някое $m$, $\M$ използва не повече от $m$ клетки от лентата отдясно на входната дума.
+  Ясно е, че имаме
+  \[A_1 \to^\star s[a_1,a_1]\cdots[a_n,a_n][\varepsilon,\blank]^m.\]
+  Оттук нататък, можем да използваме само правилата 6), 7), 8), докато не срещнем финално състояние.
+  С индукция по броя на стъпки в $\M$, можем да докаже, че ако е изпълнено
+  $(\varepsilon,s,a_1\cdots a_n) \vdash^\star_\M (X_1\cdots X_{r-1},q,X_r\cdots X_l)$, 
+  то \[s[a_1,a_1]\dots[a_n,a_n][\varepsilon,\blank]^m \rightarrow^\star_G [a_1,X_1]\cdots[a_{r-1},X_{r-1}]q[a_r,X_r]\cdots[a_{n+m},X_{n+m}],\]
+  където $a_1,\dots,a_n \in \Sigma$, $a_{n+1},\dots,a_{n+m} = \varepsilon$, $X_1,\dots,X_{n+m} \in \Gamma$ и
+  $X_{l+1} = X_{l+2} = \dots = X_{n+m} = \blank$.
+  
+  Най-накрая, ако $q \in F$, то можем да използваме правилата от 9) и да докажем, че
+  \[[a_1,X_1]\cdots[a_{t-1},X_{t-1}]q[a_t,X_t]\cdots[a_{n+m},X_{n+m}] \rightarrow^\star_G a_1\cdots a_n.\]
+  
+  Така доказахме, че ако $\alpha \in \L(\M)$, то $\alpha \in \L(G)$, т.е. $\L(\M) \subseteq \L(G)$.
+  За да докажем обратната посока, трябва да направим подобни разсъждения.
+\end{proof}
+
+\begin{lemma}
+  Ако $L = \L(G)$, където $G$ е неограничена граматика, то $L$ е полуразрешим език.
+\end{lemma}
+\marginpar{Доказателствата в \cite{hopcroft1} и \cite{papadimitriou} са различни}
+\begin{proof}
+  $\M$ ще бъде недетерминистична машина с три ленти.
+  \begin{enumerate}[1)]
+  \item
+    Записваме входната дума $\omega$ на първата лента на $\M$.
+    Тя никога не се променя.
+  \item
+    На втората лента ще имаме думата $\gamma \in (V\cup\Sigma)^\star$.
+    В началото $\gamma := S$.
+  \item 
+    Недетерминистично избираме правило $\alpha \to \beta$ от граматиката $G$.
+  \item
+    Недетерминистично избираме $\gamma_0,\gamma_1 \in (V\cup\Sigma)^\star$, за които 
+    $\gamma = \gamma_0\alpha\gamma_1$.
+    Тогава $\gamma := \gamma_0\beta\gamma_1$.
+    Ако няма такива $\gamma_0$ и $\gamma_1$, то $\M$ ,,зацикля'' - текущият опит за извеждане на $\omega$ пропада.
+  \item
+    Сравняваме съдържанието на първите две ленти, т.е. проверяваме дали $\omega = \gamma$.
+    Ако $\omega = \gamma$, то спираме и казваме, че $\M$ разпознава думата $\omega$.
+    Ако $\omega \neq \gamma$, то се връщаме на стъпка 3).
+  \end{enumerate}
+
+  \begin{algorithm}[H]
+  \caption{}
+%  \label{alg:}
+  \begin{algorithmic}[1]
+    \State $\gamma:= S$
+    \ForAll{$\alpha\to\beta \in R$}
+    \If{$(\exists \gamma_0,\gamma_1\in (V\cup\Sigma)^\star)[\gamma = \gamma_0\alpha\gamma_1]$}
+    \State $\gamma := \gamma_0\beta\gamma_1$
+    \Else ...
+    \EndIf
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+\end{proof}
+
+\begin{example}
+  Граматика за $L = \{a^nb^nc^n \mid n\in\Nat\}$.
+\end{example}
+
+
+\section*{Библиография}
+
+\begin{itemize}
+\item 
+\item
+\item
+
+\end{itemize}
 
 %%% Local Variables: 
 %%% mode: latex
