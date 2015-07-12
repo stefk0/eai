@@ -1147,15 +1147,15 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \marginpar{На англ. се нарича \\ Pumping Lemma}
   \marginpar{Има подобна лема и за безконтекстни езици}
   \marginpar{Обърнете внимание, че $0 \in \Nat$ и $xy^0z =  xz$}
-  Нека $L$ да бъде безкраен регулярен език.
-  Съществува число $n\geq 1$, зависещо само от $L$, 
-  за което за всяка дума $\alpha\in L, \abs{\alpha}\geq n$ може да 
+  Нека $L$ да бъде регулярен език.
+  Съществува число $p\geq 1$, зависещо само от $L$, 
+  за което за всяка дума $\alpha\in L, \abs{\alpha}\geq p$ може да 
   бъде записана във вида $\alpha = xyz$ и 
   \begin{enumerate}[1)]
   \item
     $|y|\geq 1$;
   \item
-    $|xy|\leq n$;
+    $|xy|\leq p$;
   \item
     $(\forall i\in\Nat)[xy^iz \in L]$.
   \end{enumerate}
@@ -1163,19 +1163,19 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{proof}
   \marginpar{стр. 88 от \cite{papadimitriou}, стр. 78 от \cite{sipser1}}
   Понеже $L$ е регулярен, той се разпознава от $\A = \FA$.
-  Да положим $n = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq n$.
-  Да разгледаме първите $n$ стъпки от изпълнението на $\alpha$ върху $\A$:
-  \[q_0\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow} \dots \stackrel{a_n}{\rightarrow} q_n.\]
-  Тъй като $\abs{Q} = n$, а по този път участват $n+1$ състояния $q_0,q_1,\dots,q_n$,
-  то съществуват числа $i, j$, за които $0\leq i < j\leq n$ и $q_i = q_j$.
+  Да положим $p = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq p$.
+  Да разгледаме първите $p$ стъпки от изпълнението на $\alpha$ върху $\A$:
+  \[q_0\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow} \dots \stackrel{a_p}{\rightarrow} q_p.\]
+  Тъй като $\abs{Q} = p$, а по този път участват $n+1$ състояния $q_0,q_1,\dots,q_p$,
+  то съществуват числа $i, j$, за които $0\leq i < j\leq p$ и $q_i = q_j$.
   Нека разделим думата $\alpha$ на три части по следния начин:
   \[x = a_1\cdots a_i,\quad y = a_{i+1}\cdots a_j,\quad z = a_{j+1}\cdots a_k.\]
-  Ясно е, че $\abs{y} \geq 1$ и $\abs{xy} = j \leq n$.
+  Ясно е, че $\abs{y} \geq 1$ и $\abs{xy} = j \leq p$.
   \marginpar{\ding{45} Докажете!}
   Освен това, лесно се съобразява, че за всяко $i \in\Nat$,
   $xy^iz \in L$. Да разгледаме само случая за $i = 0$.
   Думата $xy^0z = xz \in L$, защото имаме следното изчисление:
-  \[q_0\stackrel{a_1}{\rightarrow} \cdots \stackrel{a_i}{\rightarrow} q_i\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{n}}{\rightarrow}q_n\in F,\]
+  \[q_0\stackrel{a_1}{\rightarrow} \cdots \stackrel{a_i}{\rightarrow} q_i\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{p}}{\rightarrow}q_p\in F,\]
   защото $q_i = q_j$.
 \end{proof}
 
@@ -1887,9 +1887,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
         
-        \node[initial above, state]   (0) {$Q^0_1$};
-        \node[state]            (1) [right of=0]{$Q^1_1$};
-        \node[state,accepting]  (2) [right of=1]{$Q^2_1$};
+        \node[initial above, state]   (0) {$B_0$};
+        \node[state]            (1) [right of=0]{$B_1$};
+        \node[state,accepting]  (2) [right of=1]{$B_2$};
         
         \path 
         (0) edge [bend left=15] node [above] {$a,b$}   (1)
@@ -1909,7 +1909,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{itemize}
 \item 
   Класовете на еквивалентност на $\equiv_0$ са два.
-  Те са $Q^0_0 = Q\setminus F = \{0,1,2\}$ и $Q^1_0 = F = \{3,4,5\}$.
+  Те са $A_0 = Q\setminus F = \{0,1,2\}$ и $A_1 = F = \{3,4,5\}$.
 \item
   Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv_0$.
   
@@ -1918,17 +1918,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
     \hline
     \hline
-    $\equiv_0$ & $Q^0_0$ & $Q^0_0$ & $Q^0_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+    $\equiv_0$ & $A_0$ & $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
     \hline
-    $a$ & $Q^0_0$& $Q^1_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+    $a$ & $A_0$& $A_1$ & $A_1$ & $A_1$ & $A_1$ & $A_1$\\
     \hline
-    $b$ & $Q^0_0$& $Q^1_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+    $b$ & $A_0$& $A_1$ & $A_1$ & $A_1$ & $A_1$ & $A_1$\\
     \hline
   \end{tabular}
 
   Виждаме, че $0 \not\equiv_1 1$ и $1 \equiv_1 2$.
   Класовете на еквивалентност на $\equiv_1$ са 
-  $Q^0_1 = \{0\}$, $Q^1_1 = \{1,2\}$, $Q^2_1 = \{3,4,5\}$.
+  $B_0 = \{0\}$, $B_1 = \{1,2\}$, $B_2 = \{3,4,5\}$.
 \item
   Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv_1$.
   
@@ -1937,11 +1937,11 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
     \hline
     \hline
-    $\equiv_1$ & $Q^0_1$ & $Q^1_1$ & $Q^1_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+    $\equiv_1$ & $B_0$ & $B_1$ & $B_1$ & $B_2$ & $B_2$ & $B_2$\\
     \hline
-    $a$ & $Q^1_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+    $a$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
     \hline
-    $b$ & $Q^1_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+    $b$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
     \hline
   \end{tabular}
 
@@ -1949,6 +1949,20 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv_1$}
   Следователно, минималният автомат има три състояния.
   Той е изобразен на Фигура \ref{sub:min1}.  
+  Минималният автомат може да се представи и таблично:
+  
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+    % \hline
+    % $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
+    % \hline
+    \hline
+    $\delta$ & $B_0$ & $B_1$ & $B_2$ \\
+    \hline
+    $a$ & $B_1$ & $B_2$ & $B_2$ \\
+    \hline
+    $b$ & $B_1$ & $B_2$ & $B_2$ \\
+    \hline
+  \end{tabular}
 \end{itemize}
 \end{example}
 
@@ -1986,10 +2000,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
         
-        \node[initial above, state]   (0) {$Q^0_2$};
-        \node[state,accepting]  (1) [right of=0]{$Q^1_2$};
-        \node[state]            (2) [right of=1]{$Q^2_2$};
-        \node[state,accepting]  (3) [right of=2]{$Q^3_2$};
+        \node[initial above, state]   (0) {$C_0$};
+        \node[state,accepting]  (1) [right of=0]{$C_1$};
+        \node[state]            (2) [right of=1]{$C_2$};
+        \node[state,accepting]  (3) [right of=2]{$C_3$};
                 
         \path 
         (0) edge [bend left=15] node [above] {$a,b$}   (1)
@@ -2010,7 +2024,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \begin{itemize}
   \item
     Класовете на екиваленост на $\equiv_0$ са 
-    $Q^0_0 = Q\setminus F = \{0,3,4\}$ и $Q^1_0 = F = \{1,2,5\}$.
+    $A_0 = Q\setminus F = \{0,3,4\}$ и $A_1 = F = \{1,2,5\}$.
   \item
     Разбиваме класовете на еквивалентност на $\equiv_0$.
     
@@ -2019,18 +2033,18 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
       \hline
       \hline
-      $\equiv_0$ & $Q^0_0$ & $Q^1_0$ & $Q^1_0$ & $Q^0_0$ & $Q^0_0$ & $Q^1_0$\\
+      $\equiv_0$ & $A_0$ & $A_1$ & $A_1$ & $A_0$ & $A_0$ & $A_1$\\
       \hline
-      $a$ & $Q^1_0$& $Q^0_0$ & $Q^0_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+      $a$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
       \hline
-      $b$ & $Q^1_0$& $Q^0_0$ & $Q^0_0$ & $Q^1_0$ & $Q^1_0$ & $Q^1_0$\\
+      $b$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
       \hline
     \end{tabular}
     
     Виждаме, че $1 \not\equiv_1 5$ и $1 \equiv_0 5$.
     Следователно, $\equiv_0\ \neq\ \equiv_1$.
     Класовете на еквивалентност на $\equiv_1$ са 
-    $Q^0_1 = \{0,3,4\}$, $Q^1_1 = \{1,2\}$, $Q^2_1 = \{5\}$.
+    $B_0 = \{0,3,4\}$, $B_1 = \{1,2\}$, $B_2 = \{5\}$.
   \item
     Сега се опитваме да разбием класовете на еквивалентност на $\equiv_1$.
 
@@ -2039,17 +2053,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
       \hline
       \hline
-      $\equiv_1$ & $Q^0_1$ & $Q^1_1$ & $Q^1_1$ & $Q^0_1$ & $Q^0_1$ & $Q^2_1$\\
+      $\equiv_1$ & $B_0$ & $B_1$ & $B_1$ & $B_0$ & $B_0$ & $B_2$\\
       \hline
-      $a$ & $Q^1_1$ & $Q^0_1$ & $Q^0_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+      $a$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
       \hline
-      $b$ & $Q^1_1$ & $Q^0_1$ & $Q^0_1$ & $Q^2_1$ & $Q^2_1$ & $Q^2_1$\\
+      $b$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
       \hline
     \end{tabular}
     
     Имаме, че $0 \equiv_1 3$, но $0 \not\equiv_2 3$. Следователно $\equiv_1\ \neq\ \equiv_2$.
     Класовете на еквивалентност на $\equiv_2$ са 
-    $Q^0_2 = \{0\}$, $Q^1_2 = \{1,2\}$, $Q^2_2 = \{3,4\}$, $Q^3_2 = \{5\}$.
+    $C_0 = \{0\}$, $C_1 = \{1,2\}$, $C_2 = \{3,4\}$, $C_3 = \{5\}$.
   \item
     Отново, опитваме да разбием класовете на $\equiv_2$.
 
@@ -2058,21 +2072,34 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
         \hline
         \hline
-        $\equiv_2$ & $Q^0_2$ & $Q^1_2$ & $Q^1_2$ & $Q^2_2$ & $Q^2_2$ & $Q^3_2$\\
+        $\equiv_2$ & $C_0$ & $C_1$ & $C_1$ & $C_2$ & $C_2$ & $C_3$\\
         \hline
-        $a$ & $Q^1_2$ & $Q^2_2$ & $Q^2_2$ & $Q^3_2$ & $Q^3_2$ & $Q^3_2$\\
+        $a$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
         \hline
-        $b$ & $Q^1_2$ & $Q^2_2$ & $Q^2_2$ & $Q^3_2$ & $Q^3_2$ & $Q^3_2$\\
+        $b$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
         \hline
       \end{tabular}
       
-      Виждаме, че не можем да разбием $Q^1_2$ или $Q^2_2$.
+      Виждаме, че не можем да разбием $C_1$ или $C_2$.
       \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv_2$}
       Следователно, $\equiv_2\ =\ \equiv_3$ и минималният автомат разпознаващ езика $L$
       има четири състояния. Вижте Фигура \ref{sub:min2} за преходите на минималния автомат.
+      Минималният автомат може да се представи и таблично:
+
+      \begin{tabular}{|c|c|c|c|c|}
+        \hline
+        $\delta$ & $C_0$ & $C_1$ & $C_2$ & $C_3$ \\
+        \hline
+        $a$ & $C_1$ & $C_2$ & $C_3$ & $C_3$ \\
+        \hline
+        $b$ & $C_1$ & $C_2$ & $C_3$ & $C_3$ \\
+        \hline
+      \end{tabular}
+      
   \end{itemize}
 \end{example}
 
+\section{Автоматни граматики}
 
 \section*{Библиография}
 
