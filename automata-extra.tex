@@ -1,6 +1,19 @@
 \section{Допълнителни задачи}
 
 \begin{problem}
+  Докажете, че следните езици са регулярни:
+  \begin{enumerate}[a)]
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} \leq 2 \text{ за всяка представка $\omega$ на $\alpha$}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} > 2 \text{ за някоя представка $\omega$ на $\alpha$}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} > 2 \text{ за някоя наставка $\omega$ на $\alpha$}\}$.
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}
   Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
   \begin{enumerate}[a)]
   \item
@@ -172,14 +185,19 @@
     $\mbox{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \beta \in \Sigma^\star)[\alpha\beta \in L]\}$;
   \item
     $\mbox{Suf}(L) = \{\beta \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\alpha\beta \in L]\}$;
-  \item 
-    $\mbox{Half}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$;
   \item
+    $\text{Infix}(L) = \{\alpha \mid (\exists \beta,\gamma)[\beta\alpha\gamma \in L]\}$;
+  \item 
+    $\frac{1}{2}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$;
+  \item
+  %   $\frac{1}{3}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha,\beta \in \Sigma^\star)[\omega\alpha\beta \in L\ \&\ \abs{\omega} = \abs{\alpha} = \abs{\beta}]\}$;
+  % \item
     $L/L' = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L]\}$;
   \item
     $\mbox{Max}(L) = \{\alpha \in \Sigma^\star \mid (\forall \beta\in\Sigma^\star)[\beta \neq \varepsilon\implies \alpha\beta \not\in L]\}$.
   \end{enumerate}
   За всички тези езици, докажете, че са регулярни при условие, че $L$ и $L'$ са регулярни.
+  \marginpar{Тази конструкция няма да бъде ефективна}
   Освен това, докажете, че $L/L'$ е регулярен и при условието, че $L$ е регулярен, но $L'$ е произволен език.
 \end{problem}
 \begin{hint}
@@ -187,9 +205,31 @@
   \item 
     Индукция по дефиницията на регулярен израз.
   \item[в)]
+    Най-лесно е да се построи автомат за $\text{Infix}(L)$ като се използва автомата за $L$.
+  \item[г)]
     Конструкция с автомат за $L$ и автомат за $L^R$.
   \end{enumerate}
 \end{hint}
+
+\begin{problem}
+  За даден език $L$ над азбуката $\Sigma$, да разгледаме езиците:
+  \begin{enumerate}[a)]
+  \item
+    $L' = \{\alpha \mid (\exists \beta\in\Sigma^\star)[\abs{\alpha} = 2\abs{\beta}\ \&\ \alpha\beta \in L]\}$;
+  \item 
+    $L'' = \{\alpha \mid (\exists \beta\in\Sigma^\star)[2\abs{\alpha} = \abs{\beta}\ \&\ \alpha\beta \in L]\}$;
+  \item 
+    $\frac{1}{3}(L) = \{\alpha \mid (\exists \beta,\gamma)[\abs{\alpha} = \abs{\beta} = \abs{\gamma}\ \&\ \alpha\beta\gamma \in L]\}$;
+  \item
+    $\frac{2}{3}(L) = \{\beta \mid (\exists \beta,\gamma)[\abs{\alpha} = \abs{\beta} = \abs{\gamma}\ \&\ \alpha\beta\gamma \in L]\}$;
+  \item
+    $\frac{3}{3}(L) = \{\gamma \mid (\exists \beta,\gamma)[\abs{\alpha} = \abs{\beta} = \abs{\gamma}\ \&\ \alpha\beta\gamma \in L]\}$;
+  \item
+    $\sqrt{L} = \{\alpha \mid (\exists \beta)[\abs{\beta} = \abs{\alpha}^2\ \&\ \alpha\beta \in L]\}$.
+  \end{enumerate}
+  Проверете ако $L$ е регулярен, то кои от горните езици също са регулярни.
+\end{problem}
+
 
 \begin{problem}
   \marginpar{(\cite{sipser1}, стр. 90)}
