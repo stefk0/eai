@@ -1,6 +1,21 @@
 \section{Допълнителни задачи}
 
 \begin{problem}
+  Докажете, че следните езици са безконтекстни:
+  \begin{enumerate}[a)]
+  \item 
+    $L = \{\omega_1\sharp\omega_2 \mid \omega_1,\omega_2 \in \{a,b\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
+  \item
+    $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ \omega_1,\omega_2,\dots,\omega_n \in \{a,b\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
+  \item
+    $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ \omega_1,\dots,\omega_n \in \{a,b\}^\star\ \&\ (\exists i \neq j)[\abs{\omega_i} = \abs{\omega_j}]\}$;
+  \item
+    $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ (\forall i\in[1,n])[\omega_i \in \{a,b\}^\star\ \&\ \abs{\omega_i} = \abs{\omega_{n+1-i}}]\}$.
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}
   Проверете дали следните езици са безконтекстни:
   \begin{enumerate}[a)]
   \item
@@ -144,12 +159,31 @@
 %  \marginpar{\cite{papadimitriou} стр. 149}
   Да фиксираме азбуката $\Sigma$.
   Нека $L$ е безконтекстен език, а $R$ е регулярен език.
-  Докажете, че езика
-  $M = \{\omega \in \Sigma^\star \mid (\exists u \in R)[\omega u \in L]\}$
+  Докажете, че езикът
+  $L/R = \{\omega \in \Sigma^\star \mid (\exists u \in R)[\omega u \in L]\}$
   е безконтекстен.
 \end{problem}
 
 
+\begin{problem}
+  Нека е дадена граматиката $G = \pair{\{a,b\}, \{S,A,B,C\},S,R}$.
+  Използвайте CYK-алгоритъма, за да проверите дали
+  думата $\alpha$ принадлежи на $\L(G)$, където правилата на граматиката $R$ и думата $\alpha$
+  са зададени като:
+  \begin{enumerate}[a)]
+  \item
+    $R = \{S\rightarrow BA| CA|a, C\rightarrow BS|SA,A\rightarrow a, B\rightarrow b\}$, $\alpha=bbaaa$;
+  \item
+    $R =\{S\rightarrow AB|BC, A\rightarrow BA|a,B\rightarrow CC|b, C\rightarrow AB|a\}$, $\alpha=baaba$;
+  \item
+    $R = \{S\rightarrow AB, A\rightarrow AC|a|b,B\rightarrow CB|a, C\rightarrow a\}$, $\alpha=babaa$;
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Постройте стеков автомат за езика 
+  \[L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid \sum^n_{i=1}\abs{\omega_{2i}} = \sum^{n}_{i=1}\abs{\omega_{2i-1}}\}.\]
+\end{problem}
 
 
 %%% Local Variables: 
