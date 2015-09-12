@@ -1,4 +1,4 @@
-\chapter{Езици и автомати}
+\chapter{Регулярни езици и автомати}
 
 \section{Автоматни езици}
 
@@ -215,17 +215,15 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $L = \{w \in \{a,b\}^\star \mid \abs{w} \equiv 0 \bmod 3\}$;
   \item
     \marginpar{$N_a(w)$ - броят на срещанията на буквата $a$ в думата $w$}
-    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 3\}$;
+    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 1 \bmod 3\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid N_b(w) \equiv 1 \bmod 2\}$;
-  \item
-    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 3\ \&\ N_b(w) \equiv 1 \bmod 2\}$;
-  % \item
-  %   $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 0 \bmod 2\ \&\ N_b(w) \equiv 1 \bmod 2\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 3\ \&\ N_b(\omega) \equiv 1 \bmod 2\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 2\ \vee\ \omega\mbox{ съдържа точно две }b\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа равен брой срещания на }ab\text{ и на }ba\}$.
+  \item
+    $L = \{\omega_1 \sharp \omega_2 \sharp \omega_3 \mid \forall i \in [1,3](\omega_i \in \{a,b\}^\star\ \&\ |\omega_i| \geq i+1)\}$;
   \end{enumerate}
 \end{problem}
   
@@ -719,6 +717,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \index{автомат!недетерминиран}
 \begin{dfn}
   \marginpar{Въведени от Рабин и Скот \cite{rabin-scott}}
+  \marginpar{За яснота, често ще означаваме с $\N$ недетерминирани автомати, а с $\A$ детерминирани автомати}
   Недетерминиран краен автомат представлява
   \[\N = \NFA,\]
   \begin{itemize}
@@ -1123,7 +1122,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   конструкцията за обединение на автомата за езика $\L(\N_1)^+$ с автомата за езика $\{\varepsilon\}$.
   Защо трябва да добавим ново начално състояние $s$?
   Да допуснем, че вместо това сме направили $s_1$ финално.
-  Тогава има опасност да разпознаем повече думи. Например, думата $abb$ би се разпонала от този автомат,
+  Тогава има опасност да разпознаем повече думи. Например, думата $abb$ би се разпознала от този автомат,
   но $abb \not\in\L(\N_1)^\star$.
   
 \end{example}
@@ -1180,31 +1179,60 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{proof}
 
 
-При фиксиран език $L$, условието на \Lem{pumping-reg} може формално да се запише така:
-{\scriptsize
-\[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
-Отрицанието на горната формула може да се запише по следния начин:
-{\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]],\]}
-което е еквивалентно на:
-{\scriptsize
-\[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+% При фиксиран език $L$, условието на \Lem{pumping-reg} може формално да се запише така:
+% {\scriptsize
+% \[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
+% Отрицанието на горната формула може да се запише по следния начин:
+% {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]],\]}
+% което е еквивалентно на:
+% {\scriptsize
+%   % \begin{equation}
+%   %   \label{pump-neg}
+%   \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+% % \end{equation}
 
-\begin{framed}
-  \Lem{pumping-reg} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е регулярен.
-  За да постигнем това, ние доказваме {\bf отрицанието} на условията от \Lem{pumping-reg} за $L$, т.е.
-  за всяка константа $p \geq 1$, намираме дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
+% Това означава, че условието на \Lem{pumping-reg} може да се запише така:\\
+% Ако условието \ref{pump-neg} е изпълнено, то $L$ не е регулярен.
+
+% \begin{framed}
+%   \Lem{pumping-reg} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е регулярен.
+%   За да постигнем това, ние доказваме {\bf отрицанието} на условията от \Lem{pumping-reg} за $L$, т.е.
+%   за всяка константа $p \geq 1$, намираме дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
+%   със свойствата $\abs{y} \geq 1$ и $\abs{xy} \leq p$, е изпълнено, че $(\exists i)[xy^iz \not\in L]$.
+% \end{framed}
+
+Практически е по-полезно да разглеждаме следната еквивалентна формулировка на лемата за покачването.
+\marginpar{Контрапозиция на твърдението $p \to q$ е твърдението $\neg q \to \neg p$}
+\begin{cor}[Контрапозиция на лемата за покачването]
+  \label{cor:pumping-reg}
+  \marginpar{Ясно е, че всеки краен език е регулярен. Нали?}
+  Нека $L$ е произволен {\bf безкраен} език. Нека също така е изпълнено, че за всяко естествено число $p \geq 1$ можем да намерим дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
   със свойствата $\abs{y} \geq 1$ и $\abs{xy} \leq p$, е изпълнено, че $(\exists i)[xy^iz \not\in L]$.
-\end{framed}
+  Тогава $L$ {\bf не} е регулярен език.
+\end{cor}
+\begin{proof}
+  \Lem{pumping-reg} гласи, че ако $L$ е регулярен език, то
+  {\scriptsize
+    \[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
+  Отрицанието на горното твърдение гласи, че ако 
+  {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]],\]}
+  то $L$ {\bf не} е регулярен език.
+  Горната формула е еквивалентна на:
+  {\scriptsize
+    % \begin{equation}
+    %   \label{pump-neg}
+    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+\end{proof}
 
 
 \begin{example}
-  Езикът $L = \{a^nb^n \mid n\in \Nat\}$ {\bf не} е регулярен.
+  Езикът $L = \{a^nb^n \mid n\in \Nat\}$ {\bf не} ерегулярен.
 \end{example}
 \begin{proof}
   \marginpar{Това е важен пример. По-късно ще видим, че този език е безконтекстен}
-  Да допуснем, че $L$ е регулярен.
-  Ще достигнем до противоречие като докажем отрицанието на условието на \Lem{pumping-reg},
-  т.е. ще докажем, че
+  % Да допуснем, че $L$ е регулярен.
+  % Ще достигнем до противоречие като докажем отрицанието на условието на \Lem{pumping-reg},
+  Ще докажем, че
   {\scriptsize
     \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
   Доказателството следва стъпките:
@@ -1212,8 +1240,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item 
     Разглеждаме произволно число $p \geq 1$ (нямаме власт над избора на $p$).
   \item
-    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквото $\alpha$
-    си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
+    \marginpar{Няма общо правило, което да ни казва как избираме думата $\alpha$. Нормално е пробаваме с няколко думи $\alpha$, докато намерим такава, която върши работа}
+    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
+    си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
+    \marginpar{Обърнете внимание, че думата $\alpha$ зависи от константата $p$}
     Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$.
     Очевидно е, че $\abs{\alpha} \geq p$.
   \item
@@ -1225,23 +1255,24 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
     Ясно е, че $xz \not\in L$, защото $p-k < p$.
   \end{itemize}  
-  Доказахме, че ако $L$ е регулярен език, то свойствата от \Lem{pumping-reg} не са изпълнени. Следователно, езикът $L$
-  не е регулярен.  
+  % Доказахме, че ако $L$ е регулярен език, то свойствата от \Lem{pumping-reg} не са изпълнени. Следователно, езикът $L$
+  % не е регулярен.  
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
 \begin{example}
   Езикът $L = \{a^mb^n \mid m,n\in \Nat\ \&\ m < n\}$ {\bf не} е регулярен.
 \end{example}
 \begin{proof}
-  Да допуснем, че $L$ е регулярен.
-  Следваме същата процедура както в предишния пример.
+  % Да допуснем, че $L$ е регулярен.
+  % Следваме същата процедура както в предишния пример.
   Доказателството следва стъпките:
   \begin{itemize}
   \item 
     Разглеждаме произволно число $p \geq 1$.
   \item
-    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Можем да изберем каквото $\alpha$
-    си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
+    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
+    си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
     Щом имаме тази свобода, нека да изберем думата $\alpha = a^{p}b^{p+1} \in L$. Очевидно е, че $\abs{\alpha} \geq p$.
   \item
     Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
@@ -1252,20 +1283,21 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Тогава ако вземем $i = 2$, получаваме 
     \[xy^2z = a^{p-k}a^{2k}b^{p+1} = a^{p+k}b^{p+1}.\]
     Ясно е, че $xy^2z \not\in L$, защото $p+k \geq p+1$.
-  \end{itemize}  
+  \end{itemize}
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
 \begin{example}
   Езикът $L = \{a^n\ \mid\ n\mbox{ е просто число}\}$ не е регулярен.
 \end{example}
 \begin{proof}
-  Да допуснем, че $L$ е регулярен език. Ще достигнем до противоречие като докажем отрицанието на условието на \Lem{pumping-reg},
-  т.е. ще докажем, че
-  % {\scriptsize
-  \begin{align*}
-    (\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[ & (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow\\
-    & (\exists i\in\Nat)[xy^iz \not\in L]].
-  \end{align*}
+  % Да допуснем, че $L$ е регулярен език. Ще достигнем до противоречие като докажем отрицанието на условието на \Lem{pumping-reg},
+  % т.е. ще докажем, че
+  % % {\scriptsize
+  % \begin{align*}
+  %   (\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[ & (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow\\
+  %   & (\exists i\in\Nat)[xy^iz \not\in L]].
+  % \end{align*}
   % }
   Доказателството следва стъпките:
   \begin{itemize}
@@ -1274,8 +1306,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     Избираме дума $w \in L$, за която $\abs{w} \geq p$. Можем да изберем каквото $w$ 
     си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
-    Щом имаме тази власт, нека да изберем думата $w \in L$, такава че $\abs{w} > p+1$.
-    Знаем, че такава дума съществува, защото $L$ е безкраен език. По-долу ще видим защото този избор е важен за нашите разсъждения.
+    Нека да изберем думата $w \in L$, такава че $\abs{w} > p+1$.
+    Знаем, че такава дума съществува, защото $L$ е безкраен език. По-долу ще видим защо този избор е важен за нашите разсъждения.
   \item
     Разглеждаме произволно разбиване на $w$ на три части, $w = xyz$,
     за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
@@ -1288,21 +1320,21 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \[\abs{xy^iz} = \abs{xz} + i.\abs{y} = \abs{xz} + \abs{xz}.\abs{y} = (1 + \abs{y})\abs{xz}\] е съставно число, следователно 
     $xy^iz \not\in L$.
   \end{itemize}
-  Доказахме, че ако $L$ е регулярен език, то свойството за покачване от \Lem{pumping-reg} не е изпълнено. Следователно, езикът $L$
-  не е регулярен.  
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
 \begin{problem}
   Докажете, че езикът $L = \{a^{n^2}\ \mid\ n\in\Nat\}$ не е регулярен.  
 \end{problem}
 \begin{proof}
-  Да допуснем, че $L$ е регулярен. Отново ще докажем отрицанието на свойството за покачване от \Lem{pumping-reg}.
-  Доказателството има стъпките:
+  % Да допуснем, че $L$ е регулярен. Отново ще докажем отрицанието на свойството за покачване от \Lem{pumping-reg}.
+  Доказателството следва стъпките:
   \begin{itemize}
   \item 
     Разглеждаме произволно число $p \geq 1$.
   \item
-    Избираме дума $w = a^{p^2}$.
+    Избираме достатъчно дълга дума, която принадлежи на езика $L$.
+    Например, нека $w = a^{p^2}$.
   \item
     Разглеждаме произволно разбиване на $w$ на три части, $w = xyz$, 
     като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
@@ -1315,17 +1347,19 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     откъдето следва, че $\abs{xy^2z}$ не е точен квадрат.
     Следователно, $xy^2z \not\in L$.
   \end{itemize}
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.  
 \end{proof}
 
 \begin{problem}
   Докажете, че езикът $L = \{a^{n!}\ \mid\ n\in\Nat\}$ не е регулярен.  
 \end{problem}
 \begin{proof}
-    \begin{itemize}
+  Доказателството следва стъпките:
+  \begin{itemize}
   \item 
     Разглеждаме произволно число $p \geq 1$.
   \item
-    Избираме достатъчно дълга дума. Например, нека $\omega = a^{(p+2)!}$.
+    Избираме достатъчно дълга дума, която принадлежи на езика $L$. Например, нека $\omega = a^{(p+2)!}$.
   \item
     Разглеждаме произволно разбиване на $\omega$ на три части, $\omega = xyz$, 
     като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
@@ -1339,6 +1373,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \[\abs{y} = \abs{xyz} - \abs{xz} = (p+2)! - k! \geq (p+2)! - (p+1)! = (p+1).(p+1)! > p.\]
     Достигнахме до противоречие.
   \end{itemize}
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.  
 \end{proof}
 
 
@@ -1401,7 +1436,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{cor}
 
 
-\subsection*{Примери, когато лемата не е  приложима}
+\subsection*{Примери, за които лемата не е  приложима}
 
 \begin{problem}
   \marginpar{Например, $c^+\{a^nb^n\mid n\in\Nat\}\cup (a\vert b)^\star$}
@@ -1450,7 +1485,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 \end{proof}
 
-\newpage
 \section{Минимизация на ДКА}
 
 %\marginpar{\href{http://en.wikipedia.org/wiki/DFA_minimization}{Уикипедия}}
@@ -1498,7 +1532,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \begin{thm}
   \label{th:rel-finer}
-  Нека е даден ДКА $\A = \FA$ и $\L(\A)$ е езика, разпознаван от $\A$. Тогава е изпълнено
+  За всеки ДКА $\A = \FA$ е изпълнено:
   \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{\L(\A)}\beta].\]
   С други думи, 
   $[\alpha]_\A \subseteq [\alpha]_{\L(\A)}$, за всяка дума $\alpha \in \Sigma^\star$.
@@ -2065,7 +2099,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Класовете на еквивалентност на $\equiv_2$ са 
     $C_0 = \{0\}$, $C_1 = \{1,2\}$, $C_2 = \{3,4\}$, $C_3 = \{5\}$.
   \item
-    Отново, опитваме да разбием класовете на $\equiv_2$.
+    Отново опитваме да разбием класовете на $\equiv_2$.
 
       \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
@@ -2099,7 +2133,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 \end{example}
 
-\section{Автоматни граматики}
+\section{Регулярни граматики}
 
 \section*{Библиография}
 
