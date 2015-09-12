@@ -309,17 +309,6 @@
   Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
 
-\begin{problem}
-  Докажете, че следните езици са безконтекстни:
-  \begin{enumerate}[a)]
-  \item 
-    $L_1 = \{\omega_1a\omega_2 \mid \omega_1,\omega_2 \in \{b,c\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
-  \item
-    $L_2 = \{\omega_1a\omega_2a\cdots a\omega_n \mid n\geq 2\ \&\ \omega_1,\omega_2,\dots,\omega_n \in \{b,c\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
-  \item
-    $L_3 = \{\omega_1a\omega_2a\cdots a\omega_n \mid n\geq 2\ \&\ \omega_1,\dots,\omega_n \in \{b,c\}^\star\ \&\ (\exists i, j)[i \neq j\ \&\ \abs{\omega_i} = \abs{\omega_j}]\}$.
-  \end{enumerate}
-\end{problem}
 
 
 \section{Езици, които не са безконтекстни}
@@ -377,6 +366,15 @@
 \end{proof}
 
 \begin{cor}
+  \label{cor:pumping-context-free}
+  \marginpar{Ако $L$ е краен език, то е ясно, че $L$ е безконтекстен.}
+  Нека $L$ е произволен {\bf безкраен} език. Нека също така е изпълнено, че за всяко естествено число $p \geq 1$ можем да намерим дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на пет части, $\alpha = xyuvw$,
+  със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$, е изпълнено, че $(\exists i)[xy^iuv^iw \not\in L]$.
+  \marginpar{\writedown Докажете! Аналогично е на \Cor{pumping-reg}}
+  Тогава $L$ {\bf не} е безконтекстен език.
+\end{cor}
+
+\begin{cor}
   \marginpar{\writedown Докажете!}
   Нека $G$ е безконтекстна граматика и $p$ е константата на покачването за $G$, $L = \L(G)$.
   Тогава $\abs{L} = \infty$ точно тогава, когато съществува $\alpha \in L$, за която $p \leq \abs{\alpha} < 2p$.
@@ -394,12 +392,13 @@
 %   Получихме, че думата $xuw\in L$ и $\abs{xuw} \geq p$. Това е противоречие с минималността на $\alpha$.
 % \end{proof}
 
-\begin{framed}
-  \Lem{pumping-context} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е безконтекстен.
-  За целта, доказваме отрицанието на \Lem{pumping-context} за $L$, т.е.
-  за всяка константа $p$, ние намираме дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на пет части, $\alpha = xyuvw$,
-  със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$, е изпълнено, че $(\exists i)[xy^iuv^iw \not\in L]$.
-\end{framed}
+% \begin{framed}
+%   \Lem{pumping-context} е полезна, когато искаме да докажем, че даден език $L$ {\bf не} е безконтекстен.
+%   За целта, доказваме отрицанието на свойствата от \Lem{pumping-context} за $L$, т.е.
+%   за всяка константа $p$, ние намираме дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на пет части, $\alpha = xyuvw$,
+%   със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$, е изпълнено, че $(\exists i)[xy^iuv^iw \not\in L]$.
+% \end{framed}
+
 
 \begin{example}
   \label{example:anbncn}
@@ -432,7 +431,7 @@
     Оказа се, че във всички възможни случаи за $y$ и $v$, 
     $xy^2uv^2w \not\in L$.
   \end{itemize}
-  Следователно, езикът $L$ не е безконтекстен.
+  Така от \Cor{pumping-context-free} следва, че езикът $L$ не е безконтекстен.
 \end{proof}
 
 % \begin{problem}
@@ -441,7 +440,7 @@
 % \end{problem}
 
 \begin{example}
-  Приложете лемата за разрастването за да докажете, че
+  Приложете лемата за покачването за да докажете, че
   езикът $L$ не е безконтекстен, където:
   \begin{enumerate}[a)]
   \item
@@ -592,7 +591,7 @@
   без безполезни правила.
 \end{thm}
 \begin{proof}
-  \marginpar{Защо е важен реда на прилагане?}
+  \marginpar{Защо е важна последователността на прилагане?}
   Нека е дадена безконтекстна граматика $G$ пораждаща $L$.
   Прилагаме върху $G$ първо процедурата от \Lem{useless1} и след това върху резултата прилагаме процедурата от \Lem{useless2}.
 \end{proof}
@@ -966,9 +965,9 @@
   \item
     $\Sigma = \{a,b\}$;
   \item
-    $\Gamma = \{\#,A\}$;
+    $\Gamma = \{\#,A\}$, където символът $\#$ служи за дъно на стека, а броят на $A$-тата в стека ще показват колко букви $a$ сме прочели от думата;
   \item
-    $F = \emptyset$;
+    $F = \emptyset$, защото разпознаваме с празен стек, а не с финално състояние;
   \item 
     $\Delta(q,a,\#) = \{(q, A\#)\}$;
   \item 
@@ -1295,6 +1294,8 @@
   Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от Пример \ref{example:anbncn}, че {\em не} е безконтекстен.
   Достигнахме до противоречие. Следователно, $L$ не е безконтекстни език.
 \end{proof}
+
+
 
 \section*{Библиография}
 
