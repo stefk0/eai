@@ -22,6 +22,8 @@
 
 %\usepackage{ucs}
 
+% \usepackage{natbib}
+% \usepackage{bibentry}
 
 \usepackage[english,bulgarian]{babel}
 \usepackage[utf8]{inputenc}
@@ -66,7 +68,7 @@ citecolor=green, urlcolor=blue]{hyperref}
 \newtheorem{example}{Пример}
 \newtheorem{question}{Въпрос}
 \newtheorem*{remark}{Забележка}
-\renewenvironment{proof}{\noindent{\bf Док.}\hspace*{1em}}{\qed\par}
+\renewenvironment{proof}{\noindent{\bf Доказателство.}\hspace*{1em}}{\qed\par}
 \newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par}
 \newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par}
 
@@ -103,6 +105,7 @@ citecolor=green, urlcolor=blue]{hyperref}
 \newcommand{\ov}[1]{\overline{#1}}
 \newcommand{\abs}[1]{\lvert{#1}\rvert}
 \newcommand{\pair}[1]{\langle{#1}\rangle}
+\newcommand{\writedown}{\ding{45}\ }
 
 \newcommand{\FA}{\langle{Q,\Sigma,s,\delta,F}\rangle}
 \newcommand{\FAn}[1]{\langle{Q_#1,\Sigma,s_#1,\delta_#1,F_#1}\rangle}
@@ -114,6 +117,8 @@ citecolor=green, urlcolor=blue]{hyperref}
 \newcommand{\TM}{\langle{Q,\Sigma,\Gamma,\delta,s,\blank,F}\rangle}
 
 \renewcommand{\iff}{\ \leftrightarrow\ }
+\newcommand{\df}{\stackrel{\text{деф}}{=}}
+
 
 \newcommand{\Th}[1]{{\em Теорема~\ref{th:#1}}}
 \newcommand{\Lem}[1]{{\em Лема~\ref{lem:#1}}}
@@ -126,6 +131,7 @@ citecolor=green, urlcolor=blue]{hyperref}
 
 \title{Езици, автомати, изчислимост}
 \author{Стефан Вътев\thanks{ел. поща: \href{mailto:stefanv@fmi.uni-sofia.bg}{stefanv@fmi.uni-sofia.bg}}}
+%, \LaTeX\ файловете са \href{https://github.com/stefk0/EAI}{тук}}}
 %, Факултет по математика и информатика, Софийски университет ,,Св. Климент Охридски''}}
 
 \makeindex
@@ -142,6 +148,8 @@ citecolor=green, urlcolor=blue]{hyperref}
 \include{automata-extra}
 
 \include{context-free}
+
+\include{context-free-extra}
 
 \include{turing}
 
