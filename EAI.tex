@@ -59,17 +59,17 @@ citecolor=green, urlcolor=blue]{hyperref}
 \usepackage{subcaption}
 
 \theoremstyle{definition}
-\newtheorem{thm}{Теорема}
-\newtheorem{crl}{Следствие}
-\newtheorem{cor}{Следствие}
-\newtheorem{lemma}{Лема}
-\newtheorem{prop}{Твърдение}
-\newtheorem{dfn}{Определение}
-\newtheorem{problem}{Задача}
-\newtheorem{example}{Пример}
-\newtheorem{question}{Въпрос}
+\newtheorem{thm}{Теорема}[chapter]
+\newtheorem{crl}{Следствие}[chapter]
+\newtheorem{cor}{Следствие}[chapter]
+\newtheorem{lemma}{Лема}[chapter]
+\newtheorem{prop}{Твърдение}[chapter]
+\newtheorem{dfn}{Определение}[chapter]
+\newtheorem{problem}{Задача}[chapter]
+\newtheorem{example}{Пример}[chapter]
+\newtheorem{question}{Въпрос}[chapter]
 \newtheorem*{remark}{Забележка}
-\renewenvironment{proof}{\noindent{\bf Доказателство.}\hspace*{1em}}{\qed\par}
+\renewenvironment{proof}{\noindent{\bf Док.}\hspace*{1em}}{\qed\par}
 \newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par}
 \newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par}
 
@@ -119,6 +119,7 @@ citecolor=green, urlcolor=blue]{hyperref}
 
 \renewcommand{\iff}{\ \leftrightarrow\ }
 \newcommand{\df}{\stackrel{\text{деф}}{=}}
+\newcommand{\dff}{\stackrel{\text{деф}}{\iff}}
 
 
 \newcommand{\Th}[1]{{\em Теорема~\ref{th:#1}}}
@@ -152,7 +153,7 @@ citecolor=green, urlcolor=blue]{hyperref}
 
 \include{context-free-extra}
 
-\include{turing}
+% \include{turing}
 
 
 \bibliographystyle{amsalpha}
