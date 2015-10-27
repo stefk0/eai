@@ -2,6 +2,7 @@
 
 \begin{problem}
   Докажете, че следните езици са регулярни:
+  \marginpar{Озн. $N_a(\omega)$ - броят на срещанията на буквата $a$ в думата $\omega$}
   \begin{enumerate}[a)]
   \item
     $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} \leq 2 \text{ за всяка представка $\omega$ на $\alpha$}\}$;
@@ -35,7 +36,7 @@
   \item
     $L = \{a^{n.m}\mid n,m\mbox{ са прости числа}\}$;
   \item
-    \marginpar{$N_x(\omega)$ - брой срещания на буквата $x$ в думата $\omega$}
+    % \marginpar{$N_x(\omega)$ - брой срещания на буквата $x$ в думата $\omega$}
     $L = \{\omega\in\{a,b\}^\star \mid N_a(\omega) = N_b(\omega)\}$;
   \item
     \marginpar{$\alpha = a^pba^pb$}
@@ -57,7 +58,7 @@
   \item
     $L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}$;
   \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{n_a(\alpha) - n_b(\alpha)} \leq 2\}$;
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\alpha) - N_b(\alpha)} \leq 2\}$;
   \item
     $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \alpha\beta\alpha\ \&\ \abs{\beta} \leq \abs{\alpha}\}$;
   \item
@@ -87,7 +88,6 @@
 \end{hint}
 
 \begin{problem}
-  \marginpar{от Владислав}
   Нека $\Sigma = \{a,b,c,d\}$.
   Да се докаже, че езика 
   \[L = \{a_1a_2\cdots a_{2n} \in \Sigma^\star \mid (\forall j \in [1,n])[a_{2j-1} = a_{2j}]\ \&\ d\text{ се среща $\leq 3$ пъти}\}\]
@@ -96,7 +96,7 @@
 
 \begin{problem}
   Нека $L_1$ и $L_2$ са регулярни езици. Докажете, че $L$ също е регулярен език, където
-  \[L = \{\alpha \mid (\exists \beta,\gamma)[\beta\alpha\gamma \in L_1]\ \&\ \alpha \in L_2 \vee \alpha^R \in L_2\}.\]
+  \[L = \{\alpha \mid (\exists \beta,\gamma)[\beta\alpha\gamma \in L_1]\ \&\ (\alpha \in L_2 \vee \alpha^R \in L_2)\}.\]
 \end{problem}
 
 \begin{dfn}
@@ -227,7 +227,7 @@
   \item
     $\sqrt{L} = \{\alpha \mid (\exists \beta)[\abs{\beta} = \abs{\alpha}^2\ \&\ \alpha\beta \in L]\}$.
   \end{enumerate}
-  Проверете ако $L$ е регулярен, то кои от горните езици също са регулярни.
+  Проверете, ако $L$ е регулярен, то кои от горните езици също са регулярни.
 \end{problem}
 
 
@@ -256,16 +256,16 @@
   \marginpar{(\cite{kozen}, стр. 75; \cite{papadimitriou}, стр. 89)}
   Да фиксираме азбука само с един символ $\Sigma = \{a\}$.
   Да положим за всяко $p,q\in\Nat$, 
-  \[L(p,q) = \{a^k \mid (\exists n\in\Nat)[k = p+q\cdot n]\}.\]
+  \[\L(p,q) = \{a^k \mid (\exists n\in\Nat)[k = p+q\cdot n]\}.\]
   Ако за един език $L$ съществуват константи $p_1,\dots,p_k$ и $q_1,\dots,q_k$, такива че 
-  \[L = \bigcup_{1\leq i \leq k} L(p_i,q_i),\]
+  \[L = \bigcup_{1\leq i \leq k} \L(p_i,q_i),\]
   то казваме, че $L$ е {\em породен от аритметични прогресии}.
   \begin{enumerate}[a)]
   \item 
     Докажете, че $L \subseteq \{a\}^\star$ е регулярен език точно тогава, когато $L$ е породен от аритметична прогресия.
   \item
-    За произволна азбука $\Sigma$, докажете, че ако $L \subseteq \Sigma^\star$ е регулярен език,
-    то езикът $\{a^{\abs{\omega}} \mid \omega \in L\}$  е породен от аритметична прогресия.    
+    За {\em произволна} азбука $\Sigma$, докажете, че ако $L \subseteq \Sigma^\star$ е регулярен език,
+    то езикът $\{a^{\abs{\omega}} \mid \omega \in L\}$  е породен от аритметични прогресии.
   \end{enumerate}
 \end{problem}
 \begin{hint}
@@ -274,7 +274,7 @@
     За едната посока, разгледайте КДА за $L$.
   \item
     За втората част, разгледайте $h:\Sigma\to\{a\}$ деф. като $(\forall b\in\Sigma)[h(b) = a]$.
-    Докажете, че $h$ е поражда хомоморфизъм между $\Sigma^\star$ и $\{a\}^\star$.
+    Докажете, че $h$ поражда хомоморфизъм между $\Sigma^\star$ и $\{a\}^\star$.
     Тогава $h(L) = \{a^{\abs{\omega}} \mid \omega \in L\}$, а
     ние знаем, че регулярните езици са затворени относно хомоморфни образи.  
   \end{enumerate}
@@ -367,16 +367,16 @@
 \begin{problem}
   Да разгледаме азбуката:
   \[\Sigma_2 = \left\{\begin{bmatrix} 0\\0\end{bmatrix},\begin{bmatrix} 0\\1\end{bmatrix},\begin{bmatrix} 1\\0\end{bmatrix},\begin{bmatrix} 1\\1\end{bmatrix}\right\}.\]
-  Една дума над азбуката $\Sigma_2$ ни дава два реда от $0$-ли и $1$-ци, които ще разглеждаме като числа в двоична бройна система.
+  % Една дума над азбуката $\Sigma_2$ ни дава два реда от $0$-ли и $1$-ци, които ще разглеждаме като числа в двоична бройна система.
   Да разгледаме езиците:
-  \begin{itemize}
+  \begin{enumerate}[a)]
   \item 
-    $L_1 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е по-голямо число от горния ред}\}$;
+    $L_1 = \left\{\begin{bmatrix} \alpha\\ \beta\end{bmatrix} \in \Sigma^\star_2 \mid \alpha_{(2)} < \beta_{(2)}\right\}$;
   \item
-    $L_2 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е три пъти по-голямо число от горния}\}$;
+    $L_2 = \left\{\begin{bmatrix} \alpha\\ \beta\end{bmatrix} \in \Sigma^\star_2 \mid 3\alpha_{(2)} = \beta_{(2)}\right\}$;
   \item
-    $L_3 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е обратния низ на горния ред}\}$.
-  \end{itemize}
+    $L_2 = \left\{\begin{bmatrix} \alpha\\ \beta\end{bmatrix} \in \Sigma^\star_2 \mid \alpha = \beta^R\right\}$;
+  \end{enumerate}
   Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
 \end{problem}
 % \begin{hint}
