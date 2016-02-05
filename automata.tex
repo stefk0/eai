@@ -122,7 +122,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{proof}
   \marginpar{Защо изискваме $\A_1$ и $\A_2$ да са тотални?}
   Нека $L_1 = L(\A_1)$ и $L_2 = L(\A_2)$, 
-  където $\A_1 = \FAn{1}$ и $\A_2 = \FAn{2}$ са {\bf тотални}.
+  където \[\A_1 = \FAn{1},\ \A_2 = \FAn{2}\] са {\bf тотални}.
   Определяме автомата $\A = \FA$, който разпознава $L_1\cup L_2$ по следния начин:
   \begin{itemize}
   \item
@@ -228,80 +228,79 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{problem}
   
 \marginpar{\ding{45} За всички тези автомати, дефинирайте функцията на преходите им!}
-  \begin{figure}[H]
-    \begin{subfigure}[b]{0.5\textwidth}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        
-        \node[initial below, state]   (0) {$s$};
-        \node[state]            (1) [right of=0]{$q_1$};
-        \node[state]            (2) [right of=1]{$q_2$};
-        \node[state,accepting]  (3) [right of=2]{$q_3$};
-        
-        \path 
-        (0) edge [loop above]   node [above] {$a$}    (0)
-        (0) edge [bend left=15] node [above] {$b$}    (1)
-        (1) edge [loop above]   node [above] {$b$}    (1)
-        (1) edge [bend left=15] node [above] {$a$}    (2)
-        (2) edge [bend left=30] node [below] {$a$}    (0)
-        (2) edge [bend left=15] node [above] {$b$}    (3)
-        (3) edge [loop above]   node [above] {$a,b$}  (3);
-      \end{tikzpicture}
-      \caption{$\{\omega \in \{a,b\}^\star \mid \omega\mbox{ съдържа }bab\}$}
-    \end{subfigure}
-    \qquad
-    \begin{subfigure}[b]{0.4\textwidth}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        
-        \node[initial below, state]   (0) {$s$};
-        \node[state]            (1) [right of=0]{$q_1$};
-        \node[state,accepting]  (2) [right of=1]{$q_2$};
-        
-        \path 
-        (0) edge [loop above]   node [above] {$b$}    (0)
-        (0) edge [bend left=15] node [above] {$a$}    (1)
-        (1) edge [loop above]   node [above] {$b$}    (1)
-        (1) edge [bend left=15] node [above] {$a$}    (2)
-        (2) edge [loop above]   node [above] {$a,b$}  (2);
-      \end{tikzpicture}
-      \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\}$}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.5\textwidth}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        
-        \node[initial, accepting, state] (0) {$s$};
-        \node[state]                     (1) [right of=0]{$q_1$};
-        
-        \path 
-        (0) edge [loop above]   node [above] {$b$}   (0)
-        (0) edge [bend left=15] node [above] {$a$}   (1)
-        (1) edge [bend left=15] node [below] {$b$}   (0);
-      \end{tikzpicture}
-      \caption{$\{\omega \in \{a,b\}^\star \mid $ всяко $a$ в $\omega$ се следва от поне едно $b\}$ }
-      \end{subfigure}
-      \qquad
-      \qquad
-      \begin{subfigure}[b]{0.5\textwidth}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        
-        \node[initial, state, accepting]   (0) {$s$};
-        \node[state]                       (1) [right of=0]{$q_1$};
-        \node[state]                       (2) [right of=1]{$q_2$};
-        
-        \path 
-        (0) edge [loop above]   node   [above] {$b$}    (0)
-        (0) edge [bend left=15] node   [above] {$a$}    (1)
-        (1) edge [loop above]   node   [above] {$b$}    (1)
-        (1) edge [bend left=15] node   [above] {$a$}    (2)
-        (2) edge [loop above]   node   [above] {$b$}    (2)
-        (2) edge [bend left=30] node   [below] {$a$}    (0);
-      \end{tikzpicture}
-      \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0\ (\bmod\ 3)\}$}
-    \end{subfigure}
-  \end{figure}    
+\begin{figure}[H]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      
+      \node[initial below, state]   (0) {$s$};
+      \node[state]            (1) [right of=0]{$q_1$};
+      \node[state]            (2) [right of=1]{$q_2$};
+      \node[state,accepting]  (3) [right of=2]{$q_3$};
+      
+      \path 
+      (0) edge [loop above]   node [above] {$a$}    (0)
+      (0) edge [bend left=15] node [above] {$b$}    (1)
+      (1) edge [loop above]   node [above] {$b$}    (1)
+      (1) edge [bend left=15] node [above] {$a$}    (2)
+      (2) edge [bend left=30] node [below] {$a$}    (0)
+      (2) edge [bend left=15] node [above] {$b$}    (3)
+      (3) edge [loop above]   node [above] {$a,b$}  (3);
+    \end{tikzpicture}
+    \caption{$\{\omega \in \{a,b\}^\star \mid \omega\mbox{ съдържа }bab\}$}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{0.4\textwidth}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      
+      \node[initial below, state]   (0) {$s$};
+      \node[state]            (1) [right of=0]{$q_1$};
+      \node[state,accepting]  (2) [right of=1]{$q_2$};
+      
+      \path 
+      (0) edge [loop above]   node [above] {$b$}    (0)
+      (0) edge [bend left=15] node [above] {$a$}    (1)
+      (1) edge [loop above]   node [above] {$b$}    (1)
+      (1) edge [bend left=15] node [above] {$a$}    (2)
+      (2) edge [loop above]   node [above] {$a,b$}  (2);
+    \end{tikzpicture}
+    \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\}$}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      
+      \node[initial below, accepting, state] (0) {$s$};
+      \node[state]                     (1) [right of=0]{$q_1$};
+      
+      \path 
+      (0) edge [loop above]   node [above] {$b$}   (0)
+      (0) edge [bend left=15] node [above] {$a$}   (1)
+      (1) edge [bend left=15] node [below] {$b$}   (0);
+    \end{tikzpicture}
+    \caption{$\{\omega \in \{a,b\}^\star \mid $ всяко $a$ в $\omega$ се следва от поне едно $b\}$ }
+  \end{subfigure}
+  \qquad
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      
+      \node[initial below, state, accepting]   (0) {$s$};
+      \node[state]                       (1) [right of=0]{$q_1$};
+      \node[state]                       (2) [right of=1]{$q_2$};
+      
+      \path 
+      (0) edge [loop above]   node   [above] {$b$}    (0)
+      (0) edge [bend left=15] node   [above] {$a$}    (1)
+      (1) edge [loop above]   node   [above] {$b$}    (1)
+      (1) edge [bend left=15] node   [above] {$a$}    (2)
+      (2) edge [loop above]   node   [above] {$b$}    (2)
+      (2) edge [bend left=30] node   [below] {$a$}    (0);
+    \end{tikzpicture}
+    \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0\ (\bmod\ 3)\}$}
+  \end{subfigure}
+\end{figure}    
 
 В повечето от горните задачи е лесно да се съобрази, че построения автомат разпознава желания език.
 При по-сложни задачи обаче, ще се наложи да дадем доказателство, като обикновено се прилага 
@@ -530,49 +529,81 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Така доказахме и посоката $L \subseteq \L(\A)$.
 \end{proof}
 
-\section{Регулярни езици}
+\section{Регулярни изрази и езици}
 
-\begin{dfn}
-  \index{език!регулярен}
-  \index{регулярен израз}
-  \marginpar{Това е друг пример за индуктивна (рекурсивна) дефиниция.}
-  Нека е дадена азбука $\Sigma$. Дефинираме множеството от
-  {\em регулярни езици} над азбуката $\Sigma$ и едновременно с това 
-  множеството от {\em регулярни изрази}, които разпознават тези езици.
-  \begin{enumerate}[1)]
-  \item
-   за всеки символ $a \in \Sigma$, $\{a\}$ е регулярен език,
-   който се разпознава от регулярния израз $a$;
-  \item
-    $\{\varepsilon\}$ е регулярен език,
-    който се разпознава от регулярния израз $\varepsilon$;
-  \item
-    $\emptyset$ е регулярен език,
-    който се разпознава от регулярния израз $\emptyset$;
-  \item
+Да фиксираме една непразна азбука $\Sigma$.
+\index{регулярен израз}
+{\bf Регулярните изрази} $\mathbf{r}$ могат да се опишат със следната абстрактна граматика
+\[\mathbf{r} ::= \emptyset\ |\ \varepsilon\ |\ a\ |\ \mathbf{ r_1 \cdot r_2}\ |\ \mathbf{r_1 + r_2}\ |\ \mathbf{r^\star_1},\]
+където $\varepsilon$ означава празната дума и $a$ е произволна буква от азбуката $\Sigma$.
+
+Друг начин да се опишат регулярните изрази е по следния начин:
+\marginpar{Това е пример за индуктивна дефиниция}
+\begin{itemize}
+\item 
+  Символите $\emptyset$, $\varepsilon$ и всяко $a \in \Sigma$ са регулярен изрази;
+\item
+  Ако $r_1$ и $r_2$ са регулярни изрази, то $r_1 \cdot r_2$, $r_1 + r_2$ и $r^\star_1$
+  също са регулярни изрази.
+\end{itemize}
+
+\index{език!регулярен}
+\marginpar{Това е друг пример за индуктивна (рекурсивна) дефиниция.}
+Сега ще дефинираме езиците, които се описват с регулярни изрази.
+Тези езици се наричат {\bf регулярни}.
+Това ще направим следвайки индуктивната дефиниция на регулярните изрази,
+т.е. за всеки регулярен израз $\mathbf{r}$ ще определим език $\L(\mathbf{r})$.
+\begin{itemize}
+\item
+  $\{\varepsilon\}$ е регулярен език,
+  който се разпознава от регулярния израз $\varepsilon$.
+  Означаваме $\L(\varepsilon) = \{\varepsilon\}$;
+\item
+  за всяка буква $a \in \Sigma$, $\{a\}$ е регулярен език,
+  който се разпознава от регулярния израз $a$.
+  Означаваме $\L(a) = \{a\}$;
+\item
+  $\emptyset$ е регулярен език,
+  който се разпознава от регулярния израз $\emptyset$;
+\item
+  Нека $L_1$ и $L_2$ са регулярни езици, т.е. съществуват регулярни изрази $\mathbf{r_1}$
+  и $\mathbf{r_2}$, за които $\L(\mathbf{r}_1) = L_1$ и $\L(\mathbf{r_2}) = L_2$.
+  Тогава:
+  \begin{itemize}
+  \item 
     \index{обединение}
-    $L_1\cup L_2$, където $L_1$ и $L_2$ са регулярни езици,
-    който се разпознава от регулярния израз $(r_1 + r_2)$,
-    където $r_1$ и $r_2$ са регулярните изрази за $L_1$ и $L_2$.
-    Записваме, че $\L(r_1) \cup \L(r_2) = \L(r_1+r_2)$.
+    $L_1 \cup L_2$ е регулярен език, който се описва с регулярния израз $\mathbf{r_1 + r_2}$.
+    Това означава, че $\L(\mathbf{r_1}) \cup \L(\mathbf{r_2}) = \L(\mathbf{r_1+r_2})$.
   \item
     \index{конкатенация}
     \marginpar{Тази операция се наричка конкатенация. Обикновено изпускаме знака $\cdot$}
-    $L_1\cdot L_2 = \{uw\mid u \in L_1\ \&\ w \in L_2\}$, където $L_1$ и $L_2$ са регулярни езици,
-    който се разпознава от регулярния израз $(r_1\cdot r_2)$,
-    където $r_1$ и $r_2$ са регулярните изрази за $L_1$ и $L_2$.
-    Записваме, че $\L(r_1)\cdot\L(r_2) = \L(r_1 \cdot r_2)$.
+    $L_1 \cdot L_2$ е регулярен език, който се описва с регулярния израз $\mathbf{r_1 \cdot r_2}$.
+    Това означава, че $\L(\mathbf{r_1}) \cdot \L(\mathbf{r_2}) = \L(\mathbf{r_1 \cdot r_2})$.
+    % $L_1\cdot L_2 = \{uw\mid u \in L_1\ \&\ w \in L_2\}$, където $L_1$ и $L_2$ са регулярни езици,
+    % който се разпознава от регулярния израз $(r_1\cdot r_2)$,
+    % където $r_1$ и $r_2$ са регулярните изрази за $L_1$ и $L_2$.
+    % Записваме, че $\L(r_1)\cdot\L(r_2) = \L(r_1 \cdot r_2)$.    
   \item
     \marginpar{Звезда на Клини}
     \index{звезда на Клини}
-    $L^\star = \{w_1w_2\cdots w_n\mid n \in \Nat\ \&\ w_i \in L\mbox{ за всяко } i \leq n\}$,  където $L$ е регулярен език,
-    който се разпознава от регулярния израз $(r^\star)$,
-    където $r$ е регулярния израз за $L$.
-    Записваме, че  $\L(r)^\star = \L(r^\star)$.
-    Можем да запишем, че $L^\star = \bigcup_n L^n$, където
-    $L^0 = \{\varepsilon\}$ и $L^{n+1} = L^n\cdot L$.
-  \end{enumerate}
-\end{dfn}
+    $L^\star_1$ е регуларен език, който се описва с регулярния израз $\mathbf{r^\star_1}$.
+    Това означава, че $L^\star_1 = \L(\mathbf{r^\star_1})$.
+  \end{itemize}
+\end{itemize}
+
+\begin{remark}
+  Ние знаем, че:
+  \begin{itemize}
+  \item 
+    понеже разглеждаме само крайни азбуки, то $\Sigma^\star$ е изброимо безкрайно множество;
+  \item
+    всички регулярни изрази са изброимо много, откъдето следва, че всички регулярни езици са изброимо много;
+  \item
+    всички езици над азбуката $\Sigma$ са неизброимо много, защото един език представлява елемент на $\Ps(\Sigma^\star)$.
+  \end{itemize}
+  От всичко това следва, че има езици, които не са регулярни.
+  По-нататък ще видим примери за такива езици.
+\end{remark}
 
 
 \begin{example}
@@ -740,13 +771,27 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 \end{dfn}
 
-\begin{thm}
+Удобно е да разширим функцията на преходите $\Delta: Q\times\Sigma \to \Ps(Q)$ 
+до функцията $\Delta^\star: Q\times\Sigma^\star \to \Ps(Q)$ по следния начин:
+\begin{itemize}
+\item 
+  $\Delta^\star(q, \varepsilon) = \{q\}$;
+\item
+  \marginpar{Съобразете, че $\Delta^\star(q, \alpha b) = \bigcup_{p \in \Delta^\star(q,\alpha)} \Delta(p,b)$}
+  $\Delta^\star(q, b\alpha) = \bigcup_{p \in \Delta(q,b)} \Delta^\star(p, \alpha)$;
+\end{itemize}
+
+\begin{framed}
+\begin{thm}[Рабин-Скот \cite{rabin-scott}]
   За всеки НKА $\N$ съществува еквивалентен на него ДКА $\D$, т.е. $\L(\N) = \L(\D)$.
 \end{thm}
-\begin{proof}
-  Нека $\N = \NFA$. Ще построим ДКА $\D = (Q',\Sigma,\delta,s',F')$.
+\end{framed}
+\begin{hint}
+  Нека $\N = \NFA$. Ще построим детерминиран автомат
+  \[\D = (Q',\Sigma,\delta,s',F'),\]
+  за който $\L(\N) = \L(\D)$.
   Конструкцията е следната:
-  \marginpar{Да отбележим, че детерминираният автомат $\D$ има не повече от $2^{\abs{Q}}$ на брой състояния}
+  \marginpar{Да отбележим, че детерминираният автомат $\D$ има не повече от $2^{\abs{Q}}$ на брой състояния $Q'$}
   \begin{itemize}
   \item
     $Q' = \Ps(Q)$;
@@ -757,7 +802,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     $F' = \{R \subseteq Q \mid R\cap F \neq \emptyset\}$.
   \end{itemize}
-\end{proof}
+\end{hint}
 
 % \begin{problem}
 %   За дума $\alpha = a_1a_2\cdots a_n$, дефинираме $\alpha^R = a_na_{n-1}\cdots a_1$.
@@ -828,7 +873,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Съществува НКА $\N = \NFA$, който разпознава езика $L(r)$, 
   където $r = \emptyset$, $r = \varepsilon$ или $r = a$, за $a\in \Sigma$.
 \end{lemma}
-\begin{proof}
+\begin{hint}
   \begin{figure}[H]
     \begin{subfigure}[b]{0.2\textwidth}
       \label{subf:a1}
@@ -858,7 +903,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \caption{$L(a)$}
     \end{subfigure}
   \end{figure}
-\end{proof}
+\end{hint}
 
 \begin{lemma}
   Класът на автоматните езици е затворен относно операцията {\bf конкатенация}.
@@ -974,7 +1019,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{lemma}
   Класът от автоматните езици е затворен относно операцията {\bf обединение}.
 \end{lemma}
-\begin{proof}
+\begin{hint}
   Нека са дадени автоматите:
   \begin{itemize}
   \item 
@@ -1008,7 +1053,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   % \item
   %   $\Delta(s,a) = \Delta_1(s_1,a) \cup \Delta_2(s_2,a)$, за всяко $a\in\Sigma$;
   \end{itemize}
-\end{proof}
+\end{hint}
 \begin{remark}
   В началното състояние на новопостроения автомат $\N$ не влизат ребра.
 \end{remark}
@@ -1080,44 +1125,42 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Накрая строим автомат $\N_2$, за който $L(\N_2) = \{\varepsilon\} \cup L(\N_1)$.
 \end{proof}
 
-\begin{figure}[H]
-  %\begin{subfigure}[H]{0.3\textwidth}
-  \label{subf:a1}
-  \center  
-  \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
-    \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-    \node[initial,state]      (1) {$s_1$};
-    \node[state]              (2) [right of=1] {$q_1$};
-    \node[state,accepting]    (3) [right of=2] {$q_2$};
-    \path
-    (1) edge node [above] {$a$} (2)
-    (2) edge node [above] {$b$} (3)
-    (3) edge [bend left=45] node [below] {$b$} (1);
-  \end{tikzpicture}
-  \caption{автомат $\N_3$}
-\end{figure}
 
 \begin{example}
   Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\N_3)^\star$.
-
+  
   \begin{figure}[H]
-    \label{subf:a1}
-    \center
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
-      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-      \node[initial,state,accepting]      (0) {$s$};
-      % \node[state,accepting]      (4) [above right=0cm and 2cm of 0]{$s_2$};
-      \node[state]      (1) [below right of=0] {$s_1$};
-      \node[state]              (2) [right of=1] {$q_1$};
-      \node[state,accepting]    (3) [right of=2] {$q_2$};
-      \path
-      (0) edge [dashed, bend left=15] node [above] {$a$} (2)
-      (1) edge node [above] {$a$} (2)
-      (2) edge node [below] {$b$} (3)
-      (3) edge [bend left=45] node [below] {$b$} (1)
-      (3) edge [dashed, bend right=45] node [above] {$a$} (2);        
-    \end{tikzpicture}
-    \caption{$\L(\N) = \L(\N_3)^\star = \L(\N_3)^+ \cup \{\varepsilon\}$}
+    % \center
+    \begin{subfigure}[b]{0.3\textwidth}
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        \node[initial above,state]      (1) {$s_1$};
+        \node[state]              (2) [right of=1] {$q_1$};
+        \node[state,accepting]    (3) [right of=2] {$q_2$};
+        \path
+        (1) edge node [above] {$a$} (2)
+        (2) edge node [above] {$b$} (3)
+        (3) edge [bend left=45] node [below] {$b$} (1);
+      \end{tikzpicture}
+      \caption{автомат $\N_3$}
+    \end{subfigure}
+    \hspace{2cm}
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        \node[initial above,state,accepting] (0) {$s$};
+        \node[state]                   (1) [below right of=0] {$s_1$};
+        \node[state]                   (2) [right of=1] {$q_1$};
+        \node[state,accepting]         (3) [right of=2] {$q_2$};
+        \path
+        (0) edge [dashed, bend left=15] node [above] {$a$} (2)
+        (1) edge node [above] {$a$} (2)
+        (2) edge node [below] {$b$} (3)
+        (3) edge [bend left=45] node [below] {$b$} (1)
+        (3) edge [dashed, bend right=45] node [above] {$a$} (2);        
+      \end{tikzpicture}
+      \caption{$\L(\N) = \L(\N_3)^\star = \L(\N_3)^+ \cup \{\varepsilon\}$}
+    \end{subfigure}
   \end{figure}
     
   Лесно се вижда, че $\L(\N_1) = \{(abb)^nab\mid n\in\Nat\}$.
@@ -1135,8 +1178,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \begin{problem}
   Да фиксираме една дума $\alpha$ над дадена азбука $\Sigma$.
-  \marginpar{(текстовият файл $\beta \in \Sigma^\star$)}
-  Опишете алгоритъм, който за вход произволен текстов файл $\beta$,
+  Опишете алгоритъм, който за вход произволен текстов файл, чието съдържание означаваме с $\beta$,
   отговаря дали думата $\alpha$ се среща в $\beta$.
   Каква е сложността на този алгоритъм относно дължините на $\alpha$ и $\beta$ ?
 \end{problem}
