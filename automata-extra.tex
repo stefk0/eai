@@ -1,6 +1,104 @@
 \section{Допълнителни задачи}
 
 \begin{problem}
+  \marginpar{Библиотеката {\bf regex} е част от C++11 стандарта на езика.}
+  Да разгледаме следната програма на езика си++
+  \begin{minted}[]{cpp}
+    #include <iostream>
+    #include <regex>
+    #include <string>
+    
+    using namespace std;
+    
+    int main() {
+      string input;
+      regex reg("....................");
+      while (true) {
+        cout << "Input:" << endl;
+        cin >> input;
+        if (!cin || input=="q") break;
+        if (regex_match(input, reg))
+          cout << "Valid input" << endl;
+        else
+          cout << "Invalid input" << endl;	  
+      }
+    }
+  \end{minted}
+  Разучете как се създават обекти от тип {\bf regex} и попълнете дефиницията на регулярния израз {\bf reg} в горната програма, така че програмата приема за валиден вход:
+  \begin{enumerate}[a)]
+  \item 
+    само реални числа;
+  \item
+    факултетни номера във ФМИ;
+  \item
+    низове, които са съставени от поне 8 символа, измежду които се включват малки букви, големи букви,
+    и цифри.    
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  За всеки от следните езици $L$, постройте автомат $\A$, който разпознава езика $L$.
+  \begin{enumerate}[a)]
+  \item 
+    $L = \{a^nb\mid n \geq 0\}$;
+  \item
+    $L = \{\varepsilon, a,b\}$;
+  \item
+    $L = \emptyset$;
+  \item
+    $L = \{a,b\}^\star\setminus\{\varepsilon\}$;
+  \item
+    $L = \{a^nb^m\mid n,m \geq 0\}$;
+  \item
+    $L = \{a^nb^m\mid n,m \geq 1\}$;
+  \item
+    $L = \{a,b\}^\star \setminus \{a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\mbox{ и поне едно }b\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \mbox{на всяка нечетна позиция на }w\mbox{ е буквата }a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w\mbox{ съдържа четен брой }a\mbox{ и най-много едно }b\}$;
+  \item
+    \marginpar{$\abs{w} = $ дължина на думата $w$}
+    $L = \{w \in \{a,b\}^\star\mid \abs{w} \leq 3\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ не започва с }ab\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ завършва с }ab\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа }bab\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ не съдържа }bab\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ няма две последователни }a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва и завършва с буквата } a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва и завършва с една и съща буква}\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ \omega \mbox{ съдържа точно едно }a\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \abs{w} \equiv 0 \bmod 3\}$;
+  \item
+    \marginpar{$N_a(w)$ - броят на срещанията на буквата $a$ в думата $w$}
+    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 1 \bmod 3\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 3\ \&\ N_b(\omega) \equiv 1 \bmod 2\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 2\ \vee\ \omega\mbox{ съдържа точно две }b\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа равен брой срещания на }ab\text{ и на }ba\}$.
+  \item
+    $L = \{\omega_1 \sharp \omega_2 \sharp \omega_3 \mid \forall i \in [1,3](\omega_i \in \{a,b\}^\star\ \&\ |\omega_i| \geq i+1)\}$;
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
   Докажете, че следните езици са регулярни:
   \begin{enumerate}[a)]
   \item
@@ -87,7 +185,6 @@
 \end{hint}
 
 \begin{problem}
-  \marginpar{от Владислав}
   Нека $\Sigma = \{a,b,c,d\}$.
   Да се докаже, че езика 
   \[L = \{a_1a_2\cdots a_{2n} \in \Sigma^\star \mid (\forall j \in [1,n])[a_{2j-1} = a_{2j}]\ \&\ d\text{ се среща $\leq 3$ пъти}\}\]
