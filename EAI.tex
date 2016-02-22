@@ -14,8 +14,10 @@
 
 \let\oldmarginpar\marginpar
 
-\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\scriptsize #1]%
-{\raggedright\scriptsize #1}}
+\renewcommand\marginpar[1]{\oldmarginpar{\raggedright\scriptsize #1}}
+
+% \renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\scriptsize #1]%
+% {\raggedright\scriptsize #1}}
 %\renewcommand\marginpar[1]{\oldmarginpar{\scriptsize #1}}
 
 %%%%%%%%%%%%%%
