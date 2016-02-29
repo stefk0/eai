@@ -44,16 +44,22 @@
 \end{problem}
 
 \begin{problem}
+  Опишете алгоритъм, който при вход два регулярни израза $\mathbf{r}$ и $\mathbf{s}$,
+  проверява дали $\L(\mathbf{r}) \subseteq \L(\mathbf{s})$.
+\end{problem}
+
+
+\begin{problem}
   За всеки от следните езици $L$, постройте автомат $\A$, който разпознава езика $L$.
   \begin{enumerate}[a)]
   \item 
     $L = \{a^nb\mid n \geq 0\}$;
   \item
-    $L = \{\varepsilon, a,b\}$;
-  \item
-    $L = \emptyset$;
-  \item
     $L = \{a,b\}^\star\setminus\{\varepsilon\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid a \text{ и } b \text{ се срещат четен брой пъти в }w\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid a \text{ се среща четен брой, докато $b$ нечетен брой пъти в }w\}$;
   \item
     $L = \{a^nb^m\mid n,m \geq 0\}$;
   \item

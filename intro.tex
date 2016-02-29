@@ -94,8 +94,138 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
 
 Лесно се проверява с таблиците за истинност, че законите са валидни.
 
+\section{Предикати и квантори}
 
-\section{Предикатно смятане}
+\subsection*{Квантори}
+
+Свойствата или отношенията на елементите в произволно множество се наричат {\bf предикати}.
+Нека да разгледаме един едноместен предикат $P(\cdot)$.
+
+\bigskip
+\begin{tabular}{|l|p{4.2cm}|p{4.5cm}|}
+  \hline
+  твърдение & Кога е истина? & Кога е неистина?\\
+  \hline
+  $\forall x P(x)$ & $P(x)$ е вярно за всяко $x$ & съществува $x$, за което $P(x)$ {\bf не} е вярно \\
+  \hline
+  $\exists x P(x)$ & съществува $x$, за което $P(x)$ е вярно & $P(x)$ {\bf не} е вярно за всяко $x$\\
+  \hline
+\end{tabular}  
+\bigskip
+
+\begin{enumerate}[(I)]
+\item 
+  {\bf Квантор за общност} $\forall x$.
+  Записът $(\forall x \in A) P(x)$ означава, че за всеки елемент $a$ в $A$, 
+  твърдението $P(a)$ има стойност истина.
+  Например, $(\forall x\in\Real)[(x+1)^2 = x^2+2x+1]$.
+\item
+  {\bf Квантор за съществуване} $\exists x$.
+  Записът $(\exists x \in A) P(x)$ означава, че съществува елемент $a$ в $A$, 
+  за който твърдението $P(a)$ има стойност истина.
+  Например, $(\exists x \in\mathbb{C})[x^2 = -1]$, но $(\forall x\in\Real)[x^2 \neq -1]$.
+\end{enumerate}
+
+% \begin{example}
+%   \begin{itemize}
+%   \item
+%     За всяко естествено число, съществува по-голямо от него:
+%     \[(\forall x\in\Nat)(\exists z\in\Nat)[x < z].\]
+%   \item
+%     Съществува естествено число, от което няма по-малко:
+%     \[(\exists x\in\Nat)(\forall y\in\Nat)[x < y \vee x = y].\]
+%     Нека да означим с $Zero(x)$ предиката, който казва, че $x$ е най-малкото число, т.е.
+%     \[Zero(x) \equiv (\forall y)[x < y \vee x =y].\]
+%   \item
+%     Нека $S(x,y)$ да бъде предиката, който казва, че $y = x+1$ в естествените числа:
+%     \[S(x,y) \equiv (x < y\ \wedge\ (\forall z\in\Nat)[x < z\ \rightarrow (z = y\ \vee\ y < z)].\]
+%   \item
+%     $One(x)$ - $x$ е числото $1$:
+%     \[One(x) \equiv (\exists y)[Z(y)\ \wedge\ S(y,x)].\]
+%   \item
+%     $Div(x,y)$ - $x$ се дели на $y$:
+%     \[Div(x,y) \equiv (\exists z)[x = y.z].\]
+%   \item
+%     $Prime(x)$ - $x$ е просто число:
+%     \[Prime(x) \equiv x \geq 2\ \wedge\ (\forall y\in\Nat)[\neg (O(y)\ \wedge Z(y))\ \rightarrow\ \neg Div(x,y)].\]
+%   \end{itemize}
+% \end{example}
+
+
+\subsection*{Закони на предикатното смятане}
+
+\begin{enumerate}[(I)]
+  \item
+    $\neg\forall x P(x) \iff \exists x \neg P(x)$
+  \item
+    $\neg\exists x P(x) \iff \forall x \neg P(x)$
+  \item
+    $\forall x P(x) \iff \neg\exists x \neg P(x)$
+  \item
+    $\exists x P(x) \iff \neg\forall x \neg P(x)$
+  \item
+    $\forall x \forall y P(x) \iff \forall y\forall x P(x)$
+  \item
+    $\exists x\exists y P(x,y) \iff \exists y \exists x P(x)$  
+  \item
+    $\exists x\forall y P(x,y) \rightarrow \forall y \exists x P(x,y)$
+\end{enumerate}
+
+\bigskip
+\begin{tabular}{|l|p{2.5cm}|p{3.2cm}|p{3cm}|}
+  \hline
+  \multicolumn{4}{|c|}{{\bf Закони на Де Морган за квантори}}\\
+  \hline
+  твърдение & Еквивалентно твърдение & Кога е истина? & Кога е неистина?\\
+  \hline
+  $\neg \exists x P(x)$ & $\forall x \neg P(x)$ & за всяко $x$ $P(x)$ {\bf не} е вярно & съществува $x$, за което $P(x)$ е вярно \\
+  \hline
+  $\neg \forall x P(x)$ & $\exists x \neg P(x)$ & съществува $x$, за което $P(x)$ {\bf не} е вярно & $P(x)$ е вярно за всяко $x$\\
+  \hline
+\end{tabular}  
+\bigskip
+
+\begin{problem}
+  Да означим с $K(x,y)$ твърдението ``$x$ познава $y$''.
+  Изразете като предикатна формула следните твърдения.
+  \begin{enumerate}[1)]
+  \item
+    \marginpar{$\forall x \exists y K(x,y)$}
+    Всеки познава някого.
+  \item
+    \marginpar{$\exists x \forall y K(x,y)$}
+    Някой познава всеки.
+  \item
+    \marginpar{$\exists x\forall y K(y,x)$}
+    Някой е познаван от всички.
+  \item
+    \marginpar{$\forall x \exists y(K(x,y)\wedge \neg K(y,x)) $}
+    Всеки знае някой, който не го познава.
+  \item
+    \marginpar{$\exists x \forall y(K(y,x)\ \rightarrow K(x,y))$}
+    Има такъв, който знае всеки, който го познава.
+  \item
+    \marginpar{$(\forall x,y)(K(x,y)\ \&\ K(y,x) \to \exists z(K(x,z)\ \&\ K(y,z))$}
+    Всеки двама познати имат общ познат.
+  \end{enumerate}
+\end{problem}
+
+\begin{example}
+  Нека $D \subseteq \Real$.
+  Казваме, че $f:D \to \Real$ е {\em непрекъсната} в точката $x_0 \in D$, ако 
+  \[(\forall \varepsilon > 0)(\exists \delta >0)(\forall x\in D)[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon].\]
+  Да видим какво означава $f$ да бъде {\em прекъсната} в точката $x_0 \in D$:
+  \marginpar{$f$ е прекъсната в $x_0$ ако $f$ не е непрекъсната в $x_0$}
+  \begin{align*}
+    & \neg (\forall \varepsilon > 0)(\exists \delta >0)(\forall x\in D)[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon] \iff\\
+    & (\exists \varepsilon > 0) \neg (\exists \delta >0)(\forall x\in D)[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon] \iff \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)\neg(\forall x\in D)[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon] \iff \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)\neg[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon] \iff \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)\neg[\neg (|x_0 - x| <\delta) \vee |f(x_0) - f(x)| < \varepsilon] \iff \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)[\neg\neg (|x_0 - x| <\delta) \land \neg (|f(x_0) - f(x)| < \varepsilon)] \iff \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)[|x_0 - x| < \delta\ \land\ |f(x_0) - f(x)| \geq \varepsilon].
+  \end{align*}
+\end{example}
 
 \section{Доказателства на твърдения}
 
@@ -361,9 +491,9 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
     $A\backslash B = A\backslash (A\cap B)$ и $A\backslash B = A\backslash (A\cup B)$;
   \item
     $(A\cup B)\setminus C = (A\setminus C) \cup (B\setminus C)$;
-  \item
-    \marginpar{Не е вярно!}
-    $A\setminus (B\setminus C) = (A\setminus B)\setminus C$;
+  % \item
+  %   \marginpar{Не е вярно!}
+  %   $A\setminus (B\setminus C) = (A\setminus B)\setminus C$;
   \item
     \marginpar{Закони на Де Морган}
     $C\setminus (A\cup B) = (C\backslash A)\cap(C\backslash B)$ и $C \backslash (A\cap B) = (C\backslash A)\cup(C\backslash B)$

@@ -341,6 +341,49 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{proof}
 
 \begin{problem}
+  Докажете, че следния език е автоматен:
+  \[L = \{w \in \{a,b\}^\star \mid a \text{ се среща четен брой, докато $b$ нечетен брой пъти в }w\}.\]
+\end{problem}
+\begin{hint}
+  Разгледайте автомата $\A$:
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        
+        \node[initial,state]      (00) {$00$};
+        \node[state]              (10) [above right of=00]{$10$};
+        \node[accepting, state]   (01) [below right of=00]{$01$};
+        \node[state]              (11) [below right of=10]{$11$};
+        
+        \path 
+        (00) edge  [bend left=15]  node [above]  {$a$} (10)
+        (10) edge  [bend left=15]  node [below]  {$a$} (00)
+        (01) edge  [bend right=15]  node [above]  {$b$} (00)
+        (00) edge  [bend right=15]  node [below]  {$b$} (01)
+        (10) edge  [bend left=15]  node [above]  {$b$} (11)
+        (11) edge  [bend left=15]  node [below]  {$b$} (10)
+        (01) edge  [bend right=15]  node [below]  {$a$} (11)
+        (11) edge  [bend right=15]  node [above]  {$a$} (01);
+      \end{tikzpicture}
+    \end{center}
+    \caption{$\L(\A) \stackrel{?}{=} L$}
+  \end{figure}
+  Докажете с индукция по дължината на думата $w$, че:
+  \begin{enumerate}[a)]
+  \item 
+    $\delta^\star(00, w) = 00 \implies (\exists k,n\in\Nat)[N_a(w) = 2k\ \&\ N_b(w) = 2n]$;
+  \item 
+    $\delta^\star(00, w) = 01 \implies (\exists k,n\in\Nat)[N_a(w) = 2k\ \&\ N_b(w) = 2n+1]$;
+  \item 
+    $\delta^\star(00, w) = 10 \implies (\exists k,n\in\Nat)[N_a(w) = 2k+1\ \&\ N_b(w) = 2n]$;
+  \item 
+    $\delta^\star(00, w) = 11 \implies (\exists k,n\in\Nat)[N_a(w) = 2k+1\ \&\ N_b(w) = 2n+1]$;
+  \end{enumerate}
+\end{hint}
+
+
+\begin{problem}
   Докажете, че езикът $L = \{w \in \{0,1\}^\star \mid |w| \equiv 1 \bmod 3\}$ е автоматен.
 \end{problem}
 \begin{hint}
@@ -374,20 +417,18 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  \end{enumerate}
 \end{hint}
 
-\begin{framed}
-  За една дума $\alpha \in \{0,1\}^\star$, 
-  нека с $\alpha_{(2)}$ да означим числото в десетична бройна система, което се представя в двоична бройна система като $\alpha$.
-  Например, $1101_{(2)} = 1 \cdot 2^3+1\cdot 2^2+0\cdot 2^1+1\cdot 2^0 = 13$.
-  Тогава имаме следните свойства:
-  \begin{itemize}
-  \item
-    $\varepsilon_{(2)} = 0$,
-  \item
-    $(\alpha0)_{(2)} = 2\cdot(\alpha)_{(2)}$,
-  \item
-    $(\alpha1)_{(2)} = 2\cdot(\alpha)_{(2)} + 1$.
-  \end{itemize}
-\end{framed}
+За една дума $\alpha \in \{0,1\}^\star$, 
+нека с $\alpha_{(2)}$ да означим числото в десетична бройна система, което се представя в двоична бройна система като $\alpha$.
+Например, $1101_{(2)} = 1 \cdot 2^3+1\cdot 2^2+0\cdot 2^1+1\cdot 2^0 = 13$.
+Тогава имаме следните свойства:
+\begin{itemize}
+\item
+  $\varepsilon_{(2)} = 0$,
+\item
+  $(\alpha0)_{(2)} = 2\cdot(\alpha)_{(2)}$,
+\item
+  $(\alpha1)_{(2)} = 2\cdot(\alpha)_{(2)} + 1$.
+\end{itemize}
 \marginpar{Да отбележим, че за всяко число $n$ има безкрайно много думи $\alpha$, за които $\alpha_{(2)} = n$. Например, $10_{(2)} = 010_{(2)} = 0010_{(2)} = \cdots$}
 
 \begin{problem}
@@ -613,6 +654,11 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Тогава лесно може да се види, че $L = L^\star$.
   \end{itemize}
 \end{example}
+
+\begin{example}
+  
+\end{example}
+
 
 \begin{problem}
   За произволни регулярни изрази $r$ и $s$, 
@@ -2119,7 +2165,51 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{example}
 
 \section{Граматики. Регулярни граматики}
+\index{граматика!неограничена}
+
+{\bf Граматика} e четворка от вида
+\[G = (V, \Sigma, R, S),\]
+където
+\begin{itemize}
+\item
+  \marginpar{Променливите се наричат също нетерминали}
+  $V$ е крайно множество от {\em променливи};
+\item
+  \marginpar{Буквите се наричат също терминали.}
+  $\Sigma$ е крайно множество от {\em букви}, $\Sigma \cap V = \emptyset$;
+\item
+  \marginpar{В \cite{hopcroft1} правилата се наричат {\em productions}}
+  $R \subseteq (V\cup\Sigma)^\star \times (V \cup \Sigma)^\star$ е крайно множество от {\em правила}.
+  Обикновено правилата $(\alpha, \beta) \in R$ се означават $\alpha \to \beta$, където $\alpha, \beta \in (V \cup \Sigma)^\star$;
+\item
+  $S \in V$ е началната променлива. 
+\end{itemize}
+
+Казваме, че имаме {\bf извод} $\omega \to_G \omega'$, ако $\omega = \alpha\beta\gamma \in (V\cup\Sigma)^\star$,
+$\omega' = \alpha\beta'\gamma \in (V\cup\Sigma)^\star$ и имаме правило $\beta \to \beta'$ в граматиката $G$.
+Нека $\to^\star_G$ е рефлексивното и транзитивно затваряне на релацията $\to_G$, т.е.
+\begin{align*}
+  & \alpha \to^\star_G \alpha\\
+  & \alpha \to^\star_G \alpha'\ \&\ \alpha' \to_G \alpha'' \implies \alpha \to^\star_G \alpha''.
+\end{align*}
+
+Езикът, който се поражда от граматиката $G$ е
+\[\L(G) = \{\omega \in \Sigma^\star \mid S \to^\star_G \omega\}.\]
+
+Граматиките се разделят на няколко вида в зависимост от това какви ограничения налагаме върху правилата $R$.
+В следващите няколко глави ще разгледаме различни ограничения. Сега ще разгледаме граматики с такъв вид правила,
+които пораждат точно регулярните (или еквивалентно автоматни) езици.
+
 \index{граматика!регулярна}
+Граматиката $G = (V, \Sigma, R, S)$ се нарича {\bf регулярна граматика},
+ако правилата $R$ са от вида 
+\begin{align*}
+  & A \to \varepsilon,\\
+  & A \to a,\\
+  & A \to aB,
+\end{align*}
+където $A, B \in V$ и $a \in \Sigma$.
+
 
 
 \section*{Библиография}

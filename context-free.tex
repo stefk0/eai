@@ -3,40 +3,34 @@
 
 \section{Безконтекстни граматики}
 \index{граматика!безконтекстна}
-% От Сипсер, същото е в слайдовете на Сашка
-% Малко е тъпо, че в Пападимитриу дефиницията е различна. Там \Sigma \subseteq V
+\marginpar{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$}
+\marginpar{На англ. {\em context-free grammar}}
+\marginpar{Други срещани наименования на български са {\em контекстно-свободна}, {\em контекстно-независима}}
+Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
+имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
+$L$ се нарича {\bf безконтекстен език}, ако съществува безконтекстна граматика $G$, за която $L = \L(G)$.
 
-\begin{dfn}
-  \marginpar{На англ. {\em context-free grammar}}
-  \marginpar{Други срещани наименования на български са {\em контекстно-свободна}, {\em контекстно-независима}}
-%  \marginpar{Според йерархията на Чомски, това са граматики тип }
-  Безконтекстна граматика e четворка от вида
-  \[G = (V,\Sigma,R,S),\]
-  където
-  \begin{itemize}
-  \item
-    \marginpar{Променливите се наричат също нетерминали}
-    $V$ е крайно множество от {\em променливи};
-  \item
-    \marginpar{Буквите се наричат също терминали.}
-    $\Sigma$ е крайно множество от {\em букви}, $\Sigma \cap V = \emptyset$;
-  \item
-    $R \subseteq V\times (V\cup\Sigma)^\star$, крайно множество от {\em правила};
-  \item
-    $S \in V$ е началната променлива. 
-  \end{itemize}
-\end{dfn}
+Очевидно е, че всяка регулярна граматика е безконтекстна. Следователно, всеки регулярен език е безконтекстен.
+Като първи пример нека да видим, че това включване е {\em строго}, т.е. съществува безконтекстен език, който не е регулярен.
+Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
 
-При дадена граматика $G$, за правилата на граматиката обикновено ще пишем $A \rightarrow \alpha$ вместо $(A,\alpha) \in R$.
-Ще въведем и релация между думи $\alpha,\beta\in (V \cup \Sigma)^\star$, която ще казва, че думата $\beta$
-се получаава от $\alpha$ като приложим правло от граматиката.
-За две думи $u,v\in (V\cup\Sigma)^\star$ ще пишем $u \rightarrow_G v$, ако съществуват думи $x,y\in (\Sigma\cup V)^\star$, $A\in V$,
-правило $A\rightarrow \alpha$ и $u = xAy$, $v = x\alpha y$.
-С $\rightarrow^\star_G$ ще означаваме рефлексивното и транзитивно затваряне на релацията $\rightarrow_G$.
-% \marginpar{Да се дефинира $\rightarrow^\star_G$}
+\begin{example}
+  Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
+  \begin{align*}
+    & S \to aSb \mid \varepsilon.
+  \end{align*}
+  Лесно се съобразява, че $\L(G) = \{a^nb^n \mid n\in\Nat\}$.
+\end{example}
 
-Езикът породен от граматиката $G$ е множеството от думи
-\[\L(G) = \{\alpha\in\Sigma^\star\mid S \rightarrow^\star_G \alpha\}.\]
+\begin{example}
+  Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
+  \begin{align*}
+    & S \to aSc \mid B\\
+    & B \to bBc \mid \varepsilon.
+  \end{align*}
+  Лесно се съобразява, че $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
+\end{example}
+
   
 \begin{problem}
   Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
@@ -316,7 +310,7 @@
 \begin{lemma}[за покачването (безконтекстни езици)]
   \index{лема за покачването!безконтекстни езици}
   \label{lem:pumping-context} 
-  \marginpar{(стр. 123 от \cite{sipser1}; стр. 125 от \cite{hopcroft1})}
+  \marginpar{\cite[стр. 123]{sipser1}, \cite[стр. 125]{hopcroft1}}
   За всеки безконтекстен език $L$ съществува $p>0$, такова
   че ако $\alpha\in L, \abs{\alpha} \geq p$, то съществува разбиване на думата на пет части, $\alpha=xyuvw$,
   за което е изпълнено:
@@ -337,9 +331,8 @@
   \marginpar{Възлите във вътрешността на дървото са променливи, а листата са букви или $\varepsilon$}
   Това означава, че във всяко дърво на извод, всеки възел има
   не повече от $b$ наследника.
-  Нека $p = b^{\abs{V}}+1$. Ще покажем, че $p$ е константа на покачването за граматиката $G$.
-  Това означава, че всяка дума с дължина поне $p$ в езика $L$ има дърво на извод с височина
-  поне $\abs{V} + 1$.
+  Нека $p = b^{\abs{V}}$. Ще покажем, че $p$ е константа на покачването за граматиката $G$.
+  Това означава, че всяка дума с дължина поне $p$ в езика $L$ има дърво на извод с поне $\abs{V} + 2$ възела.
   
   Нека $\abs{\alpha} \geq p$ и $T$ е дърво на извода за думата $\alpha$.
   Понеже думата $\alpha$ може да има много дървета на извод, нека $T$ също така да бъде {\em с минимален брой възли}. 
@@ -668,7 +661,7 @@
 \[A \rightarrow BC\mbox{ и }A \rightarrow a,\]
 като $B, C$ {\em не могат} да бъдат променливата за начало $S$.
 Освен това, позволяваме правилото $S\to\varepsilon$.
-\footnote{На стр. 151 в \cite{papadimitriou} дефиницията е малко по-различна.
+\footnote{В \cite[стр. 151]{papadimitriou} дефиницията е малко по-различна.
 Там дефинират $G$ да бъде в нормална форма на Чомски ако $R \subseteq V\times(V\cup\Sigma)^2$.
 В този случай губим езиците $\{\varepsilon\}$ и $\{a\}$, за $a\in\Sigma$.}
 \end{dfn}
@@ -799,10 +792,10 @@
 \end{thm}
 % \begin{proof}[стр. 154 от \cite{papadimitriou}]
 Можем да приемем, че $G = \CFG$ е граматика в нормална форма на Чомски.
-Нека $\alpha = a_1a_2\dots a_n$ е дума, за която искаме да проверим дали $\alpha \in L(G)$.
+Нека $\alpha = a_1a_2\dots a_n$ е дума, за която искаме да проверим дали $\alpha \in \L(G)$.
 \marginpar{Това е алгоритъм на Cocke, Younger и Kasami (CYK), който е пример за динамично програмиране (стр. 195 от \cite{kozen})}
 \begin{algorithm}[H]
-  \caption{Проверка за $\alpha \in L(G)$}
+  \caption{Проверка за $\alpha \in \L(G)$}
   \label{alg:belongs-to-grammar}
   \begin{algorithmic}[1]
     \State $n := \abs{\alpha}$ \Comment{Вход дума $\alpha = a_1\cdots a_n$}
@@ -880,7 +873,7 @@
 \end{example}
 
 \begin{thm}
-  \marginpar{\cite{hopcroft1}, стр. 137}
+  \marginpar{\cite[стр. 137]{hopcroft1}}
   Съществуват алгоритми, които определят по дадена безконтекстна граматика $G$ дали:
   \begin{enumerate}[a)]
   \item 
@@ -910,30 +903,28 @@
 \section{Недетерминирани стекови автомати}
 
 \index{автомат!недетерминиран стеков}
-\marginpar{На англ. {\bf Push-down automaton}}% (стр. 157 от \cite{kozen})}
+\marginpar{На англ. {\em Push-down automaton}}% (стр. 157 от \cite{kozen})}
 %Sipser p.102
-\begin{dfn}
-  Недетерминиран стеков автомат е 7-орка от вида
-  \[P = \PDA,\] където:
-  \begin{itemize}
-  \item
-    $Q$ е крайно множество от състояния;
-  \item  
-    $\Sigma$ е крайна входна азбука;
-  \item
-    $\Gamma$ е крайна стекова азбука;
-  \item
-    $\# \in \Gamma$ е символ за дъно на стека;
-  \item
-    $s\in Q$ е начално състояние;
-  \item
-    \marginpar{Озн. $\Ps_{fin}(A)$ - крайните подмножества на $A$}
-    $\Delta:Q\times(\Sigma \cup \{\varepsilon\})\times\Gamma\rightarrow \Ps_{fin}(Q\times\Gamma^\star)$ 
-    е функция на преходите;    
-  \item
-    $F\subseteq Q$ е множество от заключителни състояния.
-  \end{itemize}
-\end{dfn}
+{\bf Недетерминиран стеков автомат} е седморка от вида
+\[P = \PDA,\] където:
+\begin{itemize}
+\item
+  $Q$ е крайно множество от състояния;
+\item  
+  $\Sigma$ е крайна входна азбука;
+\item
+  $\Gamma$ е крайна стекова азбука;
+\item
+  $\# \in \Gamma$ е символ за дъно на стека;
+\item
+  $s\in Q$ е начално състояние;
+\item
+  \marginpar{Озн. $\Ps_{fin}(A)$ - крайните подмножества на $A$}
+  $\Delta:Q\times(\Sigma \cup \{\varepsilon\})\times\Gamma\rightarrow \Ps_{fin}(Q\times\Gamma^\star)$ 
+  е функция на преходите;    
+\item
+  $F\subseteq Q$ е множество от заключителни състояния.
+\end{itemize}
 
 \marginpar{Instanteneous description}
 {\em Моментно описание} (или конфигурация) на изчислението със стеков автомат представлява тройка от вида $(q,\alpha,\gamma) \in Q\times\Sigma^\star\times\Gamma^\star$,
