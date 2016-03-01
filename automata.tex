@@ -170,6 +170,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 
 \begin{example}
+  \label{ex:automata-pictures}
   Да разгледаме няколко примера за автомати и езиците, които разпознават.
   Дефинирайте функцията на преходите $\delta$ за всеки автомат.
 
@@ -443,30 +444,24 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   т.е. всяко състояние отговаря на определен остатък при деление на три.
   Понеже искаме нашия автомат да разпознава тези думи $\alpha$,
   за които $\alpha_{(2)} \equiv 2\mod 3$, финалното състояние ще бъде $q_2$.
-  Дефинираме функцията $\delta$ следвайки следните свойства:
+  Дефинираме функцията $\delta$ следвайки свойствата:
   \begin{itemize}
   \item
-    \marginpar{$\delta(q_0,0) = q_0$}
-    $\alpha_{(2)} \equiv 0 \bmod 3\ \Rightarrow\ (\alpha0)_{(2)} \equiv 0 \bmod 3$;
+    $\delta(q_0,0) = q_0$, защото ако $\alpha_{(2)} \equiv 0 \bmod 3$, то $(\alpha0)_{(2)} \equiv 0 \bmod 3$;
   \item 
-    \marginpar{$\delta(q_0,1) = q_1$}
-    $\alpha_{(2)} \equiv 0 \bmod 3\ \Rightarrow\ (\alpha1)_{(2)} \equiv 1 \bmod 3$;
+    $\delta(q_0,1) = q_1$, защото ако $\alpha_{(2)} \equiv 0 \bmod 3$, то $(\alpha1)_{(2)} \equiv 1 \bmod 3$;
   \item
-    \marginpar{$\delta(q_1,0) = q_2$}
-    $\alpha_{(2)} \equiv 1 \bmod 3\ \Rightarrow\ (\alpha0)_{(2)} \equiv 2 \bmod 3$;
+    $\delta(q_1,0) = q_2$, защото ако $\alpha_{(2)} \equiv 1 \bmod 3$, то $(\alpha0)_{(2)} \equiv 2 \bmod 3$;
   \item 
-    \marginpar{$\delta(q_1,1) = q_0$}
-    $\alpha_{(2)} \equiv 1 \bmod 3\ \Rightarrow\ (\alpha1)_{(2)} \equiv 0 \bmod 3$;
+    $\delta(q_1,1) = q_0$, защото ако $\alpha_{(2)} \equiv 1 \bmod 3$, то $(\alpha1)_{(2)} \equiv 0 \bmod 3$;
   \item
-    \marginpar{$\delta(q_2,0) = q_1$}
-    $\alpha_{(2)} \equiv 2 \bmod 3\ \Rightarrow\ (\alpha0)_{(2)} \equiv 1 \bmod 3$;
+    $\delta(q_2,0) = q_1$, защото ако $\alpha_{(2)} \equiv 2 \bmod 3$, то $(\alpha0)_{(2)} \equiv 1 \bmod 3$;
   \item 
-    \marginpar{$\delta(q_2,1) = q_2$}
-    $\alpha_{(2)} \equiv 2 \bmod 3\ \Rightarrow\ (\alpha1)_{(2)} \equiv 2 \bmod 3$.
+    $\delta(q_2,1) = q_2$, защото ако $\alpha_{(2)} \equiv 2 \bmod 3$, то $(\alpha1)_{(2)} \equiv 2 \bmod 3$.
   \end{itemize}
   Ето и картинка на автомата $\A$:
+  \begin{framed}
   \begin{figure}[H]
-    % \begin{subfigure}[b]{0.3\textwidth}% [$L_1 = L(M_1)$]{
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
@@ -485,16 +480,16 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \end{tikzpicture}
       \end{center}
       \caption{$\L(\A) \stackrel{?}{=} \{\alpha\in\{0,1\}^\star \mid \alpha_{(2)} \equiv 2\ (\bmod\ 3)\}$}
- %   \end{subfigure}
  \end{figure}
+ \end{framed}
  \noindent Да разгледаме твърденията:
  \begin{enumerate}[(1)]
   \item 
-    $\delta^\star(q_0,\alpha) = q_0\ \Rightarrow\ \alpha_{(2)} \equiv 0 \mod 3$;
+    $\delta^\star(q_0,\alpha) = q_0 \implies \alpha_{(2)} \equiv 0 \mod 3$;
   \item 
-    $\delta^\star(q_0,\alpha) = q_1\ \Rightarrow\ \alpha_{(2)} \equiv 1 \mod 3$;
+    $\delta^\star(q_0,\alpha) = q_1 \implies \alpha_{(2)} \equiv 1 \mod 3$;
   \item 
-    $\delta^\star(q_0,\alpha) = q_2\ \Rightarrow\ \alpha_{(2)} \equiv 2 \mod 3$.
+    $\delta^\star(q_0,\alpha) = q_2 \implies \alpha_{(2)} \equiv 2 \mod 3$.
   \end{enumerate}
   Ще докажем (1), (2) и (3) {\em едновременно} с индукция по дължината на думата $\alpha$.
   За $\abs{\alpha} = 0$, всички условия са изпълнени. (Защо?)
@@ -504,7 +499,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \[\delta^\star(q_0,\beta x) = \delta(\delta^\star(q_0,\beta),x).\]
   
   Ще докажем подробно само (3) понеже другите твърдения се доказват по сходен начин.
-  \marginpar{Обърнете внимание, че в доказателството на (3) използваме И.П. не само за (3), но и за (2)}
+  \marginpar{Обърнете внимание, че в доказателството на (3) използваме И.П. не само за (3), но и за (2). Поради тази причина трябва да докажем трите свойства едновременно}
   Нека $\delta^\star(q_0,\beta x) = q_2$. 
   Имаме два случая:
   \begin{itemize}
@@ -544,9 +539,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
   От (1), (2) и (3) следва директно, че $\L(\A) \subseteq L$.
   
-  За другата посока, нека $\alpha \in L$, т.е. $(\alpha)_{(2)} \equiv 2 \bmod 3$.
+  За другата посока, нека $\alpha \in L$, т.е. $\alpha_{(2)} \equiv 2 \bmod 3$.
   Ако допуснем, че $\alpha \not\in \L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_1\}$.
-  Но в тези случаи получаваме от твърдения (1) и (2), че $(\alpha)_{(2)} \equiv 0 \bmod 3$ или $(\alpha)_{(2)} \equiv 1 \bmod 3$.
+  Но в тези случаи получаваме от твърдения (1) и (2), че $\alpha_{(2)} \equiv 0 \bmod 3$ или $\alpha_{(2)} \equiv 1 \bmod 3$.
   Това е противоречие с избора на $\alpha \in L$. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
   Така доказахме и посоката $L \subseteq \L(\A)$.
 \end{proof}
@@ -656,7 +651,22 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{example}
 
 \begin{example}
-  
+  \marginpar{В \cite[стр. 73]{sipser1} е показан алгоритъм, за който по един автомат може да се получи регулярен израз описващ езика на автомата. Ние няма да разглеждаме този алгоритъм. }
+  Нека да построим регулярни изрази за всеки от езиците от \Ex{automata-pictures}.
+  \begin{enumerate}[a)]
+  \item 
+    Нека $\mathbf{r} = \mathbf{(a+b)^\star bab(a+b)^\star}$. Тогава
+    \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа } bab\}.\]
+  \item
+    Нека $\mathbf{r} = \mathbf{b^\star ab^\star a(a+b)^\star}$. Тогава
+    \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\}.\]
+  \item
+    Нека $\mathbf{r} = \mathbf{(abb^\star)^\star}$. Тогава
+    \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid \text{ всяко $a$ в $\omega$ се следва от поне едно $b$}\}.\]
+  \item
+    Нека $\mathbf{r} = \mathbf{(b^\star ab^\star ab^\star ab^\star)^\star}$. Тогава
+    \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 3\}.\]
+  \end{enumerate}
 \end{example}
 
 
@@ -1217,12 +1227,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     $(\forall i\in\Nat)[xy^iz \in L]$.
   \end{enumerate}
 \end{lemma}
-\begin{proof}
-  \marginpar{стр. 88 от \cite{papadimitriou}, стр. 78 от \cite{sipser1}}
-  Понеже $L$ е регулярен, той се разпознава от $\A = \FA$.
+\begin{hint}
+  \marginpar{\cite[стр. 88]{papadimitriou}, \cite[стр. 78]{sipser1}}
+  Понеже $L$ е регулярен, то $L$ е и автоматен език. Нека $\A = \FA$ е краен детерминиран 
+  автомат, за който $L = \L(\A)$.
   Да положим $p = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq p$.
   Да разгледаме първите $p$ стъпки от изпълнението на $\alpha$ върху $\A$:
-  \[q_0\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow} \dots \stackrel{a_p}{\rightarrow} q_p.\]
+  \[s\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow} \dots \stackrel{a_p}{\rightarrow} q_p.\]
   Тъй като $\abs{Q} = p$, а по този път участват $n+1$ състояния $q_0,q_1,\dots,q_p$,
   то съществуват числа $i, j$, за които $0\leq i < j\leq p$ и $q_i = q_j$.
   Нека разделим думата $\alpha$ на три части по следния начин:
@@ -1230,14 +1241,15 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Ясно е, че $\abs{y} \geq 1$ и $\abs{xy} = j \leq p$.
   \marginpar{\ding{45} Докажете!}
   Освен това, лесно се съобразява, че за всяко $i \in\Nat$,
-  $xy^iz \in L$. Да разгледаме само случая за $i = 0$.
+  $xy^iz \in L$. Да разгледаме случая за $i = 0$.
   Думата $xy^0z = xz \in L$, защото имаме следното изчисление:
-  \[q_0\stackrel{a_1}{\rightarrow} \cdots \stackrel{a_i}{\rightarrow} q_i\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{p}}{\rightarrow}q_p\in F,\]
+  \[s\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F,\]
   защото $q_i = q_j$.
-\end{proof}
+  Да разгледаме и случая $i = 2$. Тогава думата $xy^2z \in L$, защото имаме следното изчисление:
+  \[s\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{j+1}}{\rightarrow}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F.\]
+\end{hint}
 
 Практически е по-полезно да разглеждаме следната еквивалентна формулировка на лемата за покачването.
-\marginpar{Контрапозиция на твърдението $p \to q$ е твърдението $\neg q \to \neg p$}
 \begin{cor}[Контрапозиция на лемата за покачването]
   \label{cor:pumping-reg}
   \marginpar{Ясно е, че всеки краен език е регулярен. Нали?}
@@ -1246,13 +1258,26 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Тогава $L$ {\bf не} е регулярен език.
 \end{cor}
 \begin{proof}
-  \marginpar{$\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
-  \hyperref[lem:pumping-reg]{Лемата за покачването} гласи, че ако $L$ е регулярен език, то
+  Да означим с $(P)$ следната предикатна формула:
   {\scriptsize
     \[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
-  Отрицанието на горното твърдение гласи, че ако 
-  {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]],\]}
-  то $L$ {\bf не} е регулярен език.
+  \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
+  
+  \begin{center}
+  {\em ,,Aко $L$ е регулярен език, то е изпълнено свойството $(P)$.''}
+  \end{center}
+  \marginpar{Контрапозиция на твърдението $p \to q$ е твърдението $\neg q \to \neg p$}
+  \noindent
+  Лемата може да се запише по следния еквивалентен начин:
+  
+  \begin{center}
+    {\em ,,Ако свойството $(P)$ не е изпълнено, то $L$ не е регулярен език.''}
+  \end{center}
+
+  \marginpar{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
+
+  \noindent Отрицанието на свойството $(P)$ може да се запише по следния начин:
+  {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
   Горната формула е еквивалентна на:
   {\scriptsize
     \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
