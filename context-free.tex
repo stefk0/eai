@@ -31,6 +31,18 @@ $L$ се нарича {\bf безконтекстен език}, ако съще
   Лесно се съобразява, че $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
 \end{example}
 
+\begin{example}
+  Да разгледаме граматика с правила
+  \begin{align*}
+    & S \to E\\
+    & E \to E + P\ |\ P\\
+    & P \to P * N\ |\ N\\
+    & N \to (E)\ |\ a,
+  \end{align*}
+  като $\Sigma = \{a,+,*,(,),\}$, и $V = \{S,E,P,N\}$.
+\end{example}
+
+
   
 \begin{problem}
   Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
