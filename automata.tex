@@ -683,6 +683,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     $(r^\star s^\star) = (r+s)^\star$;
   \item
+    \marginpar{\ding{45} Проверете!}
     $(r^\star)^\star = r^\star$;
   \item
     $(rs + r)^\star r = r(sr+r)^\star$;
@@ -703,7 +704,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{thm}
 \end{framed}
 \begin{proof}
-  \marginpar{стр. 79 от \cite{papadimitriou}, стр. 33 от \cite{hopcroft1}}
+  \marginpar{\cite[стр. 79]{papadimitriou}; \cite[стр. 33]{hopcroft1}}
   Нека  $L = \L(\A)$, за някой краен детерминиран автомат $\A$.
   Да фиксираме едно изброяване на състоянията $Q = \{q_1,\dots,q_n\}$,
   като началното състояние е $q_1$.
@@ -725,15 +726,22 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Имаме да разгледаме два случая.
     
     Ако $i = j$, то 
-    \[L(i, j, 0) = \{\varepsilon\}\cup\{a\in\Sigma \mid \delta(q_i,a) = q_j\}.\]
+    \begin{equation}
+      \label{eq:kleene-equal}
+      L(i, j, 0) = \{\varepsilon\}\cup\{a\in\Sigma \mid \delta(q_i,a) = q_j\}.
+    \end{equation}
     Ако $i \neq j$, то
     \[L(i, j, 0) = \{a\in\Sigma \mid \delta(q_i, a) = q_j\}.\]
+    И в двата случая, понеже $L(i,j,0)$ е краен език, то е ясно, че той се описва с регулярен израз.
   \item
     Да предположим, че $k > 0$ и за всяко $i$, $j$, можем да намерим регулярните изрази
     съответстващи на $L(i,j,k-1)$. Тогава
     \[L(i,j,k) = L(i,j,k-1)\ \cup\ L(i,k,k-1)\cdot (L(k,k,k-1)^\star) \cdot L(k,j,k-1).\]
     Тогава по {\bf И.П.} следва, че $L(i,j,k)$ може да се опише с регулярен израз, който е
-    \[\mathbf{r^{k-1}_{i,j} + r^{k-1}_{i,k}\cdot (r^{k-1}_{k,k})^\star\cdot r^{k-1}_{k,j}}.\]
+    \begin{equation}
+      \label{eq:kleene}
+      \mathbf{r^k_{i,j}} = \mathbf{r^{k-1}_{i,j} + r^{k-1}_{i,k}\cdot (r^{k-1}_{k,k})^\star\cdot r^{k-1}_{k,j}}.
+    \end{equation}
   \end{enumerate}
   Заключаваме, че за всяко $i,j,k$, $L(i,j,k)$ може да се опише с регулярен израз $\mathbf{r^{k}_{i,j}}$.
   Тогава ако $F = \{q_{i_1},\dots,q_{i_k}\}$, то $\L(\A)$ се описва с регулярния израз
@@ -762,18 +770,27 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
  Ясно е, езикът на автомата от Пример \ref{fig:a1} се описва с регулярния израз $\mathbf{1^\star 0 (0 + 1)^\star}$.
  % За да намерим регулярния език за автомата от Пример \ref{fig:a1}, 
- Следвайки конструкцията от доказателството на Теорема \ref{th:regular-kleene},
+ Следвайки конструкцията от доказателството на \Th{regular-kleene},
  езикът на този автомат се описва с регулярния израз $\mathbf{r^2_{1,2}}$, защото началното състояние е $q_1$, финалното е $q_2$ и 
  броят на състоянията в автомата е $2$.
  \begin{align*}
-   r^0_{1,1} =\ & \varepsilon + 1,\\
-   r^0_{1,2} =\ & 0,\\
-   r^0_{2,1} =\ & \emptyset,\\
-   r^0_{2,2} =\ & \varepsilon +  0 + 1,\\
-    r^1_{1,2} =\ & r^0_{1,2} + r^0_{1,1}\cdot(r^0_{1,1})^\star \cdot r^0_{1,2} = 0 + (\varepsilon + 1)(\varepsilon + 1)^\star0 = 1^\star0,\\
-    r^1_{2,2} =\ & r^0_{2,2} + r^0_{2,1} \cdot (r^0_{1,1})^\star\cdot r^0_{1,2} = \varepsilon + 0 + 1 + \emptyset(\varepsilon + 1)^\star0 = \varepsilon + 0 + 1\\
-    r^2_{1,2} =\ & r^{1}_{1,2} + r^{1}_{1,2}(r^1_{2,2})^\star r^1_{2,2} \\
-    =\ & 1^\star0 + 1^\star0 (\varepsilon + 0 + 1)^\star (\varepsilon + 0 + 1) = 1^\star 0 (0 + 1)^\star.
+   \mathbf{r^2_{1,2}} & = \underbrace{\mathbf{r^{1}_{1,2}}}_{\mathbf{1^\star 0}} + \underbrace{\mathbf{r^{1}_{1,2}}}_{\mathbf{1^\star 0}}\cdot \underbrace{\mathbf{(r^1_{2,2})^\star}}_{\mathbf{(\varepsilon+0+1)^\star}} \cdot \underbrace{\mathbf{r^1_{2,2}}}_{\mathbf{\varepsilon+0+1}} & (\text{според (\ref{eq:kleene}})) \\
+   &  = \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^\star (\varepsilon + 0 + 1)}\\
+   & =  \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^+} & (\mathbf{r^+ = r^\star r})\\
+   & =  \mathbf{1^\star0 + 1^\star 0 (0 + 1)^\star} & (\mathbf{r^\star = (\varepsilon + r)^+})\\
+   & = \mathbf{1^\star 0 (\varepsilon + (0 + 1)^\star)} & (\mathbf{r + rq = r(\varepsilon + q)})\\
+   & = \mathbf{1^\star 0 (0 + 1)^\star} & (\mathbf{r^\star = \varepsilon + r^\star})
+  \end{align*}
+  
+  Тук използвахме, че:
+  \begin{align*}
+    \mathbf{r^1_{1,2}} & = \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}} + \underbrace{\mathbf{r^0_{1,1}}}_{\mathbf{\varepsilon + 1}}\cdot\underbrace{\mathbf{(r^0_{1,1})^\star}}_{\mathbf{(\varepsilon+1)^\star}} \cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
+    & = \mathbf{0 + (\varepsilon + 1)(\varepsilon + 1)^\star0} \\
+    & = \mathbf{0 + 1^\star 0}\\
+    & = \mathbf{1^\star0},\\
+    \mathbf{r^1_{2,2}} & = \underbrace{\mathbf{r^0_{2,2}}}_{\mathbf{\varepsilon+0+1}} + \underbrace{\mathbf{r^0_{2,1}}}_{\mathbf{\emptyset}} \cdot \underbrace{\mathbf{(r^0_{1,1})^\star}}_{\mathbf{\varepsilon+1}}\cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
+    & = \mathbf{\varepsilon + 0 + 1 + \emptyset(\varepsilon + 1)^\star0}\\
+    & = \varepsilon + 0 + 1 & (\text{защото }\mathbf{\emptyset \cdot r = \emptyset})
   \end{align*}
 \end{example}
 
@@ -904,6 +921,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{problem}
 
 \begin{lemma}
+  \label{lem:automata-basic}
   Съществува НКА $\N = \NFA$, който разпознава езика $L(r)$, 
   където $r = \emptyset$, $r = \varepsilon$ или $r = a$, за $a\in \Sigma$.
 \end{lemma}
@@ -940,7 +958,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{hint}
 
 \begin{lemma}
-  Класът на автоматните езици е затворен относно операцията {\bf конкатенация}.
+  \label{lem:concat}
+  Класът на автоматните езици е затворен относно операцията {\em конкатенация}.
   Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика, то $L_1\cdot L_2$
   също е автоматен език.
 \end{lemma}
@@ -1051,7 +1070,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 
 \begin{lemma}
-  Класът от автоматните езици е затворен относно операцията {\bf обединение}.
+  \label{lem:union}
+  Класът от автоматните езици е затворен относно операцията {\em обединение}.
 \end{lemma}
 \begin{hint}
   Нека са дадени автоматите:
@@ -1125,14 +1145,15 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{example}
 
 \begin{lemma}
+  \label{lem:kleene-star}
   Класът от автоматните езици е затворен относно операцията {\em звезда на Клини}, т.е.
-  ако $\L(\N) = L$, то съществува $\N_1$, за който $\L(\N_1) = L^\star$.
+  ако $\L(\N) = L$, то съществува $\hat{\N}$, за който $\L(\hat{\N}) = L^\star$.
 \end{lemma}
 \begin{proof}
   Нека е даден автомата $\N = \NFA$, за който е изпънено, че
-  $L(\N) = L(r)$.
+  $\L(\N) = \L(\mathbf{r})$.
   Първата стъпка е да построим $\N_1 = \NFAn{1}$, такъв че 
-  \[L(\N_1) = \bigcup_{n\geq 1} (L(\N))^n = \bigcup_{n\geq 1} (L(r))^n = L(r^+).\]
+  \[\L(\N_1) = \bigcup_{n\geq 1} (\L(\N))^n = \bigcup_{n\geq 1} (\L(\mathbf{r}))^n = \L(\mathbf{r^+}).\]
   \begin{itemize}
   \item
     $Q_1 = Q$;
@@ -1148,12 +1169,14 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \Delta(q,a) \cup \Delta(s,a), & \text{ ако } q\in F, a\in\Sigma.
     \end{cases}$
   \end{itemize}
-  Накрая строим автомат $\N_2$, за който $L(\N_2) = \{\varepsilon\} \cup L(\N_1)$.
+  Накрая строим желания автомат $\hat\N$, така че $\L(\hat\N) = \{\varepsilon\} \cup \L(\N_1)$.
+  Ние знаем как да построим $\hat\N$, защото можем да посторим автомат $\N_0$ за езика $\{\varepsilon\}$
+  (\Lem{automata-basic}) и тогава $\hat\N$ се получава от конструкцията за обединение от \Lem{union} приложена върху $\N_0$ и $\N_1$.
 \end{proof}
 
 
 \begin{example}
-  Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\N_3)^\star$.
+  Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\N)^\star$.
   
   \begin{figure}[H]
     % \center
@@ -1168,9 +1191,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (1) edge node [above] {$a$} (2)
         (1) edge [bend left=15] node [above] {$b$} (4)
         (2) edge node [above] {$b$} (3)
-        (3) edge [bend left=45] node [below] {$b$} (1);
+        (3) edge [bend left=45] node [below] {$a$} (1);
       \end{tikzpicture}
-      \caption{автомат $\N_3$}
+      \caption{автомат $\N$}
     \end{subfigure}
     \hspace{2cm}
     \begin{subfigure}[b]{0.5\textwidth}
@@ -1187,23 +1210,23 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (1) edge [bend left=15] node [above] {$b$} (4)
         (1) edge node [above] {$a$} (2)
         (2) edge node [below] {$b$} (3)
-        (3) edge [bend left=45] node [below] {$b$} (1)
+        (3) edge [bend left=45] node [below] {$a$} (1)
         (3) edge [dashed, bend right=45] node [above] {$b$} (4)
         (4) edge [dashed] node [left] {$a$} (2)
         (4) edge [dashed, loop above] node {$b$} (4)
         (3) edge [dashed, bend right=45] node [above] {$a$} (2);        
       \end{tikzpicture}
-      \caption{$\L(\N) = \L(\N_3)^\star = \L(\N_3)^+ \cup \{\varepsilon\}$}
+      \caption{$\L(\hat\N) = \L(\N)^\star = \L(\N)^+ \cup \{\varepsilon\}$}
     \end{subfigure}
   \end{figure}
     
-  Лесно се вижда, че $\L(\N_3) = \{b\} \cup \{(abb)^nab\mid n\in\Nat\}$.
-  Формално погледнато, след като построим автомат за езика $\L(\N_3)^+$, трябва да приложим
-  конструкцията за обединение на автомата за езика $\L(\N_3)^+$ с автомата за езика $\{\varepsilon\}$.
+  \marginpar{Лесно се вижда, че $\L(\N) = \{b\} \cup \{(aba)^nab\mid n\in\Nat\}$}
+  След като построим автомат за езика $\L(\N)^+$, трябва да приложим
+  конструкцията за обединение на автомата за езика $\L(\N)^+$ с автомата за езика $\{\varepsilon\}$.
   Защо трябва да добавим ново начално състояние $s'$?
   Да допуснем, че вместо това сме направили $s$ финално.
-  Тогава има опасност да разпознаем повече думи. Например, думата $abb$ би се разпознала от този автомат,
-  но $abb \not\in\L(\N_3)^\star$.
+  Тогава има опасност да разпознаем повече думи. Например, думата $aba$ би се разпознала от този автомат,
+  но $aba \not\in\L(\N)^\star$.
 \end{example}
 
 
