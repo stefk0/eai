@@ -1,4 +1,4 @@
-\documentclass[a4paper, 10pt]{report}
+\documentclass[a4paper, 10pt, oneside]{report}
 %\usepackage[paperwidth=9cm, paperheight=12cm, top=0.5cm, bottom=0.5cm, left=0.0cm, right=0.5cm]{geometry}
 %\special{papersize=9cm,12cm}
 
@@ -14,7 +14,7 @@
 
 \let\oldmarginpar\marginpar
 
-\renewcommand\marginpar[1]{\oldmarginpar{\raggedright\scriptsize #1}}
+\renewcommand\marginpar[1]{\leavevmode\oldmarginpar{\raggedright\scriptsize #1}}
 
 % \renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\scriptsize #1]%
 % {\raggedright\scriptsize #1}}
@@ -137,6 +137,11 @@ citecolor=green, urlcolor=blue]{hyperref}
 
 %\newcommand*{\blank}{\allowbreak\textvisiblespace\allowbreak} % visible space
 \newcommand*{\blank}{\sqcup}
+
+% \setsecheadstyle{\large\usefont{T2A}{fag}{b}{r}} %\scshape
+% \setsubsecheadstyle{\bfseries\sffamily}
+
+% \renewcommand\familydefault{\sfdefault}
 
 \title{Езици, автомати, изчислимост}
 \author{Стефан Вътев\thanks{ел. поща: \href{mailto:stefanv@fmi.uni-sofia.bg}{stefanv@fmi.uni-sofia.bg}}}

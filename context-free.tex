@@ -1218,7 +1218,7 @@ $L$ се нарича {\bf безконтекстен език}, ако съще
 
 \begin{example}
   Нека е дадена граматиката $G$ с правила 
-  $S\rightarrow ASB\vert \varepsilon, A\rightarrow aAa\vert a, B\rightarrow bBb\vert b$.
+  \[S\rightarrow ASB\vert \varepsilon, A\rightarrow aAa\vert a, B\rightarrow bBb\vert b.\]
   Ще построим стеков автомат $P = \PDA$, такъв че $\L_S(P) = \L(G)$.
   \begin{itemize}
   \item
@@ -1289,7 +1289,7 @@ $L$ се нарича {\bf безконтекстен език}, ако съще
 \end{proof}
 
 \begin{example}
-  Езикът $L = \{w \in \{a,b,c\}^\star \mid n_a(w) = n_b(w) = n_c(w)\}$ не е безконтекстен.
+  Езикът $L = \{w \in \{a,b,c\}^\star \mid N_a(w) = N_b(w) = N_c(w)\}$ не е безконтекстен.
 \end{example}
 \begin{proof}
   Да допуснем, че $L$ е безконтекстен език.
