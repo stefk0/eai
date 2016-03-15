@@ -1257,7 +1257,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Да положим $p = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq p$.
   Да разгледаме първите $p$ стъпки от изпълнението на $\alpha$ върху $\A$:
   \[s\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow}q_2 \dots \stackrel{a_p}{\rightarrow} q_p.\]
-  Тъй като $\abs{Q} = p$, а по този път участват $n+1$ състояния $q_0,q_1,\dots,q_p$,
+  Тъй като $\abs{Q} = p$, а по този път участват $p+1$ състояния $q_0,q_1,\dots,q_p$,
   то съществуват числа $i, j$, за които $0\leq i < j\leq p$ и $q_i = q_j$.
   Нека разделим думата $\alpha$ на три части по следния начин:
   \[x = a_1\cdots a_i,\quad y = a_{i+1}\cdots a_j,\quad z = a_{j+1}\cdots a_k.\]
@@ -1302,6 +1302,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \noindent Отрицанието на свойството $(P)$ може да се запише по следния начин:
   {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
   Горната формула е еквивалентна на:
+  \marginpar{Използваме, че $\neg p \vee \neg q \vee r \equiv (p \wedge q) \to r$}
   {\scriptsize
     \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
 \end{proof}
