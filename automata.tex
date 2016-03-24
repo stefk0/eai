@@ -1583,48 +1583,44 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Имаме свойството, че
 \[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}L\}.\]
 
-\begin{example}
-  Да разгледаме езика $L = \L(\mathbf{((a+b)^+\cdot a)^\star})$.
-  Да видим как можем директно да построим минимален тотален детерминиран автомат $\A = \FA$ разпознаващ $L$.
-  Състоянията на автомата ще бъдат от вида $q_B$, където $B \subseteq \Sigma^\star$, така че
-  \[B = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_B,\omega) \in F^\A\}.\]
-  Тогава началното състояние $s$ ще бъде $q_L$, защото 
-  \[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_L,\omega) \in F^\A\}.\]
-  Сега едновременно ще строим състоянията на автомата $Q^\A$ и функцията на преходите $\delta_\A$.
-  \begin{itemize}
-  \item 
-    $a^{-1}L = aL \cup (a+b)^+aL \df M$;
-    Следователно, имаме ново състояние $q_M$ в автомата и 
-    $\delta_\A(q_L,a) = q_M$.
-  \item
-    $b^{-1}L = aL\cup (a+b)^+aL = M$;
-    Следователно, $\delta_\A(q_L,b) = q_M$.
-  \item
-    $a^{-1}M = L \cup aL \cup (a+b)^+aL \df N$;
-    Следователно, имаме ново състояние $q_N$ в автомата и 
-    $\delta_\A(q_M,a) = q_N$.
-  \item
-    $b^{-1}M = aL\cup (a+b)^+aL = M$;
-    Следователно, $\delta_\A(q_M,b) = q_M$.
-  \item
-    $a^{-1}N = a^{-1}L \cup L \cup aL \cup (a+b)^+aL = N$;
-    Следователно, $\delta_\A(q_N,a) = q_N$.
-  \item
-    $b^{-1}N = aL \cup (a+b)^+aL = M$.
-    Следователно, $\delta_\A(q_M,b) = q_M$.
-  \end{itemize}
-  Така получихме, че 
-  \[Q^\A = \{q_L, q_N, q_M\}.\]
-  Нека сега да съобразим кои са финалните състояния.
-  Понеже имаме, че 
-  \[B = \{\omega \in \Sigma^\star \mid \delta^\star(q_B,\omega) \in F\},\]
-  то $q_B \in F^\A \iff \delta^\star_\A(q_B,\varepsilon) \in F^\A \iff \varepsilon \in B$.
-  Следователно, в нашия автомат, финалните състояния са $q_L$ и $q_M$,
-  защото $\varepsilon \in L,M$. 
-  Сега вече сме готови да нарисуваме картинка на автомата.
+Да разгледаме езика $L = \L(\mathbf{((a+b)^+\cdot a)^\star})$.
+Да видим как можем директно да построим минимален тотален детерминиран автомат $\A = \pair{Q^\A,\Sigma,s,\delta_\A,F^\A}$ разпознаващ $L$.
+Състоянията на автомата ще бъдат от вида $q_B$, където $B \subseteq \Sigma^\star$, така че
+\[B = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_B,\omega) \in F^\A\}.\]
+Тогава началното състояние $s$ ще бъде $q_L$, защото 
+\[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_L,\omega) \in F^\A\}.\]
+Сега едновременно ще строим състоянията на автомата $Q^\A$ и функцията на преходите $\delta_\A$.
+\begin{itemize}
+\item 
+  $a^{-1}L = aL \cup \{a,b\}^+aL \df M$.
+  Понеже $M \neq L$, имаме ново състояние $q_M$ в автомата и 
+  $\delta_\A(q_L,a) = q_M$.
+\item
+  $b^{-1}L = aL\cup \{a,b\}^+aL = M$;
+  Следователно, $\delta_\A(q_L,b) = q_M$.
+\item
+  $a^{-1}M = L \cup aL \cup \{a,b\}^+aL \df N$. Понеже $N \neq L, M$, имаме ново състояние $q_N$ в автомата и 
+  $\delta_\A(q_M,a) = q_N$.
+\item
+  $b^{-1}M = aL\cup \{a,b\}^+aL = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
+\item
+  $a^{-1}N = a^{-1}L \cup L \cup aL \cup \{a,b\}^+aL = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
+\item
+  $b^{-1}N = aL \cup \{a,b\}^+aL = M$.
+  Следователно, $\delta_\A(q_M,b) = q_M$.
+\end{itemize}
+Така получихме, че 
+\[Q^\A = \{q_L, q_N, q_M\}.\]
+Нека сега да съобразим кои са финалните състояния.
+Понеже искаме нашия автомат да има свойството, че
+\[B = \{\omega \in \Sigma^\star \mid \delta^\star(q_B,\omega) \in F^\A\},\]
+то $q_B \in F^\A \iff \delta^\star_\A(q_B,\varepsilon) \in F^\A \iff \varepsilon \in B$.
+Следователно, в нашия автомат, финалните състояния са $q_L$ и $q_M$,
+защото $\varepsilon \in L,M$. 
+Сега вече сме готови да нарисуваме картинка на автомата.
 
-  \begin{figure}[H]
-    \centering
+\begin{figure}[H]
+  \begin{subfigure}[b]{.4\textwidth}
     \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
       \tikzstyle{every state}=[circle,minimum size=20pt,auto]
       
@@ -1640,57 +1636,85 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       (N) edge [bend left=15] node [below] {$b$} (M)
       (N) edge [loop above] node [above] {$a$} (N);
     \end{tikzpicture}
-    \caption{Минимален автомат за рег. израз $((a+b)^+a)^\star$}
-  \end{figure}
+    \caption{Минимален автомат за езика $\L(\mathbf{((a+b)^+a)^\star})$}
+  \end{subfigure}
+  \quad
+  ~
+  \quad
+  \begin{subfigure}[b]{.4\textwidth}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      
+      \node[initial above, state,accepting]   (L) {$[\varepsilon]_L$};
+      \node[state]                            (M) [right of=L]{$[a]_L$};
+      \node[state,accepting]                  (N) [right of=M]{$[aa]_L$};
+      
+      
+      \path 
+      (L) edge [bend left=15] node [above] {$a,b$}   (M)
+      (M) edge [loop above] node [above] {$b$} (M)
+      (M) edge [bend left=15] node [above] {$a$} (N)
+      (N) edge [bend left=15] node [below] {$b$} (M)
+      (N) edge [loop above] node [above] {$a$} (N);
+    \end{tikzpicture}
+    \caption{Минимален автомат за езика $\L(\mathbf{((a+b)^+a)^\star})$}
+  \end{subfigure}
+\end{figure}
 
-  Остава да се уверим, че нашата конструкция е коректна, т.е. наистина автоматът $\A$ е минимален за езика $L$.
-  Според \Th{myhill-nerode}, състоянията на минималния автомат $\M$ са класовете на еквивалентност на релацията $\approx_L$.
-  Трябва да построим биекция $f:Q^\A \to Q^\M$, така че
-  \[(\forall q\in Q^\A)(\forall x\in \Sigma)[f(\delta_\A(q,x)) = \delta_\M(f(q),x)].\]
-  В нашия случай, $Q^\A = \{q_L,q_M,q_N\}$.
-  \begin{itemize}
-  \item 
-    Ясно е, че $f(q_L) \df [\varepsilon]_L$ защото това са началните състояния.
-  \item
-    Понеже $\delta_\A(q_L,a) = q_M$, то $f(q_M) = f(q_L)\cdot[a]_L = [a]_L$. Ясно е, че $[\varepsilon]_L \neq [a]_L$.
-  \item
-    Понеже $\delta_\A(q_L,b) = q_M$, то $f(q_M) = f(q_L)\cdot[b]_L$. Лесно се вижда, че наистина $[a]_L = [b]_L$.
-  \item
-    Понеже $\delta_\A(q_M,a) = q_N$, то $f(q_N) = f(q_M)\cdot[a]_L = [aa]_L$. Лесно се вижда, че $[aa]_L \neq [\varepsilon]_L$
-    и $[aa]_L \neq [a]_L$.
-  \item
-    Понеже $\delta_\A(q_M,b) = q_M$, то $f(q_M) = f(q_N)\cdot[b]_L = [ab]_L$. Лесно се вижда, че $[a]_L = [aab]_L$.
-  \item
-    Понеже $\delta_\A(q_N,a) = q_N$, то $f(q_N) = f(q_N)\cdot[a]_L = [aaa]_L$. Лесно се вижда, че $[aa]_L = [aaa]_L$.
-  \item
-    Понеже $\delta_\A(q_N,b) = q_M$, то $f(q_M) = f(q_N)\cdot[b]_L = [aab]_L$. 
-  \end{itemize}
-  Според горните разсъждения, 
-  \begin{align*}
-    Q^\M & = \{f(q_L),f(q_M),f(q_N)\} = \{[\varepsilon]_L, [a]_L, [aa]_L\},\\
-    F^\M & = \{f(q_L), f(q_N)\} = \{[\varepsilon]_L, [aa]_L\}.
-  \end{align*}
-\end{example}
+Остава да се уверим, че нашата конструкция е коректна, т.е. наистина автоматът $\A$ е минимален за езика $L$.
+Според \Th{myhill-nerode}, състоянията на минималния автомат $\M$ са класовете на еквивалентност на релацията $\approx_L$.
+Трябва да построим биекция $f:Q^\A \to Q^\M$, така че
+\[(\forall q\in Q^\A)(\forall x\in \Sigma)[f(\delta_\A(q,x)) = \delta_\M(f(q),x)].\]
+В нашия случай, $Q^\A = \{q_L,q_M,q_N\}$.
+\begin{itemize}
+\item 
+  Ясно е, че $f(q_L) \df [\varepsilon]_L$ защото това са началните състояния.
+\item
+  Понеже $\delta_\A(q_L,a) = q_M$ и $\delta_\M([\varepsilon]_L,a) = [a]_L$, то $f(q_M) = [a]_L$. Ясно е, че $[\varepsilon]_L \neq [a]_L$
+  и следователно $f$ продължава да е инективна.
+\item
+  Понеже $\delta_\A(q_L,b) = q_M$ и $\delta_\M([\varepsilon]_L,b) = [b]_L$, то $f(q_M) = [b]_L$. Лесно се вижда, че наистина $[a]_L = [b]_L$
+  и следователно дефиницията на $f$ е коректна.
+\item
+  Понеже $\delta_\A(q_M,a) = q_N$ и $\delta_\M([a]_L,a) = [aa]_L$, то $f(q_N) = [aa]_L$. Лесно се вижда, че $[aa]_L \neq [\varepsilon]_L$
+  и $[aa]_L \neq [a]_L$. Това означава, че $f$ продължава да е инективна.
+\item
+  Понеже $\delta_\A(q_M,b) = q_M$ и $\delta_\M([a]_L,b) = [ab]_L$, то $f(q_M) = [ab]_L$. Лесно се вижда, че $[a]_L = [ab]_L$.
+\item
+  Понеже $\delta_\A(q_N,a) = q_N$ и $\delta_\M([aa]_L,a) = [aaa]_L$, то $f(q_N) = [aaa]_L$. Лесно се вижда, че $[aaa]_L = [aa]_L$, т.е.
+  $f$ продължава да бъде коректно дефинирана функция.
+\item
+  Понеже $\delta_\A(q_N,b) = q_M$ и $\delta_\M([aa]_L,b) = [aab]_L$, то $f(q_M) = [aab]_L$. Лесно се вижда, че $[aab]_L = [ab]_L$, т.е.
+  $f$ продължава да бъде коректно дефинирана функция.
+\end{itemize}
+Според горните разсъждения, 
+\begin{align*}
+  Q^\M & = \{f(q_L),f(q_M),f(q_N)\} = \{[\varepsilon]_L, [a]_L, [aa]_L\},\\
+  F^\M & = \{f(q_L), f(q_N)\} = \{[\varepsilon]_L, [aa]_L\}.
+\end{align*}
+
+Проверете, че наистина $L = [\varepsilon]_L \cup [aa]_L$.
+
 
 \begin{example}
   Да разгледаме езика $L = \L(\mathbf{a\cdot(a+b)^\star\cdot b})$.
   \begin{itemize}
   \item 
-    $a^{-1}L = (a+b)^\star b = M$;
+    $a^{-1}L = \{a,b\}^\star b = M$;
   \item
     $b^{-1}L = \emptyset$;
   \item
-    $a^{-1}M = b + (a+b)^\star b = N$;
+    $a^{-1}M = \{b\} \cup \{a,b\}^\star b = N$;
   \item
-    $b^{-1}M = \varepsilon + b + (a+b)^\star b = P$;
+    $b^{-1}M = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$;
   \item
-    $a^{-1}N = b \cup (a+b)^\star b = M$;
+    $a^{-1}N = \{b\} \cup \{a,b\}^\star b = M$;
   \item
-    $b^{-1}N = \varepsilon \cup b \cup (a+b)^\star b = P$;
+    $b^{-1}N = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$;
   \item
-    $a^{-1}P = b + (a+b)^\star b = N$;
+    $a^{-1}P = \{b\} \cup \{a,b\}^\star b = N$;
   \item
-    $b^{-1}P = \varepsilon + b + (a+b)^\star b = P$.
+    $b^{-1}P = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$.
   \end{itemize}
 
   \begin{figure}[H]
