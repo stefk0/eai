@@ -370,16 +370,16 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \end{center}
     \caption{$\L(\A) \stackrel{?}{=} L$}
   \end{figure}
-  Докажете с индукция по дължината на думата $w$, че:
+  Докажете с индукция по дължината на думата $\omega$, че:
   \begin{enumerate}[a)]
   \item 
-    $\delta^\star(00, w) = 00 \implies (\exists k,n\in\Nat)[N_a(w) = 2k\ \&\ N_b(w) = 2n]$;
+    $\delta^\star(q_{00}, \omega) = q_{00} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k\ \&\ N_b(\omega) = 2n]$;
   \item 
-    $\delta^\star(00, w) = 01 \implies (\exists k,n\in\Nat)[N_a(w) = 2k\ \&\ N_b(w) = 2n+1]$;
+    $\delta^\star(q_{00}, \omega) = q_{01} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k\ \&\ N_b(\omega) = 2n+1]$;
   \item 
-    $\delta^\star(00, w) = 10 \implies (\exists k,n\in\Nat)[N_a(w) = 2k+1\ \&\ N_b(w) = 2n]$;
+    $\delta^\star(q_{00}, \omega) = q_{10} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k+1\ \&\ N_b(\omega) = 2n]$;
   \item 
-    $\delta^\star(00, w) = 11 \implies (\exists k,n\in\Nat)[N_a(w) = 2k+1\ \&\ N_b(w) = 2n+1]$;
+    $\delta^\star(q_{00}, \omega) = q_{11} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k+1\ \&\ N_b(\omega) = 2n+1]$;
   \end{enumerate}
 \end{hint}
 
@@ -1872,10 +1872,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \marginpar{$\approx_L$ е известна като релация на Майхил-Нероуд}
   Нека $L \subseteq \Sigma^\star$ е език и нека $x,y \in \Sigma^\star$.
   Казваме, че $x$ и $y$ са {\bf еквивалентни относно} $L$, което записваме 
-  като $\alpha \approx_L \beta$, ако е изпълнено:
-  \[(\forall \omega \in \Sigma^\star)[\alpha\omega \in L \iff \beta\omega \in L].\]
+  като $\alpha \approx_L \beta$, когато:
+  \[\alpha \approx_L \beta \dff \alpha^{-1}L = \beta^{-1}L.\]
   С други думи, 
-  \[\alpha \approx_L \beta \iff \alpha^{-1}L = \beta^{-1}L.\]
+  \[\alpha \approx_L \beta \iff (\forall \omega \in \Sigma^\star)[\alpha\omega \in L \iff \beta\omega \in L].\]
 \item
   \marginpar{Трябва ли $\A$ да е тотален?}
   Нека $\A = \FA$ е ДКА.
@@ -2201,6 +2201,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Единият е $F$, а другият е $Q\setminus F$.
 
 \begin{prop}
+  \label{pr:one-letter-test}
   За всеки две състояния $p,q \in Q$, и всяко $n$, $p \equiv_{n+1} q$ точно тогава, когато
   \begin{enumerate}[a)]
   \item
@@ -2407,7 +2408,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Класовете на екиваленост на $\equiv_0$ са 
     $A_0 = Q\setminus F = \{0,3,4\}$ и $A_1 = F = \{1,2,5\}$.
   \item
-    Разбиваме класовете на еквивалентност на $\equiv_0$.
+    Разбиваме класовете на еквивалентност на $\equiv_0$ като използваме \Prop{one-letter-test}.
     
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
