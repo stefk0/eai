@@ -1582,6 +1582,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \[\alpha L = \{\alpha\omega \in \Sigma^\star \mid \omega \in L\}.\]
 Имаме свойството, че
 \[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}L\}.\]
+Лесно се съобразява, че 
+\[(\alpha\cdot\beta)^{-1}L = \beta^{-1}(\alpha^{-1}L).\]
 
 Да разгледаме езика $L = \L(\mathbf{((a+b)^+\cdot a)^\star})$.
 Да видим как можем директно да построим минимален тотален детерминиран автомат $\A = \pair{Q^\A,\Sigma,s,\delta_\A,F^\A}$ разпознаващ $L$.
@@ -1590,21 +1592,30 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Тогава началното състояние $s$ ще бъде $q_L$, защото 
 \[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_L,\omega) \in F^\A\}.\]
 Сега едновременно ще строим състоянията на автомата $Q^\A$ и функцията на преходите $\delta_\A$.
+Удобно е да представим 
+\begin{align*}
+  L & = \{\varepsilon\} \cup \{a,b\}^+ a L\\
+  & = \{\varepsilon\} \cup a\{a,b\}^\star aL \cup b\{a,b\}^\star aL.
+\end{align*}
 \begin{itemize}
 \item 
-  $a^{-1}L = aL \cup \{a,b\}^+aL \df M$.
+  $a^{-1}L = \{a,b\}^\star aL = aL \cup \{a,b\}^+aL \df M$.
+  Имаме, че $M \neq L$, защото $\varepsilon \in L$, но $\varepsilon \not\in M$.
   Понеже $M \neq L$, имаме ново състояние $q_M$ в автомата и 
   $\delta_\A(q_L,a) = q_M$.
 \item
-  $b^{-1}L = aL\cup \{a,b\}^+aL = M$;
+  $b^{-1}L = \{a,b\}^\star aL = M$;
   Следователно, $\delta_\A(q_L,b) = q_M$.
 \item
-  $a^{-1}M = L \cup aL \cup \{a,b\}^+aL \df N$. Понеже $N \neq L, M$, имаме ново състояние $q_N$ в автомата и 
+  $a^{-1}M = L \cup aL \cup \{a,b\}^+aL \df N$. 
+  Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
+  Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
+  Понеже $N \neq L, M$, имаме ново състояние $q_N$ в автомата и 
   $\delta_\A(q_M,a) = q_N$.
 \item
-  $b^{-1}M = aL\cup \{a,b\}^+aL = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
+  $b^{-1}M = \{a,b\}^\star aL = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
 \item
-  $a^{-1}N = a^{-1}L \cup L \cup aL \cup \{a,b\}^+aL = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
+  $a^{-1}N = a^{-1}L \cup L \cup aL \cup \{a,b\}^+aL = M \cup L \cup \{a,b\}^\star aL = M \cup L \cup M = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
 \item
   $b^{-1}N = aL \cup \{a,b\}^+aL = M$.
   Следователно, $\delta_\A(q_M,b) = q_M$.
@@ -1663,8 +1674,11 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 Остава да се уверим, че нашата конструкция е коректна, т.е. наистина автоматът $\A$ е минимален за езика $L$.
 Според \Th{myhill-nerode}, състоянията на минималния автомат $\M$ са класовете на еквивалентност на релацията $\approx_L$.
-Трябва да построим биекция $f:Q^\A \to Q^\M$, така че
-\[(\forall q\in Q^\A)(\forall x\in \Sigma)[f(\delta_\A(q,x)) = \delta_\M(f(q),x)].\]
+Да разгледаме изображението $f$ с дефиниционна област $\Sigma^\star/_{\sim_L}$, дефинирано като:
+\[f([\alpha]_L) = q_M, \text{ където }M = \alpha^{-1}L.\]
+
+% Трябва да построим биекция $f:Q^\M \to Q^\A$, така че
+% \[(\forall q\in Q^\A)(\forall x\in \Sigma)[f(\delta_\A(q,x)) = \delta_\M(f(q),x)].\]
 В нашия случай, $Q^\A = \{q_L,q_M,q_N\}$.
 \begin{itemize}
 \item 
