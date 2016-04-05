@@ -1573,9 +1573,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 \end{proof}
 
-\section{Минимлен автомат}
+\section{Минимален автомат}
 
-\subsection{Минимален автомат по даден регулярен език}
+Нека да започнем като въведем няколко означения.
 Нека $\alpha$ е дума над азбуката $\Sigma$  и $L$ е език. Означаваме 
 \[\alpha^{-1}L = \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
 Освен това, да означим 
@@ -1585,6 +1585,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Лесно се съобразява, че 
 \[(\alpha\cdot\beta)^{-1}L = \beta^{-1}(\alpha^{-1}L).\]
 
+\subsection{Минимален автомат по даден регулярен език}
 Да разгледаме езика $L = \L(\mathbf{((a+b)^+\cdot a)^\star})$.
 Да видим как можем директно да построим минимален тотален детерминиран автомат $\A = \pair{Q^\A,\Sigma,s,\delta_\A,F^\A}$ разпознаващ $L$.
 Състоянията на автомата ще бъдат от вида $q_B$, където $B \subseteq \Sigma^\star$, така че накрая искаме да имаме свойството
@@ -1644,9 +1645,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Така получихме, че 
 \[Q^\A = \{q_L, q_N, q_M\}.\]
 Нека сега да съобразим кои са финалните състояния.
-% Понеже искаме нашия автомат да има свойството, че
-% \[B = \{\omega \in \Sigma^\star \mid \delta^\star(q_B,\omega) \in F^\A\},\]
-% то $q_B \in F^\A \iff \delta^\star_\A(q_B,\varepsilon) \in F^\A \iff \varepsilon \in B$.
 Понеже имаме свойството 
 \[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}L\},\]
 то следва, че финалните състояния на автомата $\A$ са  $q_L$ и $q_M$,
@@ -1697,7 +1695,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 Остава да се уверим, че нашата конструкция е коректна, т.е. наистина автоматът $\A$ е минимален за езика $L$.
 Според \Th{myhill-nerode}, състоянията на минималния автомат $\M$ са класовете на еквивалентност на релацията $\approx_L$.
-Да разгледаме изображението $f$ с дефиниционна област $\Sigma^\star/_{\sim_L} = \{[\alpha]_L \mid \alpha \in \Sigma^\star\}$, дефинирано като:
+Да разгледаме изображението $f$ с дефиниционна област $\Sigma^\star/_{\approx_L} = \{[\alpha]_L \mid \alpha \in \Sigma^\star\}$, дефинирано като:
 \[f([\alpha]_L) = q_M, \text{ където }M = \alpha^{-1}L.\]
 \begin{itemize}
 \item 
@@ -1707,14 +1705,18 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Да разгледаме $q_M \in Q^\A$. От конструкцията на автомата $\A$ следва, че съществува дума $\alpha \in \Sigma^\star$,
   за която $M = \alpha^{-1}L$. Това означава, че $f([\alpha]_L) = q_M$.
   Следователно, $f$ е сюрективна.
+\item
+  Имаме и свойството:
+  \begin{align*}
+    f(\delta_\M([\alpha]_L,x)) & = f([\alpha\cdot x]_L) & (\text{деф. на }\delta_\M)\\
+    & = q_N & (N = (\alpha\cdot x)^{-1}L = x^{-1}(\alpha^{-1}L))\\
+    & = \delta_\A(q_M, x) & (M = \alpha^{-1}L)\\
+    & = \delta_\A(f([\alpha]_L), x),
+  \end{align*}
+  от което следва, че $f$ е биекция.
 \end{itemize}
 
-\begin{align*}
-  f(\delta_\M([\alpha]_L,x)) & = f([\alpha\cdot x]_L) & (\text{деф. на }\delta_\M)\\
-  & = q_N & (N = (\alpha\cdot x)^{-1}L = x^{-1}(\alpha^{-1}L))\\
-  & = \delta_\A(q_M, x) & (M = \alpha^{-1}L)\\
-  & = \delta_\A(f([\alpha]_L), x).
-\end{align*}
+
 
 % \begin{itemize}
 % \item 
