@@ -1587,16 +1587,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 Да разгледаме езика $L = \L(\mathbf{((a+b)^+\cdot a)^\star})$.
 Да видим как можем директно да построим минимален тотален детерминиран автомат $\A = \pair{Q^\A,\Sigma,s,\delta_\A,F^\A}$ разпознаващ $L$.
-Състоянията на автомата ще бъдат от вида $q_B$, където $B \subseteq \Sigma^\star$, така че
+Състоянията на автомата ще бъдат от вида $q_B$, където $B \subseteq \Sigma^\star$, така че накрая искаме да имаме свойството
 \[B = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_B,\omega) \in F^\A\}.\]
 Тогава началното състояние $s$ ще бъде $q_L$, защото 
 \[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_L,\omega) \in F^\A\}.\]
 Сега едновременно ще строим състоянията на автомата $Q^\A$ и функцията на преходите $\delta_\A$.
+\marginpar{
 Удобно е да представим 
 \begin{align*}
   L & = \{\varepsilon\} \cup \{a,b\}^+ a L\\
-  & = \{\varepsilon\} \cup a\{a,b\}^\star aL \cup b\{a,b\}^\star aL.
-\end{align*}
+  & = \{\varepsilon\} \cup a\{a,b\}^\star aL \cup b\{a,b\}^\star aL
+\end{align*}}
 \begin{itemize}
 \item 
   $a^{-1}L = \{a,b\}^\star aL = aL \cup \{a,b\}^+aL \df M$.
@@ -1607,26 +1608,48 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   $b^{-1}L = \{a,b\}^\star aL = M$;
   Следователно, $\delta_\A(q_L,b) = q_M$.
 \item
-  $a^{-1}M = L \cup aL \cup \{a,b\}^+aL \df N$. 
+  \marginpar{
+    Удобно е да представим
+    \begin{align*}
+      M & \df \{a,b\}^\star aL\\
+      & = aL \cup \{a,b\}^+aL\\
+      & = aL \cup aM \cup bM
+    \end{align*}    
+    Тогава 
+    \begin{align*}
+      L & = \{\varepsilon\} \cup aM \cup bM
+    \end{align*}
+    Освен това,
+    \begin{align*}
+      N & \df L \cup M \\
+      & = \{\varepsilon\} \cup aM \cup bM \cup M\\
+      & = \{\varepsilon\} \cup aM \cup bM \cup aL\\
+    \end{align*}
+  }
+  $a^{-1}M = L \cup M \df N$. 
   Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
   Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
   Понеже $N \neq L, M$, имаме ново състояние $q_N$ в автомата и 
   $\delta_\A(q_M,a) = q_N$.
 \item
-  $b^{-1}M = \{a,b\}^\star aL = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
+  $b^{-1}M = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
 \item
-  $a^{-1}N = a^{-1}L \cup L \cup aL \cup \{a,b\}^+aL = M \cup L \cup \{a,b\}^\star aL = M \cup L \cup M = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
+  $a^{-1}N = L \cup M = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
 \item
-  $b^{-1}N = aL \cup \{a,b\}^+aL = M$.
+  $b^{-1}N = M$.
   Следователно, $\delta_\A(q_M,b) = q_M$.
 \end{itemize}
+От горните сметки следва, че 
+\[(\forall \omega \in \Sigma^\star)[\omega^{-1}L \in \{L, N, M\}].\]
 Така получихме, че 
 \[Q^\A = \{q_L, q_N, q_M\}.\]
 Нека сега да съобразим кои са финалните състояния.
-Понеже искаме нашия автомат да има свойството, че
-\[B = \{\omega \in \Sigma^\star \mid \delta^\star(q_B,\omega) \in F^\A\},\]
-то $q_B \in F^\A \iff \delta^\star_\A(q_B,\varepsilon) \in F^\A \iff \varepsilon \in B$.
-Следователно, в нашия автомат, финалните състояния са $q_L$ и $q_M$,
+% Понеже искаме нашия автомат да има свойството, че
+% \[B = \{\omega \in \Sigma^\star \mid \delta^\star(q_B,\omega) \in F^\A\},\]
+% то $q_B \in F^\A \iff \delta^\star_\A(q_B,\varepsilon) \in F^\A \iff \varepsilon \in B$.
+Понеже имаме свойството 
+\[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}L\},\]
+то следва, че финалните състояния на автомата $\A$ са  $q_L$ и $q_M$,
 защото $\varepsilon \in L,M$. 
 Сега вече сме готови да нарисуваме картинка на автомата.
 
@@ -1674,33 +1697,46 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 Остава да се уверим, че нашата конструкция е коректна, т.е. наистина автоматът $\A$ е минимален за езика $L$.
 Според \Th{myhill-nerode}, състоянията на минималния автомат $\M$ са класовете на еквивалентност на релацията $\approx_L$.
-Да разгледаме изображението $f$ с дефиниционна област $\Sigma^\star/_{\sim_L}$, дефинирано като:
+Да разгледаме изображението $f$ с дефиниционна област $\Sigma^\star/_{\sim_L} = \{[\alpha]_L \mid \alpha \in \Sigma^\star\}$, дефинирано като:
 \[f([\alpha]_L) = q_M, \text{ където }M = \alpha^{-1}L.\]
-
-% Трябва да построим биекция $f:Q^\M \to Q^\A$, така че
-% \[(\forall q\in Q^\A)(\forall x\in \Sigma)[f(\delta_\A(q,x)) = \delta_\M(f(q),x)].\]
-В нашия случай, $Q^\A = \{q_L,q_M,q_N\}$.
 \begin{itemize}
 \item 
-  Ясно е, че $f(q_L) \df [\varepsilon]_L$ защото това са началните състояния.
+  Ако $[\alpha]_L \neq [\beta]_L$, то $\alpha^{-1}L \neq \beta^{-1}L$ и оттук следва, че $f([\alpha]_L) \neq f([\beta]_L)$.
+  Това означава, че $f$ е инективна.
 \item
-  Понеже $\delta_\A(q_L,a) = q_M$ и $\delta_\M([\varepsilon]_L,a) = [a]_L$, то $f(q_M) = [a]_L$. Ясно е, че $[\varepsilon]_L \neq [a]_L$
-  и следователно $f$ продължава да е инективна.
-\item
-  Понеже $\delta_\A(q_L,b) = q_M$ и $\delta_\M([\varepsilon]_L,b) = [b]_L$, то $f(q_M) = [b]_L$. Лесно се вижда, че наистина $[a]_L = [b]_L$
-  и следователно дефиницията на $f$ е коректна.
-\item
-  Понеже $\delta_\A(q_M,a) = q_N$ и $\delta_\M([a]_L,a) = [aa]_L$, то $f(q_N) = [aa]_L$. Лесно се вижда, че $[aa]_L \neq [\varepsilon]_L$
-  и $[aa]_L \neq [a]_L$. Това означава, че $f$ продължава да е инективна.
-\item
-  Понеже $\delta_\A(q_M,b) = q_M$ и $\delta_\M([a]_L,b) = [ab]_L$, то $f(q_M) = [ab]_L$. Лесно се вижда, че $[a]_L = [ab]_L$.
-\item
-  Понеже $\delta_\A(q_N,a) = q_N$ и $\delta_\M([aa]_L,a) = [aaa]_L$, то $f(q_N) = [aaa]_L$. Лесно се вижда, че $[aaa]_L = [aa]_L$, т.е.
-  $f$ продължава да бъде коректно дефинирана функция.
-\item
-  Понеже $\delta_\A(q_N,b) = q_M$ и $\delta_\M([aa]_L,b) = [aab]_L$, то $f(q_M) = [aab]_L$. Лесно се вижда, че $[aab]_L = [ab]_L$, т.е.
-  $f$ продължава да бъде коректно дефинирана функция.
+  Да разгледаме $q_M \in Q^\A$. От конструкцията на автомата $\A$ следва, че съществува дума $\alpha \in \Sigma^\star$,
+  за която $M = \alpha^{-1}L$. Това означава, че $f([\alpha]_L) = q_M$.
+  Следователно, $f$ е сюрективна.
 \end{itemize}
+
+\begin{align*}
+  f(\delta_\M([\alpha]_L,x)) & = f([\alpha\cdot x]_L) & (\text{деф. на }\delta_\M)\\
+  & = q_N & (N = (\alpha\cdot x)^{-1}L = x^{-1}(\alpha^{-1}L))\\
+  & = \delta_\A(q_M, x) & (M = \alpha^{-1}L)\\
+  & = \delta_\A(f([\alpha]_L), x).
+\end{align*}
+
+% \begin{itemize}
+% \item 
+%   Ясно е, че $f([\varepsilon]_L) = q_L$.
+% \item
+%   Понеже $\delta_\A(q_L,a) = q_M$ и $\delta_\M([\varepsilon]_L,a) = [a]_L$, то $f(q_M) = [a]_L$. Ясно е, че $[\varepsilon]_L \neq [a]_L$
+%   и следователно $f$ продължава да е инективна.
+% \item
+%   Понеже $\delta_\A(q_L,b) = q_M$ и $\delta_\M([\varepsilon]_L,b) = [b]_L$, то $f(q_M) = [b]_L$. Лесно се вижда, че наистина $[a]_L = [b]_L$
+%   и следователно дефиницията на $f$ е коректна.
+% \item
+%   Понеже $\delta_\A(q_M,a) = q_N$ и $\delta_\M([a]_L,a) = [aa]_L$, то $f(q_N) = [aa]_L$. Лесно се вижда, че $[aa]_L \neq [\varepsilon]_L$
+%   и $[aa]_L \neq [a]_L$. Това означава, че $f$ продължава да е инективна.
+% \item
+%   Понеже $\delta_\A(q_M,b) = q_M$ и $\delta_\M([a]_L,b) = [ab]_L$, то $f(q_M) = [ab]_L$. Лесно се вижда, че $[a]_L = [ab]_L$.
+% \item
+%   Понеже $\delta_\A(q_N,a) = q_N$ и $\delta_\M([aa]_L,a) = [aaa]_L$, то $f(q_N) = [aaa]_L$. Лесно се вижда, че $[aaa]_L = [aa]_L$, т.е.
+%   $f$ продължава да бъде коректно дефинирана функция.
+% \item
+%   Понеже $\delta_\A(q_N,b) = q_M$ и $\delta_\M([aa]_L,b) = [aab]_L$, то $f(q_M) = [aab]_L$. Лесно се вижда, че $[aab]_L = [ab]_L$, т.е.
+%   $f$ продължава да бъде коректно дефинирана функция.
+% \end{itemize}
 Според горните разсъждения, 
 \begin{align*}
   Q^\M & = \{f(q_L),f(q_M),f(q_N)\} = \{[\varepsilon]_L, [a]_L, [aa]_L\},\\
@@ -1789,28 +1825,28 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \node[state]                            (1) [right of=0]{$L_1$};
       \node[state]                            (2) [right of=1]{$L_2$};
       \node[state]                            (3) [right of=2]{$L_3$};
-      \node[state]                            (E) [below of=1]{$\emptyset$};
+      \node[state]                            (A) [below of=1]{$\emptyset$};
       \node[state]                            (B) [below right of=1]{$\{b\}$};
       \node[state]                            (BB) [below right of=2]{$\{bb\}$};
-      \node[state, accepting]                 (A) [below of=B]{$\{\varepsilon\}$};
+      \node[state, accepting]                 (E) [below of=A]{$\{\varepsilon\}$};
       
       \coordinate[right of=3] (4);
-      \coordinate[below right of=3] (BBB); 
-      \coordinate[below of=4] (BBBA); 
+      \coordinate[below right of=3] (BBB);
+      \coordinate[below of=4] (BBBA);
 
       \path 
-      (0) edge [bend left=15]  node [above] {$a$} (1)
-      (1) edge [bend left=15]  node [above] {$a$} (2)
-      (2) edge [bend left=15]  node [above] {$a$} (3)
-      (0) edge [bend right=15]  node [above] {$b$} (E)
-      (E) edge [loop left]    node [left] {$a,b$} (E)
-      (1) edge [bend right=15]  node [left] {$b$} (E)
+      (0) edge [bend left=15]   node [above] {$a$} (1)
+      (1) edge [bend left=15]   node [above] {$a$} (2)
+      (2) edge [bend left=15]   node [above] {$a$} (3)
+      (0) edge [bend right=30]  node [left] {$b$} (E)
+      (E) edge [loop left]      node [left] {$a,b$} (E)
+      (1) edge [bend right=30]  node [left] {$b$} (E)
       (2) edge [bend right=15]  node [left] {$b$} (B)
       (3) edge [bend right=15]  node [left] {$b$} (BB)
-      (B) edge [bend right=15]  node [left] {$b$} (A)
-      (B) edge [bend right=15]  node [above] {$a$} (E)
-      (A) edge [bend left=15]  node [left] {$a,b$} (E)
-      (BB) edge [bend right=15]  node [above] {$b$} (B)
+      (B) edge [bend right=15]  node [above] {$b$} (A)
+      (B) edge [bend left=15]  node [right] {$a$} (E)
+      (A) edge [bend right=15]   node [right] {$a,b$} (E)
+      (BB) edge [bend right=15] node [above] {$b$} (B)
       (BB) edge [bend left=15]  node [below] {$a$} (E);
       
       \draw [dashed,->,shorten >=0pt] (3) to[bend left=15] node[auto] {$a$} (4);
