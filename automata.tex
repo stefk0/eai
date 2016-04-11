@@ -1527,7 +1527,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \subsection*{Примери, за които лемата не е  приложима}
 
 \begin{problem}
-  \marginpar{Например, $c^+\{a^nb^n\mid n\in\Nat\}\cup (a + b)^\star$}
+  \marginpar{Например, $\{c\}^+\cdot\{a^nb^n\mid n\in\Nat\}\cup \{a,b\}^\star$}
   Да се даде пример за език $L$, който {\bf не} е регулярен, но удовлетворява
   условието на \Lem{pumping-reg}.
 \end{problem}
@@ -1792,8 +1792,57 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       (P) edge [loop right]    node [right] {$b$} (P);      
     \end{tikzpicture}
     \caption{Минимален автомат за $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$}
+  \end{figure}
+\end{example}
+
+\begin{example}
+  Да разгледаме езика 
+  \[L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа четен брой $a$ и точно едно $b$}\}.\]
+  Нека да видим дали можем да построим автомат за този език.
+  \begin{itemize}
+  \item 
+    $a^{-1}L \df M$ е езика съставен от думите с нечетен брой $a$ и точно едно $b$;
+  \item 
+    $b^{-1}L \df N$ е езика съставен от думите с четен брой $a$ и нито едно $b$;
+  \item
+    $a^{-1}M = L$;
+  \item
+    $b^{-1}M \df P$ е езика съставен от думите с нечетен брой $a$ и нито едно $b$;
+  \item
+    $a^{-1}N = P$;
+  \item
+    $b^{-1}N = \emptyset$;
+  \item
+    $a^{-1}P = N$;
+  \item
+    $b^{-1}P = \emptyset$;
+  \end{itemize}
+
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      
+      \node[initial, state]        (L) {$q_L$};
+      \node[state]                 (M) [above right of=L]{$q_M$};
+      \node[state, accepting]      (N) [below right of=M]{$q_N$};
+      \node[state]                 (P) [right of=M]{$q_P$};
+      \node[state]                 (E) [right of=N]{$q_\emptyset$};
+            
+      \path 
+      (L) edge [bend right=15]  node [below] {$a$} (M)
+      (M) edge [bend right=15]  node [above] {$a$} (L)
+      (L) edge [bend right=15] node [above] {$b$} (N)
+      (M) edge [bend left=15] node [above] {$b$} (P)
+      (N) edge [bend left=15] node [left] {$a$} (P)
+      (P) edge [bend left=15] node [right] {$a$} (N)
+      (P) edge [bend left=15] node [right] {$b$} (E)
+      (N) edge [bend right=15] node [below] {$b$} (E);
+    \end{tikzpicture}
+    \caption{Минимален автомат, който приема думи с четен брой $a$ и точно едно $b$}
   \end{figure}  
 \end{example}
+
 
 \begin{example}
   Да разгледаме езика $L = \{a^nb^n\mid n \in \Nat\}$. Да се опитаме да построим автомат, който го разпознава.
@@ -1916,12 +1965,14 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 %\marginpar{\href{http://en.wikipedia.org/wiki/DFA_minimization}{Уикипедия}}
 
+\subsection{Релация на Майхил-Нероуд}
+
 \begin{itemize}
 \item
   \index{Майхил-Нероуд!релация}
   \marginpar{$\approx_L$ е известна като релация на Майхил-Нероуд}
-  Нека $L \subseteq \Sigma^\star$ е език и нека $x,y \in \Sigma^\star$.
-  Казваме, че $x$ и $y$ са {\bf еквивалентни относно} $L$, което записваме 
+  Нека $L \subseteq \Sigma^\star$ е език и нека $\alpha,\beta \in \Sigma^\star$.
+  Казваме, че $\alpha$ и $\beta$ са {\bf еквивалентни относно} $L$, което записваме 
   като $\alpha \approx_L \beta$, когато:
   \[\alpha \approx_L \beta \dff \alpha^{-1}L = \beta^{-1}L.\]
   С други думи, 
@@ -1990,13 +2041,14 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{cor}
   \label{cor:approx-less-sim}
   За всеки тотален ДКА $\A$ е изпълнено, че
-  \[\abs{\approx_{\L(\A)}} \leq \abs{\sim_\A},\]
+  \[\abs{\Sigma^\star/_{\approx_{\L(\A)}}} \leq \abs{\Sigma^\star/_{\sim_\A}},\]
   т.е. броят на класовете на еквивалентност на релацията $\approx_{\L(\A)}$
   не надвишава броя на класовете на еквивалентност на релацията $\sim_\A$.
 \end{cor}
 \begin{proof}
-  Нека $A = \{[\alpha]_{\L(\A)} \mid \alpha\in\Sigma^\star\}$ и $B = \{[\alpha]_\A \mid \alpha\in\Sigma^\star\}$.
-  Да разгледаме изображението $f:B\to A$, определено като $f([\alpha]_\A) = [\alpha]_{\L(\A)}$.
+  Да разгледаме изображението 
+  $f:\Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_{\L(\A)}}$, определено като $f([\alpha]_\A) = [\alpha]_{\L(\A)}$.
+  \marginpar{Ако дефинираме $g([\alpha]_{\L(\A)}) = [\alpha]_\A$, то $g$ може да не е функция}
   \begin{itemize}
   \item 
     Първо ще проверим, че $f$ е {\bf функция}, т.е. трябва да проверим, че 
@@ -2013,7 +2065,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Очевидно е, че $f$ е {\bf сюрекция}, защото на всеки клас $[\alpha]_{\L(\A)}$ съответства класа $[\alpha]_\A$.
   \item
     \marginpar{Защо?\\ \writedown Обяснете!}
-    От това, че $f:B\to A$ е сюрективна функция следва, че $\abs{A} \leq \abs{B}$.
+    От това, че $f:\Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_{\L(\A)}}$ е сюрективна функция следва, че 
+    $\abs{\Sigma^\star/_{\approx_{\L(\A)}}} \leq \abs{\Sigma^\star/_{\sim_\A}}$.
   \end{itemize}
 \end{proof}
 
@@ -2021,7 +2074,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \label{cor:upper-bound}
   Нека $L$ е произволен регулярен език $L$.  
   Всеки тотален ДКА $\A$, който разпознава $L$ има свойството
-  \[\abs{Q} \geq \abs{\approx_L},\]
+  \[\abs{Q} \geq \abs{\Sigma^\star/_{\approx_L}},\]
   т.е. броят на класовете на еквивалентност на релацията $\approx_L$
   не надвишава броя на състоянията на автомата.
 \end{cor}
@@ -2030,7 +2083,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Тъй като всяко достижимо състояние определя клас на еквивалентност относно $\sim_\A$,
   то получаваме, че $\abs{Q} = \abs{\sim_\A}$.
   Комбинирайки със \Cor{approx-less-sim},
-  \[\abs{Q} = \abs{\sim_\A} \geq \abs{\approx_L}.\]
+  \[\abs{Q} = \abs{\Sigma^\star/_{\sim_\A}} \geq \abs{\Sigma^\star/_{\approx_L}}.\]
 \end{proof}
 Така получаваме {\em долна граница} за броя на състоянията в тотален автомат разпознаващ езика $L$.
 Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
@@ -2040,8 +2093,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \index{минимален автомат}
 \begin{dfn}
-  Нека $\A$ а тотален ДКА, за който $L = \L(\A)$.
-  Казваме, че $\A$ е {\bf минимален} за езика $L$, ако $\abs{Q_\A} = \abs{\approx_L}$.
+  Нека $\A$ е тотален ДКА, за който $L = \L(\A)$.
+  Казваме, че $\A$ е {\bf минимален} за езика $L$, ако $\abs{Q_\A} = \abs{\Sigma^\star/_{\approx_L}}$.
 \end{dfn}
 
 % Да приемем, че сме фиксирали азбуката $\Sigma$.
@@ -2054,7 +2107,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Нека $L\subseteq \Sigma^\star$ е регулярен език.
   Тогава съществува ДКА $\A = \FA$, който разпознава $L$,
   с точно толкова състояния, колкото са класовете на еквивалентност на релацията $\approx_L$,
-  т.е. $\abs{Q} = \abs{\approx_L}$.
+  т.е. $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
 \end{thm}
 \begin{proof}
 %  \marginpar{стр. 96 от \cite{papadimitriou}}
@@ -2076,7 +2129,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Първо, трябва да се уверим, че множеството от състояния $Q$ е крайно, т.е.
   релацията $\approx_\L$ има крайно много класове на еквивалентност.
   И така, тъй като $\L$ е регулярен език, то той се разпознава от някой тотален ДКА $\A'$.
-  От \Cor{upper-bound} имаме, че $\abs{Q^{\A'}} \geq \abs{\approx_L}$.
+  От \Cor{upper-bound} имаме, че $\abs{Q^{\A'}} \geq \abs{\Sigma^\star/_{\approx_L}}$.
   Понеже $Q^{\A'}$ е крайно множество, то $\approx_L$ има крайно много класове и 
   следователно $Q$ също е крайно множество.
 
@@ -2148,12 +2201,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Всички минимални автомати за $L$ са изоморфни на $\A_0$, автомата построен в теоремата на Нерод-Майхил.
 \end{cor}
 \begin{proof}
-  Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\approx_L}$.
+  Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
   Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
   Искаме да докажем, че $\A \cong \A_0$.
   Понеже $\A$ е свързан, за всяко състояние $q$ можем да намерим дума $\omega_q$,
   за която $\delta^\star(s,\omega_q) = q$.
-  Да дефинираме изображението $f:Q\to [\approx_L]$ като $f(q) = [\omega_q]_L$.
+  Да дефинираме изображението $f:Q\to \Sigma^\star/_{\approx_L}$ като $f(q) = [\omega_q]_L$.
   Ще докажем, че
   $f$ задава изоморфизъм на $\A$ върху $\A_0$. 
   \begin{itemize}
@@ -2170,7 +2223,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \[f(q_1) = [\omega_{q_1}]_L = [\omega_{q_2}]_L = f(q_2).\]
     Тогава $\omega_{q_1} \not\sim_\A \omega_{q_2}$ и $\omega_{q_1} \approx_L \omega_{q_2}$.
     \marginpar{\writedown Обяснете!}
-    Но тогава от \Cor{upper-bound} получаваме, че $\abs{\sim_\A} > \abs{\approx_L}$,
+    Но тогава от \Cor{upper-bound} получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} > \abs{\Sigma^\star/_{\approx_L}}$,
     което противоречи с минималността на $\A$.
   \item
     За да бъде $f$ {\bf сюрективна} трябва за всеки клас $[\beta]_L$ да съществува състояние $q$, за което $f(q) = [\beta]_L$.
@@ -2533,7 +2586,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \section{Регулярни граматики}
 \index{граматика!неограничена}
-
+\label{sect:regular-grammar}
 {\bf Неограничена граматика} e четворка от вида
 \[G = (V, \Sigma, R, S),\]
 където
