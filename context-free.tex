@@ -144,15 +144,15 @@
   Тогава:
   \begin{enumerate}[a)]
   \item 
-    ако $n_a(\omega) = n_b(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
-    $\omega = \omega_1 a \omega_2$, $n_a(\omega_1) = n_b(\omega_1)$ и $n_a(\omega_2) = n_b(\omega_2)$.
+    ако $N_a(\omega) = N_b(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
+    $\omega = \omega_1 a \omega_2$, $N_a(\omega_1) = N_b(\omega_1)$ и $N_a(\omega_2) = N_b(\omega_2)$.
   \item
-    ако $n_b(\omega) = n_a(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
-    $\omega = \omega_1 b \omega_2$, $n_a(\omega_1) = n_b(\omega_1)$ и $n_a(\omega_2) = n_b(\omega_2)$.
+    ако $N_b(\omega) = N_a(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
+    $\omega = \omega_1 b \omega_2$, $N_a(\omega_1) = N_b(\omega_1)$ и $N_a(\omega_2) = N_b(\omega_2)$.
   \end{enumerate}
 \end{problem}
 \begin{proof}
-  Пълна индукция по дължината на думата $\omega$, за които $n_a(\omega) = n_b(\omega)+1$.
+  Пълна индукция по дължината на думата $\omega$, за които $N_a(\omega) = N_b(\omega)+1$.
   \begin{itemize}
   \item 
     $\abs{\omega} = 1$. Тогава $\omega_1 = \omega_2 = \varepsilon$ и $\omega = a$.
@@ -166,9 +166,9 @@
       Тогава $\omega = b^{i+1}a\omega'$. Да разгледаме думата $\omega''$, която се получава от $\omega$
       като премахнем първото срещане на думата $ba$, т.е. 
       $\omega'' = b^i\omega'$ и $\abs{\omega''} = n-1$.
-      Понеже от $\omega$ сме премахнали равен брой $a$-та и $b$-та, $n_a(\omega'') = n_b(\omega'')+1$.
+      Понеже от $\omega$ сме премахнали равен брой $a$-та и $b$-та, $N_a(\omega'') = N_b(\omega'')+1$.
       Според {\bf И.П.} за $\omega''$, можем да запишем думата като $\omega'' = \omega''_1a\omega''_2$
-      и $n_a(\omega''_1) = n_b(\omega''_1)$, $n_a(\omega''_2) = n_b(\omega''_2)$.
+      и $N_a(\omega''_1) = N_b(\omega''_1)$, $N_a(\omega''_2) = N_b(\omega''_2)$.
       Понеже $b^i$ е префикс на $\omega''_1$, за да получим обратно $\omega$, трябва 
       да прибавим премахнатата част $ba$ веднага след $b^i$ в $\omega''_1$.
     \end{itemize}
@@ -177,20 +177,20 @@
 
 \begin{problem}
   За произволна дума $\omega \in \{a,b\}^\star$, 
-  докажете, че ако $n_a(\omega) > n_b(\omega)$, то съществуват думи $\omega_1$ и $\omega_2$,
-  за които $\omega = \omega_1 a \omega_2$ и $n_a(\omega_1) \geq n_b(\omega_1)$, $n_a(\omega_2) \geq n_b(\omega_2)$.
+  докажете, че ако $N_a(\omega) > N_b(\omega)$, то съществуват думи $\omega_1$ и $\omega_2$,
+  за които $\omega = \omega_1 a \omega_2$ и $N_a(\omega_1) \geq N_b(\omega_1)$, $N_a(\omega_2) \geq N_b(\omega_2)$.
 \end{problem}
 
 \begin{problem}
-  Да се докаже, че езикът $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) = n_b(\alpha)\}$ 
+  Да се докаже, че езикът $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) = N_b(\alpha)\}$ 
   е безконтекстен.
 \end{problem}
 \begin{proof}
   \marginpar{  Алтернативна граматика за езика $L$ е
   \begin{align*}
-    S& \rightarrow aB\vert bA\\
-    A& \rightarrow a\vert aS\vert bAA\\
-    B& \rightarrow b\vert bS\vert aBB
+    S& \rightarrow aB | bA | \varepsilon\\
+    A& \rightarrow a | aS | bAA\\
+    B& \rightarrow b | bS | aBB
   \end{align*}}
   Една възможна граматика $G$ е следната: 
   \[S \rightarrow aSbS\vert bSaS \vert\varepsilon.\]
@@ -200,19 +200,19 @@
     & \to aabbb\varepsilon a S \to aabbba.
   \end{align*}
   
-  Като следствие от \Prob{nanb} може лесно да се изведе, че за думи $\omega$, за които $n_a(\omega) = n_b(\omega)$,
+  Като следствие от \Prob{nanb} може лесно да се изведе, че за думи $\omega$, за които $N_a(\omega) = N_b(\omega)$,
   е изпълнено следното:
   \begin{enumerate}[a)]
   \item 
     ако $\omega = a\omega'$, то
-    $\omega = a\omega_1b\omega_2$ и $n_a(\omega_1) = n_b(\omega_1)$, $n_a(\omega_2) = n_b(\omega_2)$;
+    $\omega = a\omega_1b\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$;
   \item
     ако $\omega = b\omega'$, то
-    $\omega = b\omega_1a\omega_2$ и $n_a(\omega_1) = n_b(\omega_1)$, $n_a(\omega_2) = n_b(\omega_2)$.
+    $\omega = b\omega_1a\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
   \end{enumerate}
 
   Сега първо ще проверим, че $L \subseteq L(G)$.
-  За целта ще докажем с {\em пълна индукция} по дължината на думата $\omega$, че за всяка дума $\omega$ със свойството $n_a(\omega) = n_b(\omega)$ е изпълнено
+  За целта ще докажем с {\em пълна индукция} по дължината на думата $\omega$, че за всяка дума $\omega$ със свойството $N_a(\omega) = N_b(\omega)$ е изпълнено
   $S \rightarrow^\star \omega$.
   \begin{itemize}
   \item 
@@ -221,12 +221,12 @@
     Нека $\abs{\omega} = k+1$. Имаме два случая.
     \begin{itemize}
     \item 
-      $\omega = a\omega^\prime$, т.е. от свойство а), $\omega = a\omega_1b\omega_2$ и $n_a(\omega_1) = n_b(\omega_1)$, $n_a(\omega_2) = n_b(\omega_2)$.
+      $\omega = a\omega^\prime$, т.е. от свойство а), $\omega = a\omega_1b\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
       Тогава $\abs{\omega_1} \leq k$ и по И.П. $S \rightarrow^\star \omega_1$.
       Аналогично, $S \rightarrow^\star \omega_2$.
       Понеже имаме правило $S \rightarrow aSbS$, заключаваме че $S \rightarrow^\star a\omega_1b\omega_2$.
     \item
-      $\omega = b\omega^\prime$, т.е. свойство б), $\omega = b\omega_1a\omega_2$ и $n_a(\omega_1) = n_b(\omega_1)$, $n_a(\omega_2) = n_b(\omega_2)$.
+      $\omega = b\omega^\prime$, т.е. свойство б), $\omega = b\omega_1a\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
       Този случай се разглежда аналогично.
     \end{itemize}
   \end{itemize}
@@ -235,7 +235,7 @@
   Тук с индукция по дължината на извода $l$ ще докажем, че
   $S \stackrel{l}{\rightarrow} \omega$, то $\omega \in M$,
   където
-  \[M = \{\omega \in \{a,b,S\}^\star \mid n_a(\omega) = n_b(\omega)\}.\]
+  \[M = \{\omega \in \{a,b,S\}^\star \mid N_a(\omega) = N_b(\omega)\}.\]
   За $l = 0$  е ясно, че $S \stackrel{0}{\rightarrow^\star} S$.
   За $l = k+1$, то $S \stackrel{k}{\rightarrow^\star} \alpha \rightarrow \omega$.
   От {\bf И.П.} имаме, че $\alpha \in M$.
@@ -257,15 +257,11 @@
   \[\omega \in \Sigma^\star \cap M = L.\]
 \end{proof}
 
-
 \begin{problem}
-  \marginpar{от Владислав}
   Да разгледаме граматиката $G = \CFG$, където  $V = \{S,A,B\}$, $\Sigma = \{a,b\}$, а правилата $R$ са
   \[S \to AA | B, A \to B | bb, B \to aa | aB.\]
   Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
-
-
 
 \section{Езици, които не са безконтекстни}
 

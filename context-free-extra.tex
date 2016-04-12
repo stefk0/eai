@@ -14,18 +14,19 @@
   \item
     $L = \{a^nb^{m}c^{m}d^n \mid m,n \in \Nat\}$;
   \item
+    \marginpar{Обединение на два езика}
     $L = \{a^nb^{2k} \mid n,k \in \Nat\ \&\ n \neq k\}$;
   \item
     \marginpar{$S \rightarrow aSb | aS | a$}
     $L = \{a^nb^k \mid n > k\}$;
   \item
     $L = \{a^nb^k \mid n \geq 2k\}$;
-  \item
-    \marginpar{$S \rightarrow aSc | B,\ B \rightarrow bBc | \varepsilon$}
-    $L = \{a^nb^mc^{n+m}\mid n,m \in \Nat\}$;
-  \item
-    \marginpar{$S \rightarrow aSc | aS | B$, $B\rightarrow bBc | bB | \varepsilon$}
-    $L = \{a^nb^kc^m \mid n + k \geq m\}$;
+  % \item
+  %   \marginpar{$S \rightarrow aSc | B,\ B \rightarrow bBc | \varepsilon$}
+  %   $L = \{a^nb^mc^{n+m}\mid n,m \in \Nat\}$;
+  % \item
+  %   \marginpar{$S \rightarrow aSc | aS | B$, $B\rightarrow bBc | bB | \varepsilon$}
+  %   $L = \{a^nb^kc^m \mid n + k \geq m\}$;
   \item
     \marginpar{$S \rightarrow aSc | aS | aB | bB$,\\$B\rightarrow bBc | bB | \varepsilon$}
     $L = \{a^nb^kc^m \mid n + k \geq m+1\}$;
@@ -47,16 +48,16 @@
     $L = \{a,b\}^\star \setminus \{a^{2n}b^n \mid n\in\Nat\}$;
   \item
     \marginpar{$S\to EaE$, $E \to aEbE | bEaE | \varepsilon$}
-    $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) = n_b(\alpha) + 1\}$;
+    $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) = N_b(\alpha) + 1\}$;
   \item
     \marginpar{$S\to E | SaS$, $E \to aEbE | bEaE | \varepsilon$}
-    $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) \geq n_b(\alpha)\}$;
+    $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) \geq N_b(\alpha)\}$;
   \item
-    $L = \{\alpha \in \{a,b\}^\star\mid n_a(\alpha) > n_b(\alpha)\}$;
+    $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) > N_b(\alpha)\}$;
   \item
     $L = \{\omega_1 a \omega_2 b \mid \omega_1,\omega_2 \in \{a,b\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
   \item
-    $L = \{\alpha c \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha^R\mbox{ е поддума на }\beta \}$.
+    $L = \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha^R\mbox{ е поддума на }\beta \}$.
   \item 
     $L = \{\omega_1\sharp\omega_2 \mid \omega_1,\omega_2 \in \{a,b\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
   \item
@@ -112,12 +113,12 @@
     $L = \{a^ib^jc^k\mid i,j,k\geq 0\ \&\ (i = j \vee j = k)\}$;
   \item
     % \marginpar{Разгл. $L' = L \cap L(a^*b^*c^*)$.}
-    $L = \{\alpha \in \{a,b,c\}^\star\mid n_a(\alpha) > n_b(\alpha) > n_c(\alpha)\}$;
+    $L = \{\alpha \in \{a,b,c\}^\star\mid N_a(\alpha) > N_b(\alpha) > n_c(\alpha)\}$;
   \item
     $L = \{a,b\}^\star \setminus \{a^nb^n\mid n\in \Nat\}$;
   \item
 %    \marginpar{Разгл. $L' = L \cap L(a^*b^*a^*)$.}
-    $L = \{\omega \in \{a,b\}^\star \mid n_a(\omega) = 2n_b(\omega)\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) = 2N_b(\omega)\}$;
   \item
     $L = \{a^nb^mc^ma^n \mid m,n\in\Nat\ \&\ n = m+42\}$;
   \item
@@ -135,7 +136,7 @@
   \item
     $\{a^mb^nc^k\mid m = n \wedge n = k \wedge m = k\}$;
   \item
-    $\{w \in \{a,b,c\}^\star\mid n_a(w) \neq n_b(w) \vee n_a(w) \neq n_c(w) \vee n_b(w) \neq n_c(w)\}$.
+    $\{w \in \{a,b,c\}^\star\mid N_a(w) \neq N_b(w) \vee N_a(w) \neq n_c(w) \vee N_b(w) \neq n_c(w)\}$.
   \end{enumerate}
 \end{problem}
 
