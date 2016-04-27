@@ -45,6 +45,39 @@
 \begin{example}
   Да разгледаме граматика с правила
   \begin{align*}
+    & S \to S + S | S * S | (S) | V\\
+    & V \to x | y | z
+  \end{align*}
+
+  Думата $x * y + z$ има два различни извода.
+
+  Да разгледаме граматика с правила
+  \begin{align*}
+    & S \to E + S | E\\
+    & E \to V * E | V | (S) * E | (S)\\
+    & V \to x | y | z
+  \end{align*}
+\end{example}
+
+\begin{example}
+  \begin{align*}
+    & S \to \textbf{if } S \textbf{ then } S \textbf{ else }S | \textbf{ if }S \textbf{ then }S | V\\
+    & V \to x | y | z
+  \end{align*}
+
+  Ние искаме следната граматика:
+  \begin{align*}
+    & S \to M | U\\
+    & M \to \textbf{if } S \textbf{ then } M \textbf{ else }M | X\\
+    & U \to \textbf{if } S \textbf{ then } S | \textbf{if } S \textbf{ then } M \textbf{ else }U
+  \end{align*}
+\end{example}
+
+
+
+\begin{example}
+  Да разгледаме граматика с правила
+  \begin{align*}
     & S \to E\\
     & E \to E + P\ |\ P\\
     & P \to P * N\ |\ N\\
@@ -263,7 +296,7 @@
   Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
 
-\section{Езици, които не са безконтекстни}
+\section{Лема за покачването}
 
 \begin{lemma}[за покачването (безконтекстни езици)]
   \index{лема за покачването!безконтекстни езици}
@@ -319,8 +352,17 @@
 \begin{cor}
   \label{cor:pumping-context-free}
   \marginpar{Ако $L$ е краен език, то е ясно, че $L$ е безконтекстен.}
-  Нека $L$ е произволен {\bf безкраен} език. Нека също така е изпълнено, че за всяко естествено число $p \geq 1$ можем да намерим дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на пет части, $\alpha = xyuvw$,
-  със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$, е изпълнено, че $(\exists i)[xy^iuv^iw \not\in L]$.
+  Нека $L$ е произволен {\bf безкраен} език. Нека също така е изпълнено, че:
+  \begin{itemize}
+  \item 
+    за {\em всяко} естествено число $p \geq 1$,
+  \item
+    можем да намерим дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че
+  \item
+    за {\em всяко} разбиване на думата на пет части, $\alpha = xyuvw$, със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$,
+  \item
+    можем да посочим $i \in \Nat$, за което е изпълнено, че $xy^iuv^iw \not\in L$.
+  \end{itemize}  
   \marginpar{\writedown Докажете! Аналогично е на \Cor{pumping-reg}}
   Тогава $L$ {\bf не} е безконтекстен език.
 \end{cor}
@@ -484,7 +526,7 @@
 \subsubsection*{Премахване на безполезните променливи}
 
 Нека е дадена безконтекстната граматика $G = \CFG$.
-\marginpar{\cite{hopcroft1} стр. 88}
+\marginpar{\cite[стр. 88]{hopcroft1}}
 Една променлива $A$ се нарича {\bf полезна}, ако съществува извод от следния вид:
 \[S \to^\star \alpha A \beta \to^\star \gamma,\]
 където $\gamma \in \Sigma^\star$, а $\alpha,\beta \in (V \cup \Sigma)^\star$.
@@ -500,7 +542,7 @@
   $\L(G) = \L(G')$, и за всяка променлива $A' \in V'$, съществува дума $\alpha \in \Sigma^\star$,
   за която $A' \to^\star \alpha$.
 \end{lemma}
-\begin{proof}
+\begin{hint}
   Да разгледаме следната проста итеративна процедура.
   \begin{algorithm}[H]
     \caption{Намираме $V' = \{A \in V\mid (\exists \alpha \in \Sigma^\star)[A \to^\star \alpha]\}$}
@@ -522,7 +564,7 @@
   то $A \in V'$.
   
   Правилата на $G'$ са всички правила на $G$, в които участват променливи от $V'$ и букви от $\Sigma$.
-\end{proof}
+\end{hint}
 
 \begin{lemma}
   \label{lem:useless2}
@@ -531,11 +573,12 @@
   за които $S \to^\star \alpha x \beta$,
   т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
 \end{lemma}
-\begin{proof}
+\begin{hint}
   Намираме $V'$ и $\Sigma'$ итеративно, като в началото $V' = \{S\}$, $\Sigma' = \emptyset$.
-  Ако $A \in V'$ и имаме правила $A \to \alpha_0 | \alpha_1 | \dots | \alpha_n$ в $G$,
+  Ако $A \in V'$ и имаме правила в $G$:
+  \[A \to \alpha_0\ |\ \alpha_1\ |\ \cdots\ |\ \alpha_n,\]
   то за всяко $i = 0,\dots,n$ добавяме всички променливи на $\alpha_i$ към $V'$ и всички нетерминали на $\alpha_i$ към $\Sigma'$.
-\end{proof}
+\end{hint}
 
 \begin{thm}
   Всеки непразен безконтекстен език $L$ се поражда от безконтекстна граматика $G$
@@ -546,6 +589,36 @@
   Нека е дадена безконтекстна граматика $G$ пораждаща $L$.
   Прилагаме върху $G$ първо процедурата от \Lem{useless1} и след това върху резултата прилагаме процедурата от \Lem{useless2}.
 \end{proof}
+
+\begin{example}
+  Да разгледаме следната граматика $G$:
+  \begin{align*}
+    & S \to AB\ |\ aA\\
+    & A \to a\ |\ aAa\\
+    & B \to SB\ |\ BC\\
+    & C \to \varepsilon\ |\ cC.
+  \end{align*}
+  \begin{itemize}
+  \item 
+    $V_0 = \{A, C\}$, защото $A \to a$ и $C \to \varepsilon$;
+  \item
+    $V_1 = \{A, C, S\}$, защото $S \to aA$;
+  \item
+    не можем да добавим $B$ към $V_2$, следователно $V_1 = V_2$.
+  \end{itemize}
+  Получаваме граматиката $G'$:
+  \begin{align*}
+    & S \to aA\\
+    & A \to a\ |\ aAa\\
+    & C \to \varepsilon\ |\ cC.
+  \end{align*}
+  Сега премахваме променливите и буквите, които не са достижими от началната промелива $S$. Така получаваме граматиката $G''$:
+  \begin{align*}
+    & S \to aA\\
+    & A \to a\ |\ aAa.
+  \end{align*}
+\end{example}
+
 
 \subsubsection*{Премахване на $\varepsilon$-правила}
 \index{$\varepsilon$-правила}
@@ -559,25 +632,40 @@
   ако всяко $X_i \in E$, то добавяме $B$ към $E$.
 \item
   Строим множеството от правила $R'$, в което няма правила $\varepsilon$-правила по следния начин.
-  За всяко правило $A \to X_1\cdots X_k$ в $R$,
-  добавяме към $R'$ всички правила от вида $A \to \alpha_1\cdots\alpha_k$, където:
+  За всяко правило $A \to x_1\cdots x_k$, където $x_i \in V\cup\Sigma$,
+  добавяме към $R'$ всички правила от вида $A \to y_1\cdots y_k$, където:
   \begin{itemize}[-]
   \item 
-    ако $X_i \not\in E$, то $\alpha_i = X_i$;
+    ако $x_i \not\in E$, то $y_i = x_i$;
   \item
-    ако $X_i \in E$, то $\alpha_i = X_i$ или $\alpha_i = \varepsilon$;
+    ако $x_i \in E$, то $y_i = x_i$ или $y_i = \varepsilon$;
   \item
-    не всички $\alpha_i$-та са $\varepsilon$.
+    не всички $y_i$-та са $\varepsilon$.
   \end{itemize}
 \end{enumerate}
 
 \begin{example}
   Нека е дадена граматиката $G$ с правила
-  \[S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AA|EC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb.\]
-  Тогава $E = \{X \in V \mid X \rightarrow^\star_G \varepsilon\} = \{A,B,C,E\}$.
+  \begin{align*}
+    & S \to D\\
+    & D \to AD\ |\ b\\
+    & A \to AB\ |\ BC\ |\ a\\
+    & B \to AA\ |\ UC\\
+    & C \to \varepsilon\ |\ CA\ |\ a\\
+    & U \to \varepsilon\ |\ aUb.
+  \end{align*}
+  % \[S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AA|EC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb.\]
+  Тогава $E = \{X \in V \mid X \rightarrow^\star_G \varepsilon\} = \{A,B,C,U\}$.
   Това означава, че $\varepsilon \not\in \L(G)$.
   Граматиката $G'$ без $\varepsilon$-правила, за която $\L(G') = \L(G)$ има следните правила
-  $S \to D, D\to AD|D|b, A \to A|B|C|AB|BC|a,B\to A|E|C|AA|EC, C \to C|A|CA|a, E \to aEb|ab$.
+  \begin{align*}
+    & S \to D\\
+    & D\to AD\ |\ D\ |\ b\\
+    & A \to A\ |\ B\ |\ C\ |\ AB\ |\ BC\ |\ a\\
+    & B\to A\ |\ E\ |\ C\ |\ AA\ |\ UC\\
+    & C \to C\ |\ A\ |\ CA\ |\ a\\
+    & U \to aUb\ |\ ab.
+  \end{align*}
 \end{example}
 
 \subsubsection*{Премахване на преименуващи правила}
@@ -592,29 +680,67 @@
 
 \begin{example}
   Нека е дадена граматиката $G$ с правила  
-  \[A\rightarrow B|S,B\rightarrow C|BC,C\rightarrow AB|a|b,S\rightarrow B|CC|b.\]
-  Първо добавяме към $R'$ правилата $B \to BC, C \to AB|a|b, S \to CC|b$.
+  \begin{align*}
+    & S \to B\ |\ CC\ |\ b\\
+    & A \to B\ |\ S\\
+    & B \to C\ |\ BC\\
+    & C \to AB\ |\ a\ |\ b.
+  \end{align*}
+  % \[A\rightarrow B|S,B\rightarrow C|BC,C\rightarrow AB|a|b,S\rightarrow B|CC|b.\]
+  Първо добавяме към $R'$ правилата $B \to BC, C \to AB\ |\ a\ |\ b, S \to CC\ |\ b$.
   \begin{itemize}
   \item 
     Лесно се съобразява, че $A \to^\star_G B,S,C$.
-    Добавяме правилата $A \to BC|AB|a|b|CC$.
+    Добавяме правилата 
+    \[A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC.\]
   \item
     Имаме $B \to^\star_G C$.
-    Добавяме правилата $B \to AB|a|b$.
+    Добавяме правилата $B \to AB\ |\ a\ |\ b$.
   \item
     Имаме $S \to^\star_G B,C$.
-    Добавяме правилата $S \to BC|AB|a|b$.
+    Добавяме правилата $S \to BC\ |\ AB\ |\ a\ |\ b$.
   \end{itemize}
   Накрая получаваме, че граматиката $G'$ има правила
-  $A \to BC|AB|a|b|CC, B \to AB|a|b|BC, C \to AB|a|b, S \to BC|AB|CC|a|b$.
+  \begin{align*}
+    & S \to BC\ |\ AB\ |\ CC\ |\ a\ |\ b\\
+    & A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC\\
+    & B \to AB\ |\ a\ |\ b\ |\ BC\\
+    & C \to AB\ |\ a\ |\ b.
+  \end{align*}
 \end{example}
+
+\subsubsection*{Премахване на ,,дългите'' правила}
+
+Едно правило се нарича дълго, ако е от вида $A \to \beta$, където $|\beta| \geq 3$.
+Да разгледаме едно дълго правило в граматиката от вида $A \to x_1x_2\cdots x_k$, 
+където $k \geq 3$ и $x_i \in V \cup \Sigma$. За да получим еквивалентна граматика без това дълго правило,
+добавяме нови променливи $A_1,\dots, A_{k-2}$, и правила
+\[A \to x_1A_1,\ A_1 \to x_2A_2, \dots,\ A_{k-2} \to x_{k-1}x_k.\]
+
+
+\begin{problem}
+  Нека е дадена граматиката  $G = \pair{\{S,A,B,C\}, \{a,b\}, S, R}$.
+  Използвайте обща конструкция, за да премахнете ,,дългите'' правила от $ G$ като при това получите 
+  безконтестна граматика $G_1$ с език $\L(G) = \L(G_1)$, където правилата на граматиката са:
+  \begin{enumerate}[a)]
+  \item
+    $S \to \varepsilon\ |\ ab\ |\ aAba,\ A\to aBCb,\ B\to bbb, C\to aC\ |\ aCaC$;
+  \item
+    $S \to \varepsilon\ |\ ab\ |\ baAb, A\to BaBb,\ B\to b,\ C\to AbA\ |\ aCCa$;
+  \item
+    $A\to BSB\ |\ a,\ B\to ba\ |\ BC,\ C\to BaSA\ |\ a\ |\ b,\ S\to CC\ |\ b$;
+  \item
+    $A\to BAS,\ B\to CB,\ C\to ab\ |\ ABbS,\ S\to CC\ |\ b$;
+  \end{enumerate}
+\end{problem}
+
+
 
 \subsection{Нормална Форма на Чомски}
 
-\begin{dfn}
 %[стр. 99 от \cite{sipser}]
 \index{Нормална форма на Чомски}
-Една безконтекстна граматика е в {\em нормална форма на Чомски}, ако
+Една безконтекстна граматика е в {\bf нормална форма на Чомски}, ако
 всяко правило е от вида
 \[A \rightarrow BC\mbox{ и }A \rightarrow a,\]
 като $B, C$ {\em не могат} да бъдат променливата за начало $S$.
@@ -622,11 +748,9 @@
 \footnote{В \cite[стр. 151]{papadimitriou} дефиницията е малко по-различна.
 Там дефинират $G$ да бъде в нормална форма на Чомски ако $R \subseteq V\times(V\cup\Sigma)^2$.
 В този случай губим езиците $\{\varepsilon\}$ и $\{a\}$, за $a\in\Sigma$.}
-\end{dfn}
 
 \begin{thm}
-  Всеки безконтекстен език $L$ е генериран от контекстно-свободна
-  граматика в нормална форма на Чомски.
+  Всеки безконтекстен език $L$ е генериран от безконтекстна граматика в нормална форма на Чомски.
 \end{thm}
 \begin{proof}
 %  \marginpar{Броят на правилата може да се увеличи експоненциално.}
@@ -640,8 +764,8 @@
   \item
     \marginpar{Време $O(n)$}
     Съкращаваме дължината на правилата.
-    Заменяме правилата от вида $A\to u_1\dots u_n$, $n\geq 3$, $u_i \in V\cup\Sigma$, с
-    правилата \[A\to u_1A_1,\ A_1\to u_2A_2,\ \dots,\ A_{n-2} \to u_{n-1}u_n.\]
+    Заменяме правилата от вида $A\to x_1x_2\dots x_n$, $n\geq 3$, $x_i \in V\cup\Sigma$, с
+    правилата \[A\to x_1A_1,\ A_1\to x_2A_2,\ \dots,\ A_{n-2} \to x_{n-1}x_n.\]
     където $A_i$ са нови променливи.
   \item
     \marginpar{Време $O(n^2)$}
@@ -718,23 +842,6 @@
 %     C\rightarrow CC|a\}$; 
 %   \end{enumerate}
 % \end{problem}
-
-\begin{problem}
-  Нека е дадена граматиката  $G = \pair{\{S,A,B,C\}, \{a,b\}, S, R}$.
-  Използвайте обща конструкция, за да премахнете ,,дългите'' правила 
-  (т.е. правила с дължина поне 2, които не са в н.ф. на Чомски) от $ G$ като при това получите 
-  безконтестна граматика $G_1$ с език $L(G)=L(G_1)$, където:
-  \begin{enumerate}[a)]
-  \item
-    $R = \{S \rightarrow \varepsilon|ab|aAba, A\rightarrow aBCb, B\rightarrow bbb, C\rightarrow aC\vert aCaC\}\rangle$;
-  \item
-    $R = \{S \rightarrow \varepsilon|ab|baAb, A\rightarrow BaBb,B\rightarrow b,C\rightarrow AbA\vert aCCa\}$;
-  \item
-    $R = \{A\rightarrow BSB|a,B\rightarrow ba|BC,C\rightarrow BaSA|a|b,S\rightarrow CC|b\}$;
-  \item
-    $R = \{A\rightarrow BAS,B\rightarrow CB,C\rightarrow ab|ABbS,S\rightarrow CC|b\}$;
-  \end{enumerate}
-\end{problem}
 
 
 % \begin{problem}

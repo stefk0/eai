@@ -1587,21 +1587,40 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \subsection{Минимален автомат по даден регулярен език}
 Да разгледаме езика $L = \L(\mathbf{((a+b)^+\cdot a)^\star})$.
-Да видим как можем директно да построим минимален тотален детерминиран автомат $\A = \pair{Q^\A,\Sigma,s,\delta_\A,F^\A}$ разпознаващ $L$.
-Състоянията на автомата ще бъдат от вида $q_B$, където $B \subseteq \Sigma^\star$, така че накрая искаме да имаме свойството
-\[B = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_B,\omega) \in F^\A\}.\]
-Тогава началното състояние $s$ ще бъде $q_L$, защото 
-\[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_L,\omega) \in F^\A\}.\]
-Сега едновременно ще строим състоянията на автомата $Q^\A$ и функцията на преходите $\delta_\A$.
 \marginpar{
 Удобно е да представим 
 \begin{align*}
   L & = \{\varepsilon\} \cup \{a,b\}^+ a L\\
   & = \{\varepsilon\} \cup a\{a,b\}^\star aL \cup b\{a,b\}^\star aL
 \end{align*}}
+Да видим как можем директно да построим минимален тотален детерминиран автомат $\A$ разпознаващ $L$, където
+\[\A = \pair{Q^\A,\Sigma,s,\delta_\A,F^\A}.\]
+Състоянията на автомата ще бъдат от вида $q_B$, където $B \subseteq \Sigma^\star$, така че накрая искаме да имаме свойството
+\[B = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_B,\omega) \in F^\A\}.\]
+Тогава началното състояние ще бъде $q_L$, защото 
+\[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_L,\omega) \in F^\A\}.\]
+Сега едновременно ще строим състоянията на автомата $Q^\A$ и функцията на преходите $\delta_\A$.
+\marginpar{
+  Удобно е да представим
+  \begin{align*}
+    M & \df \{a,b\}^\star aL\\
+    & = aL \cup \{a,b\}^+aL\\
+    & = aL \cup aM \cup bM
+  \end{align*}    
+  Тогава 
+  \begin{align*}
+    L & = \{\varepsilon\} \cup aM \cup bM
+  \end{align*}
+  Освен това,
+  \begin{align*}
+    N & \df L \cup M \\
+    & = \{\varepsilon\} \cup aM \cup bM \cup M\\
+    & = \{\varepsilon\} \cup aM \cup bM \cup aL\\
+  \end{align*}
+}
 \begin{itemize}
 \item 
-  $a^{-1}L = \{a,b\}^\star aL = aL \cup \{a,b\}^+aL \df M$.
+  $a^{-1}L = \{a,b\}^\star aL \df M$.
   Имаме, че $M \neq L$, защото $\varepsilon \in L$, но $\varepsilon \not\in M$.
   Понеже $M \neq L$, имаме ново състояние $q_M$ в автомата и 
   $\delta_\A(q_L,a) = q_M$.
@@ -1609,24 +1628,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   $b^{-1}L = \{a,b\}^\star aL = M$;
   Следователно, $\delta_\A(q_L,b) = q_M$.
 \item
-  \marginpar{
-    Удобно е да представим
-    \begin{align*}
-      M & \df \{a,b\}^\star aL\\
-      & = aL \cup \{a,b\}^+aL\\
-      & = aL \cup aM \cup bM
-    \end{align*}    
-    Тогава 
-    \begin{align*}
-      L & = \{\varepsilon\} \cup aM \cup bM
-    \end{align*}
-    Освен това,
-    \begin{align*}
-      N & \df L \cup M \\
-      & = \{\varepsilon\} \cup aM \cup bM \cup M\\
-      & = \{\varepsilon\} \cup aM \cup bM \cup aL\\
-    \end{align*}
-  }
   $a^{-1}M = L \cup M \df N$. 
   Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
   Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
@@ -1694,16 +1695,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{figure}
 
 Остава да се уверим, че нашата конструкция е коректна, т.е. наистина автоматът $\A$ е минимален за езика $L$.
-Според \Th{myhill-nerode}, състоянията на минималния автомат $\M$ са класовете на еквивалентност на релацията $\approx_L$.
+Според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}, 
+състоянията на минималния автомат $\M$, разпознаващ $L$, са класовете на еквивалентност на релацията $\approx_L$.
 Да разгледаме изображението $f$ с дефиниционна област $\Sigma^\star/_{\approx_L} = \{[\alpha]_L \mid \alpha \in \Sigma^\star\}$, дефинирано като:
-\[f([\alpha]_L) = q_M, \text{ където }M = \alpha^{-1}L.\]
+\[f([\alpha]_L) = q_K, \text{ където }K = \alpha^{-1}L.\]
 \begin{itemize}
 \item 
   Ако $[\alpha]_L \neq [\beta]_L$, то $\alpha^{-1}L \neq \beta^{-1}L$ и оттук следва, че $f([\alpha]_L) \neq f([\beta]_L)$.
   Това означава, че $f$ е инективна.
 \item
-  Да разгледаме $q_M \in Q^\A$. От конструкцията на автомата $\A$ следва, че съществува дума $\alpha \in \Sigma^\star$,
-  за която $M = \alpha^{-1}L$. Това означава, че $f([\alpha]_L) = q_M$.
+  Да разгледаме $q_K \in Q^\A$. От конструкцията на автомата $\A$ следва, че съществува дума $\alpha \in \Sigma^\star$,
+  за която $K = \alpha^{-1}L$. Това означава, че $f([\alpha]_L) = q_K$.
   Следователно, $f$ е сюрективна.
 \item
   Имаме и свойството:
@@ -1716,29 +1718,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   от което следва, че $f$ е биекция.
 \end{itemize}
 
-
-
-% \begin{itemize}
-% \item 
-%   Ясно е, че $f([\varepsilon]_L) = q_L$.
-% \item
-%   Понеже $\delta_\A(q_L,a) = q_M$ и $\delta_\M([\varepsilon]_L,a) = [a]_L$, то $f(q_M) = [a]_L$. Ясно е, че $[\varepsilon]_L \neq [a]_L$
-%   и следователно $f$ продължава да е инективна.
-% \item
-%   Понеже $\delta_\A(q_L,b) = q_M$ и $\delta_\M([\varepsilon]_L,b) = [b]_L$, то $f(q_M) = [b]_L$. Лесно се вижда, че наистина $[a]_L = [b]_L$
-%   и следователно дефиницията на $f$ е коректна.
-% \item
-%   Понеже $\delta_\A(q_M,a) = q_N$ и $\delta_\M([a]_L,a) = [aa]_L$, то $f(q_N) = [aa]_L$. Лесно се вижда, че $[aa]_L \neq [\varepsilon]_L$
-%   и $[aa]_L \neq [a]_L$. Това означава, че $f$ продължава да е инективна.
-% \item
-%   Понеже $\delta_\A(q_M,b) = q_M$ и $\delta_\M([a]_L,b) = [ab]_L$, то $f(q_M) = [ab]_L$. Лесно се вижда, че $[a]_L = [ab]_L$.
-% \item
-%   Понеже $\delta_\A(q_N,a) = q_N$ и $\delta_\M([aa]_L,a) = [aaa]_L$, то $f(q_N) = [aaa]_L$. Лесно се вижда, че $[aaa]_L = [aa]_L$, т.е.
-%   $f$ продължава да бъде коректно дефинирана функция.
-% \item
-%   Понеже $\delta_\A(q_N,b) = q_M$ и $\delta_\M([aa]_L,b) = [aab]_L$, то $f(q_M) = [aab]_L$. Лесно се вижда, че $[aab]_L = [ab]_L$, т.е.
-%   $f$ продължава да бъде коректно дефинирана функция.
-% \end{itemize}
 Според горните разсъждения, 
 \begin{align*}
   Q^\M & = \{f(q_L),f(q_M),f(q_N)\} = \{[\varepsilon]_L, [a]_L, [aa]_L\},\\

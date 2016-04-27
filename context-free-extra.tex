@@ -78,9 +78,11 @@
   \item
     $\{a^nb^{2n}c^{n}\ \mid\ n\in\Nat\}$;
   \item
-    $\{a^mb^n\mid\ m \neq n\}$;
+    $\{a^nb^kc^ka^n\mid\ k \leq n\}$;
   \item
     $\{a^nb^mc^k\mid n < m < k\}$;
+  \item
+    $\{a^nb^nc^k\mid n \leq k \leq 2n\}$;
   \item
     $\{a^nb^mc^k\mid k = \min\{n,m\}\}$;
   \item
@@ -92,8 +94,8 @@
     $L = \{\alpha\alpha^R \mid \alpha \in \{a,b\}^\star\}$;
   \item
     $\{www\mid w\in \{a,b\}^\star\}$;
-  \item
-    $\{ww^R\mid w\in \{a,b\}^\star\}$;
+  % \item
+  %   $\{ww^R\mid w\in \{a,b\}^\star\}$;
   \item
     $\{a^{n^2}b^n\ \mid n \in \Nat\}$;
   \item
@@ -103,7 +105,7 @@
   \item
     $\{\omega^n \mid \omega \in \{a,b\}^\star\ \&\ n \in \Nat\}$;
   \item
-    $\{a^{n^3 + 2n^2} \mid n \in \Nat\}$;
+    $\{\omega c^n \omega^R \mid \omega \in \{a,b\}^\star\ \&\ n = \abs{\omega}\}$;
   \item
     % Дефиниция на подниз
     $L = \{w c x\mid w,x\in \{a,b\}^\star\ \&\ w\mbox{ е подниз на }x\}$;
@@ -123,12 +125,6 @@
     $L = \{a^nb^mc^ma^n \mid m,n\in\Nat\ \&\ n = m+42\}$;
   \item
     $L = \{babaabaaab\cdots ba^{n-1}ba^nb \mid n \geq 1\}$;
-%   \end{enumerate}
-% \end{problem}
-
-% \begin{problem}
-%   Проверете кои от следните езици са безконтекстен:
-%   \begin{enumerate}[a)]
   \item
     $\{a^mb^nc^k\mid m = n \vee n = k \vee m = k\}$;
   \item
@@ -136,7 +132,7 @@
   \item
     $\{a^mb^nc^k\mid m = n \wedge n = k \wedge m = k\}$;
   \item
-    $\{w \in \{a,b,c\}^\star\mid N_a(w) \neq N_b(w) \vee N_a(w) \neq n_c(w) \vee N_b(w) \neq n_c(w)\}$.
+    $\{w \in \{a,b,c\}^\star\mid N_a(w) \neq N_b(w) \vee N_a(w) \neq N_c(w) \vee N_b(w) \neq N_c(w)\}$.
   \end{enumerate}
 \end{problem}
 
