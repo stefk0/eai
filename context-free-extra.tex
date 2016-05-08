@@ -1,6 +1,17 @@
 \section{Допълнителни задачи}
 
 \begin{problem}
+  Постройте регулярен израз за езика на следната граматика:
+  \begin{align*}
+    & S \to S + S\ |\ S * S\ |\ A\\
+    & A \to KL\ |\ LK\\
+    & K \to 0K\ |\ \varepsilon\\
+    & L \to 1K\ |\ \varepsilon.
+  \end{align*}
+\end{problem}
+
+
+\begin{problem}
   Докажете, че следните езици са безконтекстни.
   \begin{enumerate}[a)]
   \item
@@ -36,7 +47,7 @@
     \marginpar{$S \rightarrow aSc | aS | B | Bc$,\\$B\rightarrow bBc | bB | \varepsilon$}
     $L = \{a^nb^kc^m \mid n + k + 1 \geq m\}$;
   \item
-    $L = \{a^nb^kc^m \mid n + k + 2 \geq m\}$;
+    $L = \{a^nb^mc^{2k} \mid n \neq 2m\ \&\ k \geq 1\}$;
   \item
     $L = \{a^nb^kc^m \mid n + k \leq m\}$;
   \item
