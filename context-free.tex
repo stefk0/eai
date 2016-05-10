@@ -13,6 +13,7 @@
   Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
   имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
 \item
+  \index{език!безконтекстен}
   $L$ се нарича {\bf безконтекстен език}, ако съществува безконтекстна граматика $G$, за която 
   $L = \L(G) = \{\omega \in \Sigma^\star \mid S \to^\star_G \omega\}$.
 \end{itemize}
@@ -298,6 +299,14 @@
 
 \section{Лема за покачването}
 
+\begin{prop}
+  \marginpar{Д-во с индукция по $n$}
+  Нека $G$ е в нормална форма на Чомски.
+  Ако дървото на извод в $G$ на думата $\omega$ няма път с дължина $\geq n$,
+  то $|\omega| \leq 2^{n-1}$.
+\end{prop}
+
+
 \begin{lemma}[за покачването (безконтекстни езици)]
   \index{лема за покачването!безконтекстни езици}
   \label{lem:pumping-context} 
@@ -327,7 +336,7 @@
   
   Нека $\abs{\alpha} \geq p$ и $T$ е дърво на извода за думата $\alpha$.
   Понеже думата $\alpha$ може да има много дървета на извод, нека $T$ също така да бъде {\em с минимален брой възли}. 
-  От направените по-горе разсъждения е ясно, че височината на $T$ е поне $\abs{V} + 1$,
+  От направените по-горе разсъждения е ясно, че височината на $T$ е поне $\abs{V} + 1$.
   Следователно, по най-дългия път $\pi$ в $T$ имаме поне $\abs{V}+2$ възела, от които
   поне $\abs{V}+1$ са променливи, защото само листата могат да не са променливи.
   Да разгледаме последните $\abs{V}+1$ променливи по пътя $\pi$.
@@ -393,10 +402,10 @@
 % \end{framed}
 
 
-\begin{example}
-  \label{example:anbncn}
-  Езикът $L = \{a^nb^nc^n\ \mid\ n\in\Nat\}$ не е безконтекстен.
-\end{example}
+\begin{problem}
+  \label{pr:anbncn}
+  Докажете, че езикът $L = \{a^nb^nc^n\ \mid\ n\in\Nat\}$ не е безконтекстен.
+\end{problem}
 \begin{proof}
   \begin{itemize}
   \item 
@@ -432,25 +441,19 @@
 %   лемата за разрастването.
 % \end{problem}
 
-\begin{example}
-  Приложете лемата за покачването за да докажете, че
-  езикът $L$ не е безконтекстен, където:
-  \begin{enumerate}[a)]
-  \item
-    $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$;
-  \item
-    $L = \{\beta\beta\mid \beta\in \{a,b\}^\star\}$;
-  \item
-    $L = \{a^{n^2}\mid n\in\Nat\}$.
-  \end{enumerate}
-\end{example}
+\begin{problem}
+  Докажете, че $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$ не е безконтекстен език.
+\end{problem}
 \begin{proof}
-  \begin{enumerate}[a)]
-  \item
-    Да фиксираме думата $\alpha = a^pb^pc^p$ и да разгледаме
-    едно произволно нейно разбиване, $\alpha = xyuvw$, за което
-    $\abs{yuv} \leq p$ и $1 \leq \abs{yv}$.
-    Знаем, че поне една от $y$ и $v$ не е празната дума.
+   \begin{itemize}
+   \item 
+     Разглеждаме произволна константа $p \geq 1$.
+   \item
+     Избираме дума $\alpha \in L$, $\abs{\alpha} \geq p$.
+     В случая, нека $\alpha = a^pb^pc^p$.
+   \item
+     Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{xyv} \leq p$ и $1 \leq \abs{yv}$.
+     Знаем, че поне една от $y$ и $v$ не е празната дума.
     \begin{itemize}
     \item
       $y$ и $v$ са съставени от една буква.
@@ -461,34 +464,89 @@
         Тогава $xy^0vu^0w$ съдържа повече $a$ от $b$ или $c$.
       \item
         $b$ не се среща в $y$ и $v$.
-        Ако $a$ се среща в $y$ или $v$, тогава $xy^2uv^2w$ съдържа повече $a$ от $b$
-        Ако $c$ се среща в $y$ или $v$, тогава $xy^0uv^0w$ съдържа по-малко $c$ от $b$.
+        \begin{itemize}
+        \item 
+          Ако $a$ се среща в $y$ или $v$, тогава $xy^2uv^2w$ съдържа повече $a$ от $b$.
+        \item
+          Ако $c$ се среща в $y$ или $v$, тогава $xy^0uv^0w$ съдържа по-малко $c$ от $b$.
+        \end{itemize}
       \item
         $c$ не се среща в $y$ и $v$.
         Тогава $xy^2uv^2w$ съдържа повече $a$ или $b$ от $c$.
       \end{enumerate}      
-    \item
-      $y$ или $v$ е съставена от две букви.
-      Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
-    \end{itemize}
-  \item
-    \marginpar{Защо $\alpha = a^pba^pb$ не е добър кандидат?}
-    Разгледайте $\alpha = a^pb^pa^pb^p$, т.е. $\beta = a^pb^p$ и $\alpha = \beta\beta$.
-    Нека $xyuvw = \alpha$ е произволно разбиване на $\alpha$, за което е изпълнено, че
-    $\abs{yuv} \leq p$ и $1\leq \abs{yv}$.
-    \begin{itemize}
-    \item
-      Ако $yuv$ е в първата част на думата, то 
-      $xy^0uv^0w = a^ib^ja^pb^p \not\in L$.
-      Аналогично ако $yuv$ е във втората част на думата.
-    \item
-      Ако $yuv$ е в двете части на думата, то 
-      $xy^0uv^0w = a^pb^ia^jb^p \not\in L$.
-    \end{itemize}    
-  \item
-    Решава се аналогично както за регулярни езици.
-  \end{enumerate}
+     \item
+       $y$ или $v$ е съставена от две букви.
+       Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
+     \end{itemize}    
+   \end{itemize}
 \end{proof}
+
+\begin{problem}
+  Докажете, че езикът $L = \{\beta\beta\mid \beta\in \{a,b\}^\star\}$ не е безконтекстен.
+\end{problem}
+\begin{hint}
+  \marginpar{Защо $\alpha = a^pba^pb$ не става?}
+  Разгледайте $\alpha = a^pb^pa^pb^p$.
+\end{hint}
+
+
+% \begin{example}
+%   Приложете лемата за покачването за да докажете, че
+%   езикът $L$ не е безконтекстен, където:
+%   \begin{enumerate}[a)]
+%   \item
+%     $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$;
+%   \item
+%     $L = \{\beta\beta\mid \beta\in \{a,b\}^\star\}$;
+%   \item
+%     $L = \{a^{n^2}\mid n\in\Nat\}$.
+%   \end{enumerate}
+% \end{example}
+% \begin{proof}
+%   \begin{enumerate}[a)]
+%   \item
+%     Да фиксираме думата $\alpha = a^pb^pc^p$ и да разгледаме
+%     едно произволно нейно разбиване, $\alpha = xyuvw$, за което
+%     $\abs{yuv} \leq p$ и $1 \leq \abs{yv}$.
+%     Знаем, че поне една от $y$ и $v$ не е празната дума.
+%     \begin{itemize}
+%     \item
+%       $y$ и $v$ са съставени от една буква.
+%       Имаме три случая.
+%       \begin{enumerate}[i)]
+%       \item
+%         $a$ не се среща в $y$ и $v$.
+%         Тогава $xy^0vu^0w$ съдържа повече $a$ от $b$ или $c$.
+%       \item
+%         $b$ не се среща в $y$ и $v$.
+%         Ако $a$ се среща в $y$ или $v$, тогава $xy^2uv^2w$ съдържа повече $a$ от $b$
+%         Ако $c$ се среща в $y$ или $v$, тогава $xy^0uv^0w$ съдържа по-малко $c$ от $b$.
+%       \item
+%         $c$ не се среща в $y$ и $v$.
+%         Тогава $xy^2uv^2w$ съдържа повече $a$ или $b$ от $c$.
+%       \end{enumerate}      
+%     \item
+%       $y$ или $v$ е съставена от две букви.
+%       Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
+%     \end{itemize}
+%   \item
+%     \marginpar{Защо $\alpha = a^pba^pb$ не е добър кандидат?}
+%     Разгледайте $\alpha = a^pb^pa^pb^p$, т.е. $\beta = a^pb^p$ и $\alpha = \beta\beta$.
+%     Нека $xyuvw = \alpha$ е произволно разбиване на $\alpha$, за което е изпълнено, че
+%     $\abs{yuv} \leq p$ и $1\leq \abs{yv}$.
+%     \begin{itemize}
+%     \item
+%       Ако $yuv$ е в първата част на думата, то 
+%       $xy^0uv^0w = a^ib^ja^pb^p \not\in L$.
+%       Аналогично ако $yuv$ е във втората част на думата.
+%     \item
+%       Ако $yuv$ е в двете части на думата, то 
+%       $xy^0uv^0w = a^pb^ia^jb^p \not\in L$.
+%     \end{itemize}    
+%   \item
+%     Решава се аналогично както за регулярни езици.
+%   \end{enumerate}
+% \end{proof}
 
 
 \begin{thm}
@@ -496,7 +554,7 @@
 \end{thm}
 \begin{proof}
   Да разгледаме езика
-  \[L_0 = \{a^nb^nc^n\mid n\in\Nat\},\] за който вече знаем от Пример \ref{example:anbncn}, че не е безконтекстен.
+  \[L_0 = \{a^nb^nc^n\mid n\in\Nat\},\] за който вече знаем от \Prob{anbncn}, че не е безконтекстен.
   Да вземем също така и безконтекстните езици 
   \marginpar{\writedown Защо са безконтекстни?}
   \[L_1 = \{a^nb^nc^m\mid n,m\in\Nat\},\ L_2 = \{a^mb^nc^n\mid n,m\in\Nat\},\]
@@ -581,8 +639,7 @@
 \end{hint}
 
 \begin{thm}
-  Всеки непразен безконтекстен език $L$ се поражда от безконтекстна граматика $G$
-  без безполезни правила.
+  За всяка безконтекстна граматика $G$, $\L(G) = \emptyset$ точно тогава, когато $S$ е безполезно правило в граматиката.
 \end{thm}
 \begin{proof}
   \marginpar{Защо е важна последователността на прилагане?}
@@ -598,6 +655,7 @@
     & B \to SB\ |\ BC\\
     & C \to \varepsilon\ |\ cC.
   \end{align*}
+  Първо да намерим променливите, от които се извеждат думи.
   \begin{itemize}
   \item 
     $V_0 = \{A, C\}$, защото $A \to a$ и $C \to \varepsilon$;
@@ -619,6 +677,15 @@
   \end{align*}
 \end{example}
 
+\begin{problem}
+  Проверете дали $\L(G) = \emptyset$, където правилата на $G$ са:
+  \begin{align*}
+    & S \to AS\ |\ BC\\
+    & A \to 0\ |\ BA\ |\ SB\\
+    & B \to 1\ |\ BC\ |\ AB\\
+    & C \to CB\ |\ SC\ |\ AS.
+  \end{align*}
+\end{problem}
 
 \subsubsection*{Премахване на $\varepsilon$-правила}
 \index{$\varepsilon$-правила}
@@ -709,7 +776,17 @@
   \end{align*}
 \end{example}
 
-\subsubsection*{Премахване на ,,дългите'' правила}
+\begin{problem}
+  Премахнете преименуващите правила от граматиката $G$, като запазите езика, ако $G$ има следните правила:
+    \begin{align*}
+      & S \to C\ |\ CC\ |\ b\\
+      & A \to B\\
+      & B \to S\ |\ C\ |\ BC\\
+      & C \to a\ |\ AB;
+    \end{align*}
+\end{problem}
+
+\subsubsection*{Премахване на дългите правила}
 
 Едно правило се нарича дълго, ако е от вида $A \to \beta$, където $|\beta| \geq 3$.
 Да разгледаме едно дълго правило в граматиката от вида $A \to x_1x_2\cdots x_k$, 
@@ -722,24 +799,28 @@
   Нека е дадена граматиката  $G = \pair{\{S,A,B,C\}, \{a,b\}, S, R}$.
   Използвайте обща конструкция, за да премахнете ,,дългите'' правила от $ G$ като при това получите 
   безконтестна граматика $G_1$ с език $\L(G) = \L(G_1)$, където правилата на граматиката са:
-  \begin{enumerate}[a)]
-  \item
-    $S \to \varepsilon\ |\ ab\ |\ aAba,\ A\to aBCb,\ B\to bbb, C\to aC\ |\ aCaC$;
-  \item
-    $S \to \varepsilon\ |\ ab\ |\ baAb, A\to BaBb,\ B\to b,\ C\to AbA\ |\ aCCa$;
-  \item
-    $A\to BSB\ |\ a,\ B\to ba\ |\ BC,\ C\to BaSA\ |\ a\ |\ b,\ S\to CC\ |\ b$;
-  \item
-    $A\to BAS,\ B\to CB,\ C\to ab\ |\ ABbS,\ S\to CC\ |\ b$;
-  \end{enumerate}
+  % \begin{enumerate}[a)]
+  % \item
+  %   \begin{align*}
+  %     & S \to \varepsilon\ |\ ab\ |\ aAba\\
+  %     & A\to aBCb\\
+  %     & B\to bbb\\
+  %     & C\to aC\ |\ aCaC;
+  %   \end{align*}
+  % \item
+    \begin{align*}
+      & S\to CC\ |\ b\\
+      & A\to BSB\ |\ a\\
+      & B\to ba\ |\ BC\\
+      & C\to BaSA\ |\ a\ |\ b.
+    \end{align*}
+  % \end{enumerate}
 \end{problem}
 
-
-
 \subsection{Нормална Форма на Чомски}
-
+\index{Чомски}
 %[стр. 99 от \cite{sipser}]
-\index{Нормална форма на Чомски}
+\index{нормална форма на Чомски}
 Една безконтекстна граматика е в {\bf нормална форма на Чомски}, ако
 всяко правило е от вида
 \[A \rightarrow BC\mbox{ и }A \rightarrow a,\]
@@ -749,13 +830,15 @@
 Там дефинират $G$ да бъде в нормална форма на Чомски ако $R \subseteq V\times(V\cup\Sigma)^2$.
 В този случай губим езиците $\{\varepsilon\}$ и $\{a\}$, за $a\in\Sigma$.}
 
-\begin{thm}
-  Всеки безконтекстен език $L$ е генериран от безконтекстна граматика в нормална форма на Чомски.
-\end{thm}
+\begin{framed}
+  \begin{thm}
+    Всеки безконтекстен език $L$ се поражда от безконтекстна граматика в нормална форма на Чомски.
+  \end{thm}
+\end{framed}
 \begin{proof}
 %  \marginpar{Броят на правилата може да се увеличи експоненциално.}
-  Нека имаме контекстно-свободна граматика $G$, за която $L = L(G)$.
-  Ще построим контекстно-свободна граматика $G^\prime$ в нормална форма на Чомски, $L = L(G^\prime)$.
+  Нека имаме контекстно-свободна граматика $G$, за която $L = \L(G)$.
+  Ще построим безконтекстна граматика $G^\prime$ в нормална форма на Чомски, $L = \L(G^\prime)$.
   % [стр. 99 от \cite{sipser}]
   Следваме следната процедура:
   \begin{itemize}
@@ -763,12 +846,13 @@
     Добавяме нов начален символ $S_0$ и правило $S_0 \to S$.
   \item
     \marginpar{Време $O(n)$}
-    Съкращаваме дължината на правилата.
+    Премахваме дългите правила.
     Заменяме правилата от вида $A\to x_1x_2\dots x_n$, $n\geq 3$, $x_i \in V\cup\Sigma$, с
     правилата \[A\to x_1A_1,\ A_1\to x_2A_2,\ \dots,\ A_{n-2} \to x_{n-1}x_n.\]
     където $A_i$ са нови променливи.
   \item
     \marginpar{Време $O(n^2)$}
+    Премахваме $\varepsilon$-правилата.
     За всяка променлива $A \neq S_0$ премахваме правилата от вида $A\to\varepsilon$.
     Това правим по следния начин.
     
@@ -852,7 +936,7 @@
 \subsection{Проблемът за принадлежност}
 
 \begin{thm}
-  Съществува {\em полиномиален} алгоритъм , който проверява дали дадена дума принадлежни на граматиката $G$.
+  Съществува {\em полиномиален} алгоритъм, който проверява дали дадена дума принадлежни на граматиката $G$.
   \marginpar{За дума $\alpha$, алгоритъмът работи за време $O(\abs{\alpha}^3)$}
 \end{thm}
 % \begin{proof}[стр. 154 от \cite{papadimitriou}]
@@ -860,7 +944,7 @@
 Нека $\alpha = a_1a_2\dots a_n$ е дума, за която искаме да проверим дали $\alpha \in \L(G)$.
 \marginpar{Това е алгоритъм на Cocke, Younger и Kasami (CYK), който е пример за динамично програмиране (стр. 195 от \cite{kozen})}
 \begin{algorithm}[H]
-  \caption{Проверка за $\alpha \in \L(G)$}
+  \caption{Проверка дали $\alpha \in \L(G)$}
   \label{alg:belongs-to-grammar}
   \begin{algorithmic}[1]
     \State $n := \abs{\alpha}$ \Comment{Вход дума $\alpha = a_1\cdots a_n$}
@@ -914,23 +998,28 @@
 
 \begin{example}
   Нека е дадена граматиката $G$ с правила 
-  $S\rightarrow a|AB|AC, C\rightarrow SB|AS,A\rightarrow a, B\rightarrow b$.
+  \begin{align*}
+    & S\rightarrow a\ |\ AB\ |\ AC\\
+    & A\rightarrow a\\
+    & B\rightarrow b\\
+    & C\rightarrow SB\ |\ AS.
+  \end{align*}
   Ще приложим $CYK$ алгоритъма за да проверим дали думата $aaabb \in \L(G)$.
   \begin{itemize}
   \item 
-    $V[1,1] = V[2,2] = V[3,3] = \{S,A\}$.
+    $V[1,1] = V[2,2] = V[3,3] = \{S,A\}$;
     $V[4,4] = V[5,5] = \{B\}$.
   \item
-    $V[1,2] = V[2,3] = \{C\}$.
-    $V[3,4] = \{S,C\}$.
+    $V[1,2] = V[2,3] = \{C\}$;
+    $V[3,4] = \{S,C\}$;
     $V[4,5] = \emptyset$.
   \item
-    $V[1,3] = \{S\} \cup \emptyset$.
-    $V[2,4] = \{S,C\} \cup \emptyset$.
+    $V[1,3] = \{S\} \cup \emptyset$;
+    $V[2,4] = \{S,C\} \cup \emptyset$;
     $V[3,5] = \emptyset \cup \{C\}$.
   \item
-    $V[1,4] = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$.
-    $V[2,5] = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$
+    $V[1,4] = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$;
+    $V[2,5] = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$.
   \item
     $V[1,5] = \{S,C\} \cup \emptyset \cup \emptyset \cup \{C\}= \{S,C\}$.
   \end{itemize}
@@ -1301,9 +1390,9 @@
   \end{itemize}
 \end{example}
 
-
 \begin{thm}
-  \marginpar{(стр. 144 от \cite{papadimitriou})}
+  \label{th:intersection-context-reg}
+  \marginpar{\cite[стр. 144]{papadimitriou}}
   Нека $L$ e безконтекстен език и $R$ е регулярен език.
   Тогава тяхното сечение $L \cap R$ е безконтекстен език.
 \end{thm}
@@ -1341,17 +1430,23 @@
   \end{itemize}
 \end{proof}
 
+\Th{intersection-context-reg} е удобна, когато искаме да докажем, че даден език не е безконтекстен.
+С нейна помощ можем да сведем езика до друг, за който вече знаем, че не е безконтекстен.
+
 \begin{example}
-  Езикът $L = \{w \in \{a,b,c\}^\star \mid N_a(w) = N_b(w) = N_c(w)\}$ не е безконтекстен.
-\end{example}
-\begin{proof}
+  Езикът $L = \{\omega \in \{a,b,c\}^\star \mid N_a(\omega) = N_b(\omega) = N_c(\omega)\}$ не е безконтекстен.
   Да допуснем, че $L$ е безконтекстен език.
   Тогава \[L^\prime = L \cap \L(a^\star b^\star c^\star)\] също е безконтекстен език.
-  Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от Пример \ref{example:anbncn}, че {\em не} е безконтекстен.
-  Достигнахме до противоречие. Следователно, $L$ не е безконтекстни език.
-\end{proof}
+  Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от \Prob{anbncn}, че {\em не} е безконтекстен.
+  Достигнахме до противоречие. Следователно, $L$ не е безконтекстен език.
+\end{example}
 
-
+\begin{problem}
+  Докажете, че езикът $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) = 2N_b(\omega)\}$ не е безконтекстен.
+\end{problem}
+\begin{hint}
+  Разгледайте езика $L' = L \cap \L(a^\star b^\star a^\star)$.
+\end{hint}
 
 \section*{Библиография}
 
@@ -1365,120 +1460,6 @@
   глава 3 от \cite{papadimitriou}.
 \end{itemize}
 
-
-% \section{Въпроси}
-% Вярно ли е, че:
-% \begin{itemize}
-% \item
-% %  \marginpar{Да} 
-%   ако $L$ е безконтекстен език, то езикът $L \cap \{a^{2n}b^{2k}\mid n,k\in\Nat\}$ е безконтекстен ?
-% \item
-%  % \marginpar{Да}
-%   ако $L$ е безкраен безконтекстен език, то съществува безкрайна редица от регулярни езици $L_1,L_2,\dots$,
-%   за които $L = \bigcup_{i\in\Nat}L_i$ ?
-% \item
-%   \marginpar{Не}
-%   за всяка безкрайна редица от регулярни езици $L_1,L_2,\dots$, то 
-%   езикът $L = \bigcup_{i\in\Nat}L_i$ е безконтекстен ?
-% \item
-%   %\marginpar{Да}
-%   за всеки регулярен език $R$ и всеки безконтекстен език $L$, то $L \cap R$ е безконтекстен ?
-% \item
-%   за всеки регулярен език $R$ и всеки безконтекстен език $L$, то $L \cup R$ е безконтекстен ?
-% \item
-%   за всеки регулярен език $R$ и всеки безконтекстен език $L$, то $L \setminus R$ е безконтекстен ?
-% \item
-%   за всеки регулярен език $R$ и всеки безконтекстен език $L$, то $R \setminus L$ е безконтекстен ?
-% \item
-%   съществува регулярен език $R$ и безконтекстен език $L$, за които $L \cap R$ не е безконтекстен ?
-% \item
-%   съществува регулярен език $R$ и нерегулярен, но безконтекстен език $L$, за които $L \cap R$ е регулярен ?
-% \item
-%   за всеки два нерегулярни, но контекстно-свободни езика $L_1,L_2$, то $L_1\cup L_2$ е регулярен ?
-% \item
-%   съществуват два нерегулярни, но безконтекстни езика $L_1,L_2$, за които $L_1\setminus L_2$ е регулярен ?
-% \item
-%   съществуват два нерегулярни, но безконтекстни езика $L_1,L_2$, за които $L_1\cap L_2$ е регулярен ?
-% \item
-%   съществуват два нерегулярни, но безконтекстни езика $L_1,L_2$, за които $L_1\cup L_2$ е регулярен ?
-% \item
-%   съществува регулярен език $R$, който може да се представи като $R = L_1 \cup L_2$, където
-%   $L_1 \cap L_2 = \emptyset$, $L_1,L_2$ са нерегулярни, но контекстно-свободни ?
-% \item
-%   езикът $\{a,b\}^\star \setminus \{a^nb^n \mid n\in\Nat\}$ е регулярен ?
-% \item
-%   езикът $\{a,b\}^\star \setminus \{a^nb^n \mid n\in\Nat\}$ е безконтекстен ?
-% \item
-%   езикът $\{a,b\}^\star \setminus \{a^nb^{2k+1} \mid n,k\in\Nat\}$ е регулярен ?
-% \item
-%   езикът $\{a,b\}^\star \setminus \{a^nb^{k} \mid n > k\}$ е регулярен ?
-% \item
-%   езикът $\{a,b\}^\star \setminus \{a^nbba^{n} \mid n \in \Nat\}$ е регулярен ?
-% \item
-%   езикът $\{a,b\}^\star \setminus \{a^nb^n \mid n\in\Nat\}$ е безконтекстен ?
-% \item
-%   езикът $\{a,b,c\}^\star \setminus \{a^nb^mc^k \mid m < n\ \&\ m < k\}$ е безконтекстен ?
-% \item
-%   \marginpar{Не. $\alpha = b^pa^pbba^p$.}
-%   езикът $L = \{uvv^R \mid u,v \in \{a,b\}^\star\ \&\ \abs{u} \leq \abs{v}\}$ е регулярен ?
-% \item
-%   \marginpar{Да.}
-%   езикът $L = \{uvv^R \mid u,v \in \{a,b\}^\star\ \&\ \abs{u} \leq \abs{v}\}$ е безконтекстен ?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\L(r) = \L(G)$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\L(r) \cap \L(G) = \emptyset$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\abs{\L(r) \cap \L(G)} < \infty$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\abs{\L(r) \cap \L(G)} = \infty$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$, безконтекстна граматика $G$
-%   и число $k$, проверява дали $\abs{\L(r) \cap \L(G)} = k$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\L(r) \setminus \L(G) = \emptyset$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\L(G) \setminus \L(r) = \emptyset$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\abs{\L(r) \setminus \L(G)} < \infty$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\abs{\L(G) \setminus \L(r)} < \infty$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\abs{\L(r) \setminus \L(G)} = \infty$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$ и безконтекстна граматика $G$
-%   проверява дали $\abs{\L(G) \setminus \L(r)} = \infty$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$, безконтекстна граматика $G$
-%   и число $k$, проверява дали $\abs{\L(r) \setminus \L(G)} = k$?
-% \item
-%   съществува алгоритъм, който за даден вход регулярен израз $r$, безконтекстна граматика $G$
-%   и число $k$, проверява дали $\abs{\L(G) \setminus \L(r)} = k$?
-% \end{itemize}
-
-% Нека е дадена безконтекстна граматика $G$ с правила \[S\rightarrow a\vert AB \vert AC, A \rightarrow a, B\rightarrow b, C\rightarrow SB.\]
-% Вярно ли е, че ако приложим CYK алгоритъма върху думата $\alpha$, където
-% \begin{itemize}
-% \item 
-%   $\alpha = aabb$, то $N[1,1] = \{S\}$.
-% \item 
-%   $\alpha = aabb$, то $N[3,3] = \{B\}$.
-% \item 
-%   $\alpha = aabb$, то $N[1,4] = \{\}$.
-% \item
-%   $\alpha = baab$, то $N[2,4] = \{\}$.
-% \item
-%   $\alpha = baab$, то $N[1,3] = \{\}$.
-% \end{itemize}
 
 
 
