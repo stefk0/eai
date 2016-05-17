@@ -1,7 +1,7 @@
 \chapter{Машини на Тюринг}
 
 \newcommand{\tape}[1]{\dots\blank\blank\blank{#1}\blank\blank\blank\dots}
-
+\marginpar{Тук най-вече следваме \cite{sipser3}}
 \section{Основни понятия}
 \index{Тюринг}
 \marginpar{Дефиницията в \cite{sipser} е по-различна. Там има две финални състояния - $q_{accept}$ и $q_{reject}$}
@@ -127,7 +127,7 @@
   \item
     $\Gamma = \{a,b,c,d,\blank\}$, за някой нов символ $d$;
   \item
-    $Q = \{1,2,\dots,6\}$;
+    $Q = \{1,2,\dots,5\}$;
   \item
     $q_{accept} = 5$;
   \item
@@ -179,9 +179,33 @@
 
 \begin{example}
   \marginpar{Да напомним, че този език не е безконтекстен}
+  \marginpar{В \cite[стр. 155]{hopcroft1} е даден по-различно решение. Тук следваме \cite[стр. 173]{sipser3}. Там има малка грешка}
   Да разгледаме езика $L = \{\omega c \omega \mid \omega\in\{a,b\}^\star\}$.
+  Нека първо да видим, че можем неформално да опишем алгоритъм, който да разпознава думите на езика $L$.
+  Нека една дума е копирана върху лентата и четящата глава е поставена върху първия символ от думата.
+  \begin{enumerate}[(1)]
+  \item 
+    Чете $x$-ове надясно по лентата докато не срещне $a$ или $b$ и го замества с $x$.
+    Запомня дали сме срещнали $a$ или $b$.
+    Ако вместо $a$ или $b$ срещне $c$, то отива на стъпка $(6)$.
+  \item
+    Чете $a$-та и $b$-та надясно по лентата докато не стигне $c$. 
+  \item
+    Чете $c$-то надясно по лентата и всички следващи $x$-ове докато не срещне символа $a$ или $b$.
+    Той трябва да е същия символ, който сме запаметили на стъпка $(1)$.
+    Заместваме този символ с $x$.
+  \item
+    Чете $x$-ове наляво по лентата докато не стигне $c$.
+  \item
+    Чете $a$-та и $b$-та по лентата докато не стигне $x$.
+    Поставя четящата глава върху символа точно след първия $x$.
+    Отива на стъпка $(1)$.
+  \item
+    Прочита $c$ надясно по лентата и чете надясно $x$-ове докато не срещне $\blank$.
+    Алгоритъмът завършва успешно.
+  \end{enumerate}
+
   Ще построим машина на Тюринг $\M$, за която $L = \L(\M)$.
-  
   \begin{itemize}
   \item 
     $\Sigma = \{a,b,c\}$;
@@ -221,7 +245,7 @@
               edge [bend left=15] node [below left] {$a/x;L$} (6)
           (5) edge [loop below] node [below] {$x;R$} (5)
               edge [bend right=15] node [above left] {$b/x;L$} (6)
-          (6) edge [loop right] node [right] {$\{a,b,x\};L$} (6)
+          (6) edge [loop right] node [right] {$x;L$} (6)
               edge [bend right=15] node [right] {$c;L$} (7)
           (7) edge [loop right] node [right] {$\{a,b\};L$} (7)
               edge [out=130,in=120,above,distance=2.5cm] node [above] {$x;R$} (1)
@@ -233,72 +257,16 @@
   \end{figure}
 
   Да проследим изчислението на думата $abcab$.
+  
+  \begin{align*}
+    _1abcab & \to x_2bcab \to xb_2cab \to xbc_4ab \to xb_6cxb \to x_7bcxb \to _7xbcxb \to x_1bcxb\\
+    & \to xx_3cxb \to xxc_5xb \to xxcx_5b \to xxc_6xx \to xx_6cxx \to x_7xcxx \to xx_1cxx \\
+    & \to xxc_8xx \to xxcx_8x \to xxcxx_8\blank \to xxcxx\blank_9\blank
+  \end{align*}
 
+  Може лесно да се съобрази, че тази машина на Тюринг може да се допълни до {\em тотална}.
+  
 \end{example}
-
-
-\subsection*{Удвояване на броя на единиците}
-
-% \begin{align*}
-%   (\varepsilon, q_1, 111)
-% \end{align*}
-
-\[\stackrel{1}{1}11\ \Rightarrow\ \stackrel{2}{\blank} 111\ \Rightarrow\ \stackrel{3}{\blank}\blank 111\ \Rightarrow\ \stackrel{4}{\blank}1\blank 111\ \Rightarrow\ 1\stackrel{5}{1}\blank 111\ \Rightarrow\  11\stackrel{5}{\blank}111\ \Rightarrow\  11 \blank \stackrel{6}{1}11\]
-\[\dots \Rightarrow\ 11\blank 111\stackrel{6}{\blank}\ \Rightarrow\ 11\blank 11\stackrel{7}{1}\blank\ \Rightarrow\ 11\blank 1\stackrel{8}{1}\blank\blank\ \Rightarrow\ 11\blank \stackrel{9}{1}1\blank\blank\ \Rightarrow\  1\stackrel{10}{1}\blank 11\blank\blank\]
-\[\dots \Rightarrow\ \stackrel{10}{\blank}11\blank 11\blank\blank\ \Rightarrow\ \stackrel{2}{1}1\blank 11\blank\blank\ \Rightarrow\ \cdots\]
-
-\begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-      \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.7]
-      
-      \node[state]   (1) {$1$};
-      \node[state]            (2) [right of=1]{$2$};
-      \node[state]            (3) [right of=2]{$3$};
-      \node[state]            (4) [right of=3]{$4$};
-      \node[state]            (5) [right of=4]{$5$};
-      \node[state]            (6) [right of=5]{$6$};
-      \node[state]            (7) [right of=6]{$7$};
-      \node[state]            (8) [right of=7]{$8$};
-      \node[state]            (9) [right of=8]{$9$};
-      \node[state]            (10) [right of=9]{$10$};
-      \node[state]            (11) [below of=8]{$11$};
-      \node[state,accepting]  (12) [below of=11]{$12$};
-      
-      \begin{scope}[every node/.style={scale=.8}]
-      \path
-      (1) edge [bend left=15] node [above] {$1;L$} (2)
-      (2) edge [bend left=15] node [above] {$1;L$} (3)
-      (2) edge [bend right=15] node [below] {$\blank;L$} (3)
-      % (3) edge [bend left=15] node [above] {$1/1;L$} (4)
-      (3) edge [bend left=15] node [above] {$\blank/1;L$} (4)
-      (4) edge [bend left=15] node [above] {$\blank/1;R$} (5)
-      % (4) edge [bend right=15] node [below] {$1/1;R$} (5)
-      (5) edge [loop below] node [below] {$1;R$} (5)
-      (5) edge [bend left=15] node [above] {$\blank;R$} (6)
-      (6) edge [loop below] node [below] {$1;R$} (6)
-      (6) edge [bend left=15] node [above] {$\blank;L$} (7)
-      (7) edge [bend left=15] node [above] {$1/\blank;L$} (8)
-      % (7) edge [bend right=15] node [below] {$\blank;L$} (8)
-      (8) edge [bend left=15] node [above] {$1;L$} (9)
-      (9) edge [loop below] node [below] {$1;L$} (9)
-      (9) edge [bend right=15] node [below] {$\blank;L$} (10)
-      (10) edge [loop below] node [below] {$1;L$} (10)
-      % (10) [out=130,in=120,above,distance=2.5cm] node [above] {$x;R$} (2)
-      (10) edge [out=140,in=60, above] node [below] {$\blank;R$} (2)
-      (8) edge [] node [right] {$\blank;L$} (11)
-      (11) edge [loop left] node [left] {$1;L$} (11)
-      (11) edge [] node [right] {$\blank;R$} (12);
-      \end{scope}
-    \end{tikzpicture}
-  \end{center}
-\end{figure}
-
-\begin{problem}
-  За произволно естествено число $n$, дефинирайте МТ $\M_n$ с $n+11$ състояния, за която,
-  ако главата е на най-лявата $1$-ца върху блок от $1$-ци, то $\M_n$
-  завършва като записва $2n$ единици на лентата и завършва в стандартна конфигурация.
-\end{problem}
 
 
 \subsection*{Канонична подредба на $\Sigma^\star$}
@@ -436,9 +404,75 @@
   или $\M$ ще работи безкрайно време, или ще завърши в конфигурация, която не е стандартна.
 \end{itemize}
 
-% За фунция от вида $f:\Nat^k\to \Nat$, дефинираме аналогично какво означава $f$
-% да е изчислима с машина на Тюринг $\M$, като тук за да изчислим $f(n_1,\dots,n_k)$, входната лента има вида:
-% \[\dots \blank \blank \underbrace{11\dots 1}_{n_1}\blank  \underbrace{11\dots 11}_{n_2} \blank \dots \blank  \underbrace{11\dots 11}_{n_k} \blank\blank\dots\]
+\begin{example}
+
+  Да видим, че функцията $f(n) = 2n$ е изчислима.
+  
+% \[\stackrel{1}{1}11\ \Rightarrow\ \stackrel{2}{\blank} 111\ \Rightarrow\ \stackrel{3}{\blank}\blank 111\ \Rightarrow\ \stackrel{4}{\blank}1\blank 111\ \Rightarrow\ 1\stackrel{5}{1}\blank 111\ \Rightarrow\  11\stackrel{5}{\blank}111\ \Rightarrow\  11 \blank \stackrel{6}{1}11\]
+% \[\dots \Rightarrow\ 11\blank 111\stackrel{6}{\blank}\ \Rightarrow\ 11\blank 11\stackrel{7}{1}\blank\ \Rightarrow\ 11\blank 1\stackrel{8}{1}\blank\blank\ \Rightarrow\ 11\blank \stackrel{9}{1}1\blank\blank\ \Rightarrow\  1\stackrel{10}{1}\blank 11\blank\blank\]
+% \[\dots \Rightarrow\ \stackrel{10}{\blank}11\blank 11\blank\blank\ \Rightarrow\ \stackrel{2}{1}1\blank 11\blank\blank\ \Rightarrow\ \cdots\]
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.7]
+      
+      \node[state]   (1) {$1$};
+      \node[state]            (2) [right of=1]{$2$};
+      \node[state]            (3) [right of=2]{$3$};
+      \node[state]            (4) [right of=3]{$4$};
+      \node[state]            (5) [right of=4]{$5$};
+      \node[state]            (6) [right of=5]{$6$};
+      \node[state]            (7) [right of=6]{$7$};
+      \node[state]            (8) [right of=7]{$8$};
+      \node[state]            (9) [right of=8]{$9$};
+      \node[state]            (10) [right of=9]{$10$};
+      \node[state]            (11) [below of=8]{$11$};
+      \node[state,accepting]  (12) [below of=11]{$12$};
+      
+      \begin{scope}[every node/.style={scale=.8}]
+      \path
+      (1) edge [bend left=15] node [above] {$1;L$} (2)
+      (2) edge [bend left=15] node [above] {$1;L$} (3)
+      (2) edge [bend right=15] node [below] {$\blank;L$} (3)
+      % (3) edge [bend left=15] node [above] {$1/1;L$} (4)
+      (3) edge [bend left=15] node [above] {$\blank/1;L$} (4)
+      (4) edge [bend left=15] node [above] {$\blank/1;R$} (5)
+      % (4) edge [bend right=15] node [below] {$1/1;R$} (5)
+      (5) edge [loop below] node [below] {$1;R$} (5)
+      (5) edge [bend left=15] node [above] {$\blank;R$} (6)
+      (6) edge [loop below] node [below] {$1;R$} (6)
+      (6) edge [bend left=15] node [above] {$\blank;L$} (7)
+      (7) edge [bend left=15] node [above] {$1/\blank;L$} (8)
+      % (7) edge [bend right=15] node [below] {$\blank;L$} (8)
+      (8) edge [bend left=15] node [above] {$1;L$} (9)
+      (9) edge [loop below] node [below] {$1;L$} (9)
+      (9) edge [bend right=15] node [below] {$\blank;L$} (10)
+      (10) edge [loop below] node [below] {$1;L$} (10)
+      % (10) [out=130,in=120,above,distance=2.5cm] node [above] {$x;R$} (2)
+      (10) edge [out=140,in=60, above] node [below] {$\blank;R$} (2)
+      (8) edge [] node [right] {$\blank;L$} (11)
+      (11) edge [loop left] node [left] {$1;L$} (11)
+      (11) edge [] node [right] {$\blank;R$} (12);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+\end{figure}
+
+\begin{align*}
+  _1111 & \to\ _2\blank 111 \to\  _3\blank \blank 111 \to\ _4\blank 1 \blank 111 \to 1_51\blank 111 \to 11_5\blank 111\\
+  & \to 11\blank_6 111 \to \cdots \to 11 \blank 11_71 \to 11 \blank 1_81\blank \to 11 \blank _911\blank \to 11_9 \blank 11\blank\\
+  & \to 1_{10}1\blank 11 \blank \to \cdots \to\ _211\blank 11\blank \to \cdots \to 1_5111\blank 11 \blank \to \cdots \\
+  & \to 1111\blank_6 11\blank \to \cdots
+\end{align*}
+
+\end{example}
+
+\begin{problem}
+  За произволно естествено число $n$, дефинирайте МТ $\M_n$ с $n+11$ състояния, за която,
+  ако главата е на най-лявата $1$-ца върху блок от $1$-ци, то $\M_n$
+  завършва като записва $2n$ единици на лентата и завършва в стандартна конфигурация.
+\end{problem}
 
 \begin{thm}
   За всяко $k$, съществуват функции от вида $f:\Nat^k\to\Nat$, които не са изчислими с МТ.
