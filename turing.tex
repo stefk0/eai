@@ -4,7 +4,7 @@
 \marginpar{Тук най-вече следваме \cite{sipser3}}
 \section{Основни понятия}
 \index{Тюринг}
-Детерминистична машина на Тюринг ще наричаме седморка от вида 
+{\em Детерминистична} машина на Тюринг ще наричаме седморка от вида 
 \[\M = \TM,\] където:
 \begin{itemize}
 \item 
@@ -14,6 +14,7 @@
 \item
   $\Gamma$ - азбука за лентата, $\Sigma \subseteq \Gamma$;
 \item
+  \marginpar{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
   $\delta:Q\times\Gamma \to Q\times \Gamma \times \{L,R\}$ - (частична) функция на преходите;
 \item
   $s$ - начално състояние, $s \in Q$;
@@ -23,6 +24,7 @@
   \marginpar{Тези две състояния ще наричаме заключителни}
   $q_{accept} \in Q$ - приемащо състояние;
 \item
+  \marginpar{$q_{accept} \neq q_{reject}$}
   $q_{reject} \in Q$ - отхвърлящо състояние.
 \end{itemize}
 
@@ -48,16 +50,16 @@
 Ако машината, която работи върху дадена входа дума, достигне до заключително състояние, ще казваме
 че машината {\em спира работа}.
 
-Както за автомати, удобно е да дефинираме бинарна релация $\vdash_\M$,
+Както за автомати, удобно е да дефинираме бинарна релация $\vdash_\M$ над $\Gamma^\star \times Q \times \Gamma^\star$,
 която ще казва как моментното описание на машината $\M$ се променя при 
-изпълнение на една стъпка от изчислението.
+изпълнение на една стъпка.
 \begin{itemize}
 \item
-  Ако $\delta_\M(q,Z) = (p,Y,R)$, то $(\alpha, q, Z\beta) \vdash_\M (\alpha Y, p, \beta)$.
+  Ако $\delta_\M(q,Z) = (p,Y,R)$, то дефинираме $(\alpha, q, Z\beta) \vdash_\M (\alpha Y, p, \beta)$.
   % При $Z = \blank$ също така можем да запишем 
   % $(\alpha, q, \varepsilon) \vdash_\M (\alpha Y, p, \varepsilon)$ (???)
 \item 
-  Ако $\delta_\M(q,Z) = (p,Y,L)$, то $(\alpha X, q, Z\beta) \vdash_\M (\alpha , p, XY\beta)$.
+  Ако $\delta_\M(q,Z) = (p,Y,L)$, то дефинираме $(\alpha X, q, Z\beta) \vdash_\M (\alpha , p, XY\beta)$.
   % При $X = \blank$, имаме $(\varepsilon, q, Z\beta) \vdash_\M (\varepsilon, p, \blank Y\beta)$.
 % \item
 %   Ако $\delta_\M(q,Z) = (p,Y,N)$, то 
@@ -67,9 +69,10 @@
 
 \begin{itemize}
 \item
+  \marginpar{Обърнете внимание, че това не е същото като да изискваме функцията на преходите $\delta$ да бъде тотална.}
   Една машина на Тюринг се нарича {\bf тотална}, ако при всеки вход достига до заключително състояние.
 \item 
-  Езикът, който се {\bf разпознава} от машината $M$ е:
+  Езикът, който се {\bf разпознава} от машината $\M$ е:
   \[\L(\M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star_\M (\beta, q_{accept}, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
 \item
   \index{език!полуразрешим}
@@ -81,13 +84,20 @@
   $L = \L(\M)$.
 \end{itemize}
 
+\begin{framed}
+  \begin{prop}
+    Ако $L$ е разрешим език над азбуката $\Sigma$, то $\Sigma^\star \setminus L$ също е разрешим език.
+  \end{prop}
+\end{framed}
 
+\begin{remark}
+  По-късно, ще видим, че съществуват полуразрешими езици, чиито допълнения не са полуразрешими.
+\end{remark}
 
 % \marginpar{Това трябва ли ми ?}
 % Езикът, който се {\bf разпознава чрез спиране} от $M$ е:
 % \[\L_H(\M) = \{\alpha \in \Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star (\beta, q, X\gamma)\ \&\ \neg !\delta(q,X)\}\]
 % Може да се докаже, че се разпознават едни и същи езици.
-
 
 
 \section{Примери}
@@ -161,11 +171,11 @@
   \end{figure}
 
 
-  Да проследим изчислението на думата $aabbcc$:
+  % Да проследим изчислението на думата $aabbcc$:
   
-  \[_1aabbcc \vdash d_2abbcc \vdash da_2bbcc \vdash dad_3bcc \vdash dadb_3cc \vdash dad_4bdc \vdash da_4dbdc \vdash \cdots \vdash\]
-  \[_4dadbdc \vdash\ _4\blank dadbdc \vdash\ _1dadbdc \vdash d_1adbdc \vdash dd_2dbdc \vdash ddd_2bdc \vdash dddd_3dc \vdash \]
-  \[ ddddd_3c \vdash dddddd_4 \vdash \cdots \vdash\ _4\blank dddddd \vdash\ _1dddddd \vdash \cdots \vdash dddddd_1\blank \vdash dddddd_5\blank.\]
+  % \[_1aabbcc \vdash d_2abbcc \vdash da_2bbcc \vdash dad_3bcc \vdash dadb_3cc \vdash dad_4bdc \vdash da_4dbdc \vdash \cdots \vdash\]
+  % \[_4dadbdc \vdash\ _4\blank dadbdc \vdash\ _1dadbdc \vdash d_1adbdc \vdash dd_2dbdc \vdash ddd_2bdc \vdash dddd_3dc \vdash \]
+  % \[ ddddd_3c \vdash dddddd_4 \vdash \cdots \vdash\ _4\blank dddddd \vdash\ _1dddddd \vdash \cdots \vdash dddddd_1\blank \vdash dddddd_5\blank.\]
 
   Съобразете, че тази машина на Тюринг може да се направи тотална като се добави ново състояние $q_{reject}$
   и за всяка двойка $(q,x)$, за която функцията на преходите не е дефинирана, да сочи към $q_{reject}$.
@@ -175,7 +185,7 @@
 
 \begin{example}
   \marginpar{Да напомним, че този език не е безконтекстен}
-  \marginpar{В \cite[стр. 155]{hopcroft1} е даден по-различно решение. Тук следваме \cite[стр. 173]{sipser3}. Там има малка грешка}
+  \marginpar{В \cite[стр. 155]{hopcroft1} е дадено по-различно решение. Тук следваме \cite[стр. 173]{sipser3}. Там има малка грешка}
   Да разгледаме езика $L = \{\omega \sharp \omega \mid \omega\in\{a,b\}^\star\}$.
   Нека първо да видим, че можем неформално да опишем алгоритъм, който да разпознава думите на езика $L$.
   Нека една дума е копирана върху лентата и четящата глава е поставена върху първия символ от думата.
@@ -252,13 +262,13 @@
     \end{center}
   \end{figure}
 
-  Да проследим изчислението на думата $ab\sharp ab$.
+  % Да проследим изчислението на думата $ab\sharp ab$.
   
-  \begin{align*}
-    _1ab\sharp ab & \to x_2b\sharp ab \to xb_2\sharp ab \to xb\sharp _4ab \to xb_6\sharp xb \to x_7b\sharp xb \to _7xb\sharp xb \to x_1b\sharp xb\\
-    & \to xx_3\sharp xb \to xx\sharp _5xb \to xx\sharp x_5b \to xx\sharp _6xx \to xx_6\sharp xx \to x_7x\sharp xx \to xx_1\sharp xx \\
-    & \to xx\sharp _8xx \to xx\sharp x_8x \to xx\sharp xx_8\blank \to xx\sharp xx\blank_9\blank
-  \end{align*}
+  % \begin{align*}
+  %   (\varepsilon, 1, ab\sharp ab) & \to (x, 2, b\sharp ab) \to xb_2\sharp ab \to xb\sharp _4ab \to xb_6\sharp xb \to x_7b\sharp xb \to _7xb\sharp xb \to x_1b\sharp xb\\
+  %   & \to xx_3\sharp xb \to xx\sharp _5xb \to xx\sharp x_5b \to xx\sharp _6xx \to xx_6\sharp xx \to x_7x\sharp xx \to xx_1\sharp xx \\
+  %   & \to xx\sharp _8xx \to xx\sharp x_8x \to xx\sharp xx_8\blank \to xx\sharp xx\blank_9\blank
+  % \end{align*}
 
   Може лесно да се съобрази, че тази машина на Тюринг може да се допълни до {\em тотална}.
   
@@ -295,17 +305,45 @@
 \end{prop}
 \begin{proof}
   \marginpar{\cite[стр. 162]{hopcroft1}}
-  % $\Gamma' = \{\sharp\} \cup \Gamma \cup \{\hat{X} \mid X \in \Gamma\}$.
   Нека $\M$ е $k$-лентова машина на Тюринг.
   Ще построим еднолентова машина на Тюринг $\M'$, за която $\L(\M) = \L(\M')$.
-  $\Gamma' = (\{\blank, X\} \times \Gamma)^k$, където $X$ е нов символ.
-  Символите $X$ ще маркират къде се намира главата на всяка лента като позволяваме да имаме само по една клетка $X$ за 
+  Да означим $\hat\Gamma = \{\hat X \mid X \in \Gamma\}$.
+  Тогава азбуката на лентата на $\M'$ ще бъде $\Gamma' = (\hat\Gamma \cup \Gamma)^{k}$.
+  Сега вместо да имаме $k$ ленти ще имаме една лента, която представлява $k$-орка.
+  За да симулираме $\M$, използваме символите $\hat X$ за да маркират позицията на главите на $\M$,
+  като във всяка координата на лентата има точно по един символ от вида $\hat X$.
+  % С $\$$ ще отблезяваме границите на всяка лента, в която можем да търсим маркера.
+  Да да определим следващия ход на машината $\M'$, ние трябва да сканираме лентата докато не 
+  открием разположението на всичките $k$ на брой маркирани клетки. Тогава симулираме ход на $\M$
+  и отново трябва да променим маркираните клетки.
 \end{proof}
 
 \subsection*{Недетерминистични машини на Тюринг}
 
-Една машина на Тюринг се нарича недетерминистична, ако функцията на преходите има вида
-\[\Delta: Q\times \Gamma \to \Ps(Q \times \Gamma\times \{L,R\}). \]
+Една машина на Тюринг $\N$ се нарича недетерминистична, ако функцията на преходите има вида
+\[\Delta_\N: Q\times \Gamma \to \Ps(Q \times \Gamma\times \{L,R\}). \]
+
+Отново можем да дефинираме бинарна релация $\vdash_\N$ над $\Gamma^\star \times Q \times \Gamma^\star$,
+която ще казва как моментното описание на машината $\N$ се променя при изпълнение на една стъпка.
+\begin{itemize}
+\item
+  Ако $\Delta_\N(q,Z) \ni (p,Y,R)$, то дефинираме $(\alpha, q, Z\beta) \vdash_\N (\alpha Y, p, \beta)$.
+\item 
+  Ако $\Delta_\N(q,Z) \ni (p,Y,L)$, то дефинираме $(\alpha X, q, Z\beta) \vdash_\N (\alpha , p, XY\beta)$.
+\end{itemize}
+С $\vdash^\star_\N$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\N$.
+
+Тогава за недетерминистична машина на Тюринг $\N$, 
+\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star_\N (\beta, q_{accept}, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
+
+\begin{remark}
+  Върху дадена дума $\omega$, недетерминистичната машина на Тюринг $\N$ може да има много различни изчисления.
+  Думата $\omega$ принадлежи на $\L(\N)$ ако съществува {\em поне едно} изчисление, което завършва в състоянието $q_{accept}$.
+  Възможно е много други изчисления за $\omega$ да завършват в $q_{reject}$ или да зациклят.
+\end{remark}
+
+Аналогично, дефинираме една недетерминистична машина на Тюринг $\N$ да бъде {\bf тотална}, ако за всяка дума и 
+всяко изчисление на $\N$ върху $\omega$ завършва в $q_{accept}$ или $q_{reject}$.
 
 \begin{framed}
   \begin{thm}
@@ -322,7 +360,7 @@
   като сямо някои от тях завършват в $q_{accept}$. Ще построим детерминистична машина на Тюринг,
   която последователно ще симулира всички възможни {\em крайни} изчисления за думата $\alpha$, докато 
   намери такова, което завършва в състоянието $q_{accept}$.
-
+  \marginpar{На практика това, което е правим е да представим всички възможни изчисления на $\N$ като $r$-разклонено дърво и да го обходим в широчина, докато не достигнем до приемащо състояние}
   Лесно се съобразява, че всяко изчисление на $\N$ може да се представи като 
   крайна редица от елементи на $Q \times \Gamma \times \{L,R\}$.
   Понеже това множество е крайно, то можем на всяка такава тройка да
@@ -349,14 +387,41 @@
   \end{itemize}
 \end{proof}
 
+\begin{prop}[Лема на Кьониг]
+  Ако $T$ е безкрайно дърво с крайно разклонение, то $T$ съдържа безкраен път.
+\end{prop}
 
-\subsection*{Полуразрешими и разрешими езици}
+\begin{cor}
+  Ако $L$ се разпознава от {\em тотална недетерминистична} машина на Тюринг $\N$, то $L$
+  също се разпознава и от {\em тотална детерминистична} машина на Тюринг $\D$.
+\end{cor}
+\begin{proof}
+  Да разгледаме дървото $T$, което представя всички изчисления на $\N$ при вход думата $\omega$.
+  От лемата на Кьониг следва, че $T$ е крайно дърво, защото ако допуснем, че $T$ е безкрайно, то ще има безкрайно дълго изчисление на $\N$,
+  което е невъзможно, понеже $\N$ винаги достига до финално състояние.
+  \begin{itemize}
+  \item 
+    Ако $\N$ приема дадена дума $\omega$, то детерминистичната ни симулация на $\N$ ще достигне до изчисление, кодирано като път в $T$, 
+    което завършва в състояние $q_{accept}$.
+  \item
+    Ако $\N$ не приема дадена дума $\omega$, то детерминистичната ни симулация на $\N$ ще покаже, че всяко изчисление, кодирано като път в $T$, завършва в състояние $q_{reject}$.
+  \end{itemize}
+\end{proof}
 
-\begin{framed}
-\begin{thm}[Пост]
-  Ако $L$ и $\Sigma^\star \setminus L$ са полуразрешими езици, то $L$ е разрешим език.
-\end{thm}
-\end{framed}
+
+\section{Машини на Тюринг като генератори (?)}
+
+\marginpar{\cite[стр. 168]{hopcroft1}}
+
+
+
+% \subsection*{Полуразрешими и разрешими езици}
+
+% \begin{framed}
+% \begin{thm}[Пост]
+%   Ако $L$ и $\Sigma^\star \setminus L$ са полуразрешими езици, то $L$ е разрешим език.
+% \end{thm}
+% \end{framed}
 
 % \subsection*{Busy Beaver}
 
@@ -506,23 +571,20 @@
   Заключаваме, че със сигурност съществуват функции, които не са изчислими с МТ.
 \end{proof}
 
+\section{Примери за разрешими и полуразрешими езици}
 
-
-\section{Разрешими и полуразрешими езици}
-
+Да напомним, че:
 \begin{itemize}
 \item
-  \marginpar{semi-decidable languages}
-  {\bf Полуразрешими} са тези езици, които се разпознават от машина на Тюринг.
+  {\bf полуразрешими} са тези езици, които се разпознават от машина на Тюринг.
 \item
-  \marginpar{decidable languages}
-  {\bf Разрешими} са тези езици, които се разпознават от машина на Тюринг, която {\em спира върху всеки вход}.
+  {\bf разрешими} са тези езици, които се разпознават от тотална машина на Тюринг.
 \end{itemize}
 
 Ще разгледаме два основни примера за езици. Единият ще бъде за език, който не е полуразрешим, а другият за език, който е 
 полуразрешим, но не е разрешим.
 
-\subsection*{Диагоналният език $L_d$}
+\subsection{Диагоналният език $L_d$}
 
 Нека $\omega_0,\omega_1,\dots,\omega_n,\dots$ е каноничната подредба на всички думи над азбуката $\{0,1\}$.
 Да разгледаме безкрайната таблица $\{a_{ij} \mid i,j \in \Nat\}$, където:
@@ -540,7 +602,7 @@
   $L_d = \{w_i \mid w_i \not\in L(\M_i)\}$ не се разпознава от MT,
   т.е. $L_d$ {\bf не} е полуразрешим.
 \end{framed}
-Да допуснем, че $L_d$ се разпознава от МТ, т.е. $L_d = \L(\M_i)$, за някоя МТ с код $i$.
+Да допуснем, че $L_d$ се разпознава от машина на Тюринг, т.е. $L_d = \L(\M_i)$, за някоя машина на Тюринг с код $i$.
 Тогава:
 \begin{align*}
   & \omega_i \in L_d \implies \omega_i \in \L(\M_i) \implies \omega_i \not\in L_d,\\
@@ -549,10 +611,11 @@
 Достигаме до противоречие.
 
 \begin{remark}
-  Да обърнем внимание, че $\bar{L}_d = \{\omega_i \mid \omega_i \in \L(\M_i)\}$ е полуразрешим език.
+  Да обърнем внимание, че $\bar{L}_d = \{\omega_i \mid \omega_i \in \L(\M_i)\}$ е полуразрешим език,
+  който очевидно не е разрешим.
 \end{remark}
 
-\subsection*{Универсалният език $L_u$}
+\subsection{Универсалният език $L_u$}
 
 Да разгледаме езика $L_u = \{\pair{\M,\omega} \mid \omega\in \L(\M)\}$.
 
@@ -589,8 +652,6 @@
 % \section{Проблемът за съответствие на Пост (PCP)}
 
 % \subsection*{MPCP}
-
-
 
 \section{Критерий за разрешимост}
 \marginpar{\cite{hopcroft1}, стр. 188}
@@ -910,11 +971,11 @@ $\Ss$ е тривиално свойство, ако $\Ss = \emptyset$ или $\
   За всеки полуразрешим език $L$, $L = \L(G)$, за някоя неограничена граматика $G$.  
 \end{lemma}
 \begin{proof}
-  Нека $L = \L(\M)$, където $\M = \TM$ е детерминистична машина на Тюринг,
+  Нека $L = \L(\M)$, където 
+  \[\M = \TM\] е детерминистична машина на Тюринг,
   като искаме лентата да е безкрайна само отдясно и входната дума $\alpha$ е
   поставена в началото на лентата.
-  Ще построим граматика $G$, която 
-  $G = \CFG$, където 
+  Ще построим граматика $G = \CFG$, където 
   \[V = ((\Sigma\cup\{\varepsilon\})\times\Gamma) \cup \{A_1,A_2,A_3\}.\]
   Правилата на $G$ са следните:
   \begin{enumerate}[1)]
@@ -931,9 +992,9 @@ $\Ss$ е тривиално свойство, ако $\Ss = \emptyset$ или $\
   \item
     $q[a,X] \to [a,Y]p$, за всяка $a \in \Sigma\cup\{\varepsilon\}$, всяко $q\in Q$, $X,Y \in\Gamma$, 
     за които $\delta(q,X) = (p,Y,R)$;
-  \item
-    $q[a,X] \to p[a,Y]$, за всяка $a \in \Sigma\cup\{\varepsilon\}$, всяко $q\in Q$, $X,Y \in\Gamma$, 
-    за които $\delta(q,X) = (p,Y,N)$;
+  % \item
+  %   $q[a,X] \to p[a,Y]$, за всяка $a \in \Sigma\cup\{\varepsilon\}$, всяко $q\in Q$, $X,Y \in\Gamma$, 
+  %   за които $\delta(q,X) = (p,Y,N)$;
   \item
     $[b,Z]q[a,X] \to p[b,Z][z,Y]$, за всяко $X,Y,Z \in \Gamma$, $a,b\in\Sigma\cup\{\varepsilon\}$, $q\in Q$,
     за които $\delta(q,X) = (p,Y,L)$;
