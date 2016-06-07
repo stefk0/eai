@@ -1593,6 +1593,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   L & = \{\varepsilon\} \cup \{a,b\}^+ a L\\
   & = \{\varepsilon\} \cup a\{a,b\}^\star aL \cup b\{a,b\}^\star aL
 \end{align*}}
+
 Да видим как можем директно да построим минимален тотален детерминиран автомат $\A$ разпознаващ $L$, където
 \[\A = \pair{Q^\A,\Sigma,s,\delta_\A,F^\A}.\]
 Състоянията на автомата ще бъдат от вида $q_B$, където $B \subseteq \Sigma^\star$, така че накрая искаме да имаме свойството
@@ -1600,13 +1601,15 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Тогава началното състояние ще бъде $q_L$, защото 
 \[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star_\A(q_L,\omega) \in F^\A\}.\]
 Сега едновременно ще строим състоянията на автомата $Q^\A$ и функцията на преходите $\delta_\A$.
+\begin{itemize}
+\item 
 \marginpar{
   Удобно е да представим
   \begin{align*}
     M & \df \{a,b\}^\star aL\\
     & = aL \cup \{a,b\}^+aL\\
     & = aL \cup aM \cup bM
-  \end{align*}    
+  \end{align*}
   Тогава 
   \begin{align*}
     L & = \{\varepsilon\} \cup aM \cup bM
@@ -1616,10 +1619,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     N & \df L \cup M \\
     & = \{\varepsilon\} \cup aM \cup bM \cup M\\
     & = \{\varepsilon\} \cup aM \cup bM \cup aL\\
-  \end{align*}
-}
-\begin{itemize}
-\item 
+  \end{align*}}
   $a^{-1}L = \{a,b\}^\star aL \df M$.
   Имаме, че $M \neq L$, защото $\varepsilon \in L$, но $\varepsilon \not\in M$.
   Понеже $M \neq L$, имаме ново състояние $q_M$ в автомата и 
