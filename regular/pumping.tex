@@ -1,0 +1,347 @@
+\section{Лема за покачването}
+
+\begin{lemma}[за покачването]
+  \index{лема за покачването!регулярни езици}
+  \label{lem:pumping-reg}
+  \marginpar{На англ. се нарича \\ Pumping Lemma}
+  \marginpar{Има подобна лема и за безконтекстни езици}
+  \marginpar{Обърнете внимание, че $0 \in \Nat$ и $xy^0z =  xz$}
+  Нека $L$ да бъде {\em безкраен} регулярен език.
+  Съществува число $p\geq 1$, зависещо само от $L$, 
+  за което за всяка дума $\alpha\in L, \abs{\alpha}\geq p$ може да 
+  бъде записана във вида $\alpha = xyz$ и 
+  \begin{enumerate}[1)]
+  \item
+    $|y|\geq 1$;
+  \item
+    $|xy|\leq p$;
+  \item
+    $(\forall i\in\Nat)[xy^iz \in L]$.
+  \end{enumerate}
+\end{lemma}
+\begin{hint}
+  \marginpar{\cite[стр. 88]{papadimitriou}, \cite[стр. 78]{sipser1}}
+  Понеже $L$ е регулярен, то $L$ е и автоматен език. Нека $\A = \FA$ е краен детерминиран 
+  автомат, за който $L = \L(\A)$.
+  Да положим $p = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq p$.
+  Да разгледаме първите $p$ стъпки от изпълнението на $\alpha$ върху $\A$:
+  \[s\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow}q_2 \dots \stackrel{a_p}{\rightarrow} q_p.\]
+  Тъй като $\abs{Q} = p$, а по този път участват $p+1$ състояния $q_0,q_1,\dots,q_p$,
+  то съществуват числа $i, j$, за които $0\leq i < j\leq p$ и $q_i = q_j$.
+  Нека разделим думата $\alpha$ на три части по следния начин:
+  \[x = a_1\cdots a_i,\quad y = a_{i+1}\cdots a_j,\quad z = a_{j+1}\cdots a_k.\]
+  Ясно е, че $\abs{y} \geq 1$ и $\abs{xy} = j \leq p$.
+  \marginpar{\ding{45} Докажете!}
+  Освен това, лесно се съобразява, че за всяко $i \in\Nat$,
+  $xy^iz \in L$. Да разгледаме случая за $i = 0$.
+  Думата $xy^0z = xz \in L$, защото имаме следното изчисление:
+  \[s\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F,\]
+  защото $q_i = q_j$.
+  Да разгледаме и случая $i = 2$. Тогава думата $xy^2z \in L$, защото имаме следното изчисление:
+  \[s\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{j+1}}{\rightarrow}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F.\]
+\end{hint}
+
+Практически е по-полезно да разглеждаме следната еквивалентна формулировка на лемата за покачването.
+\begin{cor}[Контрапозиция на лемата за покачването]
+  \label{cor:pumping-reg}
+  \marginpar{Ясно е, че всеки краен език е регулярен. Нали?}
+  Нека $L$ е произволен {\em безкраен} език. Нека също така е изпълнено, че за всяко естествено число $p \geq 1$ можем да намерим дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
+  със свойствата $\abs{y} \geq 1$ и $\abs{xy} \leq p$, е изпълнено, че $(\exists i)[xy^iz \not\in L]$.
+  Тогава $L$ {\bf не} е регулярен език.
+\end{cor}
+\begin{proof}
+  Да означим с $(P)$ следната предикатна формула:
+  {\scriptsize
+    \[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
+  \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
+  
+  \begin{center}
+  {\em ,,Aко $L$ е регулярен език, то е изпълнено свойството $(P)$.''}
+  \end{center}
+  \marginpar{Контрапозиция на твърдението $p \to q$ е твърдението $\neg q \to \neg p$}
+  \noindent
+  Лемата може да се запише по следния еквивалентен начин:
+  
+  \begin{center}
+    {\em ,,Ако свойството $(P)$ не е изпълнено, то $L$ не е регулярен език.''}
+  \end{center}
+
+  \marginpar{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
+
+  \noindent Отрицанието на свойството $(P)$ може да се запише по следния начин:
+  {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+  Горната формула е еквивалентна на:
+  \marginpar{Използваме, че $\neg p \vee \neg q \vee r \equiv (p \wedge q) \to r$}
+  {\scriptsize
+    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+\end{proof}
+
+\subsection*{Приложения на лемата за покачването}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^nb^n \mid n\in \Nat\}$ не е регулярен.
+\end{problem}
+\begin{proof}
+  \marginpar{Това е важен пример. По-късно ще видим, че този език е безконтекстен}
+  Ще докажем, че
+  {\scriptsize
+    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
+  Доказателството следва стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$ (нямаме власт над избора на $p$).
+  \item
+    \marginpar{Няма общо правило, което да ни казва как избираме думата $\alpha$. Нормално е да пробаваме с няколко думи, докато намерим такава, която върши работа.}
+    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
+    си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
+    \marginpar{Обърнете внимание, че думата $\alpha$ зависи от константата $p$}
+    Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$.
+    Очевидно е, че $\abs{\alpha} \geq p$.
+  \item
+    Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
+    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$ (не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства).
+  \item
+    Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
+    Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
+    Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
+    Ясно е, че $xz \not\in L$, защото $p-k < p$.
+  \end{itemize}  
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
+\end{proof}
+
+\begin{remark}
+  Много често студентите правят следното разсъждение:
+  \[(\forall L,L' \subseteq \Sigma^\star)[L \text{ е регулярен}\ \&\ L' \subseteq L \implies L'\text{ е регулярен}].\]
+  Съобразете, че в общия случай това твърдение е невярно.
+  За да видите това, достатъчно е да посочите регулярен език $L$, който има като
+  подмножество нерегулярен език $L'$.
+  Също лесно се вижда, че твърдението
+  \[(\forall L,L' \subseteq \Sigma^\star)[L \text{ е регулярен}\ \&\ L \subseteq L' \implies L'\text{ е регулярен}]\]
+  е невярно.
+\end{remark}
+
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^mb^n \mid m,n\in \Nat\ \&\ m < n\}$ не е регулярен.
+\end{problem}
+\begin{proof}
+  Доказателството следва стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$.
+  \item
+    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
+    си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
+    Щом имаме тази свобода, нека да изберем думата $\alpha = a^{p}b^{p+1} \in L$. Очевидно е, че $\abs{\alpha} \geq p$.
+  \item
+    Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
+    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$ (не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства).
+  \item
+    Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
+    Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
+    Тогава ако вземем $i = 2$, получаваме 
+    \[xy^2z = a^{p-k}a^{2k}b^{p+1} = a^{p+k}b^{p+1}.\]
+    Ясно е, че $xy^2z \not\in L$, защото $p+k \geq p+1$.
+  \end{itemize}
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
+\end{proof}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^n\ \mid\ n\mbox{ е просто число}\}$ не е регулярен.
+\end{problem}
+\begin{proof}
+  Доказателството следва стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$.
+  \item
+    Избираме дума $w \in L$, за която $\abs{w} \geq p$. Можем да изберем каквото $w$ 
+    си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
+    Нека да изберем думата $w \in L$, такава че $\abs{w} > p+1$.
+    Знаем, че такава дума съществува, защото $L$ е безкраен език. По-долу ще видим защо този избор е важен за нашите разсъждения.
+  \item
+    Разглеждаме произволно разбиване на $w$ на три части, $w = xyz$,
+    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+  \item
+    Ще намерим $i$, за което $xy^iz \not\in L$,
+    т.е. ще намерим $i$, за което 
+    $\abs{xy^iz} = \abs{xz} + i\cdot\abs{y}$ е {\em съставно число}.
+    Понеже $\abs{xy} \leq p$ и $\abs{xyz} > p+1$, то $\abs{z} > 1$.
+    Да изберем $i = \abs{xz} > 1$. Тогава:
+    \[\abs{xy^iz} = \abs{xz} + i.\abs{y} = \abs{xz} + \abs{xz}.\abs{y} = (1 + \abs{y})\abs{xz}\] е съставно число, следователно 
+    $xy^iz \not\in L$.
+  \end{itemize}
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
+\end{proof}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^{n^2}\ \mid\ n\in\Nat\}$ не е регулярен.  
+\end{problem}
+\begin{proof}
+  В тази задача ще използваме следното свойство:
+  \[n\text{ не е точен квадрат} \iff (\exists p\in \Nat)[p^2 < n < (p+1)^2].\]
+  Доказателството следва стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$.
+  \item
+    Избираме достатъчно дълга дума, която принадлежи на езика $L$.
+    Например, нека $w = a^{p^2}$.
+  \item
+    Разглеждаме произволно разбиване на $w$ на три части, $w = xyz$, 
+    като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+  \item
+    Ще намерим $i$, за което $xy^iz \not\in L$.
+    В нашия случай това означава, че $\abs{xz} + i\cdot\abs{y}$ не е точен квадрат.
+    Тогава за $i = 2$,
+    \[p^2 = \abs{xyz} < \abs{xy^2z} = \abs{xz} + 2\abs{y} \leq p^2 + 2p < p^2 + 2p + 1 = (p+1)^2 .\]
+    Получаваме, че $p^2 < \abs{xy^2z} < (p+1)^2$,
+    откъдето следва, че $\abs{xy^2z}$ не е точен квадрат.
+    Следователно, $xy^2z \not\in L$.
+  \end{itemize}
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.  
+\end{proof}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^{n!}\ \mid\ n\in\Nat\}$ не е регулярен.  
+\end{problem}
+\begin{proof}
+  Доказателството следва стъпките:
+  \begin{itemize}
+  \item 
+    Разглеждаме произволно число $p \geq 1$.
+  \item
+    Избираме достатъчно дълга дума, която принадлежи на езика $L$. Например, нека $\omega = a^{(p+2)!}$.
+  \item
+    Разглеждаме произволно разбиване на $\omega$ на три части, $\omega = xyz$, 
+    като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+    Да обърнем внимание, че $1 \leq \abs{y} \leq p$
+  \item
+    Ще намерим $i$, за което $xy^iz \not\in L$.
+    В нашия случай това означава, че $\abs{xz} + i\cdot\abs{y}$ не е от вида $n!$.
+    Възможно ли е $xy^0z \in L$?
+    Понеже $\abs{xyz} = (p+2)!$, това означава, че $\abs{xz} = k!$, за някое $k \leq p+1$.
+    Тогава 
+    \[\abs{y} = \abs{xyz} - \abs{xz} = (p+2)! - k! \geq (p+2)! - (p+1)! = (p+1).(p+1)! > p.\]
+    Достигнахме до противоречие с условието, че $\abs{y} \leq p$.
+  \end{itemize}
+  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.  
+\end{proof}
+
+\subsection*{Следствия от лемата за покачването}
+
+\begin{prop}
+  Нека е даден автомата $\A = \FA$.
+  Езикът $\L(\A)$ е {\em непразен} е точно тогава, когато съдържа дума $\alpha, \abs{\alpha} < \abs{Q}$.
+\end{prop}
+\begin{proof}
+  Ще разгледаме двете посоки на твърдението.
+  \begin{description}
+  \item[$(\Rightarrow)$]
+    Нека $L$ е непразен език и нека $m = \min\{\abs{\alpha} \mid \alpha \in L\}$.
+    Ще докажем, че $m < \abs{Q}$.    
+    За целта, да допуснем, че $m \geq \abs{Q}$ и да изберем $\alpha \in L$, за която $\abs{\alpha} = m$.
+    Според \Lem{pumping-reg}, съществува разбиване $xyz = \alpha$, 
+    такова че $xz \in L$.
+    При положение, че $\abs{y} \geq 1$, то $\abs{xz} < m$, което 
+    е противоречие с минималността на $m$.
+    Заключаваме, че нашето допускане е грешно. Тогава $m < \abs{Q}$, откъдето следва, че 
+    съществува дума $\alpha \in L$ с $\abs{\alpha} < \abs{Q}$.
+  \item[$(\Leftarrow)$]
+    Тази посока е тривиална.
+    Ако $L$ съдържа дума $\alpha$, за която $\abs{\alpha} < \abs{Q}$,
+    то е очевидно, че $L$ е непразен език.
+  \end{description}
+\end{proof}
+
+\begin{cor}
+  Съществува алгоритъм, който проверява дали даден регулярен език е празен или не.
+\end{cor}
+
+
+\begin{cor}
+  \marginpar{$(L_1\setminus L_2) \cup (L_2 \setminus L_1) = \emptyset$?}
+  Съществува алгоритъм, който определя дали два автомата $\A_1$ и $\A_2$ разпознават един и същ език.
+\end{cor}
+
+\begin{prop}
+  Регулярният език $L$, 
+  разпознаван от КДА $\A$, е {\em безкраен} точно тогава, когато съдържа дума $\alpha, \abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
+\end{prop}
+\begin{proof}
+  Да разгледаме двете посоки на твърдението.
+  \begin{description}
+  \item[$(\Leftarrow)$]
+    Нека $L$ е регулярен език, за който съществува дума $\alpha$, такава че $\abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
+    Тогава от \Lem{pumping-reg} следва, че съществува разбиване $\alpha = xyz$ със свойството, че
+    за всяко $i \in \Nat$, $xy^iz \in L$. Следователно, $L$ е безкраен, защото $\abs{y} \geq 1$.
+  \item[$(\Rightarrow)$]
+    Нека $L$ е безкраен език и % да приемем, че няма думи $\alpha$ със
+    % свойството $\abs{Q} \leq \abs{\alpha} <  2\abs{Q}$.
+    да вземем {\em най-късата} дума $\alpha \in L$, за която $\abs{\alpha} \geq 2\abs{Q}$.
+    Понеже $L$ е безкраен, знаем, че такава дума съществува.
+    Тогава отново по \Lem{pumping-reg}, имаме следното разбиване на $\alpha$:
+    \[\alpha = xyz,\ \abs{xy} \leq \abs{Q},\ 1\leq \abs{y},\ xz \in L.\]
+    Но понеже $\abs{xyz} \geq 2\abs{Q}$, а $1 \leq \abs{y} \leq \abs{Q}$, то $\abs{xyz} > \abs{xz} \geq \abs{Q}$ и понеже избрахме $\alpha = xyz$
+    да бъде най-късата дума с дължина поне $2\abs{Q}$, заключаваме, че $\abs{Q} \leq \abs{xz} < 2\abs{Q}$ и $xz \in L$.
+  \end{description}
+\end{proof}
+
+\begin{cor}
+  Съществува алгоритъм, който проверява дали даден регулярен език е безкраен.
+\end{cor}
+
+
+\subsection*{Примери, за които лемата не е  приложима}
+
+\begin{problem}
+  \marginpar{Например, $\{c\}^+\cdot\{a^nb^n\mid n\in\Nat\}\cup \{a,b\}^\star$}
+  Да се даде пример за език $L$, който {\bf не} е регулярен, но удовлетворява
+  условието на \Lem{pumping-reg}.
+\end{problem}
+
+\begin{example}
+  Езикът $L = \{c^ka^nb^m\mid k,n,m \in \Nat\ \&\ k = 1\implies m = n\}$
+  {\bf не} е регулярен, но условието за покачване от \Lem{pumping-reg} е изпълнено за него.
+\end{example}
+\begin{proof}
+  Да допуснем, че $L$ е регулярен.
+  Тогава ще следва, че 
+  \[L_1 = L\cap ca^\star b^\star = \{ca^nb^n \mid n\in\Nat\}\]
+  е регулярен,
+  но с лемата за разрастването лесно се вижда, че $L_1$ не е.
+
+  Сега да проверим, че условието за покачване от \Lem{pumping-reg} е изпълнено за $L$.
+  Да изберем константа $p = 2$.
+  Сега трябва да разгледаме всички думи $\alpha \in L$, $\abs{\alpha} \geq 2$
+  и за всяка $\alpha$ да посочим разбиване $xyz = \alpha$, за което са изпълнени трите свойства от лемата.
+  \marginpar{Условията за $x,y,z$ са:
+    \begin{align*}
+      & \abs{xy} \leq 2\\
+      & \abs{y} \geq 1\\
+      & (\forall i\in\Nat)(xy^iz \in L)
+    \end{align*}}
+
+  \begin{itemize}
+  \item
+    Ако $\alpha = a^n$ или $\alpha = b^n$, $n\geq 2$, то е  очевидно, че можем да
+    намерим такова разбиване.
+  \item
+    $\alpha = a^nb^m$ и $n+m \geq 2$, $n \geq 1$.
+    Избираме $x = \varepsilon$, $y = a$, $z = a^{n-1}b^m$.
+  \item
+    $\alpha = ca^nb^n$, $n\geq 1$.
+    Избираме $x = \varepsilon$, $y = c$, $z = a^nb^n$.
+  \item
+    $\alpha = c^2a^nb^m$. 
+    Избираме $x = \varepsilon$, $y = c^2$, $z = a^nb^m$.
+  \item
+    $\alpha = c^ka^nb^m$, $k \geq 3$.
+    Избираме $x = \varepsilon$, $y = c$, $z = c^{k-1}a^nb^m$.
+  \end{itemize}
+\end{proof}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "EAI"
+%%% End: 
