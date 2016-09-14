@@ -1,0 +1,481 @@
+\section{Алгоритми}
+
+\subsection{Опростяване на безконтекстни граматики}
+
+\subsubsection*{Премахване на безполезните променливи}
+
+Нека е дадена безконтекстната граматика $G = \CFG$.
+\marginpar{\cite[стр. 88]{hopcroft1}}
+Една променлива $A$ се нарича {\bf полезна}, ако съществува извод от следния вид:
+\[S \to^\star \alpha A \beta \to^\star \gamma,\]
+където $\gamma \in \Sigma^\star$, а $\alpha,\beta \in (V \cup \Sigma)^\star$.
+Това означава, че една променлива е полезна, ако участва в извода на някоя дума в езика на граматиката.
+Една променлива се нарича {\bf безполезна}, ако не е полезна.
+Целта ни е да получим еквивалентна граматика $G'$ без безполезни променливи.
+Ще решим задачата като разгледаме две леми.
+
+\begin{lemma}
+  \label{lem:useless1}
+  Нека е дадена безконтекстната граматика $G = \CFG$ и $\L(G) \neq \emptyset$.
+  Съществува алгоритъм, който намира граматика $G' = \pair{V',\Sigma,S,R'}$, за която 
+  $\L(G) = \L(G')$, и за всяка променлива $A' \in V'$, съществува дума $\alpha \in \Sigma^\star$,
+  за която $A' \to^\star \alpha$.
+\end{lemma}
+\begin{hint}
+  Да разгледаме следната проста итеративна процедура.
+  \begin{algorithm}[H]
+    \caption{Намираме $V' = \{A \in V\mid (\exists \alpha \in \Sigma^\star)[A \to^\star \alpha]\}$}
+    \label{alg:useless}
+    \begin{algorithmic}[1]
+      \State $V' := \emptyset$
+      \State $V'' := \{A \in V \mid (\exists \alpha \in \Sigma^\star)[A \to \alpha]\}$
+      \While{$V' \neq V''$}
+      \State $V' := V''$
+      \State $V'' := V' \cup \{A \in V \mid (\exists \alpha \in (\Sigma \cup V')^\star)[A \to \alpha]\}$
+      \EndWhile
+      \State \Return $V'$
+    \end{algorithmic}
+  \end{algorithm}
+  Трябва да докажем, че във $V'$ са точно полезните променливи за $G$.
+  Очевидно е, че ако $A \in V'$, то $A$ е полезна променлива.
+  \marginpar{\writedown Докажете!}
+  За другата посока, с индукция по дължината на извода се доказва, че ако $A \to^\star_G \omega$,
+  то $A \in V'$.
+  
+  Правилата на $G'$ са всички правила на $G$, в които участват променливи от $V'$ и букви от $\Sigma$.
+\end{hint}
+
+\begin{lemma}
+  \label{lem:useless2}
+  Съществува алгоритъм, който по дадена безконтекстна граматика $G = \CFG$, намира $G' = \pair{V',\Sigma',S,R'}$, $\L(G') = \L(G)$,
+  със свойството, че за всяко $x \in V' \cup \Sigma'$ съществуват $\alpha, \beta \in (V'\cup\Sigma')^\star$,
+  за които $S \to^\star \alpha x \beta$,
+  т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
+\end{lemma}
+\begin{hint}
+  Намираме $V'$ и $\Sigma'$ итеративно, като в началото $V' = \{S\}$, $\Sigma' = \emptyset$.
+  Ако $A \in V'$ и имаме правила в $G$:
+  \[A \to \alpha_0\ |\ \alpha_1\ |\ \cdots\ |\ \alpha_n,\]
+  то за всяко $i = 0,\dots,n$ добавяме всички променливи на $\alpha_i$ към $V'$ и всички нетерминали на $\alpha_i$ към $\Sigma'$.
+\end{hint}
+
+\begin{thm}
+  За всяка безконтекстна граматика $G$, $\L(G) = \emptyset$ точно тогава, когато $S$ е безполезно правило в граматиката.
+\end{thm}
+\begin{proof}
+  \marginpar{Защо е важна последователността на прилагане?}
+  Нека е дадена безконтекстна граматика $G$ пораждаща $L$.
+  Прилагаме върху $G$ първо процедурата от \Lem{useless1} и след това върху резултата прилагаме процедурата от \Lem{useless2}.
+\end{proof}
+
+\begin{example}
+  Да разгледаме следната граматика $G$:
+  \begin{align*}
+    & S \to AB\ |\ aA\\
+    & A \to a\ |\ aAa\\
+    & B \to SB\ |\ BC\\
+    & C \to \varepsilon\ |\ cC.
+  \end{align*}
+  Първо да намерим променливите, от които се извеждат думи.
+  \begin{itemize}
+  \item 
+    $V_0 = \{A, C\}$, защото $A \to a$ и $C \to \varepsilon$;
+  \item
+    $V_1 = \{A, C, S\}$, защото $S \to aA$;
+  \item
+    не можем да добавим $B$ към $V_2$, следователно $V_1 = V_2$.
+  \end{itemize}
+  Получаваме граматиката $G'$:
+  \begin{align*}
+    & S \to aA\\
+    & A \to a\ |\ aAa\\
+    & C \to \varepsilon\ |\ cC.
+  \end{align*}
+  Сега премахваме променливите и буквите, които не са достижими от началната промелива $S$. Така получаваме граматиката $G''$:
+  \begin{align*}
+    & S \to aA\\
+    & A \to a\ |\ aAa.
+  \end{align*}
+\end{example}
+
+\begin{problem}
+  Проверете дали $\L(G) = \emptyset$, където правилата на $G$ са:
+  \begin{align*}
+    & S \to AS\ |\ BC\\
+    & A \to 0\ |\ BA\ |\ SB\\
+    & B \to 1\ |\ BC\ |\ AB\\
+    & C \to CB\ |\ SC\ |\ AS.
+  \end{align*}
+\end{problem}
+
+\subsubsection*{Премахване на $\varepsilon$-правила}
+\index{$\varepsilon$-правила}
+За да премахнем правилата от вида $A \to \varepsilon$, следваме процедурата:
+\marginpar{Броят на правилата може да се увеличи експоненциално, защото в най-лошия случай извеждаме всички подмножества на дадено множество от променливи}
+\begin{enumerate}[1)]
+\item 
+  Намираме множеството $E = \{A \in V \mid A \to^\star \varepsilon\}$ по следния начин.
+  Първо, $E := \{A \in V \mid A \to \varepsilon\}$.
+  След това, за всяко правило от вида $B \to X_1\cdots X_k$, 
+  ако всяко $X_i \in E$, то добавяме $B$ към $E$.
+\item
+  Строим множеството от правила $R'$, в което няма правила $\varepsilon$-правила по следния начин.
+  За всяко правило $A \to x_1\cdots x_k$, където $x_i \in V\cup\Sigma$,
+  добавяме към $R'$ всички правила от вида $A \to y_1\cdots y_k$, където:
+  \begin{itemize}[-]
+  \item 
+    ако $x_i \not\in E$, то $y_i = x_i$;
+  \item
+    ако $x_i \in E$, то $y_i = x_i$ или $y_i = \varepsilon$;
+  \item
+    не всички $y_i$-та са $\varepsilon$.
+  \end{itemize}
+\end{enumerate}
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила
+  \begin{align*}
+    & S \to D\\
+    & D \to AD\ |\ b\\
+    & A \to AB\ |\ BC\ |\ a\\
+    & B \to AA\ |\ UC\\
+    & C \to \varepsilon\ |\ CA\ |\ a\\
+    & U \to \varepsilon\ |\ aUb.
+  \end{align*}
+  % \[S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AA|EC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb.\]
+  Тогава $E = \{X \in V \mid X \rightarrow^\star_G \varepsilon\} = \{A,B,C,U\}$.
+  Това означава, че $\varepsilon \not\in \L(G)$.
+  Граматиката $G'$ без $\varepsilon$-правила, за която $\L(G') = \L(G)$ има следните правила
+  \begin{align*}
+    & S \to D\\
+    & D\to AD\ |\ D\ |\ b\\
+    & A \to A\ |\ B\ |\ C\ |\ AB\ |\ BC\ |\ a\\
+    & B\to A\ |\ E\ |\ C\ |\ AA\ |\ UC\\
+    & C \to C\ |\ A\ |\ CA\ |\ a\\
+    & U \to aUb\ |\ ab.
+  \end{align*}
+\end{example}
+
+\subsubsection*{Премахване на преименуващи правила}
+\index{преименуващи правила}
+Преименуващите правила са от вида $A \to B$.
+Нека е дадена граматика $G = \CFG$, в която има преименуващи правила.
+Ще построим еквивалентна граматика $G'$ без преименуващи правила.
+В началото нека в $R'$ да добавим всички правила от $R$, които не са преименуващи.
+След това, за всякa променлива $A$, за която $A \to^\star_G B$,
+ако $B \to \alpha$ е правило в $R$, което не е преименуващо,
+то добавяме към $R'$ правилото $A \to \alpha$.
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила  
+  \begin{align*}
+    & S \to B\ |\ CC\ |\ b\\
+    & A \to B\ |\ S\\
+    & B \to C\ |\ BC\\
+    & C \to AB\ |\ a\ |\ b.
+  \end{align*}
+  % \[A\rightarrow B|S,B\rightarrow C|BC,C\rightarrow AB|a|b,S\rightarrow B|CC|b.\]
+  Първо добавяме към $R'$ правилата $B \to BC, C \to AB\ |\ a\ |\ b, S \to CC\ |\ b$.
+  \begin{itemize}
+  \item 
+    Лесно се съобразява, че $A \to^\star_G B,S,C$.
+    Добавяме правилата 
+    \[A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC.\]
+  \item
+    Имаме $B \to^\star_G C$.
+    Добавяме правилата $B \to AB\ |\ a\ |\ b$.
+  \item
+    Имаме $S \to^\star_G B,C$.
+    Добавяме правилата $S \to BC\ |\ AB\ |\ a\ |\ b$.
+  \end{itemize}
+  Накрая получаваме, че граматиката $G'$ има правила
+  \begin{align*}
+    & S \to BC\ |\ AB\ |\ CC\ |\ a\ |\ b\\
+    & A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC\\
+    & B \to AB\ |\ a\ |\ b\ |\ BC\\
+    & C \to AB\ |\ a\ |\ b.
+  \end{align*}
+\end{example}
+
+\begin{problem}
+  Премахнете преименуващите правила от граматиката $G$, като запазите езика, ако $G$ има следните правила:
+    \begin{align*}
+      & S \to C\ |\ CC\ |\ b\\
+      & A \to B\\
+      & B \to S\ |\ C\ |\ BC\\
+      & C \to a\ |\ AB;
+    \end{align*}
+\end{problem}
+
+\subsubsection*{Премахване на дългите правила}
+
+Едно правило се нарича дълго, ако е от вида $A \to \beta$, където $|\beta| \geq 3$.
+Да разгледаме едно дълго правило в граматиката от вида $A \to x_1x_2\cdots x_k$, 
+където $k \geq 3$ и $x_i \in V \cup \Sigma$. За да получим еквивалентна граматика без това дълго правило,
+добавяме нови променливи $A_1,\dots, A_{k-2}$, и правила
+\[A \to x_1A_1,\ A_1 \to x_2A_2, \dots,\ A_{k-2} \to x_{k-1}x_k.\]
+
+
+\begin{problem}
+  Нека е дадена граматиката  $G = \pair{\{S,A,B,C\}, \{a,b\}, S, R}$.
+  Използвайте обща конструкция, за да премахнете ,,дългите'' правила от $ G$ като при това получите 
+  безконтестна граматика $G_1$ с език $\L(G) = \L(G_1)$, където правилата на граматиката са:
+  % \begin{enumerate}[a)]
+  % \item
+  %   \begin{align*}
+  %     & S \to \varepsilon\ |\ ab\ |\ aAba\\
+  %     & A\to aBCb\\
+  %     & B\to bbb\\
+  %     & C\to aC\ |\ aCaC;
+  %   \end{align*}
+  % \item
+    \begin{align*}
+      & S\to CC\ |\ b\\
+      & A\to BSB\ |\ a\\
+      & B\to ba\ |\ BC\\
+      & C\to BaSA\ |\ a\ |\ b.
+    \end{align*}
+  % \end{enumerate}
+\end{problem}
+
+\subsection{Нормална Форма на Чомски}
+\index{Чомски}
+%[стр. 99 от \cite{sipser}]
+\index{нормална форма на Чомски}
+Една безконтекстна граматика е в {\bf нормална форма на Чомски}, ако
+всяко правило е от вида
+\[A \rightarrow BC\mbox{ и }A \rightarrow a,\]
+като $B, C$ {\em не могат} да бъдат променливата за начало $S$.
+Освен това, позволяваме правилото $S\to\varepsilon$.
+\footnote{В \cite[стр. 151]{papadimitriou} дефиницията е малко по-различна.
+Там дефинират $G$ да бъде в нормална форма на Чомски ако $R \subseteq V\times(V\cup\Sigma)^2$.
+В този случай губим езиците $\{\varepsilon\}$ и $\{a\}$, за $a\in\Sigma$.}
+
+\begin{framed}
+  \begin{thm}
+    Всеки безконтекстен език $L$ се поражда от безконтекстна граматика в нормална форма на Чомски.
+  \end{thm}
+\end{framed}
+\begin{proof}
+%  \marginpar{Броят на правилата може да се увеличи експоненциално.}
+  Нека имаме контекстно-свободна граматика $G$, за която $L = \L(G)$.
+  Ще построим безконтекстна граматика $G^\prime$ в нормална форма на Чомски, $L = \L(G^\prime)$.
+  % [стр. 99 от \cite{sipser}]
+  Следваме следната процедура:
+  \begin{itemize}
+  \item
+    Добавяме нов начален символ $S_0$ и правило $S_0 \to S$.
+  \item
+    \marginpar{Време $O(n)$}
+    Премахваме дългите правила.
+    Заменяме правилата от вида $A\to x_1x_2\dots x_n$, $n\geq 3$, $x_i \in V\cup\Sigma$, с
+    правилата \[A\to x_1A_1,\ A_1\to x_2A_2,\ \dots,\ A_{n-2} \to x_{n-1}x_n.\]
+    където $A_i$ са нови променливи.
+  \item
+    \marginpar{Време $O(n^2)$}
+    Премахваме $\varepsilon$-правилата.
+    За всяка променлива $A \neq S_0$ премахваме правилата от вида $A\to\varepsilon$.
+    Това правим по следния начин.
+    
+    Ако имаме правило от вида $R \to Au$ или $R\to u A$, $u \in V \cup \Sigma$,
+    то добавяме правилото $R\to u$.
+    %Правим това за всяко срещане на променливата $A$ в дясната страна на правило.
+    Например, 
+    \begin{itemize}
+    \item 
+      ако имаме правило $R\to aA$, то добавяме правилото $R \to a$;
+    \item
+      ако имаме правило $R\to AA$, то добавяме правилото $R \to A$.
+    \end{itemize}
+    Ако имаме правило от вида $R\to A$, то добавяме правилото $R\to\varepsilon$
+    само ако променливата $R$ още не е преминала през процедурата за премахване на $\varepsilon$.
+  \item
+    \marginpar{Време $O(n^2)$}
+    \marginpar{Памет $O(n^2)$}
+    Премахваме преименуващите правила, т.е. правила от вида $A\to B$.
+    Заменяме всяко правило от вида $B \to \beta$ с $A\to \beta$,
+    освен ако $A \to \beta$ е вече премахнато преименуващо правило.
+  \item
+    \marginpar{Време $O(n)$}
+    За правила от вида $A\to u_1 u_2$, където $u_1, u_2 \in V \cup \Sigma$, 
+    заменяме всяка буква $u_i$ с новата променлива $U_i$
+    и добавяме правилото $U_i\to u_i$.
+    Например, правилото $A \to aB$ се заменя с правилото $A \to XB$ и добавяме правилото $X \to a$,
+    където $X$ е нова променлива.
+  \end{itemize}
+\end{proof}
+
+\begin{thm}
+  При дадена безконтекстна граматика $G$ с дължина $n$, можем да намерим еквивалентна
+  на нея граматика $G'$ в нормална форма на Чомски за време $O(n^2)$,
+  като получената граматика е с дължина $O(n^2)$.
+\end{thm}
+
+
+% \begin{problem}
+%   Нека е дадена граматиката  $G = \pair{\{S,A,B,C,D,E\}, \{a,b\},S, R}$.
+%   \begin{enumerate}[a)]
+%   \item
+%     Намерете множеството $\{X \in V \mid X \rightarrow^\star_G \varepsilon\}$.
+%   \item
+%     Вярно ли е, че $\varepsilon \in L(G)$?
+%   \item
+%     Постройте граматика $G_1$ без $\varepsilon$-правила, за която $L(G_1)=L(G)\setminus\{\varepsilon\}$.
+%   \end{enumerate}
+%   Множеството от правила $R$ на граматиката $G$ е зададено като:
+%   \begin{enumerate}[a)]
+%   \item
+%     $R = \{S\rightarrow D,D\rightarrow AD|b,A\rightarrow ACB|BC|a, B\rightarrow ABCA|CEC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb\}$;
+%   \item
+%     $R = \{S \rightarrow aD, D\rightarrow \varepsilon|ABBA|ADD,A\rightarrow DEB|a,B\rightarrow DDD|DC|b,C\rightarrow CCE|a, E\rightarrow \varepsilon|bEa\}$;
+%   \item
+%     $R = \{ S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AB|CC, C\rightarrow \varepsilon|CA|a, E\rightarrow a|EB\}$;
+%   \item
+%     $R = \{ S \rightarrow AD|a, D\rightarrow \varepsilon|BB|AD,A\rightarrow DB|a,B\rightarrow DD|DC|b,C\rightarrow CE|a, E\rightarrow AB|b|EA\}$;
+%   \item
+%     $R =\{S\rightarrow AS|SB|SS,B\rightarrow CA|b, C\rightarrow AA|a|BA,A\rightarrow \varepsilon|BS\}$;
+%   % \item
+%   %   $R = \{S\rightarrow AB|AC,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a,C\rightarrow CS|a\}$;
+%   % \item
+%   %   $R = \{S\rightarrow AS|SB|SS,B\rightarrow AC|b, C\rightarrow A|a|AB,A\rightarrow \varepsilon|BS\}$;
+%   \item
+%     $R = \{S\rightarrow BA|CA,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a, C\rightarrow CS|a\}$;
+%   \item
+%     $R = \{S\rightarrow AS|b,A\rightarrow AC|BC|a, B\rightarrow BC|CC,C\rightarrow \varepsilon|CA|a\}$;
+%   \item
+%     $R = \{S\rightarrow \varepsilon|BA|AS,A\rightarrow SB|a,B\rightarrow SS|SC|b,
+%     C\rightarrow CC|a\}$; 
+%   \end{enumerate}
+% \end{problem}
+
+
+% \begin{problem}
+%   Намерете безконтекстна граматика в нормална форма на Чомски за езиците от задача 6.
+% \end{problem}
+
+
+\subsection{Проблемът за принадлежност}
+
+\begin{thm}
+  Съществува {\em полиномиален} алгоритъм, който проверява дали дадена дума принадлежни на граматиката $G$.
+  \marginpar{За дума $\alpha$, алгоритъмът работи за време $O(\abs{\alpha}^3)$}
+\end{thm}
+% \begin{proof}[стр. 154 от \cite{papadimitriou}]
+Можем да приемем, че $G = \CFG$ е граматика в нормална форма на Чомски.
+Нека $\alpha = a_1a_2\dots a_n$ е дума, за която искаме да проверим дали $\alpha \in \L(G)$.
+\marginpar{Това е алгоритъм на Cocke, Younger и Kasami (CYK), който е пример за динамично програмиране (стр. 195 от \cite{kozen})}
+\begin{algorithm}[H]
+  \caption{Проверка дали $\alpha \in \L(G)$}
+  \label{alg:belongs-to-grammar}
+  \begin{algorithmic}[1]
+    \State $n := \abs{\alpha}$ \Comment{Вход дума $\alpha = a_1\cdots a_n$}
+    \ForAll{$i\in [1,n]$}
+    \State $V[i,i] := \{A \in V \mid A\rightarrow a_i\}$
+    \EndFor
+    \ForAll{$i,j \in [1,n]\ \&\ i \neq j$}
+    \State $V[i,j] := \emptyset$
+    \EndFor      
+    \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала}
+    \ForAll{$i \in [1, n-s]$}\Comment{Начало на интервала}
+    \ForAll{$k \in [i, i + s)$}\Comment{Разделяне на интервала}
+    \If{$\exists A\to BC \in R\ \&\ B \in V[i,k]\ \&\ C\in V[k+1,i+s]$}
+    \State $V[i,i+s] := V[i,i+s] \cup \{A\}$
+    \EndIf
+    \EndFor
+    \EndFor
+    \EndFor
+    \If{$S \in V[1,n]$}
+    \State \Return \texttt{True}\Comment{Има извод на думата от $S$}
+    \Else
+    \State \Return \texttt{False}
+    \EndIf
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{lemma}
+  За дадена граматика в нормална форма на Чомски и дума $\alpha$, 
+  за всяко $0 \leq s < \abs{\alpha}$, след $s$-тата итерация на алгоритъма (редове 6 - 10), за всяка позиция $i = 1,\dots,n-s$,
+  \[V[i,i+s] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s}\}.\]
+\end{lemma}
+\begin{proof}
+  Пълна индукция по $s$.
+  За $s = 0$  е ясно. (Защо?)
+
+  Нека твърдението е вярно за $s < n$. Ще докажем твърдението за $s+1$, т.е. за всяко $i = 1,\dots,n-s-1$,
+  \[V[i,i+s+1] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s+1}\}.\]
+  % Да разгледаме $A \in V[i,i+s+1]$.
+  За едната посока, да разгледаме първoто правило в извода $A \to^\star_G a_i\cdots a_{i+s+1}$.
+  Понеже $G$ е в НФЧ, то е от вида $A \to BC$ и тогава съществува някое $t$, за което 
+  $B \to^\star a_i\cdots a_{i+t}$ и $C \to^\star a_{i+t+1}\cdots a_{i+s+1}$.
+  От И.П. получаваме, че $B \in V[i,i+t]$ и $C \in V[i+t+1,i+s+1]$.
+  Тогава от ред 10 на алгоритъма е ясно, че $A \in V[i,i+s+1]$.
+  
+  За другата посока, нека $A \in V[i,i+s+1]$.
+  Единствената стъпка на алгоритъма, при която може да сме добавили $A$ към множеството $V[i,i+s+1]$ е ред 10.
+  Тогава имаме, че съществува $k$, за което $B \in V[i,k]$, $C \in V[k+1,i+s+1]$, и $A\to BC$ е правило в граматиката $G$.
+  От И.П. имаме, че $B \to^\star_G a_i\cdots a_k$ и $C \to^\star_G a_{k+1}\cdots a_{i+s+1}$.
+  Заключаваме веднага, че $A \to^\star_G a_i\cdots a_{i+s+1}$.
+\end{proof}
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила 
+  \begin{align*}
+    & S\rightarrow a\ |\ AB\ |\ AC\\
+    & A\rightarrow a\\
+    & B\rightarrow b\\
+    & C\rightarrow SB\ |\ AS.
+  \end{align*}
+  Ще приложим $CYK$ алгоритъма за да проверим дали думата $aaabb \in \L(G)$.
+  \begin{itemize}
+  \item 
+    $V[1,1] = V[2,2] = V[3,3] = \{S,A\}$;
+    $V[4,4] = V[5,5] = \{B\}$.
+  \item
+    $V[1,2] = V[2,3] = \{C\}$;
+    $V[3,4] = \{S,C\}$;
+    $V[4,5] = \emptyset$.
+  \item
+    $V[1,3] = \{S\} \cup \emptyset$;
+    $V[2,4] = \{S,C\} \cup \emptyset$;
+    $V[3,5] = \emptyset \cup \{C\}$.
+  \item
+    $V[1,4] = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$;
+    $V[2,5] = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$.
+  \item
+    $V[1,5] = \{S,C\} \cup \emptyset \cup \emptyset \cup \{C\}= \{S,C\}$.
+  \end{itemize}
+  Понеже $S \in V[1,5]$, то $aaabb \in \L(G)$.
+\end{example}
+
+\begin{thm}
+  \marginpar{\cite[стр. 137]{hopcroft1}}
+  Съществуват алгоритми, които определят по дадена безконтекстна граматика $G$ дали:
+  \begin{enumerate}[a)]
+  \item 
+    $\abs{\L(G)} = 0$;
+  \item
+    $\abs{\L(G)} < \infty$;
+  \item
+    $\abs{\L(G)} = \infty$.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  Нека е дадена една безконтекстна граматика $G$.
+  \begin{description}
+  \item[($\L(G) = \emptyset?$)]
+    Прилагаме алгоритъма за премахване на безполезните променливи.
+    Ако открием, че $S$ е безполезна променлива, то $\L(G) = \emptyset$.
+  \item[($\abs{\L(G)} < \infty?$ или $\abs{\L(G)} = \infty?$)]
+    Нека да разгледаме граматиката $G'$ в НФЧ без безполезни променливи, за която $\L(G) = \L(G')$.
+    От граматиката $G' = \pair{V',\Sigma,S,R'}$ строим граф с възли променливите от $V'$ като
+    за $A,B \in V'$ имаме ребро $A \to B$ точно тогава, когато съществува $C \in V'$,
+    за което $A \to BC$ или $A \to CB$ е правило в $R'$.
+    
+    Ако в получения граф имаме цикъл, то $\L(G') = \infty$.
+  \end{description}
+\end{proof}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End: 

@@ -1,0 +1,303 @@
+\section{Безконтекстни граматики}
+\index{граматика!безконтекстна}
+\marginpar{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$}
+\marginpar{На англ. {\em context-free grammar}}
+\marginpar{Други срещани наименования на български са {\em контекстно-свободна}, {\em контекстно-независима}}
+В Глава \ref{sect:regular-grammar} въведохме понятието граматика. След това видяхме как можем да опишем регулярните езици
+със специален вид граматики, които нарекохме регулярни граматики.
+Сега ще разгледаме още един вид граматики.
+\begin{itemize}
+\item 
+  Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
+  имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
+\item
+  \index{език!безконтекстен}
+  $L$ се нарича {\bf безконтекстен език}, ако съществува безконтекстна граматика $G$, за която 
+  $L = \L(G) = \{\omega \in \Sigma^\star \mid S \to^\star_G \omega\}$.
+\end{itemize}
+
+\begin{remark}
+  Очевидно е, че всяка регулярна граматика е безконтекстна. Следователно, 
+  {\em всеки регулярен език е безконтекстен.}
+\end{remark}
+
+Като първи пример нека да видим, че това включване е {\em строго}, т.е. съществува безконтекстен език, който не е регулярен.
+Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
+
+\begin{example}
+  Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
+  \begin{align*}
+    & S \to aSb \mid \varepsilon.
+  \end{align*}
+  Лесно се съобразява, че $\L(G) = \{a^nb^n \mid n\in\Nat\}$.
+\end{example}
+
+\begin{example}
+  Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
+  \begin{align*}
+    & S \to aSc \mid B\\
+    & B \to bBc \mid \varepsilon.
+  \end{align*}
+  Лесно се съобразява, че $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
+\end{example}
+
+\begin{example}
+  Да разгледаме граматика с правила
+  \begin{align*}
+    & S \to S + S | S * S | (S) | V\\
+    & V \to x | y | z
+  \end{align*}
+
+  Думата $x * y + z$ има два различни извода.
+
+  Да разгледаме граматика с правила
+  \begin{align*}
+    & S \to E + S | E\\
+    & E \to V * E | V | (S) * E | (S)\\
+    & V \to x | y | z
+  \end{align*}
+\end{example}
+
+\begin{example}
+  \begin{align*}
+    & S \to \textbf{if } S \textbf{ then } S \textbf{ else }S | \textbf{ if }S \textbf{ then }S | V\\
+    & V \to x | y | z
+  \end{align*}
+
+  Ние искаме следната граматика:
+  \begin{align*}
+    & S \to M | U\\
+    & M \to \textbf{if } S \textbf{ then } M \textbf{ else }M | X\\
+    & U \to \textbf{if } S \textbf{ then } S | \textbf{if } S \textbf{ then } M \textbf{ else }U
+  \end{align*}
+\end{example}
+
+
+
+\begin{example}
+  Да разгледаме граматика с правила
+  \begin{align*}
+    & S \to E\\
+    & E \to E + P\ |\ P\\
+    & P \to P * N\ |\ N\\
+    & N \to (E)\ |\ a,
+  \end{align*}
+  като $\Sigma = \{a,+,*,(,),\}$, и $V = \{S,E,P,N\}$.
+\end{example}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
+\end{problem}
+\begin{proof}
+  Да разгледаме граматиката $G$ с правила
+  \begin{align*}
+    S& \rightarrow aSc\vert aS \vert B\\
+    B& \rightarrow bBc\vert bB\vert\varepsilon.
+  \end{align*}
+  
+  Лесно се вижда с индукция по $n$, че за всяко $n$ имаме свойствата:
+  \marginpar{\ding{45} Докажете!}
+  \begin{itemize}
+  \item 
+    $S \rightarrow^\star a^nSc^n$,
+  \item
+    $S \rightarrow^\star a^nS$,
+  \item
+    $B \rightarrow^\star a^nBc^n$,
+  \item
+    $B \rightarrow^\star b^nB$.
+  \end{itemize}
+  Комбинирайки горните свойства, можем да видим, че за всяко $n \geq k$,
+  \begin{itemize}
+  \item 
+    $S \rightarrow^\star a^nSc^k$,
+  \item
+    $B \rightarrow^\star b^nBc^k$.
+  \end{itemize}
+  За да докажем, че $L \subseteq L(G)$, 
+  да разгледаме една дума $\omega \in L$, т.е. $\omega = a^mb^nc^k$, където $m+n \geq k$.
+  Имаме два случая:
+  \begin{itemize}
+  \item 
+    $k \leq m$, т.е. $m = k+l$ и $m+n = k+l+n$.
+    Тогава имаме изводите:
+    \[S \rightarrow^\star a^kSc^k,\ S \rightarrow^\star a^lS,\ S \rightarrow B,\ B \rightarrow^\star b^nB,\ B \rightarrow \varepsilon.\]
+    Обединявайки всичко това, получаваме:
+    \[S \rightarrow^\star a^mb^nc^k.\]
+  \item
+    $k > m$, т.е. $k = m+l$, за някое $l > 0$, и $m+n = k+r = m+l+r$, за някое $r$.
+    Тогава имаме изводите:
+    \[S \rightarrow^\star a^mSc^m,\ S\rightarrow B,\ B\rightarrow^\star b^lBc^l,\ B\rightarrow b^rB,\ B\rightarrow\varepsilon,\]
+    и отново получаваме $S \rightarrow^\star a^mb^nc^k$.
+  \end{itemize}
+  Така доказахме, че $\omega \in \L(G)$.
+  
+  Сега ще докажем, че $\L(G) \subseteq L$.
+  С индукция по дължината на извода $l$,
+  ще докажем, че ако $S \stackrel{l}{\rightarrow}\omega$, то $\omega \in M$, където
+  \[M = \{a^nSc^k\mid n\geq k\}\cup\{a^nb^mBc^k\mid n+m\geq k\}\cup\{a^nb^mc^k\mid n+m\geq k\}.\]
+  
+  Ако $l = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$ и $S \in M$.
+
+  Нека $l > 0$ и $S \stackrel{l-1}{\rightarrow} \alpha \rightarrow \omega$.
+  От {\bf И.П.} имаме, че $\alpha \in M$. Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
+  Разглеждаме всички варианти за думата $\alpha \in M$ и за правилото $C\rightarrow \gamma$ в граматиката $G$
+  за да докажем, че  $\omega \in M$.
+  Удобно е да представим всички случаи в таблица.
+  \begin{center}
+    \begin{tabular}{| c | c | c |}
+      \hline
+      $\alpha\in M$ & $C \rightarrow \gamma$ & $\omega \in M?$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow aSc$ & $a^{n+1}Sc^{k+1}$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow aS$ & $a^{n+1}Sc^{k}$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow B$ & $a^{n}Bc^{k}$ \\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow bBc$ & $a^nb^{m+1}Bc^{k+1}$\\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow bB$ & $a^nb^{m+1}Bc^{k}$\\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow \varepsilon$ & $a^nb^{m}c^{k}$\\ \hline
+    \end{tabular}
+  \end{center}
+  Във всички случаи се установява, че $\omega \in M$.
+  Сега, за всяка дума $\omega \in L(G)$ следва, че
+  \[\omega \in \Sigma^\star \cap M = \{a^mb^nc^k\mid m+n \geq k\}.\]
+\end{proof}
+
+
+\begin{problem}
+  \marginpar{
+    $S \to aS \mid aSc \mid aB \mid bB$\\
+    $B \to bB \mid bBc \mid \varepsilon$
+}
+  Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k + 1\}$ е безконтекстен.  
+\end{problem}
+
+\begin{problem}
+  \label{pr:nanb}
+  Нека $\omega$ е произволна дума над азбуката $\{a,b\}$. 
+  Тогава:
+  \begin{enumerate}[a)]
+  \item 
+    ако $N_a(\omega) = N_b(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
+    $\omega = \omega_1 a \omega_2$, $N_a(\omega_1) = N_b(\omega_1)$ и $N_a(\omega_2) = N_b(\omega_2)$.
+  \item
+    ако $N_b(\omega) = N_a(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
+    $\omega = \omega_1 b \omega_2$, $N_a(\omega_1) = N_b(\omega_1)$ и $N_a(\omega_2) = N_b(\omega_2)$.
+  \end{enumerate}
+\end{problem}
+\begin{proof}
+  Пълна индукция по дължината на думата $\omega$, за които $N_a(\omega) = N_b(\omega)+1$.
+  \begin{itemize}
+  \item 
+    $\abs{\omega} = 1$. Тогава $\omega_1 = \omega_2 = \varepsilon$ и $\omega = a$.
+  \item
+    $\abs{\omega} = n+1$. Ще разгледаме два случая, в зависимост от първия символ на $\omega$.
+    \begin{itemize}
+    \item 
+      Случаят $\omega = a\omega'$ е лесен. (Защо?)
+    \item
+      Интересният случай е $\omega = b\omega'$.    
+      Тогава $\omega = b^{i+1}a\omega'$. Да разгледаме думата $\omega''$, която се получава от $\omega$
+      като премахнем първото срещане на думата $ba$, т.е. 
+      $\omega'' = b^i\omega'$ и $\abs{\omega''} = n-1$.
+      Понеже от $\omega$ сме премахнали равен брой $a$-та и $b$-та, $N_a(\omega'') = N_b(\omega'')+1$.
+      Според {\bf И.П.} за $\omega''$, можем да запишем думата като $\omega'' = \omega''_1a\omega''_2$
+      и $N_a(\omega''_1) = N_b(\omega''_1)$, $N_a(\omega''_2) = N_b(\omega''_2)$.
+      Понеже $b^i$ е префикс на $\omega''_1$, за да получим обратно $\omega$, трябва 
+      да прибавим премахнатата част $ba$ веднага след $b^i$ в $\omega''_1$.
+    \end{itemize}
+  \end{itemize}
+\end{proof}
+
+\begin{problem}
+  За произволна дума $\omega \in \{a,b\}^\star$, 
+  докажете, че ако $N_a(\omega) > N_b(\omega)$, то съществуват думи $\omega_1$ и $\omega_2$,
+  за които $\omega = \omega_1 a \omega_2$ и $N_a(\omega_1) \geq N_b(\omega_1)$, $N_a(\omega_2) \geq N_b(\omega_2)$.
+\end{problem}
+
+\begin{problem}
+  Да се докаже, че езикът $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) = N_b(\alpha)\}$ 
+  е безконтекстен.
+\end{problem}
+\begin{proof}
+  \marginpar{  Алтернативна граматика за езика $L$ е
+  \begin{align*}
+    S& \rightarrow aB | bA | \varepsilon\\
+    A& \rightarrow a | aS | bAA\\
+    B& \rightarrow b | bS | aBB
+  \end{align*}}
+  Една възможна граматика $G$ е следната: 
+  \[S \rightarrow aSbS\vert bSaS \vert\varepsilon.\]
+  Например, да разгледаме извода на думата $aabbba$ в тази граматика:
+  \begin{align*}
+    S & \to aSbS \to aaSbSbS \to aa\varepsilon bSbS \to aab\varepsilon bS \to aabbbSaS\\
+    & \to aabbb\varepsilon a S \to aabbba.
+  \end{align*}
+  
+  Като следствие от \Prob{nanb} може лесно да се изведе, че за думи $\omega$, за които $N_a(\omega) = N_b(\omega)$,
+  е изпълнено следното:
+  \begin{enumerate}[a)]
+  \item 
+    ако $\omega = a\omega'$, то
+    $\omega = a\omega_1b\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$;
+  \item
+    ако $\omega = b\omega'$, то
+    $\omega = b\omega_1a\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
+  \end{enumerate}
+
+  Сега първо ще проверим, че $L \subseteq L(G)$.
+  За целта ще докажем с {\em пълна индукция} по дължината на думата $\omega$, че за всяка дума $\omega$ със свойството $N_a(\omega) = N_b(\omega)$ е изпълнено
+  $S \rightarrow^\star \omega$.
+  \begin{itemize}
+  \item 
+    Нека $\abs{\omega} = 0$. Тогава $S \rightarrow \varepsilon$.
+  \item
+    Нека $\abs{\omega} = k+1$. Имаме два случая.
+    \begin{itemize}
+    \item 
+      $\omega = a\omega^\prime$, т.е. от свойство а), $\omega = a\omega_1b\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
+      Тогава $\abs{\omega_1} \leq k$ и по И.П. $S \rightarrow^\star \omega_1$.
+      Аналогично, $S \rightarrow^\star \omega_2$.
+      Понеже имаме правило $S \rightarrow aSbS$, заключаваме че $S \rightarrow^\star a\omega_1b\omega_2$.
+    \item
+      $\omega = b\omega^\prime$, т.е. свойство б), $\omega = b\omega_1a\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
+      Този случай се разглежда аналогично.
+    \end{itemize}
+  \end{itemize}
+  
+  Преминаваме към доказателството на другата посока, т.е. $L(G) \subseteq L$.
+  Тук с индукция по дължината на извода $l$ ще докажем, че
+  $S \stackrel{l}{\rightarrow} \omega$, то $\omega \in M$,
+  където
+  \[M = \{\omega \in \{a,b,S\}^\star \mid N_a(\omega) = N_b(\omega)\}.\]
+  За $l = 0$  е ясно, че $S \stackrel{0}{\rightarrow^\star} S$.
+  За $l = k+1$, то $S \stackrel{k}{\rightarrow^\star} \alpha \rightarrow \omega$.
+  От {\bf И.П.} имаме, че $\alpha \in M$.
+  Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
+  Разглеждаме всички варианти за думата $\alpha \in M$ и за правилото $C\rightarrow \gamma$ в граматиката $G$
+  за да докажем, че  $\omega \in M$.
+  Удобно е да представим всички случаи в таблица.
+  \begin{center}
+    \begin{tabular}{| c | c | c |}
+      \hline
+      $\alpha$ & $C \rightarrow \gamma$ & $\omega$ \\ \hline
+      $\in M$ & $S \rightarrow aSbS$ & $\in M$ \\ \hline
+      $\in M$ & $S \rightarrow bSaS$ & $\in M$ \\ \hline
+      $\in M$ & $S \rightarrow \varepsilon$ & $\in M$ \\ \hline
+    \end{tabular}
+  \end{center}
+  Във всички случаи лесно се установява, че $\omega \in M$.
+  Така за всяка дума $\omega \in L(G)$ следва, че
+  \[\omega \in \Sigma^\star \cap M = L.\]
+\end{proof}
+
+\begin{problem}
+  Да разгледаме граматиката $G = \CFG$, където  $V = \{S,A,B\}$, $\Sigma = \{a,b\}$, а правилата $R$ са
+  \[S \to AA | B, A \to B | bb, B \to aa | aB.\]
+  Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
+\end{problem}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End: 
