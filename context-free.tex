@@ -967,66 +967,6 @@
   Разгледайте $\alpha = a^pb^pa^pb^p$.
 \end{hint}
 
-
-% \begin{example}
-%   Приложете лемата за покачването за да докажете, че
-%   езикът $L$ не е безконтекстен, където:
-%   \begin{enumerate}[a)]
-%   \item
-%     $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$;
-%   \item
-%     $L = \{\beta\beta\mid \beta\in \{a,b\}^\star\}$;
-%   \item
-%     $L = \{a^{n^2}\mid n\in\Nat\}$.
-%   \end{enumerate}
-% \end{example}
-% \begin{proof}
-%   \begin{enumerate}[a)]
-%   \item
-%     Да фиксираме думата $\alpha = a^pb^pc^p$ и да разгледаме
-%     едно произволно нейно разбиване, $\alpha = xyuvw$, за което
-%     $\abs{yuv} \leq p$ и $1 \leq \abs{yv}$.
-%     Знаем, че поне една от $y$ и $v$ не е празната дума.
-%     \begin{itemize}
-%     \item
-%       $y$ и $v$ са съставени от една буква.
-%       Имаме три случая.
-%       \begin{enumerate}[i)]
-%       \item
-%         $a$ не се среща в $y$ и $v$.
-%         Тогава $xy^0vu^0w$ съдържа повече $a$ от $b$ или $c$.
-%       \item
-%         $b$ не се среща в $y$ и $v$.
-%         Ако $a$ се среща в $y$ или $v$, тогава $xy^2uv^2w$ съдържа повече $a$ от $b$
-%         Ако $c$ се среща в $y$ или $v$, тогава $xy^0uv^0w$ съдържа по-малко $c$ от $b$.
-%       \item
-%         $c$ не се среща в $y$ и $v$.
-%         Тогава $xy^2uv^2w$ съдържа повече $a$ или $b$ от $c$.
-%       \end{enumerate}      
-%     \item
-%       $y$ или $v$ е съставена от две букви.
-%       Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
-%     \end{itemize}
-%   \item
-%     \marginpar{Защо $\alpha = a^pba^pb$ не е добър кандидат?}
-%     Разгледайте $\alpha = a^pb^pa^pb^p$, т.е. $\beta = a^pb^p$ и $\alpha = \beta\beta$.
-%     Нека $xyuvw = \alpha$ е произволно разбиване на $\alpha$, за което е изпълнено, че
-%     $\abs{yuv} \leq p$ и $1\leq \abs{yv}$.
-%     \begin{itemize}
-%     \item
-%       Ако $yuv$ е в първата част на думата, то 
-%       $xy^0uv^0w = a^ib^ja^pb^p \not\in L$.
-%       Аналогично ако $yuv$ е във втората част на думата.
-%     \item
-%       Ако $yuv$ е в двете части на думата, то 
-%       $xy^0uv^0w = a^pb^ia^jb^p \not\in L$.
-%     \end{itemize}    
-%   \item
-%     Решава се аналогично както за регулярни езици.
-%   \end{enumerate}
-% \end{proof}
-
-
 \begin{thm}
   Безконтекстните езици {\bf не} са затворени относно сечение и допълнение.
 \end{thm}
@@ -1556,17 +1496,17 @@
   Разгледайте езика $L' = L \cap \L(a^\star b^\star a^\star)$.
 \end{hint}
 
-\section*{Библиография}
+% \section*{Библиография}
 
-Основни източници в тази глава са:
-\begin{itemize}
-\item 
-  глава 4 от \cite{hopcroft1}, глави 5, 6 и 7 от \cite{hopcroft2};
-\item
-  глава 2 от \cite{sipser1};
-\item
-  глава 3 от \cite{papadimitriou}.
-\end{itemize}
+% Основни източници в тази глава са:
+% \begin{itemize}
+% \item 
+%   глава 4 от \cite{hopcroft1}, глави 5, 6 и 7 от \cite{hopcroft2};
+% \item
+%   глава 2 от \cite{sipser1};
+% \item
+%   глава 3 от \cite{papadimitriou}.
+% \end{itemize}
 
 
 

@@ -65,14 +65,14 @@
 \usepackage{subcaption}
 
 \theoremstyle{definition}
-\newtheorem{thm}{Теорема}
-\newtheorem{cor}{Следствие}
-\newtheorem{lemma}{Лема}
+\newtheorem{thm}{Теорема}[chapter]
+\newtheorem{cor}{Следствие}[chapter]
+\newtheorem{lemma}{Лема}[chapter]
 \newtheorem{prop}{Твърдение}[chapter]
-\newtheorem{dfn}{Определение}
-\newtheorem{problem}{Задача}
-\newtheorem{example}{Пример}
-\newtheorem{question}{Въпрос}
+\newtheorem{dfn}{Определение}[chapter]
+\newtheorem{problem}{Задача}[chapter]
+\newtheorem{example}{Пример}[chapter]
+\newtheorem{question}{Въпрос}[chapter]
 \newtheorem*{remark}{Забележка}
 \renewenvironment{proof}{\noindent{\bf Доказателство.}\hspace*{1em}}{\qed\par}
 \newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par}
@@ -209,12 +209,20 @@
 
 \include{intro}
 
-\include{automata}
+\chapter{Регулярни езици и автомати}
+\label{ch:regular}
 
-\include{automata-extra}
+\include{regular/dfa}
+\include{regular/regexp}
+\include{regular/nfa}
+\include{regular/pumping}
+\include{regular/myhill-nerode}
+\include{regular/minimisation}
+\include{regular/grammar}
+\include{regular/extra-problems}
+
 
 \include{context-free}
-
 \include{context-free-extra}
 
 \include{turing}
