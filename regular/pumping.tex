@@ -50,7 +50,7 @@
   Тогава $L$ {\bf не} е регулярен език.
 \end{cor}
 \begin{proof}
-  Да означим с $(P)$ следната предикатна формула:
+  Да означим с $(P)$ следната формула:
   {\scriptsize
     \[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
   \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
@@ -74,6 +74,19 @@
   \marginpar{Използваме, че $\neg p \vee \neg q \vee r \equiv (p \wedge q) \to r$}
   {\scriptsize
     \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+  Това означава, че ако
+  \begin{description}
+  \item[$(\forall)$]
+    вземем произволна константа $p \geq 1$,
+  \item[$(\exists)$]
+    за нея намерим дума $\alpha \in L$, такава че $\abs{\alpha} \geq p$ и 
+  \item[$(\forall)$]
+    докажем, че за всяко нейно разбиване на три части $x,y,z$, със свойствата
+    $\abs{y} \geq 1$ и $\abs{xy} \leq p$,
+  \item[$(\exists)$]
+    можем да намерим $i$, за което $xy^iz \not\in L$,
+  \end{description}
+  то можем да заключим, че езикът $L$ не е регулярен.
 \end{proof}
 
 \subsection*{Приложения на лемата за покачването}
@@ -87,25 +100,27 @@
   {\scriptsize
     \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
   Доказателството следва стъпките:
-  \begin{itemize}
-  \item 
-    Разглеждаме произволно число $p \geq 1$ (нямаме власт над избора на $p$).
-  \item
-    \marginpar{Няма общо правило, което да ни казва как избираме думата $\alpha$. Нормално е да пробаваме с няколко думи, докато намерим такава, която върши работа.}
+  \begin{description}
+  \item[$(\forall)$]
+    \marginpar{нямаме власт над избора на числото $p$}
+    Разглеждаме произволно число $p \geq 1$.
+  \item[$(\exists)$]
+    \marginpar{Няма общо правило, което да ни казва как избираме думата $\alpha$}
     Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
     си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
     \marginpar{Обърнете внимание, че думата $\alpha$ зависи от константата $p$}
     Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$.
     Очевидно е, че $\abs{\alpha} \geq p$.
-  \item
+  \item[$(\forall)$]
+    \marginpar{не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства}
     Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
-    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$ (не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства).
-  \item
+    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+  \item[$(\exists)$]
     Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
     Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
     Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
     Ясно е, че $xz \not\in L$, защото $p-k < p$.
-  \end{itemize}  
+  \end{description}  
   Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
@@ -120,29 +135,28 @@
   е невярно.
 \end{remark}
 
-
 \begin{problem}
   Докажете, че езикът $L = \{a^mb^n \mid m,n\in \Nat\ \&\ m < n\}$ не е регулярен.
 \end{problem}
 \begin{proof}
   Доказателството следва стъпките:
-  \begin{itemize}
-  \item 
+  \begin{description}
+  \item[$(\forall)$]
     Разглеждаме произволно число $p \geq 1$.
-  \item
+  \item[$(\exists)$]
     Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
     си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
     Щом имаме тази свобода, нека да изберем думата $\alpha = a^{p}b^{p+1} \in L$. Очевидно е, че $\abs{\alpha} \geq p$.
-  \item
+  \item[$(\forall)$]
     Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
-    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$ (не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства).
-  \item
+    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+  \item[$(\exists)$]
     Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
     Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
     Тогава ако вземем $i = 2$, получаваме 
     \[xy^2z = a^{p-k}a^{2k}b^{p+1} = a^{p+k}b^{p+1}.\]
     Ясно е, че $xy^2z \not\in L$, защото $p+k \geq p+1$.
-  \end{itemize}
+  \end{description}
   Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
@@ -151,18 +165,18 @@
 \end{problem}
 \begin{proof}
   Доказателството следва стъпките:
-  \begin{itemize}
-  \item 
+  \begin{description}
+  \item[$(\forall)$] 
     Разглеждаме произволно число $p \geq 1$.
-  \item
+  \item[$(\exists)$]
     Избираме дума $w \in L$, за която $\abs{w} \geq p$. Можем да изберем каквото $w$ 
     си харесаме, стига то да принадлежи на $L$ и да има дължина поне $p$.
     Нека да изберем думата $w \in L$, такава че $\abs{w} > p+1$.
     Знаем, че такава дума съществува, защото $L$ е безкраен език. По-долу ще видим защо този избор е важен за нашите разсъждения.
-  \item
+  \item[$(\forall)$]
     Разглеждаме произволно разбиване на $w$ на три части, $w = xyz$,
     за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
-  \item
+  \item[$(\exists)$]
     Ще намерим $i$, за което $xy^iz \not\in L$,
     т.е. ще намерим $i$, за което 
     $\abs{xy^iz} = \abs{xz} + i\cdot\abs{y}$ е {\em съставно число}.
@@ -170,7 +184,7 @@
     Да изберем $i = \abs{xz} > 1$. Тогава:
     \[\abs{xy^iz} = \abs{xz} + i.\abs{y} = \abs{xz} + \abs{xz}.\abs{y} = (1 + \abs{y})\abs{xz}\] е съставно число, следователно 
     $xy^iz \not\in L$.
-  \end{itemize}
+  \end{description}
   Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
@@ -181,16 +195,16 @@
   В тази задача ще използваме следното свойство:
   \[n\text{ не е точен квадрат} \iff (\exists p\in \Nat)[p^2 < n < (p+1)^2].\]
   Доказателството следва стъпките:
-  \begin{itemize}
-  \item 
+  \begin{description}
+  \item[$(\forall)$]
     Разглеждаме произволно число $p \geq 1$.
-  \item
+  \item[$(\exists)$]
     Избираме достатъчно дълга дума, която принадлежи на езика $L$.
     Например, нека $w = a^{p^2}$.
-  \item
+  \item[$(\forall)$]
     Разглеждаме произволно разбиване на $w$ на три части, $w = xyz$, 
     като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
-  \item
+  \item[$(\exists)$]
     Ще намерим $i$, за което $xy^iz \not\in L$.
     В нашия случай това означава, че $\abs{xz} + i\cdot\abs{y}$ не е точен квадрат.
     Тогава за $i = 2$,
@@ -198,7 +212,7 @@
     Получаваме, че $p^2 < \abs{xy^2z} < (p+1)^2$,
     откъдето следва, че $\abs{xy^2z}$ не е точен квадрат.
     Следователно, $xy^2z \not\in L$.
-  \end{itemize}
+  \end{description}
   Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.  
 \end{proof}
 
@@ -207,16 +221,16 @@
 \end{problem}
 \begin{proof}
   Доказателството следва стъпките:
-  \begin{itemize}
-  \item 
+  \begin{description}
+  \item[$(\forall)$]
     Разглеждаме произволно число $p \geq 1$.
-  \item
+  \item[$(\exists)$]
     Избираме достатъчно дълга дума, която принадлежи на езика $L$. Например, нека $\omega = a^{(p+2)!}$.
-  \item
+  \item[$(\forall)$]
     Разглеждаме произволно разбиване на $\omega$ на три части, $\omega = xyz$, 
     като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
     Да обърнем внимание, че $1 \leq \abs{y} \leq p$
-  \item
+  \item[$(\exists)$]
     Ще намерим $i$, за което $xy^iz \not\in L$.
     В нашия случай това означава, че $\abs{xz} + i\cdot\abs{y}$ не е от вида $n!$.
     Възможно ли е $xy^0z \in L$?
@@ -224,7 +238,7 @@
     Тогава 
     \[\abs{y} = \abs{xyz} - \abs{xz} = (p+2)! - k! \geq (p+2)! - (p+1)! = (p+1).(p+1)! > p.\]
     Достигнахме до противоречие с условието, че $\abs{y} \leq p$.
-  \end{itemize}
+  \end{description}
   Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.  
 \end{proof}
 
@@ -341,7 +355,8 @@
   \end{itemize}
 \end{proof}
 
-%%% Local Variables: 
+
+%%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "EAI"
-%%% End: 
+%%% TeX-master: "../eai"
+%%% End:
