@@ -203,7 +203,8 @@
 \begin{example}
   \label{fig:a1}
   Да разгледаме следния автомат:
-  
+
+  \begin{framed}
   \begin{figure}[H]
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
@@ -219,8 +220,9 @@
       \end{tikzpicture}
       \end{center}
  \end{figure}
+\end{framed}
 
- Ясно е, езикът на автомата от Пример \ref{fig:a1} се описва с регулярния израз $\mathbf{1^\star 0 (0 + 1)^\star}$.
+Лесно се съобразява, че езикът на автомата от Пример \ref{fig:a1} се описва с регулярния израз $\mathbf{1^\star 0 (0 + 1)^\star}$.
  % За да намерим регулярния език за автомата от Пример \ref{fig:a1}, 
  Следвайки конструкцията от доказателството на \Th{regular-kleene},
  езикът на този автомат се описва с регулярния израз $\mathbf{r^2_{1,2}}$, защото началното състояние е $q_1$, финалното е $q_2$ и 
