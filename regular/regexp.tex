@@ -201,11 +201,11 @@
 \end{proof}
 
 \begin{example}
-  \label{fig:a1}
   Да разгледаме следния автомат:
 
   \begin{framed}
   \begin{figure}[H]
+    \label{fig:a1}
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
@@ -219,10 +219,11 @@
         (2) edge [loop above] node [above] {$0,1$} (2);
       \end{tikzpicture}
       \end{center}
+      \caption{Автомат разпознаващ $\L(\mathbf{1^\star 0 (0 + 1)^\star)}$}
  \end{figure}
 \end{framed}
 
-Лесно се съобразява, че езикът на автомата от Пример \ref{fig:a1} се описва с регулярния израз $\mathbf{1^\star 0 (0 + 1)^\star}$.
+Лесно се съобразява, че езикът на автомата от Фигура \ref{fig:a1} се описва с регулярния израз $\mathbf{1^\star 0 (0 + 1)^\star}$.
  % За да намерим регулярния език за автомата от Пример \ref{fig:a1}, 
  Следвайки конструкцията от доказателството на \Th{regular-kleene},
  езикът на този автомат се описва с регулярния израз $\mathbf{r^2_{1,2}}$, защото началното състояние е $q_1$, финалното е $q_2$ и 

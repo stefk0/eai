@@ -67,7 +67,7 @@
   \item
     $L = \{a,b\}^\star \setminus \{a\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\}$;
+    $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\mbox{ или не повече от три }b\}$;
   \item
     $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\mbox{ и поне едно }b\}$;
   \item
@@ -80,17 +80,17 @@
   \item
     $L = \{w \in \{a,b\}^\star \mid w \mbox{ не започва с }ab\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w \mbox{ завършва с }ab\}$;
+    $L = \{w \in \{a,b\}^\star \mid w \mbox{ завършва с }ab\mbox{ или ba}\}$;
+  % \item
+  %   $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа }bab\}$;
+  % \item
+  %   $L = \{w \in \{a,b\}^\star \mid w \mbox{ не съдържа }bab\}$;
+  % \item
+    % $L = \{w \in \{a,b\}^\star \mid w \mbox{ няма две последователни }a\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа }bab\}$;
+    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва или завършва с буквата } a\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w \mbox{ не съдържа }bab\}$;
-  \item
-    $L = \{w \in \{a,b\}^\star \mid w \mbox{ няма две последователни }a\}$;
-  \item
-    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва и завършва с буквата } a\}$;
-  \item
-    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва и завършва с една и съща буква}\}$;
+    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва с $a$ точно тогава, когато завършва с $b$}\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ \omega \mbox{ съдържа точно едно }a\}$;
   \item
@@ -555,7 +555,8 @@
 %   \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
 % \end{hint}
 
-%%% Local Variables: 
+
+%%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "EAI"
-%%% End: 
+%%% TeX-master: "../eai"
+%%% End:
