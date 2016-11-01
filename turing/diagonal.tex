@@ -1,0 +1,37 @@
+\subsection{Диагоналният език $L_d$}
+
+Нека $\omega_0,\omega_1,\dots,\omega_n,\dots$ е каноничната подредба на всички думи над азбуката $\{0,1\}$.
+Да разгледаме безкрайната таблица $\{a_{ij} \mid i,j \in \Nat\}$, където:
+\begin{align*}
+  a_{ij} = 
+  \begin{cases}
+    1, & \text{ ако } \omega_i \in L(\M_j), \\
+    0, & \text{ ако } \omega_i \not\in L(\M_j).
+  \end{cases}
+\end{align*}
+
+Идеята е да вземем $0$-ите по диагонала на тази таблица.
+
+\begin{framed}
+  Езикът 
+  $L_d = \{w_i \mid w_i \not\in L(\M_i)\}$ не се разпознава от машина на Тюринг,
+  т.е. $L_d$ {\bf не} е полуразрешим език.
+\end{framed}
+Да допуснем, че $L_d$ се разпознава от машина на Тюринг, т.е. $L_d = \L(\M_i)$, за някоя машина на Тюринг с код $i$.
+Тогава:
+\begin{align*}
+  & \omega_i \in L_d \implies \omega_i \in \L(\M_i) \implies \omega_i \not\in L_d,\\
+  & \omega_i \not\in L_d \implies \omega_i \not\in \L(\M_i) \implies \omega_i \in L_d.
+\end{align*}
+Достигаме до противоречие.
+
+\begin{remark}
+  Да обърнем внимание, че $\bar{L}_d = \{\omega_i \mid \omega_i \in \L(\M_i)\}$ е полуразрешим език,
+  който очевидно не е разрешим.
+\end{remark}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

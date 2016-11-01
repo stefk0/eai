@@ -1,0 +1,38 @@
+\subsection{Универсалният език $L_u$}
+
+Да разгледаме езика $L_u = \{\pair{\M,\omega} \mid \omega\in \L(\M)\}$.
+
+\begin{lemma}
+  $L_u$ е полуразрешим език.
+\end{lemma}
+
+\begin{lemma}
+  $\bar{L}_u = \{\pair{\M,\omega} \mid \omega\not\in \L(\M)\}$ {\bf не} е полуразрешим език.
+\end{lemma}
+
+\begin{framed}
+  \begin{thm}
+    Универсалният език $L_u$ е полуразрешим, но {\bf не} е разрешим.
+  \end{thm}
+\end{framed}
+
+Да допуснем, че $L_u$ е разрешим.
+\begin{itemize}
+\item 
+  Вход думата $\omega$;
+\item
+  Намираме каноничния индекс $i$ на $\omega$, т.е. $\omega_i = \omega$;
+\item
+  Намираме машината на Тюринг $\M_i$ с код $i$;
+\item
+  Симулираме $\pair{\M_i,\omega_i}$. % върху $\M$.
+\end{itemize}
+
+Така получваме, че:
+\[\omega_i\in \bar{L}_d \iff \M_i\text{ приема }\omega_i \iff \pair{\M_i,\omega_i} \in L_u.\]
+Заключаваме, че $\bar{L}_d$ е разрешим език, което е противоречие.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

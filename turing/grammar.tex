@@ -1,0 +1,121 @@
+\section{Неограничени граматики}
+\index{граматика!неограничена}
+
+\begin{dfn}
+  \marginpar{(стр. 220 от \cite{hopcroft1})}
+  \marginpar{На англ. unrestricted grammar}
+  \marginpar{Според йерархията на Чомски, това е граматика от тип 0}
+  Граматиката $G = (V,\Sigma,R,S)$
+  се нарича неограничена граматика, 
+  ако правилата $R$ са от вида $\alpha \to \beta$,
+  където $\alpha,\beta \in (V\cup\Sigma)^\star$.
+\end{dfn}
+
+\begin{lemma}
+  За всеки полуразрешим език $L$, $L = \L(G)$, за някоя неограничена граматика $G$.  
+\end{lemma}
+\begin{proof}
+  Нека $L = \L(\M)$, където 
+  \[\M = \TM\] е детерминистична машина на Тюринг,
+  като искаме лентата да е безкрайна само отдясно и входната дума $\alpha$ е
+  поставена в началото на лентата.
+  Ще построим граматика $G = \CFG$, където 
+  \[V = ((\Sigma\cup\{\varepsilon\})\times\Gamma) \cup \{A_1,A_2,A_3\}.\]
+  Правилата на $G$ са следните:
+  \begin{enumerate}[1)]
+  \item 
+    $A_1 \to sA_2$;
+  \item
+    $A_2 \to [a,a]A_2$, за всяка $a\in\Sigma$;
+  \item
+    $A_2 \to A_3$;
+  \item
+    $A_3 \to [\varepsilon,\blank]A_3$;
+  \item
+    $A_3 \to \varepsilon$;
+  \item
+    $q[a,X] \to [a,Y]p$, за всяка $a \in \Sigma\cup\{\varepsilon\}$, всяко $q\in Q$, $X,Y \in\Gamma$, 
+    за които $\delta(q,X) = (p,Y,R)$;
+  % \item
+  %   $q[a,X] \to p[a,Y]$, за всяка $a \in \Sigma\cup\{\varepsilon\}$, всяко $q\in Q$, $X,Y \in\Gamma$, 
+  %   за които $\delta(q,X) = (p,Y,N)$;
+  \item
+    $[b,Z]q[a,X] \to p[b,Z][z,Y]$, за всяко $X,Y,Z \in \Gamma$, $a,b\in\Sigma\cup\{\varepsilon\}$, $q\in Q$,
+    за които $\delta(q,X) = (p,Y,L)$;
+  \item
+    $[a,X]q \to qaq$, $q[a,X] \to qaq$, $q \to \varepsilon$, за всяко $a\in\Sigma\cup\{\varepsilon\}$, $X\in\Gamma$,
+    и $q \in F$.
+  \end{enumerate}
+  
+  Лесно се вижда, че, използвайки правилата 1) и 2), за всяко $n$, имаме
+  \[A_1 \to^\star s[a_1,a_1]\cdots[a_n,a_n]A_2,\]
+  където $a_i \in \Sigma$.
+
+  Нека $\M$ приема думата $\alpha = a_1\cdots a_n$.
+  Това означава, че за някое $m$, $\M$ използва не повече от $m$ клетки от лентата отдясно на входната дума.
+  Ясно е, че имаме
+  \[A_1 \to^\star s[a_1,a_1]\cdots[a_n,a_n][\varepsilon,\blank]^m.\]
+  Оттук нататък, можем да използваме само правилата 6), 7), 8), докато не срещнем финално състояние.
+  С индукция по броя на стъпки в $\M$, можем да докаже, че ако е изпълнено
+  $(\varepsilon,s,a_1\cdots a_n) \vdash^\star_\M (X_1\cdots X_{r-1},q,X_r\cdots X_l)$, 
+  то \[s[a_1,a_1]\dots[a_n,a_n][\varepsilon,\blank]^m \rightarrow^\star_G [a_1,X_1]\cdots[a_{r-1},X_{r-1}]q[a_r,X_r]\cdots[a_{n+m},X_{n+m}],\]
+  където $a_1,\dots,a_n \in \Sigma$, $a_{n+1},\dots,a_{n+m} = \varepsilon$, $X_1,\dots,X_{n+m} \in \Gamma$ и
+  $X_{l+1} = X_{l+2} = \dots = X_{n+m} = \blank$.
+  
+  Най-накрая, ако $q \in F$, то можем да използваме правилата от 9) и да докажем, че
+  \[[a_1,X_1]\cdots[a_{t-1},X_{t-1}]q[a_t,X_t]\cdots[a_{n+m},X_{n+m}] \rightarrow^\star_G a_1\cdots a_n.\]
+  
+  Така доказахме, че ако $\alpha \in \L(\M)$, то $\alpha \in \L(G)$, т.е. $\L(\M) \subseteq \L(G)$.
+  За да докажем обратната посока, трябва да направим подобни разсъждения.
+\end{proof}
+
+\begin{lemma}
+  Ако $L = \L(G)$, където $G$ е неограничена граматика, то $L$ е полуразрешим език.
+\end{lemma}
+\marginpar{Доказателствата в \cite{hopcroft1} и \cite{papadimitriou} са различни}
+\begin{proof}
+  $\M$ ще бъде недетерминистична машина с три ленти.
+  \begin{enumerate}[1)]
+  \item
+    Записваме входната дума $\omega$ на първата лента на $\M$.
+    Тя никога не се променя.
+  \item
+    На втората лента ще имаме думата $\gamma \in (V\cup\Sigma)^\star$.
+    В началото $\gamma := S$.
+  \item 
+    Недетерминистично избираме правило $\alpha \to \beta$ от граматиката $G$.
+  \item
+    Недетерминистично избираме $\gamma_0,\gamma_1 \in (V\cup\Sigma)^\star$, за които 
+    $\gamma = \gamma_0\alpha\gamma_1$.
+    Тогава $\gamma := \gamma_0\beta\gamma_1$.
+    Ако няма такива $\gamma_0$ и $\gamma_1$, то $\M$ ,,зацикля'' - текущият опит за извеждане на $\omega$ пропада.
+  \item
+    Сравняваме съдържанието на първите две ленти, т.е. проверяваме дали $\omega = \gamma$.
+    Ако $\omega = \gamma$, то спираме и казваме, че $\M$ разпознава думата $\omega$.
+    Ако $\omega \neq \gamma$, то се връщаме на стъпка 3).
+  \end{enumerate}
+
+  \begin{algorithm}[H]
+  \caption{}
+%  \label{alg:}
+  \begin{algorithmic}[1]
+    \State $\gamma:= S$
+    \ForAll{$\alpha\to\beta \in R$}
+    \If{$(\exists \gamma_0,\gamma_1\in (V\cup\Sigma)^\star)[\gamma = \gamma_0\alpha\gamma_1]$}
+    \State $\gamma := \gamma_0\beta\gamma_1$
+    \Else ...
+    \EndIf
+    \EndFor
+  \end{algorithmic}
+\end{algorithm}
+
+\end{proof}
+
+\begin{example}
+  Граматика за $L = \{a^nb^nc^n \mid n\in\Nat\}$.
+\end{example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
