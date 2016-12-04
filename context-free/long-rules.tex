@@ -1,0 +1,35 @@
+\subsubsection*{Премахване на дългите правила}
+
+Едно правило се нарича дълго, ако е от вида $A \to \beta$, където $|\beta| \geq 3$.
+Да разгледаме едно дълго правило в граматиката от вида $A \to x_1x_2\cdots x_k$, 
+където $k \geq 3$ и $x_i \in V \cup \Sigma$. За да получим еквивалентна граматика без това дълго правило,
+добавяме нови променливи $A_1,\dots, A_{k-2}$, и правила
+\[A \to x_1A_1,\ A_1 \to x_2A_2, \dots,\ A_{k-2} \to x_{k-1}x_k.\]
+
+
+\begin{problem}
+  Нека е дадена граматиката  $G = \pair{\{S,A,B,C\}, \{a,b\}, S, R}$.
+  Използвайте обща конструкция, за да премахнете ,,дългите'' правила от $ G$ като при това получите 
+  безконтестна граматика $G_1$ с език $\L(G) = \L(G_1)$, където правилата на граматиката са:
+  % \begin{enumerate}[a)]
+  % \item
+  %   \begin{align*}
+  %     & S \to \varepsilon\ |\ ab\ |\ aAba\\
+  %     & A\to aBCb\\
+  %     & B\to bbb\\
+  %     & C\to aC\ |\ aCaC;
+  %   \end{align*}
+  % \item
+    \begin{align*}
+      & S\to CC\ |\ b\\
+      & A\to BSB\ |\ a\\
+      & B\to ba\ |\ BC\\
+      & C\to BaSA\ |\ a\ |\ b.
+    \end{align*}
+  % \end{enumerate}
+\end{problem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

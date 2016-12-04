@@ -1,0 +1,125 @@
+\subsection{Проблемът за принадлежност}
+
+\begin{thm}
+  Съществува {\em полиномиален} алгоритъм, който проверява дали дадена дума принадлежни на граматиката $G$.
+  \marginpar{За дума $\alpha$, алгоритъмът работи за време $O(\abs{\alpha}^3)$}
+\end{thm}
+% \begin{proof}[стр. 154 от \cite{papadimitriou}]
+Можем да приемем, че $G = \CFG$ е граматика в нормална форма на Чомски.
+Нека $\alpha = a_1a_2\dots a_n$ е дума, за която искаме да проверим дали $\alpha \in \L(G)$.
+\marginpar{Това е алгоритъм на Cocke, Younger и Kasami (CYK), който е пример за динамично програмиране (стр. 195 от \cite{kozen})}
+\begin{algorithm}[H]
+  \caption{Проверка дали $\alpha \in \L(G)$}
+  \label{alg:belongs-to-grammar}
+  \begin{algorithmic}[1]
+    \State $n := \abs{\alpha}$ \Comment{Вход дума $\alpha = a_1\cdots a_n$}
+    \ForAll{$i\in [1,n]$}
+    \State $V[i,i] := \{A \in V \mid A\rightarrow a_i\}$
+    \EndFor
+    \ForAll{$i,j \in [1,n]\ \&\ i \neq j$}
+    \State $V[i,j] := \emptyset$
+    \EndFor      
+    \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала}
+    \ForAll{$i \in [1, n-s]$}\Comment{Начало на интервала}
+    \ForAll{$k \in [i, i + s)$}\Comment{Разделяне на интервала}
+    \If{$\exists A\to BC \in R\ \&\ B \in V[i,k]\ \&\ C\in V[k+1,i+s]$}
+    \State $V[i,i+s] := V[i,i+s] \cup \{A\}$
+    \EndIf
+    \EndFor
+    \EndFor
+    \EndFor
+    \If{$S \in V[1,n]$}
+    \State \Return \texttt{True}\Comment{Има извод на думата от $S$}
+    \Else
+    \State \Return \texttt{False}
+    \EndIf
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{lemma}
+  За дадена граматика в нормална форма на Чомски и дума $\alpha$, 
+  за всяко $0 \leq s < \abs{\alpha}$, след $s$-тата итерация на алгоритъма (редове 6 - 10), за всяка позиция $i = 1,\dots,n-s$,
+  \[V[i,i+s] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s}\}.\]
+\end{lemma}
+\begin{proof}
+  Пълна индукция по $s$.
+  За $s = 0$  е ясно. (Защо?)
+
+  Нека твърдението е вярно за $s < n$. Ще докажем твърдението за $s+1$, т.е. за всяко $i = 1,\dots,n-s-1$,
+  \[V[i,i+s+1] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s+1}\}.\]
+  % Да разгледаме $A \in V[i,i+s+1]$.
+  За едната посока, да разгледаме първoто правило в извода $A \to^\star_G a_i\cdots a_{i+s+1}$.
+  Понеже $G$ е в НФЧ, то е от вида $A \to BC$ и тогава съществува някое $t$, за което 
+  $B \to^\star a_i\cdots a_{i+t}$ и $C \to^\star a_{i+t+1}\cdots a_{i+s+1}$.
+  От И.П. получаваме, че $B \in V[i,i+t]$ и $C \in V[i+t+1,i+s+1]$.
+  Тогава от ред 10 на алгоритъма е ясно, че $A \in V[i,i+s+1]$.
+  
+  За другата посока, нека $A \in V[i,i+s+1]$.
+  Единствената стъпка на алгоритъма, при която може да сме добавили $A$ към множеството $V[i,i+s+1]$ е ред 10.
+  Тогава имаме, че съществува $k$, за което $B \in V[i,k]$, $C \in V[k+1,i+s+1]$, и $A\to BC$ е правило в граматиката $G$.
+  От И.П. имаме, че $B \to^\star_G a_i\cdots a_k$ и $C \to^\star_G a_{k+1}\cdots a_{i+s+1}$.
+  Заключаваме веднага, че $A \to^\star_G a_i\cdots a_{i+s+1}$.
+\end{proof}
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила 
+  \begin{align*}
+    & S\rightarrow a\ |\ AB\ |\ AC\\
+    & A\rightarrow a\\
+    & B\rightarrow b\\
+    & C\rightarrow SB\ |\ AS.
+  \end{align*}
+  Ще приложим $CYK$ алгоритъма за да проверим дали думата $aaabb \in \L(G)$.
+  \begin{itemize}
+  \item 
+    $V[1,1] = V[2,2] = V[3,3] = \{S,A\}$;
+    $V[4,4] = V[5,5] = \{B\}$.
+  \item
+    $V[1,2] = V[2,3] = \{C\}$;
+    $V[3,4] = \{S,C\}$;
+    $V[4,5] = \emptyset$.
+  \item
+    $V[1,3] = \{S\} \cup \emptyset$;
+    $V[2,4] = \{S,C\} \cup \emptyset$;
+    $V[3,5] = \emptyset \cup \{C\}$.
+  \item
+    $V[1,4] = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$;
+    $V[2,5] = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$.
+  \item
+    $V[1,5] = \{S,C\} \cup \emptyset \cup \emptyset \cup \{C\}= \{S,C\}$.
+  \end{itemize}
+  Понеже $S \in V[1,5]$, то $aaabb \in \L(G)$.
+\end{example}
+
+\begin{thm}
+  \marginpar{\cite[стр. 137]{hopcroft1}}
+  Съществуват алгоритми, които определят по дадена безконтекстна граматика $G$ дали:
+  \begin{enumerate}[a)]
+  \item 
+    $\abs{\L(G)} = 0$;
+  \item
+    $\abs{\L(G)} < \infty$;
+  \item
+    $\abs{\L(G)} = \infty$.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  Нека е дадена една безконтекстна граматика $G$.
+  \begin{description}
+  \item[($\L(G) = \emptyset?$)]
+    Прилагаме алгоритъма за премахване на безполезните променливи.
+    Ако открием, че $S$ е безполезна променлива, то $\L(G) = \emptyset$.
+  \item[($\abs{\L(G)} < \infty?$ или $\abs{\L(G)} = \infty?$)]
+    Нека да разгледаме граматиката $G'$ в НФЧ без безполезни променливи, за която $\L(G) = \L(G')$.
+    От граматиката $G' = \pair{V',\Sigma,S,R'}$ строим граф с възли променливите от $V'$ като
+    за $A,B \in V'$ имаме ребро $A \to B$ точно тогава, когато съществува $C \in V'$,
+    за което $A \to BC$ или $A \to CB$ е правило в $R'$.
+    
+    Ако в получения граф имаме цикъл, то $\L(G') = \infty$.
+  \end{description}
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

@@ -1,0 +1,55 @@
+\subsubsection*{Премахване на преименуващи правила}
+\index{преименуващи правила}
+Преименуващите правила са от вида $A \to B$.
+Нека е дадена граматика $G = \CFG$, в която има преименуващи правила.
+Ще построим еквивалентна граматика $G'$ без преименуващи правила.
+В началото нека в $R'$ да добавим всички правила от $R$, които не са преименуващи.
+След това, за всякa променлива $A$, за която $A \to^\star_G B$,
+ако $B \to \alpha$ е правило в $R$, което не е преименуващо,
+то добавяме към $R'$ правилото $A \to \alpha$.
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила  
+  \begin{align*}
+    & S \to B\ |\ CC\ |\ b\\
+    & A \to B\ |\ S\\
+    & B \to C\ |\ BC\\
+    & C \to AB\ |\ a\ |\ b.
+  \end{align*}
+  % \[A\rightarrow B|S,B\rightarrow C|BC,C\rightarrow AB|a|b,S\rightarrow B|CC|b.\]
+  Първо добавяме към $R'$ правилата $B \to BC, C \to AB\ |\ a\ |\ b, S \to CC\ |\ b$.
+  \begin{itemize}
+  \item 
+    Лесно се съобразява, че $A \to^\star_G B,S,C$.
+    Добавяме правилата 
+    \[A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC.\]
+  \item
+    Имаме $B \to^\star_G C$.
+    Добавяме правилата $B \to AB\ |\ a\ |\ b$.
+  \item
+    Имаме $S \to^\star_G B,C$.
+    Добавяме правилата $S \to BC\ |\ AB\ |\ a\ |\ b$.
+  \end{itemize}
+  Накрая получаваме, че граматиката $G'$ има правила
+  \begin{align*}
+    & S \to BC\ |\ AB\ |\ CC\ |\ a\ |\ b\\
+    & A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC\\
+    & B \to AB\ |\ a\ |\ b\ |\ BC\\
+    & C \to AB\ |\ a\ |\ b.
+  \end{align*}
+\end{example}
+
+\begin{problem}
+  Премахнете преименуващите правила от граматиката $G$, като запазите езика, ако $G$ има следните правила:
+    \begin{align*}
+      & S \to C\ |\ CC\ |\ b\\
+      & A \to B\\
+      & B \to S\ |\ C\ |\ BC\\
+      & C \to a\ |\ AB;
+    \end{align*}
+\end{problem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

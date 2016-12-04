@@ -1,0 +1,110 @@
+\subsubsection*{Премахване на безполезните променливи}
+
+Нека е дадена безконтекстната граматика $G = \CFG$.
+\marginpar{\cite[стр. 88]{hopcroft1}}
+Една променлива $A$ се нарича {\bf полезна}, ако съществува извод от следния вид:
+\[S \to^\star \alpha A \beta \to^\star \gamma,\]
+където $\gamma \in \Sigma^\star$, а $\alpha,\beta \in (V \cup \Sigma)^\star$.
+Това означава, че една променлива е полезна, ако участва в извода на някоя дума в езика на граматиката.
+Една променлива се нарича {\bf безполезна}, ако не е полезна.
+Целта ни е да получим еквивалентна граматика $G'$ без безполезни променливи.
+Ще решим задачата като разгледаме две леми.
+
+\begin{lemma}
+  \label{lem:useless1}
+  Нека е дадена безконтекстната граматика $G = \CFG$ и $\L(G) \neq \emptyset$.
+  Съществува алгоритъм, който намира граматика $G' = \pair{V',\Sigma,S,R'}$, за която 
+  $\L(G) = \L(G')$, и за всяка променлива $A' \in V'$, съществува дума $\alpha \in \Sigma^\star$,
+  за която $A' \to^\star \alpha$.
+\end{lemma}
+\begin{hint}
+  Да разгледаме следната проста итеративна процедура.
+  \begin{algorithm}[H]
+    \caption{Намираме $V' = \{A \in V\mid (\exists \alpha \in \Sigma^\star)[A \to^\star \alpha]\}$}
+    \label{alg:useless}
+    \begin{algorithmic}[1]
+      \State $V' := \emptyset$
+      \State $V'' := \{A \in V \mid (\exists \alpha \in \Sigma^\star)[A \to \alpha]\}$
+      \While{$V' \neq V''$}
+      \State $V' := V''$
+      \State $V'' := V' \cup \{A \in V \mid (\exists \alpha \in (\Sigma \cup V')^\star)[A \to \alpha]\}$
+      \EndWhile
+      \State \Return $V'$
+    \end{algorithmic}
+  \end{algorithm}
+  Трябва да докажем, че във $V'$ са точно полезните променливи за $G$.
+  Очевидно е, че ако $A \in V'$, то $A$ е полезна променлива.
+  \marginpar{\writedown Докажете!}
+  За другата посока, с индукция по дължината на извода се доказва, че ако $A \to^\star_G \omega$,
+  то $A \in V'$.
+  
+  Правилата на $G'$ са всички правила на $G$, в които участват променливи от $V'$ и букви от $\Sigma$.
+\end{hint}
+
+\begin{lemma}
+  \label{lem:useless2}
+  Съществува алгоритъм, който по дадена безконтекстна граматика $G = \CFG$, намира $G' = \pair{V',\Sigma',S,R'}$, $\L(G') = \L(G)$,
+  със свойството, че за всяко $x \in V' \cup \Sigma'$ съществуват $\alpha, \beta \in (V'\cup\Sigma')^\star$,
+  за които $S \to^\star \alpha x \beta$,
+  т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
+\end{lemma}
+\begin{hint}
+  Намираме $V'$ и $\Sigma'$ итеративно, като в началото $V' = \{S\}$, $\Sigma' = \emptyset$.
+  Ако $A \in V'$ и имаме правила в $G$:
+  \[A \to \alpha_0\ |\ \alpha_1\ |\ \cdots\ |\ \alpha_n,\]
+  то за всяко $i = 0,\dots,n$ добавяме всички променливи на $\alpha_i$ към $V'$ и всички нетерминали на $\alpha_i$ към $\Sigma'$.
+\end{hint}
+
+\begin{thm}
+  За всяка безконтекстна граматика $G$, $\L(G) = \emptyset$ точно тогава, когато $S$ е безполезно правило в граматиката.
+\end{thm}
+\begin{proof}
+  \marginpar{Защо е важна последователността на прилагане?}
+  Нека е дадена безконтекстна граматика $G$ пораждаща $L$.
+  Прилагаме върху $G$ първо процедурата от \Lem{useless1} и след това върху резултата прилагаме процедурата от \Lem{useless2}.
+\end{proof}
+
+\begin{example}
+  Да разгледаме следната граматика $G$:
+  \begin{align*}
+    & S \to AB\ |\ aA\\
+    & A \to a\ |\ aAa\\
+    & B \to SB\ |\ BC\\
+    & C \to \varepsilon\ |\ cC.
+  \end{align*}
+  Първо да намерим променливите, от които се извеждат думи.
+  \begin{itemize}
+  \item 
+    $V_0 = \{A, C\}$, защото $A \to a$ и $C \to \varepsilon$;
+  \item
+    $V_1 = \{A, C, S\}$, защото $S \to aA$;
+  \item
+    не можем да добавим $B$ към $V_2$, следователно $V_1 = V_2$.
+  \end{itemize}
+  Получаваме граматиката $G'$:
+  \begin{align*}
+    & S \to aA\\
+    & A \to a\ |\ aAa\\
+    & C \to \varepsilon\ |\ cC.
+  \end{align*}
+  Сега премахваме променливите и буквите, които не са достижими от началната промелива $S$. Така получаваме граматиката $G''$:
+  \begin{align*}
+    & S \to aA\\
+    & A \to a\ |\ aAa.
+  \end{align*}
+\end{example}
+
+\begin{problem}
+  Проверете дали $\L(G) = \emptyset$, където правилата на $G$ са:
+  \begin{align*}
+    & S \to AS\ |\ BC\\
+    & A \to 0\ |\ BA\ |\ SB\\
+    & B \to 1\ |\ BC\ |\ AB\\
+    & C \to CB\ |\ SC\ |\ AS.
+  \end{align*}
+\end{problem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

@@ -1,0 +1,52 @@
+\subsubsection*{Премахване на $\varepsilon$-правила}
+\index{$\varepsilon$-правила}
+За да премахнем правилата от вида $A \to \varepsilon$, следваме процедурата:
+\marginpar{Броят на правилата може да се увеличи експоненциално, защото в най-лошия случай извеждаме всички подмножества на дадено множество от променливи}
+\begin{enumerate}[1)]
+\item 
+  Намираме множеството $E = \{A \in V \mid A \to^\star \varepsilon\}$ по следния начин.
+  Първо, $E := \{A \in V \mid A \to \varepsilon\}$.
+  След това, за всяко правило от вида $B \to X_1\cdots X_k$, 
+  ако всяко $X_i \in E$, то добавяме $B$ към $E$.
+\item
+  Строим множеството от правила $R'$, в което няма правила $\varepsilon$-правила по следния начин.
+  За всяко правило $A \to x_1\cdots x_k$, където $x_i \in V\cup\Sigma$,
+  добавяме към $R'$ всички правила от вида $A \to y_1\cdots y_k$, където:
+  \begin{itemize}[-]
+  \item 
+    ако $x_i \not\in E$, то $y_i = x_i$;
+  \item
+    ако $x_i \in E$, то $y_i = x_i$ или $y_i = \varepsilon$;
+  \item
+    не всички $y_i$-та са $\varepsilon$.
+  \end{itemize}
+\end{enumerate}
+
+\begin{example}
+  Нека е дадена граматиката $G$ с правила
+  \begin{align*}
+    & S \to D\\
+    & D \to AD\ |\ b\\
+    & A \to AB\ |\ BC\ |\ a\\
+    & B \to AA\ |\ UC\\
+    & C \to \varepsilon\ |\ CA\ |\ a\\
+    & U \to \varepsilon\ |\ aUb.
+  \end{align*}
+  % \[S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AA|EC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb.\]
+  Тогава $E = \{X \in V \mid X \rightarrow^\star_G \varepsilon\} = \{A,B,C,U\}$.
+  Това означава, че $\varepsilon \not\in \L(G)$.
+  Граматиката $G'$ без $\varepsilon$-правила, за която $\L(G') = \L(G)$ има следните правила
+  \begin{align*}
+    & S \to D\\
+    & D\to AD\ |\ D\ |\ b\\
+    & A \to A\ |\ B\ |\ C\ |\ AB\ |\ BC\ |\ a\\
+    & B\to A\ |\ E\ |\ C\ |\ AA\ |\ UC\\
+    & C \to C\ |\ A\ |\ CA\ |\ a\\
+    & U \to aUb\ |\ ab.
+  \end{align*}
+\end{example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
