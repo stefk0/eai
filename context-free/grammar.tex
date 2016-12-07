@@ -35,8 +35,8 @@
 \begin{example}
   Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
   \begin{align*}
-    & S \to aSc \mid B\\
-    & B \to bBc \mid \varepsilon.
+    & S \to aSc\ |\  B\\
+    & B \to bBc\ |\ \varepsilon.
   \end{align*}
   Лесно се съобразява, че $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
 \end{example}
@@ -44,24 +44,25 @@
 \begin{example}
   Да разгледаме граматика с правила
   \begin{align*}
-    & S \to S + S | S * S | (S) | V\\
-    & V \to x | y | z
+    & S \to S + S\ |\ S * S\ |\ (S)\ |\ V\\
+    & V \to x\ |\ y\ |\ z
   \end{align*}
 
-  Думата $x * y + z$ има два различни извода.
+  Думата $x * y + z$ има две различни дървета на извод.
 
   Да разгледаме граматика с правила
   \begin{align*}
-    & S \to E + S | E\\
-    & E \to V * E | V | (S) * E | (S)\\
-    & V \to x | y | z
+    & S \to E + S\ |\ E\\
+    & E \to V * E\ |\ V\ |\ (S) * E\ |\ (S)\\
+    & V \to x\ |\ y\ |\ z
   \end{align*}
+  Сега думата $x * y + z$ има само едно дърво на извод.
 \end{example}
 
 \begin{example}
   \begin{align*}
     & S \to \textbf{if } S \textbf{ then } S \textbf{ else }S | \textbf{ if }S \textbf{ then }S | V\\
-    & V \to x | y | z
+    & V \to x\ |\ y\ |\ z
   \end{align*}
 
   Ние искаме следната граматика:
@@ -80,9 +81,8 @@
     & S \to E\\
     & E \to E + P\ |\ P\\
     & P \to P * N\ |\ N\\
-    & N \to (E)\ |\ a,
+    & N \to (E)\ |\ a.
   \end{align*}
-  като $\Sigma = \{a,+,*,(,),\}$, и $V = \{S,E,P,N\}$.
 \end{example}
 
 \begin{problem}
@@ -91,8 +91,8 @@
 \begin{proof}
   Да разгледаме граматиката $G$ с правила
   \begin{align*}
-    S& \rightarrow aSc\vert aS \vert B\\
-    B& \rightarrow bBc\vert bB\vert\varepsilon.
+    S& \rightarrow aSc\ |\ aS\ |\ B\\
+    B& \rightarrow bBc\ |\  bB\ |\ \varepsilon.
   \end{align*}
   
   Лесно се вижда с индукция по $n$, че за всяко $n$ имаме свойствата:
@@ -290,8 +290,19 @@
 \end{proof}
 
 \begin{problem}
-  Да разгледаме граматиката $G = \CFG$, където  $V = \{S,A,B\}$, $\Sigma = \{a,b\}$, а правилата $R$ са
-  \[S \to AA | B, A \to B | bb, B \to aa | aB.\]
+  Нека $L_1$ и $L_2$ са произволни безконтекстни езици.
+  Докажете, че:
+  \begin{itemize}
+  \item 
+    $L_1 \cup L_2$ е безконтекстен език;
+  \item
+    $L^\star_1$ е безконтекствен език;
+  \end{itemize}
+\end{problem}
+
+\begin{problem}
+  Да разгледаме граматиката $G$ с правила
+  \[S \to AA\ |\ B,\ A \to B\ |\ bb,\ B \to aa\ |\ aB.\]
   Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
 

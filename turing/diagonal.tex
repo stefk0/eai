@@ -1,34 +1,47 @@
-\subsection{Диагоналният език $L_d$}
+\subsection{Диагоналният език $L_{\texttt{diag}}$}
 
-Нека $\omega_0,\omega_1,\dots,\omega_n,\dots$ е каноничната подредба на всички думи над азбуката $\{0,1\}$.
-Да разгледаме безкрайната таблица $\{a_{ij} \mid i,j \in \Nat\}$, където:
-\begin{align*}
-  a_{ij} = 
-  \begin{cases}
-    1, & \text{ ако } \omega_i \in L(\M_j), \\
-    0, & \text{ ако } \omega_i \not\in L(\M_j).
-  \end{cases}
-\end{align*}
+% Нека $\omega_0,\omega_1,\dots,\omega_n,\dots$ е каноничната подредба на всички думи над азбуката $\{0,1\}$.
+% Да разгледаме безкрайната таблица $\{a_{ij} \mid i,j \in \Nat\}$, където:
+% \begin{align*}
+%   a_{ij} = 
+%   \begin{cases}
+%     1, & \text{ ако $j$ е код на М.Т. и }\omega_i \in L(\M_j), \\
+%     0, & \text{ ако $j$ не е код на М.Т. или } \omega_i \not\in L(\M_j).
+%   \end{cases}
+% \end{align*}
 
-Идеята е да вземем $0$-ите по диагонала на тази таблица.
+% Идеята е да вземем $0$-ите по диагонала на тази таблица.
 
 \begin{framed}
-  Езикът 
-  $L_d = \{w_i \mid w_i \not\in L(\M_i)\}$ не се разпознава от машина на Тюринг,
-  т.е. $L_d$ {\bf не} е полуразрешим език.
+  \begin{thm}
+    Езикът 
+    \[L_{\texttt{diag}} \df \{\code{\M} \mid \text{$\M$ е М.Т. и }\code{\M} \not\in L(\M)\}\]
+    не се разпознава от машина на Тюринг, т.е. $L_{\texttt{diag}}$ {\bf не} е полуразрешим език.
+  \end{thm}
 \end{framed}
-Да допуснем, че $L_d$ се разпознава от машина на Тюринг, т.е. $L_d = \L(\M_i)$, за някоя машина на Тюринг с код $i$.
-Тогава:
-\begin{align*}
-  & \omega_i \in L_d \implies \omega_i \in \L(\M_i) \implies \omega_i \not\in L_d,\\
-  & \omega_i \not\in L_d \implies \omega_i \not\in \L(\M_i) \implies \omega_i \in L_d.
-\end{align*}
-Достигаме до противоречие.
+\begin{proof}
+  Да допуснем, че $L_{\texttt{diag}}$ се разпознава от машина на Тюринг, т.е. 
+  \[L_{\texttt{diag}} = \L(\M),\] за някоя машина на Тюринг $\M$.
+  Тогава:
+  \begin{align*}
+    & \code{\M} \in L_{\texttt{diag}} \implies \code{\M} \in \L(\M) \implies \code{\M} \not\in L_{\texttt{diag}},\\
+    & \code{\M} \not\in L_{\texttt{diag}} \implies \code{\M} \not\in \L(\code{\M}) \implies \code{\M} \in L_{\texttt{diag}}.
+  \end{align*}
+  Достигаме до противоречие.
+\end{proof}
 
-\begin{remark}
-  Да обърнем внимание, че $\bar{L}_d = \{\omega_i \mid \omega_i \in \L(\M_i)\}$ е полуразрешим език,
-  който очевидно не е разрешим.
-\end{remark}
+\begin{prop}
+  Езикът 
+  \[\bar{L}_{\texttt{diag}} \df \{\code{\M} \mid \text{$\M$ е М.Т. и }\code{\M} \in \L(\M)\}\]
+  е полуразрешим и не е разрешим.
+\end{prop}
+\begin{hint}
+  Лесно се съобразява, че $\bar{L}_{\texttt{diag}}$ е полуразрешим.
+  Ако допуснем, че $\bar{L}_{\texttt{diag}}$ е разрешим,
+  то 
+  \[L_{\texttt{diag}} = (\{0,1\}^\star \setminus \bar{L}_{\texttt{diag}}) \cap \{\code{\M} \mid \text{$\M$ е М.Т.}\}\]
+  е разрешим език, което е противоречие.
+\end{hint}
 
 
 %%% Local Variables:
