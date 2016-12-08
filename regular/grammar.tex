@@ -1,0 +1,82 @@
+\section{Регулярни граматики}
+\index{граматика!неограничена}
+\label{sect:regular-grammar}
+{\bf Неограничена граматика} e наредена четворка от вида
+\[G = (V, \Sigma, R, S),\]
+където
+\begin{itemize}
+\item
+  $V$ е крайно множество от {\em променливи} (нетерминали);
+\item
+  $\Sigma$ е крайно множество от {\em букви} (терминали), $\Sigma \cap V = \emptyset$;
+\item
+  \marginpar{В \cite{hopcroft1} правилата се наричат {\em productions}}
+  $R \subseteq (V\cup\Sigma)^+ \times (V \cup \Sigma)^\star$ е крайно множество от {\em правила}.
+  Обикновено правилата $(\alpha, \beta) \in R$ ще означаваме като 
+  $\alpha \to_G \beta$, където $\alpha \in (V \cup \Sigma)^+, \beta \in (V \cup \Sigma)^\star$;
+\item
+  $S \in V$ е началната променлива (нетерминал). 
+\end{itemize}
+
+Казваме, че имаме {\bf извод} $\omega \to_G \omega'$, ако $\omega = \alpha\beta\gamma \in (V\cup\Sigma)^\star$,
+$\omega' = \alpha\beta'\gamma \in (V\cup\Sigma)^\star$ и имаме правило $\beta \to \beta'$ в граматиката $G$.
+Нека $\to^\star_G$ е рефлексивното и транзитивно затваряне на релацията $\to_G$, т.е.
+\begin{align*}
+  & \alpha \to^\star_G \alpha\\
+  & \alpha \to^\star_G \alpha'\ \&\ \alpha' \to_G \alpha'' \implies \alpha \to^\star_G \alpha''.
+\end{align*}
+
+Езикът, който се поражда от граматиката $G$ е
+\[\L(G) = \{\omega \in \Sigma^\star \mid S \to^\star_G \omega\}.\]
+
+Граматиките се разделят на няколко вида в зависимост от това какви {\em ограничения} налагаме върху правилата $R$.
+В следващите няколко глави ще разгледаме различни ограничения. Сега ще разгледаме граматики с такъв вид правила,
+които пораждат точно регулярните (или еквивалентно автоматни) езици.
+
+\index{граматика!регулярна}
+Граматиката $G = (V, \Sigma, R, S)$ се нарича {\bf регулярна граматика},
+ако правилата са от вида 
+\begin{align*}
+  & A \to \varepsilon,\\
+  % & A \to a,\\
+  & A \to aB,
+\end{align*}
+където $A, B \in V$ и $a \in \Sigma$.
+
+\begin{prop}
+  Нека $G = \CFG$ е регулярна граматика и $L = \L(G)$.
+  Съществува краен автомат $\A$, такъв че $L = \L(\A)$.
+\end{prop}
+\begin{hint}
+  Нека $V = \{A_1,\dots,A_k\}$. Тогава:
+  \begin{itemize}
+  \item 
+    $Q = \{q_1,\dots,q_k\}$;
+  \item
+    $F = \{q_i \mid A_i \to \varepsilon\}$.
+  \item
+    $\delta(q_i,a) = q_j\ \iff\ A_i \to aA_j$.
+  \end{itemize}
+\end{hint}
+
+\begin{prop}
+  Нека $\A$ е краен автомат и $L = \L(\A)$.
+  Съществува регулярна граматика $G$, такава че $L = \L(G)$.
+\end{prop}
+\begin{hint}
+  Нека $Q = \{q_1,\dots,q_k\}$. Тогава:
+  \begin{itemize}
+  \item 
+    $V = \{A_1,\dots,A_k\}$;
+  \item
+    $A_i \to aA_j\ \iff\ \delta(q_i,a) = q_j$;
+  \item
+    $A_{i} \to \varepsilon\ \iff\ q_{i} \in F$.
+  \end{itemize}
+\end{hint}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
