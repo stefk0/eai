@@ -1,15 +1,10 @@
-\subsection{Универсалният език $L_u$}
-
-Да разгледаме езика $L_{\texttt{univ}} \df \{\code{\M} \cdot \omega \mid \text{$\M$ е М.Т. и }\omega\in \L(\M)\}$.
-
-% \begin{lemma}
-%   $L_{\texttt{univ}}$ е полуразрешим език.
-% \end{lemma}
-
+\subsection{Универсалният език $L_{\texttt{univ}}$}
 
 \begin{framed}
   \begin{thm}
-    Езикът $L_{\texttt{univ}}$ е полуразрешим, но {\bf не} е разрешим.
+    Езикът 
+    \[L_{\texttt{univ}} \df \{\code{\M} \cdot \omega \mid \text{$\M$ е М.Т. и }\omega\in \L(\M)\}\]
+    е полуразрешим, но {\bf не} е разрешим.
   \end{thm}
 \end{framed}
 
@@ -27,10 +22,10 @@
   Сега да съобразим защо $L_{\texttt{univ}}$ не е разрешим език.
   Имаме, че за произволна дума $\omega$,
   \begin{align*}
-    \omega \in \bar{L}_{\texttt{diag}} & \iff (\exists \M)[\M\text{ е М.Т. и }\omega = \code{\M}\ \&\ \omega \in \L(\M)]\\
+    \omega \in L_{\texttt{halt}} & \iff (\exists \M)[\M\text{ е М.Т.}\ \&\ \omega = \code{\M}\ \&\ \omega \in \L(\M)]\\
                                        & \iff \omega \cdot \omega \in L_{\texttt{univ}}.
   \end{align*}
-  Ако допуснем, че $L_{\texttt{univ}}$ е разрешим, то тогава $\bar{L}_{\texttt{diag}}$ е разрешим език, което е противоречие.
+  Ако допуснем, че $L_{\texttt{univ}}$ е разрешим, то тогава $L_{\texttt{halt}}$ е разрешим език, което е противоречие.
 \end{hint}
 
 \begin{remark}

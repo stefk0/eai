@@ -32,14 +32,14 @@
 
 \begin{prop}
   Езикът 
-  \[\bar{L}_{\texttt{diag}} \df \{\code{\M} \mid \text{$\M$ е М.Т. и }\code{\M} \in \L(\M)\}\]
+  \[L_{\texttt{halt}} \df \{\code{\M} \mid \text{$\M$ е М.Т. и }\code{\M} \in \L(\M)\}\]
   е полуразрешим и не е разрешим.
 \end{prop}
 \begin{hint}
-  Лесно се съобразява, че $\bar{L}_{\texttt{diag}}$ е полуразрешим.
-  Ако допуснем, че $\bar{L}_{\texttt{diag}}$ е разрешим,
+  Лесно се съобразява, че $L_{\texttt{halt}}$ е полуразрешим.
+  Ако допуснем, че $L_{\texttt{halt}}$ е разрешим,
   то 
-  \[L_{\texttt{diag}} = (\{0,1\}^\star \setminus \bar{L}_{\texttt{diag}}) \cap \{\code{\M} \mid \text{$\M$ е М.Т.}\}\]
+  \[L_{\texttt{diag}} = (\{0,1\}^\star \setminus L_{\texttt{halt}}) \cap \{\code{\M} \mid \text{$\M$ е М.Т.}\}\]
   е разрешим език, което е противоречие.
 \end{hint}
 

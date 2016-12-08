@@ -243,6 +243,80 @@
   \[L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i}} = \sum^{n}_{i=1}\abs{\omega_{2i-1}}\}.\]
 \end{problem}
 
+\begin{problem}
+  Нека с $\code{\A}$ да означим думата над азбуката $\{0,1\}$, която кодира крайния автомат $\A$.
+  Посочете кои от следните езици са регулярни/безконтекстни/разрешими/полуразрешими, където:
+  \begin{enumerate}[a)]
+  \item
+    $L = \{\code{\A} \mid \A\text{ е краен автомат}\}$;
+  \item
+    $L = \{\code{\A} \mid \A\text{ е краен автомат с пет състояния}\}$;
+  \item
+    $L = \{\code{\A} \mid \A\text{ е краен детерминиран автомат}\}$;
+  \item
+    $L = \{\code{\A} \mid \A\text{ е краен детерминиран тотален автомат}\}$;
+  \item
+    $L = \{\code{\A}\cdot\omega \mid \omega \in \Sigma^\star\ \&\ \omega \in \L(\A)\}$;
+  \item
+    $L = \{\code{\A}\cdot\omega \mid \omega \in \Sigma^\star\ \&\ \omega \not\in \L(\A)\}$;
+  \item
+    $L = \{\code{\A} \cdot \code{\B} \mid \A, \B \text{ са крайни автомати и } \L(\A) = \L(\B)\}$;
+  \end{enumerate}
+  Обосновете се!
+\end{problem}
+
+\begin{problem}
+  Нека $G = \CFG$ е {\em регулярна} граматика, т.е.
+  всички правила на $G$ са от вида $A \to bC$ и $A \to \varepsilon$.
+  Посочете кои от следните езици са безконтекстни, където:
+  \begin{enumerate}[a)]
+  \item 
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash_G \beta\}$;
+  \item 
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash^\star_G \beta\}$;
+  \item
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash_G \beta\}$;
+  \item
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash^\star_G \beta\}$.
+  \end{enumerate}
+  Обосновете се!
+\end{problem}
+
+\begin{problem}
+  Да разгледаме една {\em безконтекстна} граматика $G = \CFG$.
+  Посочете кои от следните езици са безконтекстни, където:
+  \begin{enumerate}[a)]
+  \item 
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash_G \beta\}$;
+  \item
+    $L = \{\alpha_1\sharp\alpha^{rev}_2\sharp\alpha_3\sharp\alpha^{rev}_4\sharp \cdots \mid \alpha_i \in (V \cup \Sigma)^\star\ \&\ \alpha_i \vdash_G \alpha_{i+1} \text{ за }i<n\}$;
+  \item 
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash^\star_G \beta\}$;
+  \item
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash_G \beta\}$;
+  \item
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash^\star_G \beta\}$.
+  \end{enumerate}
+  Обосновете се!
+\end{problem}
+
+\begin{problem}
+  Да разгледаме една {\em неограничена} граматика $G = \CFG$.
+  Посочете кои от следните езици са безконтекстни, където:
+  \begin{enumerate}[a)]
+  \item 
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash_G \beta\}$;
+  \item 
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash^\star_G \beta\}$;
+  \item
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash_G \beta\}$;
+  \item
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash^\star_G \beta\}$.
+  \end{enumerate}
+  Обосновете се!
+\end{problem}
+
+
 
 %%% Local Variables:
 %%% mode: latex
