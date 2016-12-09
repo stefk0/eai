@@ -127,8 +127,8 @@
   \begin{enumerate}[a)]
   \item
     $\{a^nb^{2n}c^{3n}\ \mid\ n\in\Nat\}$;
-  \item
-    $\{a^nb^{2n}c^{n}\ \mid\ n\in\Nat\}$;
+  % \item
+  %   $\{a^nb^{2n}c^{n}\ \mid\ n\in\Nat\}$;
   \item
     $\{a^nb^kc^ka^n\mid\ k \leq n\}$;
   \item
@@ -194,6 +194,7 @@
   Докажете, че ако $L$ е безконтекстен език, то $L^R = \{\omega^R \mid \omega \in L\}$ 
   също е безконтекстен.
 \end{problem}
+
 
 \begin{problem}
   Нека $\Sigma = \{a,b,c,d,f,e\}$.
@@ -279,6 +280,20 @@
     $R = \{S\rightarrow AB, A\rightarrow AC|a|b,B\rightarrow CB|a, C\rightarrow a\}$, $\alpha=babaa$;
   \end{enumerate}
 \end{problem}
+
+\begin{problem}
+  Нека $L$ е безконтекстен език над азбуката $\Sigma$.
+  Докажете, че следните езици са безконтекстни:
+  \begin{enumerate}[a)]
+  \item 
+    $\texttt{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \beta \in \Sigma^\star)[\alpha\cdot\beta \in L]\}$;
+  \item 
+    $\texttt{Suff}(L) = \{\beta \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\alpha\cdot\beta \in L]\}$;
+  \item
+    $\texttt{Infix}(L) = \{\beta \in \Sigma^\star \mid (\exists \alpha,\gamma \in \Sigma^\star)[\alpha \cdot \beta \cdot \gamma \in L]\}$;
+  \end{enumerate}
+\end{problem}
+
 
 \begin{problem}
   \marginpar{Интересно е също да се направи и безконтекстна граматика за $L$}

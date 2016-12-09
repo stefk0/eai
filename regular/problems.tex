@@ -292,7 +292,11 @@
   При дадени езици $L$, $L'$ над азбуката $\Sigma$, да разгледаме:
   \begin{enumerate}[a)]
   \item
-    $\mbox{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \beta \in \Sigma^\star)[\alpha\beta \in L]\}$;
+    $\texttt{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \beta \in \Sigma^\star)[\alpha\beta \in L]\}$;
+  \item
+    $\texttt{NoPref}(L) = \{\alpha \in L \mid \text{ не съществува префикс на $\alpha$ в $L$}\}$;
+  \item
+    $\texttt{NoExtend}(L) = \{\alpha \in L \mid \text{ $\alpha$ не е префикс на никоя дума от $L$}\}$;
   \item
     $\mbox{Suf}(L) = \{\beta \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\alpha\beta \in L]\}$;
   \item
@@ -389,6 +393,25 @@
   $1010 \not\in  L$, защото съдържа два пъти $10$ и само веднъж $01$.
   Докажете, че $L$ е регулярен.
 \end{problem}
+
+
+\begin{problem}
+  Нека $L$ е регулярен език над азбуката $\{a,b\}$. Докажете, че следните езици са регулярни:
+  \begin{enumerate}[a)]
+  \item 
+    $\texttt{Diff}_1(L) \df \{\alpha \in L \mid (\exists \beta \in L)[|\alpha| = |\beta|\ \&\ \alpha \text{ се различава от $\beta$ в една позиция}]\}$;
+  \item
+    $\texttt{Diff}_n(L) \df \{\alpha \in L \mid (\exists \beta \in L)[n \leq |\alpha| = |\beta|\ \&\ \alpha \text{ се различава от $\beta$ в $n$ позиции}]\}$;
+  \item
+    $\texttt{Diff}(L) \df \{\alpha \in L \mid (\exists \beta \in L)[|\alpha| = |\beta|\ \&\ \alpha \text{ се различава от $\beta$ във всяка  позиция}]\}$;
+  \end{enumerate}
+\end{problem}
+\begin{hint}
+  Ако $L = \L(\A)$, то правим декартово произведение на $\A$ плюс флаг дали сме направили грешка.
+
+  Не е ли по-лесно с индукция по построението на регулярните езици ?
+\end{hint}
+
 
 % \begin{problem}
 %   \marginpar{(\cite{kozen}, стр. 75)}
