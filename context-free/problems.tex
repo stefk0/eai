@@ -10,7 +10,6 @@
   \end{align*}
 \end{problem}
 
-
 \begin{problem}
   Докажете, че следните езици са безконтекстни.
   \begin{enumerate}[a)]
@@ -104,13 +103,6 @@
   \item[ф)]
     Разгледайте граматиката:
     \begin{align*}
-      & S \to XSX\ |\ A\\
-      & A \to aBb\ |\ bBa\\
-      & B \to XBX\ |\ \varepsilon\\
-      & X \to a\ |\ b.
-    \end{align*}
-    Тази граматика е по-хитра:
-    \begin{align*}
       & S \to AB\ |\ BA\\
       & A \to XAX\ |\ a\\
       & B \to XBX\ |\ b\\
@@ -178,7 +170,7 @@
   \item
     $L = \{a^nb^mc^ma^n \mid m,n\in\Nat\ \&\ n = m+42\}$;
   \item
-    $L = \{babaabaaab\cdots ba^{n-1}ba^nb \mid n \geq 1\}$;
+    $L = \{\sharp a \sharp aa \sharp aaa \sharp \cdots \sharp a^{n-1}\sharp a^n\sharp \mid n \geq 1\}$;
   \item
     $\{a^mb^nc^k\mid m = n \vee n = k \vee m = k\}$;
   \item
@@ -187,6 +179,89 @@
     $\{a^mb^nc^k\mid m = n \wedge n = k \wedge m = k\}$;
   \item
     $\{w \in \{a,b,c\}^\star\mid N_a(w) \neq N_b(w) \vee N_a(w) \neq N_c(w) \vee N_b(w) \neq N_c(w)\}$.
+  \end{enumerate}
+\end{problem}
+
+За всеки две думи с равна дължина, дефинираме функцията $\texttt{diff}$ по следния начин:
+\begin{align*}
+  & \texttt{diff}(\varepsilon,\varepsilon) = 0\\
+  & \texttt{diff}(a \cdot \alpha, b\cdot \beta) =
+    \begin{cases}
+      \texttt{diff}(\alpha,\beta), & \text{ако }a = b\\
+      1 + \texttt{diff}(\alpha,\beta), & \text{ако }a \neq b\\
+    \end{cases}
+\end{align*}
+
+\begin{problem}
+  За всеки от следните езици, отговорете дали са безконтекстни, като се обосновете:
+  \begin{enumerate}[a)]
+  \item 
+    \marginpar{Да}
+    $L \df \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\}$;
+  \item 
+    \marginpar{Да}
+    $L \df \{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) \geq 1\}$;
+  \item 
+    \marginpar{Не}
+    $L \df \{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) \geq 1\}$;
+  \item 
+    \marginpar{Да}
+    $L \df \{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) \geq 1\}$;
+  \item
+    \marginpar{Не}
+    $L \df \{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) = 1\}$;
+  % \item
+  %   $L \df \{\alpha\sharp\beta\sharp\gamma \mid \alpha, \beta, \gamma \in \{a,b\}^\star\ \&\ |\alpha| = |\beta| = |\gamma|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\ \&\ \texttt{diff}(\beta,\gamma^{rev}) = 1\}$;
+  \end{enumerate}
+
+\end{problem}    
+
+\begin{problem}
+    Да разгледаме езика
+    \[D_1 \df \{\alpha_1 \sharp \alpha_2 \sharp \cdots \sharp \alpha_n \mid n \geq 2\ \&\ |\alpha_i| = |\alpha_{i+1}|\ \&\ \texttt{diff}(\alpha_i,\alpha^{rev}_{i+1}) = 1\}.\]
+    \begin{itemize}
+    \item 
+      Докажете, че $D_1$ не е безконтекстен.
+    \item
+      Докажете, че $D_1$ може да се представи като сечението на два безконтекстни езика.
+    \end{itemize}    
+\end{problem}
+\begin{hint}
+  Да разгледаме безконтекстния език 
+  \[L_1 = \{\alpha_1 \sharp \alpha_2 \mid |\alpha_1| = |\alpha_{2}|\ \&\ \texttt{diff}(\alpha_1,\alpha^{rev}_{2}) = 1\}.\]
+  Тогава
+  \begin{align*}
+    D_1 =\ & L_1 \cdot (\sharp L_1)^\star \cdot (\{\varepsilon\} \cup \sharp\{a,b\}^\star)\ \cap \\
+           & \{a,b\}^\star \cdot (\sharp L_1)^\star \cdot (\{\varepsilon\} \cup \sharp\{a,b\}^\star).
+  \end{align*}
+\end{hint}
+
+\begin{problem}
+  За произволен език $L$, дефинираме езика
+  \[\texttt{Diff}_n(L) = \{\alpha \in L \mid (\exists \beta \in L)[|\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) = n]\}.\]
+  Вярно ли е, че:
+  \begin{itemize}
+  \item 
+    ако $L$ е регулярен, то $\texttt{Diff}_n(L)$ е регулярен?
+  \item
+    ако $L$ е безконтекстен, то $\texttt{Diff}_n(L)$ е безконтекстен?
+  \end{itemize}
+\end{problem}
+\begin{hint}
+  Мисля, че най-лесно става като се разгледа съответно автомата или стековия автомат.
+\end{hint}
+
+\begin{problem}
+  Нека $L_1$ и $L_2$ са езици. Дефинираме
+  \[L_1 \triangle_n L_2 \df \{\alpha\beta \mid \alpha \in L_1\ \&\ \beta \in L_2\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) = n\}.\]
+  Докажете, че
+  \begin{enumerate}[a)]
+  \item 
+    ако $L_1$ и $L_2$ са регулярни езици, то е възможно $L_1 \triangle_n L_2$ да не е регулярен;
+  \item
+    ако $L_1$ и $L_2$ са регулярни езици, то $L_1 \triangle_n L_2$ е безконтекстен;
+  \item
+    ако $L_1$ и $L_2$ са безконтекстни езици, то е възможно $L_1 \triangle_n L_2$ да не е безконтекстен.
   \end{enumerate}
 \end{problem}
 
@@ -269,15 +344,18 @@
 \begin{problem}
   Нека е дадена граматиката $G = \pair{\{a,b\}, \{S,A,B,C\},S,R}$.
   Използвайте CYK-алгоритъма, за да проверите дали
-  думата $\alpha$ принадлежи на $\L(G)$, където правилата на граматиката $R$ и думата $\alpha$
+  думата $\alpha$ принадлежи на $\L(G)$, където правилата на граматиката и думата $\alpha$
   са зададени като:
   \begin{enumerate}[a)]
   \item
-    $R = \{S\rightarrow BA| CA|a, C\rightarrow BS|SA,A\rightarrow a, B\rightarrow b\}$, $\alpha=bbaaa$;
+    $S\rightarrow BA| CA|a, C\rightarrow BS|SA,A\rightarrow a, B\rightarrow b$,\\
+    $\alpha=bbaaa$;
   \item
-    $R =\{S\rightarrow AB|BC, A\rightarrow BA|a,B\rightarrow CC|b, C\rightarrow AB|a\}$, $\alpha=baaba$;
+    $S\rightarrow AB|BC, A\rightarrow BA|a,B\rightarrow CC|b, C\rightarrow AB|a$,\\
+    $\alpha=baaba$;
   \item
-    $R = \{S\rightarrow AB, A\rightarrow AC|a|b,B\rightarrow CB|a, C\rightarrow a\}$, $\alpha=babaa$;
+    $S\rightarrow AB, A\rightarrow AC|a|b,B\rightarrow CB|a, C\rightarrow a$,\\
+    $\alpha=babaa$.
   \end{enumerate}
 \end{problem}
 
@@ -294,12 +372,22 @@
   \end{enumerate}
 \end{problem}
 
-
 \begin{problem}
-  \marginpar{Интересно е също да се направи и безконтекстна граматика за $L$}
-  Постройте стеков автомат за езика над азбуката $\{a,b,\sharp\}$:
-  \[L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i}} = \sum^{n}_{i=1}\abs{\omega_{2i-1}}\}.\]
+  Докажете, че езикът
+  \[L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\}\]
+  е безконтекстен.
 \end{problem}
+\begin{hint}
+  Най-лесно става със стеков автомат.
+  Интересно е също да се направи и безконтекстна граматика за $L$.
+  Това дали е вярно:
+  \begin{align*}
+    & S \to XSX\ |\ \sharp O\ |\ O\sharp\ |\ \sharp S\sharp\\
+    & O \to OO\ |\ CS\ |\ SC\\
+    & C \to XCX\ |\ \sharp\\
+    & X \to a\ \|\ b.
+  \end{align*}
+\end{hint}
 
 \begin{problem}
   Нека с $\code{\A}$ да означим думата над азбуката $\{0,1\}$, която кодира крайния автомат $\A$.
