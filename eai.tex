@@ -22,11 +22,6 @@
 
 %%%%%%%%%%%%%%
 
-%\usepackage{ucs}
-
-% \usepackage{natbib}
-% \usepackage{bibentry}
-
 \usepackage[bulgarian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[colorlinks=true, linkcolor=blue,pdfstartview=FitV,citecolor=green, urlcolor=blue]{hyperref}
@@ -34,8 +29,7 @@
 \usepackage{amssymb, amsmath, amsthm, mathrsfs, latexsym}
 
 \usepackage{makeidx}
-\usepackage{layout}
-\usepackage{framed}
+\usepackage{layout, framed}
 \usepackage{bussproofs, algorithm}
 \floatname{algorithm}{Алгоритъм}
 %\usepackage{algorithmic}
@@ -49,14 +43,12 @@
 \setlist{leftmargin=*}
 
 %%%%%%%%%%%%%%% TIKZ Package %%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{tikz}
-\usepackage{pgf}
+\usepackage{tikz, pgf}
 \usetikzlibrary{arrows,automata}
 \usetikzlibrary{positioning}
 \usetikzlibrary{backgrounds}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{caption}
-\usepackage{subcaption}
+\usepackage{caption, subcaption}
 
 \theoremstyle{definition}
 \newtheorem{thm}{Теорема}[chapter]
@@ -130,6 +122,10 @@
 
 %\newcommand*{\blank}{\allowbreak\textvisiblespace\allowbreak} % visible space
 \newcommand*{\blank}{\sqcup}
+
+\newif\ifhints
+\hintstrue
+
 
 % \setsecheadstyle{\large\usefont{T2A}{fag}{b}{r}} %\scshape
 % \setsubsecheadstyle{\bfseries\sffamily}
