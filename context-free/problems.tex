@@ -252,21 +252,23 @@
 \end{hint}
 
 \begin{problem}
+  \marginpar{\cite[стр. 158]{sipser3}}
   Нека $L_1$ и $L_2$ са езици. Дефинираме
-  \[L_1 \triangle_n L_2 \df \{\alpha\beta \mid \alpha \in L_1\ \&\ \beta \in L_2\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) = n\}.\]
+  \[L_1 \triangle L_2 \df \{\alpha\beta \mid \alpha \in L_1\ \&\ \beta \in L_2\ \&\ |\alpha| = |\beta|\}.\]
   Докажете, че
   \begin{enumerate}[a)]
   \item 
-    ако $L_1$ и $L_2$ са регулярни езици, то е възможно $L_1 \triangle_n L_2$ да не е регулярен;
+    ако $L_1$ и $L_2$ са регулярни езици, то е възможно $L_1 \triangle L_2$ да не е регулярен;
   \item
-    ако $L_1$ и $L_2$ са регулярни езици, то $L_1 \triangle_n L_2$ е безконтекстен;
+    ако $L_1$ и $L_2$ са регулярни езици, то $L_1 \triangle L_2$ е безконтекстен;
   \item
-    ако $L_1$ и $L_2$ са безконтекстни езици, то е възможно $L_1 \triangle_n L_2$ да не е безконтекстен.
+    ако $L_1$ и $L_2$ са безконтекстни езици, то е възможно $L_1 \triangle L_2$ да не е безконтекстен.
   \end{enumerate}
 \end{problem}
 
 \begin{problem}
-  Докажете, че ако $L$ е безконтекстен език, то $L^R = \{\omega^R \mid \omega \in L\}$ 
+  Докажете, че ако $L$ е безконтекстен език, то 
+  \[L^{rev} = \{\omega^{rev} \mid \omega \in L\}\]
   също е безконтекстен.
 \end{problem}
 
@@ -330,16 +332,25 @@
   Докажете, че всеки безконтекстен език над азбуката $\Sigma = \{a\}$
   е регулярен.
 \end{problem}
+\ifhints
+\begin{hint}
+  
+\end{hint}
+\fi
 
 \begin{problem}
 %  \marginpar{\cite{papadimitriou} стр. 149}
   Да фиксираме азбуката $\Sigma$.
   Нека $L$ е безконтекстен език, а $R$ е регулярен език.
   Докажете, че езикът
-  $L/R = \{\omega \in \Sigma^\star \mid (\exists u \in R)[\omega u \in L]\}$
+  \[L/R = \{\alpha \in \Sigma^\star \mid (\exists \beta \in R)[\alpha \beta \in L]\}\]
   е безконтекстен.
 \end{problem}
-
+\ifhints
+\begin{hint}
+  
+\end{hint}
+\fi
 
 \begin{problem}
   Нека е дадена граматиката $G = \pair{\{a,b\}, \{S,A,B,C\},S,R}$.
@@ -348,13 +359,13 @@
   са зададени като:
   \begin{enumerate}[a)]
   \item
-    $S\rightarrow BA| CA|a, C\rightarrow BS|SA,A\rightarrow a, B\rightarrow b$,\\
+    $S \to BA\ |\ CA\ |\ a,\ C\to BS\ |\ SA,\ A\to a,\ B\to b$,\\
     $\alpha=bbaaa$;
   \item
-    $S\rightarrow AB|BC, A\rightarrow BA|a,B\rightarrow CC|b, C\rightarrow AB|a$,\\
+    $S \to AB\ |\ BC,\ A\to BA\ |\ a,\ B\to CC\ |\ b,\ C\to AB\ |\ a$,\\
     $\alpha=baaba$;
   \item
-    $S\rightarrow AB, A\rightarrow AC|a|b,B\rightarrow CB|a, C\rightarrow a$,\\
+    $S \to AB,\ A\to AC\ |\ a\ |\ b,\ B\to CB\ |\ a,\ C\to a$,\\
     $\alpha=babaa$.
   \end{enumerate}
 \end{problem}
@@ -371,6 +382,9 @@
     $\texttt{Infix}(L) = \{\beta \in \Sigma^\star \mid (\exists \alpha,\gamma \in \Sigma^\star)[\alpha \cdot \beta \cdot \gamma \in L]\}$;
   \end{enumerate}
 \end{problem}
+\begin{hint}
+  
+\end{hint}
 
 \begin{problem}
   Докажете, че езикът
@@ -382,10 +396,8 @@
   Интересно е също да се направи и безконтекстна граматика за $L$.
   Това дали е вярно:
   \begin{align*}
-    & S \to XSX\ |\ \sharp O\ |\ O\sharp\ |\ \sharp S\sharp\\
-    & O \to OO\ |\ CS\ |\ SC\\
-    & C \to XCX\ |\ \sharp\\
-    & X \to a\ \|\ b.
+    & S \to XSX\ |\ \sharp SS\ |\ SS\sharp\ |\ \sharp S\sharp\\
+    & X \to a\ |\ b.
   \end{align*}
 \end{hint}
 
