@@ -5,12 +5,160 @@
 $\Ss$ е тривиално свойство, ако $\Ss = \emptyset$ или $\Ss$ съдържа точно всички полуразрешими езици.
 Нека $L_\Ss = \{\code{\M} \mid \L(\M) \in \Ss\}$.
 
-\begin{thm}[Райс-Успенски]
-  \index{Райс-Успенски}
-  \marginpar{\cite[стр. 188]{hopcroft1}}
-  Всяко нетривиално свойство $\Ss$ на полуразрешимите езици е неразрешимо.
-\end{thm}
+\begin{prop}
+  Докажете, че езикът
+  \[L_{\texttt{All}} \df \{\code{\M} \mid \M\text{ е М.Т. и }\L(\M) = \Sigma^\star\}\]
+  не е разрешим.
+\end{prop}
 \begin{proof}
+  Дефинираме алгоритъм, за който по вход $\code{\M}\cdot\omega$ 
+  връща код на машината на Тюринг $\M'_\omega$.
+  Сега ще опишем как работи $\M'_\omega$.
+  \marginpar{За различни $\M$ и $\omega$, получаваме различни $\M'_\omega$}
+  \begin{itemize}
+  \item 
+    Вход думата $\alpha$;
+  \item
+    Първоначално не обръщаме внимание на $\alpha$.
+  \item
+    Симулираме $\M$ върху думата $\omega$;
+    \begin{itemize}
+    \item 
+      Ако след краен брой стъпки се окаже, че $\M$ приема думата $\omega$,
+      то $\M'_\omega$ приема думата $\alpha$.
+    \item
+      Ако след краен брой стъпки се окаже, че $\M$ не приема думата $\omega$,
+      то $\M'_\omega$ не приема думата $\alpha$.
+    \item
+      В противен случай, чакаме безкрайно много стъпки $\M$ да завърши върху $\omega$, но нищо не се случва.
+      Това означава, че $\M'_\omega$ не приема думата $\alpha$.
+    \end{itemize}
+  \end{itemize}
+  Получаваме, че:
+  \begin{align*}
+    & \code{\M}\cdot\omega \in L_{\texttt{univ}} \implies \L(\M'_\omega) = \Sigma^\star \implies \code{\M'_\omega} \in L_{\texttt{All}},\\
+    & \code{\M}\cdot\omega \not\in L_{\texttt{univ}} \implies \L(\M'_\omega) = \emptyset \implies \code{\M'_\omega} \not\in L_{\texttt{All}}.
+  \end{align*}
+  Ако допуснем, че $L_{\texttt{All}}$ е разрешим език, то $L_{\texttt{univ}}$ също ще е разрешим, което е противоречие.
+\end{proof}
+
+\begin{cor}
+  \marginpar{Същата конструкция както горе.}
+  Езикът
+  \[\ov{L}_{\texttt{Empty}} \df \{\code{\M} \mid \M\text{ е М.Т. и }\L(\M) \neq \emptyset\}\]
+  не е разрешим.
+\end{cor}
+
+\begin{cor}
+  Езикът
+  \[L_{\texttt{Empty}} \df \{\code{\M} \mid \M\text{ е М.Т. и }\L(\M) = \emptyset\}\]
+  не е разрешим.
+\end{cor}
+\begin{hint}
+  Ако $L_{\texttt{Empty}}$ беше разрешим, то
+  \[\ov{L}_{\texttt{Empty}} = \{0,1\}^\star \setminus L_{\texttt{Empty}} \cap \{\code{\M} \mid \M\text{ е М.Т.}\}\]
+  щеше да е разрешим език, което е противоречие.
+\end{hint}
+
+\begin{prop}
+  Докажете, че езикът
+  \[L_{\texttt{reg}} \df \{\code{\M} \mid \M\text{ е М.Т. и }\L(\M) \text{ е регулярен език}\}\]
+  не е разрешим.
+\end{prop}
+\begin{proof}
+  Да фиксираме един език, за който знаем, че не е регулярен, например, 
+  $\{0^n1^n \mid n \in \Nat\}$.
+
+  Дефинираме алгоритъм, за който по вход $\code{\M}\cdot\omega$ 
+  връща код на машината на Тюринг $\M'_\omega$.
+  Сега ще опишем как работи $\M'_\omega$.
+  \begin{itemize}
+  \item 
+    Вход думата $\alpha$;
+  \item
+    Ако $\alpha = 0^n1^n$, за някое $n$, то $\M'_\omega$ приема думата $\alpha$.
+  \item
+    Ако $\alpha$ не е от вида $0^n1^n$, тогава $\M'_\omega$ симулира $\M$ върху думата $\omega$.
+    \begin{itemize}
+    \item 
+      Ако след краен брой стъпки се окаже, че $\M$ приема думата $\omega$,
+      то $\M'_\omega$ приема $\alpha$.
+    \item
+      Ако след краен брой стъпки се окаже, че $\M$ не приема думата $\omega$,
+      то $\M'_\omega$ не приема думата $\alpha$.
+    \item
+      В противен случай, чакаме безкрайно много стъпки $\M$ да завърши върху $\omega$, но нищо не се случва.
+      Това означава, че $\M'_\omega$ не приема думата $\alpha$.
+    \end{itemize}
+  \end{itemize}
+  Получаваме, че:
+  \begin{align*}
+    & \code{\M}\cdot\omega \in L_{\texttt{univ}} \implies \L(\M'_\omega) = \Sigma^\star \implies \code{\M'_\omega} \in L_{\texttt{reg}},\\
+    & \code{\M}\cdot\omega \not\in L_{\texttt{univ}} \implies \L(\M'_\omega) = \{0^n1^n \mid n \in \Nat\} \implies \code{\M'_\omega} \not\in L_{\texttt{reg}}.
+  \end{align*}
+  Ако допуснем, че $L_{\texttt{reg}}$ е разрешим език, то $L_{\texttt{univ}}$ също ще е разрешим, което е противоречие.
+\end{proof}
+
+\begin{prop}
+  Докажете, че езикът
+  \[\ov{L}_{\texttt{reg}} \df \{\code{\M} \mid \M\text{ е М.Т. и }\L(\M) \text{ не е регулярен език}\}\]
+  не е разрешим.
+\end{prop}
+\begin{proof}
+  Да фиксираме машина на Тюринг $\M_L$, за което $\L(\M_L) = L$ не е регулярен език.
+
+  Дефинираме алгоритъм, за който по вход $\code{\M}\cdot\omega$ 
+  връща код на машината на Тюринг $\M'_\omega$.
+  Сега ще опишем как работи $\M'_\omega$.
+  \marginpar{За различни $\M$ и $\omega$, получаваме различни $\M'_\omega$}
+  \begin{itemize}
+  \item 
+    Вход думата $\alpha$;
+  \item
+    Първоначално не обръщаме внимание на $\alpha$.
+  \item
+    $\M'_\omega$ симулира $\M$ върху думата $\omega$;
+    \begin{itemize}
+    \item 
+      Ако след краен брой стъпки се окаже, че $\M$ приема думата $\omega$,
+      то $\M'_\omega$ симулира $\M_L$ върху $\alpha$.
+      \begin{itemize}
+      \item 
+        Ако $\M_L$ приеме $\alpha$, то $\M'_\omega$ приема $\alpha$;
+      \item
+        Ако $\M_L$ не приеме $\alpha$, то $\M'_\omega$ не приема $\alpha$;
+      \item
+        Ако $\M_L$ никога не свършва върху $\alpha$, то $\M'_\omega$ никога няма да свирши върху $\alpha$,
+        което означава, че $\M'_\omega$ не приема $\alpha$.
+      \end{itemize}
+    \item
+      Ако след краен брой стъпки се окаже, че $\M$ не приема думата $\omega$,
+      то $\M'_\omega$ не приема думата $\alpha$.
+    \item
+      В противен случай, $\M$ работи безкрайно много стъпки върху $\omega$ без да завърши.
+      Това означава, че $\M'_\omega$ ще работи безкрайно много стъпки върху вход думата $\alpha$
+      и следователно $\M'_\omega$ не приема думата $\alpha$.
+    \end{itemize}
+  \end{itemize}
+  Получаваме, че:
+  \begin{align*}
+    & \code{\M}\cdot\omega \in L_{\texttt{univ}} \implies \L(\M'_\omega) = L \implies \code{\M'_\omega} \in \ov{L}_{\texttt{reg}},\\
+    & \code{\M}\cdot\omega \not\in L_{\texttt{univ}} \implies \L(\M'_\omega) = \emptyset \implies \code{\M'_\omega} \not\in \ov{L}_{\texttt{reg}}.
+  \end{align*}
+  Ако допуснем, че $\ov{L}_{\texttt{reg}}$ е разрешим език, то $L_{\texttt{univ}}$ също ще е разрешим, което е противоречие.
+\end{proof}
+
+
+Сега ще видим, че идеята, която следваме в горните доказателства може да се обобщи.
+
+\begin{framed}
+  \begin{thm}[Райс]
+    \index{Райс}
+    Всяко нетривиално свойство $\Ss$ на полуразрешимите езици е неразрешимо.
+  \end{thm}  
+\end{framed}
+\begin{proof}
+  \marginpar{\cite[стр. 188]{hopcroft1}}
   \marginpar{Цел: да сведем ефективно $L_{\texttt{univ}}$ към $L_\Ss$}
   Без ограничение на общността, нека $\emptyset \not\in \Ss$.
   Понеже $\Ss$ е нетривиално свойство, да разгледаме $L \in \Ss$,
@@ -40,14 +188,16 @@ $\Ss$ е тривиално свойство, ако $\Ss = \emptyset$ или $\
     & \code{\M}\cdot\omega \in L_{\texttt{univ}} \implies \L(\M') = L \implies \L(\M') \in \Ss,\\
     & \code{\M}\cdot\omega \not\in L_{\texttt{univ}} \implies \L(\M') = \emptyset \implies \L(\M') \not\in \Ss.
   \end{align*}
-  Да допуснем, че $\Ss$ е разрешимо множество от полуразрешими езици.
+  Да допуснем, че $L_\Ss$ е разрешимо множество от полуразрешими езици.
   Тогава от еквивалентността,
   \[\code{\M}\cdot\omega \in L_{\texttt{univ}} \iff \code{\M'} \in L_\Ss,\]
   получаваме, че $L_{\texttt{univ}}$ е разрешимо множество, което е противоречие.
 
-  Ако $\emptyset \in \Ss$, то правим горните разсъждения за класа $\ov{\Ss} = \{\L(\M) \mid \L(\M) \not\in\Ss\}$.
+  Ако $\emptyset \in \Ss$, то правим горните разсъждения за класа 
+  \[\ov{\Ss} = \{\L(\M) \mid \M\text{ е М.Т. и }\L(\M) \not\in\Ss\}.\]
   Доказваме, че $L_{\ov{\Ss}}$ не е разрешим език.
-  Понеже $L_{\ov{\Ss}} = (\{0,1\}^\star \setminus L_{\Ss}) \cap \{\code{\M} \mid \M \text{ е М.Т.}\}$,
+  Понеже 
+  \[L_{\ov{\Ss}} = (\{0,1\}^\star \setminus L_{\Ss}) \cap \{\code{\M} \mid \M \text{ е М.Т.}\},\]
   то $L_{\Ss}$ също не е разрешим език.
 \end{proof}
 
@@ -56,17 +206,26 @@ $\Ss$ е тривиално свойство, ако $\Ss = \emptyset$ или $\
   $L_\Ss$ {\bf не} е разрешимо множество, където:
   \begin{enumerate}[a)]
   \item 
-    празнота, т.е. 
+    свойството празнота, т.е. 
     \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и } \L(\M) = \emptyset\};\]
+  \item 
+    свойството за пълнота, т.е. 
+    \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и } \L(\M) = \{0,1\}^\star\};\]
   \item
-    крайност, т.е. 
+    свойството крайност, т.е. 
     \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и }|\L(\M)| < \infty\};\]
   \item
-    регулярност, т.е. 
-    \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и }(\exists \text{ рег. израз }r)[\L(\M) = \L(r)]\};\]
+    свойството безкрайност, т.е. 
+    \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и }|\L(\M)| = \infty\};\]
   \item
-    безконтекстност, т.е. 
-    \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и }(\exists\text{ безконт. грам. }G)[\L(\M) = \L(G)]\}.\]
+    свойството регулярност, т.е. 
+    \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и $\L(\M)$ е регулярен език}\};\]
+  \item
+    свойството безконтекстност, т.е. 
+    \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и $\L(\M)$ е безконтекстен}\}.\]
+  \item
+    свойството разрешимост, т.е. 
+    \[L_\Ss = \{\code{\M} \mid \text{$\M$ е М.Т. и $\L(\M)$ е разрешим}\}.\]
   \end{enumerate}
 \end{cor}
 

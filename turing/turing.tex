@@ -2,6 +2,11 @@
 
 \newcommand{\tape}[1]{\dots\blank\blank\blank{#1}\blank\blank\blank\dots}
 \marginpar{Тук най-вече следваме \cite{sipser3}}
+
+\begin{framed}
+  {\bf Теза на Чърч-Тюринг:} Всеки алгоритъм може да се осъществи като машина на Тюринг.
+\end{framed}
+
 \section{Основни понятия}
 \index{Тюринг}
 \index{машина на Тюринг!детерминистична}
@@ -18,7 +23,7 @@
   $\Gamma$ - крайна азбука за лентата, $\Sigma \subseteq \Gamma$;
 \item
   \marginpar{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
-  $\delta:Q\times\Gamma \to Q\times \Gamma \times \{L,R\}$ - (частична) функция на преходите;
+  $\delta:Q\times\Gamma \to Q\times \Gamma \times \{L,R,S\}$ - (частична) функция на преходите;
 \item
   $s$ - начално състояние, $s \in Q$;
 \item
@@ -497,7 +502,7 @@
 
 \input{turing/rice}
 
-% \subsection*{Валидни и невалидни изчисления на машини на Тюринг}
+\subsection*{Валидни и невалидни изчисления на машини на Тюринг}
 \marginpar{\cite{hopcroft1} стр. 201}
 Да разгледаме машината на Тюринг $\M$.
 Дума от вида 
@@ -551,17 +556,72 @@
 \end{hint}
 
 \begin{thm}
-  Въпросът дали сечението на езиците на две произволни безконтекстни граматики е празно е неразрешим.
+  Езикът
+  \[L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконтекстни граматики и }\L(G_1) \cap \L(G_2) = \emptyset\}\]
+  е неразрешим.
 \end{thm}
+\begin{proof}
+  По дадена дума $\code{\M}$, можем ефективно да намерим $G_1$ и $G_2$, за които
+  $\L(G_1) \cap \L(G_2)$ са точно валитните изчисления на $\M$.
+  Тогава ако $L$ е разрешим език, то $L_{\texttt{Empty}}$ е разрешим език, което е противоречие.
+\end{proof}
 
 \begin{lemma}
   Множеството от невалидни изчисления на машина на Тюринг е безконтекстен език.
 \end{lemma}
+\begin{proof}
+  
+\end{proof}
 
-\begin{thm}
-  Въпросът дали за произволна безконтекстна граматика $G$, $\L(G) = \Sigma^\star$,
-  е неразрешим.
-\end{thm}
+\begin{framed}
+  \begin{thm}
+    За дадена азбука $\Sigma$, 
+    езикът 
+    \[L = \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}\]
+    е неразрешим.
+  \end{thm}
+\end{framed}
+\begin{proof}
+  По дадена дума $\code{\M}$, можем ефективно да намерим $G$, за която
+  $\L(G)$ са точно невалитните изчисления на $\M$.
+  Тогава ако допуснем, че $L$ е разрешим език, то $L_{\texttt{Empty}}$ е разрешим, което е противоречие.
+\end{proof}
+
+\begin{cor}
+  Следните езици не са разрешими:
+  \begin{enumerate}[a)]
+  \item
+    $L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) = \L(G_2)\}$;
+  \item
+    $L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) \subseteq \L(G_2)\}$;
+  \item 
+    $L = \{\code{G}\cdot r \mid \text{$G$ е безконт. грам. и $r$ е рег. израз и }\L(G) = \L(r)\}$;
+  \item
+    $L = \{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(G) = \L(\A)\}$;
+  \item 
+    $L = \{\code{G}\cdot r \mid \text{$G$ е безконт. грам. и $r$ е рег. израз и }\L(r) \subseteq \L(G)\}$;
+  \item
+    $L = \{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(\A) \subseteq \L(G)\}$;
+  \end{enumerate}
+\end{cor}
+% \begin{hint}
+%   \begin{enumerate}
+%   \item 
+%     Фикс. $\L(G_1) = \Sigma^\star$.
+%   \item
+%     Фикс. $\L(G_1) = \Sigma^\star$.
+%   \end{enumerate}
+% \end{hint}
+
+
+\begin{remark}
+  Добре е да обърнем внимание, че езикът 
+  \[L = \{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(G) \subseteq \L(\A)\}\]
+  е разрешим.
+  Това е така, защото $\L(G) \subseteq \L(\A) \iff \L(G) \cap \L(\ov{\A}) = \emptyset$,
+  което сечението на безконтекстен и регулярен език е безконтекстен език.
+\end{remark}
+
 
 % \begin{cor}
 %   Нека $G_1$ и $G_2$ са произволни безконтекстни граматики, а $r$ е произволен регулярен израз.
@@ -582,7 +642,14 @@
 
 \input{turing/grammar}
 
-% \section*{Библиография}
+\section*{Бележки}
+
+\begin{itemize}
+\item
+  За основните дефиниции следваме основно Глава 3 от \cite{sipser3}.
+\item 
+  За въпросите за неразрешимост следваме основно Глава 8 от \cite{hopcroft1}.
+\end{itemize}
 
 % \begin{itemize}
 % \item 
