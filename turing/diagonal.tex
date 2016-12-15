@@ -20,8 +20,8 @@
   \end{thm}
 \end{framed}
 \begin{proof}
-  Да допуснем, че $L_{\texttt{diag}}$ се разпознава от машина на Тюринг, т.е. 
-  \[L_{\texttt{diag}} = \L(\M),\] за някоя машина на Тюринг $\M$.
+  Да допуснем, че $L_{\texttt{diag}}$ се разпознава от машина на Тюринг $\M$, т.е. 
+  \[L_{\texttt{diag}} = \L(\M).\]
   Тогава:
   \begin{align*}
     & \code{\M} \in L_{\texttt{diag}} \implies \code{\M} \in \L(\M) \implies \code{\M} \not\in L_{\texttt{diag}},\\
@@ -33,10 +33,39 @@
 \begin{prop}
   Езикът 
   \[L_{\texttt{halt}} \df \{\code{\M} \mid \text{$\M$ е М.Т. и }\code{\M} \in \L(\M)\}\]
-  е полуразрешим и не е разрешим.
+  е полуразрешим, но не е разрешим.
 \end{prop}
 \begin{hint}
   Лесно се съобразява, че $L_{\texttt{halt}}$ е полуразрешим.
+  Дефинираме машина на Тюринг $\M'$, която работи по следния начин:
+  \begin{itemize}
+  \item
+    вход дума $\alpha$;
+  \item 
+    $\M'$ проверява дали $\alpha$ има вида $\code{\M}$,
+    за някоя машина на Тюринг $\M$;
+  \item
+    Ако $\alpha = \code{\M}$, 
+    то $\M'$ симулира работата на $\M$ върху $\alpha$.
+    \begin{itemize}
+    \item 
+      Ако $\M$ завърши след краен брой стъпки като приема $\alpha$,
+      то $\M'$ приема $\alpha$.
+    \item
+      Ако $\M$ завърши след краен брой стъпки като отхвърля $\alpha$,
+      то $\M'$ отхвърля $\alpha$.
+    \item
+      Ако $\M$ никога не завършва върху $\alpha$,
+      то $\M'$ също никога не завършва върху $\alpha$.
+    \end{itemize}
+  \item
+    Ако $\alpha$ няма вида $\code{\M}$,
+    то $\M'$ завършва като отхвърля думата $\alpha$.
+  \end{itemize}
+  Получаваме, че
+  \[\alpha \in L_{\texttt{halt}} \iff \alpha \in \L(\M'),\]
+  откъдето следва, че $L_{\texttt{halt}}$ е полуразрешим език.
+
   Ако допуснем, че $L_{\texttt{halt}}$ е разрешим,
   то 
   \[L_{\texttt{diag}} = (\{0,1\}^\star \setminus L_{\texttt{halt}}) \cap \{\code{\M} \mid \text{$\M$ е М.Т.}\}\]

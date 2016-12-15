@@ -10,14 +10,33 @@
 
 \begin{hint}
   Първо да съобразим защо $L_{\texttt{univ}}$ е полуразрешим език.
+  Дефинираме машина на Тюринг $\M'$, която работи по следния начин:
   \begin{itemize}
+  \item
+    вход дума $\alpha$;
   \item 
-    По дадена дума $\alpha$, ние можем ефективно да проверим
-    дали тя има вида $\alpha = \code{\M} \cdot \omega$.
+    $\M'$ проверява дали $\alpha$ има вида $\code{\M} \cdot \omega$,
+    за някоя машина на Тюринг $\M$ и дума $\omega$;
   \item
     Ако $\alpha = \code{\M} \cdot \omega$, 
-    то симулираме $\M$ върху $\omega$.
+    то $\M'$ симулира работата на $\M$ върху $\omega$.
+    \begin{itemize}
+    \item 
+      Ако $\M$ завърши след краен брой стъпки като приеме $\omega$,
+      то $\M'$ приема $\alpha$.
+    \item
+      Ако $\M$ завърши след краен брой стъпки като отхвърли $\omega$,
+      то $\M'$ отхвърля $\alpha$.
+    \item
+      Ако $\M$ никога не завършва върху $\omega$,
+      то очевидно $\M'$ също никога не завършва върху $\alpha$.
+    \end{itemize}
+  \item
+    Ако $\alpha$ няма вида $\code{\M} \cdot \omega$,
+    то $\M'$ завършва като отхвърля думата $\alpha$.
   \end{itemize}
+  Получаваме, че
+  \[\alpha \in L_{\texttt{univ}} \iff \alpha \in \L(\M').\]
   
   Сега да съобразим защо $L_{\texttt{univ}}$ не е разрешим език.
   Имаме, че за произволна дума $\omega$,
@@ -28,11 +47,11 @@
   Ако допуснем, че $L_{\texttt{univ}}$ е разрешим, то тогава $L_{\texttt{halt}}$ е разрешим език, което е противоречие.
 \end{hint}
 
-\begin{remark}
-  $\bar{L}_{\texttt{univ}} \df \{\code{\M} \cdot \omega \mid \code{\M} \text{ е М.Т. и }\omega\not\in \L(\M)\}$ {\bf не} е полуразрешим език.
-\end{remark}
-
-
+\begin{cor}
+  Езикът
+  \[\ov{L}_{\texttt{univ}} \df \{\code{\M} \cdot \omega \mid \code{\M} \text{ е М.Т. и }\omega\not\in \L(\M)\}\]
+  {\bf не} е полуразрешим.
+\end{cor}
 
 %%% Local Variables:
 %%% mode: latex

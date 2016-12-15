@@ -1,11 +1,14 @@
 \chapter{Машини на Тюринг}
 
 \newcommand{\tape}[1]{\dots\blank\blank\blank{#1}\blank\blank\blank\dots}
-\marginpar{Тук най-вече следваме \cite{sipser3}}
+\newcommand{\qaccept}{q_{\texttt{accept}}}
+\newcommand{\qreject}{q_{\texttt{reject}}}
 
-\begin{framed}
-  {\bf Теза на Чърч-Тюринг:} Всеки алгоритъм може да се осъществи като машина на Тюринг.
-\end{framed}
+\marginpar{Тук най-вече следваме \cite[Глава 3]{sipser3}}
+
+% \begin{framed}
+%   {\bf Теза на Чърч-Тюринг:} Всеки алгоритъм може да се осъществи като машина на Тюринг.
+% \end{framed}
 
 \section{Основни понятия}
 \index{Тюринг}
@@ -22,7 +25,7 @@
 \item
   $\Gamma$ - крайна азбука за лентата, $\Sigma \subseteq \Gamma$;
 \item
-  \marginpar{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
+  % \marginpar{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
   $\delta:Q\times\Gamma \to Q\times \Gamma \times \{L,R,S\}$ - (частична) функция на преходите;
 \item
   $s$ - начално състояние, $s \in Q$;
@@ -30,10 +33,10 @@
   $\blank$ - празен символ,  $\blank \in \Gamma \setminus \Sigma$;
 \item
   \marginpar{Тези две състояния ще наричаме заключителни}
-  $q_{accept} \in Q$ - приемащо състояние;
+  $\qaccept \in Q$ - приемащо състояние;
 \item
-  \marginpar{$q_{accept} \neq q_{reject}$}
-  $q_{reject} \in Q$ - отхвърлящо състояние.
+  \marginpar{$\qaccept \neq \qreject$}
+  $\qreject \in Q$ - отхвърлящо състояние.
 \end{itemize}
 
 Сега ще опишем как $\M$ работи върху вход думата $\alpha \in \Sigma^\star$.
@@ -55,7 +58,7 @@
   и четящата глава е на първия символ от думата $\alpha$.
 \item
   {\bf Заключителна конфигурация} представлява тройка от вида
-  \[(\alpha, q_{accept}, \beta), \text{ или }(\alpha, q_{reject}, \beta).\]
+  \[(\alpha, \qaccept, \beta), \text{ или }(\alpha, \qreject, \beta).\]
   Ако машината, която работи върху дадена входа дума, достигне до заключително състояние, ще казваме
   че машината {\em спира работа}.
 \end{itemize}
@@ -80,10 +83,10 @@
 \item
   \marginpar{Обърнете внимание, че това не е същото като да изискваме функцията на преходите $\delta$ да бъде тотална.}
   Една машина на Тюринг се нарича {\bf тотална}, ако при всеки вход достига до заключително състояние,
-  т.е. достига до $q_{accept}$ или $q_{reject}$.
+  т.е. достига до $\qaccept$ или $\qreject$.
 \item 
   Езикът, който се {\bf разпознава} от машината $\M$ е:
-  \[\L(\M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star_\M (\beta, q_{accept}, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
+  \[\L(\M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star_\M (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
 \item
   \index{език!полуразрешим}
   Езикът $L$ се нарича {\bf полуразрешим}, ако съществува машина на Тюринг $\M$, за която
@@ -113,7 +116,7 @@
 \end{prop}
 \begin{hint}
   Нека $L = \L(\M)$, където $\M$ е тотална машина на Тюринг.
-  Нека $\M'$ е същата като $\M$, само със сменени accept и reject състояния.
+  Нека $\M'$ е същата като $\M$, само със сменени $\qaccept$ и $\qreject$ състояния.
   Тогава $\ov{L} = \L(\M')$.
 \end{hint}
 
@@ -504,149 +507,7 @@
 
 \input{turing/rice-shapiro}
 
-\subsection*{Валидни и невалидни изчисления на машини на Тюринг}
-\marginpar{\cite{hopcroft1} стр. 201}
-Да разгледаме машината на Тюринг $\M$.
-Дума от вида 
-\[\omega_1 \sharp \omega^{rev}_2 \sharp \omega_3 \sharp \omega^{rev}_4\sharp\omega_5\cdots\]
-ще наричаме валидно изчисление на $\M$, ако 
-\begin{itemize}
-\item
-  всяко $\omega_i \in \Gamma^\star Q \Gamma^\star$ описва моментна конфигурация
-  и $\omega_i$ не завършва на $\blank$.
-\item
-  $\omega_1 \in s\Sigma^\star$ описва начална конфигурация.
-\item
-  $\omega_n \in \Gamma^\star Q \Gamma^\star$ описва финална конфигурация.
-\item 
-  $\omega_i \vdash_\M \omega_{i+1}$ за $i = 1,\dots,n-1$.
-\end{itemize}
-
-% \begin{prop}
-%   Езикът
-%   $L = \{\omega_1 \sharp \omega^{rev}_2 \mid \omega_1, \omega_2 \in \Gamma^\star Q \Gamma^\star\ \&\ \omega_1 \vdash_\M \omega_2\}$
-%   е безконтекстен.
-% \end{prop}
-
-
-\begin{lemma}
-  \marginpar{\cite{hopcroft1}, стр. 201}
-  Множеството от валидни изчисления на машина на Тюринг $\M$ е сечението на два безконтекстни езика $L_1$ и $L_2$.
-  Освен това, граматиките на $L_1$ и $L_2$ могат ефективно да бъдат построени от $\M$.
-\end{lemma}
-\begin{hint}
-  Да разгледаме езика
-  \[L_3 = \{\alpha\#\beta^{rev} \mid \alpha \vdash_\M \beta\}.\]
-  Лесно е да построим стеков автомат $P_3$, който разпознава езика $L_3$.
-  Четем буквата $X$. Тогава:
-  \begin{itemize}
-  \item 
-    ако $\delta_\M(q,X) =(p,Y,R)$, то слагаме $Yp$ на върха на стека;
-  \item
-    ако $\delta_\M(q,X) =(p,Y,L)$, то ако $Z$ е върха на стека, заменяме $Z$ с $pZY$;
-  \end{itemize}
-  Аналогично разглеждаме безконтекстния език
-  \[L_4 = \{\alpha^{rev}\#\beta \mid \alpha \vdash_\M \beta\}.\]
-  Сега можем да дефинираме езиците
-  \begin{align*}
-    & L_1 = (L_3\#)^\star(\{\varepsilon\}\cup \Gamma^\star q_{accept} \Gamma^\star\#)\\
-    & L_2 = q_0\Sigma^\star \# (L_4\#)^\star(\{\varepsilon\}\cup \Gamma^\star q_{accept} \Gamma^\star\#),
-  \end{align*}
-  за които е ясно, че са безконтекстни.
-  Тогава езикът от валидните изчисления на $\M$
-  е $L_1 \cap L_2$.
-\end{hint}
-
-\begin{thm}
-  Езикът
-  \[L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконтекстни граматики и }\L(G_1) \cap \L(G_2) = \emptyset\}\]
-  е неразрешим.
-\end{thm}
-\begin{proof}
-  По дадена дума $\code{\M}$, можем ефективно да намерим $G_1$ и $G_2$, за които
-  $\L(G_1) \cap \L(G_2)$ са точно валитните изчисления на $\M$.
-  Тогава ако $L$ е разрешим език, то $L_{\texttt{Empty}}$ е разрешим език, което е противоречие.
-\end{proof}
-
-\begin{lemma}
-  Нека е дадена $\M = \TM$.
-  Тогава езикът 
-  \[L = \{\alpha\sharp\beta^R \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\}\]
-  е безконтекстен.
-\end{lemma}
-
-\begin{lemma}
-  Множеството от невалидни изчисления на машина на Тюринг е безконтекстен език.
-\end{lemma}
-\begin{proof}
-  
-\end{proof}
-
-\begin{framed}
-  \begin{thm}
-    За дадена азбука $\Sigma$, 
-    езикът 
-    \[L = \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}\]
-    е неразрешим.
-  \end{thm}
-\end{framed}
-\begin{proof}
-  По дадена дума $\code{\M}$, можем ефективно да намерим $G$, за която
-  $\L(G)$ са точно невалитните изчисления на $\M$.
-  Тогава ако допуснем, че $L$ е разрешим език, то $L_{\texttt{Empty}}$ е разрешим, което е противоречие.
-\end{proof}
-
-\begin{cor}
-  Следните езици не са разрешими:
-  \begin{enumerate}[a)]
-  \item
-    $L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) = \L(G_2)\}$;
-  \item
-    $L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) \subseteq \L(G_2)\}$;
-  \item 
-    $L = \{\code{G}\cdot r \mid \text{$G$ е безконт. грам. и $r$ е рег. израз и }\L(G) = \L(r)\}$;
-  \item
-    $L = \{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(G) = \L(\A)\}$;
-  \item 
-    $L = \{\code{G}\cdot r \mid \text{$G$ е безконт. грам. и $r$ е рег. израз и }\L(r) \subseteq \L(G)\}$;
-  \item
-    $L = \{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(\A) \subseteq \L(G)\}$;
-  \end{enumerate}
-\end{cor}
-% \begin{hint}
-%   \begin{enumerate}
-%   \item 
-%     Фикс. $\L(G_1) = \Sigma^\star$.
-%   \item
-%     Фикс. $\L(G_1) = \Sigma^\star$.
-%   \end{enumerate}
-% \end{hint}
-
-
-\begin{remark}
-  Добре е да обърнем внимание, че езикът 
-  \[L = \{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(G) \subseteq \L(\A)\}\]
-  е разрешим.
-  Това е така, защото $\L(G) \subseteq \L(\A) \iff \L(G) \cap \L(\ov{\A}) = \emptyset$,
-  което сечението на безконтекстен и регулярен език е безконтекстен език.
-\end{remark}
-
-
-% \begin{cor}
-%   Нека $G_1$ и $G_2$ са произволни безконтекстни граматики, а $r$ е произволен регулярен израз.
-%   Следните проблеми са неразрешими:
-%   \begin{enumerate}
-%   \item 
-%     $\L(G_1) = \L(G_2)$;
-%   \item
-%     $\L(G_2) \subseteq \L(G_1)$;
-%   \item
-%     $\L(G_1) = \L(r)$;
-%   \item
-%     $\L(r) \subseteq \L(G_1)$.
-%   \end{enumerate}
-% \end{cor}
-
+% \input{turing/computations}
 
 % \input{turing/grammar}
 
