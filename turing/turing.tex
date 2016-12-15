@@ -502,6 +502,8 @@
 
 \input{turing/rice}
 
+\input{turing/rice-shapiro}
+
 \subsection*{Валидни и невалидни изчисления на машини на Тюринг}
 \marginpar{\cite{hopcroft1} стр. 201}
 Да разгледаме машината на Тюринг $\M$.
@@ -565,6 +567,13 @@
   $\L(G_1) \cap \L(G_2)$ са точно валитните изчисления на $\M$.
   Тогава ако $L$ е разрешим език, то $L_{\texttt{Empty}}$ е разрешим език, което е противоречие.
 \end{proof}
+
+\begin{lemma}
+  Нека е дадена $\M = \TM$.
+  Тогава езикът 
+  \[L = \{\alpha\sharp\beta^R \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\}\]
+  е безконтекстен.
+\end{lemma}
 
 \begin{lemma}
   Множеството от невалидни изчисления на машина на Тюринг е безконтекстен език.
@@ -638,9 +647,8 @@
 %   \end{enumerate}
 % \end{cor}
 
-\input{turing/rice-shapiro}
 
-\input{turing/grammar}
+% \input{turing/grammar}
 
 \section*{Бележки}
 

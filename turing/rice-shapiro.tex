@@ -7,18 +7,23 @@
 \end{lemma}
 \begin{hint}
   Нека $L_0 = \L(\M_0)$.
-  Ще опишем алгоритъм, който при вход дума $\pair{\M,\omega}$,
-  извежда код на машина на Тюринг $\M'$, която работи така:
+  Ще опишем алгоритъм, който при вход дума $\code{\M}\cdot\omega$,
+  извежда код на машина на Тюринг $\M'_\omega$, която работи така:
   \begin{itemize}
   \item 
     вход думата $\alpha$;
   \item
-    за $\abs{\alpha}$ стъпки симулираме $\M$ върху $\omega$.
+    $\M'_\omega$ симулира $\M$ върху думата $\omega$:
     \begin{itemize}
     \item 
-      ако $\M$ не приема $\omega$ за $\leq \abs{\alpha}$ стъпки, то симулираме $\M_0$ върху $\alpha$;
+      ако $\M$ завърши за по-малко от $|\alpha|$ на брой стъпки като {\em отхвърли} $\omega$, 
+      то $\M'_\omega$ симулира $\M_0$ върху $\alpha$;
     \item 
-      ако $\M$ приема $\omega$ за $\leq \abs{\alpha}$ стъпки, то зацикляме и нищо не връщаме.
+      ако $\M$ завърши за по-малко от $|\alpha|$ на брой стъпки като приеме $\omega$, 
+      то $\M'_\omega$ завършва като отхвърля $\alpha$.
+    \item
+      ако $\M$ не завърши за по-малко от $|\alpha|$ на брой стъпки върху $\omega$,
+      то $\M'_\omega$ завършва като отхвърля $\alpha$.
     \end{itemize}
   \end{itemize}
 
@@ -26,38 +31,43 @@
   \begin{align*}
     \L(\M') = 
     \begin{cases}
-      \{\alpha \in L_0 \mid \abs{\alpha} < k\}, & \M\text{ приема }\omega\\
-      L, & \M\text{ не приема }\omega,
+      \{\alpha \in L_0 \mid \abs{\alpha} < s\}, & \text{ако } \M\text{ приема }\omega\\
+      L, & \text{ако }\M\text{ не приема }\omega,
     \end{cases}
   \end{align*}
-  където $k$ е минималната стъпка, при която $\M$ приема $\omega$.
+  където $s$ е минималното число, такова че 
+  $\M$ завършва за $s$ на брой стъпки като приема думата $\omega$.
   
   Заключаваме, че 
-  \[\code{\M}\cdot \omega \not\in L_{\texttt{univ}} \iff \code{\M'} \in L_\Ss.\]
-  Това означава, че ефективно можем да сведем въпрос за принадлежност в $\bar{L}_u$
+  \begin{align*}
+    & \code{\M}\cdot \omega \in L_{\texttt{univ}} \implies \code{\M'_\omega} \not\in L_\Ss\\
+    & \code{\M}\cdot \omega \not\in L_{\texttt{univ}} \implies \code{\M'_\omega} \in L_\Ss.
+  \end{align*}
+  % \[\code{\M}\cdot \omega \not\in L_{\texttt{univ}} \iff \code{\M'} \in L_\Ss.\]
+  Това означава, че ефективно можем да сведем въпрос за принадлежност в $\ov{L}_{\texttt{univ}}$
   към въпрос за принадлежност в $L_\Ss$.
-  Следователно, ако $L_\Ss$ е полуразрешим език, то $\bar{L}_{\texttt{univ}}$ е полуразрешим език, което е противоречие.
+  Следователно, ако $L_\Ss$ е полуразрешим език, то $\ov{L}_{\texttt{univ}}$ е полуразрешим език, което е противоречие.
 \end{hint}
 
 \begin{cor}
   Следните езици {\bf не} са полуразрешими:
   \begin{itemize}
   \item 
-    $L = \{\pair{\M} \mid \abs{\L(\M)} = \infty\}$;
+    $L = \{\code{\M} \mid \abs{\L(\M)} = \infty\}$;
   \item
-    $L = \{\pair{\M} \mid \L(\M) = \Sigma^\star\}$;
+    $L = \{\code{\M} \mid \L(\M) = \Sigma^\star\}$;
   \item
-    $L = \{\pair{\M} \mid \L(\M)\text{ не е разрешим}\}$;
+    $L = \{\code{\M} \mid \L(\M)\text{ не е разрешим}\}$;
   \item
-    $L = \{\pair{\M} \mid \L(\M)\text{ не е полуразрешим}\}$;
+    $L = \{\code{\M} \mid \L(\M)\text{ не е полуразрешим}\}$;
   \item
-    $L = \{\pair{\M} \mid \L(\M)\text{ не е регулярен}\}$.
+    $L = \{\code{\M} \mid \L(\M)\text{ не е регулярен}\}$.
   \end{itemize}
 \end{cor}
 
 \begin{lemma}
-  Нека $L_1$ е език в $\Ss$ и нека $L_2$ е полуразрешимо множество, разширяващо $L_1$, и $L_2 \not\in\Ss$.
-  Тогава $L_\Ss$ не е полуразрешимо.
+  Нека $L_1$ е език в $\Ss$ и нека $L_2$ е полуразрешим език, като $L_1 \subset L_2$ и $L_2 \not\in\Ss$.
+  Тогава $L_\Ss$ не е полуразрешим език.
 \end{lemma}
 \begin{hint}
   Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$.
@@ -67,46 +77,54 @@
   \item 
     вход думата $\alpha$;
   \item
-    Симулираме едновременно две изчисления - $\M_1$ върху $\alpha$ и $\M$ върху $\omega$
-    докато намерим $s$, такова че:    
+    $\M'_\omega$ симулира едновременно две изчисления - $\M_1$ върху $\alpha$ и $\M$ върху $\omega$
+    докато намери стъпка $s$, такава че:    
     \begin{itemize}
     \item 
-      ако $\M_1$ приеме думата $\alpha$ за $s$ стъпки, то обявяваме, че $\M'$ приема $\alpha$ и завършваме.
+      ако $\M_1$ завършва за $s$ на брой стъпки като приема думата $\alpha$, то $\M'_\omega$ завършва като приеме думата $\alpha$;
     \item
-      ако $\M_1$ не приема думата $\alpha$ за $s$ стъпки, но $\M$ приема $\omega$ за $s$ стъпки, 
-      то започваме да симулираме $\M_2$ върху $\alpha$.
-      Ако $\M_2$ приеме $\alpha$, то $\M'$ приема $\alpha$.
+      ако $\M$ за завършва за $s$ на брой стъпки като приема думата $\omega$, 
+      то $\M'_\omega$ започваме да симулира $\M_2$ върху $\alpha$;
+      \begin{itemize}
+      \item 
+        Ако $\M_2$ завърши като приеме $\alpha$, то $\M'_\omega$ завършва като приема $\alpha$;
+      \item 
+        Ако $\M_2$ завърши като отхвърли $\alpha$, то $\M'_\omega$ завършва като отхвърля $\alpha$;
+      \item 
+        Ако $\M_2$ не завършва никога върху $\alpha$, то $\M'_\omega$ никога не завършва върху $\alpha$.
+      \end{itemize}
+    \item
+      ако $\M'_\omega$ не намери такава стъпка, то $\M'_\omega$ никога не завършва върху $\alpha$.
     \end{itemize}
-    Ако не съществува такава стъпка $s$, то работата $\M'$ никога няма да завърши и 
-    следователно $\M'$ не завършва върху вход $\alpha$.
   \end{itemize}
   
   Получаваме, че:
   \begin{align*}
-    \L(\M') = 
+    \L(\M'_\omega) = 
     \begin{cases}
-      L_2, & \M\text{ приема }\omega\\
-      L_1, & \M\text{ не приема }\omega.
+      L_2, & \text{ако $\M$ приема }\omega\\
+      L_1, & \text{ако $\M$ не приема }\omega.
     \end{cases}
   \end{align*}
   Заключаваме, че:
-  \[\code{\M}\cdot\omega \not\in L_{\texttt{univ}} \iff \code{\M'} \in L_\Ss.\]
-  Това означава, че ефективно можем да сведем въпрос за принадлежност в $\bar{L}_{\texttt{univ}}$
+  \[\code{\M}\cdot\omega \in \ov{L}_{\texttt{univ}} \iff \code{\M'_\omega} \in L_\Ss,\]
+  защото $L_2 \not\in \Ss$, а $L_1 \in \Ss$.
+  Това означава, че ефективно можем да сведем въпрос за принадлежност в $\ov{L}_{\texttt{univ}}$
   към въпрос за принадлежност в $L_\Ss$.
-  Следователно, ако $L_\Ss$ е полуразрешим език, то $\bar{L}_{\texttt{univ}}$ е полуразрешим език, което е противоречие.  
+  Следователно, ако $L_\Ss$ е полуразрешим език, то $\ov{L}_{\texttt{univ}}$ е полуразрешим език, което е противоречие.  
 \end{hint}
 
 \begin{cor}
   Следните езици {\bf не} са полуразрешими:
   \begin{itemize}
   \item 
-    $L = \{\pair{\M} \mid \L(\M) \text{ е регулярен} \}$;
+    $L = \{\code{\M} \mid \L(\M) \text{ е регулярен} \}$;
   \item
-    $L = \{\pair{\M} \mid \L(\M) \text{ е безконтекстен} \}$;
+    $L = \{\code{\M} \mid \L(\M) \text{ е безконтекстен} \}$;
   \item
-    $L = \{\pair{\M} \mid \L(\M) \text{ е разрешим} \}$;
+    $L = \{\code{\M} \mid \L(\M) \text{ е разрешим} \}$;
   \item
-    $L = \{\pair{\M} \mid \abs{\L(\M)} = 42\}$;
+    $L = \{\code{\M} \mid \abs{\L(\M)} = 42\}$;
   \end{itemize}
 \end{cor}
 
@@ -130,12 +148,6 @@
 % %   \end{itemize}
 % % \end{proof}
 
-\begin{lemma}
-  Нека е дадена $\M = \TM$.
-  Тогава езикът 
-  \[L = \{\alpha\sharp\beta^R \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\}\]
-  е безконтекстен.
-\end{lemma}
 
 
 % % \begin{thm}
