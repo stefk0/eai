@@ -193,6 +193,7 @@
     Да предположим, че $k > 0$ и за всяко $i$, $j$, можем да намерим регулярните изрази
     съответстващи на $L(i,j,k-1)$. Тогава
     \[L(i,j,k) = L(i,j,k-1)\ \cup\ L(i,k,k-1)\cdot (L(k,k,k-1)^\star) \cdot L(k,j,k-1).\]
+
     Тогава по {\bf И.П.} следва, че $L(i,j,k)$ може да се опише с регулярен израз, който е
     \begin{equation}
       \label{eq:kleene}
@@ -208,49 +209,48 @@
   Да разгледаме следния автомат:
 
   \begin{framed}
-  \begin{figure}[H]
-    \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-        
-        \node[initial,state]      (1) {$q_1$};
-        \node[accepting, state]   (2) [right of=1]{$q_2$};
-        
-        \path 
-        (1) edge [loop above]  node [above] {$1$} (1)
-        (1) edge  node [above] {$0$} (2)
-        (2) edge [loop above] node [above] {$0,1$} (2);
-      \end{tikzpicture}
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+          \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+          
+          \node[initial,state]      (1) {$q_1$};
+          \node[accepting, state]   (2) [right of=1]{$q_2$};
+          
+          \path 
+          (1) edge [loop above]  node [above] {$1$} (1)
+          (1) edge  node [above] {$0$} (2)
+          (2) edge [loop above] node [above] {$0,1$} (2);
+        \end{tikzpicture}
       \end{center}
       \label{fig:a1}
       \caption{Автомат разпознаващ $\L(\mathbf{1^\star 0 (0 + 1)^\star)}$}
- \end{figure}
+    \end{figure}
 \end{framed}
 
 Лесно се съобразява, че езикът на автомата от Фигура \ref{fig:a1} се описва с регулярния израз $\mathbf{1^\star 0 (0 + 1)^\star}$.
- % За да намерим регулярния език за автомата от Пример \ref{fig:a1}, 
- Следвайки конструкцията от доказателството на \Th{regular-kleene},
- езикът на този автомат се описва с регулярния израз $\mathbf{r^2_{1,2}}$, защото началното състояние е $q_1$, финалното е $q_2$ и 
- броят на състоянията в автомата е $2$.
- \begin{align*}
-   \mathbf{r^2_{1,2}} & = \underbrace{\mathbf{r^{1}_{1,2}}}_{\mathbf{1^\star 0}} + \underbrace{\mathbf{r^{1}_{1,2}}}_{\mathbf{1^\star 0}}\cdot \underbrace{\mathbf{(r^1_{2,2})^\star}}_{\mathbf{(\varepsilon+0+1)^\star}} \cdot \underbrace{\mathbf{r^1_{2,2}}}_{\mathbf{\varepsilon+0+1}} & (\text{според (\ref{eq:kleene}})) \\
-   &  = \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^\star (\varepsilon + 0 + 1)}\\
-   & =  \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^+} & (\mathbf{r^+ = r^\star r})\\
-   & =  \mathbf{1^\star0 + 1^\star 0 (0 + 1)^\star} & (\mathbf{r^\star = (\varepsilon + r)^+})\\
-   & = \mathbf{1^\star 0 (\varepsilon + (0 + 1)^\star)} & (\mathbf{r + rq = r(\varepsilon + q)})\\
-   & = \mathbf{1^\star 0 (0 + 1)^\star} & (\mathbf{r^\star = \varepsilon + r^\star})
-  \end{align*}
-  
-  Тук използвахме, че:
-  \begin{align*}
-    \mathbf{r^1_{1,2}} & = \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}} + \underbrace{\mathbf{r^0_{1,1}}}_{\mathbf{\varepsilon + 1}}\cdot\underbrace{\mathbf{(r^0_{1,1})^\star}}_{\mathbf{(\varepsilon+1)^\star}} \cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
-    & = \mathbf{0 + (\varepsilon + 1)(\varepsilon + 1)^\star0} \\
-    & = \mathbf{0 + 1^\star 0}\\
-    & = \mathbf{1^\star0},\\
-    \mathbf{r^1_{2,2}} & = \underbrace{\mathbf{r^0_{2,2}}}_{\mathbf{\varepsilon+0+1}} + \underbrace{\mathbf{r^0_{2,1}}}_{\mathbf{\emptyset}} \cdot \underbrace{\mathbf{(r^0_{1,1})^\star}}_{\mathbf{\varepsilon+1}}\cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
-    & = \mathbf{\varepsilon + 0 + 1 + \emptyset(\varepsilon + 1)^\star0}\\
-    & = \varepsilon + 0 + 1 & (\text{защото }\mathbf{\emptyset \cdot r = \emptyset})
-  \end{align*}
+Следвайки конструкцията от доказателството на \Th{regular-kleene},
+езикът на този автомат се описва с регулярния израз $\mathbf{r^2_{1,2}}$, защото началното състояние е $q_1$, финалното е $q_2$ и 
+броят на състоянията в автомата е $2$.
+\begin{align*}
+  \mathbf{r^2_{1,2}} & = \underbrace{\mathbf{r^{1}_{1,2}}}_{\mathbf{1^\star 0}} + \underbrace{\mathbf{r^{1}_{1,2}}}_{\mathbf{1^\star 0}}\cdot \underbrace{\mathbf{(r^1_{2,2})^\star}}_{\mathbf{(\varepsilon+0+1)^\star}} \cdot \underbrace{\mathbf{r^1_{2,2}}}_{\mathbf{\varepsilon+0+1}} & (\text{според (\ref{eq:kleene}})) \\
+                     &  = \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^\star (\varepsilon + 0 + 1)}\\
+                     & =  \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^+} & (\mathbf{r^+ = r^\star r})\\
+                     & =  \mathbf{1^\star0 + 1^\star 0 (0 + 1)^\star} & (\mathbf{r^\star = (\varepsilon + r)^+})\\
+                     & = \mathbf{1^\star 0 (\varepsilon + (0 + 1)^\star)} & (\mathbf{r + rq = r(\varepsilon + q)})\\
+                     & = \mathbf{1^\star 0 (0 + 1)^\star} & (\mathbf{r^\star = \varepsilon + r^\star})
+\end{align*}
+
+Тук използвахме, че:
+\begin{align*}
+  \mathbf{r^1_{1,2}} & = \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}} + \underbrace{\mathbf{r^0_{1,1}}}_{\mathbf{\varepsilon + 1}}\cdot\underbrace{\mathbf{(r^0_{1,1})^\star}}_{\mathbf{(\varepsilon+1)^\star}} \cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
+                     & = \mathbf{0 + (\varepsilon + 1)(\varepsilon + 1)^\star0} \\
+                     & = \mathbf{0 + 1^\star 0}\\
+                     & = \mathbf{1^\star0},\\
+  \mathbf{r^1_{2,2}} & = \underbrace{\mathbf{r^0_{2,2}}}_{\mathbf{\varepsilon+0+1}} + \underbrace{\mathbf{r^0_{2,1}}}_{\mathbf{\emptyset}} \cdot \underbrace{\mathbf{(r^0_{1,1})^\star}}_{\mathbf{\varepsilon+1}}\cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
+                     & = \mathbf{\varepsilon + 0 + 1 + \emptyset(\varepsilon + 1)^\star0}\\
+                     & = \varepsilon + 0 + 1 & (\text{защото }\mathbf{\emptyset \cdot r = \emptyset})
+\end{align*}
 \end{example}
 
 Следващата ни цел е да видим, че имаме и обратната посока на горната лема.

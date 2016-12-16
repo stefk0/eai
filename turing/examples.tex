@@ -31,24 +31,25 @@
   \item
     $\Gamma = \{a,b,c,d,\blank\}$, за някой нов символ $d$;
   \item
-    $Q = \{1,2,\dots,5\}$;
+    $Q = \{q_1,q_2,\dots,q_5\}$;
   \item
-    $q_{accept} = 5$;
+    $q_{accept} = q_5$;
   \item
     частичната функция на преходите $\delta:Q\times\Gamma \to Q\times\Gamma\times\{L,R\}$
     е описана на схемата отдолу.
   \end{itemize}
 
+  \begin{framed}
   \begin{figure}[H]
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto]
         
-        \node[state,initial]    (1) {$1$};
-        \node[state]            (2) [right of=1]{$2$};
-        \node[state]            (3) [right of=2]{$3$};
-        \node[state]            (4) [right of=3]{$4$};
-        \node[state,accepting]  (5) [below of=1]{$5$};
+        \node[state,initial]    (1) {$q_1$};
+        \node[state]            (2) [right of=1]{$q_2$};
+        \node[state]            (3) [right of=2]{$q_3$};
+        \node[state]            (4) [right of=3]{$q_4$};
+        \node[state,accepting]  (5) [below of=1]{$q_5$};
         % \node[state,accepting]  (6) [right of=5]{$6$};
         
         \begin{scope}[every node/.style={scale=.8}]
@@ -58,16 +59,24 @@
           % (1) edge [bend left=15] node [left] {$\{b,c\}$} (6)
           (1) edge [bend left=15] node [above] {$a/d;R$} (2)
           (2) edge [bend left=15] node [above] {$b/d;R$} (3)
-          (2) edge [loop below] node [right] {$\{a,d\};R$} (2)
+          (2) edge [loop above] node   [above] {$\{a,d\};R$} (2)
           (3) edge [bend left=15] node [above] {$c/d;L$} (4)
-          (3) edge [loop below] node [right] {$\{b,d\};R$} (3)
-          (4) edge [loop right] node [below right] {$\{a,b,d\};L$} (4)
+          (3) edge [loop above] node   [above] {$\{b,d\};R$} (3)
+          (4) edge [loop right] node   [below right] {$\{a,b,d\};L$} (4)
           (4) edge [in=65,out=115,above] node [above] {$\blank;R$} (1);
         \end{scope}
       \end{tikzpicture}
     \end{center}
+    \caption{детерминистична частична машина на Тюринг $\M$, за която $\L(\M) = \{a^nb^nc^n \mid n \in \Nat\}$}
   \end{figure}
+  \end{framed}
 
+  Например,
+  \begin{align*}
+    & \delta(q_1, a) = (q_2, d, R)\\
+    & \delta(q_4, \blank) = (q_1, \blank, R)\\
+    & \delta(q_2, a) = (q_2, a, R).
+  \end{align*}
 
   % Да проследим изчислението на думата $aabbcc$:
   
@@ -75,22 +84,23 @@
   % \[_4dadbdc \vdash\ _4\blank dadbdc \vdash\ _1dadbdc \vdash d_1adbdc \vdash dd_2dbdc \vdash ddd_2bdc \vdash dddd_3dc \vdash \]
   % \[ ddddd_3c \vdash dddddd_4 \vdash \cdots \vdash\ _4\blank dddddd \vdash\ _1dddddd \vdash \cdots \vdash dddddd_1\blank \vdash dddddd_5\blank.\]
 
-  Съобразете, че тази машина на Тюринг може да се направи тотална като се добави ново състояние $q_{reject}$
-  и за всяка двойка $(q,x)$, за която функцията на преходите не е дефинирана, да сочи към $q_{reject} = 6$.
+  Съобразете, че тази машина на Тюринг може да се направи тотална като се добави ново състояние $\qreject$
+  и за всяка двойка $(q,x)$, за която функцията на преходите не е дефинирана, да сочи към $\qreject = q_6$.
   Така можем да получим {\em тотална} машина на Тюринг за езика $L$, което означава, че 
   $L$ е не само полуразрешим, но {\em разрешим} език.
 
+\begin{framed}
   \begin{figure}[H]
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto]
         
-        \node[state,initial]    (1) {$1$};
-        \node[state]            (2) [right of=1]{$2$};
-        \node[state]            (3) [right of=2]{$3$};
-        \node[state]            (4) [right of=3]{$4$};
-        \node[state,accepting]  (5) [below of=1]{$5$};
-        \node[state]            (6) [below of=3]{$6$};
+        \node[state,initial]    (1) {$q_1$};
+        \node[state]            (2) [right of=1]{$q_2$};
+        \node[state]            (3) [right of=2]{$q_3$};
+        \node[state]            (4) [right of=3]{$q_4$};
+        \node[state,accepting]  (5) [below of=1]{$q_5$};
+        \node[state]            (6) [below of=3]{$q_6$};
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
@@ -115,6 +125,7 @@
       \end{tikzpicture}
     \end{center}
   \end{figure}
+\end{framed}
 
 \end{example}
 
@@ -153,25 +164,26 @@
   \item
     $\Gamma = \{a,b,\sharp,x,\blank\}$;
   \item
-    $Q = \{1,2,\dots,9\}$;
+    $Q = \{q_1,q_2,\dots,q_9\}$;
   \item
-    $q_{accept} = 9$;
+    $\qaccept = q_9$;
   \end{itemize}
 
+  \begin{framed}
   \begin{figure}[H]
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
         
-        \node[state,initial]    (1) {$1$};
-        \node[state]            (2) [above right of=1]{$2$};
-        \node[state]            (3) [below right of=1]{$3$};
-        \node[state]            (4) [right of=2]{$4$};
-        \node[state]            (5) [right of=3]{$5$};
-        \node[state]            (6) [below right of=4]{$6$};
-        \node[state]            (7) [above of=6]{$7$};
-        \node[state]            (8) [left of=3]{$8$};
-        \node[state,accepting]  (9) [below left of=3]{$9$};
+        \node[state,initial]    (1) {$q_1$};
+        \node[state]            (2) [above right of=1]{$q_2$};
+        \node[state]            (3) [below right of=1]{$q_3$};
+        \node[state]            (4) [right of=2]{$q_4$};
+        \node[state]            (5) [right of=3]{$q_5$};
+        \node[state]            (6) [below right of=4]{$q_6$};
+        \node[state]            (7) [above of=6]{$q_7$};
+        \node[state]            (8) [left of=3]{$q_8$};
+        \node[state,accepting]  (9) [below left of=3]{$q_9$};
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
@@ -195,7 +207,9 @@
         \end{scope}
       \end{tikzpicture}
     \end{center}
+    \caption{детерминистична частична машина на г-н Тюринг $\M$, за която $\L(\M) = \{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$}
   \end{figure}
+\end{framed}
 
   % Да проследим изчислението на думата $ab\sharp ab$.
   
