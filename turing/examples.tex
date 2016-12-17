@@ -116,11 +116,11 @@
           (4) edge [in=65,out=115,above] node [above] {$\blank;R$} (1);
 
           \path
-          (1) edge [dashed, bend right=15] node [below] {$\{b,c\};$} (6)
-          (2) edge [dashed, bend left=15] node [left] {$\{c,\blank\};$} (6)
-          (3) edge [dashed, bend left=25] node [right] {$\{a,\blank\};$} (6);
-          % (5) edge [dashed, bend right=15] node [below] {$\{a,b,c,d,\blank\};$} (6)
-          % (6) edge [dashed, loop right] node [right] {$\{a,b,c,d,\blank\};$} (6);
+          (1) edge [dashed, bend right=15] node [left] {$\{b,c\};S$} (6)
+          (2) edge [dashed, bend left=30] node [left] {$\{c,\blank\};S$} (6)
+          (3) edge [dashed, bend left=25] node [right] {$\{a,\blank\};S$} (6)
+          (5) edge [dashed, bend right=15] node [below] {$\{a,b,c,d,\blank\};S$} (6)
+          (6) edge [dashed, loop right] node [right] {$\{a,b,c,d,\blank\};S$} (6);
         \end{scope}
       \end{tikzpicture}
     \end{center}
@@ -220,13 +220,39 @@
   % \end{align*}
 
   Може лесно да се съобрази, че тази машина на Тюринг може да се допълни до {\em тотална}.
+
+  \begin{framed}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
+        \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
+        
+        \node[state,initial]    (1) {$q_1$};
+        \node[state]            (2) [right of=1]{$q_2$};
+        \node[state]            (3) [right of=2]{$q_3$};
+        \node[state,accepting]  (4) [right of=3]{$q_4$};
+        % \node[state]            (5) [below of=3]{$q_5$};
+        
+        \begin{scope}% [every node/.style={scale=.8}]
+          \path
+          (1) edge [loop above] node [above] {$\frac{a}{\blank} / \frac{a}{a};\frac{R}{R}$} (1)
+          (1) edge [loop below] node [below] {$\frac{b}{\blank} / \frac{b}{b};\frac{R}{R}$} (1)
+          (1) edge [bend left=15] node [above] {$\frac{\sharp}{\blank};\frac{R}{S}$} (2)
+          (2) edge [loop above] node [above] {$\frac{a}{\blank}/\frac{a}{\blank};\frac{R}{S}$} (2)
+          (2) edge [loop below] node [below] {$\frac{b}{\blank}/\frac{b}{\blank};\frac{R}{S}$} (2)
+          (2) edge [bend left=15] node [above] {$\frac{\blank}{\blank};\frac{L}{L}$} (3)
+          (3) edge [loop above] node [above] {$\frac{a}{a}/\frac{a}{a};\frac{L}{L}$} (3)
+          (3) edge [loop below] node [below] {$\frac{b}{b}/\frac{b}{b};\frac{L}{L}$} (3)
+          (3) edge [bend left=15] node [above] {$\frac{\blank}{\blank};\frac{R}{R}$} (4);
+        \end{scope}
+      \end{tikzpicture}
+    \end{center}
+    \caption{двулентова детерминистична частична машина на Тюринг $\M$, за която $\L(\M) = \{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$}
+  \end{figure}
+  \end{framed}
   
 \end{example}
 
-\begin{framed}
-  Да се направи същия пример, но за двулентова машина на Тюринг.
-  Да се обясни, че така е по-бързо, за сметка на паметта.
-\end{framed}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"
