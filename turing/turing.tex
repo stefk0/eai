@@ -47,15 +47,24 @@
 \begin{itemize}
 \item 
   % \marginpar{(На англ. instanteneous description)}
-  {\bf Моментната конфигурация} (или описание) на едно изчисление на МТ е тройка от вида $(\alpha, q, \beta) \in \Gamma^\star\times Q \times \Gamma^\star$. Това означава, че
-  машината се намира в състояние $q$ и лентата има вида
-  \[\tape{\alpha\beta},\]
-  като главата на машината е поставена върху първия символ на $\beta$.  
+  Формално, {\bf моментната конфигурация} (или описание) на едно изчисление на машина на Тюринг
+  е тройка от вида 
+  \[(\alpha, q, x\beta) \in \Gamma^\star\times Q \times \Gamma^\star,\]
+  като интерпретацията на тази тройка е, че машината се намира в състояние $q$ и лентата има вида
+  \[\tape{\alpha\underline{x}\beta},\]
+  като четящата глава на машината  е поставена върху първия символ на $\beta$.  
+  Понякога за удобство ще означаваме моментната конфигурация като $(q,\alpha\underline{x}\beta)$.
+\item
+  Ако $\beta = \varepsilon$, това означава, че главата на машината е върху $\blank$, т.е.
+  лентата има вида  \[\tape{\alpha\underline{\blank}},\]
 \item
   {\bf Началната конфигурация} за входа $\alpha \in \Sigma^\star$ представлява 
   \[(\varepsilon, s, \alpha).\]
-  Това означава, че лентата има вида \[\cdots\blank\blank\alpha\blank\blank\cdots\]
-  и четящата глава е на първия символ от думата $\alpha$.
+  Това означава, че лентата има вида \[\cdots\blank\blank\underline{x}\alpha\blank\blank\cdots,\]
+  където $\alpha = x\alpha'$, ако $\alpha \in \Sigma^+$.
+\item
+  Ако $\alpha = \varepsilon$, то началната конфигурация е $(\varepsilon, s, \varepsilon)$ и лентата има вида
+  \[\tape{\underline{\blank}}.\]
 \item
   {\bf Заключителна конфигурация} представлява тройка от вида
   \[(\alpha, \qaccept, \beta), \text{ или }(\alpha, \qreject, \beta).\]
@@ -75,11 +84,28 @@
   % При $X = \blank$, имаме $(\varepsilon, q, Z\beta) \vdash_\M (\varepsilon, p, \blank Y\beta)$.
 % \item
 %   Ако $\delta_\M(q,Z) = (p,Y,N)$, то 
-  
+\item
+  Ако $\delta_\M(q,Z) = (p,Y,S)$, то дефинираме $(\alpha, q, Z\beta) \vdash_\M (\alpha , p, Y\beta)$.
 \end{itemize}
 С $\vdash^\star_\M$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\M$.
 
 \begin{itemize}
+\item
+  Машината на Тюринг $\M$ {\bf приема} думата $\alpha$, 
+  ако 
+  \[(\varepsilon, s, \alpha) \vdash^\star_\M (\gamma_1, \qaccept, \gamma_2),\]
+  за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
+\item
+  Машината на Тюринг $\M$ {\bf отхвърля} думата $\alpha$, 
+  ако 
+  \[(\varepsilon, s, \alpha) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2),\]
+  за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
+\item
+  Машината на Тюринг $\M$ {\bf не приема} думата $\alpha$, 
+  ако 
+  \[(\varepsilon, s, \alpha) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2),\]
+  за някои $\gamma_1, \gamma_2 \in \Gamma^\star$,
+  или $\M$ никога не завършва при начална конфигурация $(\varepsilon,s,\alpha)$.
 \item
   \marginpar{Обърнете внимание, че това не е същото като да изискваме функцията на преходите $\delta$ да бъде тотална.}
   Една машина на Тюринг се нарича {\bf тотална}, ако при всеки вход достига до заключително състояние,
@@ -510,6 +536,8 @@
 % \input{turing/computations}
 
 % \input{turing/grammar}
+
+\input{turing/complexity}
 
 \section*{Бележки}
 
