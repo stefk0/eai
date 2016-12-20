@@ -76,16 +76,27 @@
 която ще казва как моментната конфигурация на машината $\M$ се променя при изпълнение на една стъпка.
 \begin{itemize}
 \item
-  Ако $\delta_\M(q,Z) = (p,Y,R)$, то дефинираме $(\alpha, q, Z\beta) \vdash_\M (\alpha Y, p, \beta)$.
-  % При $Z = \blank$ също така можем да запишем 
-  % $(\alpha, q, \varepsilon) \vdash_\M (\alpha Y, p, \varepsilon)$ (???)
+  Ако $\delta_\M(q,z) = (p,y,R)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha y, p, \beta)$.
+  Това означава, че ако лентата е имала вида 
+  \[\tape{\alpha\underline{z}\beta},\]
+  след тази стъпка лентата има вида 
+  \[\tape{\alpha y\underline{b}\beta'},\]
+  ако $\beta = b\beta'$, или 
+  \[\tape{\alpha y\underline{\blank}},\]
+  ако $\beta = \varepsilon$.
 \item 
-  Ако $\delta_\M(q,Z) = (p,Y,L)$, то дефинираме $(\alpha X, q, Z\beta) \vdash_\M (\alpha , p, XY\beta)$.
-  % При $X = \blank$, имаме $(\varepsilon, q, Z\beta) \vdash_\M (\varepsilon, p, \blank Y\beta)$.
-% \item
-%   Ако $\delta_\M(q,Z) = (p,Y,N)$, то 
+  Ако $\delta_\M(q,z) = (p,y,L)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\M (\alpha , p, xy\beta)$.
+  Това означава, че ако лентата е имала вида 
+  \[\tape{\alpha x\underline{z}\beta},\]
+  след тази стъпка лентата има вида 
+  \[\tape{\alpha \underline{x}y\beta}\]
 \item
-  Ако $\delta_\M(q,Z) = (p,Y,S)$, то дефинираме $(\alpha, q, Z\beta) \vdash_\M (\alpha , p, Y\beta)$.
+  Ако $\delta_\M(q, z) = (p, y, S)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha , p, y\beta)$.
+  Това означава, че ако лентата е имала вида 
+  \[\tape{\alpha \underline{z}\beta},\]
+  след тази стъпка лентата има вида 
+  \[\tape{\alpha \underline{y}\beta}\]
+  
 \end{itemize}
 С $\vdash^\star_\M$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\M$.
 

@@ -17,10 +17,12 @@
         cout << "Input:" << endl;
         cin >> input;
         if (!cin || input=="q") break;
-        if (regex_match(input, reg))
+        if (regex_match(input, reg)) {
           cout << "Valid input" << endl;
-        else
-          cout << "Invalid input" << endl;	  
+        }  
+        else {
+          cout << "Invalid input" << endl;
+        }
       }
     }
   \end{minted}
@@ -458,6 +460,7 @@
   $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}\right\}$
   е автоматен език.
 \end{problem}
+\ifhints
 \begin{hint}
   По-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
   Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
@@ -508,6 +511,7 @@
     \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}$}
   \end{itemize}
 \end{hint}
+\fi
 
 \begin{problem}
   Да разгледаме азбуката:
@@ -524,6 +528,7 @@
   \end{itemize}
   Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
 \end{problem}
+\ifhints
 \begin{hint}
   Ще построим автомат $\A = \FA$ за езика $L^R_1$.
   За улеснение, в рамките на тази задача ще пишем:
@@ -587,7 +592,7 @@
   Докажете, че за така дефинирания автомат $\A$, $\L(\A) = L^R_1$.
   \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
 \end{hint}
-
+\fi
 
 %%% Local Variables:
 %%% mode: latex

@@ -119,16 +119,16 @@
   Докажете, че езикът $L = \{a^nb^nc^n\ \mid\ n\in\Nat\}$ не е безконтекстен.
 \end{problem}
 \begin{proof}
-  \begin{itemize}
-  \item 
+  \begin{description}
+  \item[$(\forall)$]
     Разглеждаме произволна константа $p \geq 1$.
-  \item
+  \item[$(\exists)$]
     Избираме дума $\alpha \in L$, $\abs{\alpha} \geq p$.
     В случая, нека $\alpha = a^pb^pc^p$.
-  \item
+  \item[$(\forall)$]
     Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{xyv} \leq p$ и $1 \leq \abs{yv}$.
-  \item
-    Трябва да изберем $i$, за което $xy^iuv^iw \not\in L$.
+  \item[$(\exists)$]
+    Ще изберем $i$, за което $xy^iuv^iw \not\in L$.
     Знаем, че поне едно от $y$ и $v$ не е празната дума.
     Имаме няколко случая за $y$ и $v$.
     \begin{itemize}
@@ -144,7 +144,7 @@
     \end{itemize}  
     Оказа се, че във всички възможни случаи за $y$ и $v$, 
     $xy^2uv^2w \not\in L$.
-  \end{itemize}
+  \end{description}
   Така от \Cor{pumping-context-free} следва, че езикът $L$ не е безконтекстен.
 \end{proof}
 
@@ -157,15 +157,16 @@
   Докажете, че $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$ не е безконтекстен език.
 \end{problem}
 \begin{proof}
-   \begin{itemize}
-   \item 
+  \begin{description}
+  \item[$(\forall)$]
      Разглеждаме произволна константа $p \geq 1$.
-   \item
+   \item[$(\exists)$]
      Избираме дума $\alpha \in L$, $\abs{\alpha} \geq p$.
      В случая, нека $\alpha = a^pb^pc^p$.
-   \item
+   \item[$(\forall)$]
      Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{xyv} \leq p$ и $1 \leq \abs{yv}$.
      Знаем, че поне една от $y$ и $v$ не е празната дума.
+   \item[$(\exists)$] Ще намерим $i \in \Nat$, за което $xy^iuv^iw \not\in L$.
     \begin{itemize}
     \item
       $y$ и $v$ са съставени от една буква.
@@ -190,7 +191,7 @@
        $y$ или $v$ е съставена от две букви.
        Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
      \end{itemize}    
-   \end{itemize}
+   \end{description}
 \end{proof}
 
 \begin{problem}
@@ -202,11 +203,13 @@
 \end{hint}
 
 \begin{problem}
-  Докажете, че езикът $L = \{\alpha\beta\alpha^{rev} \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}$ не е безконтекстен.
+  Докажете, че езикът 
+  \[L = \{\alpha\beta\alpha^{rev} \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}\]
+  не е безконтекстен.
 \end{problem}
 \begin{hint}
   $\alpha = a^p b^p a^p b^p b^p a^p$.
-  Във всички случаи е покачваме повече от $p$.
+  Покаваме с повече от $p$ би трябвало да свърши работа.
 \end{hint}
 
 \begin{framed}
