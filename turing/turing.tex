@@ -4,6 +4,10 @@
 \newcommand{\qaccept}{q_{\texttt{accept}}}
 \newcommand{\qreject}{q_{\texttt{reject}}}
 
+\newcommand{\goleft}{\lhd}
+\newcommand{\goright}{\rhd}
+\newcommand{\stay}{\Box}
+
 \marginpar{Тук най-вече следваме \cite[Глава 3]{sipser3}}
 
 % \begin{framed}
@@ -26,7 +30,7 @@
   $\Gamma$ - крайна азбука за лентата, $\Sigma \subseteq \Gamma$;
 \item
   % \marginpar{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
-  $\delta:Q\times\Gamma \to Q\times \Gamma \times \{L,R,S\}$ - (частична) функция на преходите;
+  $\delta:Q\times\Gamma \to Q\times \Gamma \times \{\goleft,\goright,\stay\}$ - (частична) функция на преходите;
 \item
   $s$ - начално състояние, $s \in Q$;
 \item
@@ -76,7 +80,7 @@
 която ще казва как моментната конфигурация на машината $\M$ се променя при изпълнение на една стъпка.
 \begin{itemize}
 \item
-  Ако $\delta_\M(q,z) = (p,y,R)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha y, p, \beta)$.
+  Ако $\delta_\M(q,z) = (p,y,\goright)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha y, p, \beta)$.
   Това означава, че ако лентата е имала вида 
   \[\tape{\alpha\underline{z}\beta},\]
   след тази стъпка лентата има вида 
@@ -85,13 +89,13 @@
   \[\tape{\alpha y\underline{\blank}},\]
   ако $\beta = \varepsilon$.
 \item 
-  Ако $\delta_\M(q,z) = (p,y,L)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\M (\alpha , p, xy\beta)$.
+  Ако $\delta_\M(q,z) = (p,y,\goleft)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\M (\alpha , p, xy\beta)$.
   Това означава, че ако лентата е имала вида 
   \[\tape{\alpha x\underline{z}\beta},\]
   след тази стъпка лентата има вида 
   \[\tape{\alpha \underline{x}y\beta}\]
 \item
-  Ако $\delta_\M(q, z) = (p, y, S)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha , p, y\beta)$.
+  Ако $\delta_\M(q, z) = (p, y, \stay)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha , p, y\beta)$.
   Това означава, че ако лентата е имала вида 
   \[\tape{\alpha \underline{z}\beta},\]
   след тази стъпка лентата има вида 
@@ -113,10 +117,7 @@
   за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
 \item
   Машината на Тюринг $\M$ {\bf не приема} думата $\alpha$, 
-  ако 
-  \[(\varepsilon, s, \alpha) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2),\]
-  за някои $\gamma_1, \gamma_2 \in \Gamma^\star$,
-  или $\M$ никога не завършва при начална конфигурация $(\varepsilon,s,\alpha)$.
+  ако $\M$ отхвърля $\alpha$ или $\M$ никога не завършва при начална конфигурация $(\varepsilon,s,\alpha)$.
 \item
   \marginpar{Обърнете внимание, че това не е същото като да изискваме функцията на преходите $\delta$ да бъде тотална.}
   Една машина на Тюринг се нарича {\bf тотална}, ако при всеки вход достига до заключително състояние,

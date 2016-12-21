@@ -1,7 +1,7 @@
 \subsection{Недетерминистични машини на Тюринг}
 \index{машина на Тюринг!недетерминистична}
 Една машина на Тюринг $\N$ се нарича недетерминистична, ако функцията на преходите има вида
-\[\Delta_\N: Q\times \Gamma \to \Ps(Q \times \Gamma\times \{L,R,S\}). \]
+\[\Delta_\N: Q\times \Gamma \to \Ps(Q \times \Gamma\times \{\goleft,\goright,\stay\}). \]
 
 Отново можем да дефинираме бинарна релация $\vdash_\N$ над $\Gamma^\star \times Q \times \Gamma^\star$,
 която ще казва как моментното описание на машината $\N$ се променя при изпълнение на една стъпка.
@@ -14,29 +14,29 @@
 С $\vdash^\star_\N$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\N$.
 
 Тогава за недетерминистична машина на Тюринг $\N$, 
-\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star_\N (\beta, q_{accept}, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
+\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star_\N (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
 
 \begin{remark}
   Върху дадена дума $\omega$, недетерминистичната машина на Тюринг $\N$ може да има много различни изчисления.
-  Думата $\omega$ принадлежи на $\L(\N)$ ако съществува {\em поне едно} изчисление, което завършва в състоянието $q_{accept}$.
-  Възможно е много други изчисления за $\omega$ да завършват в $q_{reject}$ или да зациклят.
+  Думата $\omega$ принадлежи на $\L(\N)$ ако съществува {\em поне едно} изчисление, което завършва в състоянието $\qaccept$.
+  Възможно е много други изчисления за $\omega$ да завършват в $\qreject$ или да зациклят.
 \end{remark}
 
 Аналогично, дефинираме една недетерминистична машина на Тюринг $\N$ да бъде {\bf тотална}, ако за всяка дума и 
-всяко изчисление на $\N$ върху $\omega$ завършва в $q_{accept}$ или $q_{reject}$.
+всяко изчисление на $\N$ върху $\omega$ завършва в $\qaccept$ или $\qreject$.
 
 \begin{problem}
   \marginpar{\cite{hopcroft2}}
   $\N = (\{q_0,q_1,q_2,q_f\}, \{0,1\}, \{0,1,\blank\}, \Delta, q_0, \{q_f\})$,
   \begin{itemize}
   \item 
-    $\Delta(q_0,0) = \{(q_0,1,R),(q_1,1,R)\}$;
+    $\Delta(q_0,0) = \{(q_0,1,R),(q_1,1,\goright)\}$;
   \item
-    $\Delta(q_1,1) = \{(q_2,0,L)\}$;
+    $\Delta(q_1,1) = \{(q_2,0,\goleft)\}$;
   \item
-    $\Delta(q_2,1) = \{(q_0,1,R)\}$;
+    $\Delta(q_2,1) = \{(q_0,1,\goright)\}$;
   \item
-    $\Delta(q_1,\blank) = \{(q_f,\blank,R)\}$.
+    $\Delta(q_1,\blank) = \{(q_f,\blank,\goright)\}$.
   \end{itemize}
   \marginpar{$\{0^{n+1}1^k \mid n,k\in\Nat\}$}
   Опишете $\L(\N)$.
