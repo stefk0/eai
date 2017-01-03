@@ -214,11 +214,11 @@
   Да проследим изчислението на думата $ab\sharp ab$.
   
   \begin{align*}
-    (q_1, \underline{a}b\sharp ab) & \to (q_2, x\underline{b}\sharp ab) \to (q_2,xb\underline{\sharp}ab) \to (q_4, xb\sharp\underline{a}b) \to (q_6, xb\underline{\sharp}xb)\\
-    & \to (q_7, x\underline{b}\sharp xb) \to (q_7, \underline{x}b\sharp xb) \to (q_1, x\underline{b}\sharp xb) \to (q_3, xx\underline{\sharp}xb)\\
-    & \to (q_5, xx\sharp\underline{x}b) \to (q_5, xx\sharp x\underline{b}) \to (q_6, xx\sharp\underline{x}x) \to (q_6, xx\underline{\sharp} xx)\\
-    & \to (q_7, x\underline{x}\sharp xx) \to (q_1, xx\underline{\sharp} xx) \to (q_8, xx\sharp\underline{x}x) \to (q_8, xx\sharp x\underline{x})\\
-    & \to (q_8, xx\sharp xx\underline{\blank}) \to (q_9,xx\sharp xx\underline{\blank}).
+    (q_1, \underline{a}b\sharp ab) & \vdash (q_2, x\underline{b}\sharp ab) \vdash (q_2,xb\underline{\sharp}ab) \vdash (q_4, xb\sharp\underline{a}b) \vdash (q_6, xb\underline{\sharp}xb)\\
+    & \vdash (q_7, x\underline{b}\sharp xb) \vdash (q_7, \underline{x}b\sharp xb) \vdash (q_1, x\underline{b}\sharp xb) \vdash (q_3, xx\underline{\sharp}xb)\\
+    & \vdash (q_5, xx\sharp\underline{x}b) \vdash (q_5, xx\sharp x\underline{b}) \vdash (q_6, xx\sharp\underline{x}x) \vdash (q_6, xx\underline{\sharp} xx)\\
+    & \vdash (q_7, x\underline{x}\sharp xx) \vdash (q_1, xx\underline{\sharp} xx) \vdash (q_8, xx\sharp\underline{x}x) \vdash (q_8, xx\sharp x\underline{x})\\
+    & \vdash (q_8, xx\sharp xx\underline{\blank}) \vdash (q_9,xx\sharp xx\underline{\blank}).
   \end{align*}
 
   Може лесно да се съобрази, че тази машина на Тюринг може да се допълни до {\em тотална}.
@@ -229,8 +229,7 @@
 Една {\em тотална} функция $f:\Sigma^\star \to \Sigma^\star$ се нарича изчислима с машина на Тюринг $\M$, ако 
 за всяка дума $\alpha \in \Sigma^\star$,
 \[(\varepsilon, s, \alpha) \vdash^\star_\M (\varepsilon, \qaccept, f(\alpha)).\]
-
-
+Това означава, че машината на Тюринг $\M$ е тотална.
 
 \[Graph(f) = \{\alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\}.\]
 
@@ -284,11 +283,11 @@
 Да проследим работата на $\M$ върху думата $ab$:
 
 \begin{align*}
-  (s, \underline{a}b) & \to (q_1, x\underline{b}) \to (q_1,xb\underline{\blank}) \to (q_2, x\underline{b}A) \to (q_2, \underline{x}bA)\\
-                      & \to (s, a\underline{b}A) \to (q_3, ax\underline{A}) \to (q_3, axA\underline{\blank}) \to (q_4, ax\underline{A}B)\\
-                      & \to (q_4, a\underline{x}AB) \to (s, ab\underline{A}B) \to (s,aba\underline{B}) \to (s, abab\underline{\blank})\\
-                      & \to (q_5, aba\underline{b}) \to (q_5, ab\underline{a}b) \to (q_5, a\underline{b}ab) \to (q_5, \underline{a}bab)\\
-                      & \to (q_5, \underline{\blank}abab) \to (q_6, \underline{a}bab).
+  (s, \underline{a}b) & \vdash (q_1, x\underline{b}) \vdash (q_1,xb\underline{\blank}) \vdash (q_2, x\underline{b}A) \vdash (q_2, \underline{x}bA)\\
+                      & \vdash (s, a\underline{b}A) \vdash (q_3, ax\underline{A}) \vdash (q_3, axA\underline{\blank}) \vdash (q_4, ax\underline{A}B)\\
+                      & \vdash (q_4, a\underline{x}AB) \vdash (s, ab\underline{A}B) \vdash (s,aba\underline{B}) \vdash (s, abab\underline{\blank})\\
+                      & \vdash (q_5, aba\underline{b}) \vdash (q_5, ab\underline{a}b) \vdash (q_5, a\underline{b}ab) \vdash (q_5, \underline{a}bab)\\
+                      & \vdash (q_5, \underline{\blank}abab) \vdash (q_6, \underline{a}bab).
 \end{align*}
 
   

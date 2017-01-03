@@ -7,9 +7,9 @@
 която ще казва как моментното описание на машината $\N$ се променя при изпълнение на една стъпка.
 \begin{itemize}
 \item
-  Ако $\Delta_\N(q,Z) \ni (p,Y,R)$, то дефинираме $(\alpha, q, Z\beta) \vdash_\N (\alpha Y, p, \beta)$.
+  Ако $\Delta_\N(q,Z) \ni (p,Y,\goright)$, то дефинираме $(\alpha, q, Z\beta) \vdash_\N (\alpha Y, p, \beta)$.
 \item 
-  Ако $\Delta_\N(q,Z) \ni (p,Y,L)$, то дефинираме $(\alpha X, q, Z\beta) \vdash_\N (\alpha , p, XY\beta)$.
+  Ако $\Delta_\N(q,Z) \ni (p,Y,\goleft)$, то дефинираме $(\alpha X, q, Z\beta) \vdash_\N (\alpha , p, XY\beta)$.
 \end{itemize}
 С $\vdash^\star_\N$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\N$.
 
@@ -54,18 +54,18 @@
   Нека имаме недетерминистичната машина на Тюринг $\N$, за която $L = \L(\N)$.
   Една дума $\alpha$ принадлежи на $\L(\N)$ точно тогава, когато съществува изчисление,
   което започва с думата $\alpha$ върху лентата и след краен брой стъпки, следвайки функцията на преходите $\Delta_\N$,
-  достига до състоянието $q_{accept}$.
+  достига до състоянието $\qaccept$.
   Сложността идва от факта, че за думата $\alpha$ може да имаме много различни изчисления, 
-  като само някои от тях завършват в $q_{accept}$. Ще построим детерминистична машина на Тюринг,
+  като само някои от тях завършват в $\qaccept$. Ще построим детерминистична машина на Тюринг,
   която последователно ще симулира всички възможни {\em крайни} изчисления за думата $\alpha$, докато 
-  намери такова, което завършва в състоянието $q_{accept}$.
-  \marginpar{На практика това, което е правим е да представим всички възможни изчисления на $\N$ като $r$-разклонено дърво и да го обходим в широчина, докато не достигнем до $q_{accept}$}
+  намери такова, което завършва в състоянието $\qaccept$.
+  \marginpar{На практика това, което е правим е да представим всички възможни изчисления на $\N$ като $r$-разклонено дърво и да го обходим в широчина, докато не достигнем до $\qaccept$}
   
   Лесно се съобразява, че всяко изчисление на $\N$ може да се представи като 
-  крайна редица от елементи на $Q \times \Gamma \times \{L,R\}$.
+  крайна редица от елементи на $Q \times \Gamma \times \{\goleft,\goright,\stay\}$.
   Понеже това множество е крайно, то можем на всяка такава тройка да
   съпоставим число в интервала $[1,r]$, където 
-  \[r = 2 \cdot |Q| \cdot |\Gamma|.\]
+  \[r = 3 \cdot |Q| \cdot |\Gamma|.\]
   Оттук следва, че всяко изчисление на $\N$ може да се представи като крайна 
   редица от числа, всяко принадлежащо на интервала $[1,r]$.
 
@@ -83,7 +83,7 @@
     това означава, че симулираме изчисление от три стъпки като на първата стъпка избираме четвъртата
     възможна тройка, на втората стъпка избираме първата възможна тройка, на третата стъпка избираме втората възможна тройка.
     
-    Ако симулацията завърши в състоянието $q_{accept}$ на $\N$, то машината $\D$ завършва успешно.
+    Ако симулацията завърши в състоянието $\qaccept$ на $\N$, то машината $\D$ завършва успешно.
     В противен случай, на втората лента записваме следващия низ; изтриваме третата лента и започваме нова симулация.
   \end{itemize}
 \end{proof}
@@ -103,11 +103,63 @@
   \begin{itemize}
   \item 
     Ако $\N$ приема дадена дума $\omega$, то детерминистичната ни симулация на $\N$ ще достигне до изчисление, кодирано като път в $T$, 
-    което завършва в състояние $q_{accept}$.
+    което завършва в състояние $\qaccept$.
   \item
-    Ако $\N$ не приема дадена дума $\omega$, то детерминистичната ни симулация на $\N$ ще покаже, че всяко изчисление, кодирано като път в $T$, завършва в състояние $q_{reject}$.
+    Ако $\N$ не приема дадена дума $\omega$, то детерминистичната ни симулация на $\N$ ще покаже, че всяко изчисление, кодирано като път в $T$, завършва в състояние $\qreject$.
   \end{itemize}
 \end{proof}
+
+
+\begin{example}
+  Да разгледаме езика  
+  \[L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\text{ е подниз на }\beta\}.\]
+  Ще видим, че този език е разрешим като построим недетерминистична машина на Тюринг $\N$,
+  която разрешава този език.
+  \begin{framed}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+        \tikzstyle{every state}=[circle,minimum size=10pt,auto]
+        
+        \node[state,initial]    (1) {$q_1$};
+        \node[state]            (2) [right of=1]{$q_2$};
+        \node[state]            (3) [below of=2]{$q_3$};
+        \node[state]            (4) [below of=3]{$q_4$};
+        \node[state]            (5) [below right of=4,node distance=70pt]{$q_5$};
+        \node[state]            (6) [right of=4]{$q_6$};
+        \node[state]            (7) [above of=6]{$q_7$};
+        \node[state]            (8) [right of=6,node distance=80pt]{$q_8$};
+        \node[state]            (9) [right of=7,node distance=70pt]{$q_9$};
+        \node[state,accepting]  (10)[below right of=5]{$q_{10}$};
+
+        \begin{scope}[every node/.style={scale=.8}]
+          \path
+          (1) edge [loop above] node [above] {$\{a,b\};\goright$} (1)
+          (1) edge [bend left=15] node [above] {$\sharp;\goright$} (2)
+          (2) edge [loop above] node [above] {$a/\blank,b/\blank;\goright$} (2)
+          % (2) edge [loop right] node [right] {$b/\blank;\goright$} (2)
+          (2) edge [bend right=15] node [left] {$\{a,b,\blank\};\goleft$} (3)
+          (3) edge [loop left] node [left] {$\blank;\goleft$} (3)
+          (3) edge [bend right=15] node [left] {$\sharp;\goleft$} (4)
+          (4) edge [loop left] node [left] {$\{a,b\};\goleft$} (4)
+          (4) edge [bend right=30] node [left] {$\blank;\goright$} (5)
+          (5) edge [bend right=15] node [right] {$a/\blank;\goright$} (6)
+          (6) edge [loop right] node [right] {$\{a,b\};\goright$} (6)
+          (6) edge [bend right=15] node [right] {$\sharp;\goright$} (7)
+          (7) edge [loop right] node [right] {$\blank;\goright$} (7)
+          (7) edge [bend left=15] node [below] {$a/\blank;\goleft$} (3)
+          (8) edge [loop right] node [right] {$\{a,b\};\goright$} (8)
+          (5) edge [bend right=30] node [right] {$b/\blank;\goright$} (8)
+          (8) edge [bend right=15] node [right] {$\sharp;\goright$} (9)
+          (9) edge [loop right] node [right] {$\blank;\goright$} (9)
+          (9) edge [bend right=45] node [above] {$b/\blank;\goleft$} (3)
+          (5) edge [bend right=15] node [left] {$\sharp;\stay$} (10);
+        \end{scope}
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+\end{framed}
+\end{example}
 
 
 
