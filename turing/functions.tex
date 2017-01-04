@@ -1,0 +1,238 @@
+\section{Изчислими функции}
+
+Една {\em тотална} функция $f:\Sigma^\star \to \Sigma^\star$ се нарича изчислима с машина на Тюринг $\M$, ако 
+за всяка дума $\alpha \in \Sigma^\star$,
+\[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\varepsilon, \qaccept, f(\alpha)).\]
+Това означава, че машината на Тюринг $\M$ е тотална.
+
+Лесно може да се съобрази, че тогава езикът
+\[Graph(f) = \{\alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\}\]
+е разрешим.
+
+\begin{problem}
+  Докажете, че съществуват функции от вида $f:\Sigma^\star\to\Sigma^\star$, които не са изчислими с машина на Тюринг.
+\end{problem}
+\begin{hint}
+  Всяка машина на Тюринг може да се кодира с естествено число.
+  Това означава, че съществуват изброимо безкрайно много машини на Тюринг.
+  От друга страна, съществуват неизброимо много функции от вида $f:\Sigma^\star \to \Sigma^\star$.
+\end{hint}
+
+% Нека е дадена функцията $f:\Nat^k \to \Nat$.
+% Ще казваме, че $f$ е изчислима с машината на Тюринг $\M$,
+% ако за всяко $n_1,\dots,n_k$ е изпълнено:
+% \begin{itemize}
+% \item 
+%   Представяме всяко от числата $n_1,\dots,n_k$ в монадична бройна система
+%   като лентата на $\M$ има вида:  
+%   \[\dots \blank \blank \underbrace{1111\dots 11}_{n} \blank\blank\dots,\]
+%   като изискваме главата на $\M$ да е позиционирана върху най-лявата единица.
+%   Такава конфигурация ще наричаме {\bf стандартна начална конфигурация}.
+% \item
+%   Ако $f(n_1,\dots,n_k) = m$, то $\M$ завършва с резултат върху лентата
+%   \[\dots \blank \blank \underbrace{1111\dots 11}_{m} \blank\blank\dots,\]
+%   като главата на $\M$ е върху най-лявата 1-ца.
+%   Такава конфигурация се нарича {\bf стандартна финална конфигурация}.
+% \item
+%   Ако $f(n_1,\dots,n_k)$ е недефенирана, то $\M$ няма да завърши в стандартна конфигурация, т.е.
+%   или $\M$ ще работи безкрайно време, или ще завърши в конфигурация, която не е стандартна.
+% \end{itemize}
+
+\begin{example}
+  Да разгледаме функцията $f:\{1\}^\star \to \{1\}^\star$
+  дефинирана като $|f(\alpha)| = 2|\alpha|$.
+  
+\begin{framed}
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.7]
+      
+      \node[state,initial]    (1) {$q_0$};
+      \node[state]            (2) [right of=1]{$q_1$};
+      \node[state]            (3) [right of=2]{$q_2$};
+      \node[state]            (4) [right of=3]{$q_3$};
+      \node[state]            (5) [right of=4]{$q_4$};
+      \node[state]            (6) [right of=5]{$q_5$};
+      \node[state]            (7) [right of=6]{$q_6$};
+      \node[state]            (8) [right of=7]{$q_7$};
+      \node[state]            (9) [right of=8]{$q_8$};
+      \node[state]            (10) [right of=9]{$q_9$};
+      \node[state]            (11) [below of=8]{$q_{10}$};
+      \node[state,accepting]  (12) [below of=11]{$q_{11}$};
+      
+      \begin{scope}[every node/.style={scale=.8}]
+      \path
+      (1) edge [bend left=15] node [above] {$1;\goleft$} (2)
+      (1) edge [bend right=30] node [above] {$\blank;\stay$} (12)
+      (2) edge [bend left=15] node [above] {$1;\goleft$} (3)
+      (2) edge [bend right=15] node [below] {$\blank;\goleft$} (3)
+      (3) edge [bend left=15] node [above] {$\blank/1;\goleft$} (4)
+      (4) edge [bend left=15] node [above] {$\blank/1;\goright$} (5)
+      (5) edge [loop below] node [below] {$1;\goright$} (5)
+      (5) edge [bend left=15] node [above] {$\blank;\goright$} (6)
+      (6) edge [loop below] node [below] {$1;\goright$} (6)
+      (6) edge [bend left=15] node [above] {$\blank;\goleft$} (7)
+      (7) edge [bend left=15] node [above] {$1/\blank;\goleft$} (8)
+      (8) edge [bend left=15] node [above] {$1;\goleft$} (9)
+      (9) edge [loop below] node [below] {$1;\goleft$} (9)
+      (9) edge [bend right=15] node [below] {$\blank;\goleft$} (10)
+      (10) edge [loop below] node [below] {$1;\goleft$} (10)
+      (10) edge [out=140,in=60, above] node [below] {$\blank;\goright$} (2)
+      (8) edge [] node [right] {$\blank;\goleft$} (11)
+      (11) edge [loop left] node [left] {$1;\goleft$} (11)
+      (11) edge [] node [right] {$\blank;\goright$} (12);
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+\end{figure}
+\end{framed}
+
+\begin{align*}
+  (q_0, \underline{1}1) & \vdash (q_1, \underline{\blank}11) \vdash  (q_2, \underline{\blank} \blank 11) \vdash  (q_3, \underline{\blank} 1 \blank 11) \vdash (q_4, 1\underline{1}\blank 11) \vdash (q_4, 11 \underline{\blank} 11)\\
+  & \vdash (q_5, 11\blank \underline{1}1) \vdash \cdots \vdash (q_7, 11 \blank \underline{1}\blank) \vdash \cdots
+\end{align*}
+
+\end{example}
+
+
+\begin{example}
+  Да видим защо тоталната функция $f:\{a,b\}^\star \to \{a,b\}^\star$, дефинирана като
+  $f(\alpha) = \alpha\cdot\alpha$ е изчислима с машина на Тюринг.
+  
+  \begin{itemize}
+  \item
+    $\Sigma = \{a,b\}$;
+  \item 
+    $\Gamma = \{a,b,x,A,B\}$;
+  \item
+    $\qstart = q_0$;
+  \item
+    $\qaccept = q_6$
+  \end{itemize}
+  
+  \begin{framed}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
+        \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
+        
+        \node[state]            (1) {$q_0$};
+        \node[state]            (2) [above of=1]{$q_1$};
+        \node[state]            (3) [right of=2]{$q_2$};
+        \node[state]            (4) [below of=1]{$q_3$};
+        \node[state]            (5) [right of=4]{$q_4$};
+        \node[state]            (6) [right of=1]{$q_5$};
+        \node[state,accepting]  (7) [right of=6]{$q_6$};
+        
+        \begin{scope}[every node/.style={scale=.8}]
+          \path
+          (1) edge [bend left=15] node [left] {$a/x;\goright$} (2)
+          (2) edge [loop above] node [above] {$\{a,b,A,B\};\goright$} (2)
+          (2) edge [bend left=15] node [above] {$\blank/A;\goleft$} (3)
+          (3) edge [loop right] node [right] {$\{a,b,A,B\};\goleft$} (3)
+          (3) edge [bend right=15] node [right] {$x/a;\goright$} (1)
+          (1) edge [bend right=15] node [left] {$b/x;\goright$} (4)
+          (4) edge [loop below] node [below] {$\{a,b,A,B\};\goright$} (4)
+          (4) edge [bend right=15] node [below] {$\blank/B;\goleft$} (5)
+          (5) edge [loop right] node [right] {$\{a,b,A,B\};\goleft$} (5)
+          (5) edge [bend left=15] node [right] {$x/b;\goright$} (1)
+          (1) edge [loop left] node [left] {$A/a,B/b;\goright$} (1)
+          (1) edge [bend left=15] node [above] {$\blank;\goleft$} (6)
+          (6) edge [loop below] node [right] {$\{a,b\};\goleft$} (6)
+          (6) edge [bend left=15] node [above] {$\blank;\goright$} (7);
+        \end{scope}
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+\end{framed}
+
+Да проследим работата на $\M$ върху думата $ab$:
+
+\begin{align*}
+  (q_0, \underline{a}b) & \vdash (q_1, x\underline{b}) \vdash (q_1,xb\underline{\blank}) \vdash (q_2, x\underline{b}A) \vdash (q_2, \underline{x}bA)\\
+                        & \vdash (q_0, a\underline{b}A) \vdash (q_3, ax\underline{A}) \vdash (q_3, axA\underline{\blank}) \vdash (q_4, ax\underline{A}B)\\
+                        & \vdash (q_4, a\underline{x}AB) \vdash (q_0, ab\underline{A}B) \vdash (q_0,aba\underline{B}) \vdash (q_0, abab\underline{\blank})\\
+                        & \vdash (q_5, aba\underline{b}) \vdash (q_5, ab\underline{a}b) \vdash (q_5, a\underline{b}ab) \vdash (q_5, \underline{a}bab)\\
+                        & \vdash (q_5, \underline{\blank}abab) \vdash (q_6, \underline{a}bab).
+\end{align*}
+
+  
+\end{example}
+
+
+{\bf Да се каже нещо за графиката ? За момента може би е добре да се казва нищо за графиката. Да се разглеждат само тотални функции.}
+
+\begin{example}
+  \marginpar{Изискваме $f(\alpha)$ да започва с $1$ за да може $f$ да бъде функция}
+  Да разгледаме тоталната функция 
+  \[f:\{0,1\}^\star \to 1\cdot\{0,1\}^\star,\]
+  дефинирана като
+  \[(f(\alpha))_2 = (\alpha)_2 + 1.\]
+  Нека да видим, че тази функция е изчислима с машина на Тюринг.
+
+  \begin{itemize}
+  \item 
+    $\Sigma = \{0,1\}$;
+  \item
+    $\Gamma = \{0,1,\blank\}$;
+  \item
+    $\qstart = q_0$;
+  \item
+    $\qaccept = q_4$.
+  \end{itemize}
+
+  \begin{framed}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
+        \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
+        
+        \node[state,initial]    (0) {$q_0$};
+        \node[state]            (1) [right of=0]{$q_1$};
+        \node[state]            (2) [right of=1]{$q_2$};
+        \node[state]            (3) [right of=2]{$q_3$};
+        \node[state,accepting]  (4) [right of=3]{$q_4$};
+        
+        \begin{scope}[every node/.style={scale=.8}]
+          \path
+          (0) edge [loop above] node [above] {$0/\blank;\goright$} (0)
+          (0) edge [bend left=15] node [above] {$1;\goright$} (1)
+          (0) edge [bend right=30] node [below] {$\blank;\stay$} (2)
+          (1) edge [loop above] node [above] {$\{0,1\};\goright$} (1)
+          (1) edge [bend left=15] node [above] {$\blank;\goleft$} (2)
+          (2) edge [loop above] node [above] {$1/0;\goleft$} (2)
+          (2) edge [bend left=15] node [above] {$0/1;\goleft$} (3)
+          (2) edge [bend right=30] node [below] {$\blank/1;\stay$} (4)
+          (3) edge [loop above] node [above] {$\{0,1\};\goleft$} (3)
+          (3) edge [bend left=15] node [above] {$\blank;\goright$} (4);
+        \end{scope}
+      \end{tikzpicture}
+    \end{center}
+  \end{figure}
+\end{framed}
+
+Да проследим изчислението на $\M$ върху вход $01011$.
+
+\begin{align*}
+  (q_0, 0\underline{1}011) & \vdash (q_0,\underline{1}011) \vdash (q_1, 1\underline{0}11) \vdash (q_1, 10\underline{1}1) \vdash (q_1, 101\underline{1}) \vdash (q_1, 1011\underline{\blank})\\
+  & \vdash (q_2, 101\underline{1}) \vdash (q_2, 10\underline{1}0) \vdash (q_2, 1\underline{0}00) \vdash (q_3, \underline{1}100) \vdash (q_3, \underline{\blank}1100)\\
+  & \vdash (q_4, \underline{1}100).
+\end{align*}
+\end{example}
+
+
+\begin{problem}
+  Да разгледаме азбуката $\Sigma = \{0,1,\dots,k-1\}$, където $k > 2$.
+  Да разгледаме тоталната функция 
+  \[f:\Sigma^\star \to (\Sigma\setminus\{0\})\cdot\Sigma^\star,\]
+  дефинирана като
+  \[(f(\alpha))_k = (\alpha)_k + 1.\]
+  Дефинирайте машина на Тюринг $\M$, която изчислява функцията $f$.
+\end{problem}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
