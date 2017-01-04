@@ -1,6 +1,7 @@
 \chapter{Машини на Тюринг}
 
 \newcommand{\tape}[1]{\dots\blank\blank\blank{#1}\blank\blank\blank\dots}
+\newcommand{\qstart}{q_{\texttt{start}}}
 \newcommand{\qaccept}{q_{\texttt{accept}}}
 \newcommand{\qreject}{q_{\texttt{reject}}}
 
@@ -32,7 +33,7 @@
   % \marginpar{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
   $\delta:Q\times\Gamma \to Q\times \Gamma \times \{\goleft,\goright,\stay\}$ - (частична) функция на преходите;
 \item
-  $s$ - начално състояние, $s \in Q$;
+  $\qstart$ - начално състояние, $\qstart \in Q$;
 \item
   $\blank$ - празен символ,  $\blank \in \Gamma \setminus \Sigma$;
 \item
@@ -63,11 +64,11 @@
   лентата има вида  \[\tape{\alpha\underline{\blank}},\]
 \item
   {\bf Началната конфигурация} за входа $\alpha \in \Sigma^\star$ представлява 
-  \[(\varepsilon, s, \alpha).\]
+  \[(\varepsilon, \qstart, \alpha).\]
   Това означава, че лентата има вида \[\cdots\blank\blank\underline{x}\alpha\blank\blank\cdots,\]
   където $\alpha = x\alpha'$, ако $\alpha \in \Sigma^+$.
 \item
-  Ако $\alpha = \varepsilon$, то началната конфигурация е $(\varepsilon, s, \varepsilon)$ и лентата има вида
+  Ако $\alpha = \varepsilon$, то началната конфигурация е $(\varepsilon, \qstart, \varepsilon)$ и лентата има вида
   \[\tape{\underline{\blank}}.\]
 \item
   {\bf Заключителна конфигурация} представлява тройка от вида
@@ -108,16 +109,16 @@
 \item
   Машината на Тюринг $\M$ {\bf приема} думата $\alpha$, 
   ако 
-  \[(\varepsilon, s, \alpha) \vdash^\star_\M (\gamma_1, \qaccept, \gamma_2),\]
+  \[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\gamma_1, \qaccept, \gamma_2),\]
   за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
 \item
   Машината на Тюринг $\M$ {\bf отхвърля} думата $\alpha$, 
   ако 
-  \[(\varepsilon, s, \alpha) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2),\]
+  \[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2),\]
   за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
 \item
   Машината на Тюринг $\M$ {\bf не приема} думата $\alpha$, 
-  ако $\M$ отхвърля $\alpha$ или $\M$ никога не завършва при начална конфигурация $(\varepsilon,s,\alpha)$.
+  ако $\M$ отхвърля $\alpha$ или $\M$ никога не завършва при начална конфигурация $(\varepsilon,\qstart,\alpha)$.
 \item
   \marginpar{Това понятие не е стандартно}
   Една машина на Тюринг се нарича {\bf тотална}, ако при всеки вход достига до заключително състояние,
@@ -125,15 +126,17 @@
   Обърнете внимание, че това не е същото като да изискваме функцията на преходите $\delta$ да бъде тотална.
 \item 
   Езикът, който се {\bf разпознава} от машината $\M$ е:
-  \[\L(\M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star_\M (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
+  \[\L(\M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, \qstart, \alpha) \vdash^\star_\M (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
 \item
   \index{език!полуразрешим}
   Езикът $L$ се нарича {\bf полуразрешим}, ако съществува машина на Тюринг $\M$, за която
   $L = \L(\M)$.
+  В този случай се казва, че $\M$ разпознава езика $L$.
 \item
   \index{език!разрешим}
   Един език $L$ се нарича {\bf разрешим}, ако за него съществува {\em тотална} машина на Тюринг $\M$, за която
   $L = \L(\M)$.
+  В този случай се казва, че $\M$ разрешава езика $L$.
 \end{itemize}
 
 \begin{framed}
@@ -148,72 +151,13 @@
 
 \input{turing/examples}
 
-\section{Основни свойства}
-
-\begin{prop}
-  Ако $L$ е разрешим език, то $\ov{L}$ е разрешим език.
-\end{prop}
-\begin{hint}
-  Нека $L = \L(\M)$, където $\M$ е тотална машина на Тюринг.
-  Нека $\M'$ е същата като $\M$, само със сменени $\qaccept$ и $\qreject$ състояния.
-  Тогава $\ov{L} = \L(\M')$.
-\end{hint}
-
-\begin{prop}
-  Ако $L_1$ и $L_2$ са разрешими езици, то $L_1 \cup L_2$ е разрешим език.
-\end{prop}
-\begin{hint}
-  Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$.
-  Симулираме двете изчисления едновременно.
-  Ако едната машина достигне accept състоянието си, то връщаме accept.
-\end{hint}
-
-\begin{prop}
-  Ако $L_1$ и $L_2$ са полуразрешими езици, то $L_1 \cup L_2$ е полуразрешим език.
-\end{prop}
-
-\begin{prop}
-  Ако $L_1$ и $L_2$ са разрешими езици, то $L_1 \cap L_2$ е разрешим език.
-\end{prop}
-\begin{hint}
-  Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$.
-  Симулираме двете изчисления едновременно.
-  Ако и двете машини достигнат accept състоянията си, то връщаме accept.
-\end{hint}
-
-\begin{framed}
-  \begin{thm}
-    $L$ и $\ov{L}$ са полуразрешими езици точно тогава, когато $L$ е разрешим език.
-  \end{thm}
-\end{framed}
-\begin{hint}
-  Посоката $(\Rightarrow)$ е ясна.
-  За посоката $(\Leftarrow)$, нека $L = \L(\M_1)$ и $\ov{L} = \L(\M_2)$.
-  Симулираме едновременно и двете изчисления.
-  Знаем със сигурност, че точно едно от тях ще завърши в accept състояние.
-  Ако това е $\M_1$, връщаме accept.
-  Ако това е $\M_2$, връщаме reject.
-\end{hint}
+\input{turing/functions}
 
 \input{turing/multitape}
 
-\subsection*{Канонична подредба на $\Sigma^\star$}
-
-\marginpar{Тази канонична подредба е необходима единствено за доказателството, че всяка НМТ е еквивалентна на ДМТ}
-Нека $\Sigma = \{a_0,a_1,\dots,a_{k-1}\}$.
-Подреждаме думите по ред на тяхната дължина.
-Думите с еднаква дължина подреждаме по техния числов ред, т.е.
-гледаме на буквите $a_i$ като числото $i$ в $k$-ична бройна система.
-Тогава думите с дължина $n$ са числата от $0$ до $k^n-1$ записани в $k$-ична бройна система.
-Ще означаваме с $\omega_i$ $i$-тата дума в $\Sigma^\star$ при тази подредба.
-
-\begin{example}
-  Ако $\Sigma = \{0,1\}$, то наредбата започва така:
-  \[\varepsilon, 0, 1, \underbrace{00, 01, 10, 11}_{\text{от $0$ до $3$}}, \underbrace{000, 001, 010, 011, 100, 101, 110, 111}_{\text{от $0$ до $7$}}, 0000, 0001, \dots\]
-  В този случай, $\omega_0 = \varepsilon$, $\omega_7 = 000$, $\omega_{13} = 110$.
-\end{example}
-
 \input{turing/nondeterministic}
+
+\input{turing/properties}
 
 % \section{Машини на Тюринг като генератори}
 
@@ -336,174 +280,8 @@
 % \end{itemize}
 
 
-\subsection{Кодиране на краен автомат}
+\input{turing/coding}
 
-Да разгледаме крайния автомат $\A = \NFA$, където 
-\begin{itemize}
-\item 
-  $Q = \{q_1,\dots,q_n\}$,
-\item
-  $F = \{q_{k_1},\dots,q_{k_l}\}$,
-\item
-  $\Sigma = \{a_1,\dots,a_m\}$.
-\end{itemize}
-Да разгледаме прехода $\Delta(q_i,a_j) \ni q_k$.
-Кодираме този преход по следния начин:
-\[0^i10^j10^k.\]
-
-\[\code{\Delta} \df \texttt{code}_1\ 11\ \texttt{code}_2\ 11 \cdots 11\ \texttt{code}_r\]
-
-Да обърнем внимание, че в този двоичен код няма последователни единици и той 
-започва и завършва с нула.
-
-Да означим 
-\[\code{F} \df 0^{k_1}10^{k_2}1\cdots 0^{k_l}.\]
-
-Тогава кодът на $\A$ е думата
-\[\code{\A} \df 111\ \code{F}\ 11\ \code{\Delta}\ 111.\]
-
-
-\subsection{Кодиране на машина на Тюринг}
-
-\subsection*{Кодиране на преход}
-Да разгледаме прехода $\delta(q_i,X_j) = (q_k,X_l,D_m)$.
-Кодираме този преход по следния начин:
-\[0^i10^j10^k10^l10^m\]
-Да обърнем внимание, че в този двоичен код няма последователни единици и той 
-започва и завършва с нула.
-
-
-За да кодираме една машина на Тюринг $\M$ е достатъчно да кодираме функцията на преходите $\delta$.
-Понеже $\delta$ е крайна функция, нека с числото $r$ да означим броя на всички възможни преходи.
-По описания по-горе начин, нека $code_i$ е числото в двоичен запис, получено за $i$-тия преход на $\delta$.
-Тогава кодът на $\M$ е следното число в двоичен запис:
-\[\code{\M} \df 111\ \texttt{code}_1\ 11\ \texttt{code}_2\ 11\ \cdots\ 11\ \texttt{code}_r\ 111.\]
-\begin{itemize}
-\item
-  Лесно се съобразява, че за две МТ $\M$ и $\M'$ с различни функции на преходите, имаме $\code{\M} \neq \code{\M'}$.
-% \item
-%   Ще казваме, че числото $r\in\Nat$ е {\bf код на} $\M$, ако $r$, записано в двоичен запис представлява думата $\code{\M}$.
-%   Оттук нататък, когато пишем $\M_r$, ще имаме предвид машината на Тюринг с код $r$.
-% \item
-%   Ясно е, че не всяко естествено число е код на машина на Тюринг, но по дадено число $n$
-%   има ефективна процедура, която ни казва дали $n$ е код на машина на Тюринг или не.
-% \item
-  % С $\pair{\M,\omega}$ ще означаваме кода на $\M$ при вход $\omega$ е числото с двоичен запис описанието на $\M$ и след това прикрепена думата $\omega$.
-  % При едно число $r = \pair{M,\omega}$, лесно се намира кода на $\M$.
-  % Просто започваме да четем двоичния запис на $r$ докато не срещнем за втори път $111$.
-  % След това започва думата $\omega$.
-% \item
-%   Да въведем означението $\M_i$ за произволно ествестено число $i$.
-%   Ако $i$ е код на машина на Тюринг $\M$, то $\M_i \df \M$.
-%   Ако $i$ не е код на машина на Тюринг, то $\M_i$ е машина на Тюринг с празна функция на преходите.
-\end{itemize}
-
-\begin{example}
-  Да се даде пример за кода на конкретна машина на Тюринг.
-\end{example}
-
-
-\begin{prop}
-  Следните езици са разрешими:
-  \begin{itemize}
-  \item 
-    $L = \{\code{\M} \mid \M\text{ е машина на Тюринг}\}$;
-  \item
-    $L = \{\code{\M} \mid \M\text{ е детерминистична машина на Тюринг}\}$.
-  \end{itemize}
-\end{prop}
-
-\begin{remark}
-  Следният език {\bf не} е разрешим:
-  \[L_{\texttt{tot}} = \{\code{\M} \mid \M\text{ е тотална машина на Тюринг}\}.\]
-\end{remark}
-
-
-% \section{Изчислими функции}
-
-% Нека е дадена функцията $f:\Nat^k \to \Nat$.
-% Ще казваме, че $f$ е изчислима с машината на Тюринг $\M$,
-% ако за всяко $n_1,\dots,n_k$ е изпълнено:
-% \begin{itemize}
-% \item 
-%   Представяме всяко от числата $n_1,\dots,n_k$ в монадична бройна система
-%   като лентата на $\M$ има вида:  
-%   \[\dots \blank \blank \underbrace{1111\dots 11}_{n} \blank\blank\dots,\]
-%   като изискваме главата на $\M$ да е позиционирана върху най-лявата единица.
-%   Такава конфигурация ще наричаме {\bf стандартна начална конфигурация}.
-% \item
-%   Ако $f(n_1,\dots,n_k) = m$, то $\M$ завършва с резултат върху лентата
-%   \[\dots \blank \blank \underbrace{1111\dots 11}_{m} \blank\blank\dots,\]
-%   като главата на $\M$ е върху най-лявата 1-ца.
-%   Такава конфигурация се нарича {\bf стандартна финална конфигурация}.
-% \item
-%   Ако $f(n_1,\dots,n_k)$ е недефенирана, то $\M$ няма да завърши в стандартна конфигурация, т.е.
-%   или $\M$ ще работи безкрайно време, или ще завърши в конфигурация, която не е стандартна.
-% \end{itemize}
-
-% \begin{example}
-
-%   Да видим, че функцията $f(n) = 2n$ е изчислима.
-  
-% % \[\stackrel{1}{1}11\ \Rightarrow\ \stackrel{2}{\blank} 111\ \Rightarrow\ \stackrel{3}{\blank}\blank 111\ \Rightarrow\ \stackrel{4}{\blank}1\blank 111\ \Rightarrow\ 1\stackrel{5}{1}\blank 111\ \Rightarrow\  11\stackrel{5}{\blank}111\ \Rightarrow\  11 \blank \stackrel{6}{1}11\]
-% % \[\dots \Rightarrow\ 11\blank 111\stackrel{6}{\blank}\ \Rightarrow\ 11\blank 11\stackrel{7}{1}\blank\ \Rightarrow\ 11\blank 1\stackrel{8}{1}\blank\blank\ \Rightarrow\ 11\blank \stackrel{9}{1}1\blank\blank\ \Rightarrow\  1\stackrel{10}{1}\blank 11\blank\blank\]
-% % \[\dots \Rightarrow\ \stackrel{10}{\blank}11\blank 11\blank\blank\ \Rightarrow\ \stackrel{2}{1}1\blank 11\blank\blank\ \Rightarrow\ \cdots\]
-
-% \begin{figure}[H]
-%   \begin{center}
-%     \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-%       \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.7]
-      
-%       \node[state]   (1) {$1$};
-%       \node[state]            (2) [right of=1]{$2$};
-%       \node[state]            (3) [right of=2]{$3$};
-%       \node[state]            (4) [right of=3]{$4$};
-%       \node[state]            (5) [right of=4]{$5$};
-%       \node[state]            (6) [right of=5]{$6$};
-%       \node[state]            (7) [right of=6]{$7$};
-%       \node[state]            (8) [right of=7]{$8$};
-%       \node[state]            (9) [right of=8]{$9$};
-%       \node[state]            (10) [right of=9]{$10$};
-%       \node[state]            (11) [below of=8]{$11$};
-%       \node[state,accepting]  (12) [below of=11]{$12$};
-      
-%       \begin{scope}[every node/.style={scale=.8}]
-%       \path
-%       (1) edge [bend left=15] node [above] {$1;L$} (2)
-%       (2) edge [bend left=15] node [above] {$1;L$} (3)
-%       (2) edge [bend right=15] node [below] {$\blank;L$} (3)
-%       % (3) edge [bend left=15] node [above] {$1/1;L$} (4)
-%       (3) edge [bend left=15] node [above] {$\blank/1;L$} (4)
-%       (4) edge [bend left=15] node [above] {$\blank/1;R$} (5)
-%       % (4) edge [bend right=15] node [below] {$1/1;R$} (5)
-%       (5) edge [loop below] node [below] {$1;R$} (5)
-%       (5) edge [bend left=15] node [above] {$\blank;R$} (6)
-%       (6) edge [loop below] node [below] {$1;R$} (6)
-%       (6) edge [bend left=15] node [above] {$\blank;L$} (7)
-%       (7) edge [bend left=15] node [above] {$1/\blank;L$} (8)
-%       % (7) edge [bend right=15] node [below] {$\blank;L$} (8)
-%       (8) edge [bend left=15] node [above] {$1;L$} (9)
-%       (9) edge [loop below] node [below] {$1;L$} (9)
-%       (9) edge [bend right=15] node [below] {$\blank;L$} (10)
-%       (10) edge [loop below] node [below] {$1;L$} (10)
-%       % (10) [out=130,in=120,above,distance=2.5cm] node [above] {$x;R$} (2)
-%       (10) edge [out=140,in=60, above] node [below] {$\blank;R$} (2)
-%       (8) edge [] node [right] {$\blank;L$} (11)
-%       (11) edge [loop left] node [left] {$1;L$} (11)
-%       (11) edge [] node [right] {$\blank;R$} (12);
-%       \end{scope}
-%     \end{tikzpicture}
-%   \end{center}
-% \end{figure}
-
-% \begin{align*}
-%   _1111 & \to\ _2\blank 111 \to\  _3\blank \blank 111 \to\ _4\blank 1 \blank 111 \to 1_51\blank 111 \to 11_5\blank 111\\
-%   & \to 11\blank_6 111 \to \cdots \to 11 \blank 11_71 \to 11 \blank 1_81\blank \to 11 \blank _911\blank \to 11_9 \blank 11\blank\\
-%   & \to 1_{10}1\blank 11 \blank \to \cdots \to\ _211\blank 11\blank \to \cdots \to 1_5111\blank 11 \blank \to \cdots \\
-%   & \to 1111\blank_6 11\blank \to \cdots
-% \end{align*}
-
-% \end{example}
 
 % \begin{problem}
 %   За произволно естествено число $n$, дефинирайте МТ $\M_n$ с $n+11$ състояния, за която,
