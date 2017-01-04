@@ -1,5 +1,6 @@
-\subsection{Недетерминистични машини на Тюринг}
+\section{Недетерминистични машини на Тюринг}
 \index{машина на Тюринг!недетерминистична}
+
 Една машина на Тюринг $\N$ се нарича недетерминистична, ако функцията на преходите има вида
 \[\Delta_\N: Q\times \Gamma \to \Ps(Q \times \Gamma\times \{\goleft,\goright,\stay\}). \]
 
@@ -7,14 +8,16 @@
 която ще казва как моментното описание на машината $\N$ се променя при изпълнение на една стъпка.
 \begin{itemize}
 \item
-  Ако $\Delta_\N(q,Z) \ni (p,Y,\goright)$, то дефинираме $(\alpha, q, Z\beta) \vdash_\N (\alpha Y, p, \beta)$.
+  Ако $\Delta_\N(q,z) \ni (p,y,\goright)$, то дефинираме $(\alpha, q, z\beta) \vdash_\N (\alpha y, p, \beta)$.
 \item 
-  Ако $\Delta_\N(q,Z) \ni (p,Y,\goleft)$, то дефинираме $(\alpha X, q, Z\beta) \vdash_\N (\alpha , p, XY\beta)$.
+  Ако $\Delta_\N(q,z) \ni (p,y,\goleft)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\N (\alpha , p, xy\beta)$.
+\item 
+  Ако $\Delta_\N(q,z) \ni (p,y,\stay)$, то дефинираме $(\alpha, q, z\beta) \vdash_\N (\alpha, p, y\beta)$.
 \end{itemize}
 С $\vdash^\star_\N$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\N$.
 
 Тогава за недетерминистична машина на Тюринг $\N$, 
-\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\varepsilon, s, \alpha) \vdash^\star_\N (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
+\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\varepsilon, \qstart, \alpha) \vdash^\star_\N (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
 
 \begin{remark}
   Върху дадена дума $\omega$, недетерминистичната машина на Тюринг $\N$ може да има много различни изчисления.
@@ -30,7 +33,7 @@
   $\N = (\{q_0,q_1,q_2,q_f\}, \{0,1\}, \{0,1,\blank\}, \Delta, q_0, \{q_f\})$,
   \begin{itemize}
   \item 
-    $\Delta(q_0,0) = \{(q_0,1,R),(q_1,1,\goright)\}$;
+    $\Delta(q_0,0) = \{(q_0,1,\goright),(q_1,1,\goright)\}$;
   \item
     $\Delta(q_1,1) = \{(q_2,0,\goleft)\}$;
   \item
@@ -41,6 +44,118 @@
   \marginpar{$\{0^{n+1}1^k \mid n,k\in\Nat\}$}
   Опишете $\L(\N)$.
 \end{problem}
+
+\begin{example}
+  Да разгледаме езика  
+  \[L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\text{ е подниз на }\beta\}.\]
+  Ще видим, че този език е разрешим като построим недетерминистична машина на Тюринг $\N$,
+  която разрешава този език.
+  \begin{framed}
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+          \tikzstyle{every state}=[circle,minimum size=10pt,scale=.9]
+          
+          \node[state,initial]    (1) {$q_0$};
+          \node[state]            (2) [right of=1]{$q_1$};
+          \node[state]            (3) [right of=2,node distance=70pt]{$q_2$};
+          \node[state]            (4) [below of=3]{$q_3$};
+          \node[state]            (5) [below right of=4,node distance=70pt]{$q_4$};
+          \node[state]            (6) [right of=4]{$q_5$};
+          \node[state]            (7) [above of=6]{$q_6$};
+          \node[state]            (8) [right of=6,node distance=80pt]{$q_7$};
+          \node[state]            (9) [right of=7,node distance=70pt]{$q_8$};
+          \node[state,accepting]  (10)[below right of=5]{$q_{9}$};
+          
+          \begin{scope}[every node/.style={scale=.8}]
+            \path
+            (1) edge [loop above] node [above] {$\{a,b\};\goright$} (1)
+            (1) edge [bend left=15] node [above] {$\sharp;\goright$} (2)
+            (2) edge [loop above] node [above] {$a/\blank,b/\blank;\goright$} (2)
+            (2) edge [bend left=15] node [above] {$\{a,b,\blank\};\goleft$} (3)
+            (3) edge [loop above] node [above] {$\blank;\goleft$} (3)
+            (3) edge [bend right=15] node [left] {$\sharp;\goleft$} (4)
+            (4) edge [loop left] node [left] {$\{a,b\};\goleft$} (4)
+            (4) edge [bend right=30] node [left] {$\blank;\goright$} (5)
+            (5) edge [bend right=15] node [right] {$a/\blank;\goright$} (6)
+            (6) edge [loop right] node [right] {$\{a,b\};\goright$} (6)
+            (6) edge [bend right=15] node [right] {$\sharp;\goright$} (7)
+            (7) edge [loop right] node [right] {$\blank;\goright$} (7)
+            (7) edge [bend left=15] node [below] {$a/\blank;\goleft$} (3)
+            (8) edge [loop right] node [right] {$\{a,b\};\goright$} (8)
+            (5) edge [bend right=30] node [right] {$b/\blank;\goright$} (8)
+            (8) edge [bend right=15] node [right] {$\sharp;\goright$} (9)
+            (9) edge [loop right] node [right] {$\blank;\goright$} (9)
+            (9) edge [bend right=45] node [above] {$b/\blank;\goleft$} (3)
+            (5) edge [bend right=15] node [left] {$\sharp;\stay$} (10);
+          \end{scope}
+        \end{tikzpicture}
+      \end{center}
+    \end{figure}
+  \end{framed}
+  Да видим, че $\M$ успешно разпознава, че думата $ab\sharp aabb$ принадлежи на езика $L$.
+
+  \begin{align*}
+    (q_0, \underline{a}b\sharp aabb) & \vdash (q_0, a\underline{b}\sharp aabb) \vdash (q_0, ab\underline{\sharp} aabb) \vdash (q_1, ab\sharp\underline{a}abb) \vdash (q_1, ab\sharp\blank\underline{a}bb)\\
+                                     & \vdash (q_2, ab\sharp\underline{\blank}abb) \vdash (q_2, ab\underline{\sharp}\blank abb) \vdash (q_3, a\underline{b}\sharp\blank abb) \vdash (q_3, \underline{a}b\sharp\blank abb)\\
+                                     & \vdash (q_3, \underline{\blank}ab\sharp\blank abb) \vdash (q_4, \underline{a}b\sharp\blank abb) \vdash (q_5, \blank\underline{b}\sharp \blank abb) \vdash (q_5, \blank b\underline{\sharp} \blank abb)\\
+                                     & \vdash (q_6, \blank b \sharp \underline{\blank} abb) \vdash (q_6, \blank b \sharp \blank \underline{a}bb) \vdash (q_2, \blank b \sharp \underline{\blank}\blank bb) \vdash (q_2, \blank b \underline{\sharp} \blank\blank bb)\\
+                                     & \vdash (q_3, \blank \underline{b} \sharp \blank\blank bb) \vdash (q_3, \underline{\blank} b \sharp \blank\blank bb) \vdash (q_4,  \blank \underline{b} \sharp \blank\blank bb) \vdash (q_7, \blank \blank \underline{\sharp} \blank\blank bb)\\
+                                     & \vdash (q_8, \blank \blank \sharp \underline{\blank}\blank bb)\vdash (q_8, \blank \blank \sharp \blank \underline{\blank} bb) \vdash (q_8, \blank \blank \sharp \blank \blank \underline{b}b)\\
+    & \vdash (q_2, \blank \blank \sharp \blank \underline{\blank} \blank b) \vdash \cdots \vdash (q_4, \blank\blank\underline{\sharp}\blank\blank\blank b) \vdash (q_9, \blank\blank\underline{\sharp}\blank\blank\blank b)
+  \end{align*}
+\end{example}
+
+\subsection*{Канонична подредба на $\Sigma^\star$}
+
+\marginpar{За доказателството, че всяка НМТ е еквивалентна на ДМТ, е необходимо да фиксираме канонична подредба на думите над дадена азбука}
+Нека $\Sigma = \{a_0,a_1,\dots,a_{k-1}\}$.
+Подреждаме думите по ред на тяхната дължина.
+Думите с еднаква дължина подреждаме по техния числов ред, т.е.
+гледаме на буквите $a_i$ като числото $i$ в $k$-ична бройна система.
+Тогава думите с дължина $n$ са числата от $0$ до $k^n-1$ записани в $k$-ична бройна система.
+Ще означаваме с $\omega_i$ $i$-тата дума в $\Sigma^\star$ при тази подредба.
+
+\begin{example}
+  Ако $\Sigma = \{0,1\}$, то наредбата започва така:
+  \[\varepsilon, 0, 1, \underbrace{00, 01, 10, 11}_{\text{от $0$ до $3$}}, \underbrace{000, 001, 010, 011, 100, 101, 110, 111}_{\text{от $0$ до $7$}}, 0000, 0001, \dots\]
+  В този случай, $\omega_0 = \varepsilon$, $\omega_7 = 000$, $\omega_{13} = 110$.
+\end{example}
+
+\begin{problem}
+  Нека $\Sigma = \{a_0,\dots,a_{k-1}\}$.
+  Да разгледаме функцията $f:\Sigma^\star \to \Sigma^\star$, за която 
+  $f(\alpha)$ е думата веднага след $\alpha$ в каноничната подредба на $\Sigma^\star$.
+  Докажете, че $f$ е изчислима с машина на Тюринг.
+\end{problem}
+\begin{hint}
+  Ако $\Sigma = \{0,1\}$, то машината на Тюринг има следния вид:
+  \begin{framed}
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
+          \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
+          
+          \node[state,initial]    (1) [right of=0]{$q_1$};
+          \node[state]            (2) [right of=1]{$q_2$};
+          \node[state]            (3) [right of=2]{$q_3$};
+          \node[state,accepting]  (4) [right of=3]{$q_4$};
+          
+          \begin{scope}[every node/.style={scale=.8}]
+            \path
+            (1) edge [loop above] node [above] {$\{0,1\};\goright$} (1)
+            (1) edge [bend left=15] node [above] {$\blank;\goleft$} (2)
+            (2) edge [loop above] node [above] {$1/0;\goleft$} (2)
+            (2) edge [bend left=15] node [above] {$0/1;\goleft$} (3)
+            (2) edge [bend right=30] node [below] {$\blank/0;\stay$} (4)
+            (3) edge [loop above] node [above] {$\{0,1\};\goleft$} (3)
+            (3) edge [bend left=15] node [above] {$\blank;\goright$} (4);
+          \end{scope}
+        \end{tikzpicture}
+      \end{center}
+    \end{figure}
+  \end{framed}
+\end{hint}
 
 
 \begin{framed}
@@ -89,8 +204,14 @@
 \end{proof}
 
 \begin{prop}[Лема на Кьониг]
+  \index{Кьониг}
   Ако $T$ е безкрайно дърво с крайно разклонение, то $T$ съдържа безкраен път.
 \end{prop}
+\begin{hint}
+  Дефинираме безкрайния път на стъпки.
+  На всяка стъпка избираме този наследник, който е корен на безкрайно дърво.
+  Понеже $T$ е безкрайно дърво с крайно разклонение, на всяка стъпка можем да изберем такъв наследник.
+\end{hint}
 
 \begin{cor}
   Ако $L$ се разпознава от {\em тотална недетерминистична} машина на Тюринг $\N$, то $L$
@@ -108,58 +229,6 @@
     Ако $\N$ не приема дадена дума $\omega$, то детерминистичната ни симулация на $\N$ ще покаже, че всяко изчисление, кодирано като път в $T$, завършва в състояние $\qreject$.
   \end{itemize}
 \end{proof}
-
-
-\begin{example}
-  Да разгледаме езика  
-  \[L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\text{ е подниз на }\beta\}.\]
-  Ще видим, че този език е разрешим като построим недетерминистична машина на Тюринг $\N$,
-  която разрешава този език.
-  \begin{framed}
-  \begin{figure}[H]
-    \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
-        \tikzstyle{every state}=[circle,minimum size=10pt,auto]
-        
-        \node[state,initial]    (1) {$q_1$};
-        \node[state]            (2) [right of=1]{$q_2$};
-        \node[state]            (3) [below of=2]{$q_3$};
-        \node[state]            (4) [below of=3]{$q_4$};
-        \node[state]            (5) [below right of=4,node distance=70pt]{$q_5$};
-        \node[state]            (6) [right of=4]{$q_6$};
-        \node[state]            (7) [above of=6]{$q_7$};
-        \node[state]            (8) [right of=6,node distance=80pt]{$q_8$};
-        \node[state]            (9) [right of=7,node distance=70pt]{$q_9$};
-        \node[state,accepting]  (10)[below right of=5]{$q_{10}$};
-
-        \begin{scope}[every node/.style={scale=.8}]
-          \path
-          (1) edge [loop above] node [above] {$\{a,b\};\goright$} (1)
-          (1) edge [bend left=15] node [above] {$\sharp;\goright$} (2)
-          (2) edge [loop above] node [above] {$a/\blank,b/\blank;\goright$} (2)
-          % (2) edge [loop right] node [right] {$b/\blank;\goright$} (2)
-          (2) edge [bend right=15] node [left] {$\{a,b,\blank\};\goleft$} (3)
-          (3) edge [loop left] node [left] {$\blank;\goleft$} (3)
-          (3) edge [bend right=15] node [left] {$\sharp;\goleft$} (4)
-          (4) edge [loop left] node [left] {$\{a,b\};\goleft$} (4)
-          (4) edge [bend right=30] node [left] {$\blank;\goright$} (5)
-          (5) edge [bend right=15] node [right] {$a/\blank;\goright$} (6)
-          (6) edge [loop right] node [right] {$\{a,b\};\goright$} (6)
-          (6) edge [bend right=15] node [right] {$\sharp;\goright$} (7)
-          (7) edge [loop right] node [right] {$\blank;\goright$} (7)
-          (7) edge [bend left=15] node [below] {$a/\blank;\goleft$} (3)
-          (8) edge [loop right] node [right] {$\{a,b\};\goright$} (8)
-          (5) edge [bend right=30] node [right] {$b/\blank;\goright$} (8)
-          (8) edge [bend right=15] node [right] {$\sharp;\goright$} (9)
-          (9) edge [loop right] node [right] {$\blank;\goright$} (9)
-          (9) edge [bend right=45] node [above] {$b/\blank;\goleft$} (3)
-          (5) edge [bend right=15] node [left] {$\sharp;\stay$} (10);
-        \end{scope}
-      \end{tikzpicture}
-    \end{center}
-  \end{figure}
-\end{framed}
-\end{example}
 
 
 

@@ -4,20 +4,20 @@
   \marginpar{Знаем, че $L$ не е безконтекстен}
   Да разгледаме езика $L = \{a^nb^nc^n \mid n\in\Nat\}$.
  
-  Нека да въведем нов символ $d$, с който ще маркираме обработените символи $a$, $b$, $c$.
+  Нека да въведем нов символ $x$, с който ще маркираме обработените символи $a$, $b$, $c$.
   Идеята на алгоритъма, който ще разгледаме е да маркира на всяка итерация по едно $a$, $b$, и $c$.
   Той завършва успешно ако всички символи на думата са маркирани.
   Нека първоначално думата е копирана върху лентата и четящата глава е върху първия символ на думата.
   \begin{enumerate}[(1)]
   \item 
-    Чете $d$-та надясно по лентата докато срещне първото $a$ и го замества с $d$. Отива на стъпка (2).
+    Чете $x$-та надясно по лентата докато срещне първото $a$ и го замества с $x$. Отива на стъпка (2).
     Ако символите свършат (т.е. достигне се $\blank$) преди да се достигне $a$,
     то алгоритъмът завършва успешно.
   \item
-    Чете $d$-та надясно по лентата докато срещне първото $b$ и го замества с $d$.
+    Чете $x$-та надясно по лентата докато срещне първото $b$ и го замества с $x$.
     Отива на стъпка (3).
   \item
-    Чете $d$-та надясно по лентата докато срещне първото $c$ и го замества с $d$.
+    Чете $x$-та надясно по лентата докато срещне първото $c$ и го замества с $x$.
   \item
     Връща четящата глава в началото на лентата, т.е. чете наляво докато не срещне символа $\blank$.
     Връща се в стъпка (1). 
@@ -29,11 +29,13 @@
   \item 
     $\Sigma = \{a,b,c\}$;
   \item
-    $\Gamma = \{a,b,c,d,\blank\}$, за някой нов символ $d$;
+    $\Gamma = \{a,b,c,x,\blank\}$, за някой нов символ $x$;
   \item
-    $Q = \{q_1,q_2,\dots,q_5\}$;
+    $Q = \{q_0,q_1,\dots,q_4\}$;
   \item
-    $q_{accept} = q_5$;
+    $\qstart = q_0$;
+  \item
+    $\qaccept = q_4$;
   \item
     частичната функция на преходите $\delta:Q\times\Gamma \to Q\times\Gamma\times\{\goleft,\goright,\stay\}$
     е описана на схемата отдолу.
@@ -45,24 +47,23 @@
       \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto]
         
-        \node[state,initial]    (1) {$q_1$};
-        \node[state]            (2) [right of=1]{$q_2$};
-        \node[state]            (3) [right of=2]{$q_3$};
-        \node[state]            (4) [right of=3]{$q_4$};
-        \node[state,accepting]  (5) [below of=1]{$q_5$};
-        % \node[state,accepting]  (6) [right of=5]{$6$};
+        \node[state,initial]    (1) {$q_0$};
+        \node[state]            (2) [right of=1]{$q_1$};
+        \node[state]            (3) [right of=2]{$q_2$};
+        \node[state]            (4) [right of=3]{$q_3$};
+        \node[state,accepting]  (5) [below of=1]{$q_4$};
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
-          (1) edge [loop above] node [above] {$d;\goright$} (1)
+          (1) edge [loop above] node [above] {$x;\goright$} (1)
           (1) edge [bend right=15] node [left] {$\blank;\goright$} (5)
           % (1) edge [bend left=15] node [left] {$\{b,c\}$} (6)
-          (1) edge [bend left=15] node [above] {$a/d;\goright$} (2)
-          (2) edge [bend left=15] node [above] {$b/d;\goright$} (3)
-          (2) edge [loop above] node   [above] {$\{a,d\};\goright$} (2)
-          (3) edge [bend left=15] node [above] {$c/d;\goleft$} (4)
-          (3) edge [loop above] node   [above] {$\{b,d\};\goright$} (3)
-          (4) edge [loop right] node   [below right] {$\{a,b,d\};\goleft$} (4)
+          (1) edge [bend left=15] node [above] {$a/x;\goright$} (2)
+          (2) edge [bend left=15] node [above] {$b/x;\goright$} (3)
+          (2) edge [loop above] node   [above] {$\{a,x\};\goright$} (2)
+          (3) edge [bend left=15] node [above] {$c/x;\goleft$} (4)
+          (3) edge [loop above] node   [above] {$\{b,x\};\goright$} (3)
+          (4) edge [loop right] node   [below right] {$\{a,b,x\};\goleft$} (4)
           (4) edge [in=65,out=115,above] node [above] {$\blank;\goright$} (1);
         \end{scope}
       \end{tikzpicture}
@@ -73,19 +74,13 @@
 
   Например,
   \begin{align*}
-    & \delta(q_1, a) = (q_2, d, \goright)\\
-    & \delta(q_4, \blank) = (q_1, \blank, \goright)\\
-    & \delta(q_2, a) = (q_2, a, \goright).
+    & \delta(q_0, a) = (q_1, x, \goright)\\
+    & \delta(q_3, \blank) = (q_0, \blank, \goright)\\
+    & \delta(q_1, a) = (q_1, a, \goright).
   \end{align*}
 
-  % Да проследим изчислението на думата $aabbcc$:
-  
-  % \[_1aabbcc \vdash d_2abbcc \vdash da_2bbcc \vdash dad_3bcc \vdash dadb_3cc \vdash dad_4bdc \vdash da_4dbdc \vdash \cdots \vdash\]
-  % \[_4dadbdc \vdash\ _4\blank dadbdc \vdash\ _1dadbdc \vdash d_1adbdc \vdash dd_2dbdc \vdash ddd_2bdc \vdash dddd_3dc \vdash \]
-  % \[ ddddd_3c \vdash dddddd_4 \vdash \cdots \vdash\ _4\blank dddddd \vdash\ _1dddddd \vdash \cdots \vdash dddddd_1\blank \vdash dddddd_5\blank.\]
-
   Съобразете, че тази машина на Тюринг може да се направи тотална като се добави ново състояние $\qreject$
-  и за всяка двойка $(q,x)$, за която функцията на преходите не е дефинирана, да сочи към $\qreject = q_6$.
+  и за всяка двойка $(q,z)$, за която функцията на преходите не е дефинирана, да сочи към $\qreject = q_6$.
   Така можем да получим {\em тотална} машина на Тюринг за езика $L$, което означава, че 
   $L$ е не само полуразрешим, но {\em разрешим} език.
 
@@ -95,32 +90,32 @@
       \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto]
         
-        \node[state,initial]    (1) {$q_1$};
-        \node[state]            (2) [right of=1]{$q_2$};
-        \node[state]            (3) [right of=2]{$q_3$};
-        \node[state]            (4) [right of=3]{$q_4$};
-        \node[state,accepting]  (5) [below of=1]{$q_5$};
-        \node[state]            (6) [below of=3]{$q_6$};
+        \node[state,initial]    (1) {$q_0$};
+        \node[state]            (2) [right of=1]{$q_1$};
+        \node[state]            (3) [right of=2]{$q_2$};
+        \node[state]            (4) [right of=3]{$q_3$};
+        \node[state,accepting]  (5) [below of=1]{$q_4$};
+        \node[state]            (6) [below of=3]{$q_5$};
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
-          (1) edge [loop above] node [above] {$d;\goright$} (1)
+          (1) edge [loop above] node [above] {$x;\goright$} (1)
           (1) edge [bend right=15] node [left] {$\blank;\stay$} (5)
           % (1) edge [bend left=15] node [left] {$\{b,c\}$} (6)
-          (1) edge [bend left=15] node [above] {$a/d;\goright$} (2)
-          (2) edge [bend left=15] node [above] {$b/d;\goright$} (3)
-          (2) edge [loop above] node [above] {$\{a,d\};\goright$} (2)
-          (3) edge [bend left=15] node [above] {$c/d;\goleft$} (4)
-          (3) edge [loop above] node [above] {$\{b,d\};\goright$} (3)
-          (4) edge [loop right] node [below right] {$\{a,b,d\};\goleft$} (4)
+          (1) edge [bend left=15] node [above] {$a/x;\goright$} (2)
+          (2) edge [bend left=15] node [above] {$b/x;\goright$} (3)
+          (2) edge [loop above] node [above] {$\{a,x\};\goright$} (2)
+          (3) edge [bend left=15] node [above] {$c/x;\goleft$} (4)
+          (3) edge [loop above] node [above] {$\{b,x\};\goright$} (3)
+          (4) edge [loop right] node [below right] {$\{a,b,x\};\goleft$} (4)
           (4) edge [in=65,out=115,above] node [above] {$\blank;\goright$} (1);
 
           \path
           (1) edge [dashed, bend right=15] node [left] {$\{b,c\};\stay$} (6)
           (2) edge [dashed, bend left=30] node [left] {$\{c,\blank\};\stay$} (6)
           (3) edge [dashed, bend left=25] node [right] {$\{a,\blank\};\stay$} (6)
-          (5) edge [dashed, loop below] node [below] {$\{a,b,c,d,\blank\};\stay$} (5)
-          (6) edge [dashed, loop right] node [right] {$\{a,b,c,d,\blank\};\stay$} (6);
+          (5) edge [dashed, loop below] node [below] {$\{a,b,c,x,\blank\};\stay$} (5)
+          (6) edge [dashed, loop below] node [below] {$\{a,b,c,x,\blank\};\stay$} (6);
         \end{scope}
       \end{tikzpicture}
     \end{center}
@@ -164,9 +159,11 @@
   \item
     $\Gamma = \{a,b,\sharp,x,\blank\}$;
   \item
-    $Q = \{q_1,q_2,\dots,q_9\}$;
+    $Q = \{q_0,q_1,\dots,q_8\}$;
   \item
-    $\qaccept = q_9$;
+    $\qstart = q_0$;
+  \item
+    $\qaccept = q_8$;
   \end{itemize}
 
   \begin{framed}
@@ -175,15 +172,15 @@
       \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
         
-        \node[state,initial]    (1) {$q_1$};
-        \node[state]            (2) [above right of=1]{$q_2$};
-        \node[state]            (3) [below right of=1]{$q_3$};
-        \node[state]            (4) [right of=2]{$q_4$};
-        \node[state]            (5) [right of=3]{$q_5$};
-        \node[state]            (6) [below right of=4]{$q_6$};
-        \node[state]            (7) [above of=6]{$q_7$};
-        \node[state]            (8) [left of=3]{$q_8$};
-        \node[state,accepting]  (9) [below left of=3]{$q_9$};
+        \node[state,initial]    (1) {$q_0$};
+        \node[state]            (2) [above right of=1]{$q_1$};
+        \node[state]            (3) [below right of=1]{$q_2$};
+        \node[state]            (4) [right of=2]{$q_3$};
+        \node[state]            (5) [right of=3]{$q_4$};
+        \node[state]            (6) [below right of=4]{$q_5$};
+        \node[state]            (7) [above of=6]{$q_6$};
+        \node[state]            (8) [left of=3]{$q_7$};
+        \node[state,accepting]  (9) [below left of=3]{$q_8$};
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
@@ -226,75 +223,6 @@
 \end{example}
 
 
-Една {\em тотална} функция $f:\Sigma^\star \to \Sigma^\star$ се нарича изчислима с машина на Тюринг $\M$, ако 
-за всяка дума $\alpha \in \Sigma^\star$,
-\[(\varepsilon, s, \alpha) \vdash^\star_\M (\varepsilon, \qaccept, f(\alpha)).\]
-Това означава, че машината на Тюринг $\M$ е тотална.
-
-\[Graph(f) = \{\alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\}.\]
-
-\begin{example}
-  Нека $\Sigma = \{a,b\}$.
-  Да видим защо функцията $f(\alpha) = \alpha\alpha$ е изчислима с машина на Тюринг.
-  
-  \begin{itemize}
-  \item
-    $\Sigma = \{a,b\}$;
-  \item 
-    $\Gamma = \{a,b,x,A,B\}$;
-  \end{itemize}
-  
-  \begin{framed}
-  \begin{figure}[H]
-    \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
-        \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
-        
-        \node[state]            (1) {$s$};
-        \node[state]            (2) [above of=1]{$q_1$};
-        \node[state]            (3) [right of=2]{$q_2$};
-        \node[state]            (4) [below of=1]{$q_3$};
-        \node[state]            (5) [right of=4]{$q_4$};
-        \node[state]            (6) [right of=1]{$q_5$};
-        \node[state,accepting]  (7) [right of=6]{$q_6$};
-        
-        \begin{scope}[every node/.style={scale=.8}]
-          \path
-          (1) edge [bend left=15] node [left] {$a/x;\goright$} (2)
-          (2) edge [loop above] node [above] {$\{a,b,A,B\};\goright$} (2)
-          (2) edge [bend left=15] node [above] {$\blank/A;\goleft$} (3)
-          (3) edge [loop right] node [right] {$\{a,b,A,B\};\goleft$} (3)
-          (3) edge [bend right=15] node [right] {$x/a;\goright$} (1)
-          (1) edge [bend right=15] node [left] {$b/x;\goright$} (4)
-          (4) edge [loop below] node [below] {$\{a,b,A,B\};\goright$} (4)
-          (4) edge [bend right=15] node [below] {$\blank/B;\goleft$} (5)
-          (5) edge [loop right] node [right] {$\{a,b,A,B\};\goleft$} (5)
-          (5) edge [bend left=15] node [right] {$x/b;\goright$} (1)
-          (1) edge [loop left] node [left] {$A/a,B/b;\goright$} (1)
-          (1) edge [bend left=15] node [above] {$\blank;\goleft$} (6)
-          (6) edge [loop below] node [right] {$\{a,b\};\goleft$} (6)
-          (6) edge [bend left=15] node [above] {$\blank;\goright$} (7);
-        \end{scope}
-      \end{tikzpicture}
-    \end{center}
-  \end{figure}
-\end{framed}
-
-Да проследим работата на $\M$ върху думата $ab$:
-
-\begin{align*}
-  (s, \underline{a}b) & \vdash (q_1, x\underline{b}) \vdash (q_1,xb\underline{\blank}) \vdash (q_2, x\underline{b}A) \vdash (q_2, \underline{x}bA)\\
-                      & \vdash (s, a\underline{b}A) \vdash (q_3, ax\underline{A}) \vdash (q_3, axA\underline{\blank}) \vdash (q_4, ax\underline{A}B)\\
-                      & \vdash (q_4, a\underline{x}AB) \vdash (s, ab\underline{A}B) \vdash (s,aba\underline{B}) \vdash (s, abab\underline{\blank})\\
-                      & \vdash (q_5, aba\underline{b}) \vdash (q_5, ab\underline{a}b) \vdash (q_5, a\underline{b}ab) \vdash (q_5, \underline{a}bab)\\
-                      & \vdash (q_5, \underline{\blank}abab) \vdash (q_6, \underline{a}bab).
-\end{align*}
-
-  
-\end{example}
-
-
-{\bf Да се каже нещо за графиката}
 
 %%% Local Variables:
 %%% mode: latex
