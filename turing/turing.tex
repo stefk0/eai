@@ -31,7 +31,8 @@
   $\Gamma$ - крайна азбука за лентата, $\Sigma \subseteq \Gamma$;
 \item
   % \marginpar{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
-  $\delta:Q\times\Gamma \to Q\times \Gamma \times \{\goleft,\goright,\stay\}$ - (частична) функция на преходите;
+  $\delta:Q\times\Gamma \to Q\times \Gamma \times \{\goleft,\goright,\stay\}$ - частична функция на преходите;
+  Изискваме $\delta(\qaccept, x)$ и $\delta(\qreject, x)$ да не са дефинирани, за всяка $x \in \Gamma$.
 \item
   $\qstart$ - начално състояние, $\qstart \in Q$;
 \item
