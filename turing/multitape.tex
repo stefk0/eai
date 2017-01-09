@@ -60,11 +60,11 @@
   \marginpar{В \cite[стр. 177]{sipser3} конструкцията е малко по-различна. Там съдържанието на всяка лента се поставя последователно върху една лента, като се разделят със специален символ. Тук следваме \cite[стр. 162]{hopcroft1}}
   Нека $\M$ е $k$-лентова машина на Тюринг.
   Ще построим еднолентова машина на Тюринг $\M'$, за която $\L(\M) = \L(\M')$.
-  Да означим $\hat\Gamma = \{\hat X \mid X \in \Gamma\}$.
+  Да означим $\hat\Gamma = \{\hat x \mid x \in \Gamma\}$.
   Тогава азбуката на лентата на $\M'$ ще бъде $\Gamma' = (\hat\Gamma \cup \Gamma)^{k}$.
   Сега вместо да имаме $k$ ленти ще имаме една лента, която представлява $k$-орка.
-  За да симулираме $\M$, използваме символите $\hat X$ за да маркират позицията на главите на $\M$,
-  като във всяка компонента на лентата има точно по един символ от вида $\hat X$.
+  За да симулираме $\M$, използваме символите $\hat x$ за да маркират позицията на главите на $\M$,
+  като във всяка компонента на лентата има точно по един символ от вида $\hat x$.
   % С $\$$ ще отблезяваме границите на всяка лента, в която можем да търсим маркера.
   За да определим следващия ход на машината $\M'$, трябва да сканираме лентата докато не 
   открием разположението на всичките $k$ на брой маркирани клетки. Тогава симулираме ход на $\M$
@@ -72,6 +72,54 @@
 \end{proof}
 
 {\bf Да се обясни, че има квадратично забавяне при преход от многолентова машина към еднолентова.}
+
+
+\begin{framed}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
+        \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
+        
+        \node[state]            (1) {$q_{a,\goleft}$};
+        \node[state]            (2) [right of=1]{$q'_{a,\goleft}$};
+        \node[state]            (3) [right of=2]{$q''_{a,\goleft}$};
+        \node[state]            (4) [right of=3]{$q'''_{a,\goleft}$};
+        \node[state]            (5) [right of=4]{$p_{a,\goleft}$};
+        \node[state]            (6) [below of=5]{$p_{b,\goleft}$};
+        \node[state]            (7) [below of=4]{$p_{\blank,\goleft}$};
+        
+        \begin{scope}% [every node/.style={scale=.8}]
+          \path
+          (1) edge [loop above] node [above] {$\{\frac{x}{y}\};\goleft$} (1)
+          % (1) edge [loop below] node [below] {$\frac{b}{\blank} / \frac{b}{b};\frac{\goright}{\goright}$} (1)
+          (1) edge [bend left=15] node [above] {$\frac{x}{\hat{b}}/\frac{x}{a};\goleft$} (2)
+          (2) edge [bend left=15] node [above] {$\frac{x}{y}/\frac{x}{\hat{y}};\goright$} (3)
+          (3) edge [loop above] node [above] {$\frac{x}{y};\goright$} (3)
+          (3) edge [bend left=15] node [above] {$\frac{\hat{a}}{y}/\frac{c}{y};\goright$} (4)
+          (4) edge [bend left=15] node [above] {$\frac{a}{y}/\frac{\hat{a}}{y};\goleft$} (5)
+          (4) edge [bend right=15] node [right] {$\frac{b}{y}/\frac{\hat{b}}{y};\goleft$} (6)
+          (4) edge [bend right=15] node [left] {$\frac{\blank}{y}/\frac{\hat{\blank}}{y};\goleft$} (7);
+        \end{scope}
+      \end{tikzpicture}
+    \end{center}
+    \caption{Симулация на прехода $\delta_\M(q,\frac{a}{b}) = (p,\frac{b}{a},\frac{\goright}{\goleft})$}
+  \end{figure}
+\end{framed}
+
+\begin{itemize}
+\item
+  В еднолентовата машина на Тюринг, за удобство пишем $\frac{a}{b}$ вместо $(a,b)$.
+\item
+  Когато сме в състояние от вида $q_{a,\goleft}$ означава, че се намираме 
+  в състояние $q$ на симулираната двулентова машина на Тюринг $\M$,
+  главата на първата лента е върху символа $a$ и главата на втората лента е разположена наляво от главата на първата лента.
+\item
+  Аналалогично, когато сме в състояние от вида $q_{a,\stay}$ означава, че двете глави са една върху друга в $\M$, 
+  а $q_{a,\goright}$ означава, че втората глава е отдясно на първата.
+\item 
+  $\{\frac{x}{y}\}$ е съкратен запис за $\{\frac{x}{y} \mid x,y \in \Gamma\}$;
+\end{itemize}
+
 
 
 %%% Local Variables:
