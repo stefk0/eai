@@ -5,15 +5,19 @@
 с единствената разлика, че
 \[\delta: Q \times \Gamma^k\to Q \times \Gamma^k \times \{\goleft,\goright,\stay\}^k.\]
 
-\begin{itemize}
-\item
-  $\Sigma \df \{a,b\}$;
-\item
-  $\Gamma \df \{a,b,\blank\}$
-\item
-  $\delta:Q\times\Gamma^2 \to Q\times\Gamma^2\times \{\goleft, \goright, \stay\}^2$;
-\end{itemize}
-
+\begin{example}
+  Да видим как двулентова машина на Тюринг разрешава езика 
+  $L = \{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$.
+  
+  \begin{itemize}
+  \item
+    $\Sigma \df \{a,b,\sharp\}$;
+  \item
+    $\Gamma \df \{a,b,\sharp,\blank\}$
+  \item
+    $\delta:Q\times\Gamma^2 \to Q\times\Gamma^2\times \{\goleft, \goright, \stay\}^2$;
+  \end{itemize}
+  
 \begin{framed}
   \begin{figure}[H]
     \begin{center}
@@ -52,6 +56,11 @@
                                                                                                            & \vdash (q_4, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}).
 \end{align*}
 
+\end{example}
+
+
+
+
 \begin{prop}
   За всяка $k$-лентова машина на Тюринг $\M$ съществува еднолентова машина на Тюринг $\M'$,
   такава че $\L(\M) = \L(\M')$.
@@ -71,9 +80,6 @@
   и отново трябва да променим маркираните клетки.
 \end{proof}
 
-{\bf Да се обясни, че има квадратично забавяне при преход от многолентова машина към еднолентова.}
-
-
 \begin{framed}
   \begin{figure}[H]
     \begin{center}
@@ -90,7 +96,7 @@
         
         \begin{scope}% [every node/.style={scale=.8}]
           \path
-          (1) edge [loop above] node [above] {$\{\frac{x}{y}\};\goleft$} (1)
+          (1) edge [loop above] node [above] {$\frac{x}{y};\goleft$} (1)
           % (1) edge [loop below] node [below] {$\frac{b}{\blank} / \frac{b}{b};\frac{\goright}{\goright}$} (1)
           (1) edge [bend left=15] node [above] {$\frac{x}{\hat{b}}/\frac{x}{a};\goleft$} (2)
           (2) edge [bend left=15] node [above] {$\frac{x}{y}/\frac{x}{\hat{y}};\goright$} (3)
@@ -117,7 +123,17 @@
   Аналалогично, когато сме в състояние от вида $q_{a,\stay}$ означава, че двете глави са една върху друга в $\M$, 
   а $q_{a,\goright}$ означава, че втората глава е отдясно на първата.
 \item 
-  $\{\frac{x}{y}\}$ е съкратен запис за $\{\frac{x}{y} \mid x,y \in \Gamma\}$;
+  $\frac{x}{y}$ е съкратен запис за $\{\frac{x}{y} \mid x,y \in \Gamma\}$;
+\item
+  Възможно е на всяка симулирана стъпка, главите на двете ленти да се раздаличават.
+  Това означава, че след симулацията на $s$ стъпки, в най-лошия случай, 
+  двете глави са на разстояние $2s$. Това означава, че за да симулираме $(s+1)$-вата стъпка на $\M$,
+  първо трябва да отидем $2s$ стъпки наляво, после $2s$ стъпки надясно.
+  Следователно $(s+1)$-вата стъпка на $\M$ се симулира за $\approx 2s$ стъпки.
+\item
+  Ако изчислението на $\M$ върху вход $\alpha$ отнема $s$ стъпки,
+  то симулираното изчисление върху $\alpha$ ще отнеме в най-лошия случай приблизително $\sum^s_{i=0}4i = 2s^2+2s$ стъпки.
+  Заключаваме, че симулацията на $\M$ е с времева сложност $\mathcal{O}(n^2)$.
 \end{itemize}
 
 

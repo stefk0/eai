@@ -15,7 +15,7 @@
     % \marginpar{В \cite{sipser1} се разглеждат тотални $\delta$ функции}
     $\delta:Q\times\Sigma\to Q$ е (частична) функция на преходите;
   \item
-    $s\in Q$ е начално състояние;
+    $\qstart\in Q$ е начално състояние;
   \item
     $F\subseteq Q$ е множеството от финални състояния, $F \neq \emptyset$.
   \end{enumerate}
@@ -31,7 +31,7 @@
 съществува редица от състояния $q_0,q_1,q_2,\dots,q_n$, такива че:
 \begin{itemize}
 \item
-  $q_0 = s$, началното състояние на автомата;
+  $q_0 = \qstart$, началното състояние на автомата;
 \item
   $\delta(q_i,a_{i+1}) = q_{i+1}$, за всяко $i = 0, \dots, n-1$;
 \item

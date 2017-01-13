@@ -16,7 +16,7 @@
     \marginpar{В \cite{sipser1} се позволяват $\epsilon$-преходи}
     Обърнете внимание, че тя е тотална.
   \item
-    $s \in Q$ е началното състояние;
+    $\qstart \in Q$ е началното състояние;
   \item
     $F\subseteq Q$ е множеството от финални състояния.
   \end{itemize}
@@ -39,7 +39,7 @@
 \end{framed}
 \begin{hint}
   Нека $\N = \NFA$. Ще построим детерминиран автомат
-  \[\D = (Q',\Sigma,\delta,s',F'),\]
+  \[\D = (Q',\Sigma,\delta,\qstart',F'),\]
   за който $\L(\N) = \L(\D)$.
   Конструкцията е следната:
   \marginpar{Да отбележим, че детерминираният автомат $\D$ има не повече от $2^{\abs{Q}}$ на брой състояния $Q'$}
@@ -49,7 +49,7 @@
   \item
     $\delta(R,a) = \{q\in Q\mid (\exists r\in R)[q\in\Delta(r,a)]\} = \bigcup_{r\in R}\Delta(r,a)$;
   \item
-    $s' = \{s\}$;
+    $\qstart' = \{\qstart\}$;
   \item
     $F' = \{R \subseteq Q \mid R\cap F \neq \emptyset\}$.
   \end{itemize}
