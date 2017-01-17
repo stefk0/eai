@@ -190,20 +190,35 @@
     \[L(i, j, 0) = \{a\in\Sigma \mid \delta(q_i, a) = q_j\}.\]
     И в двата случая, понеже $L(i,j,0)$ е краен език, то е ясно, че той се описва с регулярен израз.
   \item
-    Да предположим, че $k > 0$ и за всяко $i$, $j$, можем да намерим регулярните изрази
-    съответстващи на $L(i,j,k-1)$. Тогава
-    \[L(i,j,k) = L(i,j,k-1)\ \cup\ L(i,k,k-1)\cdot (L(k,k,k-1)^\star) \cdot L(k,j,k-1).\]
+    Да предположим, че $k > 0$, и за всяко $i,j \leq n$, имаме регулярните изрази $\mathbf{r}^{k-1}_{i,j}$, които
+    описват езиците $L(i,j,k-1)$, т.е. имаме индукционното предположение, че
+    \[(\forall i,j \leq n)[L(i,j,k-1) = \L(\mathbf{r}^{k-1}_{i,j})].\] 
+    Ще докажем, че съществуват регулярни изрази $\mathbf{r}^k_{i,j}$, такива че
+    \[(\forall i,j \leq n)[L(i,j,k) = \L(\mathbf{r}^{k}_{i,j})].\] 
+    Можем да изразим езика $L(i,j,k)$ по следния начин:
+    \[L(i,j,k) = \underbrace{L(i,j,k-1)}_{\L(\mathbf{r}^{k-1}_{i,j})}\ \cup\ \underbrace{L(i,k,k-1)}_{\L(\mathbf{r}^{k-1}_{i,k})}\cdot (\underbrace{L(k,k,k-1)}_{\L(\mathbf{r}^{k-1}_{k,k})})^\star \cdot \underbrace{L(k,j,k-1)}_{\L(\mathbf{r}^{k-1}_{k,j})}.\]
 
-    Тогава по {\bf И.П.} следва, че $L(i,j,k)$ може да се опише с регулярен израз, който е
+    Тогава по {\bf И.П.} следва, че $L(i,j,k)$ може да се опише с регулярния израз
     \begin{equation}
       \label{eq:kleene}
-      \mathbf{r^k_{i,j}} = \mathbf{r^{k-1}_{i,j} + r^{k-1}_{i,k}\cdot (r^{k-1}_{k,k})^\star\cdot r^{k-1}_{k,j}}.
+      \mathbf{r}^k_{i,j} = \mathbf{r}^{k-1}_{i,j} + \mathbf{r}^{k-1}_{i,k}\cdot (\mathbf{r}^{k-1}_{k,k})^\star\cdot \mathbf{r}^{k-1}_{k,j}}.
     \end{equation}
   \end{enumerate}
-  Заключаваме, че за всяко $i,j,k$, $L(i,j,k)$ може да се опише с регулярен израз $\mathbf{r^{k}_{i,j}}$.
+  Заключаваме, че за всяко $i,j,k$, $L(i,j,k)$ може да се опише с регулярен израз $\mathbf{r}^{k}_{i,j}$.
   Тогава ако $F = \{q_{i_1},\dots,q_{i_k}\}$, то $\L(\A)$ се описва с регулярния израз
-  \[\mathbf{r^n_{1,i_1} + r^n_{1,i_2} + \dots + r^n_{1,i_k}}.\]
+  \[\mathbf{r}^n_{1,i_1} + \mathbf{r}^n_{1,i_2} + \dots + \mathbf{r}^n_{1,i_k}.\]
 \end{proof}
+
+\begin{cor}
+  Съществува алгоритъм, за който при вход краен детерминиран автомат $\A$,
+  извежда като изход регулярен израз $\mathbf{r}$, такъв че $\L(\A) = \L(\mathbf{r})$.
+\end{cor}
+
+Доказателството на това следствие използва идеята от доказателството на \Th{regular-kleene},
+но излиза извън нашия интерес. За подробно изложение на този въпрос, вижте \cite[стр. 69]{sipser3}.
+Възможно е по-късно да използваме този резултат наготово.
+Нека поне да разгледаме един пример, чиято цел е да ни убеди, 
+че наистина може да се извлече алгоритъм от доказателството на \Th{regular-kleene}.
 
 \begin{example}
   Да разгледаме следния автомат:
@@ -233,7 +248,7 @@
 езикът на този автомат се описва с регулярния израз $\mathbf{r^2_{1,2}}$, защото началното състояние е $q_1$, финалното е $q_2$ и 
 броят на състоянията в автомата е $2$.
 \begin{align*}
-  \mathbf{r^2_{1,2}} & = \underbrace{\mathbf{r^{1}_{1,2}}}_{\mathbf{1^\star 0}} + \underbrace{\mathbf{r^{1}_{1,2}}}_{\mathbf{1^\star 0}}\cdot \underbrace{\mathbf{(r^1_{2,2})^\star}}_{\mathbf{(\varepsilon+0+1)^\star}} \cdot \underbrace{\mathbf{r^1_{2,2}}}_{\mathbf{\varepsilon+0+1}} & (\text{според (\ref{eq:kleene}})) \\
+  \mathbf{r}^2_{1,2} & = \underbrace{\mathbf{r}^{1}_{1,2}}_{\mathbf{1^\star 0}} + \underbrace{\mathbf{r}^{1}_{1,2}}_{\mathbf{1^\star 0}}\cdot \underbrace{\mathbf{(r^1_{2,2})^\star}}_{\mathbf{(\varepsilon+0+1)^\star}} \cdot \underbrace{\mathbf{r}^1_{2,2}}_{\mathbf{\varepsilon+0+1}} & (\text{според (\ref{eq:kleene}})) \\
                      &  = \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^\star (\varepsilon + 0 + 1)}\\
                      & =  \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^+} & (\mathbf{r^+ = r^\star r})\\
                      & =  \mathbf{1^\star0 + 1^\star 0 (0 + 1)^\star} & (\mathbf{r^\star = (\varepsilon + r)^+})\\
