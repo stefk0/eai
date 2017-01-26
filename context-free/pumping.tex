@@ -23,7 +23,7 @@
 \begin{lemma}[за покачването (безконтекстни езици)]
   \index{лема за покачването!безконтекстни езици}
   \label{lem:pumping-context} 
-  \marginpar{\cite[стр. 123]{sipser1}, \cite[стр. 125]{hopcroft1}}
+  \marginpar{\cite[стр. 123]{sipser1}, \cite[стр. 125]{hopcroft1}, \cite[стр. 148]{kozen}}
   За всеки безконтекстен език $L$ съществува $p>0$, такова
   че ако $\alpha\in L, \abs{\alpha} \geq p$, то съществува разбиване на думата на пет части, $\alpha=xyuvw$,
   \marginpar{Ще казваме, че $p$ е константа на покачването}
@@ -74,24 +74,24 @@
   \label{cor:pumping-context-free}
   \marginpar{Ако $L$ е краен език, то е ясно, че $L$ е безконтекстен.}
   Нека $L$ е произволен {\bf безкраен} език. Нека също така е изпълнено, че:
-  \begin{itemize}
-  \item 
+  \begin{description}
+  \item[($\forall$)]
     за {\em всяко} естествено число $p \geq 1$,
-  \item
+  \item[($\exists$)]
     можем да намерим дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че
-  \item
+  \item[($\forall$)]
     за {\em всяко} разбиване на думата на пет части, $\alpha = xyuvw$, със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$,
-  \item
+  \item[($\exists$)]
     можем да посочим $i \in \Nat$, за което е изпълнено, че $xy^iuv^iw \not\in L$.
-  \end{itemize}  
+  \end{description}  
   \marginpar{\writedown Докажете! Аналогично е на \Cor{pumping-reg}}
   Тогава $L$ {\bf не} е безконтекстен език.
 \end{cor}
 
 \begin{cor}
   \marginpar{\writedown Докажете!}
-  Нека $G$ е безконтекстна граматика и $p$ е константата на покачването за $G$, $L = \L(G)$.
-  Тогава $\abs{L} = \infty$ точно тогава, когато съществува $\alpha \in L$, за която $p \leq \abs{\alpha} < 2p$.
+  Нека $G$ е безконтекстна граматика и $p$ е константата на покачването за $G$.
+  Тогава $\abs{\L(G)} = \infty$ точно тогава, когато съществува $\alpha \in \L(G)$, за която $p \leq \abs{\alpha} < 2p$.
 \end{cor}
 % \begin{proof}
 %   Ако съществува дума $\alpha \in L$, за която $\abs{\alpha} \geq p$, то от \Lem{pumping-context} следва,
@@ -113,6 +113,11 @@
 %   със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$, е изпълнено, че $(\exists i)[xy^iuv^iw \not\in L]$.
 % \end{framed}
 
+\begin{remark}
+  Алгоритъм за проверка дали един безконтекстен език е безкраен следвайки горния критерий би 
+  имал експоненциална сложност относно $|G|$.
+\end{remark}
+
 
 \begin{problem}
   \label{pr:anbncn}
@@ -126,7 +131,7 @@
     Избираме дума $\alpha \in L$, $\abs{\alpha} \geq p$.
     В случая, нека $\alpha = a^pb^pc^p$.
   \item[$(\forall)$]
-    Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{xyv} \leq p$ и $1 \leq \abs{yv}$.
+    Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{yuv} \leq p$ и $1 \leq \abs{yv}$.
   \item[$(\exists)$]
     Ще изберем $i$, за което $xy^iuv^iw \not\in L$.
     Знаем, че поне едно от $y$ и $v$ не е празната дума.
@@ -148,11 +153,6 @@
   Така от \Cor{pumping-context-free} следва, че езикът $L$ не е безконтекстен.
 \end{proof}
 
-% \begin{problem}
-%   Да се даде пример за език $L$, който {\bf не} е безконтекстен, но удовлетворява
-%   лемата за разрастването.
-% \end{problem}
-
 \begin{problem}
   Докажете, че $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$ не е безконтекстен език.
 \end{problem}
@@ -164,7 +164,7 @@
      Избираме дума $\alpha \in L$, $\abs{\alpha} \geq p$.
      В случая, нека $\alpha = a^pb^pc^p$.
    \item[$(\forall)$]
-     Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{xyv} \leq p$ и $1 \leq \abs{yv}$.
+     Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{yuv} \leq p$ и $1 \leq \abs{yv}$.
      Знаем, че поне една от $y$ и $v$ не е празната дума.
    \item[$(\exists)$] Ще намерим $i \in \Nat$, за което $xy^iuv^iw \not\in L$.
     \begin{itemize}
@@ -208,7 +208,7 @@
   не е безконтекстен.
 \end{problem}
 \begin{hint}
-  $\alpha = a^p b^p a^p b^p b^p a^p$.
+  Разгледайте $\alpha = a^p b^p a^p b^p b^p a^p$.
   Покаваме с повече от $p$ би трябвало да свърши работа.
 \end{hint}
 

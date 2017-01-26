@@ -15,7 +15,7 @@
 \item
   $\# \in \Gamma$ е символ за дъно на стека;
 \item
-  $s\in Q$ е начално състояние;
+  $\qstart \in Q$ е начално състояние;
 \item
   \marginpar{Озн. $\Ps_{fin}(A)$ - крайните подмножества на $A$}
   $\Delta:Q\times(\Sigma \cup \{\varepsilon\})\times\Gamma\rightarrow \Ps_{fin}(Q\times\Gamma^\star)$ 
@@ -37,10 +37,10 @@
 \begin{itemize}
 \item
   $\L_F(P)$ е езика, който се разпознава от $P$ {\bf с финално състояние},
-  \[\L_F(P) = \{\omega \mid (q_0,\omega,\#) \vdash^\star_P (q,\varepsilon,\alpha),\text{ за някои } q \in F,\alpha\in\Gamma^\star\}.\]    
+  \[\L_F(P) = \{\omega \mid (\qstart,\omega,\#) \vdash^\star_P (q,\varepsilon,\alpha),\text{ за някои } q \in F,\alpha\in\Gamma^\star\}.\]    
 \item
   $\L_S(P)$ е езика, който се разпознава от $P$  {\bf с празен стек},
-  \[\L_S(P) = \{\omega \mid (q_0,\omega,\#) \vdash^\star_P (q,\varepsilon,\varepsilon),\text{ за някое }q \in Q\}.\]    
+  \[\L_S(P) = \{\omega \mid (\qstart,\omega,\#) \vdash^\star_P (q,\varepsilon,\varepsilon),\text{ за някое }q \in Q\}.\]    
 \end{itemize}
 
 \begin{example}
@@ -50,7 +50,7 @@
   Да разгледаме $P = \PDA$, където
   \begin{itemize}
   \item
-    $Q = \{q,p\}$;
+    $Q = \{\qstart,p\}$;
   \item
     $\Sigma = \{a,b\}$;
   \item
@@ -61,15 +61,15 @@
     Функцията на преходите $\Delta$ има следната дефиниция:
     \begin{enumerate}[(1)]
     \item
-      $\Delta(q,a,\#) = \{(q, A\#), (p, A\#)\}$;
+      $\Delta(\qstart,a,\#) = \{(\qstart, A\#), (p, A\#)\}$;
     \item
-      $\Delta(q,a,A) = \{(q, AA), (p, AA)\}$;
+      $\Delta(\qstart,a,A) = \{(\qstart, AA), (p, AA)\}$;
     \item 
-      $\Delta(q,\varepsilon,\#) = \{(q,\varepsilon)\}$;
+      $\Delta(\qstart,\varepsilon,\#) = \{(\qstart,\varepsilon)\}$;
     \item
-      $\Delta(q, b, A) = \emptyset$;
+      $\Delta(\qstart, b, A) = \emptyset$;
     \item
-      $\Delta(q, b, \#) = \emptyset$;
+      $\Delta(\qstart, b, \#) = \emptyset$;
     \item 
       $\Delta(p, b, A) = \{(p,\varepsilon)\}$;
     \item 
@@ -79,7 +79,7 @@
   Да видим как думата $a^2b^2$ се разпознава от автомата с празен стек:
   \marginpar{\writedown Докажете, че $L = \L_S(P)$!}
   \begin{align*}
-    (q, a^2b^2, \#) & \vdash_P (q, ab^2, A\#) & (\text{правило }(1))\\
+    (\qstart, a^2b^2, \#) & \vdash_P (\qstart, ab^2, A\#) & (\text{правило }(1))\\
     & \vdash_P (p, b^2, AA\#) & (\text{правило }(2))\\
     & \vdash_P (p, b, A\#) & (\text{правило }(6))\\
     & \vdash_P (p, \varepsilon, \#) & (\text{правило }(6))\\
@@ -94,32 +94,30 @@
   Нека $P = \PDA$, където:
   \begin{itemize}
   \item 
-    $Q = \{q\}$; $F = \emptyset$;
+    $Q = \{\qstart,p\}$;
   \item
     $\Sigma = \{a,b\}$;
   \item
     $\Gamma = \{A, B, \#\}$;
-  \item
-    началното състояние $s = q$;
   \item
     $F = \emptyset$, защото разпознаваме с празен стек;
   \item
     Функцията на преходите $\Delta$ има следната дефиниция:
     \begin{enumerate}[(1)]
     \item 
-      $\Delta(q, a, \#) = \{(q, A\#)\}$;
+      $\Delta(\qstart, a, \#) = \{(\qstart, A\#)\}$;
     \item 
-      $\Delta(q, b, \#) = \{(q, B\#)\}$;
+      $\Delta(\qstart, b, \#) = \{(\qstart, B\#)\}$;
     \item
-      $\Delta(q, \varepsilon, \#) = \{(q,\varepsilon)\}$;
+      $\Delta(\qstart, \varepsilon, \#) = \{(\qstart,\varepsilon)\}$;
     \item
-      $\Delta(q, a, A) = \{(q, AA), (p, \varepsilon)\}$;
+      $\Delta(\qstart, a, A) = \{(\qstart, AA), (p, \varepsilon)\}$;
     \item
-      $\Delta(q, a, B) = \{(q, AB)\}$;
+      $\Delta(\qstart, a, B) = \{(\qstart, AB)\}$;
     \item
-      $\Delta(q, b, A) = \{(q, BA)\}$;
+      $\Delta(\qstart, b, A) = \{(\qstart, BA)\}$;
     \item
-      $\Delta(q, b, B) = \{(q, BB), (p, \varepsilon)\}$;
+      $\Delta(\qstart, b, B) = \{(\qstart, BB), (p, \varepsilon)\}$;
     \item
       $\Delta(p, a, A) = \{(p,\varepsilon)\}$;
     \item
@@ -133,23 +131,23 @@
   Да видим защо $P$ разпознава думата $abaaba$ с празен стек.
   Започваме по следния начин:
   \begin{align*}
-    (q,abaaba,\#) & \vdash_P (q,baaba,A\#) & (\text{правило }(1))\\
-    & \vdash_P (q, aaba, BA\#) & (\text{правило }(6))\\
-    & \vdash_P (q, aba, ABA\#) & (\text{правило }(5)).
+    (\qstart,abaaba,\#) & \vdash_P (\qstart,baaba,A\#) & (\text{правило }(1))\\
+                        & \vdash_P (\qstart, aaba, BA\#) & (\text{правило }(6))\\
+                        & \vdash_P (\qstart, aba, ABA\#) & (\text{правило }(5)).
   \end{align*}
   Сега можем да направим два избора как да продължим. Състоянието $p$ служи за маркер, което ни казва, че вече сме започнали 
   да четем $\omega^R$. Поради тази причина, продължаваме така:
   \begin{align*}
-    (q, aba, ABA\#) & \vdash_P (p, ba, BA\#) & (\text{правило }(4))\\
+    (\qstart, aba, ABA\#) & \vdash_P (p, ba, BA\#) & (\text{правило }(4))\\
     & \vdash_P (p, a, A\#) & (\text{правило }(9))\\
     & \vdash_P (p, \varepsilon, \#) & (\text{правило }(8))\\
     & \vdash_P (p,\varepsilon,\varepsilon) & (\text{правило }(10)).
   \end{align*}
   Да проиграем още един пример. Да видим защо думата $aba$ не се извежда от автомата.
   \begin{align*}
-    (q,aba,\#) & \vdash_P (q, ba,A\#) & (\text{правило }(1))\\
-    & \vdash_P (q, a, BA\#) & (\text{правило }(6))\\
-    & \vdash_P (q, \varepsilon, ABA\#) & (\text{правило }(5)).
+    (\qstart,aba,\#) & \vdash_P (\qstart, ba,A\#) & (\text{правило }(1))\\
+                     & \vdash_P (\qstart, a, BA\#) & (\text{правило }(6))\\
+                     & \vdash_P (\qstart, \varepsilon, ABA\#) & (\text{правило }(5)).
   \end{align*}
   \marginpar{\writedown Докажете, че $\L_S(P) = L$ !}
   От последното моментно описание на автомата нямаме нито един преход, следователно
@@ -162,43 +160,41 @@
   Нека $P = \PDA$, където:
   \begin{itemize}
   \item 
-    $Q = \{q\}$; $F = \emptyset$;
+    $Q = \{\qstart\}$;
   \item
     $\Sigma = \{a,b\}$;
   \item
     $\Gamma = \{A, B, \#\}$;
-  \item
-    началното състояние $s = q$;
   \item
     $F = \emptyset$, защото разпознаваме с празен стек;
   \item
     Функцията на преходите $\Delta$ има следната дефиниция:
     \begin{enumerate}[(1)]
     \item 
-      $\Delta(q, \varepsilon, \#) = \{(q, \varepsilon)\}$;
+      $\Delta(\qstart, \varepsilon, \#) = \{(\qstart, \varepsilon)\}$;
     \item
-      $\Delta(q, a, \#) = \{(q, A\#)\}$;
+      $\Delta(\qstart, a, \#) = \{(\qstart, A\#)\}$;
     \item
-      $\Delta(q, b, \#) = \{(q, B\#)\}$;
+      $\Delta(\qstart, b, \#) = \{(\qstart, B\#)\}$;
     \item
-      $\Delta(q, a, A) = \{(q, AA)\}$;
+      $\Delta(\qstart, a, A) = \{(\qstart, AA)\}$;
     \item
-      $\Delta(q, a, B) = \{(q, \varepsilon)\}$;
+      $\Delta(\qstart, a, B) = \{(\qstart, \varepsilon)\}$;
     \item
-      $\Delta(q, b, A) = \{(q, \varepsilon)\}$;
+      $\Delta(\qstart, b, A) = \{(\qstart, \varepsilon)\}$;
     \item
-      $\Delta(q, b, B) = \{(q, BB)\}$.
+      $\Delta(\qstart, b, B) = \{(\qstart, BB)\}$.
     \end{enumerate}
   \end{itemize}
   Да видим защо думата $abbbaa \in \L_S(P)$.
   \begin{align*}
-    (q, abbbaa, \#) & \vdash (q, bbbaa, A\#) & (\text{правило }(2))\\
-    & \vdash (q, bbaa, \#) & (\text{правило }(6))\\
-    & \vdash (q, baa, B\#) & (\text{правило }(3))\\
-    & \vdash (q, aa, BB\#) & (\text{правило }(7))\\
-    & \vdash (q, a, B\#) & (\text{правило }(5))\\
-    & \vdash (q, \varepsilon, \#) & (\text{правило }(5))\\
-    & \vdash (q, \varepsilon, \varepsilon) & (\text{правило }(1)).
+    (\qstart, abbbaa, \#) & \vdash (\qstart, bbbaa, A\#) & (\text{правило }(2))\\
+    & \vdash (\qstart, bbaa, \#) & (\text{правило }(6))\\
+    & \vdash (\qstart, baa, B\#) & (\text{правило }(3))\\
+    & \vdash (\qstart, aa, BB\#) & (\text{правило }(7))\\
+    & \vdash (\qstart, a, B\#) & (\text{правило }(5))\\
+    & \vdash (\qstart, \varepsilon, \#) & (\text{правило }(5))\\
+    & \vdash (\qstart, \varepsilon, \varepsilon) & (\text{правило }(1)).
   \end{align*}
 \end{example}
 
@@ -219,14 +215,14 @@
     Нека $L = \L_F(P)$, където $P = \PDA$.
     Ще построим $P^\prime$, така че да симулира $P$ и като отидем във финално състояние ще изпразним стека.
     Нека
-    \[P^\prime = \langle{Q\cup\{q_e,s^\prime\},\Sigma,\Gamma \cup \{\$\},\$,s^\prime,\Delta^\prime,\emptyset}\rangle,\]
+    \[P^\prime = \langle{Q\cup\{q_e,\qstart'\},\Sigma,\Gamma \cup \{\$\},\$,\qstart',\Delta^\prime,\emptyset}\rangle,\]
     където $\$ \not\in \Gamma$.
     Важно е $P^\prime$ да има собствен нов символ за дъно на стека, защото е възможно за някоя дума $\alpha \not\in \L_F(P)$
     стековият автомат $P$ да си изчисти стека и така да разпознаем повече думи.
     \begin{itemize}
     \item 
       \marginpar{- започваме симулацията}
-      $\Delta'(s^\prime,\varepsilon,\$) = \{(s,\#\$)\}$;
+      $\Delta'(\qstart',\varepsilon,\$) = \{(\qstart,\#\$)\}$;
     \item
       \marginpar{- симулираме $P$}
       $\Delta'(q,a,X)$ включва множеството $\Delta(q,a,X)$, за всяко $q\in Q$, $a\in\Sigma_\varepsilon$, $X\in\Gamma$;
@@ -240,14 +236,14 @@
       $\Delta'$ няма други правила.
     \end{itemize}
   \item
-    Сега имаме $L = \L_S(P)$, където $P = \langle{Q,\Sigma,\Gamma,\#,s,\Delta,\emptyset}\rangle$. 
+    Сега имаме $L = \L_S(P)$, където $P = \langle{Q,\Sigma,\Gamma,\#,\qstart,\Delta,\emptyset}\rangle$. 
     Да положим
-    \[P^\prime = \langle{Q\cup\{s^\prime,q_f\}, \Sigma, \Gamma \cup \{\$\}, \Delta^\prime, \$, \{q_f\}}\rangle.\]
+    \[P^\prime = \langle{Q\cup\{\qstart',q_f\}, \Sigma, \Gamma \cup \{\$\}, \$, \qstart', \Delta^\prime, \{q_f\}}\rangle.\]
     $P^\prime$ ще симулира $P$ като ще внимаваме кога $P$ изчиства символа $\#$. Тогава ще искаме да отидем във финалното състояние $q_f$.
     \begin{itemize}
     \item 
       \marginpar{- започваме симулацията}
-      $\Delta'(s',\varepsilon,\$) = \{(s, \#\$)\}$;
+      $\Delta'(\qstart',\varepsilon,\$) = \{(\qstart, \#\$)\}$;
     \item
       \marginpar{- симулираме $P$}
       $\Delta'(q,a,X) = \Delta(q,a,X)$, за всяко $q \in Q$, $a \in \Sigma_\varepsilon$, $X \in \Gamma$;
@@ -386,22 +382,22 @@
   \item
     $\# = S$;
   \item
-    $Q = \{q\}$;
+    $Q = \{\qstart\}$;
   \item
     $F = \emptyset$;
   \item
     Дефинираме релацията на преходите, следвайки конструкцията от \Th{push-down-context-free}:
     \begin{itemize}
     \item 
-      $\Delta(q,\varepsilon, S) = \{\pair{q,ASB}, \pair{q,\varepsilon}\}$;
+      $\Delta(\qstart,\varepsilon, S) = \{\pair{\qstart,ASB}, \pair{\qstart,\varepsilon}\}$;
     \item
-      $\Delta(q, \varepsilon, A) = \{\pair{q, aAa}, \pair{q, a}\}$;
+      $\Delta(\qstart, \varepsilon, A) = \{\pair{\qstart, aAa}, \pair{\qstart, a}\}$;
     \item
-      $\Delta(q, \varepsilon, B) = \{\pair{q, bBb}, \pair{q, b}\}$;
+      $\Delta(\qstart, \varepsilon, B) = \{\pair{\qstart, bBb}, \pair{\qstart, b}\}$;
     \item
-      $\Delta(q, a, a) = \{\pair{q,\varepsilon}\}$;
+      $\Delta(\qstart, a, a) = \{\pair{\qstart,\varepsilon}\}$;
     \item
-      $\Delta(q, b, b) = \{\pair{q,\varepsilon}\}$.
+      $\Delta(\qstart, b, b) = \{\pair{\qstart,\varepsilon}\}$.
     \end{itemize}
   \end{itemize}
 \end{example}
@@ -415,6 +411,8 @@
   \begin{itemize}
   \item
     Променливите на граматиката са $2 \cdot 3 \cdot 2 + 1 = 13$.
+  \item
+    Нека тук за улеснение да пишем $q$ вместо $\qstart$;
   \item 
     Започваме с правилата $S \to [q,\#,q]\ |\ [q,\#,p]$,
     защото началното състояние на автомата е $q$ и символът за дъно на стек е $\#$.
@@ -457,7 +455,7 @@
   \item 
     $Q = Q_1 \times Q_2$;
   \item
-    $s = \pair{s_1,s_2}$;
+    $\qstart = \pair{s_1,s_2}$;
   \item
     $F = F_1 \times F_2$;
   \item 
