@@ -1,0 +1,154 @@
+\section{Азбуки, думи, езици}
+
+\subsection*{Основни понятия}
+
+\begin{itemize}
+\item 
+  \index{азбука}
+  {\bf Азбука} ще наричаме всяко крайно множество,
+  като обикновено ще я означаваме със $\Sigma$.
+  \marginpar{Често ще използваме буквите $a$, $b$, $c$ за да означаваме букви.}
+  Елементите на азбуката $\Sigma$ ще наричаме {\bf букви} или символи.
+\item
+  \index{дума}
+  {\bf Дума} над азбуката $\Sigma$ е произволна крайна редица от елементи на $\Sigma$.
+  Например, за $\Sigma = \{a,b\}$, $aababba$ е дума над $\Sigma$ с дължина $7$.
+  С $\abs{\alpha}$ ще означаваме дължината на думата $\alpha$.
+  \marginpar{Обикновено ще означаваме думите с $\alpha$, $\beta$, $\gamma$, $\omega$.}
+\item
+  Обърнете внимание, че имаме единствена дума с дължина $0$.
+  Тази дума ще означаваме с $\varepsilon$ и ще я наричаме {\bf празната дума},
+  т.е. $\abs{\varepsilon} = 0$.
+\item
+  С $a^n$ ще означаваме думата съставена от $n$ $a$-та.
+  Формалната индуктивна дефиниция е следната:
+  \begin{align*}
+    a^0 & \df \varepsilon,\\
+    a^{n+1} & \df a^na.
+  \end{align*}
+\item
+  Множеството от всички думи над азбуката $\Sigma$ ще означаваме със $\Sigma^\star$.
+  Например, за $\Sigma = \{a,b\}$,
+  \[\Sigma^\star = \{\varepsilon,a,b,aa,ab,ba,bb,aaa,aab,\dots\}.\]
+  Обърнете внимание, че $\emptyset^\star = \{\varepsilon\}$.
+% \item
+%   {\bf Лексикографска наредба}
+\end{itemize}
+
+\subsection*{Операции върху думи}
+
+\begin{itemize}
+\item 
+  \index{конкатенация}
+  Операцията {\bf конкатенация} взима две думи $\alpha$ и $\beta$ и образува 
+  новата дума $\alpha\cdot\beta$ като слепва двете думи.
+  Например $aba\cdot bb = ababb$.
+  Обърнете внимание, че в общия 
+  случай $\alpha\cdot\beta \neq \beta\cdot\alpha$. 
+  \marginpar{Често ще пишем $\alpha\beta$ вместо $\alpha\cdot\beta$}
+  Можем да дадем формална индуктивна дефиниция на операцията конкатенация по
+  дължината на думата $\beta$.
+  \begin{itemize}
+  \item 
+    Ако $\abs{\beta} = 0$, то $\beta = \varepsilon$.
+    Тогава $\alpha\cdot \varepsilon \df \alpha$.
+  \item
+    Ако $\abs{\beta} = n+1$, то $\beta = \gamma b$, $\abs{\gamma} = n$.
+    Тогава $\alpha\cdot\beta \df (\alpha\cdot\gamma)b$.
+  \end{itemize}
+\item
+  Друга често срещана операция върху думи е {\bf обръщането} на дума.
+  Дефинираме думата $\alpha^R$ като обръщането на $\alpha$ по следния начин.
+  \begin{itemize}
+  \item 
+    Ако $\abs{\alpha} = 0$, то $\alpha = \varepsilon$ и $\alpha^R \df \varepsilon$.
+  \item
+    Ако $\abs{\alpha} = n+1$, то $\alpha = a\beta$, където $\abs{\beta} = n$.
+    Тогава $\alpha^R \df (\beta^R)a$.
+  \end{itemize}
+  Например, $reverse^R = esrever$.
+\item
+  \index{дума!префикс}
+  \index{дума!суфикс}
+  Казваме, че думата $\alpha$ е {\bf префикс} на думата $\beta$,
+  ако съществува дума $\gamma$, такава че $\beta = \alpha\cdot\gamma$.
+  $\alpha$ е {\bf суфикс} на $\beta$, ако $\beta = \gamma\cdot\alpha$, за някоя дума $\gamma$.
+\item
+  \marginpar{Обърнете внимание, че $\emptyset\cdot A = A\cdot\emptyset = \emptyset$}
+  \marginpar{Също така, $\{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A$}
+  Нека $A$ и $B$ са множества от думи.
+  Дефинираме конкатенацията на $A$ и $B$ като
+  \[A\cdot B \df \{\alpha\cdot\beta \mid \alpha\in A\ \&\ \beta \in B\}.\]
+\item
+  Сега за едно множество от думи $A$, дефинираме $A^n$ индуктивно:
+  \begin{align*}
+    A^0 & \df \{\varepsilon\},\\
+    A^{n+1} & \df A^n \cdot A.
+  \end{align*}
+  Ако $A = \{ab, ba\}$, то
+  $A^0 = \{\varepsilon\}$, $A^1 = A$, $A^2 = \{abab, abba, baba, baab\}$.
+  Ако $A = \{a,b\}$, то $A^n = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} = n\}$.
+\item
+  За едно множеството от думи $A$, дефинираме:
+  \marginpar{Операцията $\star$ е известна като звезда на Клини}
+  \marginpar{Обърнете внимание, че $\emptyset^\star = \{\varepsilon\}$}
+  \begin{align*}
+    A^\star & \df \bigcup_{n\geq 0} A^n\\
+    & = A^0 \cup A^1 \cup A^2 \cup A^3 \cup \dots\\
+    A^+ & \df A\cdot A^\star.
+  \end{align*}
+\end{itemize}
+
+\begin{problem}
+  Проверете:
+  \begin{enumerate}[a)]
+  \item 
+    операцията конкатенация е {\em асоциативна}, т.е. за всеки три думи $\alpha$, $\beta$, $\gamma$,
+    \[(\alpha\cdot\beta)\cdot\gamma = \alpha\cdot(\beta\cdot\gamma);\]
+  \item
+    за множествата от думи $A$, $B$ и $C$,
+    \[(A\cdot B)\cdot C = A\cdot (B\cdot C);\]
+  \item
+    $\{\varepsilon\}^\star = \varepsilon$;
+  \item
+    за произволно множество от думи $A$,
+    $A^\star = A^\star\cdot A^\star$ и $(A^\star)^\star = A^\star$;
+  \item
+    за произволни букви $a$ и $b$,
+    $\{a,b\}^\star = \{a\}^\star\cdot(\{b\}\cdot\{a\}^\star)^\star$.
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+  Докажете, че за всеки две думи $\alpha$ и $\beta$ е изпълено:
+  \begin{enumerate}[a)]
+  \item 
+    $(\alpha\cdot\beta)^R = \beta^R\cdot\alpha^R$;
+  \item
+    $\alpha$ е префикс на $\beta$ точно тогава, когато $\alpha^R$ е суфикс на $\beta^R$;
+  \item
+    $(\alpha^R)^R = \alpha$;
+  \item
+    $(\alpha^n)^R = (\alpha^R)^n$, за всяко $n \geq 0$.
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  \marginpar{С други думи, ако $\varepsilon \not\in X$, то $Z = X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$.}
+  Нека $X, Y, Z \subseteq \Sigma^\star$ със свойството, че $Z = XZ \cup Y$.
+  \begin{enumerate}[a)]
+  \item 
+    Докажете, че за всяко $n \in \Nat$, $X^nY \subseteq Z$.
+    Заключете, че $X^\star Y \subseteq Z$.
+  \item
+    Да предположим, че $\varepsilon \not\in X$.
+    Докажете, че за всяка дума $\omega \in Z$ е изпълнено, че $\omega \in X^\star Y$.
+  \end{enumerate}
+\end{problem}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

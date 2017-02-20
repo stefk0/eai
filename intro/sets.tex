@@ -1,0 +1,368 @@
+
+\section{Множества, релации, функции}
+
+\subsection*{Основни операции върху множества}
+
+Ще разгледаме няколко операции върху произволни множества $A$ и $B$.
+\begin{itemize}
+\item
+  {\bf Сечение}
+  \[A\cap B = \{x\ \mid\ x\in A\ \wedge\ x\in B\}.\]
+  % Казано по-формално, $A\cap B$ е множеството, за което е изпълнена формулата
+  % \[(\forall x)[x \in A\cap B \iff (x\in A\ \wedge\ x \in B)].\]
+  % Примери:
+  % \begin{itemize}
+  % \item
+  %   $A \cap A = A$, за всяко множество $A$.
+  % \item
+  %   $A \cap \emptyset = \emptyset$, за всяко множество $A$.
+  % \item
+  %   $\{1,\emptyset,\{\emptyset\}\} \cap \{\emptyset\} = \{\emptyset\}$.
+  %   \item
+  %     $\{1,2,\{1,2\}\} \cap \{1,\{1\}\} = \{1\}$.
+  %   \end{itemize}
+  \item
+    {\bf Обединение}
+    \[A\cup B = \{x\ \mid x\in A\ \vee\ x\in B\}.\]
+    % $A\cup B$ е множеството, за което е изпълнена формулата
+    % \[(\forall x)[x \in A\cup B \iff (x\in A\ \vee\ x \in B)].\]
+    % Примери:
+    % \begin{itemize}
+    % \item
+    %   $A \cup A = A$, за всяко множество $A$.
+    % \item 
+    %   $A \cup \emptyset = A$, за всяко множество $A$.
+    % \item
+    %   $\{1,2,\emptyset\} \cup \{1,2,\{\emptyset\}\} = \{1,2,\emptyset,\{\emptyset\}\}$.
+    % \item
+    %   $\{1,2,\{1,2\}\} \cup \{1,\{1\}\} = \{1,2,\{1\},\{1,2\}\}$.
+    % \end{itemize}
+  \item
+    {\bf Разлика}
+    \[A\setminus B = \{x\ \mid\ x\in A\ \wedge\ x\not\in B\}.\]
+    % $A\setminus B$ е множеството, за което е изпълнена формулата
+    % \[(\forall x)[x \in A\setminus B \iff (x\in A\ \wedge\ x \not\in B)].\]
+    % Примери:
+    % \begin{itemize}
+    % \item
+    %   $A \setminus A = \emptyset$, за всяко множество $A$.
+    % \item 
+    %   $A \setminus \emptyset = A$, за всяко множество $A$.
+    % \item 
+    %   $\emptyset \setminus A = \emptyset$, за всяко множество $A$.
+    % \item
+    %   $\{1,2,\emptyset\} \setminus \{1,2,\{\emptyset\}\} = \{\emptyset\}$.
+    % \item
+    %   $\{1,2,\{1,2\}\} \setminus \{1,\{1\}\} = \{2,\{1,2\}\}$.
+    % \end{itemize}
+  % \item
+  %   {\bf Симетрична разлика}
+  %   \[A\triangle B = (A\backslash B)\cup (B\backslash A).\]
+  %   % $A\triangle B$ е множеството, за което е изпълнена формулата
+  %   % \[(\forall x)[x \in A\triangle B \iff [(x\in A\ \wedge\ x \not\in B) \vee (x \in B\ \wedge\ x\not\in A)]].\]
+  %   Примери:
+  %   \begin{itemize}
+  %   \item 
+  %     $A \triangle \emptyset = A$, за всяко множество $A$.
+  %   \item
+  %     $A \triangle A = \emptyset$, за всяко множество $A$.
+  %   \item
+  %     $A\triangle B = B \triangle A$, за всеки две множества $A$ и $B$.
+  %   \item
+  %     $\{1,2,\emptyset\} \triangle \{1,2,\{\emptyset\}\} = \{\emptyset\} \cup \{\{\emptyset\}\} = \{\emptyset,\{\emptyset\}\}$.
+  %   \item
+  %     $\{1,2,\{1,2\}\} \triangle \{1,\{1\}\} = \{2,\{1,2\}\} \cup \{\{1\}\} = \{2,\{1\},\{1,2\}\}$.
+  %   \end{itemize}
+  \item
+    {\bf Степенно множество}
+    \[\Ps(A) = \{x\mid x\subseteq A\}.\]
+    % $\Ps(A)$ е множеството, за което е изпълнена формулата
+    % \[(\forall x)[x \in \Ps(A) \iff (\forall y)[y\in x\rightarrow y \in A]].\]
+    Примери:
+    \begin{itemize}
+    \item 
+      $\Ps(\emptyset) = \{\emptyset\}$.
+    \item
+      $\Ps(\{\emptyset\}) = \{\emptyset,\{\emptyset\}\}$.
+    \item
+      $\Ps(\{\emptyset,\{\emptyset\}\}) = \{\emptyset,\{\emptyset\},\{\{\emptyset\}\},\{\emptyset,\{\emptyset\}\}\}$.
+    \item
+      $\Ps(\{1,2\}) = \{\emptyset,\{1\},\{2\},\{1,2\}\}$.
+    \end{itemize}
+  \end{itemize}
+  Нека имаме редица от множества $\{A_1,A_2,\dots,A_n\}$.
+  Тогава имаме следните операции:
+  \begin{itemize}
+  \item
+    {\bf Обединение на редица от множества}
+    \[\bigcup^{n}_{i=1} A_i = \{x \mid \exists i (1\leq i\leq n\ \&\ x\in A_i)\}.\]
+    % \[(\forall x)[x \in \bigcup^n_{i=1}A_i \iff (\exists i)[1 \leq i \leq n\ \wedge\ x \in A_i]].\]
+  \item
+    {\bf Сечение на редица от множества}
+    \[\bigcap^{n}_{i=1} A_i = \{x \mid \forall i (1\leq i\leq n \rightarrow x\in A_i)\}.\]
+    % \[(\forall x)[x \in \bigcap^n_{i=1}A_i \iff (\forall i)[1 \leq i \leq n\ \rightarrow\ x \in A_i]].\]
+  \end{itemize}
+
+% \begin{example}
+%   Нека $A = \{x\in\Nat\mid x > 1\}$ и $B = \{x\in\Nat\mid x>3\}$. Тогава :
+%   \begin{itemize}
+%     \item
+%       $A\cap B = \{x\in\Nat\mid x > 3\}$,
+%     \item
+%       $A\cup B = \{x\in\Nat\mid x > 1\}$,
+%     \item
+%       $A\setminus B = \{x\in\Nat\mid 1<x\leq 3\}$,
+%     \item
+%       $B\setminus A = \emptyset$,
+%     % \item
+%     %   $A\triangle B = \{x\in\Nat\mid 1<x\leq 3\}$
+%     \end{itemize}
+% \end{example}
+
+
+\begin{problem}
+  Проверете верни ли са свойствата:
+  \begin{enumerate}[a)]
+  \item
+    $A\subseteq B \iff A\setminus B = \emptyset \iff A\cup B = B \iff A\cap B = A$;
+  \item
+    $A\setminus \emptyset = A$, $\emptyset\setminus A=\emptyset$, $A\setminus B = B\setminus A$.
+  \item
+    $A\cap (B\cup A) = A \cap B$;
+  \item
+    $A\cup(B\cap C) = (A\cup B)\cap(A\cup C)$ и $A \cap (B \cup C) = (A \cup B) \cap (A \cup C)$;
+  % \item
+  %   $C\subseteq A\ \&\ C\subseteq B \rightarrow C\subseteq A\cap B$;
+  % \item
+  %   $A\subseteq C\ \&\ B\subseteq C \rightarrow A\cup B\subseteq C$;
+  \item
+    $A\backslash B = A \iff A\cap B = \emptyset$;
+  \item
+    $A\backslash B = A\backslash (A\cap B)$ и $A\backslash B = A\backslash (A\cup B)$;
+  \item
+    $(A\cup B)\setminus C = (A\setminus C) \cup (B\setminus C)$;
+  % \item
+  %   \marginpar{Не е вярно!}
+  %   $A\setminus (B\setminus C) = (A\setminus B)\setminus C$;
+  \item
+    \marginpar{Закони на Де Морган}
+    $C\setminus (A\cup B) = (C\backslash A)\cap(C\backslash B)$ и $C \backslash (A\cap B) = (C\backslash A)\cup(C\backslash B)$
+  \item
+    $C\backslash(\bigcup^{n}_{i=1} A_i) = \bigcap^{n}_{i=1} (C\backslash A_i)$ и $C \backslash(\bigcap^{n}_{i=1} A_i) = \bigcup^{n}_{i=1} (C\backslash A_i)$;
+  \item
+    $(A\backslash B)\backslash C = (A\backslash C)\backslash(B \backslash C)$ и $A\backslash (B\backslash C) = (A\backslash B) \cup (A\cap C)$;
+  \item
+    $A\subseteq B \Rightarrow \Ps(A) \subseteq \Ps(B)$;
+  \item
+    \marginpar{$X \subseteq A\cup B \stackrel{?}{\Rightarrow} X\subseteq A \vee X \subseteq B$}
+    $\Ps(A\cap B) = \Ps(A) \cap \Ps(B)$ и $\Ps(A\cup B) = \Ps(A) \cup \Ps(B)$;
+  \end{enumerate}
+\end{problem}
+
+За да дадем определение на понятието релация, трябва първо 
+да въведем понятието декартово произведение на множества,
+което пък от своя страна се основава на понятието наредена двойка.
+
+\subsection*{Наредена двойка}
+\index{наредена двойка}
+За два елемента $a$ и $b$ въвеждаме опрецията {\bf наредена двойка} $\pair{a,b}$.
+Наредената двойка $\pair{a,b}$ има следното характеристичното свойство:
+\[a_1 = a_2\ \wedge\ b_1 = b_2\ \iff\ \pair{a_1,b_1} = \pair{a_2,b_2}.\]
+Понятието наредена двойка може да се дефинира по много начини, стига да изпълнява харектеристичното свойство.
+Ето примери как това може да стане:
+\begin{enumerate}[1)]
+\item
+  \marginpar{Norbert Wiener (1914)}
+  Първото теоретико-множествено определение на понятието наредена двойка е
+  дадено от Норберт Винер:
+  \[\pair{a,b} \df \{\{\{a\},\emptyset\},\{\{b\}\}\}.\]
+\item
+  \marginpar{Kazimierz Kuratowski (1921)}
+  Определението на Куратовски се приема за ,,стандартно'' в наши дни:
+  \[\pair{a,b} \df \{\{a\},\{a,b\}\}.\]
+\end{enumerate}
+
+\begin{problem}
+  Докажете, че горните дефиниции наистина изпълняват харектеристичното свойство за наредени двойки.
+\end{problem}
+
+\begin{dfn}
+  \marginpar{Пример за индуктивна (рекурсивна) дефиниция}
+  Сега можем, за всяко естествено число $n \geq 1$,
+  да въведем понятието наредена $n$-орка $\pair{a_1,\dots,a_n}$:
+  \begin{align*}
+    & \pair{a_1} \df a_1,\\
+    & \pair{a_1,a_2,\dots,a_n} \df \pair{a_1,\pair{a_2,\dots,a_n}}
+  \end{align*}
+\end{dfn}
+
+Оттук нататък ще считаме, че имаме операцията наредена $n$-орка, без да се интересуваме от нейната формална дефиниция.
+ 
+\subsection*{Декартово произведение}
+\marginpar{На англ. cartesian product}
+\index{декартово произведение}
+\marginpar{Считаме, че $(A\times B)\times C = A\times (B\times C) = A\times B \times C$}
+
+За две множества $A$ и $B$, определяме тяхното декартово произведение като
+\[A\times B = \{\pair{a,b}\mid a\in A\ \&\ b\in B\}.\]
+За краен брой множества $A_1,A_2,\dots,A_n$, определяме
+\[A_1\times A_2\times\cdots\times A_n = \{\pair{a_1,a_2,\dots,a_n}\mid a_1 \in A_1\ \&\ a_2\in A_2\ \&\ \dots\ \&\ a_n \in A_n\}.\]
+
+\begin{problem}
+  Проверете, че:
+  \begin{enumerate}[a)]
+  \item
+    $A\times(B\cup C) = (A\times B) \cup (A\times C)$.
+  \item
+    $(A\cup B)\times C = (A\times C)\cup (B\times C)$.
+  \item 
+    $A\times(B\cap C) = (A\times B) \cap (A\times C)$.
+  \item
+    $(A \cap B)\times C = (A \times C)\cap(B\times C)$.
+  \item 
+    $A\times(B\setminus C) = (A\times B) \setminus (A\times C)$.
+  \item
+    $(A\setminus B)\times C = (A\times C)\setminus (B\times C)$.
+  \end{enumerate}
+\end{problem}
+
+\subsection*{Основни видове бинарни релации}
+% \marginpar{Бинарни релации}
+
+Подмножествата $R$ от вида $R \subseteq A\times A\times\cdots\times A$ се наричат релации.
+Релациите от вида $R\ \subseteq\ A\times A$ са важен клас, който ще срещаме често.
+Да разгледаме няколко основни видове релации от този клас:
+\begin{enumerate}[I)]
+\item
+  {\bf рефликсивна}, ако
+  \[(\forall x\in A)[\pair{x,x}\in R].\]
+  Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е рефлексивна, защото
+  \[(\forall x\in \Nat)[x \leq x].\]
+% \item
+%   {\bf антирефлексивна}, ако
+%   \[(\forall x\in A)[\pair{x,x}\not\in R].\]
+%   Например, релацията $<\ \subseteq\ \Nat\times\Nat$ е антирефлексивна, защото
+%   \[(\forall x\in \Nat)[x \not< x].\]
+\item
+  {\bf транзитивна}, ако
+  \[(\forall x,y,z\in A)[\pair{x,y}\in R\ \&\ \pair{y,z}\in R \rightarrow \pair{x,z}\in R].\]
+  Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е транзитивна, защото
+  \[(\forall x,y,z\in A)[x \leq y\ \&\ y \leq z\ \rightarrow\ x\leq z].\]
+\item
+  {\bf симетрична}, ако
+  \[(\forall x,y\in A)[\pair{x,y}\in R \rightarrow \pair{y,x}\in R].\]
+  Например, релацията $=\ \subseteq\ \Nat\times\Nat$ е рефлексивна, защото
+  \[(\forall x,y\in \Nat)[x = y\ \rightarrow\ y = x].\]
+\item
+  {\bf антисиметрична}, ако
+  \[(\forall x,y\in A)[\pair{x,y}\in R\ \&\ \pair{y,x}\in R \rightarrow x = y].\]
+  Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е антисиметрична, защото
+  \[(\forall x,y,z\in A)[x \leq y\ \&\ y \leq x\ \rightarrow\ x = y].\]
+% \item
+%   {\bf асиметрична}, ако
+%   \[(\forall x,y)[\pair{x,y}\in R \rightarrow \pair{y,x}\not\in R].\]
+%   Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е асиметрична, защото
+%   \[(\forall x,y\in \Nat)[x < y\ \rightarrow\ y \not< x].\]
+\end{enumerate}
+
+% \begin{remark}
+%   Добре е да запомните как се наричат тези основни видове релации,
+%   защото ще ги използваме често.
+% \end{remark}
+
+% \begin{example}
+%   Да обобщим примерите от по-горе.
+%   \begin{enumerate}[a)]
+%   \item
+%     Релацията $\leq\ \subseteq\ \Nat\times\Nat$ е рефлексивна, транзитивна и антисиметрична.
+%   \item
+%     Релацията $<\ \subseteq\ \Nat\times\Nat$ е антирефлексивна, транзитивна и асиметрична.
+%   \item
+%     Релацията $=\ \subseteq\ \Nat\times\Nat$ е рефлексивна, транзитивна и симетрична.
+%   \end{enumerate}
+% \end{example}
+
+\begin{itemize}
+\item
+  Една бинарна релация $R$ над множеството $A$ се нарича {\bf релация на еквивалентност}, 
+  ако $R$ е рефлексивна, транзитивна и симетрична.
+\item 
+  За всеки елемент $a \in A$, определяме неговия 
+  {\bf клас на еквивалентност} относно релацията на еквивалентност $R$ по следния начин:
+  \[[a]_R \df \{b\in A \mid \pair{a,b} \in R\}.\]
+\end{itemize}
+
+\begin{remark}
+  Лесно се съобразява, че за всеки два елемента $a, b\in A$,
+  \[\pair{a,b} \in R \iff [a]_R = [b]_R.\]
+\end{remark}
+
+\begin{example}
+  За всяко естествено число $n\geq 2$, дефинираме релацията $R_n$ като
+  \[\pair{x,y}\in R_n \iff x \equiv y\ (\bmod\ n).\]
+  Ясно е, че $R_n$ са релации на еквивалентност.
+\end{example}
+
+
+\subsection*{Операции върху бинарни релации}
+
+\begin{enumerate}[I)]
+\item
+  {\bf Композиция} на две релации $R \subseteq B\times C$ и $P \subseteq A\times B$ е релацията $R\circ P \subseteq A\times C$,
+  определена като:
+  \[R\circ P \df \{\pair{a,c} \in A\times C \mid (\exists b \in B)[\pair{a,b}\in P\ \&\ \pair{b,c} \in R]\}.\]
+\item
+  {\bf Обръщане} на релацията $R \subseteq A\times B$ е релацията $R^{-1}\subseteq B\times A$, 
+  определена като:
+  \[R^{-1} \df \{\pair{x,y} \in B\times A \mid \pair{y,x} \in R\}.\]
+\item
+  \marginpar{Очевидно е, че $P$ е рефлексивна релация, дори ако $R$ не е.}
+  {\bf Рефлексивно затваряне} на релацията $R \subseteq A\times A$ е релацията
+  \[P \df R \cup \{\pair{a,a}\mid a \in A\}.\]
+\item
+  {\bf Итерация} на релацията $R \subseteq A\times A$ дефинираме като за всяко естествено число $n$,
+  дефинираме релацията $R^n$ по следния начин:
+  \marginpar{Лесно се вижда, че  $R^1 = R$}
+  \begin{align*}
+    R^0 & \df \{\pair{a,a} \mid a \in A\}\\
+    R^{n+1} & \df R^n \circ R.
+  \end{align*}
+\item
+  \marginpar{\ding{45} Проверете, че $R^+$ е транзитивна релация!}
+  {\bf Транзитивно затваряне} на $R \subseteq A\times A$ е релацията
+  \[R^+ \df \bigcup_{n\geq 1} R^n.\]
+\end{enumerate}
+
+\index{$R^\star$}
+За дадена релация $R$, с $R^\star$ ще означаваме нейното {\em рефлексивно и транзитивно затваряне}.
+От дефинициите е ясно, че \[R^\star = \bigcup_{n\geq 0} R^n.\]
+
+\subsection*{Видове функции}
+
+Функцията $f:A \to B$ е:
+\begin{itemize}
+\item
+  \marginpar{(или $f$ е {\bf обратима})}
+  {\bf инекция}\index{функция!инекция}, ако 
+  \[(\forall a_1,a_2\in A)[a_1\neq a_2 \rightarrow f(a_1)\neq f(a_2)],\]
+  или еквивалентно,
+  \[(\forall a_1,a_2\in A)[f(a_1) = f(a_2) \rightarrow a_1 = a_2].\]
+\item
+  \marginpar{(или $f$ е {\bf върху} $B$)}
+  {\bf сюрекция}\index{функция!сюрекция}, ако 
+  \[(\forall b\in B)(\exists a\in A)[f(a) = b].\]
+\item
+  {\bf биекция}\index{функция!биекция}, ако е инекция и сюрекция.
+\end{itemize}
+
+\begin{problem}
+  \marginpar{Канторово кодиране. Най-добре се вижда като се нарисува таблица}
+  Докажете, че $f: \Nat \times \Nat\rightarrow \Nat$ е биекция, където
+  \[f(x, y) = \frac{(x+y)(x+y+1)}{2} + x.\]
+\end{problem}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
