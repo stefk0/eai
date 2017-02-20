@@ -424,27 +424,28 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{hint}
 
 За една дума $\alpha \in \{0,1\}^\star$, 
-нека с $\alpha_{(2)}$ да означим числото в десетична бройна система, което се представя в двоична бройна система като $\alpha$.
-Например, $1101_{(2)} = 1 \cdot 2^3+1\cdot 2^2+0\cdot 2^1+1\cdot 2^0 = 13$.
-Тогава имаме следните свойства:
+нека с $\ov{\alpha}_{(k)}$ да означим числото, което се представя в $k$-ична бройна система като $\alpha$.
+Например, 
+\[\ov{1101}_{(2)} = 1 \cdot 2^3+1\cdot 2^2+0\cdot 2^1+1\cdot 2^0 = \ov{13}_{(10)} = 1.10^1 + 3.10^0.\]
+За $k = 2$, имаме следната дефиниция:
 \begin{itemize}
 \item
-  $\varepsilon_{(2)} = 0$,
+  $\ov{\varepsilon}_{(2)} = 0$,
 \item
-  $(\alpha0)_{(2)} = 2\cdot(\alpha)_{(2)}$,
+  $\ov{\alpha 0}_{(2)} = 2\cdot \ov{\alpha}_{(2)}$,
 \item
-  $(\alpha1)_{(2)} = 2\cdot(\alpha)_{(2)} + 1$.
+  $\ov{\alpha 1}_{(2)} = 2\cdot \ov{\alpha}_{(2)} + 1$.
 \end{itemize}
-\marginpar{Да отбележим, че за всяко число $n$ има безкрайно много думи $\alpha$, за които $\alpha_{(2)} = n$. Например, $10_{(2)} = 010_{(2)} = 0010_{(2)} = \cdots$}
+\marginpar{Да отбележим, че за всяко число $n$ има безкрайно много думи $\alpha$, за които $\ov{\alpha}_{(2)} = n$. Например, $\ov{10}_{(2)} = \ov{010}_{(2)} = \ov{0010}_{(2)} = \cdots$}
 
 \begin{problem}
-  Докажете, че $L = \{\omega \in \{0,1\}^\star \mid \omega_{(2)} \equiv 2\ (\bmod\ 3)\}$ е автоматен.
+  Докажете, че $L = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$ е автоматен.
 \end{problem}
 \begin{proof}
   Нашият автомат ще има три състояния $\{q_0,q_1,q_2\}$, като началното състояние ще бъде $q_0$.
   Целта ни е да дефинираме така автомата, че да имаме следното свойство:
   \begin{equation}
-    (\forall\alpha\in\Sigma^\star)(\forall i < 3)[\alpha_{(2)} \equiv i\ (\bmod\ 3)\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i],
+    (\forall\alpha\in\Sigma^\star)(\forall i < 3)[\ov{\alpha}_{(2)} \equiv i\ (\bmod\ 3)\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i],
   \end{equation}
   т.е. всяко състояние отговаря на определен остатък при деление на три.
   Понеже искаме нашия автомат да разпознава тези думи $\alpha$,
