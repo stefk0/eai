@@ -453,17 +453,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Дефинираме функцията $\delta$ следвайки свойствата:
   \begin{itemize}
   \item
-    $\delta(q_0,0) = q_0$, защото ако $\alpha_{(2)} \equiv 0 \bmod 3$, то $(\alpha0)_{(2)} \equiv 0 \bmod 3$;
+    $\delta(q_0,0) = q_0$, защото ако $\ov{\alpha}_{(2)} \equiv 0 \bmod 3$, то $\ov{\alpha 0}_{(2)} \equiv 0 \bmod 3$;
   \item 
-    $\delta(q_0,1) = q_1$, защото ако $\alpha_{(2)} \equiv 0 \bmod 3$, то $(\alpha1)_{(2)} \equiv 1 \bmod 3$;
+    $\delta(q_0,1) = q_1$, защото ако $\ov{\alpha}_{(2)} \equiv 0 \bmod 3$, то $\ov{\alpha 1}_{(2)} \equiv 1 \bmod 3$;
   \item
-    $\delta(q_1,0) = q_2$, защото ако $\alpha_{(2)} \equiv 1 \bmod 3$, то $(\alpha0)_{(2)} \equiv 2 \bmod 3$;
+    $\delta(q_1,0) = q_2$, защото ако $\ov{\alpha}_{(2)} \equiv 1 \bmod 3$, то $\ov{\alpha 0}_{(2)} \equiv 2 \bmod 3$;
   \item 
-    $\delta(q_1,1) = q_0$, защото ако $\alpha_{(2)} \equiv 1 \bmod 3$, то $(\alpha1)_{(2)} \equiv 0 \bmod 3$;
+    $\delta(q_1,1) = q_0$, защото ако $\ov{\alpha}_{(2)} \equiv 1 \bmod 3$, то $\ov{\alpha 1}_{(2)} \equiv 0 \bmod 3$;
   \item
-    $\delta(q_2,0) = q_1$, защото ако $\alpha_{(2)} \equiv 2 \bmod 3$, то $(\alpha0)_{(2)} \equiv 1 \bmod 3$;
+    $\delta(q_2,0) = q_1$, защото ако $\ov{\alpha}_{(2)} \equiv 2 \bmod 3$, то $\ov{\alpha 0}_{(2)} \equiv 1 \bmod 3$;
   \item 
-    $\delta(q_2,1) = q_2$, защото ако $\alpha_{(2)} \equiv 2 \bmod 3$, то $(\alpha1)_{(2)} \equiv 2 \bmod 3$.
+    $\delta(q_2,1) = q_2$, защото ако $\ov{\alpha}_{(2)} \equiv 2 \bmod 3$, то $\ov{\alpha 1}_{(2)} \equiv 2 \bmod 3$.
   \end{itemize}
   Ето и картинка на автомата $\A$:
   \begin{framed}
@@ -491,11 +491,11 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  \noindent Да разгледаме твърденията:
  \begin{enumerate}[(1)]
   \item 
-    $\delta^\star(q_0,\alpha) = q_0 \implies \alpha_{(2)} \equiv 0 \mod 3$;
+    $\delta^\star(q_0,\alpha) = q_0 \implies \ov{\alpha}_{(2)} \equiv 0 \mod 3$;
   \item 
-    $\delta^\star(q_0,\alpha) = q_1 \implies \alpha_{(2)} \equiv 1 \mod 3$;
+    $\delta^\star(q_0,\alpha) = q_1 \implies \ov{\alpha}_{(2)} \equiv 1 \mod 3$;
   \item 
-    $\delta^\star(q_0,\alpha) = q_2 \implies \alpha_{(2)} \equiv 2 \mod 3$.
+    $\delta^\star(q_0,\alpha) = q_2 \implies \ov{\alpha}_{(2)} \equiv 2 \mod 3$.
   \end{enumerate}
   Ще докажем (1), (2) и (3) {\em едновременно} с индукция по дължината на думата $\alpha$.
   За $\abs{\alpha} = 0$, всички условия са изпълнени. (Защо?)
@@ -514,17 +514,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Тогава, по дефиницията на $\delta$, 
     $\delta(q_1,0) = q_2$ и следователно, $\delta^\star(q_0,\beta) = q_1$.
     По {\bf И.П.} за (2) с $\beta$,
-    \[\delta^\star(q_0,\beta) = q_1\ \Rightarrow\ \beta_{(2)} \equiv 1 \bmod 3\]
-    Тогава, $(\beta0)_{(2)} \equiv 2 \mod 3$. Така доказахме, че
-    \[\delta^\star(q_0,\beta 0) = q_2\ \Rightarrow\ (\beta 0)_{(2)} \equiv 2 \bmod 3.\]
+    \[\delta^\star(q_0,\beta) = q_1\ \Rightarrow\ \ov{\beta}_{(2)} \equiv 1 \bmod 3\]
+    Тогава, $\ov{\beta0}_{(2)} \equiv 2 \mod 3$. Така доказахме, че
+    \[\delta^\star(q_0,\beta 0) = q_2\ \Rightarrow\ \ov{\beta 0}_{(2)} \equiv 2 \bmod 3.\]
   \item
     $x = 1$.
     Тогава, по дефиницията на $\delta$, $\delta(q_2,1) = q_2$ и следователно,
     $\delta^\star(q_0,\beta) = q_2$.
     По {\bf И.П.} за (3) с $\beta$,
-    \[\delta^\star(q_0,\beta) = q_2\ \Rightarrow\ \beta_{(2)} \equiv 2 \mod 3.\]
-    Тогава, $(\beta1)_{(2)} \equiv 2 \mod 3$. Така доказахме, че
-    \[\delta^\star(q_0,\beta 1) = q_2\ \Rightarrow\ (\beta 1)_{(2)} \equiv 2 \mod 3.\]
+    \[\delta^\star(q_0,\beta) = q_2\ \Rightarrow\ \ov{\beta}_{(2)} \equiv 2 \mod 3.\]
+    Тогава, $\ov{\beta1}_{(2)} \equiv 2 \mod 3$. Така доказахме, че
+    \[\delta^\star(q_0,\beta 1) = q_2\ \Rightarrow\ \ov{\beta 1}_{(2)} \equiv 2 \mod 3.\]
   \end{itemize}
   
   За да докажем (1), нека $\delta^\star(q_0,\beta x) = q_0$. 
@@ -545,12 +545,96 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
   От (1), (2) и (3) следва директно, че $\L(\A) \subseteq L$.
   
-  За другата посока, нека $\alpha \in L$, т.е. $\alpha_{(2)} \equiv 2 \bmod 3$.
+  За другата посока, нека $\alpha \in L$, т.е. $\ov{\alpha}_{(2)} \equiv 2 \bmod 3$.
   Ако допуснем, че $\alpha \not\in \L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_1\}$.
-  Но в тези случаи получаваме от твърдения (1) и (2), че $\alpha_{(2)} \equiv 0 \bmod 3$ или $\alpha_{(2)} \equiv 1 \bmod 3$.
+  Но в тези случаи получаваме от твърдения (1) и (2), че $\ov{\alpha}_{(2)} \equiv 0 \bmod 3$ или $\ov{\alpha}_{(2)} \equiv 1 \bmod 3$.
   Това е противоречие с избора на $\alpha \in L$. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
   Така доказахме и посоката $L \subseteq \L(\A)$.
 \end{proof}
+
+Можем да дадем и следнта дефиниция на $\ov{\alpha}_{(2)}$:
+\begin{itemize}
+\item
+  $\ov{\varepsilon}_{(2)} = 0$,
+\item
+  $\ov{0\alpha}_{(2)} = \ov{\alpha}_{(2)}$,
+\item
+  $\ov{1\alpha}_{(2)} = 2^{|\alpha|} + \ov{\alpha}_{(2)}$.
+\end{itemize}
+
+Тогава:
+\begin{align*}
+  0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = L\\
+  \\
+  1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & \df L_1.
+\end{align*}
+
+Лесно се съобразява, че $L \neq L_1$, защото например за думата $\alpha = 10$
+имаме, че $\alpha \in L$, но $\alpha \not\in L_1$.
+Продължаваме нататък:
+\begin{align*}
+  0^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_1\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & \df L_2\\
+  \\
+  1^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_1\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L.
+\end{align*}
+Да проверим, че $L_2 \neq L$ и $L_2 \neq L_1$.
+Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
+Непосредствено се проверява, че $\alpha \in L_2$, $\alpha \not\in L$, $\alpha \not\in L_1$.
+Продължаваме нататък:
+\begin{align*}
+  0^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_2\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L_1
+  \\
+  1^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_2\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L_2.
+\end{align*}
+
+Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
+
+\begin{framed}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        
+        \node[initial,state]      (0) {$L$};
+        \node[state]              (1) [right of=0]{$L_1$};
+        \node[accepting, state]   (2) [right of=1]{$L_2$};
+        
+        \path 
+        (0) edge  [loop above]    node [above]  {$0$} (0)
+        (0) edge  [bend left=15]  node [above]  {$1$} (1)
+        (2) edge  [bend left=15]  node [below]  {$0$} (1)
+        (1) edge  [bend left=15]  node [below]  {$1$} (0)
+        (1) edge  [bend left=15]  node [above]  {$0$} (2)
+        (2) edge  [loop above]    node [above]  {$1$} (2);
+      \end{tikzpicture}
+    \end{center}
+    \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \alpha_{(2)} \equiv 2\ (\bmod\ 3)\}$}
+  \end{figure}
+\end{framed}
 
 
 %%% Local Variables:
