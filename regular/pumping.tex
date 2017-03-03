@@ -50,25 +50,25 @@
   Тогава $L$ {\bf не} е регулярен език.
 \end{cor}
 \begin{proof}
-  Да означим с $(P)$ следната формула:
+  Да означим с $P_{\text{reg}}(L,p)$ следната формула:
   {\scriptsize
-    \[(\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
+    \[(\forall \alpha \in L)[\abs{\alpha} \geq p \geq 1\Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
   \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
   
   \begin{center}
-  {\em ,,Aко $L$ е регулярен език, то е изпълнено свойството $(P)$.''}
+    {\em ,,Aко $L$ е регулярен език, то е изпълнено $(\exists p)P_{\text{reg}}(L,p)$.''}
   \end{center}
   \marginpar{Контрапозиция на твърдението $p \to q$ е твърдението $\neg q \to \neg p$}
   \noindent
   Лемата може да се запише по следния еквивалентен начин:
   
   \begin{center}
-    {\em ,,Ако свойството $(P)$ не е изпълнено, то $L$ не е регулярен език.''}
+    {\em ,,Ако $(\exists p) P_{\text{reg}}(L,p)$ не е изпълнено, то $L$ не е регулярен език.''}
   \end{center}
 
   \marginpar{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
 
-  \noindent Отрицанието на свойството $(P)$ може да се запише по следния начин:
+  \noindent Отрицанието на формулата $(\exists p) P_{\text{reg}}(L,p)$ може да се запише по следния начин:
   {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
   Горната формула е еквивалентна на:
   \marginpar{Използваме, че $\neg p \vee \neg q \vee r \equiv (p \wedge q) \to r$}
@@ -314,13 +314,12 @@
 
 \begin{problem}
   \marginpar{Например, $\{c\}^+\cdot\{a^nb^n\mid n\in\Nat\}\cup \{a,b\}^\star$}
-  Да се даде пример за език $L$, който {\bf не} е регулярен, но удовлетворява
-  условието на \Lem{pumping-reg}.
+  Да се даде пример за език $L$, който {\bf не} е регулярен, но $(\exists p)P_{\text{reg}}(L,p)$.
 \end{problem}
 
 \begin{example}
   Езикът $L = \{c^ka^nb^m\mid k,n,m \in \Nat\ \&\ k = 1\implies m = n\}$
-  {\bf не} е регулярен, но условието за покачване от \Lem{pumping-reg} е изпълнено за него.
+  {\bf не} е регулярен, но но $(\exists p)P_{\text{reg}}(L,p)$.
 \end{example}
 \begin{proof}
   Да допуснем, че $L$ е регулярен.
