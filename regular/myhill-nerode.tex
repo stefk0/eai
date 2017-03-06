@@ -53,20 +53,20 @@
   Понеже $M \neq L$, имаме ново състояние $q_M$ в автомата и 
   $\delta_\A(q_L,a) = q_M$.
 \item
-  $b^{-1}L = \{a,b\}^\star aL = M$;
+  $b^{-1}(L) = \{a,b\}^\star aL = M$;
   Следователно, $\delta_\A(q_L,b) = q_M$.
 \item
-  $a^{-1}M = L \cup M \df N$. 
+  $a^{-1}(M) = L \cup M \df N$. 
   Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
   Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
   Понеже $N \neq L, M$, имаме ново състояние $q_N$ в автомата и 
   $\delta_\A(q_M,a) = q_N$.
 \item
-  $b^{-1}M = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
+  $b^{-1}(M) = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
 \item
-  $a^{-1}N = L \cup M = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
+  $a^{-1}(N) = L \cup M = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
 \item
-  $b^{-1}N = M$.
+  $b^{-1}(N) = M$.
   Следователно, $\delta_\A(q_M,b) = q_M$.
 \end{itemize}
 От горните сметки следва, че 
@@ -158,23 +158,28 @@
   Да разгледаме езика $L = \L(\mathbf{a\cdot(a+b)^\star\cdot b})$.
   \begin{itemize}
   \item 
-    $a^{-1}L = \{a,b\}^\star b = M$;
+    $a^{-1}(L) = \{a,b\}^\star b = M$, т.е. $\delta(q_L,a) = q_M$;
   \item
-    $b^{-1}L = \emptyset$;
+    $b^{-1}(L) = \emptyset$, т.е. $\delta(q_L,b) = q_\emptyset$;
   \item
-    $a^{-1}M = \{b\} \cup \{a,b\}^\star b = N$;
+    $a^{-1}(M) = \{b\} \cup \{a,b\}^\star b = N$, т.е. $\delta(q_M,a) = q_N$;
   \item
-    $b^{-1}M = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$;
+    $b^{-1}(M) = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$, т.е. $\delta(q_M,b) = q_P$;
   \item
-    $a^{-1}N = \{b\} \cup \{a,b\}^\star b = M$;
+    $a^{-1}(N) = \{b\} \cup \{a,b\}^\star b = M$, т.е. $\delta(q_N,b) = q_M$;
   \item
-    $b^{-1}N = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$;
+    $b^{-1}(N) = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$;
   \item
-    $a^{-1}P = \{b\} \cup \{a,b\}^\star b = N$;
+    $a^{-1}(P) = \{b\} \cup \{a,b\}^\star b = N$;
   \item
-    $b^{-1}P = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$.
+    $b^{-1}(P) = \{\varepsilon\} \cup \{b\} \cup \{a,b\}^\star b = P$;
+  \item
+    Ясно е, че $a^{-1}(\emptyset) = b^{-1}(\emptyset) = \emptyset$.
   \end{itemize}
 
+  Единственото финално състояние е $q_P$, защото $\varepsilon$ е елемент единствено на $P$.
+
+\begin{framed}
   \begin{figure}[H]
     \centering
     \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
@@ -200,6 +205,7 @@
     \end{tikzpicture}
     \caption{Минимален автомат за $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$}
   \end{figure}
+\end{framed}
 \end{example}
 
 \begin{example}
@@ -208,23 +214,24 @@
   Нека да видим дали можем да построим автомат за този език.
   \begin{itemize}
   \item 
-    $a^{-1}L \df M$ е езика съставен от думите с нечетен брой $a$ и точно едно $b$;
+    $a^{-1}(L) = M \df \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и точно едно $b$}\}$;
   \item 
-    $b^{-1}L \df N$ е езика съставен от думите с четен брой $a$ и нито едно $b$;
+    $b^{-1}(L) = N \df \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа четен брой $a$ и нито едно $b$}\}$;
   \item
-    $a^{-1}M = L$;
+    $a^{-1}(M) = L$;
   \item
-    $b^{-1}M \df P$ е езика съставен от думите с нечетен брой $a$ и нито едно $b$;
+    $b^{-1}(M) = P \df \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и нито едно $b$}\}$;
   \item
-    $a^{-1}N = P$;
+    $a^{-1}(N) = P$;
   \item
-    $b^{-1}N = \emptyset$;
+    $b^{-1}(N) = \emptyset$;
   \item
-    $a^{-1}P = N$;
+    $a^{-1}(P) = N$;
   \item
-    $b^{-1}P = \emptyset$;
+    $b^{-1}(P) = \emptyset$;
   \end{itemize}
 
+\begin{framed}
   \begin{figure}[H]
     \centering
     \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
@@ -248,6 +255,7 @@
     \end{tikzpicture}
     \caption{Минимален автомат, който приема думи с четен брой $a$ и точно едно $b$}
   \end{figure}  
+\end{framed}
 \end{example}
 
 
@@ -259,23 +267,24 @@
   на минимален автомат.
   \begin{itemize}
   \item 
-    $a^{-1}L = L_1$;
+    $a^{-1}(L) = L_1$;
   \item
-    $b^{-1}L = \emptyset$;
+    $b^{-1}(L) = \emptyset$;
   \item
-    $a^{-1}L_1 = L_2$;
+    $a^{-1}(L_1) = L_2$;
   \item
-    $b^{-1}L_1 = \{\varepsilon\}$;
+    $b^{-1}(L_1) = \{\varepsilon\}$;
   \item
-    $a^{-1}\{\varepsilon\} = b^{-1}\{\varepsilon\} = \emptyset$;
+    $a^{-1}(\{\varepsilon\}) = b^{-1}(\{\varepsilon\}) = \emptyset$;
   \item
-    Вижда се, че $a^{-1}L_k = L_{k+1}$, за всяко $k$.
+    Вижда се, че $a^{-1}(L_k) = L_{k+1}$, за всяко $k$.
   \item
-    Вижда се, че $b^{-1}L_{k+1} = \{b^k\}$, за всяко $k$.
-    Освен това е ясно, че $b^{-1}\{b^{k}\} = \{b^{k-1}\}$, за всяко $k \geq 1$.
+    Вижда се, че $b^{-1}(L_{k+1}) = \{b^k\}$, за всяко $k$.
+    Освен това е ясно, че $b^{-1}(\{b^{k}\}) = \{b^{k-1}\}$, за всяко $k \geq 1$.
   \end{itemize}
   Получаваме, че езикът $L$ се разпознава от автомат с {\em безкрайно много състояния}.
-  
+
+\begin{framed}  
   \begin{figure}[H]
     \centering
     \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
@@ -313,8 +322,9 @@
       \draw [dashed,->,shorten >=0pt] (BBB) to[bend right=15] node[above] {$b$} (BB);
       \draw [dashed,->,shorten >=0pt] (BBBA) to[bend left=30] node[below] {$a$} (E);
     \end{tikzpicture}
-    \caption{Получаваме {\em безкраен} автомат за $\{a^nb^n \mid n \in \Nat\}$}
-  \end{figure}    
+    \caption{{\em Безкраен} автомат за $\{a^nb^n \mid n \in \Nat\}$}
+  \end{figure}
+\end{framed}
 \end{example}
 
 \subsection{Проверка за регулярност на език}
@@ -381,7 +391,7 @@
   Нека $L \subseteq \Sigma^\star$ е език и нека $\alpha,\beta \in \Sigma^\star$.
   Казваме, че $\alpha$ и $\beta$ са {\bf еквивалентни относно} $L$, което записваме 
   като $\alpha \approx_L \beta$, когато:
-  \[\alpha \approx_L \beta \dff \alpha^{-1}L = \beta^{-1}L.\]
+  \[\alpha \approx_L \beta \dff \alpha^{-1}(L) = \beta^{-1}(L).\]
   С други думи, 
   \[\alpha \approx_L \beta \iff (\forall \omega \in \Sigma^\star)[\alpha\omega \in L \iff \beta\omega \in L].\]
 \item
@@ -389,7 +399,7 @@
   Нека $\A = \FA$ е ДКА.
   Казваме, че две думи $\alpha,\beta \in \Sigma^\star$ са {\bf еквивалентни относно $\A$},
   което означаваме с $\alpha \sim_\A \beta$, ако 
-  \[\delta^\star(s,\alpha) = \delta^\star(s,\beta).\]
+  \[\delta^\star(\qstart,\alpha) = \delta^\star(\qstart,\beta).\]
 \item
   Проверете, че $\approx_L$ и $\sim_\A$ са {\bf релации на еквивалентност}, т.е.
   те са рефлексивни, транзитивни и симетрични.
@@ -431,53 +441,63 @@
 \end{prop}
 \begin{proof}
 %  \marginpar{стр. 95 от \cite{papadimitriou}}
-  Да означим за всяка дума $\alpha$, $q_\alpha = \delta^\star_\A(s, \alpha)$.
+  Да означим за всяка дума $\alpha$, $q_\alpha = \delta^\star_\A(\qstart, \alpha)$.
   Лесно се съобразява, че за всеки две думи $\alpha$ и $\beta$ имаме 
   \begin{align*}
-    \alpha \sim_\A \beta & \iff \delta^\star(s,\alpha) = \delta^\star(s,\beta) & (\text{по деф. на }\sim_\A)\\
+    \alpha \sim_\A \beta & \iff \delta^\star(\qstart,\alpha) = \delta^\star(\qstart,\beta) & (\text{по деф. на }\sim_\A)\\
     & \iff q_\alpha = q_\beta.
   \end{align*}
   Нека $\alpha \sim_\A \beta$. Ще проверим, че  $\alpha \approx_{\L(\A)} \beta$.
   За произволно $\gamma \in \Sigma^\star$ имаме:
   \begin{align*}
-    \alpha\gamma \in \L(\A) & \iff \delta^\star(s,\alpha\gamma)\in F & (\text{по деф. на }\L(\A))\\
-    & \iff \delta^\star(\delta^\star(s,\alpha),\gamma) \in F & (\text{по деф. на }\delta^\star)\\
-    & \iff \delta^\star(q_\alpha, \gamma) \in F & (q_\alpha = \delta^\star(s,\alpha))\\
+    \alpha\gamma \in \L(\A) & \iff \delta^\star(\qstart,\alpha\gamma)\in F & (\text{по деф. на }\L(\A))\\
+    & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & (\text{по деф. на }\delta^\star)\\
+    & \iff \delta^\star(q_\alpha, \gamma) \in F & (q_\alpha \df \delta^\star(\qstart,\alpha))\\
     & \iff \delta^\star(q_\beta, \gamma) \in F & (q_\alpha = q_\beta, \text{ защото }\alpha \sim_\A \beta)\\
-    & \iff \delta^\star(\delta^\star(s,\beta),\gamma) \in F & (q_\beta = \delta^\star(s,\beta))\\
-    & \iff \delta^\star(s,\beta\gamma) \in F & (\text{по деф. на }\delta^\star)\\
+    & \iff \delta^\star(\delta^\star(\qstart,\beta),\gamma) \in F & (q_\beta \df \delta^\star(\qstart,\beta))\\
+    & \iff \delta^\star(\qstart,\beta\gamma) \in F & (\text{по деф. на }\delta^\star)\\
     & \iff \beta\gamma \in \L(\A) & (\text{по деф. на }\L(\A)).
   \end{align*}
   Заключаваме, че 
   \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{\L(\A)}\beta].\]
 \end{proof}
 
-\begin{problem}
-  Докажете, че за всеки тотален ДКА $\A$ и всяка дума $\alpha$,
-  \[[\alpha]_{\L(\A)} = \bigcup_{\beta \in [\alpha]_{\L(\A)}}[\beta]_\A.\]
-\end{problem}
-
+\begin{prop}
+  Нека $\A$ е тотален ДКА и нека $L = \L(\A)$.
+  Тогава за всяка дума $\alpha$,
+  \[[\alpha]_{L} = \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
+\end{prop}
+% \begin{hint}
+%   Понеже $[\alpha]_\A \subseteq [\alpha]_L$ и $\alpha \in [\alpha]_L$, то е очевидно, че
+%   \[\bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A \subseteq [\alpha]_{L}.\]
+%   За другата посока,
+%   ако $\gamma \in [\alpha]_L$, то е ясно, че $\gamma \in [\gamma]_\A$.
+  
+% \end{hint}
 
 \begin{cor}
   \label{cor:approx-less-sim}
-  За всеки тотален ДКА $\A$ е изпълнено, че
-  \[\abs{\Sigma^\star/_{\approx_{\L(\A)}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
+  Нека $\A$ е тотален ДКА и нека $L = \L(\A)$.
+  Тогава 
+  \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
 \end{cor}
 \begin{hint}
-  Да означим $L = \L(\A)$ и да разгледаме изображението 
+  Да разгледаме изображението 
   \[f([\alpha]_L) \df \{[\gamma]_\A \mid \gamma \approx_L \alpha\}.\]
+  Получаваме, че
+  \[[\alpha]_L = \bigcup f([\alpha]_L).\]
 
   \begin{itemize}
   \item
-    Ясно е, че за всяко $\alpha$, $f([\alpha]_L) \neq \emptyset$.
+    Ясно е, че за всяко $\alpha$, $f([\alpha]_L) \neq \emptyset$, защото $[\alpha]_\A \in f([\alpha]_L)$.
   \item 
     Съобразете, че $f$ е {\bf функция}, т.е. 
     \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \approx_L \beta \implies f([\alpha]_L) = f([\beta]_L)].\]
   \item
-    Използвайте \Prop{rel-finer} за да съобразите, че 
+    Съобразете, че 
     \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \not\approx_L \beta \implies f([\alpha]_L) \cap f([\beta]_L) = \emptyset].\]
   \item
-    Заключете, че \[\abs{\Sigma^\star/_{\approx_{\L(\A)}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
+    Заключете, че \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
   \end{itemize}
 \end{hint}
 
@@ -490,11 +510,11 @@
   не надвишава броя на състоянията на автомата.
 \end{cor}
 \begin{proof}
-  Да изберем $\A$, който разпознава $L$, бъде такъв, че да {\em няма недостижими състояния}.
-  Тъй като всяко достижимо състояние определя клас на еквивалентност относно $\sim_\A$,
-  то получаваме, че $\abs{Q} = \abs{\sim_\A}$.
+  Да изберем $\A$, който разпознава $L$. % да бъде такъв, че да {\em няма недостижими състояния}.
+  Тъй като всяко достижимо състояние на $\A$ определя клас на еквивалентност относно $\sim_\A$,
+  то получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} \leq |Q|$.
   Комбинирайки със \Cor{approx-less-sim},
-  \[\abs{Q} = \abs{\Sigma^\star/_{\sim_\A}} \geq \abs{\Sigma^\star/_{\approx_L}}.\]
+  \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{\Sigma^\star/_{\sim_\A}} \leq \abs{Q}.\]
 \end{proof}
 Така получаваме {\em долна граница} за броя на състоянията в тотален автомат разпознаващ езика $L$.
 Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
@@ -521,7 +541,7 @@
   \item
     $Q = \{[\alpha]_L\mid \alpha\in \Sigma^\star\}$;
   \item
-    $s = [\varepsilon]_L$;
+    $\qstart = [\varepsilon]_L$;
   \item
     $F = \{[\alpha]_L\mid \alpha\in L\} = \{[\alpha]_L \mid [\alpha]_L \cap L \neq \emptyset\}$;
   \item
@@ -574,8 +594,8 @@
   \end{proof}
   \noindent За да се убедим, че $L = \L(\A)$ е достатъчно да проследим еквивалентностите:
   \begin{align*}
-    \alpha\in \L(\A) & \iff \delta^\star(s,\alpha) \in F & (\text{от деф. на }\L(\A))\\
-                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\text{по деф. }s = [\varepsilon]_L)\\
+    \alpha\in \L(\A) & \iff \delta^\star(\qstart,\alpha) \in F & (\text{от деф. на }\L(\A))\\
+                     & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & (\qstart \df [\varepsilon]_L)\\
                      & \iff \delta^\star([\varepsilon]_L,\alpha) = [\alpha]_L\ \&\ \alpha\in L & (\text{от деф. на }F)\\
                      & \iff \alpha \in L & (\text{от последното твърдение}).
   \end{align*}
@@ -637,8 +657,8 @@
   \item
     За последно оставихме проверката, че $f$ наистина е {\bf изоморфизъм}:
     \begin{align*}
-      f(\delta_\A(q,a)) & = f(\delta_\A(\delta^\star_\A(s,\omega_q),a)) & (\text{от избора на }\omega_q)\\
-      & = f(\delta^\star_\A(s,\omega_qa)) & (\text{от деф. на }\delta^\star_\A)\\
+      f(\delta_\A(q,a)) & = f(\delta_\A(\delta^\star_\A(\qstart,\omega_q),a)) & (\text{от избора на }\omega_q)\\
+      & = f(\delta^\star_\A(\qstart,\omega_qa)) & (\text{от деф. на }\delta^\star_\A)\\
       & = [\omega_qa]_L & (\text{от деф. на }f)\\
       & = \delta^\star_{\A_0}([\varepsilon]_L, \omega_qa) & (\text{от деф. на }\A_0)\\ 
       & = \delta_{\A_0}(\delta^\star_{\A_0}([\varepsilon]_L, \omega_q),a) & (\text{от деф. на }\delta^\star_{\A_0})\\
