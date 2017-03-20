@@ -25,7 +25,7 @@
   автомат, за който $L = \L(\A)$.
   Да положим $p = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq p$.
   Да разгледаме първите $p$ стъпки от изпълнението на $\alpha$ върху $\A$:
-  \[s\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow}q_2 \dots \stackrel{a_p}{\rightarrow} q_p.\]
+  \[\qstart\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow}q_2 \dots \stackrel{a_p}{\rightarrow} q_p.\]
   Тъй като $\abs{Q} = p$, а по този път участват $p+1$ състояния $q_0,q_1,\dots,q_p$,
   то съществуват числа $i, j$, за които $0\leq i < j\leq p$ и $q_i = q_j$.
   Нека разделим думата $\alpha$ на три части по следния начин:
@@ -35,10 +35,10 @@
   Освен това, лесно се съобразява, че за всяко $i \in\Nat$,
   $xy^iz \in L$. Да разгледаме случая за $i = 0$.
   Думата $xy^0z = xz \in L$, защото имаме следното изчисление:
-  \[s\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F,\]
+  \[\qstart\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F,\]
   защото $q_i = q_j$.
   Да разгледаме и случая $i = 2$. Тогава думата $xy^2z \in L$, защото имаме следното изчисление:
-  \[s\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{j+1}}{\rightarrow}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F.\]
+  \[\qstart\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{j+1}}{\rightarrow}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F.\]
 \end{hint}
 
 Практически е по-полезно да разглеждаме следната еквивалентна формулировка на лемата за покачването.
