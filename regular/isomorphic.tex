@@ -1,0 +1,33 @@
+\section{Изоморфни автомати}
+\label{sect:isomorphic}
+
+\index{изоморфизъм}
+Нека са дадени автоматите
+$\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \delta'', F'')$.
+Казваме, че $\A'$ и $\A''$ са {\bf изоморфни}, което означаваме с $\A' \cong \A''$, ако
+съществува биекция $f: Q'\to Q''$, за която:
+\begin{itemize}
+\item
+  $f(\qstart') = \qstart''$;
+\item
+  $q \in F' \iff f(q) \in F''$;
+\item
+  $(\forall a\in\Sigma)(\forall q\in Q')[f(\delta'(q,a)) = \delta''(f(q),a)]$.
+\end{itemize}
+Ще казваме, че $f$ задава изоморфизъм на $\A'$ върху $\A''$.
+
+\begin{framed}
+  \begin{thm}
+    Ако $\A' \cong \A''$, то $\L(\A') = \L(\A'')$.
+  \end{thm}  
+\end{framed}
+\begin{hint}
+  Индукция по дължината на думата.
+\end{hint}
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
