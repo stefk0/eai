@@ -1,4 +1,4 @@
-\subsection{Алгоритъм за строене на минимален автомат}
+\section{Алгоритъм за строене на минимален автомат}
 \begin{itemize}
 \item
   Да фиксираме произволен тотален ДКА $\A = \FA$.
@@ -18,23 +18,50 @@
 \item
   Релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност. 
 \item
-  Нека $q_\alpha$ е състоянието, което съответства на думата $\alpha$ в $\A$, т.е.
-  $\delta^\star_\A(s,\alpha) = q_\alpha$. Тогава 
-  \[\L_\A(q_\alpha) = \alpha^{-1}\L(\A).\]
+  Да означим
+  \[Q/_{\equiv_\A} \df \{[q]_{\equiv_\A} \mid q \in Q\}.\]
+\end{itemize}
+
+\begin{framed}
+  \begin{prop}
+    \label{pr:equal-number}
+    Нека $\A = \FA$ е тотален ДКА {\em без недостижими състояния от} $\qstart$.
+    Тогава
+    \[\abs{Q/_{\equiv_\A}} = \abs{\Sigma^\star/_{\approx_{\L(\A)}}}.\]  
+  \end{prop}  
+\end{framed}
+\begin{hint}
+  Понеже няма недостижими състояния от $\qstart$, нека 
+  $q_\alpha$ е състоянието, което съответства на думата $\alpha$ в $\A$, т.е.
+  $\delta^\star_\A(\qstart,\alpha) = q_\alpha$. Тогава 
+  \[\L_\A(q_\alpha) = \alpha^{-1}(\L(\A)),\]
+  защото за произволна дума $\beta$,
+  \begin{align*}
+    \beta \in \L_\A(q_\alpha) & \iff \delta^\star(q_\alpha,\beta) \in F\\
+                              & \iff \delta^\star(\delta^\star(\qstart, \alpha),\beta) \in F\\
+                              & \iff \alpha \cdot \beta \in \L(\A)\\
+                              & \iff \beta \in \alpha^{-1}(\L(\A)).
+  \end{align*}
   Оттук получаваме, че 
   \begin{align*}
-    q_\alpha \equiv_\A q_\beta & \iff \L_\A(q_\alpha) = \L_\A(q_\beta)\\
-    & \iff \alpha^{-1}\L(\A) = \beta^{-1}\L(\A)\\
-    & \iff \alpha \sim_{\L(\A)} \beta.
+    q_\alpha \equiv_\A q_\beta & \dff \L_\A(q_\alpha) = \L_\A(q_\beta)\\
+                               & \iff \alpha^{-1}(\L(\A)) = \beta^{-1}(\L(\A))\\
+                               & \dff \alpha \approx_{\L(\A)} \beta.
   \end{align*}
-  % \[q_\alpha \equiv_\A q_\beta\ \iff\ \alpha\approx_{\L(\A)} \beta.\]
-  Това означава, че ако в $\A$ няма недостижими състояния от началното състояние $s$, то 
-  \[\abs{\Sigma^\star/_{\equiv_\A}} = \abs{\Sigma^\star/_{\approx_{\L(\A)}}}.\]
-\end{itemize}
+  Заключаваме, че $f:\Sigma^\star/_{\approx_L} \to Q/_{\equiv_\A}$, където
+  \[f([\alpha]_L) \df [\underbrace{\delta^\star(\qstart,\alpha)}_{q_\alpha}]_{\equiv_\A}\]
+  е биекция.  
+\end{hint}
+
+\begin{problem}
+  Докажете, че
+  \[[q]_{\equiv_\A} \cap F \neq \emptyset \iff [q]_{\equiv_\A} \subseteq F.\]
+\end{problem}
+
 
 При даден език $L$ и тотален ДКА $\A = \FA$, който го разпознава, нашата цел е да построим нов ДКА $\A_0$,
 който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_\L$.
-Това ще направим като ``слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
+Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
 Това означава, че всяко състояние на $\A_0$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
 Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \gamma \in \Sigma^\star$
 във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
@@ -62,16 +89,18 @@
 лесно се съобразява, че $\equiv_0$ има два класа на еквивалентност.
 Единият е $F$, а другият е $Q\setminus F$.
 
-\begin{prop}
-  \label{pr:one-letter-test}
-  За всеки две състояния $p,q \in Q$, и всяко $n$, $p \equiv_{n+1} q$ точно тогава, когато
-  \begin{enumerate}[a)]
-  \item
-    $p \equiv_{n} q$ и
-  \item
-    $(\forall a \in \Sigma)[\delta(q,a) \equiv_{n} \delta(p,a)]$.
-  \end{enumerate}
-\end{prop}
+\begin{framed}
+  \begin{prop}
+    \label{pr:one-letter-test}
+    За всеки две състояния $p,q \in Q$, и всяко естествено число $n$, $p \equiv_{n+1} q$ точно тогава, когато
+    \begin{enumerate}[a)]
+    \item
+      $p \equiv_{n} q$ и
+    \item
+      $(\forall a \in \Sigma)[\delta(q,a) \equiv_{n} \delta(p,a)]$.
+    \end{enumerate}
+  \end{prop}  
+\end{framed}
 \begin{hint}
   \marginpar{\cite[стр. 99]{papadimitriou}}
   \begin{align*}
@@ -86,20 +115,31 @@
 строим автомата $\A' = (Q',\Sigma,\qstart',\delta',F')$, където:
 \begin{itemize}
 \item
-  $Q' = \{[q]_{\equiv_\A} \mid q\in Q\}$;
+  $Q' \df \{[q]_{\equiv_\A} \mid q\in Q\}$;
 \item
-  $\qstart'' = [\qstart]_{\equiv_\A}$;
+  $\qstart' \df [\qstart]_{\equiv_\A}$;
 \item
-  $\delta'([q]_{\equiv_\A}, a) = [\delta(q,a)]_{\equiv_\A}$;
+  $\delta'([q]_{\equiv_\A}, a) \df [\delta(q,a)]_{\equiv_\A}$;
 \item
-  $F' = \{[q]_{\equiv_\A}\mid F\cap [q]_{\equiv_\A} \neq \emptyset\}$;
+  $F' \df \{[q]_{\equiv_\A}\mid [q]_{\equiv_\A} \subseteq F\}$;
 \end{itemize}
 
-От всичко казано дотук знаем, че $\A'$ е минимален автомат разпознаващ езика $\L(\A)$.
+\begin{framed}
+  \begin{thm}
+    $\A'$ е минимален автомат разпознаващ езика $\L(\A)$.
+  \end{thm}
+\end{framed}
+\begin{hint}
+  Лесно се съобразява, че $\L(\A) = \L(\A')$.
+  От \Prop{equal-number} знаем, че $|Q'| = |\Sigma^\star/_{\approx_{\L(\A)}}|$.
+  Тогава от \Cor{upper-bound} следва, че $\A'$ е минимален автомат.
+\end{hint}
 
 \begin{example}
   Да разгледаме следния краен детерминиран автомат $\A$.
-  \begin{figure}[H]
+  \marginpar{$\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
+  \begin{framed}
+    \begin{figure}[H]
     \begin{subfigure}[b]{.4\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
@@ -127,7 +167,7 @@
     \end{subfigure}
     \qquad
     \qquad
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
         
@@ -140,11 +180,12 @@
         (1) edge [bend left=15] node [above] {$a,b$}   (2)
         (2) edge [loop above] node [above] {$a,b$}   (2);
       \end{tikzpicture}
-      \caption{Получаваме следния минимален автомат $\A_0$, $\L(\A_0) = \L(\A)$}
+      \caption{Получаваме минималния автомат $\A_0$, $\L(\A_0) = \L(\A)$}
       \label{sub:min1}
     \end{subfigure}
   \end{figure}
-  \marginpar{Съобразете, че $\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
+  \end{framed}
+
 
 Ще приложим алгоритъма за минимизация за да получим минималния автомат за езика $L$.
 За всяко $n = 0,1,2,\dots$, ще намерим класовете на еквивалентност на $\equiv_n$,
@@ -212,6 +253,7 @@
 
 \begin{example}
   Да разгледаме следния краен детерминиран автомат $\A$.
+  \begin{framed}
   \begin{figure}[H]
     % \begin{center}
     \begin{subfigure}[b]{0.4\textwidth}
@@ -255,10 +297,11 @@
         (2) edge [bend left=15] node [above] {$a,b$}   (3)
         (3) edge [loop above]   node [above] {$a,b$}   (3);
       \end{tikzpicture}
-      \caption{Получаваме следния минимален автомат $\A_0$, $\L(\A_0) = \L(\A)$}
+      \caption{Получаваме минималния автомат $\A_0$, $\L(\A_0) = \L(\A)$}
       \label{sub:min2}
     \end{subfigure}
   \end{figure}
+  \end{framed}
 
   \marginpar{Съобразете, че $\L(\A) = \{a,b\} \cup \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 3\}$.}
   

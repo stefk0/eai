@@ -112,12 +112,13 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
 
 \begin{framed}
   \begin{thm}
+    \label{th:regular:isomorphic:minimal}
     Нека е даден регулярния език $L$.
-    Всички минимални автомати за $L$ са изоморфни на $\M$, автоматът построен в \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}.
+    Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
+    Тогава $\A \cong \M$, автоматът построен в \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}.
   \end{thm}  
 \end{framed}
 \begin{proof}
-  Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
   Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
   Искаме да докажем, че $\A \cong \M$.
   Понеже $\A$ е свързан, за всяко състояние $q$ можем да намерим дума $\omega_q$,
