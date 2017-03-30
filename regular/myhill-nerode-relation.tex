@@ -1,0 +1,206 @@
+\section{Минимален автомат}
+
+\subsection{Проверка за регулярност на език}
+
+\begin{prop}
+  Езикът $L$ е регулярен точно тогава, когато релацията $\approx_L$ има {\em крайно много} класове на еквивалентност.
+\end{prop}
+\begin{proof}
+  Ако $L$ е регулярен, то той се разпознава от някой ДКА $\A$, който има крайно много състояния 
+  и следователно крайно много класове на еквивалентност относно $\sim_\A$.
+  Релацията $\approx_L$ е по-груба от $\sim_\A$ и има по-малко класове на еквивалентност.
+  Следователно, $\approx_L$ има крайно много класове на еквивалентност.
+  
+  За другата посока, ако $\approx_L$ има крайно много класове на еквивалентност, то можем да 
+  построим ДКА $\A$ както в доказателството на \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}, който разпознава $L$.
+\end{proof}
+
+Това следствие ни дава още един начин за проверка дали даден език е регулярен.
+За разлика от \Lem{pumping-reg}, сега имаме {\bf необходимо и достатъчно условие}.
+При даден език $L$, ние разглеждаме неговата релация $\approx_L$.
+Ако тя има крайно много класове, то езикът $L$ е регулярен.
+В противен случай, езикът $L$ не е регулярен.
+
+\begin{example}
+  За езика $L = \{a^nb^n\mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
+  защото \[(\forall k,j\in\Nat)[k \neq j \implies [a^kb]_L \neq [a^jb]_L].\]
+  Проверете, че $[a^kb]_L = \{a^kb,a^{k+1}b^{2},\dots,a^{k+l}b^{l+1},\dots\}$.
+  Така получаваме, че релацията $\approx_L$ има безкрайно много класове на еквивалентност.
+  Заключаваме, че този език {\bf не} е регулярен.
+\end{example}
+
+\begin{example}
+  За езика $L = \{a^{n^2} \mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
+  защото \[(\forall m,n\in\Nat)[m \neq n \implies [a^{n^2}]_L \neq [a^{m^2}]_L].\]
+  
+  Без ограничение на общността, да разгледаме $n < m$ и думата $\gamma = a^{2n+1}$.
+  Тогава $a^{n^2}\gamma = a^{(n+1)^2} \in L$, но 
+  $m^2 < m^2 + 2n + 1 < (m+1)^2$ и следователно $a^{m^2}\gamma = a^{m^2+2n+1}\not\in L$.
+\end{example}
+
+\begin{example}
+  За езика $L = \{a^{n!} \mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
+  защото \[(\forall m,n\in\Nat)[m \neq n \implies [a^{n!}]_L \neq [a^{m!}]_L].\]
+  
+  Без ограничение на общността, да разгледаме $n < m$ и думата $\gamma = a^{(n!)n}$.
+  Тогава $a^{n!}\gamma = a^{(n+1)!} \in L$, но 
+  $m! < m! + (n!)n < m! + (m!)m = (m+1)!$ и следователно $a^{m!}\gamma = a^{m!+(n!)n}\not\in L$.
+\end{example}
+
+\begin{problem}
+  Да разгледаме езика
+  \[L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}.\]
+  Докажете, че $\abs{\approx_L} = \infty$.
+\end{problem}
+
+%\marginpar{\href{http://en.wikipedia.org/wiki/DFA_minimization}{Уикипедия}}
+
+\subsection{Релация на Майхил-Нероуд}
+
+\begin{itemize}
+\item
+  \index{Майхил-Нероуд!релация}
+  \marginpar{$\approx_L$ е известна като релация на Майхил-Нероуд}
+  Нека $L \subseteq \Sigma^\star$ е език и нека $\alpha,\beta \in \Sigma^\star$.
+  Казваме, че $\alpha$ и $\beta$ са {\bf еквивалентни относно} $L$, което записваме 
+  като $\alpha \approx_L \beta$, когато:
+  \[\alpha \approx_L \beta \dff \alpha^{-1}(L) = \beta^{-1}(L).\]
+  С други думи, 
+  \[\alpha \approx_L \beta \iff (\forall \omega \in \Sigma^\star)[\alpha\omega \in L \iff \beta\omega \in L].\]
+\item
+  \marginpar{Трябва ли $\A$ да е тотален?}
+  Нека $\A = \FA$ е ДКА.
+  Казваме, че две думи $\alpha,\beta \in \Sigma^\star$ са {\bf еквивалентни относно $\A$},
+  което означаваме с $\alpha \sim_\A \beta$, ако 
+  \[\delta^\star(\qstart,\alpha) = \delta^\star(\qstart,\beta).\]
+\item
+  Проверете, че $\approx_L$ и $\sim_\A$ са {\bf релации на еквивалентност}, т.е.
+  те са рефлексивни, транзитивни и симетрични.
+\item
+  Класът на еквивалентност на думата $\alpha$ относно релацията $\approx_L$ означаваме като
+  \[[\alpha]_L \df \{\beta \in \Sigma^\star \mid \alpha \approx_L \beta\}.\]
+  Означаваме 
+  \[\Sigma^\star/_{\approx_L} \df \{[\alpha]_L \mid \alpha \in \Sigma^\star\}.\]
+  Тогава с $\abs{\Sigma^\star/_{\approx_L}}$ ще означаваме броя на класовете на еквивалентност на релацията $\approx_L$.
+\item
+  Класът на еквивалентност на думата $\alpha$ относно релацията $\sim_\A$ означаваме като
+  \[[\alpha]_\A \df \{\beta \in \Sigma^\star \mid \alpha \sim_\A \beta\}.\]
+  Означаваме 
+  \[\Sigma^\star/_{\sim_\A} \df \{[\alpha]_\A \mid \alpha \in \Sigma^\star\}.\]
+  С $\abs{\Sigma^\star/_{\sim_\A}}$ ще означаваме броя на класовете на еквивалентност на релацията $\sim_\A$.
+\item
+  Съобразете, че всяко състояние на $\A$, което е достижимо от началното състояние, определя клас на еквивалентност относно 
+  релацията $\sim_\A$. Това означава, че ако за всяка дума означим  $q_\alpha = \delta^\star_\A(s,\alpha)$, то
+  $\alpha \sim_\A \beta$ точно тогава, когато $q_\alpha = q_\beta$. Заключаваме, че броят на класовете на еквивалентност
+  на $\sim_\A$ е равен на броя на достижимите от $s$ състояния. Следователно,
+  \[|\Sigma^\star/_{\sim_\A}| \leq |Q^\A|.\]
+\item
+  Релациите $\approx_\L$ и $\sim_\A$ са дясно-инвариантни, т.е. за всеки две думи $\alpha$ и $\beta$
+  е изпълнено:
+  \begin{align*}
+    \alpha \sim_\A \beta  &\implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\A \beta\gamma],\\
+    \alpha \approx_\L \beta & \implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \approx_\L \beta\gamma].
+  \end{align*}
+\end{itemize}
+
+\begin{prop}
+  $\alpha \in L \iff [\alpha]_L \subseteq L$.
+\end{prop}
+
+\begin{prop}
+  \label{pr:rel-finer}
+  Нека $\A = \FA$ е ДКА и $L = \L(\A)$.
+  Тогава
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{L}\beta].\]
+  Това означава, че
+  $[\alpha]_\A \subseteq [\alpha]_{L}$, за всяка дума $\alpha \in \Sigma^\star$.
+\end{prop}
+\begin{proof}
+%  \marginpar{стр. 95 от \cite{papadimitriou}}
+  % Да означим за всяка дума $\alpha$, $q_\alpha = \delta^\star_\A(\qstart, \alpha)$.
+  % Лесно се съобразява, че за всеки две думи $\alpha$ и $\beta$ имаме 
+  % \begin{align*}
+  %   \alpha \sim_\A \beta & \iff \delta^\star(\qstart,\alpha) = \delta^\star(\qstart,\beta) & (\text{по деф. на }\sim_\A)\\
+  %   & \iff q_\alpha = q_\beta.
+  % \end{align*}
+  Нека $\alpha \sim_\A \beta$, т.е. $\delta^\star_\A(\qstart, \alpha) = \delta^\star_\A(\qstart,\beta)$.
+  
+  Ще проверим, че  $\alpha \approx_{L} \beta$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$.
+  За произволно $\gamma \in \Sigma^\star$ имаме:
+  \begin{align*}
+    \gamma \in \alpha^{-1}(L) & \iff \alpha\gamma \in L\\
+                              & \iff \delta^\star_\A(\qstart,\alpha\gamma)\in F & \comment{L = \L(\A)}\\
+                              & \iff \delta^\star_\A(\delta^\star_\A(\qstart,\alpha),\gamma) \in F & \comment{\text{по деф. на }\delta^\star}\\
+                              & \iff \delta^\star_\A(\delta^\star_\A(\qstart,\beta),\gamma) \in F & \comment{\text{защото }\alpha \sim_\A \beta}\\
+                              & \iff \delta^\star_\A(\qstart,\beta\gamma) \in F & \comment{\text{свойство на }\delta^\star_\A}\\
+                              & \iff \beta\gamma \in \L(\A)\\
+                              & \iff \gamma \in \beta^{-1}(L).
+  \end{align*}
+  Заключаваме, че 
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{L}\beta].\]
+\end{proof}
+
+\begin{prop}
+  Нека $\A$ е тотален ДКА и нека $L = \L(\A)$.
+  Тогава за всяка дума $\alpha$,
+  \[[\alpha]_{L} = \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
+\end{prop}
+% \begin{hint}
+%   Понеже $[\alpha]_\A \subseteq [\alpha]_L$ и $\alpha \in [\alpha]_L$, то е очевидно, че
+%   \[\bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A \subseteq [\alpha]_{L}.\]
+%   За другата посока,
+%   ако $\gamma \in [\alpha]_L$, то е ясно, че $\gamma \in [\gamma]_\A$.
+  
+% \end{hint}
+
+\begin{prop}
+  \label{pr:approx-less-sim}
+  Нека $\A$ е тотален ДКА и нека $L = \L(\A)$.
+  Тогава 
+  \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
+\end{prop}
+\begin{hint}
+  Да разгледаме изображението 
+  \[f([\alpha]_L) \df \{[\gamma]_\A \mid \gamma \approx_L \alpha\}.\]
+  Получаваме, че
+  \[[\alpha]_L = \bigcup f([\alpha]_L).\]
+
+  \begin{itemize}
+  \item
+    Ясно е, че за всяко $\alpha$, $f([\alpha]_L) \neq \emptyset$, защото $[\alpha]_\A \in f([\alpha]_L)$.
+  \item 
+    Съобразете, че $f$ е {\bf функция}, т.е. 
+    \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \approx_L \beta \implies f([\alpha]_L) = f([\beta]_L)].\]
+  \item
+    Съобразете, че 
+    \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \not\approx_L \beta \implies f([\alpha]_L) \cap f([\beta]_L) = \emptyset].\]
+  \item
+    Заключете, че \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
+  \end{itemize}
+\end{hint}
+
+\begin{cor}
+  \label{cor:upper-bound}
+  Нека $L$ е произволен регулярен език $L$.  
+  Всеки тотален ДКА $\A$, който разпознава $L$ има свойството
+  \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
+  т.е. броят на класовете на еквивалентност на релацията $\approx_L$
+  не надвишава броя на състоянията на автомата.
+\end{cor}
+\begin{proof}
+  Да изберем $\A$, който разпознава $L$. % да бъде такъв, че да {\em няма недостижими състояния}.
+  Тъй като всяко достижимо състояние на $\A$ определя клас на еквивалентност относно $\sim_\A$,
+  то получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} \leq |Q|$.
+  Комбинирайки със \Prop{approx-less-sim},
+  \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{\Sigma^\star/_{\sim_\A}} \leq \abs{Q}.\]
+\end{proof}
+Така получаваме {\em долна граница} за броя на състоянията в тотален автомат разпознаващ езика $L$.
+Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
+В следващия раздел ще видим, че тази долна граница може да бъде достигната.
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
