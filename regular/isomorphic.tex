@@ -5,15 +5,17 @@
 Нека са дадени автоматите
 $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \delta'', F'')$.
 Казваме, че $\A'$ и $\A''$ са {\bf изоморфни}, което означаваме с $\A' \cong \A''$, ако
-съществува биекция $f: Q'\to Q''$, за която:
-\begin{itemize}
+съществува $f: Q'\to Q''$, за която:
+\begin{enumerate}[(1)]
+\item
+  $f$ е биекция;
 \item
   $f(\qstart') = \qstart''$;
 \item
   $q \in F' \iff f(q) \in F''$;
 \item
   $(\forall a\in\Sigma)(\forall q\in Q')[f(\delta'(q,a)) = \delta''(f(q),a)]$.
-\end{itemize}
+\end{enumerate}
 Ще казваме, че $f$ задава изоморфизъм на $\A'$ върху $\A''$.
 
 \begin{framed}
@@ -22,8 +24,152 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
   \end{thm}  
 \end{framed}
 \begin{hint}
-  Индукция по дължината на думата.
+  Индукция по дължината на думата $\alpha$ докажете, че
+  \[f(\delta^\star_{\A'}(\qstart',\alpha)) = \delta^\star_{\A''}(f(\qstart'), \alpha).\]
 \end{hint}
+
+\index{Бжожовски}
+Нека е даден регулярен език $L$ над азбуката $\Sigma$.
+Конструкцията на автомата $\B$ по метода на Бжожовски е следната:
+\begin{itemize}
+\item 
+  $Q^\B \df \{\alpha^{-1}(L) \mid \alpha \in \Sigma^\star\}$;
+\item
+  $\qstart^\B \df L$;
+\item
+  $F^\B \df \{N \in Q^\B \mid \varepsilon \in N\}$;
+\item
+  $\delta_\B(N,x) \df x^{-1}(N)$, за произволни $x \in \Sigma$ и $N \in Q^\B$.
+\end{itemize}
+
+Да припомним конструкцията на минималния автомат $\M$ според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}.
+\begin{itemize}
+\item 
+  $Q^\M \df \{[\alpha]_L \mid \alpha \in \Sigma^\star\}$;
+\item
+  $\qstart^\M \df [\varepsilon]_L$;
+\item
+  $F^\M \df \{[\alpha]_L \mid [\alpha]_L \subseteq L\}$;
+\item
+  $\delta_\M([\alpha]_L,x) \df [\alpha\cdot x]_L$, за произволни $x \in \Sigma$ и $\alpha \in \Sigma^\star$.
+\end{itemize}
+
+\begin{framed}
+  \begin{thm}
+    $\B \cong \M$.
+  \end{thm}  
+\end{framed}
+\begin{hint}
+  Нека да дефинираме $f:Q^\M \to Q^\B$ по следния начин:
+  \[f([\alpha]_L) \df \alpha^{-1}(L).\] 
+  Ще докажем, че $f$ изпълнява свойствата за изоморфизъм.
+
+  \begin{enumerate}[(1)]
+  \item 
+    Трябва първо да проверим, че $f$ е биектвна, т.е. $f$
+    е инективна и сюрективна.
+    \begin{itemize}
+    \item 
+      Нека $[\alpha]_L \neq [\beta]_L$.
+      Тогава:
+      \begin{align*}
+        f([\alpha]_L) & \df \alpha^{-1}(L)\\
+                      & \neq \beta^{-1}(L) & \comment{\text{от }[\alpha]_L \neq [\beta]_L}\\
+                      & \df f([\beta]_L).
+      \end{align*}
+      Оттук следва, че $f$ е {\em инективна}.
+    \item
+      Да разгледаме $N \in Q^\B$, т.е. $N = \alpha^{-1}(L)$, за някоя дума $\alpha \in \Sigma^\star$.
+      Понеже $f([\alpha]_L) \df \alpha^{-1}(L)$, то това означава, че $f$ е {\em сюрективна}.      
+    \end{itemize}
+  \item
+    Лесно се съобразява, че
+    \begin{align*}
+      f(\qstart^\M) & = f([\varepsilon]_L) & \comment{\qstart^\M \df [\varepsilon]_L}\\
+                    & \df \varepsilon^{-1}(L)\\
+                    & = L \\
+                    & \df \qstart^\B. & \comment{\qstart^\B \df L}
+    \end{align*}
+  \item
+    Също не е трудно да се съобрази, че
+    \begin{align*}
+      [\alpha]_L \in F^\M & \dff [\alpha]_L \subseteq L\\
+                          & \iff \varepsilon \in \alpha^{-1}(L)\\
+                          & \iff f([\alpha]_L) \in F^\B.
+    \end{align*}
+  \item
+    Имаме и свойството:
+    \begin{align*}
+      f(\delta_\M([\alpha]_L,x)) & = f([\alpha\cdot x]_L) & \comment{\text{деф. на }\delta_\M}\\
+                                 & = (\alpha\cdot x)^{-1}(L) & \comment{\text{деф. на }f}\\
+                                 & = x^{-1}(\alpha^{-1}(L)) & \comment{\text{от \Prob{pullback}}}\\
+                                 & = \delta_\B(\alpha^{-1}(L), x) & \comment{\text{деф. на }\delta_\B}\\
+                                 & = \delta_\B(f([\alpha]_L), x), & \comment{\text{деф. на }f}
+    \end{align*}
+    от което следва, че $f$ е {\em изоморфизъм}.
+  \end{enumerate}
+\end{hint}
+
+\begin{framed}
+  \begin{thm}
+    Нека е даден регулярния език $L$.
+    Всички минимални автомати за $L$ са изоморфни на $\M$, автоматът построен в \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}.
+  \end{thm}  
+\end{framed}
+\begin{proof}
+  Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
+  Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
+  Искаме да докажем, че $\A \cong \M$.
+  Понеже $\A$ е свързан, за всяко състояние $q$ можем да намерим дума $\omega_q$,
+  за която $\delta^\star(\qstart,\omega_q) = q$.
+  Да дефинираме изображението $f:Q^\A\to Q^\M$ като 
+  \[f(q) \df [\omega_q]_L.\]
+  Ще докажем, че $f$ задава изоморфизъм на $\A$ върху $\M$. 
+  \begin{enumerate}[(1)]
+  \item
+    Първо да съобразим, че $f:Q^\A \to Q^\M$ е биекция.
+    \begin{itemize}
+    \item
+      Първо да съобразим, че ако $\delta^\star_\A(\qstart,\alpha) = q$, то $[\omega_q]_L = [\alpha]_L$.
+      Понеже $\delta^\star_\A(\qstart,\alpha) = q = \delta^\star_\A(\qstart,\omega_q)$, то $\omega_q \sim_\A \alpha$.
+      От \Prop{rel-finer} имаме, че
+      \[\omega_q \sim_\A \alpha \implies \omega_q \approx_L \alpha.\]
+      Това означава, че $[\omega_q]_L = [\alpha]_L$ и следователно $f$ е определена коректно, т.е. $f$ е {\bf функция}.
+    \item
+      Ще проверим, че $f$ е {\bf инективна}, т.е.
+      \[(\forall q_1,q_2 \in Q)[q_1\neq q_2 \implies f(q_1) \neq f(q_2)].\]
+      Да допуснем, че има състояния $q_1 \neq q_2$, за които 
+      \[f(q_1) = [\omega_{q_1}]_L = [\omega_{q_2}]_L = f(q_2).\]
+      Тогава $\omega_{q_1} \not\sim_\A \omega_{q_2}$ и $\omega_{q_1} \approx_L \omega_{q_2}$.
+      \marginpar{\writedown Обяснете!}
+      Но тогава от \Cor{upper-bound} получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} > \abs{\Sigma^\star/_{\approx_L}}$,
+      което противоречи с минималността на $\A$.
+    \item
+      За да бъде $f$ {\bf сюрективна} трябва за всеки клас $[\beta]_L$ да съществува състояние $q$, за което $f(q) = [\beta]_L$.
+      Понеже $\A$ е свързан, съществува състояние $q$, за което $\delta^\star_\A(s,\beta) = q$.
+      Вече се убедихме, че в този случай $\beta \approx_L \omega_q$, защото $\beta \sim_\A \omega_q$.
+      Тогава $f(q) = [\omega_q]_L = [\beta]_L$.
+    \end{itemize}
+  \item
+    Понеже $\delta^\star_\A(\qstart,\varepsilon) = \qstart$,
+    то е ясно, че $f(\qstart) = [\varepsilon]_L$.
+  \item
+    Също лесно се съобразява, че
+    $q \in F^\A \iff f(q) \in F^\M$.
+  \item
+    За последно оставихме проверката, че $f$ наистина е {\bf изоморфизъм}:
+    \begin{align*}
+      f(\delta_\A(q,a)) & = f(\delta_\A(\delta^\star_\A(\qstart,\omega_q),a)) & \comment{\text{от избора на }\omega_q}\\
+      & = f(\delta^\star_\A(\qstart,\omega_qa)) & \comment{\text{от деф. на }\delta^\star_\A}\\
+      & = [\omega_qa]_L & \comment{\text{от деф. на }f}\\
+      & = \delta^\star_{\M}([\varepsilon]_L, \omega_qa) & \comment{\text{от деф. на }\M}\\ 
+      & = \delta_{\M}(\delta^\star_{\M}([\varepsilon]_L, \omega_q),a) & \comment{\text{от деф. на }\delta^\star_{\M}}\\
+      & = \delta_{\M}([\omega_q]_L, a) & \comment{\text{свойство на }\delta^\star_{\M}}\\
+      & = \delta_{\M}(f(q), a) & \comment{f(q) \df [\omega_q]_L}.
+    \end{align*}
+  \end{enumerate}
+\end{proof}
+
 
 
 
