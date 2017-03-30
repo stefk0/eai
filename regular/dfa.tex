@@ -127,23 +127,21 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   също е автоматен език.
 \end{prop}
 \begin{proof}
-  \marginpar{Защо изискваме $\A_1$ и $\A_2$ да са тотални?}
-  Нека $L_1 = \L(\A_1)$ и $L_2 = \L(\A_2)$, 
-  където \[\A_1 = \FAn{1},\ \A_2 = \FAn{2}\] са {\em тотални}.
-  Определяме автомата $\A = \FA$, който разпознава $L_1\cup L_2$ по следния начин:
+  \marginpar{Защо изискваме $\A'$ и $\A''$ да са тотални?}
+  Нека \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'')\] са {\em тотални}.
+  Определяме автомата $\A = \FA$, който разпознава $\L(\A') \cup \L(\A'')$ по следния начин:
   \begin{itemize}
   \item
-    $Q = Q_1\times Q_2$;
+    $Q = Q'\times Q''$;
   \item
     \marginpar{Едновременно симулираме изчисление и по двата автомата}
-    \marginpar{По-нататък ще дадем друга конструкция за обединение, която ще бъде по-ефективна относно броя на състоянията}
-    \marginpar{\writedown Проверете, че $\L(\A) = \L(\A_1)\cup \L(\A_2)$}
+    \marginpar{\writedown Проверете, че $\L(\A) = \L(\A')\cup \L(\A'')$}
     Определяме за всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
-    \[\delta(\pair{r_1,r_2},a) = \pair{\delta_1(r_1,a),\delta_2(r_2,a)};\]
+    \[\delta(\pair{r_1,r_2},a) = \pair{\delta'(r_1,a),\delta''(r_2,a)};\]
   \item
-    $s = \pair{s_1,s_2}$;
+    $\qstart = \pair{\qstart',\qstart''}$;
   \item
-    $F = \{\pair{r_1,r_2}\mid r_1\in F_1\vee r_2 \in F_2\} = (F_1\times Q_2)\cup (Q_1\times F_2)$.
+    $F = \{\pair{r_1,r_2}\mid r_1\in F'' \vee r_2 \in F''\} = (F'\times Q'')\cup (Q'\times F'')$.
   \end{itemize}
 \end{proof}
 
