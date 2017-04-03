@@ -59,25 +59,17 @@
   $[\alpha]_\A \subseteq [\alpha]_{L}$, за всяка дума $\alpha \in \Sigma^\star$.
 \end{prop}
 \begin{proof}
-%  \marginpar{стр. 95 от \cite{papadimitriou}}
-  % Да означим за всяка дума $\alpha$, $q_\alpha = \delta^\star_\A(\qstart, \alpha)$.
-  % Лесно се съобразява, че за всеки две думи $\alpha$ и $\beta$ имаме 
-  % \begin{align*}
-  %   \alpha \sim_\A \beta & \iff \delta^\star(\qstart,\alpha) = \delta^\star(\qstart,\beta) & (\text{по деф. на }\sim_\A)\\
-  %   & \iff q_\alpha = q_\beta.
-  % \end{align*}
-  Нека $\alpha \sim_\A \beta$, т.е. $\delta^\star_\A(\qstart, \alpha) = \delta^\star_\A(\qstart,\beta)$.
-  
+  Нека $\alpha \sim_\A \beta$, т.е. $\delta^\star(\qstart, \alpha) = \delta^\star(\qstart,\beta)$.
   Ще проверим, че  $\alpha \approx_{L} \beta$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$.
   За произволно $\gamma \in \Sigma^\star$ имаме:
   \begin{align*}
-    \gamma \in \alpha^{-1}(L) & \iff \alpha\gamma \in L\\
-                              & \iff \delta^\star_\A(\qstart,\alpha\gamma)\in F & \comment{L = \L(\A)}\\
-                              & \iff \delta^\star_\A(\delta^\star_\A(\qstart,\alpha),\gamma) \in F & \comment{\text{по деф. на }\delta^\star}\\
-                              & \iff \delta^\star_\A(\delta^\star_\A(\qstart,\beta),\gamma) \in F & \comment{\text{защото }\alpha \sim_\A \beta}\\
-                              & \iff \delta^\star_\A(\qstart,\beta\gamma) \in F & \comment{\text{свойство на }\delta^\star_\A}\\
-                              & \iff \beta\gamma \in \L(\A)\\
-                              & \iff \gamma \in \beta^{-1}(L).
+    \gamma \in \alpha^{-1}(L) & \dff \alpha\gamma \in L\\
+                              & \iff \delta^\star(\qstart,\alpha\gamma)\in F & \comment{L = \L(\A)}\\
+                              & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment{\text{по деф. на }\delta^\star}\\
+                              & \iff \delta^\star(\delta^\star(\qstart,\beta),\gamma) \in F & \comment{\text{защото }\alpha \sim_\A \beta}\\
+                              & \iff \delta^\star(\qstart,\beta\gamma) \in F & \comment{\text{свойство на }\delta^\star}\\
+                              & \dff \beta\gamma \in \L(\A)\\
+                              & \iff \gamma \in \beta^{-1}(L) & \comment{L = \L(\A)}
   \end{align*}
   Заключаваме, че 
   \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{L}\beta].\]

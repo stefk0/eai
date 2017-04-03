@@ -69,6 +69,11 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
     Трябва първо да проверим, че $f$ е биектвна, т.е. $f$
     е инективна и сюрективна.
     \begin{itemize}
+    \item
+      Дефиницията на $f$ е зададена спрямо представител $\alpha$ на класа на еквивалентност на релацията $\approx_L$.
+      Първо да проверим, че $f$ е функция.
+      Нека $[\alpha]_L = [\beta]_L$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$.
+      Тогава $f([\alpha]_L) \df \alpha^{-1}(L) = \beta^{-1}(L) \df f([\beta]_L)$.
     \item 
       Нека $[\alpha]_L \neq [\beta]_L$.
       Тогава:
@@ -110,12 +115,17 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
   \end{enumerate}
 \end{hint}
 
+\begin{cor}
+  Автоматът $\B$, построен по метода на Бжожовски, за регулярния език $L$ е минимален.
+\end{cor}
+
+
 \begin{framed}
   \begin{thm}
     \label{th:regular:isomorphic:minimal}
     Нека е даден регулярния език $L$.
     Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
-    Тогава $\A \cong \M$, автоматът построен в \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}.
+    Тогава $\A \cong \M$, автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
   \end{thm}  
 \end{framed}
 \begin{proof}
