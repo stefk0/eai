@@ -62,19 +62,17 @@
 
 \begin{example}
   \begin{align*}
-    & S \to \textbf{if } S \textbf{ then } S \textbf{ else }S | \textbf{ if }S \textbf{ then }S | V\\
-    & V \to x\ |\ y\ |\ z
+    & S \to \texttt{if } S \texttt{ then } S \texttt{ else }S\quad |\quad \texttt{ if }S \texttt{ then }S\quad |\quad V\\
+    & V \to x\quad |\quad y\quad |\quad z
   \end{align*}
 
   Ние искаме следната граматика:
   \begin{align*}
-    & S \to M | U\\
-    & M \to \textbf{if } S \textbf{ then } M \textbf{ else }M | X\\
-    & U \to \textbf{if } S \textbf{ then } S | \textbf{if } S \textbf{ then } M \textbf{ else }U
+    & S \to M\quad |\quad U\\
+    & M \to \texttt{if } S \texttt{ then } M \texttt{ else }M\quad |\quad X\\
+    & U \to \texttt{if } S \texttt{ then } S\quad |\quad \texttt{if } S \texttt{ then } M \texttt{ else }U
   \end{align*}
 \end{example}
-
-
 
 \begin{example}
   Да разгледаме граматика с правила
@@ -172,7 +170,7 @@
 \end{problem}
 
 \begin{problem}
-  \label{pr:nanb}
+  \label{prob:nanb}
   Нека $\omega$ е произволна дума над азбуката $\{a,b\}$. 
   Тогава:
   \begin{enumerate}[a)]
