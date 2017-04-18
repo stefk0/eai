@@ -1,0 +1,77 @@
+\subsection*{Балансирани скоби}
+
+Тук ще разглеждаме азбука $\Sigma$, която включва буквите $\texttt{[}$ и $\texttt{]}$.
+Нека за по-голяма яснота да положим
+\begin{align*}
+  & \texttt{left}(\alpha) \df N_{\texttt{[}}(\alpha);\\
+  & \texttt{right}(\alpha) \df N_{\texttt{]}}(\alpha).
+\end{align*}
+Нека $\alpha$ е дума над азбука, която включва буквите $\texttt{[}$ и $\texttt{]}$. 
+Ще казваме, че че $\alpha$ е {\bf балансирана}, ако са изпълнени свойствата:
+\begin{enumerate}[1)]
+\item 
+  $\texttt{left}(\alpha) = \texttt{right}(\alpha)$;
+\item
+  За всеки префикс $\gamma$ на $\alpha$,
+  $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$.
+\end{enumerate}
+  
+\begin{problem}
+  \marginpar{\cite[стр. 135]{kozen}}
+  Докажете, че езикът 
+  \[L = \{\alpha \in \{\texttt{[},\texttt{]}\}^\star \mid \alpha\text{ е балансирана дума}\}\]
+  е безконтекстен.
+\end{problem}
+\begin{hint}
+  Да разгледаме граматиката $G$ с правила
+  \[S \to \texttt{[}S\texttt{]}\ |\ SS\ |\ \varepsilon.\]
+  Ще докажем, че $L = \L(G)$.
+  
+  Да разгледаме $M \df \{\alpha \in \{\texttt{[},\texttt{]}, S\}^\star \mid \alpha\text{ е балансирана}\}$.
+  Нека $\alpha \in \L(G)$. Ще докажем, че $\alpha \in M$.
+  С индукция по дължината на извода ще докажем, че $\alpha$ е балансирана.
+  Нека $S \to^{l}_G \beta \to^1_G \alpha$.
+  Лесно се съобразява, че за всички случаи за $\beta$ и $\alpha$ имаме следното:
+  \begin{center}
+    \begin{tabular}{| c | c | c |}
+      \hline
+      $\text{от И.П. за }\beta$ & $\text{правило на }G$ & $\alpha$ \\ \hline
+      $\in M$ & $S \rightarrow \texttt{[}S\texttt{]}$ & $\in M$ \\ \hline
+      $\in M$ & $S \rightarrow SS$ & $\in M$ \\ \hline
+      $\in M$ & $S \rightarrow \varepsilon$ & $\in M$ \\ \hline
+    \end{tabular}
+  \end{center}
+
+  За другата посока, нека $\alpha \in L$.
+  Ще докажем с индукция по дължината на думата, че $\alpha \in \L(G)$.
+  Ясно е, че за всички нетривиални случаи, можем да запишем думата $\alpha$ като $\alpha = \texttt{[}\beta\texttt{]}$.
+  Проблемът е, че в общия случай не е ясно дали можем да приложим индукционното предположение за $\beta$,
+  защото е възможно $\beta \not\in L$. Например, $\alpha = \texttt{[][]}$.
+  Тогава $\beta = \texttt{][} \not \in L$.
+  Поради тази причина, трябва да сме по-внимателни и да разгледаме два случая.
+  \begin{itemize}
+  \item 
+    \marginpar{т.е. $\beta \neq \varepsilon$ и $\beta \neq \alpha$}
+    Нека $\alpha$ има {\em същински} префикс $\beta \in L$.
+    Понеже $\alpha \in L$, лесно се съобразява, че $\alpha = \beta\gamma$ и $\gamma \in L$
+    Сега можем да приложим {\bf И.П.} за $\beta$ и $\gamma$ и да получим, че 
+    $\beta \in \L(G)$ и $\gamma \in \L(G)$, т.е.
+    $S \to^\star_G \beta$ и $S \to^\star_G \gamma$.
+    Понеже имаме правило $S \to_G SS$, то е ясно, че $\alpha \in \L(G)$.
+  \item
+    Нека $\alpha$ да няма същински префикс $\beta \in L$.
+    Ясно е, че винаги $\alpha = \texttt{[}\beta\texttt{]}$, за някое $\beta$
+    и $\texttt{left}(\beta) = \texttt{right}(\beta)$. Ако $\beta \in L$, то ще можем да приложим {\bf И.П.}
+    за $\beta$ и ще сме готови.
+    За всеки префикс $\gamma$ на $\beta$ имаме, че $\texttt{[}\gamma$ е префикс на $\alpha$,
+    и понеже $\alpha \in L$, то $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$.
+    Това означава, че $\beta \in L$ и можем да приложим {\bf И.П.}
+    Тогава $S \to^\star_G \beta$ и чрез правилото $S \to_G \texttt{[}S\texttt{]}$
+    получаваме, че $\alpha \in \L(G)$.    
+  \end{itemize}
+\end{hint}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
