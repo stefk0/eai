@@ -1,36 +1,51 @@
-\subsection*{Балансирани скоби}
+\subsection{Балансирани скоби}
 
-Тук ще разглеждаме азбука $\Sigma$, която включва буквите $\texttt{[}$ и $\texttt{]}$.
-Нека за по-голяма яснота да положим
-\begin{align*}
-  & \texttt{left}(\alpha) \df N_{\texttt{[}}(\alpha);\\
-  & \texttt{right}(\alpha) \df N_{\texttt{]}}(\alpha).
-\end{align*}
 Нека $\alpha$ е дума над азбука, която включва буквите $\texttt{[}$ и $\texttt{]}$. 
 Ще казваме, че че $\alpha$ е {\bf балансирана}, ако са изпълнени свойствата:
-\begin{enumerate}[1)]
+\begin{itemize}
 \item 
   $\texttt{left}(\alpha) = \texttt{right}(\alpha)$;
 \item
   За всеки префикс $\gamma$ на $\alpha$,
   $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$.
-\end{enumerate}
+\end{itemize}
+
+% \begin{prop}
+%   Нека $\alpha \in \{\texttt{[},\texttt{]}\}^\star$ е балансирана дума.
+%   Тогава:
+%   \begin{itemize}
+%   \item 
+%     $\alpha = \texttt{[}\beta\texttt{]}$, където $\beta$ е балансирана, или
+%   \item
+%     $\alpha = \beta\gamma$, където $\beta$ и $\gamma$ са балансирани думи, $\beta,\gamma \neq \varepsilon$.
+%   \end{itemize}
+% \end{prop}
+% \begin{hint}
   
-\begin{problem}
-  \marginpar{\cite[стр. 135]{kozen}}
-  Докажете, че езикът 
-  \[L = \{\alpha \in \{\texttt{[},\texttt{]}\}^\star \mid \alpha\text{ е балансирана дума}\}\]
-  е безконтекстен.
-\end{problem}
+% \end{hint}
+
+\begin{framed}
+  \begin{problem}
+    Докажете, че езикът 
+    \[L = \{\alpha \in \{\texttt{[},\texttt{]}\}^\star \mid \alpha\text{ е балансирана дума}\}\]
+    е безконтекстен.
+  \end{problem}  
+\end{framed}
 \begin{hint}
+  \marginpar{\cite[стр. 135]{kozen}}
+  \marginpar{Очевидно е, че езикът не е регулярен}
   Да разгледаме граматиката $G$ с правила
   \[S \to \texttt{[}S\texttt{]}\ |\ SS\ |\ \varepsilon.\]
   Ще докажем, че $L = \L(G)$.
   
+  Първо ще докажем включването $\L(G) \subseteq L$.
   Да разгледаме $M \df \{\alpha \in \{\texttt{[},\texttt{]}, S\}^\star \mid \alpha\text{ е балансирана}\}$.
-  Нека $\alpha \in \L(G)$. Ще докажем, че $\alpha \in M$.
-  С индукция по дължината на извода ще докажем, че $\alpha$ е балансирана.
+  
+  Нека $S \to^\star_G \alpha$. Ще докажем с индукция по дължината на извода на $\alpha$ от $S$,
+  че $\alpha \in M$.
   Нека $S \to^{l}_G \beta \to^1_G \alpha$.
+  От {\bf И.П.} имаме, че $\beta \in M$, т.е. $\beta$ е балансирана.
+
   Лесно се съобразява, че за всички случаи за $\beta$ и $\alpha$ имаме следното:
   \begin{center}
     \begin{tabular}{| c | c | c |}
@@ -42,7 +57,7 @@
     \end{tabular}
   \end{center}
 
-  За другата посока, нека $\alpha \in L$.
+  За включването $L \subseteq \L(G)$, нека $\alpha \in L$.
   Ще докажем с индукция по дължината на думата, че $\alpha \in \L(G)$.
   Ясно е, че за всички нетривиални случаи, можем да запишем думата $\alpha$ като $\alpha = \texttt{[}\beta\texttt{]}$.
   Проблемът е, че в общия случай не е ясно дали можем да приложим индукционното предположение за $\beta$,
@@ -59,13 +74,18 @@
     $S \to^\star_G \beta$ и $S \to^\star_G \gamma$.
     Понеже имаме правило $S \to_G SS$, то е ясно, че $\alpha \in \L(G)$.
   \item
-    Нека $\alpha$ да няма същински префикс $\beta \in L$.
-    Ясно е, че винаги $\alpha = \texttt{[}\beta\texttt{]}$, за някое $\beta$
-    и $\texttt{left}(\beta) = \texttt{right}(\beta)$. Ако $\beta \in L$, то ще можем да приложим {\bf И.П.}
-    за $\beta$ и ще сме готови.
+    Нека $\alpha$ да няма същински префикс $\gamma \in L$.
+    Ясно е, че $\alpha = \texttt{[}\beta\texttt{]}$, за някое $\beta$
+    и $\texttt{left}(\beta) = \texttt{right}(\beta)$. 
+    Ако $\beta \in L$, то ще можем да приложим {\bf И.П.} за $\beta$ и ще сме готови.
     За всеки префикс $\gamma$ на $\beta$ имаме, че $\texttt{[}\gamma$ е префикс на $\alpha$,
-    и понеже $\alpha \in L$, то $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$.
-    Това означава, че $\beta \in L$ и можем да приложим {\bf И.П.}
+    и понеже $\alpha \in L$, то $\texttt{left}(\texttt{[}\gamma) \geq \texttt{right}(\gamma)$.
+    Възможно ли е $\texttt{left}(\gamma) < \texttt{right}(\gamma)$ ?
+    Това може да се случи единствено ако $\texttt{left}(\texttt{[}\gamma) = \texttt{right}(\gamma)$.
+    Но тогава $\texttt{[}\gamma$ е префикс на $\alpha$, за който $\texttt{[}\gamma \in L$,
+    което противоречи на случая, който разглеждаме.
+    Това означава, че за произволен префикс $\gamma$ на $\beta$,
+    $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$ и оттук $\beta \in L$ и можем да приложим {\bf И.П.}
     Тогава $S \to^\star_G \beta$ и чрез правилото $S \to_G \texttt{[}S\texttt{]}$
     получаваме, че $\alpha \in \L(G)$.    
   \end{itemize}

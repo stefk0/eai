@@ -62,10 +62,10 @@
     $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) \geq N_b(\alpha)\}$;
   \item
     $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) > N_b(\alpha)\}$;
-  \item
-    $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha \neq \beta\}$;
-  \item
-    $L = \{\alpha\beta \in \{a,b\}^\star \mid\ |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}$;
+  % \item
+  %   $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha \neq \beta\}$;
+  % \item
+  %   $L = \{\alpha\beta \in \{a,b\}^\star \mid\ |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}$;
   \item
     $L = \{\alpha \in \{a,b\}^\star \mid \text{ във всеки префикс $\beta$ на $\alpha$, } N_b(\beta) \leq N_a(\beta)\}$;
   \item
@@ -81,35 +81,35 @@
 \begin{hint}
   \begin{enumerate}
   \item[р)]
-    $S\to EaE$, $E \to aEbE | bEaE | \varepsilon$.
+    $S\to EaE$, $E \to aEbE\ |\ bEaE\ |\ \varepsilon$.
   \item[с)]
-    $S\to E | SaS$, $E \to aEbE | bEaE | \varepsilon$.
-  \item[у)]
-    Разгледайте граматиката:
-    \begin{align*}
-      & S \to AaR\ |\ BbR\ |\ E\\
-      & A \to XAX\ |\ bR\sharp\\
-      & B \to XBX\ |\ aR\sharp\\
-      & E \to XEX\ |\ XR\sharp\ |\ \sharp XR\\
-      & R \to XR\ |\ \varepsilon\\
-      & X \to a\ |\ b.
-    \end{align*}
-    Имаме, че за произволни думи $\alpha,\beta,\gamma,\delta \in \{a,b\}^\star$,
-    \begin{align*}
-      & S \to^\star \alpha b \gamma \sharp \beta a \delta\ \&\ |\alpha| = |\beta|,\\
-      & S \to^\star \alpha a \gamma \sharp \beta b \delta\ \&\ |\alpha| = |\beta|, \text{ или}\\
-      & S \to^\star \alpha \sharp \beta\ \&\ |\alpha| \neq |\beta|\\
-    \end{align*}
-  \item[ф)]
-    Разгледайте граматиката:
-    \begin{align*}
-      & S \to AB\ |\ BA\\
-      & A \to XAX\ |\ a\\
-      & B \to XBX\ |\ b\\
-      & X \to a\ |\ b.
-    \end{align*}
+    $S\to E\ |\ SaS$, $E \to aEbE\ |\ bEaE\ |\ \varepsilon$.
+  % \item[у)]
+  %   Разгледайте граматиката:
+  %   \begin{align*}
+  %     & S \to AaR\ |\ BbR\ |\ E\\
+  %     & A \to XAX\ |\ bR\sharp\\
+  %     & B \to XBX\ |\ aR\sharp\\
+  %     & E \to XEX\ |\ XR\sharp\ |\ \sharp XR\\
+  %     & R \to XR\ |\ \varepsilon\\
+  %     & X \to a\ |\ b.
+  %   \end{align*}
+  %   Имаме, че за произволни думи $\alpha,\beta,\gamma,\delta \in \{a,b\}^\star$,
+  %   \begin{align*}
+  %     & S \to^\star \alpha b \gamma \sharp \beta a \delta\ \&\ |\alpha| = |\beta|,\\
+  %     & S \to^\star \alpha a \gamma \sharp \beta b \delta\ \&\ |\alpha| = |\beta|, \text{ или}\\
+  %     & S \to^\star \alpha \sharp \beta\ \&\ |\alpha| \neq |\beta|\\
+  %   \end{align*}
+  % \item[ф)]
+  %   Разгледайте граматиката:
+  %   \begin{align*}
+  %     & S \to AB\ |\ BA\\
+  %     & A \to XAX\ |\ a\\
+  %     & B \to XBX\ |\ b\\
+  %     & X \to a\ |\ b.
+  %   \end{align*}
     
-  \item[х)]
+  \item[у)]
     $S \to aSbS\ |\ aS$.
   \end{enumerate}
 \end{hint}
@@ -278,7 +278,6 @@
   % \item
   %   $L \df \{\alpha\sharp\beta\sharp\gamma \mid \alpha, \beta, \gamma \in \{a,b\}^\star\ \&\ |\alpha| = |\beta| = |\gamma|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\ \&\ \texttt{diff}(\beta,\gamma^{rev}) = 1\}$;
   \end{enumerate}
-
 \end{problem}    
 
 \begin{problem}
@@ -463,27 +462,27 @@
   \end{align*}
 \end{hint}
 
-\begin{problem}
-  Нека с $\code{\A}$ да означим думата над азбуката $\{0,1\}$, която кодира крайния автомат $\A$.
-  Посочете кои от следните езици са регулярни/безконтекстни/разрешими/полуразрешими, където:
-  \begin{enumerate}[a)]
-  \item
-    $L = \{\code{\A} \mid \A\text{ е краен автомат}\}$;
-  \item
-    $L = \{\code{\A} \mid \A\text{ е краен автомат с пет състояния}\}$;
-  \item
-    $L = \{\code{\A} \mid \A\text{ е краен детерминиран автомат}\}$;
-  \item
-    $L = \{\code{\A} \mid \A\text{ е краен детерминиран тотален автомат}\}$;
-  \item
-    $L = \{\code{\A}\cdot\omega \mid \omega \in \Sigma^\star\ \&\ \omega \in \L(\A)\}$;
-  \item
-    $L = \{\code{\A}\cdot\omega \mid \omega \in \Sigma^\star\ \&\ \omega \not\in \L(\A)\}$;
-  \item
-    $L = \{\code{\A} \cdot \code{\B} \mid \A, \B \text{ са крайни автомати и } \L(\A) = \L(\B)\}$;
-  \end{enumerate}
-  Обосновете се!
-\end{problem}
+% \begin{problem}
+%   Нека с $\code{\A}$ да означим думата над азбуката $\{0,1\}$, която кодира крайния автомат $\A$.
+%   Посочете кои от следните езици са регулярни/безконтекстни/разрешими/полуразрешими, където:
+%   \begin{enumerate}[a)]
+%   \item
+%     $L = \{\code{\A} \mid \A\text{ е краен автомат}\}$;
+%   \item
+%     $L = \{\code{\A} \mid \A\text{ е краен автомат с пет състояния}\}$;
+%   \item
+%     $L = \{\code{\A} \mid \A\text{ е краен детерминиран автомат}\}$;
+%   \item
+%     $L = \{\code{\A} \mid \A\text{ е краен детерминиран тотален автомат}\}$;
+%   \item
+%     $L = \{\code{\A}\cdot\omega \mid \omega \in \Sigma^\star\ \&\ \omega \in \L(\A)\}$;
+%   \item
+%     $L = \{\code{\A}\cdot\omega \mid \omega \in \Sigma^\star\ \&\ \omega \not\in \L(\A)\}$;
+%   \item
+%     $L = \{\code{\A} \cdot \code{\B} \mid \A, \B \text{ са крайни автомати и } \L(\A) = \L(\B)\}$;
+%   \end{enumerate}
+%   Обосновете се!
+% \end{problem}
 
 \begin{problem}
   Нека $G = \CFG$ е {\em регулярна} граматика, т.е.

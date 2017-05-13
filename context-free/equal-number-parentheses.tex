@@ -1,0 +1,191 @@
+\subsection{Равен брой скоби}
+
+Тук ще разглеждаме азбука $\Sigma$, която включва буквите $\texttt{[}$ и $\texttt{]}$.
+Нека за по-голяма яснота да положим
+\begin{align*}
+  & \texttt{left}(\alpha) \df N_{\texttt{[}}(\alpha) & \comment{\text{брой срещания на $\texttt{[}$ в $\alpha$}}\\
+  & \texttt{right}(\alpha) \df N_{\texttt{]}}(\alpha). & \comment{\text{брой срещания на $\texttt{]}$ в $\alpha$}}
+\end{align*}
+
+\begin{problem}
+  \label{prob:nanb}
+  Нека $\omega$ е произволна дума над азбуката $\{\texttt{[}, \texttt{]}\}$. 
+  Тогава:
+  \begin{enumerate}[a)]
+  \item 
+    ако $\texttt{left}(\omega) = \texttt{right}(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които е изпълнено:
+    \begin{itemize}
+    \item 
+      $\omega = \omega_1 \texttt{[} \omega_2$;
+    \item
+      $\texttt{left}(\omega_1) = \texttt{right}(\omega_1)$;
+    \item
+      $\texttt{left}(\omega_2) = \texttt{right}(\omega_2)$.
+    \end{itemize}
+  \item
+    ако $\texttt{right}(\omega) = \texttt{left}(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които е изпълнено:
+    \begin{itemize}
+    \item 
+      $\omega = \omega_1 \texttt{]} \omega_2$;
+    \item
+      $\texttt{left}(\omega_1) = \texttt{right}(\omega_1)$;
+    \item
+      $\texttt{left}(\omega_2) = \texttt{right}(\omega_2)$.
+    \end{itemize}
+  \end{enumerate}
+\end{problem}
+\begin{hint}
+  \marginpar{Другият случай е аналогичен}
+  Ще се съсредоточим върху случая, когато $\omega$ е дума, за която $\texttt{left}(\omega) = \texttt{right}(\omega) + 1$.
+  Ще докажем а) с индукция по дължината на думата.
+  \begin{itemize}
+  \item 
+    $\abs{\omega} = 1$. Тогава $\omega_1 = \omega_2 = \varepsilon$ и $\omega = \texttt{[}$.
+  \item
+    Да приемем, че твърдението а) е вярно за думи с дължина $\leq n$.
+  \item
+    $\abs{\omega} = n+1$. Ще разгледаме два случая, в зависимост от първия символ на $\omega$.
+    \begin{itemize}
+    \item 
+      Случаят $\omega = \texttt{[}\omega'$ е очевиден. (Защо?)
+    \item
+      Интересният случай е $\omega = \texttt{]}\omega'$.    
+      Тогава $\omega = \texttt{]}^{i+1}\texttt{[}\omega'$, за някое $i \in \Nat$.
+      Да разгледаме думата $\omega''$, която се получава от $\omega$
+      като премахнем първото срещане на думата $\texttt{][}$, т.е. 
+      $\omega'' = \texttt{]}^i\omega'$ и $\abs{\omega''} = n-1$.
+      Понеже от $\omega$ сме премахнали равен брой леви и десни скоби, то
+      $\texttt{left}(\omega'') = \texttt{right}(\omega'')+1$.
+      Според {\bf И.П.} за $\omega''$ са изпълнени свойствата:
+      \begin{itemize}
+      \item 
+        $\omega'' = \omega''_1\texttt{[}\omega''_2$;
+      \item
+        $\texttt{left}(\omega''_1) = \texttt{right}(\omega''_1)$;
+      \item
+        $\texttt{left}(\omega''_2) = \texttt{right}(\omega''_2)$.
+      \end{itemize}
+      Понеже $\texttt{]}^i$ е префикс на $\omega''_1$, за да получим обратно $\omega$, трябва 
+      да прибавим премахнатата част $\texttt{][}$ веднага след $\texttt{]}^i$ в $\omega''_1$.
+    \end{itemize}
+  \end{itemize}
+\end{hint}
+
+\begin{problem}
+  За произволна дума $\omega \in \{ \texttt{[}, \texttt{]} \}^\star$, 
+  докажете, че ако $\texttt{left}(\omega) > \texttt{right}(\omega)$, то съществуват думи $\omega_1$ и $\omega_2$,
+  за които са изпълнени свойствата:
+  \begin{itemize}
+  \item 
+    $\omega = \omega_1 \texttt{[} \omega_2$;
+  \item
+    $\texttt{left}(\omega_1) \geq \texttt{right}(\omega_1)$;
+  \item
+    $\texttt{left}(\omega_2) \geq \texttt{right}(\omega_2)$.
+  \end{itemize}
+\end{problem}
+
+\begin{framed}
+  \begin{problem}
+    Да се докаже, че езикът 
+    \[L = \{\alpha \in \{\texttt{[}, \texttt{]}\}^\star\mid \texttt{left}(\alpha) = \texttt{right}(\alpha)\}\]
+    е безконтекстен.
+  \end{problem}  
+\end{framed}
+\begin{hint}
+  \marginpar{  Алтернативна граматика за езика $L$ е
+    \[S \to \varepsilon\ |\ \texttt{[}S\texttt{]}\ |\ \texttt{]}S\texttt{[}\ |\ SS.\]}
+  Една възможна граматика $G$ е следната: 
+  \[S \to \texttt{[}S\texttt{]}S\ |\ \texttt{]}S\texttt{[}S\ |\ \varepsilon.\]
+  % Например, да разгледаме извода на думата $aabbba$ в тази граматика:
+  % \begin{align*}
+  %   S & \to aSbS \to aaSbSbS \to aa\varepsilon bSbS \to aab\varepsilon bS \to aabbbSaS\\
+  %   & \to aabbb\varepsilon a S \to aabbba.
+  % \end{align*}
+  
+  Като следствие от \Prob{nanb} може лесно да се изведе, че за думи $\omega$, за които $\texttt{left}(\omega) = \texttt{right}(\omega)$,
+  е изпълнено следното:
+  \begin{enumerate}[a)]
+  \item 
+    ако $\omega = \texttt{[}\omega'$, то са изпълнени свойствата:
+    \begin{itemize}
+    \item 
+      $\omega = \texttt{[}\omega_1\texttt{]}\omega_2$;
+    \item
+      $\texttt{left}(\omega_1) = \texttt{right}(\omega_1)$;
+    \item
+      $\texttt{left}(\omega_2) = \texttt{right}(\omega_2)$.
+    \end{itemize}
+  \item
+    ако $\omega = \texttt{]}\omega'$, то са изпълнени свойствата:
+    \begin{itemize}
+    \item 
+      $\omega = \texttt{]}\omega_1\texttt{[}\omega_2$;
+    \item
+      $\texttt{left}(\omega_1) = \texttt{right}(\omega_1)$;
+    \item
+      $\texttt{left}(\omega_2) = \texttt{right}(\omega_2)$.
+    \end{itemize}
+  \end{enumerate}
+
+  Сега първо ще проверим, че $L \subseteq \L(G)$.
+  За целта ще докажем с {\em пълна индукция} по дължината на думата $\omega$, че за всяка дума $\omega$ със свойството $\texttt{left}(\omega) = \texttt{right}(\omega)$ е изпълнено
+  $S \rightarrow^\star \omega$.
+  \begin{itemize}
+  \item 
+    Нека $\abs{\omega} = 0$. Тогава $S \rightarrow \varepsilon$.
+  \item
+    Да приемем, че за всяка дума с дължина $\leq k$ твърдението е вярно.
+  \item
+    Нека $\abs{\omega} = k+1$. Имаме два случая.
+    \begin{itemize}
+    \item 
+      $\omega = \texttt{[}\omega^\prime$, т.е. от а) на \Prob{nanb}, 
+      $\omega = \texttt{[}\omega_1\texttt{]}\omega_2$ и $\texttt{left}(\omega_1) = \texttt{right}(\omega_1)$, $\texttt{left}(\omega_2) = \texttt{right}(\omega_2)$.
+      Тогава $\abs{\omega_1} \leq k$ и по И.П. $S \rightarrow^\star \omega_1$.
+      Аналогично, $S \rightarrow^\star \omega_2$.
+      Понеже имаме правило $S \rightarrow \texttt{[}S\texttt{]}S$, заключаваме че 
+      $S \to^\star \texttt{[}\omega_1\texttt{]}\omega_2$.
+    \item
+      $\omega = \texttt{]}\omega^\prime$, т.е. свойство б), $\omega = \texttt{]}\omega_1\texttt{[}\omega_2$ и 
+      $\texttt{left}(\omega_1) = \texttt{right}(\omega_1)$, $\texttt{left}(\omega_2) = \texttt{right}(\omega_2)$.
+      Този случай се разглежда аналогично.
+    \end{itemize}
+  \end{itemize}
+  
+  Преминаваме към доказателството на другата посока, т.е. $\L(G) \subseteq L$.
+  Тук с индукция по дължината на извода $l$ ще докажем, че
+  $S \stackrel{l}{\to} \omega$, то $\omega \in M$,
+  където
+  \[M = \{\omega \in \{a,b,S\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\}.\]
+  \begin{itemize}
+  \item 
+    Ясно, че $S \stackrel{0}{\rightarrow} S$ и $S \in M$.
+  \item
+    Да разгледаме дума $\omega$, за която $S \stackrel{k+1}{\to} \omega$.
+    Това означава, че съществува дума $\alpha$, за която
+    \[S \stackrel{k}{\to} \alpha \to \omega.\]
+    От {\bf И.П.} имаме, че $\alpha \in M$.
+    Нека $\omega$ се получава от $\alpha$ с прилагане на правило от вида $S \to \gamma$.
+    Разглеждаме всички варианти за думата $\alpha \in M$ и за правилото $S \to \gamma$ в граматиката $G$
+    за да докажем, че $\omega \in M$.
+    Удобно е да представим всички случаи в таблица.
+    \begin{center}
+      \begin{tabular}{| c | c | c |}
+        \hline
+        От И.П. за $\alpha$ & правило на $G$ & $\omega$ \\ \hline
+        $\in M$ & $S \to \texttt{[}S\texttt{]}S$ & $\in M$ \\ \hline
+        $\in M$ & $S \to \texttt{]}S\texttt{[}S$ & $\in M$ \\ \hline
+        $\in M$ & $S \to \varepsilon$ & $\in M$ \\ \hline
+      \end{tabular}
+    \end{center}    
+    Във всички случаи лесно се установява, че $\omega \in M$.
+  \end{itemize}
+  Така за всяка дума $\omega \in \L(G)$ следва, че
+  \[\omega \in \Sigma^\star \cap M = L.\]
+\end{hint}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

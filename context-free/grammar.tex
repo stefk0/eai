@@ -62,15 +62,15 @@
 
 \begin{example}
   \begin{align*}
-    & S \to \texttt{if } S \texttt{ then } S \texttt{ else }S\quad |\quad \texttt{ if }S \texttt{ then }S\quad |\quad V\\
-    & V \to x\quad |\quad y\quad |\quad z
+    & S \to \texttt{if } S \texttt{ then } S \texttt{ else }S\ |\ \texttt{ if }S \texttt{ then }S\ |\ V\\
+    & V \to x\ |\ y\ |\ z
   \end{align*}
 
   Ние искаме следната граматика:
   \begin{align*}
-    & S \to M\quad |\quad U\\
-    & M \to \texttt{if } S \texttt{ then } M \texttt{ else }M\quad |\quad X\\
-    & U \to \texttt{if } S \texttt{ then } S\quad |\quad \texttt{if } S \texttt{ then } M \texttt{ else }U
+    & S \to M\ |\ U\\
+    & M \to \texttt{if } S \texttt{ then } M \texttt{ else }M\ |\ X\\
+    & U \to \texttt{if } S \texttt{ then } S\ |\ \texttt{if } S \texttt{ then } M \texttt{ else }U
   \end{align*}
 \end{example}
 
@@ -83,6 +83,11 @@
     & N \to (E)\ |\ a.
   \end{align*}
 \end{example}
+
+\begin{problem}
+  Докажете, че езикът $L = \{a^mb^nc^k\mid m+k \geq n\}$ е безконтекстен.
+\end{problem}
+
 
 \begin{problem}
   Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
@@ -160,6 +165,30 @@
   \[\omega \in \Sigma^\star \cap M = \{a^mb^nc^k\mid m+n \geq k\}.\]
 \end{proof}
 
+\begin{problem}
+  Докажете, че езикът 
+  \[L = \{a^nb^mc^kd^l \mid n+k = m + l\}\]
+  е безконтекстен.
+\end{problem}
+\begin{hint}
+  Нека $G_1$ е безконтекстна граматика за езика
+  \[L_1 = \{a^nb^mc^k \mid m = n+k\},\]
+  където правилата на $G_1$ са
+  \[S_1 \to AC,\quad  A \to aAb\ |\ \varepsilon,\quad C \to bCc\ |\ \varepsilon.\]
+  Нека $G_2$ е безконтекстна граматика за езика 
+  \[L_2 = \{b^mc^kd^l \mid k = m+l\},\]
+  където правилата на $G_2$ са
+  \[S_2 \to BD,\quad B \to bBc\ |\ \varepsilon,\quad D \to cCd\ |\ \varepsilon.\]
+  Тогава граматиката $G$ за $L$ 
+  съдържа правилата на граматиките $G_1$ и $G_2$, а също и правилата
+  \[S \to aSd\ |\ S_1\ |\ S_2.\]
+\end{hint}
+
+\begin{problem}
+  Докажете, че езикът 
+  \[L = \{a^nb^mc^kd^l \mid n+k \geq m + l\}\]
+  е безконтекстен.
+\end{problem}
 
 \begin{problem}
   \marginpar{
@@ -170,119 +199,42 @@
 \end{problem}
 
 \begin{problem}
-  \label{prob:nanb}
-  Нека $\omega$ е произволна дума над азбуката $\{a,b\}$. 
-  Тогава:
-  \begin{enumerate}[a)]
-  \item 
-    ако $N_a(\omega) = N_b(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
-    $\omega = \omega_1 a \omega_2$, $N_a(\omega_1) = N_b(\omega_1)$ и $N_a(\omega_2) = N_b(\omega_2)$.
-  \item
-    ако $N_b(\omega) = N_a(\omega) + 1$, то съществуват думи $\omega_1$, $\omega_2$, за които
-    $\omega = \omega_1 b \omega_2$, $N_a(\omega_1) = N_b(\omega_1)$ и $N_a(\omega_2) = N_b(\omega_2)$.
-  \end{enumerate}
-\end{problem}
-\begin{proof}
-  Пълна индукция по дължината на думата $\omega$, за които $N_a(\omega) = N_b(\omega)+1$.
-  \begin{itemize}
-  \item 
-    $\abs{\omega} = 1$. Тогава $\omega_1 = \omega_2 = \varepsilon$ и $\omega = a$.
-  \item
-    $\abs{\omega} = n+1$. Ще разгледаме два случая, в зависимост от първия символ на $\omega$.
-    \begin{itemize}
-    \item 
-      Случаят $\omega = a\omega'$ е лесен. (Защо?)
-    \item
-      Интересният случай е $\omega = b\omega'$.    
-      Тогава $\omega = b^{i+1}a\omega'$. Да разгледаме думата $\omega''$, която се получава от $\omega$
-      като премахнем първото срещане на думата $ba$, т.е. 
-      $\omega'' = b^i\omega'$ и $\abs{\omega''} = n-1$.
-      Понеже от $\omega$ сме премахнали равен брой $a$-та и $b$-та, $N_a(\omega'') = N_b(\omega'')+1$.
-      Според {\bf И.П.} за $\omega''$, можем да запишем думата като $\omega'' = \omega''_1a\omega''_2$
-      и $N_a(\omega''_1) = N_b(\omega''_1)$, $N_a(\omega''_2) = N_b(\omega''_2)$.
-      Понеже $b^i$ е префикс на $\omega''_1$, за да получим обратно $\omega$, трябва 
-      да прибавим премахнатата част $ba$ веднага след $b^i$ в $\omega''_1$.
-    \end{itemize}
-  \end{itemize}
-\end{proof}
-
-\begin{problem}
-  За произволна дума $\omega \in \{a,b\}^\star$, 
-  докажете, че ако $N_a(\omega) > N_b(\omega)$, то съществуват думи $\omega_1$ и $\omega_2$,
-  за които $\omega = \omega_1 a \omega_2$ и $N_a(\omega_1) \geq N_b(\omega_1)$, $N_a(\omega_2) \geq N_b(\omega_2)$.
-\end{problem}
-
-\begin{problem}
-  Да се докаже, че езикът $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) = N_b(\alpha)\}$ 
+  Докажете, че езикът
+  \[L = \{\alpha\beta \in \{a,b\}^\star \mid\ |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}\]
   е безконтекстен.
 \end{problem}
-\begin{proof}
-  \marginpar{  Алтернативна граматика за езика $L$ е
-    \[S \rightarrow \varepsilon\ |\ aSb\ |\ bSa\ |\ SS.\]}
-  Една възможна граматика $G$ е следната: 
-  \[S \rightarrow aSbS\vert bSaS \vert\varepsilon.\]
-  Например, да разгледаме извода на думата $aabbba$ в тази граматика:
+\begin{hint}
+  Разгледайте граматиката:
   \begin{align*}
-    S & \to aSbS \to aaSbSbS \to aa\varepsilon bSbS \to aab\varepsilon bS \to aabbbSaS\\
-    & \to aabbb\varepsilon a S \to aabbba.
+    & S \to AB\ |\ BA\\
+    & A \to XAX\ |\ a\\
+    & B \to XBX\ |\ b\\
+    & X \to a\ |\ b.
   \end{align*}
-  
-  Като следствие от \Prob{nanb} може лесно да се изведе, че за думи $\omega$, за които $N_a(\omega) = N_b(\omega)$,
-  е изпълнено следното:
-  \begin{enumerate}[a)]
-  \item 
-    ако $\omega = a\omega'$, то
-    $\omega = a\omega_1b\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$;
-  \item
-    ако $\omega = b\omega'$, то
-    $\omega = b\omega_1a\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
-  \end{enumerate}
+\end{hint}
 
-  Сега първо ще проверим, че $L \subseteq L(G)$.
-  За целта ще докажем с {\em пълна индукция} по дължината на думата $\omega$, че за всяка дума $\omega$ със свойството $N_a(\omega) = N_b(\omega)$ е изпълнено
-  $S \rightarrow^\star \omega$.
-  \begin{itemize}
-  \item 
-    Нека $\abs{\omega} = 0$. Тогава $S \rightarrow \varepsilon$.
-  \item
-    Нека $\abs{\omega} = k+1$. Имаме два случая.
-    \begin{itemize}
-    \item 
-      $\omega = a\omega^\prime$, т.е. от свойство а), $\omega = a\omega_1b\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
-      Тогава $\abs{\omega_1} \leq k$ и по И.П. $S \rightarrow^\star \omega_1$.
-      Аналогично, $S \rightarrow^\star \omega_2$.
-      Понеже имаме правило $S \rightarrow aSbS$, заключаваме че $S \rightarrow^\star a\omega_1b\omega_2$.
-    \item
-      $\omega = b\omega^\prime$, т.е. свойство б), $\omega = b\omega_1a\omega_2$ и $N_a(\omega_1) = N_b(\omega_1)$, $N_a(\omega_2) = N_b(\omega_2)$.
-      Този случай се разглежда аналогично.
-    \end{itemize}
-  \end{itemize}
-  
-  Преминаваме към доказателството на другата посока, т.е. $L(G) \subseteq L$.
-  Тук с индукция по дължината на извода $l$ ще докажем, че
-  $S \stackrel{l}{\rightarrow} \omega$, то $\omega \in M$,
-  където
-  \[M = \{\omega \in \{a,b,S\}^\star \mid N_a(\omega) = N_b(\omega)\}.\]
-  За $l = 0$  е ясно, че $S \stackrel{0}{\rightarrow^\star} S$.
-  За $l = k+1$, то $S \stackrel{k}{\rightarrow^\star} \alpha \rightarrow \omega$.
-  От {\bf И.П.} имаме, че $\alpha \in M$.
-  Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
-  Разглеждаме всички варианти за думата $\alpha \in M$ и за правилото $C\rightarrow \gamma$ в граматиката $G$
-  за да докажем, че  $\omega \in M$.
-  Удобно е да представим всички случаи в таблица.
-  \begin{center}
-    \begin{tabular}{| c | c | c |}
-      \hline
-      $\alpha$ & $C \rightarrow \gamma$ & $\omega$ \\ \hline
-      $\in M$ & $S \rightarrow aSbS$ & $\in M$ \\ \hline
-      $\in M$ & $S \rightarrow bSaS$ & $\in M$ \\ \hline
-      $\in M$ & $S \rightarrow \varepsilon$ & $\in M$ \\ \hline
-    \end{tabular}
-  \end{center}
-  Във всички случаи лесно се установява, че $\omega \in M$.
-  Така за всяка дума $\omega \in L(G)$ следва, че
-  \[\omega \in \Sigma^\star \cap M = L.\]
-\end{proof}
+\begin{problem}
+ Докажете, че езикът
+ \[L = \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha^R\mbox{ е поддума на }\beta \}\]
+ е безконтекстен.
+\end{problem}
+\begin{hint}
+  Разгледайте граматиката:
+  \begin{align*}
+    & S \to AaR\ |\ BbR\ |\ E\\
+    & A \to XAX\ |\ bR\sharp\\
+    & B \to XBX\ |\ aR\sharp\\
+    & E \to XEX\ |\ XR\sharp\ |\ \sharp XR\\
+    & R \to XR\ |\ \varepsilon\\
+    & X \to a\ |\ b.
+  \end{align*}
+  Имаме, че за произволни думи $\alpha,\beta,\gamma,\delta \in \{a,b\}^\star$,
+  \begin{align*}
+    & S \to^\star \alpha b \gamma \sharp \beta a \delta\ \&\ |\alpha| = |\beta|,\\
+    & S \to^\star \alpha a \gamma \sharp \beta b \delta\ \&\ |\alpha| = |\beta|, \text{ или}\\
+    & S \to^\star \alpha \sharp \beta\ \&\ |\alpha| \neq |\beta|\\
+  \end{align*}      
+\end{hint}
 
 \begin{problem}
   Нека $L_1$ и $L_2$ са произволни безконтекстни езици.
@@ -291,7 +243,9 @@
   \item 
     $L_1 \cup L_2$ е безконтекстен език;
   \item
-    $L^\star_1$ е безконтекствен език;
+    $L_1 \cdot L_2$ е безконтекстен език;
+  \item
+    $L^\star_1$ е безконтекстен език.
   \end{itemize}
 \end{problem}
 
@@ -300,7 +254,6 @@
   \[S \to AA\ |\ B,\ A \to B\ |\ bb,\ B \to aa\ |\ aB.\]
   Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
-
 
 
 %%% Local Variables: 
