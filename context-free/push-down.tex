@@ -79,17 +79,17 @@
   Да видим как думата $a^2b^2$ се разпознава от автомата с празен стек:
   \marginpar{\writedown Докажете, че $L = \L_S(P)$!}
   \begin{align*}
-    (\qstart, a^2b^2, \#) & \vdash_P (\qstart, ab^2, A\#) & (\text{правило }(1))\\
-    & \vdash_P (p, b^2, AA\#) & (\text{правило }(2))\\
-    & \vdash_P (p, b, A\#) & (\text{правило }(6))\\
-    & \vdash_P (p, \varepsilon, \#) & (\text{правило }(6))\\
-    & \vdash_P (p, \varepsilon, \varepsilon) & (\text{правило }(7))\\
+    (\qstart, a^2b^2, \#) & \vdash_P (\qstart, ab^2, A\#) & \comment{\text{правило }(1)}\\
+    & \vdash_P (p, b^2, AA\#) & \comment{\text{правило }(2)}\\
+    & \vdash_P (p, b, A\#) & \comment{\text{правило }(6)}\\
+    & \vdash_P (p, \varepsilon, \#) & \comment{\text{правило }(6)}\\
+    & \vdash_P (p, \varepsilon, \varepsilon) & \comment{\text{правило }(7)}\\
   \end{align*}
 \end{example}
 
 \begin{example}
   \label{ex:omega-omega-r}
-  За езика $L = \{\omega\omega^R \mid \omega \in \{a,b\}^\star\}$ съществува стеков автомат $P$, такъв че
+  За езика $L = \{\omega\omega^{rev} \mid \omega \in \{a,b\}^\star\}$ съществува стеков автомат $P$, такъв че
   $L = \L_S(P)$.
   Нека $P = \PDA$, където:
   \begin{itemize}
@@ -127,27 +127,27 @@
     \end{enumerate}
   \end{itemize}
   Основното наблюдение, което трябва да направим за да разберем конструкцията на автомата е, че
-  всяка дума от вида $\omega\omega^R$ може да се запише като $\omega_1aa\omega^R_1$ или $\omega_1bb\omega^R_1$.
+  всяка дума от вида $\omega\omega^{rev}$ може да се запише като $\omega_1aa\omega^{rev}_1$ или $\omega_1bb\omega^{rev}_1$.
   Да видим защо $P$ разпознава думата $abaaba$ с празен стек.
   Започваме по следния начин:
   \begin{align*}
-    (\qstart,abaaba,\#) & \vdash_P (\qstart,baaba,A\#) & (\text{правило }(1))\\
-                        & \vdash_P (\qstart, aaba, BA\#) & (\text{правило }(6))\\
-                        & \vdash_P (\qstart, aba, ABA\#) & (\text{правило }(5)).
+    (\qstart,abaaba,\#) & \vdash_P (\qstart,baaba,A\#) & \comment{\text{правило }(1)}\\
+                        & \vdash_P (\qstart, aaba, BA\#) & \comment{\text{правило }(6)}\\
+                        & \vdash_P (\qstart, aba, ABA\#). & \comment{\text{правило }(5)}
   \end{align*}
   Сега можем да направим два избора как да продължим. Състоянието $p$ служи за маркер, което ни казва, че вече сме започнали 
-  да четем $\omega^R$. Поради тази причина, продължаваме така:
+  да четем $\omega^{rev}$. Поради тази причина, продължаваме така:
   \begin{align*}
-    (\qstart, aba, ABA\#) & \vdash_P (p, ba, BA\#) & (\text{правило }(4))\\
-    & \vdash_P (p, a, A\#) & (\text{правило }(9))\\
-    & \vdash_P (p, \varepsilon, \#) & (\text{правило }(8))\\
-    & \vdash_P (p,\varepsilon,\varepsilon) & (\text{правило }(10)).
+    (\qstart, aba, ABA\#) & \vdash_P (p, ba, BA\#) & \comment{\text{правило }(4)}\\
+    & \vdash_P (p, a, A\#) & \comment{\text{правило }(9)}\\
+    & \vdash_P (p, \varepsilon, \#) & \comment{\text{правило }(8)}\\
+    & \vdash_P (p,\varepsilon,\varepsilon). & \comment{\text{правило }(10)}
   \end{align*}
   Да проиграем още един пример. Да видим защо думата $aba$ не се извежда от автомата.
   \begin{align*}
-    (\qstart,aba,\#) & \vdash_P (\qstart, ba,A\#) & (\text{правило }(1))\\
-                     & \vdash_P (\qstart, a, BA\#) & (\text{правило }(6))\\
-                     & \vdash_P (\qstart, \varepsilon, ABA\#) & (\text{правило }(5)).
+    (\qstart,aba,\#) & \vdash_P (\qstart, ba,A\#) & \comment{\text{правило }(1)}\\
+                     & \vdash_P (\qstart, a, BA\#) & \comment{\text{правило }(6)}\\
+                     & \vdash_P (\qstart, \varepsilon, ABA\#). & \comment{\text{правило }(5)}
   \end{align*}
   \marginpar{\writedown Докажете, че $\L_S(P) = L$ !}
   От последното моментно описание на автомата нямаме нито един преход, следователно
@@ -188,13 +188,13 @@
   \end{itemize}
   Да видим защо думата $abbbaa \in \L_S(P)$.
   \begin{align*}
-    (\qstart, abbbaa, \#) & \vdash (\qstart, bbbaa, A\#) & (\text{правило }(2))\\
-    & \vdash (\qstart, bbaa, \#) & (\text{правило }(6))\\
-    & \vdash (\qstart, baa, B\#) & (\text{правило }(3))\\
-    & \vdash (\qstart, aa, BB\#) & (\text{правило }(7))\\
-    & \vdash (\qstart, a, B\#) & (\text{правило }(5))\\
-    & \vdash (\qstart, \varepsilon, \#) & (\text{правило }(5))\\
-    & \vdash (\qstart, \varepsilon, \varepsilon) & (\text{правило }(1)).
+    (\qstart, abbbaa, \#) & \vdash (\qstart, bbbaa, A\#) & \comment{\text{правило }(2)}\\
+                          & \vdash (\qstart, bbaa, \#) & \comment{\text{правило }(6)}\\
+                          & \vdash (\qstart, baa, B\#) & \comment{\text{правило }(3)}\\
+                          & \vdash (\qstart, aa, BB\#) & \comment{\text{правило }(7)}\\
+                          & \vdash (\qstart, a, B\#) & \comment{\text{правило }(5)}\\
+                          & \vdash (\qstart, \varepsilon, \#) & \comment{\text{правило }(5)}\\
+                          & \vdash (\qstart, \varepsilon, \varepsilon). & \comment{\text{правило }(1)}
   \end{align*}
 \end{example}
 
@@ -405,7 +405,7 @@
 
 \begin{example}
   Да видим как по стековия автомат за езика 
-  \[L = \{\omega\omega^R \mid \omega \in \{a,b\}^\star\}\]
+  \[L = \{\omega\omega^{rev} \mid \omega \in \{a,b\}^\star\}\]
   от \Ex{omega-omega-r} можем да построим граматика, следвайки конструкцията от \Th{push-down-context-free}.
 
   \begin{itemize}
