@@ -1,80 +1,158 @@
-\subsection*{Валидни и невалидни изчисления на машини на Тюринг}
+
+\subsection*{Безконтекстен език за преходите в машина на Тюринг}
+
+% \subsection*{Валидни и невалидни изчисления на машини на Тюринг}
 \marginpar{\cite{hopcroft1} стр. 201}
 Да разгледаме машината на Тюринг $\M$.
-Дума от вида 
-\[\omega_1 \sharp \omega^{rev}_2 \sharp \omega_3 \sharp \omega^{rev}_4\sharp\omega_5\cdots\]
-ще наричаме валидно изчисление на $\M$, ако 
+
+Една дума $\omega$ описва конфигурация на машина на Тюринг,
+ако $\omega \in \Gamma^\star Q \Gamma^\star$.
+
+\begin{framed}
+  \begin{prop}
+    Да фиксираме една машина на Тюринг $\M$. 
+    Тогава следните езици за безконтекстни:
+    \begin{itemize}
+    \item 
+      $\texttt{ValidStep}(\M) \df \{\alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\}$;
+    \item
+      $\texttt{ValidStep}'(\M)\df \{\alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\}$;
+    \item
+      $\texttt{InvalidStep}(\M) \df \{\alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\}$;
+    \item
+      $\texttt{InvalidStep}'(\M) \df \{\alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\}$.
+    \end{itemize}
+  \end{prop}  
+\end{framed}
+
+\begin{hint}
+
+  Да напомним първо как дефинираме релацията $\vdash_\M$:
+  \begin{align*}
+    & (\alpha_1z, q, x\alpha_2) \vdash_\M  (\alpha_1 zy, p, \alpha_2) & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
+    & (\alpha_1z, q, x\alpha_2) \vdash_\M (\alpha_1, p ,zy\alpha_2) & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
+    & (\alpha_1z, q, x\alpha_2) \vdash_\M (\alpha_1z, p, y\alpha_2) & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}.
+  \end{align*}
+
+  Думите в езика $\texttt{ValidStep}(\M)$ кодират релацията $\vdash_\M$. Това означава, че всяка дума на 
+  $\texttt{ValidStep}(\M)$ има някое от следните представяния:
+  \begin{align*}
+    & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 p y z \alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
+    & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 y z p \alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
+    & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 y p z\alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}
+  \end{align*}
+
+  Ще опишем неформално стеков автомат $P$ за езика $\texttt{ValidStep}(\M)$.
+  Нека 
+  \[Q^{P} \df \{r_q \mid q \in Q^\M\} \cup \{r, \hat{r}\}.\]
+
+  \begin{itemize}
+  \item
+    Първо четем $\alpha_1$ и я записваме в стека като $\alpha^{rev}_1$.
+    Това правим като дефинираме функцията на преходите като 
+    \[(\forall a,z \in \Sigma)[\ \delta_{P}(r,a,z) \df \{(r,az)\}\ ].\]
+  \item 
+    Правим това докато не срещнем някое $q \in Q^\M$. Тогава трябва да направим преход на $\M$.
+    Тук трябва да внимаваме, защото за да направим преход, трябва да знаем състоянието $q$ и да прочетем следващия символ.
+    Един начин да разрешим този проблем е като запомним кое състояние сме прочели на машината на Тюринг в състоянията на стековия автомат:
+    \[(\forall q \in Q^\M)(\forall z \in \Sigma)[\ \delta_{P}(r,q,z) = \{(r_q,z)\}\ ].\]
+    \begin{itemize}
+    \item 
+      \marginpar{Стекът представлява $z\alpha^{rev}_1$}
+      ако $\delta_\M(q,x) = (p,y,\goright)$, то слагаме $yp$ на върха на стека, т.е.
+      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, ypz)\}.\]
+    \item
+      ако $\delta_\M(q,x) =(p,y,\goleft)$, то ако $z$ е върха на стека, заменяме $z$ с $pzy$, т.е.
+      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, pzy)\}.\]
+    \item
+      ако $\delta_\M(q,x) =(p,y,\stay)$, то ако $z$ е върха на стека, заменяме $z$ с $ypz$, т.е.
+      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, ypz)\}.\]
+    \end{itemize}
+  \item
+    Сега вече сме в състояние $\hat{r}$ и остава да прочетем $\alpha_2$ и да я запишем в стека като $\alpha^{rev}_2$:
+    \[\delta_{P}(\hat{r},x,z) = \{(\hat{r}, xz)\}.\]
+  \end{itemize}
+\end{hint}
+
+\begin{remark}
+  Да обърнем внимание, че горната конструкция на стековия автомат $P$ е {\bf ефективна}, т.е.
+  съществува алгоритъм, който при вход машина на Тюринг $\M$ връща като изход стеков автомат $P$ за езика $\texttt{ValidStep}(\M)$.
+  С други думи, езикът 
+  \[\{\code{\M} \cdot \code{P} \mid \L(P) = \texttt{ValidStep}(\M)\}\]
+  е разрешим.
+\end{remark}
+
+\subsection*{История на машина на Тюринг}
+\marginpar{история на приемащо изчисление}
+
+Дума от вида  $\omega_1 \sharp \omega^{rev}_2 \sharp \omega_3 \sharp \omega^{rev}_4\sharp\omega_5\cdots$
+се нарича {\bf история на приемащо изчисление} на машината на Тюринг $\M$, ако
 \begin{itemize}
 \item
-  всяко $\omega_i \in \Gamma^\star Q \Gamma^\star$ описва моментна конфигурация
-  и $\omega_i$ не завършва на $\blank$.
+  $\omega_i \in \Gamma^\star Q \Gamma^\star$, т.е. $\omega_i$ описва моментна конфигурация
+  и $\omega_i$ не започва и не завършва на $\blank$.
 \item
-  $\omega_1 \in s\Sigma^\star$ описва начална конфигурация.
+  $\omega_1 \in \qstart\Sigma^\star$ описва начална конфигурация.
 \item
-  $\omega_n \in \Gamma^\star Q \Gamma^\star$ описва финална конфигурация.
+  $\omega_n \in \Gamma^\star \cdot\{\qaccept\} \cdot \Gamma^\star$ описва приемаща конфигурация.
 \item 
   $\omega_i \vdash_\M \omega_{i+1}$ за $i = 1,\dots,n-1$.
 \end{itemize}
 
-% \begin{prop}
-%   Езикът
-%   $L = \{\omega_1 \sharp \omega^{rev}_2 \mid \omega_1, \omega_2 \in \Gamma^\star Q \Gamma^\star\ \&\ \omega_1 \vdash_\M \omega_2\}$
-%   е безконтекстен.
-% \end{prop}
-
-
 \begin{lemma}
   \marginpar{\cite{hopcroft1}, стр. 201}
-  Множеството от валидни изчисления на машина на Тюринг $\M$ е сечението на два безконтекстни езика $L_1$ и $L_2$.
+  Нека да означим с $\texttt{Accept}(\M)$ езикът от историите на всички приемащи изчисления за машината на Тюринг $\M$.
+  Тогава 
+  \[\texttt{Accept}(\M) = L_1 \cap L_2,\]
+  където $L_1$ и $L_2$ са безконтекстни езици.
   Освен това, граматиките на $L_1$ и $L_2$ могат ефективно да бъдат построени от $\M$.
 \end{lemma}
 \begin{hint}
-  Да разгледаме езика
-  \[L_3 = \{\alpha\#\beta^{rev} \mid \alpha \vdash_\M \beta\}.\]
-  Лесно е да построим стеков автомат $P_3$, който разпознава езика $L_3$.
-  Четем буквата $X$. Тогава:
-  \begin{itemize}
-  \item 
-    ако $\delta_\M(q,X) =(p,Y,R)$, то слагаме $Yp$ на върха на стека;
-  \item
-    ако $\delta_\M(q,X) =(p,Y,L)$, то ако $Z$ е върха на стека, заменяме $Z$ с $pZY$;
-  \end{itemize}
-  Аналогично разглеждаме безконтекстния език
-  \[L_4 = \{\alpha^{rev}\#\beta \mid \alpha \vdash_\M \beta\}.\]
-  Сега можем да дефинираме езиците
+  Да разгледаме езиците:
   \begin{align*}
-    & L_1 = (L_3\#)^\star(\{\varepsilon\}\cup \Gamma^\star q_{accept} \Gamma^\star\#)\\
-    & L_2 = q_0\Sigma^\star \# (L_4\#)^\star(\{\varepsilon\}\cup \Gamma^\star q_{accept} \Gamma^\star\#),
+    & L_1 \df (\texttt{ValidStep}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \qaccept \Gamma^\star\sharp)\\
+    & L_2 \df \qstart\Sigma^\star \sharp (\texttt{ValidStep}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp),
   \end{align*}
   за които е ясно, че са безконтекстни.
-  Тогава езикът от валидните изчисления на $\M$
-  е $L_1 \cap L_2$.
 \end{hint}
 
 \begin{thm}
   Езикът
-  \[L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконтекстни граматики и }\L(G_1) \cap \L(G_2) = \emptyset\}\]
+  \[L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) \cap \L(G_2) = \emptyset\}\]
   е неразрешим.
 \end{thm}
-\begin{proof}
+\begin{hint}
   По дадена дума $\code{\M}$, можем ефективно да намерим $G_1$ и $G_2$, за които
-  $\L(G_1) \cap \L(G_2)$ са точно валитните изчисления на $\M$.
+  $\L(G_1) \cap \L(G_2)$ са точно валидните изчисления на $\M$.
   Тогава ако $L$ е разрешим език, то $L_{\texttt{Empty}}$ е разрешим език, което е противоречие.
-\end{proof}
+\end{hint}
 
 \begin{lemma}
-  Нека е дадена $\M = \TM$.
-  Тогава езикът 
-  \[L = \{\alpha\sharp\beta^R \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\}\]
-  е безконтекстен.
+  За всяка машина на Тюринг $\M$, $\overline{\texttt{Accept}(\M)}$ е безконтекстен език.
 \end{lemma}
-
-\begin{lemma}
-  Множеството от невалидни изчисления на машина на Тюринг е безконтекстен език.
-\end{lemma}
-\begin{proof}
-  
-\end{proof}
+\begin{hint}
+  Една дума $\alpha$ не е история на приемащо изчисление, ако е изпълнено някое от следните условия:
+  \begin{itemize}
+  \item 
+    \marginpar{Можем да опишем това свойство с регулярен език}
+    $\alpha$ не е от вида $\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n$,
+    където $\omega_i \in \Gamma^\star Q \Gamma^\star$, или
+  \item
+    ако $\alpha$ е от вида $\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n$,
+    където $\omega_i \in \Gamma^\star Q \Gamma^\star$, тогава:
+    \begin{itemize}
+    \item 
+      $\omega_1 \not\in \qstart \Gamma^\star$, или
+    \item
+      $\omega_n \not\in \Gamma^\star\{\qaccept\}\Gamma^\star$, или
+    \item
+      $\omega_i \not\vdash_\M \omega^{rev}_{i+1}$, за някое нечетно $i$, или
+    \item
+      $\omega^{rev}_i \not\vdash_\M \omega_{i+1}$, за някое четно $i$.
+    \end{itemize}
+  \end{itemize}
+  Думите притежаващи някое от тези свойства могат да се опишат като обединение на три регулярни езика и двата безконтекстни езика.
+\end{hint}
 
 \begin{framed}
   \begin{thm}
@@ -84,11 +162,11 @@
     е неразрешим.
   \end{thm}
 \end{framed}
-\begin{proof}
+\begin{hint}
   По дадена дума $\code{\M}$, можем ефективно да намерим $G$, за която
-  $\L(G)$ са точно невалитните изчисления на $\M$.
+  $\L(G)$ са точно невалидните изчисления на $\M$.
   Тогава ако допуснем, че $L$ е разрешим език, то $L_{\texttt{Empty}}$ е разрешим, което е противоречие.
-\end{proof}
+\end{hint}
 
 \begin{cor}
   Следните езици не са разрешими:
