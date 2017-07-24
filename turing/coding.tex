@@ -42,13 +42,14 @@
   Следните езици са разрешими:
   \begin{itemize}
   \item 
-    $L = \{\code{\M} \mid \M\text{ е машина на Тюринг}\}$;
-  \item
-    $L = \{\code{\M} \mid \M\text{ е детерминистична машина на Тюринг}\}$.
+    $L = \{\alpha \in \{0,1\}^\star \mid \alpha = \code{\M}\text{ за някоя машина на Тюринг }\M\}$;
+  \item 
+    $L = \{\alpha \in \{0,1\}^\star \mid \alpha = \code{\M}\text{ за някоя детерминистична машина на Тюринг }\M\}$;
   \end{itemize}
 \end{prop}
 
 \begin{remark}
+  \marginpar{Ще докажем това по-късно}
   Следният език {\bf не} е разрешим:
   \[L_{\texttt{tot}} = \{\code{\M} \mid \M\text{ е тотална машина на Тюринг}\}.\]
 \end{remark}

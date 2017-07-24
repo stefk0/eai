@@ -3,14 +3,14 @@
 Да фиксираме една непразна азбука $\Sigma$.
 \index{регулярен израз}
 {\bf Регулярните изрази} $\mathbf{r}$ могат да се опишат със следната абстрактна граматика
-\[\mathbf{r} ::= \mathbf{\emptyset}\ |\ \mathbf{\varepsilon}\ |\ \mathbf{a}\ |\ \mathbf{ r_1 \cdot r_2}\ |\ \mathbf{r_1 + r_2}\ |\ \mathbf{r^\star_1},\]
+\[\mathbf{r} ::= \underline{\emptyset}\ |\ \underline{\varepsilon}\ |\ \mathbf{a}\ |\ \mathbf{ r_1 \cdot r_2}\ |\ \mathbf{r_1 + r_2}\ |\ \mathbf{r^\star_1},\]
 където $\varepsilon$ означава празната дума и $a$ е произволна буква от азбуката $\Sigma$.
 
-Друг начин да се опишат регулярните изрази е по следния начин:
+Регулярните изрази могат да се опишат и по следния начин:
 \marginpar{Това е пример за индуктивна дефиниция}
 \begin{itemize}
 \item 
-  Символите $\emptyset$, $\varepsilon$ и $\mathbf{a}$, за всяка буква $a \in \Sigma$, са регулярен изрази;
+  Символите $\underline{\emptyset}$, $\underline{\varepsilon}$ и $\mathbf{a}$, за всяка буква $a \in \Sigma$, са регулярен изрази;
 \item
   Ако $\mathbf{r_1}$ и $\mathbf{r_2}$ са регулярни изрази, то $\mathbf{r_1 \cdot r_2}$, $\mathbf{r_1 + r_2}$ и $\mathbf{r^\star_1}$
   също са регулярни изрази;
@@ -26,16 +26,16 @@
 т.е. за всеки регулярен израз $\mathbf{r}$ ще определим език $\L(\mathbf{r})$.
 \begin{itemize}
 \item
+  $\emptyset$ е регулярен език,
+  който се разпознава от регулярния израз $\underline{\emptyset}$. Означаваме $\L(\underline{\emptyset}) = \emptyset$;
+\item
   $\{\varepsilon\}$ е регулярен език,
-  който се разпознава от регулярния израз $\varepsilon$.
-  Означаваме $\L(\varepsilon) = \{\varepsilon\}$;
+  който се разпознава от регулярния израз $\underline{\varepsilon}$.
+  Означаваме $\L(\underline{\varepsilon}) = \{\varepsilon\}$;
 \item
   за всяка буква $a \in \Sigma$, $\{a\}$ е регулярен език,
   който се разпознава от регулярния израз $\mathbf{a}$.
   Означаваме $\L(\mathbf{a}) = \{a\}$;
-\item
-  $\emptyset$ е регулярен език,
-  който се разпознава от регулярния израз $\emptyset$. Означаваме $\L(\emptyset) = \emptyset$;
 \item
   Нека $L_1$ и $L_2$ са регулярни езици, т.е. съществуват регулярни изрази $\mathbf{r}_1$
   и $\mathbf{r}_2$, за които $\L(\mathbf{r}_1) = L_1$ и $\L(\mathbf{r}_2) = L_2$.

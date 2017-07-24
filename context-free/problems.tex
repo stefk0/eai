@@ -238,7 +238,7 @@
       Заключаваме, че $1 \leq m < k < p$. Тогава:
       \begin{align*}
         & p + pmj = k(1+pmi)\\
-        & p = k + pu(ki-j).
+        & p = k + pm(ki-j).
       \end{align*}
       Понеже $m < k$, то $j < (m+1)i \leq ki$,
       т.е. $ki-j > 0$. Достигаме до противоречие.
@@ -449,18 +449,48 @@
 
 \begin{problem}
   Докажете, че езикът
-  \[L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\}\]
+  \[L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat^+\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\}\]
   е безконтекстен.
 \end{problem}
 \begin{hint}
   Най-лесно става със стеков автомат.
-  Интересно е също да се направи и безконтекстна граматика за $L$.
-  Това дали е вярно:
+  Една възможна граматика е следната:
   \begin{align*}
-    & S \to XSX\ |\ \sharp SS\ |\ SS\sharp\ |\ \sharp S\sharp\\
+    & E \to XEX\ |\ \sharp O\ |\ O\sharp\ |\ \sharp E\sharp\\
+    & O \to OO\ |\ EE\ |\ \varepsilon\\
     & X \to a\ |\ b.
   \end{align*}
 \end{hint}
+
+\begin{prop}
+  Да разгледаме езиците:
+  \begin{align*}
+    & L_{\text{even}} = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\}\\
+    & L_{\text{odd}} = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n+1} \mid n\in\Nat\ \&\ \sum^n_{i=0}\abs{\omega_{2i+1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\}.
+  \end{align*}
+  Тогава:
+  \begin{align*}
+    (\forall \alpha)[\ \alpha\in L_{\text{even}}\ \implies\ (\exists \alpha_1,\alpha_2)[& ( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{odd}})\ \lor\\
+                                                                                        &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{odd}}\ \&\ \alpha_2 \in L_{\text{even}})\ ]\ ]\\
+    (\forall \alpha)[\ \alpha\in L_{\text{odd}}\ \implies\ (\exists \alpha_1,\alpha_2)[&( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{even}})\ \lor\\
+                                                                                        &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{odd}}\ \&\ \alpha_2 \in L_{\text{odd}})\ ]\ ].
+  \end{align*}
+\end{prop}
+\begin{hint}
+  Да разгледаме една дума $\alpha = \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \in L_{\text{even}}$.
+  Не е възможно $|\omega_{2i-1}| < |\omega_{2i}|$ за $i = 1,\dots,n$, защото тогава бихме имали 
+  \[\sum^n_{i=1}|\omega_{2i-1}|\ <\ \sum^n_{i=1}|\omega_{2i}|.\]
+  Нека $|\omega_{2i-1}| \geq |\omega_{2i}|$.
+  Тогава
+  \[\alpha = \omega_1 \sharp \omega_2 \sharp \cdots \sharp\omega'_{2i-1}\omega''_{2i-1}\sharp\omega_{2i}\sharp\cdots \omega_{2n},\]
+  където $|\omega''_{2i-1}| = |\omega_{2i}|$.
+  Като махнем от $\alpha$ $\omega''_{2i-1}\sharp\omega_{2i}$, 
+  получаваме думата
+  \[\alpha' = \omega_1 \sharp \omega_2 \sharp \cdots \sharp\omega'_{2i-1}\sharp\cdots \omega_{2n} \in L_{\text{odd}}.\]
+  Понеже $|\alpha'| < |\alpha|$, от И.П. знаем, че $\alpha' = \alpha_1\alpha_2$, такива че
+  $\alpha_1,\alpha_2 \in L_{\text{even}}$.
+\end{hint}
+
 
 % \begin{problem}
 %   Нека с $\code{\A}$ да означим думата над азбуката $\{0,1\}$, която кодира крайния автомат $\A$.

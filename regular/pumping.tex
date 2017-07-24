@@ -42,48 +42,68 @@
 \end{hint}
 
 Практически е по-полезно да разглеждаме следната еквивалентна формулировка на лемата за покачването.
+
 \begin{cor}[Контрапозиция на лемата за покачването]
   \label{cor:pumping-reg}
   \marginpar{Ясно е, че всеки краен език е регулярен. Нали?}
-  Нека $L$ е произволен {\em безкраен} език. Нека също така е изпълнено, че за всяко естествено число $p \geq 1$ можем да намерим дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че за всяко разбиване на думата на три части, $\alpha = xyz$,
-  със свойствата $\abs{y} \geq 1$ и $\abs{xy} \leq p$, е изпълнено, че $(\exists i)[xy^iz \not\in L]$.
+  Нека $L$ е произволен {\bf безкраен} език. Нека също така е изпълнено, че:
+  \begin{description}
+  \item[($\forall$)]
+    за {\em всяко} естествено число $p \geq 1$,
+  \item[($\exists$)]
+    можем да намерим дума $\alpha \in L$, $\abs{\alpha}\geq p$, такава че
+  \item[($\forall$)]
+    за {\em всяко} разбиване на думата на три части, $\alpha = xyz$, със свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$,
+  \item[($\exists$)]
+    можем да посочим $i \in \Nat$, за което е изпълнено, че $xy^iz \not\in L$.
+  \end{description}  
   Тогава $L$ {\bf не} е регулярен език.
 \end{cor}
 \begin{proof}
-  Да означим с $P_{\text{reg}}(L,p)$ следната формула:
-  {\scriptsize
-    \[(\forall \alpha \in L)[\abs{\alpha} \geq p \geq 1\Rightarrow (\exists x,y,z\in\Sigma^\star)[\alpha = xyz\ \wedge\ \abs{y} \geq 1\ \wedge\ \abs{xy} \leq p\ \wedge\ (\forall i\in\Nat)[xy^iz \in L]]].\]}
-  \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
+  Да означим с $P_{\text{reg}}(L)$ следната формула:
+  \begin{align*}
+    (\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[ & \alpha = xyz \land \abs{y} \geq 1 \land \abs{xy} \leq p\\
+    & \land\ (\forall i\in\Nat)[xy^iz \in L]]].
+  \end{align*}
+  
+  Така условието на \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
   
   \begin{center}
-    {\em ,,Aко $L$ е регулярен език, то е изпълнено $(\exists p)P_{\text{reg}}(L,p)$.''}
+    {\em ,,Aко $L$ е регулярен език, то е изпълнено $P_{\text{reg}}(L)$.''}
   \end{center}
-  \marginpar{Контрапозиция на твърдението $p \to q$ е твърдението $\neg q \to \neg p$}
+  \marginpar{Контрапозиция на твърдението $P \to Q$ е твърдението $\neg Q \to \neg P$}
   \noindent
   Лемата може да се запише по следния еквивалентен начин:
   
   \begin{center}
-    {\em ,,Ако $(\exists p) P_{\text{reg}}(L,p)$ не е изпълнено, то $L$ не е регулярен език.''}
+    {\em ,,Ако $P_{\text{reg}}(L)$ не е изпълнено, то $L$ не е регулярен език.''}
   \end{center}
 
   \marginpar{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
 
-  \noindent Отрицанието на формулата $(\exists p) P_{\text{reg}}(L,p)$ може да се запише по следния начин:
-  {\scriptsize  \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz\ \vee\ \abs{y} \not\geq 1\ \vee\ \abs{xy} \not\leq p\ \vee\ (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+  Отрицанието на $P_{\text{reg}}(L)$ преставлява формулата
+  \begin{align*}
+    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \wedge\ & (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz \vee\ \abs{y} \not\geq 1 \vee\ \abs{xy} \not\leq p\\
+    & \vee\ (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
+  \end{align*}
+  
   Горната формула е еквивалентна на:
-  \marginpar{Използваме, че $\neg p \vee \neg q \vee r \equiv (p \wedge q) \to r$}
-  {\scriptsize
-    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]]].\]}
+  \marginpar{Използваме, че $\neg P \vee \neg Q \vee R \equiv (P \wedge Q) \to R$}
+  \begin{align*}
+    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \wedge\ & (\forall x,y,z\in\Sigma^\star)[\ (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p)\\
+    & \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
+  \end{align*}
+
   Това означава, че ако
   \begin{description}
-  \item[$(\forall)$]
+  \item[($\forall$)]
     вземем произволна константа $p \geq 1$,
-  \item[$(\exists)$]
+  \item[($\exists$)]
     за нея намерим дума $\alpha \in L$, такава че $\abs{\alpha} \geq p$ и 
-  \item[$(\forall)$]
+  \item[($\forall$)]
     докажем, че за всяко нейно разбиване на три части $x,y,z$, със свойствата
     $\abs{y} \geq 1$ и $\abs{xy} \leq p$,
-  \item[$(\exists)$]
+  \item[($\exists$)]
     можем да намерим $i$, за което $xy^iz \not\in L$,
   \end{description}
   то можем да заключим, че езикът $L$ не е регулярен.
@@ -96,7 +116,7 @@
 \end{problem}
 \begin{proof}
   \marginpar{Това е важен пример. По-късно ще видим, че този език е безконтекстен}
-  Ще докажем, че
+  Формално трябва докажем, че
   {\scriptsize
     \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
   Доказателството следва стъпките:
@@ -266,7 +286,7 @@
     Нека $L$ е непразен език и нека $m = \min\{\abs{\alpha} \mid \alpha \in L\}$.
     Ще докажем, че $m < \abs{Q}$.    
     За целта, да допуснем, че $m \geq \abs{Q}$ и да изберем $\alpha \in L$, за която $\abs{\alpha} = m$.
-    Според \Lem{pumping-reg}, съществува разбиване $xyz = \alpha$, 
+    Според доказателството на \Lem{pumping-reg}, съществува разбиване $xyz = \alpha$, 
     такова че $xz \in L$.
     При положение, че $\abs{y} \geq 1$, то $\abs{xz} < m$, което 
     е противоречие с минималността на $m$.
@@ -321,12 +341,12 @@
 
 \begin{problem}
   \marginpar{Например, $\{c\}^+\cdot\{a^nb^n\mid n\in\Nat\}\cup \{a,b\}^\star$}
-  Да се даде пример за език $L$, който {\bf не} е регулярен, но $(\exists p)P_{\text{reg}}(L,p)$.
+  Да се даде пример за език $L$, който {\bf не} е регулярен, но $P_{\text{reg}}(L)$.
 \end{problem}
 
 \begin{example}
   Езикът $L = \{c^ka^nb^m\mid k,n,m \in \Nat\ \&\ k = 1\implies m = n\}$
-  {\bf не} е регулярен, но $(\exists p)P_{\text{reg}}(L,p)$.
+  {\bf не} е регулярен, но $P_{\text{reg}}(L)$.
 \end{example}
 \begin{proof}
   Да допуснем, че $L$ е регулярен.
