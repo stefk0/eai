@@ -155,16 +155,18 @@
 \end{example}
 
 \begin{example}
-  За езика $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) = N_b(\omega)\}$ съществува стеков автомат $P$, такъв че
+  За езика 
+  \[L = \{\ \omega \in \{\texttt{[},\texttt{]}\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\ \}\] съществува стеков автомат $P$, такъв че
   $L = \L_S(P)$.
+
   Нека $P = \PDA$, където:
   \begin{itemize}
   \item 
     $Q = \{\qstart\}$;
   \item
-    $\Sigma = \{a,b\}$;
+    $\Sigma = \{\texttt{[},\texttt{]}\}$;
   \item
-    $\Gamma = \{A, B, \#\}$;
+    $\Gamma = \{\texttt{[}, \texttt{]}, \#\}$;
   \item
     $F = \emptyset$, защото разпознаваме с празен стек;
   \item
@@ -173,30 +175,107 @@
     \item 
       $\Delta(\qstart, \varepsilon, \#) = \{(\qstart, \varepsilon)\}$;
     \item
-      $\Delta(\qstart, a, \#) = \{(\qstart, A\#)\}$;
+      $\Delta(\qstart, \texttt{[}, \#) = \{(\qstart, \texttt{[}\#)\}$;
     \item
-      $\Delta(\qstart, b, \#) = \{(\qstart, B\#)\}$;
+      $\Delta(\qstart, \texttt{]}, \#) = \{(\qstart, \texttt{]}\#)\}$;
     \item
-      $\Delta(\qstart, a, A) = \{(\qstart, AA)\}$;
+      $\Delta(\qstart, \texttt{[}, \texttt{[}) = \{(\qstart, \texttt{[[})\}$;
     \item
-      $\Delta(\qstart, a, B) = \{(\qstart, \varepsilon)\}$;
+      $\Delta(\qstart, \texttt{[}, \texttt{]}) = \{(\qstart, \varepsilon)\}$;
     \item
-      $\Delta(\qstart, b, A) = \{(\qstart, \varepsilon)\}$;
+      $\Delta(\qstart, \texttt{]}, \texttt{[}) = \{(\qstart, \varepsilon)\}$;
     \item
-      $\Delta(\qstart, b, B) = \{(\qstart, BB)\}$.
+      $\Delta(\qstart, \texttt{]}, \texttt{]}) = \{(\qstart, \texttt{]]})\}$.
     \end{enumerate}
   \end{itemize}
-  Да видим защо думата $abbbaa \in \L_S(P)$.
+  Да видим защо думата $\texttt{[]]][[} \in \L_S(P)$.
   \begin{align*}
-    (\qstart, abbbaa, \#) & \vdash (\qstart, bbbaa, A\#) & \comment{\text{правило }(2)}\\
-                          & \vdash (\qstart, bbaa, \#) & \comment{\text{правило }(6)}\\
-                          & \vdash (\qstart, baa, B\#) & \comment{\text{правило }(3)}\\
-                          & \vdash (\qstart, aa, BB\#) & \comment{\text{правило }(7)}\\
-                          & \vdash (\qstart, a, B\#) & \comment{\text{правило }(5)}\\
-                          & \vdash (\qstart, \varepsilon, \#) & \comment{\text{правило }(5)}\\
-                          & \vdash (\qstart, \varepsilon, \varepsilon). & \comment{\text{правило }(1)}
+    (\qstart, \texttt{[]]][[}, \#) & \vdash (\qstart,\ \texttt{]]][[},\ \texttt{[}\#) & \comment{\text{правило }(2)}\\
+                                   & \vdash (\qstart,\ \texttt{]][[},\ \#) & \comment{\text{правило }(6)}\\
+                                   & \vdash (\qstart,\ \texttt{][[},\ \texttt{]}\#) & \comment{\text{правило }(3)}\\
+                                   & \vdash (\qstart,\ \texttt{[[},\ \texttt{]]}\#) & \comment{\text{правило }(7)}\\
+                                   & \vdash (\qstart,\ \texttt{[},\ \texttt{]}\#) & \comment{\text{правило }(5)}\\
+                                   & \vdash (\qstart,\ \varepsilon,\ \#) & \comment{\text{правило }(5)}\\
+                                   & \vdash (\qstart,\ \varepsilon,\ \varepsilon). & \comment{\text{правило }(1)}
   \end{align*}
 \end{example}
+
+\begin{example}
+  За езика 
+  \[L = \{\ \omega \in \{\texttt{[},\texttt{]}\}^\star \mid \omega\text{ е балансирана дума}\ \}\] съществува стеков автомат $P$, такъв че
+  $L = \L_S(P)$.
+
+  Нека $P = \PDA$, където:
+  \begin{itemize}
+  \item 
+    $Q = \{\qstart\}$;
+  \item
+    $\Sigma = \{\texttt{[},\texttt{]}\}$;
+  \item
+    $\Gamma = \{\texttt{[}, \#\}$;
+  \item
+    $F = \emptyset$, защото разпознаваме с празен стек;
+  \item
+    Функцията на преходите $\Delta$ има следната дефиниция:
+    \begin{enumerate}[(1)]
+    \item 
+      $\Delta(\qstart, \varepsilon, \#) = \{(\qstart, \varepsilon)\}$;
+    \item
+      $\Delta(\qstart, \texttt{[}, \#) = \{(\qstart, \texttt{[}\#)\}$;
+    \item
+      $\Delta(\qstart, \texttt{]}, \#) = \emptyset$;
+    \item
+      $\Delta(\qstart, \texttt{[}, \texttt{[}) = \{(\qstart, \texttt{[[})\}$;
+    \item
+      $\Delta(\qstart, \texttt{[}, \texttt{]}) = \emptyset$;
+    \item
+      $\Delta(\qstart, \texttt{]}, \texttt{[}) = \{(\qstart, \varepsilon)\}$;
+    \item
+      $\Delta(\qstart, \texttt{]}, \texttt{]}) = \emptyset$.
+    \end{enumerate}
+  \end{itemize}  
+
+  \begin{enumerate}[(1)]
+  \item 
+    Ако $\texttt{[}^nx\alpha \in L$ и
+    $(q, x\alpha, \texttt{[}^n\sharp) \vdash (q, \alpha, \texttt{[}^{l}\sharp)$,
+    то $\texttt{[}^l\alpha \in L$.
+    \begin{itemize}
+    \item 
+      Нека $|\alpha| = 0$. Тогава е ясно, че $x = \texttt{]}$ и $n = 1$.
+      Тогава $l = 0$ и $\varepsilon \in L$.
+    \item 
+      Нека $|\alpha| > 0$. Тогава имаме два случая за $x$.
+      \begin{itemize}
+      \item 
+        Ако $x = \texttt{[}$, то 
+        \[(q, \texttt{[}\alpha, \texttt{[}^n\sharp) \vdash (q, \alpha, \texttt{[}^{n+1}\sharp).\]
+        Щом $\texttt{[}^n\texttt{[}\alpha \in L$, то директно следва, че $\texttt{[}^{n+1}\alpha \in L$.
+      \item
+        Ако $x = \texttt{]}$, то според функцията на преходите, $n > 0$ и 
+        \[(q, \texttt{]}\alpha, \texttt{[}^n\sharp) \vdash (q, \alpha, \texttt{[}^{n-1}\sharp).\]
+        Щом $\texttt{[}^{n-1}\texttt{[}\texttt{]}\alpha \in L$, то лесно се проверява, че $\texttt{[}^{n-1}\alpha \in L$.
+      \end{itemize}
+    \end{itemize}
+  \item
+    Ако $(q,\alpha,\texttt{[}^n\sharp) \vdash^\star (q,\varepsilon,\varepsilon)$,
+    то $\texttt{[}^n\alpha \in L$.
+    \begin{itemize}
+    \item 
+      Ако $l = 0$, то е ясно, че $n = 0$ и $\alpha = \varepsilon$.
+    \item
+      Нека $l > 0$. Тогава
+      \begin{itemize}
+      \item 
+        
+      \item
+
+      \end{itemize}
+    \end{itemize}
+  \end{enumerate}
+
+\end{example}
+
 
 \begin{thm}
   \marginpar{(\cite{hopcroft1}, стр. 114) }
