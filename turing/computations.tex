@@ -110,7 +110,7 @@
 \begin{hint}
   Да разгледаме езиците:
   \begin{align*}
-    & L_1 \df (\texttt{ValidStep}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \qaccept \Gamma^\star\sharp)\\
+    & L_1 \df (\texttt{ValidStep}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp)\\
     & L_2 \df \qstart\Sigma^\star \sharp (\texttt{ValidStep}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp),
   \end{align*}
   за които е ясно, че са безконтекстни.
@@ -144,7 +144,7 @@
     \item 
       $\omega_1 \not\in \qstart \Gamma^\star$, или
     \item
-      $\omega_n \not\in \Gamma^\star\{\qaccept\}\Gamma^\star$, или
+      $\omega_n \not\in \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star$, или
     \item
       $\omega_i \not\vdash_\M \omega^{rev}_{i+1}$, за някое нечетно $i$, или
     \item
@@ -203,6 +203,48 @@
   което сечението на безконтекстен и регулярен език е безконтекстен език.
 \end{remark}
 
+\newpage
+
+\begin{framed}
+  \begin{prop}
+    Езикът 
+    \[\texttt{Reg} = \{\code{G} \mid G\text{ е безконтекстна граматика и $\L(G)$ е регулярен}\}\]
+    не е разрешим.
+  \end{prop}
+\end{framed}
+\begin{hint}
+  Да фиксираме език $L_0$, който е безконтекстен, но не е регулярен.
+  За произволен език $L$, да разгледаме езика
+  \[\hat{L} \df L_0 \sharp \Sigma^\star\ \cup\ \Sigma^\star \sharp L.\]
+  Първо ще докажем, че: 
+  \begin{equation}
+    \label{eq:2}
+    L = \Sigma^\star\ \iff\ \hat{L}\text{ е регулярен}.
+  \end{equation}
+  Да отбележим, че можем ефективно да получим от безконтекстна граматика $G$ за $L$
+  безконтекстна граматика $\hat{G}$ за $\hat{L}$.
+  Нека да означим с $\texttt{conv}$ изчислимата функция, за която
+  $\texttt{conv}(\code{G}) = \code{\hat{G}}$.
+
+  \begin{itemize}
+  \item 
+    Ако $L = \Sigma^\star$, то $\hat{L}$ е регулярен, защото тогава
+    $\hat{L} = \Sigma^\star \sharp \Sigma^\star$ е очевидно регулярен.
+  \item
+    \marginpar{Ако $L$ е регулярен, то $L/_\beta \df \{\alpha \mid \alpha\beta \in L\}$ е регулярен}  
+    Ако $L \neq \Sigma^\star$, то нека да фиксираме дума $\omega \not\in L$.
+    Ако допуснем, че $\hat{L}$ е регулярен, то езикът
+    $\hat{L}/_{\sharp\omega} = L_0$ ще е регулярен, което е противоречие с избора на $L_0$.
+  \end{itemize}
+  
+  Нека да означим
+  \[\texttt{Full} \df \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}.\]
+  От (\ref{eq:2}) имаме, че 
+  \[\code{G} \in \texttt{Full}\ \iff\ \texttt{conv}(\code{G}) \in \texttt{Reg}.\]
+  
+  Ако допуснем, че $\texttt{Reg}$ е разрешим език, то тогава ще следва, че
+  $\texttt{Full}$ е разрешим език, за което вече знаем, че не е вярно.
+\end{hint}
 
 % \begin{cor}
 %   Нека $G_1$ и $G_2$ са произволни безконтекстни граматики, а $r$ е произволен регулярен израз.
