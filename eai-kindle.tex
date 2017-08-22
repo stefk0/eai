@@ -1,0 +1,162 @@
+% \documentclass[a4paper, 11pt, oneside]{report}
+
+\documentclass[a5paper]{report}
+% Lets make the text nice and big
+\usepackage[14pt]{extsizes}
+\usepackage[kerning=true]{microtype}
+% \usepackage[charter]{mathdesign}
+% \usepackage[normalmargins]{savetrees}
+\sloppy
+\pagestyle{empty}
+
+% Make the borders really small
+\usepackage[left=1cm,
+            top=1cm,
+            right=1cm,
+            bottom=1cm,
+            marginparwidth=0mm,
+            marginparsep=0mm]{geometry}
+
+
+% \documentclass[12pt, oneside]{report}
+% \usepackage[paperwidth=9cm, paperheight=12cm, top=0.5cm, bottom=0.5cm, left=0.0cm, right=0.5cm]{geometry}
+% \special{papersize=9cm,12cm}
+
+%%%% KINDLE DIMENSIONS %%%%
+% \documentclass[10pt]{extreport}
+% \usepackage[papersize={3.6in,4.8in},hmargin=0.1in,vmargin={0.1in,0.1in}]{geometry}  % page geometry
+% \renewcommand\marginpar[1]{}
+% \usepackage{extsizes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\usepackage{cmap}
+\usepackage{gitinfo2}
+
+%%%%%%%%%%%%%
+%% MARGINS %%
+%%%%%%%%%%%%%
+
+% \setlength{\marginparsep}{0.5cm}
+% \setlength{\oddsidemargin}{0.3cm}
+% \setlength{\hoffset}{0cm}
+% \setlength{\marginparwidth}{110pt}
+
+% \let\oldmarginpar\marginpar
+% \renewcommand\marginpar[1]{\leavevmode\oldmarginpar{\raggedright\scriptsize #1}}
+\renewcommand\marginpar[1]{}
+
+  
+% \renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\scriptsize #1]%
+% {\raggedright\scriptsize #1}}
+%\renewcommand\marginpar[1]{\oldmarginpar{\scriptsize #1}}
+
+
+
+%%%%%%%%%%%%%%
+
+
+\usepackage[bulgarian]{babel}
+\usepackage[OT2,T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[colorlinks=true, linkcolor=blue,pdfstartview=FitV,citecolor=green, urlcolor=blue]{hyperref}
+\usepackage{pifont}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, latexsym}
+
+\usepackage{makeidx}
+\usepackage{layout, framed}
+\usepackage{bussproofs, algorithm}
+\usepackage{minted}
+\usepackage[noend]{algpseudocode}
+\usepackage{float}
+
+\usepackage{paralist}
+\usepackage[shortlabels]{enumitem}
+\setlist{leftmargin=*}
+
+%%%%%%%%%%%%%%% TIKZ Package %%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz, pgf}
+\usetikzlibrary{arrows,automata}
+\usetikzlibrary{positioning}
+\usetikzlibrary{backgrounds}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{caption, subcaption}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Теорема}[chapter]
+\newtheorem{cor}{Следствие}[chapter]
+\newtheorem{lemma}{Лема}[chapter]
+\newtheorem{prop}{Твърдение}[chapter]
+\newtheorem{dfn}{Определение}[chapter]
+\newtheorem{problem}{Задача}[chapter]
+\newtheorem{example}{Пример}[chapter]
+\newtheorem{question}{Въпрос}[chapter]
+\newtheorem*{remark}{Забележка}
+\renewenvironment{proof}{\noindent{\bf Доказателство.}\hspace*{1em}}{\qed\par}
+\newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par}
+\newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par}
+
+\usepackage{mysymbols}
+
+\newcommand{\writedown}{\ding{45}\ }
+\newcommand{\qstart}{q_{\texttt{start}}}
+\newcommand{\qaccept}{q_{\texttt{accept}}}
+\newcommand{\qreject}{q_{\texttt{reject}}}
+
+\newcommand{\FA}{\langle{\Sigma,Q,\qstart,\delta,F}\rangle}
+\newcommand{\FAn}[1]{\langle{\Sigma,Q_#1,s_#1,\delta_#1,F_#1}\rangle}
+\newcommand{\NFA}{\langle{\Sigma,Q,\qstart,\Delta,F}\rangle}
+\newcommand{\NFAn}[1]{\langle{\Sigma,Q_#1,s_#1,\Delta_#1,F_#1}\rangle}
+\newcommand{\PDA}{\langle{Q,\Sigma,\Gamma,\#,\qstart,\Delta,F}\rangle}
+\newcommand{\PDAn}[1]{\langle{Q_#1,\Sigma,\Gamma,\#,s_#1,\Delta_#1,F_#1}\rangle}
+\newcommand{\CFG}{\langle{V,\Sigma,R,S}\rangle}
+\newcommand{\TM}{\langle{Q,\Sigma,\Gamma,\delta,\blank,\qstart,\qaccept, \qreject}\rangle}
+
+\newcommand{\Th}[1]{{\em Теорема~\ref{th:#1}}}
+\newcommand{\Lem}[1]{{\em Лема~\ref{lem:#1}}}
+\newcommand{\Cor}[1]{{\em Следствие~\ref{cor:#1}}}
+\newcommand{\Prob}[1]{{\em Задача~\ref{prob:#1}}}
+\newcommand{\Prop}[1]{{\em Твърдение~\ref{pr:#1}}}
+\newcommand{\Ex}[1]{{\em Пример~\ref{ex:#1}}}
+
+\newif\ifhints
+% \hintstrue
+
+
+% \setsecheadstyle{\large\usefont{T2A}{fag}{b}{r}} %\scshape
+% \setsubsecheadstyle{\bfseries\sffamily}
+
+% \renewcommand\familydefault{\sfdefault}
+
+\title{Записки по ,,Езици, автомати, изчислимост''}
+\author{Стефан Вътев\thanks{Това е чернова. Възможни са неточности и грешки, а също и несъответсвия с терминологията въведена на лекции. За забележки и коментари: \href{mailto:stefanv@fmi.uni-sofia.bg}{stefanv@fmi.uni-sofia.bg}.
+    Конкретната версия на \LaTeX файловете, от които е компилиран този файл, може да бъде намерена \href{https://github.com/stefk0/eai/commit/\gitHash}{тук}.}}
+
+\makeindex
+\begin{document}
+\maketitle
+% \layout
+
+\include{front}
+
+\tableofcontents
+
+\include{intro/intro}
+\include{regular/regular}
+\include{context-free/context-free}
+\include{turing/turing}
+
+% \include{outro}
+
+\bibliographystyle{amsalpha}
+\bibliography{eai}
+
+\printindex
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
