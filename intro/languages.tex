@@ -32,6 +32,7 @@
   \[\Sigma^\star = \{\varepsilon,a,b,aa,ab,ba,bb,aaa,aab,\dots\}.\]
   Обърнете внимание, че $\emptyset^\star = \{\varepsilon\}$.
 \item
+  \index{език}
   {\bf Език} над азбуката $\Sigma$ ще наричаме всяко подмножество на $\Sigma^\star$.
   Например, за $\Sigma = \{a, b\}$,
   \[L = \{\alpha \in \{a, b\}^\star \mid \alpha\mbox{ започва с }a\}\]
@@ -50,7 +51,7 @@
   Например $aba\cdot bb = ababb$.
   Обърнете внимание, че в общия 
   случай $\alpha\cdot\beta \neq \beta\cdot\alpha$. 
-  \marginpar{Често ще пишем $\alpha\beta$ вместо $\alpha\cdot\beta$}
+  \marginpar{\comment{Често ще пишем $\alpha\beta$ вместо $\alpha\cdot\beta$}}
   Можем да дадем формална индуктивна дефиниция на операцията конкатенация по
   дължината на думата $\beta$.
   \begin{itemize}
@@ -62,6 +63,7 @@
     Тогава $\alpha\cdot\beta \df (\alpha\cdot\gamma)b$.
   \end{itemize}
 \item
+  \marginpar{обръщане на дума}
   Друга често срещана операция върху думи е {\bf обръщането} на дума.
   Дефинираме думата $\alpha^R$ като обръщането на $\alpha$ по следния начин.
   \begin{itemize}
@@ -92,7 +94,8 @@
   \end{align*}
   Ако $A = \{ab, ba\}$, то
   $A^0 = \{\varepsilon\}$, $A^1 = A$, $A^2 = \{abab, abba, baba, baab\}$.
-  Ако $A = \{a,b\}$, то $A^n = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} = n\}$.
+  Ако $A = \{a,b\}$, то 
+  \[A^n = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} = n\}.\]
 \item
   За едно множеството от думи $A$, дефинираме:
   \marginpar{Операцията $\star$ е известна като звезда на Клини}
@@ -103,12 +106,16 @@
   \end{align*}
 \end{itemize}
 
+% \subsection*{Премахване на префикс}
+
 Нека $\alpha$ е дума над азбуката $\Sigma$  и $L$ е език. Означаваме 
+\marginpar{\comment{Тази операция ще бъде важна за нас по-нататък}}
 \[\alpha^{-1}(L) = \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
 Освен това, да означим 
-\[\alpha L = \{\alpha\omega \in \Sigma^\star \mid \omega \in L\}.\]
+\marginpar{\comment{$\alpha(L) = \{\alpha\} \cdot L$}}
+\[\alpha(L) = \{\alpha\omega \in \Sigma^\star \mid \omega \in L\}.\]
 Имаме свойството, че
-\[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}L\}.\]
+\[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}(L)\}.\]
 
 \begin{problem}
   \label{prob:pullback}
@@ -152,7 +159,7 @@
 \end{problem}
 
 \begin{problem}
-  \marginpar{С други думи, ако $\varepsilon \not\in X$, то $Z = X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$.}
+  \marginpar{\comment{С други думи, ако $\varepsilon \not\in X$, то $X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$, където неизвестната променлива е $Z$.}}
   Нека $X, Y, Z \subseteq \Sigma^\star$ със свойството, че $Z = XZ \cup Y$.
   \begin{enumerate}[a)]
   \item 

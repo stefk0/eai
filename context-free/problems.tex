@@ -261,19 +261,29 @@
   За всеки от следните езици, отговорете дали са безконтекстни, като се обосновете:
   \begin{enumerate}[a)]
   \item 
+    \ifhints
     \marginpar{Да}
+    \fi
     $L \df \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\}$;
-  \item 
+  \item
+    \ifhints
     \marginpar{Да}
+    \fi
     $L \df \{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) \geq 1\}$;
-  \item 
+  \item
+    \ifhints 
     \marginpar{Не}
+    \fi
     $L \df \{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) \geq 1\}$;
-  \item 
+  \item
+    \ifhints 
     \marginpar{Да}
+    \fi
     $L \df \{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) \geq 1\}$;
   \item
+    \ifhints
     \marginpar{Не}
+    \fi
     $L \df \{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) = 1\}$;
   % \item
   %   $L \df \{\alpha\sharp\beta\sharp\gamma \mid \alpha, \beta, \gamma \in \{a,b\}^\star\ \&\ |\alpha| = |\beta| = |\gamma|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\ \&\ \texttt{diff}(\beta,\gamma^{rev}) = 1\}$;
@@ -449,30 +459,33 @@
 
 \begin{problem}
   Докажете, че езикът
-  \[L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat^+\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\}\]
+  \[L = \{\ \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n \geq 1\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\ \}\]
   е безконтекстен.
 \end{problem}
 \begin{hint}
-  Най-лесно става със стеков автомат.
-  Една възможна граматика е следната:
+  Най-лесно става със стеков автомат, като са необходими две допълнителни букви за азбуката на стека.
+
+  Една възможна безконтекстна граматика е следната:
   \begin{align*}
     & E \to XEX\ |\ \sharp O\ |\ O\sharp\ |\ \sharp E\sharp\\
     & O \to OO\ |\ EE\ |\ \varepsilon\\
-    & X \to a\ |\ b.
+    & X \to a\ |\ b,
   \end{align*}
+  където началната променлива е $E$.
 \end{hint}
 
 \begin{prop}
   Да разгледаме езиците:
   \begin{align*}
-    & L_{\text{even}} = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\}\\
-    & L_{\text{odd}} = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n+1} \mid n\in\Nat\ \&\ \sum^n_{i=0}\abs{\omega_{2i+1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\}.
+    & L_{\text{even}} = \{\ \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\ \}\\
+    & L_{\text{odd}} = \{\ \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n+1} \mid n\in\Nat\ \&\ \sum^n_{i=0}\abs{\omega_{2i+1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\ \}.
   \end{align*}
   Тогава:
   \begin{align*}
-    (\forall \alpha)[\ \alpha\in L_{\text{even}}\ \implies\ (\exists \alpha_1,\alpha_2)[& ( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{odd}})\ \lor\\
+    (\forall \alpha)[\ \alpha\in L_{\text{even}}\ \implies\ (\exists \alpha_1,\alpha_2)[\ & \alpha \in \{a,b\}^\star\sharp\{a,b\}^\star\ \lor\\
+                                                                                        & ( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{odd}})\ \lor\\
                                                                                         &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{odd}}\ \&\ \alpha_2 \in L_{\text{even}})\ ]\ ]\\
-    (\forall \alpha)[\ \alpha\in L_{\text{odd}}\ \implies\ (\exists \alpha_1,\alpha_2)[&( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{even}})\ \lor\\
+    (\forall \alpha)[\ \alpha\in L_{\text{odd}}\ \implies\ (\exists \alpha_1,\alpha_2)[\ &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{even}})\ \lor\\
                                                                                         &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{odd}}\ \&\ \alpha_2 \in L_{\text{odd}})\ ]\ ].
   \end{align*}
 \end{prop}
@@ -480,15 +493,15 @@
   Да разгледаме една дума $\alpha = \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \in L_{\text{even}}$.
   Не е възможно $|\omega_{2i-1}| < |\omega_{2i}|$ за $i = 1,\dots,n$, защото тогава бихме имали 
   \[\sum^n_{i=1}|\omega_{2i-1}|\ <\ \sum^n_{i=1}|\omega_{2i}|.\]
-  Нека $|\omega_{2i-1}| \geq |\omega_{2i}|$.
+  Нека $|\omega_{2i-1}| \geq |\omega_{2i}|$ за първото такова $i$.
   Тогава
   \[\alpha = \omega_1 \sharp \omega_2 \sharp \cdots \sharp\omega'_{2i-1}\omega''_{2i-1}\sharp\omega_{2i}\sharp\cdots \omega_{2n},\]
   където $|\omega''_{2i-1}| = |\omega_{2i}|$.
-  Като махнем от $\alpha$ $\omega''_{2i-1}\sharp\omega_{2i}$, 
+  Като махнем от $\alpha$ подниза $\omega''_{2i-1}\sharp\omega_{2i}$, 
   получаваме думата
   \[\alpha' = \omega_1 \sharp \omega_2 \sharp \cdots \sharp\omega'_{2i-1}\sharp\cdots \omega_{2n} \in L_{\text{odd}}.\]
   Понеже $|\alpha'| < |\alpha|$, от И.П. знаем, че $\alpha' = \alpha_1\alpha_2$, такива че
-  $\alpha_1,\alpha_2 \in L_{\text{even}}$.
+  $\alpha_1,\alpha_2 \in L_{\text{even}}$ или $\alpha_1,\alpha_2 \in L_{\text{odd}}$.
 \end{hint}
 
 

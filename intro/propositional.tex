@@ -8,6 +8,7 @@
 Освен това, докато аритметичните променливи приемат стойности числа, то
 съждителните променливи приемат само стойности {\bf истина (1)} или {\bf неистина (0)}.
 
+\marginpar{Това не е формална дефиниция, но за момента е достатъчно.}
 {\bf Съждителна формула} наричаме съвкупността от съждителни променливи $p,q,r,\dots$, свързани със знаците за логически операции
 $\neg$, $\vee$, $\wedge$, $\rightarrow$, $\leftrightarrow$ и скоби, определящи реда на операциите.
 
@@ -32,7 +33,7 @@ $\neg$, $\vee$, $\wedge$, $\rightarrow$, $\leftrightarrow$ и скоби, опр
 \[
 \begin{array}{|c|c|c|c|c|c|c|c|c|}
   \hline
-  p & q & \neg p & p \vee q & p \wedge q & p \rightarrow q & \neg p \vee q & p \iff q & (\neg{p}\wedge q)\ \vee\ (p\wedge \neg q) \\
+  p & q & \neg p & p \vee q & p \wedge q & p \rightarrow q & \neg p \vee q & p \iff q & (p \wedge q)\ \vee\ (\neg p\wedge \neg q) \\
   \hline
   0 & 0 & 1 & 0 & 0 & 1 & 1 & 1 & 1\\
   \hline
@@ -86,7 +87,7 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
     \[p\vee \neg p \equiv {\mathbf 1}\]
   \item
     {\bf Закон за силогизма (транзитивност)}
-    \[[(p\rightarrow q)\ \wedge\ (q\rightarrow r)] \rightarrow (p\rightarrow r) \equiv {\mathbf 1}\]
+    \[ ((p\rightarrow q)\ \wedge\ (q\rightarrow r)) \rightarrow (p\rightarrow r) \equiv {\mathbf 1}\]
 \end{enumerate}
 
 Лесно се проверява с таблиците за истинност, че законите са валидни.

@@ -27,33 +27,33 @@
 \begin{framed}
   \begin{problem}
     Докажете, че езикът 
-    \[L = \{\alpha \in \{\texttt{[},\texttt{]}\}^\star \mid \alpha\text{ е балансирана дума}\}\]
+    \[L = \{\ \alpha \in \{\texttt{[},\texttt{]}\}^\star \mid \alpha\text{ е балансирана дума}\ \}\]
     е безконтекстен.
   \end{problem}  
 \end{framed}
 \begin{hint}
   \marginpar{\cite[стр. 135]{kozen}}
-  \marginpar{Очевидно е, че езикът не е регулярен}
+  \marginpar{\writedown Докажете, че езикът $L$ не е регулярен! }
   Да разгледаме граматиката $G$ с правила
   \[S \to \texttt{[}S\texttt{]}\ |\ SS\ |\ \varepsilon.\]
   Ще докажем, че $L = \L(G)$.
   
   Първо ще докажем включването $\L(G) \subseteq L$.
-  Да разгледаме $M \df \{\alpha \in \{\texttt{[},\texttt{]}, S\}^\star \mid \alpha\text{ е балансирана}\}$.
+  Да разгледаме \[M \df \{\ \alpha \in \{\texttt{[},\texttt{]}, S\}^\star \mid \alpha\text{ е балансирана}\ \}.\]
   
   Нека $S \to^\star_G \alpha$. Ще докажем с индукция по дължината на извода на $\alpha$ от $S$,
-  че $\alpha \in M$.
+  че $\alpha \in M$. Случаят, когато дължината на извода е $0$ е очевиден.
   Нека $S \to^{l}_G \beta \to^1_G \alpha$.
   От {\bf И.П.} имаме, че $\beta \in M$, т.е. $\beta$ е балансирана.
 
-  Лесно се съобразява, че за всички случаи за $\beta$ и $\alpha$ имаме следното:
+  Лесно се съобразява, че във всички случаи за думите $\beta$ и $\alpha$ имаме следното:
   \begin{center}
     \begin{tabular}{| c | c | c |}
       \hline
-      $\text{от И.П. за }\beta$ & $\text{правило на }G$ & $\alpha$ \\ \hline
-      $\in M$ & $S \rightarrow \texttt{[}S\texttt{]}$ & $\in M$ \\ \hline
-      $\in M$ & $S \rightarrow SS$ & $\in M$ \\ \hline
-      $\in M$ & $S \rightarrow \varepsilon$ & $\in M$ \\ \hline
+      $\text{от И.П. }$ & $\text{правило на }G$ & $\text{извод}$ \\ \hline
+      $\beta \in M$ & $S \rightarrow \texttt{[}S\texttt{]}$ & $\alpha \in M$ \\ \hline
+      $\beta \in M$ & $S \rightarrow SS$ & $\alpha \in M$ \\ \hline
+      $\beta \in M$ & $S \rightarrow \varepsilon$ & $\alpha \in M$ \\ \hline
     \end{tabular}
   \end{center}
 
@@ -66,23 +66,23 @@
   Поради тази причина, трябва да сме по-внимателни и да разгледаме два случая.
   \begin{itemize}
   \item 
-    \marginpar{т.е. $\beta \neq \varepsilon$ и $\beta \neq \alpha$}
+    \marginpar{\comment т.е. $\beta \neq \varepsilon$ и $\beta \neq \alpha$}
     Нека $\alpha$ има {\em същински} префикс $\beta \in L$.
-    Понеже $\alpha \in L$, лесно се съобразява, че $\alpha = \beta\gamma$ и $\gamma \in L$
+    Понеже $\alpha \in L$, лесно се съобразява, че $\alpha = \beta\gamma$ и $\gamma \in L$.
     Сега можем да приложим {\bf И.П.} за $\beta$ и $\gamma$ и да получим, че 
     $\beta \in \L(G)$ и $\gamma \in \L(G)$, т.е.
     $S \to^\star_G \beta$ и $S \to^\star_G \gamma$.
     Понеже имаме правило $S \to_G SS$, то е ясно, че $\alpha \in \L(G)$.
   \item
     Нека $\alpha$ да няма същински префикс $\gamma \in L$.
-    Ясно е, че $\alpha = \texttt{[}\beta\texttt{]}$, за някое $\beta$
+    Ясно е, че тогава $\alpha = \texttt{[}\beta\texttt{]}$, за някое $\beta$
     и $\texttt{left}(\beta) = \texttt{right}(\beta)$. 
     Ако $\beta \in L$, то ще можем да приложим {\bf И.П.} за $\beta$ и ще сме готови.
     За всеки префикс $\gamma$ на $\beta$ имаме, че $\texttt{[}\gamma$ е префикс на $\alpha$,
-    и понеже $\alpha \in L$, то $\texttt{left}(\texttt{[}\gamma) \geq \texttt{right}(\gamma)$.
+    и понеже $\alpha \in L$, то $\texttt{left}(\texttt{[}\gamma) \geq \texttt{\texttt{[}right}(\gamma)$.
     Възможно ли е $\texttt{left}(\gamma) < \texttt{right}(\gamma)$ ?
-    Това може да се случи единствено ако $\texttt{left}(\texttt{[}\gamma) = \texttt{right}(\gamma)$.
-    Но тогава $\texttt{[}\gamma$ е префикс на $\alpha$, за който $\texttt{[}\gamma \in L$,
+    Това може да се случи единствено ако $\texttt{left}(\texttt{[}\gamma) = \texttt{\texttt{[}right}(\gamma)$.
+    Но тогава $\texttt{[}\gamma$ е същински префикс на $\alpha$, за който $\texttt{[}\gamma \in L$,
     което противоречи на случая, който разглеждаме.
     Това означава, че за произволен префикс $\gamma$ на $\beta$,
     $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$ и оттук $\beta \in L$ и можем да приложим {\bf И.П.}

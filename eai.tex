@@ -1,6 +1,7 @@
-\documentclass[a4paper, 11pt, oneside]{report}
-%\usepackage[paperwidth=9cm, paperheight=12cm, top=0.5cm, bottom=0.5cm, left=0.0cm, right=0.5cm]{geometry}
-%\special{papersize=9cm,12cm}
+\documentclass[a4paper, 12pt, oneside]{report}
+
+% \usepackage[left=0.0cm, right=0.5cm]{geometry}
+% \special{papersize=9cm,12cm}
 
 \usepackage{cmap}
 \usepackage{gitinfo2}
@@ -9,36 +10,42 @@
 %% MARGINS %%
 %%%%%%%%%%%%%
 
-\setlength{\marginparsep}{0.5cm}
+\setlength{\marginparsep}{1cm}
 \setlength{\oddsidemargin}{0.3cm}
-\setlength{\hoffset}{0cm}
+\setlength{\hoffset}{-0.75in}
+\setlength{\voffset}{-0.75in}
 \setlength{\marginparwidth}{110pt}
+\setlength{\textwidth}{420pt}
+\setlength{\textheight}{670pt}
+
+% \setlength{\leftmargin}{0.2cm}
 
 \let\oldmarginpar\marginpar
-
 \renewcommand\marginpar[1]{\leavevmode\oldmarginpar{\raggedright\scriptsize #1}}
+% \renewcommand\marginpar[1]{}
+
   
 % \renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\scriptsize #1]%
 % {\raggedright\scriptsize #1}}
 %\renewcommand\marginpar[1]{\oldmarginpar{\scriptsize #1}}
 
+
+
 %%%%%%%%%%%%%%
+
 
 \usepackage[bulgarian]{babel}
 \usepackage[OT2,T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[colorlinks=true, linkcolor=blue,pdfstartview=FitV,citecolor=green, urlcolor=blue]{hyperref}
+\usepackage[pdfauthor={Stefan Vatev}, pdftitle={Languages, Automata, Computability}, colorlinks=true, linkcolor=blue, pdfstartview=FitV, citecolor=green, urlcolor=blue]{hyperref}
 \usepackage{pifont}
 \usepackage{amssymb, amsmath, amsthm, mathrsfs, latexsym}
 
 \usepackage{makeidx}
 \usepackage{layout, framed}
 \usepackage{bussproofs, algorithm}
-%\floatname{algorithm}{Алгоритъм}
-%\usepackage{algorithmic}
 \usepackage{minted}
 \usepackage[noend]{algpseudocode}
-%\usepackage{algpseudocode}
 \usepackage{float}
 
 \usepackage{paralist}
@@ -67,40 +74,8 @@
 \newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par}
 \newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par}
 
-\newcommand{\A}{\mathcal{A}}
-\newcommand{\B}{\mathcal{B}}
-\renewcommand{\C}{\mathcal{C}}
-\newcommand{\M}{\mathcal{M}}
-\renewcommand{\L}{\mathcal{L}}
-\newcommand{\D}{\mathcal{D}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\N}{\mathcal{N}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\Ls}{\mathscr{L}}
-\newcommand{\Fs}{\mathscr{F}}
-\newcommand{\Rs}{\mathscr{R}}
-\newcommand{\Ps}{\mathscr{P}}
-\newcommand{\As}{\mathscr{A}}
-\newcommand{\Bs}{\mathscr{B}}
-\newcommand{\Es}{\mathscr{E}}
-\newcommand{\Is}{\mathscr{I}}
-\newcommand{\Ss}{\mathscr{S}}
-\newcommand{\xn}{x_{1},\dots,x_{n}}
+\usepackage{mysymbols}
 
-\newcommand{\Nat}{\mathbb{N}}
-\newcommand{\Int}{\mathbb{Z}}
-\newcommand{\Real}{\mathbb{R}}
-
-\newcommand{\xs}{overline{x}}
-
-\newcommand{\ys}{overline{y}}
-
-\newcommand{\zs}{overline{z}}
-\newcommand{\ov}[1]{\overline{#1}}
-\newcommand{\abs}[1]{\lvert{#1}\rvert}
-\newcommand{\pair}[1]{\langle{#1}\rangle}
-\newcommand{\code}[1]{\ulcorner{#1}\urcorner}
 \newcommand{\writedown}{\ding{45}\ }
 \newcommand{\qstart}{q_{\texttt{start}}}
 \newcommand{\qaccept}{q_{\texttt{accept}}}
@@ -115,11 +90,6 @@
 \newcommand{\CFG}{\langle{V,\Sigma,R,S}\rangle}
 \newcommand{\TM}{\langle{Q,\Sigma,\Gamma,\delta,\blank,\qstart,\qaccept, \qreject}\rangle}
 
-\renewcommand{\iff}{\ \leftrightarrow\ }
-\newcommand{\df}{\stackrel{\text{деф}}{=}}
-\newcommand{\dff}{\stackrel{\text{деф}}{\iff}}
-\newcommand{\comment}{\texttt{/}\!\texttt{/}\ }
-
 \newcommand{\Th}[1]{{\em Теорема~\ref{th:#1}}}
 \newcommand{\Lem}[1]{{\em Лема~\ref{lem:#1}}}
 \newcommand{\Cor}[1]{{\em Следствие~\ref{cor:#1}}}
@@ -127,12 +97,9 @@
 \newcommand{\Prop}[1]{{\em Твърдение~\ref{pr:#1}}}
 \newcommand{\Ex}[1]{{\em Пример~\ref{ex:#1}}}
 
-
-%\newcommand*{\blank}{\allowbreak\textvisiblespace\allowbreak} % visible space
-\newcommand*{\blank}{\sqcup}
-
 \newif\ifhints
-\hintstrue
+\newif\ifcode
+% \hintstrue
 
 
 % \setsecheadstyle{\large\usefont{T2A}{fag}{b}{r}} %\scshape
@@ -148,8 +115,6 @@
 \begin{document}
 \maketitle
 % \layout
-
-
 
 \include{front}
 

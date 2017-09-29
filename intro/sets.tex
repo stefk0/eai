@@ -76,6 +76,7 @@
   \item
     {\bf Степенно множество}
     \[\Ps(A) = \{x\mid x\subseteq A\}.\]
+    \marginpar{power set}
     % $\Ps(A)$ е множеството, за което е изпълнена формулата
     % \[(\forall x)[x \in \Ps(A) \iff (\forall y)[y\in x\rightarrow y \in A]].\]
     Примери:
@@ -206,7 +207,7 @@
 За две множества $A$ и $B$, определяме тяхното декартово произведение като
 \[A\times B = \{\pair{a,b}\mid a\in A\ \&\ b\in B\}.\]
 За краен брой множества $A_1,A_2,\dots,A_n$, определяме
-\[A_1\times A_2\times\cdots\times A_n = \{\pair{a_1,a_2,\dots,a_n}\mid a_1 \in A_1\ \&\ a_2\in A_2\ \&\ \dots\ \&\ a_n \in A_n\}.\]
+\[A_1\times A_2\times\cdots\times A_n = \{\pair{a_1,a_2,\dots,a_n}\mid a_1 \in A_1\ \&\ \dots\ \&\ a_n \in A_n\}.\]
 
 \begin{problem}
   Проверете, че:
@@ -234,10 +235,10 @@
 Да разгледаме няколко основни видове релации от този клас:
 \begin{enumerate}[I)]
 \item
-  {\bf рефликсивна}, ако
+  {\bf рефлексивна}, ако
   \[(\forall x\in A)[\pair{x,x}\in R].\]
-  Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е рефлексивна, защото
-  \[(\forall x\in \Nat)[x \leq x].\]
+  Например, бинарната релация над $\Nat$ е рефлексивна, защото
+  \[(\forall x\in \Nat)[\ x \leq x\ ].\]
 % \item
 %   {\bf антирефлексивна}, ако
 %   \[(\forall x\in A)[\pair{x,x}\not\in R].\]
@@ -245,19 +246,19 @@
 %   \[(\forall x\in \Nat)[x \not< x].\]
 \item
   {\bf транзитивна}, ако
-  \[(\forall x,y,z\in A)[\pair{x,y}\in R\ \&\ \pair{y,z}\in R \rightarrow \pair{x,z}\in R].\]
-  Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е транзитивна, защото
-  \[(\forall x,y,z\in A)[x \leq y\ \&\ y \leq z\ \rightarrow\ x\leq z].\]
+  \[(\forall x,y,z\in A)[\ \pair{x,y}\in R\ \&\ \pair{y,z}\in R \rightarrow \pair{x,z}\in R\ ].\]
+  Например, бинарната релация $\leq$ над $\Nat$ е транзитивна, защото
+  \[(\forall x,y,z\in \Nat)[\ x \leq y\ \&\ y \leq z\ \rightarrow\ x\leq z\ ].\]
 \item
   {\bf симетрична}, ако
-  \[(\forall x,y\in A)[\pair{x,y}\in R \rightarrow \pair{y,x}\in R].\]
-  Например, релацията $=\ \subseteq\ \Nat\times\Nat$ е рефлексивна, защото
-  \[(\forall x,y\in \Nat)[x = y\ \rightarrow\ y = x].\]
+  \[(\forall x,y\in A)[\ \pair{x,y}\in R \rightarrow \pair{y,x}\in R\ ].\]
+  Например, бинарната релация $=$ над $\Nat$ е рефлексивна, защото
+  \[(\forall x,y\in \Nat)[\ x = y\ \rightarrow\ y = x\ ].\]
 \item
   {\bf антисиметрична}, ако
-  \[(\forall x,y\in A)[\pair{x,y}\in R\ \&\ \pair{y,x}\in R \rightarrow x = y].\]
+  \[(\forall x,y\in A)[\ \pair{x,y}\in R\ \&\ \pair{y,x}\in R \rightarrow x = y\ ].\]
   Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е антисиметрична, защото
-  \[(\forall x,y,z\in A)[x \leq y\ \&\ y \leq x\ \rightarrow\ x = y].\]
+  \[(\forall x,y,z\in A)[\ x \leq y\ \&\ y \leq x\ \rightarrow\ x = y\ ].\]
 % \item
 %   {\bf асиметрична}, ако
 %   \[(\forall x,y)[\pair{x,y}\in R \rightarrow \pair{y,x}\not\in R].\]
@@ -308,6 +309,7 @@
 
 \begin{enumerate}[I)]
 \item
+  \marginpar{Това е малко объркващо}
   {\bf Композиция} на две релации $R \subseteq B\times C$ и $P \subseteq A\times B$ е релацията $R\circ P \subseteq A\times C$,
   определена като:
   \[R\circ P \df \{\pair{a,c} \in A\times C \mid (\exists b \in B)[\pair{a,b}\in P\ \&\ \pair{b,c} \in R]\}.\]
@@ -342,15 +344,15 @@
 Функцията $f:A \to B$ е:
 \begin{itemize}
 \item
-  \marginpar{(или $f$ е {\bf обратима})}
+  \marginpar{\comment{или $f$ е {\bf обратима}}}
   {\bf инекция}\index{функция!инекция}, ако 
-  \[(\forall a_1,a_2\in A)[a_1\neq a_2 \rightarrow f(a_1)\neq f(a_2)],\]
+  \[(\forall a_1,a_2\in A)[\ a_1\neq a_2\ \to\ f(a_1)\neq f(a_2)\ ],\]
   или еквивалентно,
-  \[(\forall a_1,a_2\in A)[f(a_1) = f(a_2) \rightarrow a_1 = a_2].\]
+  \[(\forall a_1,a_2\in A)[\ f(a_1) = f(a_2)\ \to\ a_1 = a_2\ ].\]
 \item
-  \marginpar{(или $f$ е {\bf върху} $B$)}
+  \marginpar{\comment{или $f$ е {\bf върху} $B$ }}
   {\bf сюрекция}\index{функция!сюрекция}, ако 
-  \[(\forall b\in B)(\exists a\in A)[f(a) = b].\]
+  \[(\forall b\in B)(\exists a\in A)[\ f(a) = b\ ].\]
 \item
   {\bf биекция}\index{функция!биекция}, ако е инекция и сюрекция.
 \end{itemize}

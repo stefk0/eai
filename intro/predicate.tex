@@ -117,17 +117,17 @@
 \begin{example}
   Нека $D \subseteq \Real$.
   Казваме, че $f:D \to \Real$ е {\em непрекъсната} в точката $x_0 \in D$, ако 
-  \[(\forall \varepsilon > 0)(\exists \delta >0)(\forall x\in D)[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon].\]
+  \[(\forall \varepsilon > 0)(\exists \delta >0)(\forall x\in D)(\ |x_0 - x| < \delta\ \to\ |f(x_0) - f(x)| < \varepsilon\ ).\]
   Да видим какво означава $f$ да бъде {\em прекъсната} в точката $x_0 \in D$:
-  \marginpar{$f$ е прекъсната в $x_0$ ако $f$ не е непрекъсната в $x_0$}
+  \marginpar{$f$ е прекъсната в $x_0$ точно тогава, когато $f$ не е непрекъсната в $x_0$}
   \begin{align*}
-    & \neg (\forall \varepsilon > 0)(\exists \delta >0)(\forall x\in D)[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon] \iff\\
-    & (\exists \varepsilon > 0) \neg (\exists \delta >0)(\forall x\in D)[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon] \iff \\
-    & (\exists \varepsilon > 0)(\forall \delta >0)\neg(\forall x\in D)[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon] \iff \\
-    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)\neg[|x_0 - x| < \delta \implies |f(x_0) - f(x)| < \varepsilon] \iff \\
-    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)\neg[\neg (|x_0 - x| <\delta) \vee |f(x_0) - f(x)| < \varepsilon] \iff \\
-    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)[\neg\neg (|x_0 - x| <\delta) \land \neg (|f(x_0) - f(x)| < \varepsilon)] \iff \\
-    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)[|x_0 - x| < \delta\ \land\ |f(x_0) - f(x)| \geq \varepsilon].
+    & \neg (\forall \varepsilon > 0)(\exists \delta >0)(\forall x\in D)(\ |x_0 - x| < \delta\ \to\ |f(x_0) - f(x)| < \varepsilon\ ) \equiv \\
+    & (\exists \varepsilon > 0) \neg (\exists \delta >0)(\forall x\in D)(\ |x_0 - x| < \delta\ \to\ |f(x_0) - f(x)| < \varepsilon\ ) \equiv \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)\neg(\forall x\in D)(\ |x_0 - x| < \delta\ \to\ |f(x_0) - f(x)| < \varepsilon\ ) \equiv \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)\neg(\ |x_0 - x| < \delta\ \to\ |f(x_0) - f(x)| < \varepsilon\ ) \equiv \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)\neg(\ \neg (|x_0 - x| <\delta) \vee |f(x_0) - f(x)| < \varepsilon\ ) \equiv \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)(\ \neg\neg (|x_0 - x| <\delta) \land \neg (|f(x_0) - f(x)| < \varepsilon)\ ) \equiv \\
+    & (\exists \varepsilon > 0)(\forall \delta >0)(\exists x\in D)(\ |x_0 - x| < \delta\ \land\ |f(x_0) - f(x)| \geq \varepsilon\ ).
   \end{align*}
 \end{example}
 

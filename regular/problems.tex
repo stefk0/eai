@@ -2,6 +2,7 @@
 
 \subsection{Лесни задачи}
 
+\ifcode
 \begin{problem}
   \marginpar{Библиотеката {\bf regex} е част от C++11 стандарта на езика.}
   Да разгледаме следната програма на езика си++
@@ -39,6 +40,7 @@
     и цифри.    
   \end{enumerate}
 \end{problem}
+\fi
 
 \begin{problem}
   Да фиксираме една дума $\alpha$ над дадена азбука $\Sigma$.
@@ -54,7 +56,7 @@
 
 
 \begin{problem}
-  За всеки от следните езици $L$, постройте автомат $\A$, който разпознава езика $L$.
+  За всеки от следните езици $L$, постройте минимален краен детерминиран автомат $\A$, който разпознава езика $L$, където:
   \begin{enumerate}[a)]
   \item 
     $L = \{a^nb\mid n \geq 0\}$;
@@ -79,7 +81,7 @@
   \item
     $L = \{w \in \{a,b\}^\star \mid w\mbox{ съдържа четен брой }a\mbox{ и най-много едно }b\}$;
   \item
-    \marginpar{$\abs{w} = $ дължина на думата $w$}
+    \marginpar{$\abs{w} \df $ дължината на думата $w$}
     $L = \{w \in \{a,b\}^\star\mid \abs{w} \leq 3\}$;
   \item
     $L = \{w \in \{a,b\}^\star \mid w \mbox{ не започва с }ab\}$;
@@ -111,7 +113,7 @@
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа равен брой срещания на }ab\text{ и на }ba\}$.
   \item
-    $L = \{\omega_1 \sharp \omega_2 \sharp \omega_3 \mid \forall i \in [1,3](\omega_i \in \{a,b\}^\star\ \&\ |\omega_i| \geq i+1)\}$;
+    $L = \{\omega_1 \sharp \omega_2 \sharp \omega_3 \mid \forall i \in [1,3](\ \omega_i \in \{a,b\}^\star\ \&\ |\omega_i| \geq i+1\ )\}$;
   \end{enumerate}
 \end{problem}
 
@@ -298,7 +300,7 @@
 \end{problem}
 \begin{hint}
   За произволно $n$, разгледайте недетерминирания автомат $\A_n$, за който
-  $(\forall \alpha,\beta \in \{0,1\}^\star)[|\alpha| = |\beta| = n \implies (\alpha\beta \in \L(\A_n) \iff \alpha \neq \beta)]$.
+  \[(\forall \alpha,\beta \in \{0,1\}^\star)[|\alpha| = |\beta| = n \implies (\alpha\beta \in \L(\A_n) \iff \alpha \neq \beta)].\]
   Този автомат ще има $2n+2$ състояния.
 
   Допуснете, че за него съществува детерминиран автомат $\D_n$ с $< 2^n$ на брой състояния.

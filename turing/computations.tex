@@ -14,13 +14,13 @@
     Тогава следните езици за безконтекстни:
     \begin{itemize}
     \item 
-      $\texttt{ValidStep}(\M) \df \{\alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\}$;
+      $\texttt{ValidStep}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \}$;
     \item
-      $\texttt{ValidStep}'(\M)\df \{\alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\}$;
+      $\texttt{ValidStep}'(\M)\df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \}$;
     \item
-      $\texttt{InvalidStep}(\M) \df \{\alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\}$;
+      $\texttt{InvalidStep}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\ \}$;
     \item
-      $\texttt{InvalidStep}'(\M) \df \{\alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\}$.
+      $\texttt{InvalidStep}'(\M) \df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\ \}$.
     \end{itemize}
   \end{prop}  
 \end{framed}
@@ -158,7 +158,7 @@
   \begin{thm}
     За дадена азбука $\Sigma$, 
     езикът 
-    \[L = \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}\]
+    \[\texttt{All}_{\texttt{CFG}} = \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}\]
     е неразрешим.
   \end{thm}
 \end{framed}
@@ -185,22 +185,13 @@
     $L = \{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(\A) \subseteq \L(G)\}$;
   \end{enumerate}
 \end{cor}
-% \begin{hint}
-%   \begin{enumerate}
-%   \item 
-%     Фикс. $\L(G_1) = \Sigma^\star$.
-%   \item
-%     Фикс. $\L(G_1) = \Sigma^\star$.
-%   \end{enumerate}
-% \end{hint}
-
 
 \begin{remark}
   Добре е да обърнем внимание, че езикът 
   \[L = \{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(G) \subseteq \L(\A)\}\]
   е разрешим.
   Това е така, защото $\L(G) \subseteq \L(\A) \iff \L(G) \cap \L(\ov{\A}) = \emptyset$,
-  което сечението на безконтекстен и регулярен език е безконтекстен език.
+  защото сечението на безконтекстен и регулярен език е безконтекстен език.
 \end{remark}
 
 \newpage

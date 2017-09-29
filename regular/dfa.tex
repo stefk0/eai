@@ -13,11 +13,12 @@
   \item
     % \marginpar{Тук нямаме $\varepsilon$-преходи}
     % \marginpar{В \cite{sipser1} се разглеждат тотални $\delta$ функции}
+\marginpar{Възможно е за някои двойки $(q,a)$ функцията $\delta$ да не е дефинирана.}
     $\delta:Q\times\Sigma\to Q$ е (частична) функция на преходите;
   \item
     $\qstart\in Q$ е начално състояние;
   \item
-    $F\subseteq Q$ е множеството от финални състояния, $F \neq \emptyset$.
+    $F\subseteq Q$ е множеството от финални състояния
   \end{enumerate}
 \end{dfn}
 
@@ -53,17 +54,19 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \item
   $\delta^\star(q,a\beta) = \delta^\star(\delta(q,a),\beta)$, за всяко $q\in Q$, всяко $a\in\Sigma$ и $\beta\in\Sigma^\star$.
 \end{itemize}
-Тогава една дума $\alpha$ се {\em разпознава} от автомата $\A$ точно тогава, когато $\delta^\star(s,\alpha) \in F$.
+Тогава една дума $\alpha$ се {\em разпознава} от автомата $\A$ точно тогава, когато $\delta^\star(\qstart,\alpha) \in F$.
 Оттук следва, че
-\[\L(\A) = \{\alpha\in\Sigma^\star \mid \delta^\star(s,\alpha) \in F\}.\]
+\begin{framed}
+\[\L(\A) = \{\ \alpha\in\Sigma^\star \mid \delta^\star(\qstart,\alpha) \in F\ \}.\]
+\end{framed}
 
 \begin{prop}
   $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
 \end{prop}
-\begin{proof}
+\begin{hint}
   % \marginpar{\ding{45} Напише доказателството!}
   Индукция по дължината на $\alpha$.
-\end{proof}
+\end{hint}
 
 \index{моментно описание}
 \marginpar{(На англ. {\em instantaneous description}). В случая въвеждането на това понятие не е напълно необходимо, но по-късно, когато въведем стекови автомати и машини на Тюринг, ще работим с такива моментни описания на изчисления и затова е добре още отначало да свикнем с него}
@@ -97,7 +100,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   За всеки краен автомат $\A$, съществува {\em тотален} краен автомат $\A'$,
   за който $\L(\A) = \L(\A')$.
 \end{prop}
-\begin{proof}
+\begin{hint}
   Нека $\A = \FA$.
   Дефинираме тоталния автомат 
   \[\A' = \pair{Q\cup\{q_e\}, \Sigma, \qstart, \delta', F},\]
@@ -118,7 +121,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
   \marginpar{\writedown Довършете доказателството!}
   Сега лесно може да се докаже, че $\L(\A) = \L(\A')$.
-\end{proof}
+\end{hint}
 
 \begin{prop}
   \label{pr:automata-union}
@@ -126,7 +129,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cup L_2$
   също е автоматен език.
 \end{prop}
-\begin{proof}
+\begin{hint}
   \marginpar{Защо изискваме $\A'$ и $\A''$ да са тотални?}
   Нека \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'')\] са {\em тотални}.
   Определяме автомата $\A = \FA$, който разпознава $\L(\A') \cup \L(\A'')$ по следния начин:
@@ -143,34 +146,33 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     $F = \{\pair{r_1,r_2}\mid r_1\in F'' \vee r_2 \in F''\} = (F'\times Q'')\cup (Q'\times F'')$.
   \end{itemize}
-\end{proof}
+\end{hint}
 
 \begin{cor}
   Класът на автоматните езици е затворен относно операцията {\bf сечение}.
   Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
   също е автоматен език.
 \end{cor}
-\begin{proof}
+\begin{hint}
   \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cap L_2$!}
   Използвайте конструкцията на автомата $\A$ от \Prop{automata-union},
   с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
   \[F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2.\]
-\end{proof}
+\end{hint}
 
 \begin{prop}
   \label{pr:automata-complement}
   Нека $L$ е автоматен език.
   Тогава $\Sigma^\star\setminus L$ също е автоматен език.
 \end{prop}
-\begin{proof}
+\begin{hint}
   \marginpar{Защо искаме $\A$ да бъде тотален ?}
   Нека $L = L(\A)$, където $\A = \FA$ е {\bf тотален}.
   Да вземем автомата $\A' = \pair{Q,\Sigma,s,\delta,Q\setminus F}$,
   т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
   са тези състояния, които {\bf не} са финални в $\A$.
   \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
-\end{proof}
-
+\end{hint}
 
 \begin{example}
   \label{ex:automata-pictures}
@@ -262,7 +264,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \[L = \{\alpha \in \{a,b\}^\star\ \mid\ \alpha\mbox{ не съдържа две поредни срещания на }a\}.\]
 \end{problem}
 \begin{proof}
-  \marginpar{Най-лесния начин да се сетим как да построим $\A$ е като първо построим тотален автомат за езика, който разпознава тези думи, в които се съдържат две поредни срещания на $a$ и вземем неговото допълнение съгласно Твърдение \ref{pr:automata-complement}}
+  \marginpar{Най-лесния начин да се сетим как да построим $\A$ е като първо построим тотален автомат за езика, който разпознава тези думи, в които се съдържат две поредни срещания на $a$ и вземем неговото допълнение съгласно Твърдение \ref{pr:automata-complement}. По-късно ще разгледаме общ метод за строене на автомат по език.}
   Да разгледаме $\A = \FA$ с функция на преходите
   \begin{figure}[H]
     \begin{center}
@@ -289,11 +291,11 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  Ще докажем с индукция по дължината на думата $\alpha$, че:
  \begin{enumerate}[(1)]
  \item 
-   ако $\delta^\star(s,\alpha) = s$, то
+   ако $\delta^\star(\qstart,\alpha) = \qstart$, то
    $\alpha$ не съдържа две поредни срещания на $a$
    и ако $\abs{\alpha} > 0$, то $\alpha$ завършва на $b$;
  \item
-   ако $\delta^\star(s,\alpha) = q_1$, то
+   ако $\delta^\star(\qstart,\alpha) = q_1$, то
    $\alpha$ не съдържа две поредни срещания на $a$
    и завършва на $a$.
  \end{enumerate}
@@ -304,13 +306,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  Ще докажем (1) и (2) за $\alpha$.
  \begin{itemize}[-]
  \item 
-   Нека $\delta^\star(s,\beta x) = s = \delta(\delta^\star(s,\beta),x)$.
-   Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(s,\beta) \in \{s,q_1\}$.
+   Нека $\delta^\star(\qstart,\beta x) = s = \delta(\delta^\star(\qstart,\beta),x)$.
+   Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(\qstart,\beta) \in \{s,q_1\}$.
    Тогава по {\bf И.П.} за (1) и (2), $\beta$ не съдържа две поредни срещания на $a$.
    Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
  \item
-   Нека $\delta^\star(s,\beta x) = q_1 = \delta(\delta^\star(s,\beta),x)$.
-   Според дефиницията на $\delta$, $x = a$ и $\delta^\star(s,\beta) = s$.
+   Нека $\delta^\star(\qstart,\beta x) = q_1 = \delta(\delta^\star(\qstart,\beta),x)$.
+   Според дефиницията на $\delta$, $x = a$ и $\delta^\star(\qstart,\beta) = s$.
    Тогава по {\bf И.П.} за (2), $\beta$ не съдържа две поредни срещания на $a$
    и завършва на $b$.
    Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
@@ -318,26 +320,26 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  
  Така доказахме с индукция по дължината на думата, че за всяка дума $\alpha$
  са  изпълнени твърденията $(1)$ и $(2)$. По дефиниция, ако $\alpha \in \L(\A)$,
- то $\delta^\star(s,\alpha) \in \{s,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
+ то $\delta^\star(\qstart,\alpha) \in \{\qstart,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
  $\alpha$ не съдържа две поредни срещания на буквата $a$, т.е. $\alpha \in L$.
  С други думи, доказахме, че 
  \[\L(\A) \subseteq L.\]
 
  Сега ще докажем другата посока, т.е. $L \subseteq \L(\A)$.
  Това означава да докажем, че
- \[(\forall \alpha \in \Sigma^\star)[\alpha \in L\ \Rightarrow\ \delta^\star(s,\alpha) \in F],\]
+ \[(\forall \alpha \in \Sigma^\star)[\alpha \in L\ \Rightarrow\ \delta^\star(\qstart,\alpha) \in F],\]
  \marginpar{Да напомним, че $p \Rightarrow q \equiv \neg q \Rightarrow \neg  p$}
  което е еквивалентно на
  \begin{equation}
    \label{eq:case2}
-   (\forall \alpha \in \Sigma^\star)[\delta^\star(s,\alpha) \not\in F \ \Rightarrow\ \alpha\not\in L].
+   (\forall \alpha \in \Sigma^\star)[\delta^\star(\qstart,\alpha) \not\in F \ \Rightarrow\ \alpha\not\in L].
  \end{equation}
  Това е лесно да се съобрази.
- Щом $\delta^\star(s,\alpha) \not\in F$, то 
- $\delta^\star(s,\alpha) = q_2$ и думата $\alpha$ може да се представи по следния начин:
- \[\alpha = \beta a \gamma\ \&\ \delta^\star(s,\beta) = q_1.\]
+ Щом $\delta^\star(\qstart,\alpha) \not\in F$, то 
+ $\delta^\star(\qstart,\alpha) = q_2$ и думата $\alpha$ може да се представи по следния начин:
+ \[\alpha = \beta a \gamma\ \&\ \delta^\star(\qstart,\beta) = q_1.\]
  
- Използвайки свойство (2) от по-горе, понеже $\delta^\star(s,\beta) = q_1$, то
+ Използвайки свойство (2) от по-горе, понеже $\delta^\star(\qstart,\beta) = q_1$, то
  $\beta$ не съдържа две поредни срещания на $a$, но завършва на $a$.
  Сега е очевидно, че $\beta a$ съдържа две поредни срещания на $a$ и 
  щом $\beta a$ е префикс на $\alpha$, то думата $\alpha \not\in L$.
@@ -350,6 +352,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{problem}
 \begin{hint}
   Разгледайте автомата $\A$:
+\begin{framed}
   \begin{figure}[H]
     \begin{center}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
@@ -373,6 +376,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \end{center}
     \caption{$\L(\A) \stackrel{?}{=} L$}
   \end{figure}
+\end{framed}
   Докажете с индукция по дължината на думата $\omega$, че:
   \begin{enumerate}[a)]
   \item 
@@ -393,23 +397,25 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{hint}
   \marginpar{$|w| = $ дължината на думата $w$}
   Разгледайте автомата $\A$:
-  \begin{figure}[H]
-    \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-        
-        \node[initial,state]      (0) {$q_0$};
-        \node[accepting, state]              (1) [right of=0]{$q_1$};
-        \node[state]   (2) [right of=1]{$q_2$};
-        
-        \path 
-        (0) edge  [bend left=15]  node [above]  {$0,1$} (1)
-        (1) edge  [bend left=15]  node [above]  {$0,1$} (2)
-        (2) edge  [bend left=30]  node [below]  {$0,1$} (0);
-      \end{tikzpicture}
+  \begin{framed}
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+          \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+          
+          \node[initial,state]      (0) {$q_0$};
+          \node[accepting, state]              (1) [right of=0]{$q_1$};
+          \node[state]   (2) [right of=1]{$q_2$};
+          
+          \path 
+          (0) edge  [bend left=15]  node [above]  {$0,1$} (1)
+          (1) edge  [bend left=15]  node [above]  {$0,1$} (2)
+          (2) edge  [bend left=30]  node [below]  {$0,1$} (0);
+        \end{tikzpicture}
       \end{center}
       \caption{$\L(\A) \stackrel{?}{=} \{w\in\{0,1\}^\star \mid |w| \equiv 1 \bmod 3\}$}
- \end{figure}  
+    \end{figure}  
+  \end{framed}
  Докажете с индукция по дължината на думата $w$ едновременно следните три твърдения:
  \begin{enumerate}[(1)]
  \item
