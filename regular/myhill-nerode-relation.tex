@@ -7,9 +7,9 @@
   Нека $L \subseteq \Sigma^\star$ е език и нека $\alpha,\beta \in \Sigma^\star$.
   Казваме, че $\alpha$ и $\beta$ са {\bf еквивалентни относно} $L$, което записваме 
   като $\alpha \approx_L \beta$, когато:
-  \[\alpha \approx_L \beta \dff \alpha^{-1}(L) = \beta^{-1}(L).\]
+  \[\alpha \approx_L \beta\ \dff\ \alpha^{-1}(L) = \beta^{-1}(L).\]
   С други думи, 
-  \[\alpha \approx_L \beta \iff (\forall \omega \in \Sigma^\star)[\alpha\omega \in L \iff \beta\omega \in L].\]
+  \[\alpha \approx_L \beta \iff (\forall \omega \in \Sigma^\star)[\ \alpha\omega \in L \iff \beta\omega \in L\ ].\]
 \item
   \marginpar{Трябва ли $\A$ да е тотален?}
   Нека $\A = \FA$ е ДКА.
@@ -54,7 +54,7 @@
   \label{pr:rel-finer}
   Нека $\A = \FA$ е ДКА и $L = \L(\A)$.
   Тогава
-  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{L}\beta].\]
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
   Това означава, че
   $[\alpha]_\A \subseteq [\alpha]_{L}$, за всяка дума $\alpha \in \Sigma^\star$.
 \end{prop}
@@ -64,69 +64,88 @@
   За произволно $\gamma \in \Sigma^\star$ имаме:
   \begin{align*}
     \gamma \in \alpha^{-1}(L) & \dff \alpha\gamma \in L\\
+                              & \iff \alpha\gamma \in \L(\A) & \comment{L = \L(\A)}\\
                               & \iff \delta^\star(\qstart,\alpha\gamma)\in F & \comment{L = \L(\A)}\\
                               & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment{\text{по деф. на }\delta^\star}\\
                               & \iff \delta^\star(\delta^\star(\qstart,\beta),\gamma) \in F & \comment{\text{защото }\alpha \sim_\A \beta}\\
                               & \iff \delta^\star(\qstart,\beta\gamma) \in F & \comment{\text{свойство на }\delta^\star}\\
                               & \dff \beta\gamma \in \L(\A)\\
-                              & \iff \gamma \in \beta^{-1}(L) & \comment{L = \L(\A)}
+                              & \iff \beta\gamma \in L & \comment{L = \L(\A)} \\
+                              & \dff \gamma \in \beta^{-1}(L)
   \end{align*}
   Заключаваме, че 
-  \[(\forall \alpha,\beta \in \Sigma^\star)[\alpha\sim_\A\beta \implies \alpha\approx_{L}\beta].\]
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
 \end{proof}
+
+\begin{cor}
+  За всяка дума $\alpha$ имаме, че:
+  \[[\alpha]_\A \subseteq [\alpha]_L.\]
+\end{cor}
+
 
 \begin{prop}
   Нека $\A$ е тотален ДКА и нека $L = \L(\A)$.
   Тогава за всяка дума $\alpha$,
   \[[\alpha]_{L} = \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
 \end{prop}
-% \begin{hint}
-%   Понеже $[\alpha]_\A \subseteq [\alpha]_L$ и $\alpha \in [\alpha]_L$, то е очевидно, че
-%   \[\bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A \subseteq [\alpha]_{L}.\]
-%   За другата посока,
-%   ако $\gamma \in [\alpha]_L$, то е ясно, че $\gamma \in [\gamma]_\A$.
-  
-% \end{hint}
+\begin{proof}
+  Нека $\beta \in [\alpha]_L$. Тогава 
+  \[\beta \in [\beta]_\A \subseteq [\beta]_L = [\alpha]_L.\]
+  Заключаваме, че
+  \[[\alpha]_L \subseteq \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
 
-\begin{prop}
-  \label{pr:approx-less-sim}
+  Обратно, нека $\gamma \in [\beta]_\A$, където $\beta \in [\alpha]_L$.
+  Тогава 
+  \[\gamma \in [\beta]_\A \subseteq [\beta]_L = [\alpha]_L.\]
+  Заключаваме, че
+  \[\bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A \subseteq [\alpha]_L.\]
+\end{proof}
+
+
+\begin{cor}
+  \label{cor:approx-less-sim}
   Нека $\A$ е тотален ДКА и нека $L = \L(\A)$.
   Тогава 
   \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
-\end{prop}
-\begin{hint}
-  Да разгледаме изображението 
-  \[f([\alpha]_L) \df \{[\gamma]_\A \mid \gamma \approx_L \alpha\}.\]
-  Получаваме, че
-  \[[\alpha]_L = \bigcup f([\alpha]_L).\]
-
-  \begin{itemize}
-  \item
-    Ясно е, че за всяко $\alpha$, $f([\alpha]_L) \neq \emptyset$, защото $[\alpha]_\A \in f([\alpha]_L)$.
-  \item 
-    Съобразете, че $f$ е {\bf функция}, т.е. 
-    \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \approx_L \beta \implies f([\alpha]_L) = f([\beta]_L)].\]
-  \item
-    Съобразете, че 
-    \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \not\approx_L \beta \implies f([\alpha]_L) \cap f([\beta]_L) = \emptyset].\]
-  \item
-    Заключете, че \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
-  \end{itemize}
-\end{hint}
-
-\begin{cor}
-  \label{cor:upper-bound}
-  Нека $L$ е произволен регулярен език $L$.  
-  Всеки тотален ДКА $\A$, който разпознава $L$ има свойството
-  \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
-  т.е. броят на класовете на еквивалентност на релацията $\approx_L$
-  не надвишава броя на състоянията на автомата.
 \end{cor}
+\begin{hint}
+  Функцията $f([\alpha]_\A) = [\alpha]_L$ е сюрекция.
+\end{hint}
+% \begin{hint}
+%   Да разгледаме изображението 
+%   \[f([\alpha]_L) \df \{[\gamma]_\A \mid \gamma \approx_L \alpha\}.\]
+%   Получаваме, че
+%   \[[\alpha]_L = \bigcup f([\alpha]_L).\]
+
+%   \begin{itemize}
+%   \item
+%     Ясно е, че за всяко $\alpha$, $f([\alpha]_L) \neq \emptyset$, защото $[\alpha]_\A \in f([\alpha]_L)$.
+%   \item 
+%     Съобразете, че $f$ е {\bf функция}, т.е. 
+%     \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \approx_L \beta \implies f([\alpha]_L) = f([\beta]_L)].\]
+%   \item
+%     Съобразете, че 
+%     \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \not\approx_L \beta \implies f([\alpha]_L) \cap f([\beta]_L) = \emptyset].\]
+%   \item
+%     Заключете, че \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
+%   \end{itemize}
+% \end{hint}
+
+\begin{framed}
+  \begin{cor}
+    \label{cor:upper-bound}
+    Нека $L$ е произволен регулярен език $L$.  
+    Всеки тотален ДКА $\A$, който разпознава $L$ има свойството
+    \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
+    т.е. броят на класовете на еквивалентност на релацията $\approx_L$
+    не надвишава броя на състоянията на автомата.
+  \end{cor}  
+\end{framed}
 \begin{proof}
   Да изберем $\A$, който разпознава $L$. % да бъде такъв, че да {\em няма недостижими състояния}.
   Тъй като всяко достижимо състояние на $\A$ определя клас на еквивалентност относно $\sim_\A$,
   то получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} \leq |Q|$.
-  Комбинирайки със \Prop{approx-less-sim},
+  Комбинирайки със \Cor{approx-less-sim},
   \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{\Sigma^\star/_{\sim_\A}} \leq \abs{Q}.\]
 \end{proof}
 Така получаваме {\em долна граница} за броя на състоянията в тотален автомат разпознаващ езика $L$.

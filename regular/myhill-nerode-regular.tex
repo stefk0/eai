@@ -20,16 +20,16 @@
 В противен случай, езикът $L$ не е регулярен.
 
 \begin{example}
-  За езика $L = \{a^nb^n\mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
-  защото \[(\forall k,j\in\Nat)[k \neq j \implies [a^kb]_L \neq [a^jb]_L].\]
+  За езика $L = \{a^nb^n\mid n \in \Nat\}$ имаме, че $\abs{\Sigma^\star/_{\approx_L}} = \infty$,
+  защото \[(\forall k,j\in\Nat)[\ k \neq j \implies [a^kb]_L \neq [a^jb]_L\ ].\]
   Проверете, че $[a^kb]_L = \{a^kb,a^{k+1}b^{2},\dots,a^{k+l}b^{l+1},\dots\}$.
   Така получаваме, че релацията $\approx_L$ има безкрайно много класове на еквивалентност.
   Заключаваме, че този език {\bf не} е регулярен.
 \end{example}
 
 \begin{example}
-  За езика $L = \{a^{n^2} \mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
-  защото \[(\forall m,n\in\Nat)[m \neq n \implies [a^{n^2}]_L \neq [a^{m^2}]_L].\]
+  За езика $L = \{a^{n^2} \mid n \in \Nat\}$ имаме, че $\abs{\Sigma^\star/_{\approx_L}} = \infty$,
+  защото \[(\forall m,n\in\Nat)[\ m \neq n \implies [a^{n^2}]_L \neq [a^{m^2}]_L\ ].\]
   
   Без ограничение на общността, да разгледаме $n < m$ и думата $\gamma = a^{2n+1}$.
   Тогава $a^{n^2}\gamma = a^{(n+1)^2} \in L$, но 
@@ -37,8 +37,8 @@
 \end{example}
 
 \begin{example}
-  За езика $L = \{a^{n!} \mid n \in \Nat\}$ имаме, че $\abs{\approx_L} = \infty$,
-  защото \[(\forall m,n\in\Nat)[m \neq n \implies [a^{n!}]_L \neq [a^{m!}]_L].\]
+  За езика $L = \{a^{n!} \mid n \in \Nat\}$ имаме, че $\abs{\Sigma^\star/_{\approx_L}} = \infty$,
+  защото \[(\forall m,n\in\Nat)[\ m \neq n \implies [a^{n!}]_L \neq [a^{m!}]_L\ ].\]
   
   Без ограничение на общността, да разгледаме $n < m$ и думата $\gamma = a^{(n!)n}$.
   Тогава $a^{n!}\gamma = a^{(n+1)!} \in L$, но 
@@ -48,7 +48,7 @@
 \begin{problem}
   Да разгледаме езика
   \[L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}.\]
-  Докажете, че $\abs{\approx_L} = \infty$.
+  Докажете, че $\abs{\Sigma^\star/_{\approx_L}} = \infty$.
 \end{problem}
 
 %%% Local Variables:

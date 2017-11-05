@@ -5,7 +5,7 @@
 Нека са дадени автоматите
 $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \delta'', F'')$.
 Казваме, че $\A'$ и $\A''$ са {\bf изоморфни}, което означаваме с $\A' \cong \A''$, ако
-съществува $f: Q'\to Q''$, за която:
+съществува функция $f: Q'\to Q''$, за която:
 \begin{enumerate}[(1)]
 \item
   $f$ е биекция;
@@ -20,17 +20,45 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
 
 \begin{framed}
   \begin{thm}
-    Ако $\A' \cong \A''$, то $\L(\A') = \L(\A'')$.
+    Ако $\A' \cong_f \A''$, то $\L(\A') = \L(\A'')$.
   \end{thm}  
 \end{framed}
 \begin{hint}
-  Индукция по дължината на думата $\alpha$ докажете, че
-  \[f(\delta^\star_{\A'}(\qstart',\alpha)) = \delta^\star_{\A''}(f(\qstart'), \alpha).\]
+  Нека $\A' \cong_f \A''$. Първо с индукция по дължината на думата $\alpha$ ще докажем, че за произволно състояние $q \in Q'$,
+  \begin{equation}
+    \label{eq:3}
+    f(\delta^\star_{\A'}(q,\alpha)) = \delta^\star_{\A''}(f(q), \alpha).
+  \end{equation}
+  \begin{itemize}
+  \item 
+    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава:
+    \begin{align*}
+      f(\delta^\star_{\A'}(q,\varepsilon)) & = f(q) & \comment{\text{от деф. на }\delta^\star_{\A'}}\\
+                                           & = \delta^\star_{\A''}(f(q), \varepsilon).
+    \end{align*}
+  \item
+    Да приемем, че (\ref{eq:3}) е изпълнено за думи с дължина $n$.
+    Да разгледаме произволна дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta x$. Тогава:
+    \begin{align*}
+      f(\delta^\star_{\A'}(q,\beta x)) & = f(\delta_{\A'}(\delta^\star_{\A'}(q,\beta), x)) & \comment{\text{от деф. на }\delta^\star_{\A'}}\\
+                                       & = \delta_{\A''}( f(\delta^\star_{\A'}(q,\beta), x)) & \comment{\text{от деф. на }f}\\
+                                       & = \delta_{\A''}( \delta^\star_{\A''}(f(q),\beta), x)) & \comment{\text{от И.П.}}\\
+                                       & = \delta^\star_{\A''}(f(q), \beta x) & \comment{\text{от деф. на }\delta^\star_{\A''}}.
+    \end{align*}
+  \end{itemize}
+  Сега вече е лесно:
+  \begin{align*}
+    \alpha \in \L(\A') & \dff \delta^\star_{\A'}(\qstart',\alpha) \in F' \\
+                       & \iff f(\delta^\star_{\A'}(\qstart',\alpha)) \in F'' & \comment{\text{от деф. на изоморфизъм}}\\
+                       & \iff \delta^\star_{\A''}(f(\qstart'),\alpha) \in F'' & \comment{\text{от (\ref{eq:3})}}\\
+                       & \iff \delta^\star_{\A''}(\qstart'',\alpha) \in F'' & \comment{f(\qstart') \df \qstart''}\\
+                       & \dff \alpha \in \L(\A'').
+  \end{align*}
 \end{hint}
 
-\index{Бжожовски}
+\index{Бжозовски}
 Нека е даден регулярен език $L$ над азбуката $\Sigma$.
-Конструкцията на автомата $\B$ по метода на Бжожовски е следната:
+Конструкцията на автомата $\B$ по метода на Бжозовски е следната:
 \begin{itemize}
 \item 
   $Q^\B \df \{\alpha^{-1}(L) \mid \alpha \in \Sigma^\star\}$;
@@ -71,9 +99,14 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
     \begin{itemize}
     \item
       Дефиницията на $f$ е зададена спрямо представител $\alpha$ на класа на еквивалентност на релацията $\approx_L$.
+      \marginpar{Това е важно да се провери, защото дясната страна е дефинирана спрямо произволен представител на класа $[\alpha]_L$}
       Първо да проверим, че $f$ е функция.
-      Нека $[\alpha]_L = [\beta]_L$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$.
-      Тогава $f([\alpha]_L) \df \alpha^{-1}(L) = \beta^{-1}(L) \df f([\beta]_L)$.
+      Нека $[\alpha]_L = [\beta]_L$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$. Тогава 
+      \begin{align*}
+        f([\alpha]_L) & \df \alpha^{-1}(L)\\
+                      & = \beta^{-1}(L) & \comment{\text{от } [\alpha]_L = [\beta]_L}\\
+                      & \df f([\beta]_L).
+      \end{align*}
     \item 
       Нека $[\alpha]_L \neq [\beta]_L$.
       Тогава:
@@ -84,7 +117,7 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
       \end{align*}
       Оттук следва, че $f$ е {\em инективна}.
     \item
-      Да разгледаме $N \in Q^\B$, т.е. $N = \alpha^{-1}(L)$, за някоя дума $\alpha \in \Sigma^\star$.
+      Да разгледаме произволен елемент $N \in Q^\B$, т.е. $N$ е множество от думи и $N = \alpha^{-1}(L)$, за някоя дума $\alpha \in \Sigma^\star$.
       Понеже $f([\alpha]_L) \df \alpha^{-1}(L)$, то това означава, че $f$ е {\em сюрективна}.      
     \end{itemize}
   \item
@@ -100,10 +133,10 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
     \begin{align*}
       [\alpha]_L \in F^\M & \dff [\alpha]_L \subseteq L\\
                           & \iff \varepsilon \in \alpha^{-1}(L)\\
-                          & \iff f([\alpha]_L) \in F^\B.
+                          & \iff f([\alpha]_L) \df \alpha^{-1}(L) \in F^\B.
     \end{align*}
   \item
-    Имаме и свойството:
+    Имаме и свойството за произволна дума $\alpha \in \Sigma^\star$ и произволна буква $x \in \Sigma$:
     \begin{align*}
       f(\delta_\M([\alpha]_L,x)) & = f([\alpha\cdot x]_L) & \comment{\text{деф. на }\delta_\M}\\
                                  & = (\alpha\cdot x)^{-1}(L) & \comment{\text{деф. на }f}\\
@@ -125,7 +158,7 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
     \label{th:regular:isomorphic:minimal}
     Нека е даден регулярния език $L$.
     Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
-    Тогава $\A \cong \M$, автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
+    Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
   \end{thm}  
 \end{framed}
 \begin{proof}
@@ -153,11 +186,11 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
       \[f(q_1) = [\omega_{q_1}]_L = [\omega_{q_2}]_L = f(q_2).\]
       Тогава $\omega_{q_1} \not\sim_\A \omega_{q_2}$ и $\omega_{q_1} \approx_L \omega_{q_2}$.
       \marginpar{\writedown Обяснете!}
-      Но тогава от \Cor{upper-bound} получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} > \abs{\Sigma^\star/_{\approx_L}}$,
+      Но тогава от \Cor{upper-bound} получаваме, че $\abs{Q} = \abs{\Sigma^\star/_{\sim_\A}} > \abs{\Sigma^\star/_{\approx_L}}$,
       което противоречи с минималността на $\A$.
     \item
       За да бъде $f$ {\bf сюрективна} трябва за всеки клас $[\beta]_L$ да съществува състояние $q$, за което $f(q) = [\beta]_L$.
-      Понеже $\A$ е свързан, съществува състояние $q$, за което $\delta^\star_\A(s,\beta) = q$.
+      Понеже $\A$ е свързан, съществува състояние $q$, за което $\delta^\star_\A(\qstart,\beta) = q$.
       Вече се убедихме, че в този случай $\beta \approx_L \omega_q$, защото $\beta \sim_\A \omega_q$.
       Тогава $f(q) = [\omega_q]_L = [\beta]_L$.
     \end{itemize}
