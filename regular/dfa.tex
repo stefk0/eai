@@ -123,56 +123,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Сега лесно може да се докаже, че $\L(\A) = \L(\A')$.
 \end{hint}
 
-\begin{prop}
-  \label{pr:automata-union}
-  Класът на автоматните езици е затворен относно операцията {\em обединение}.
-  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cup L_2$
-  също е автоматен език.
-\end{prop}
-\begin{hint}
-  \marginpar{Защо изискваме $\A'$ и $\A''$ да са тотални?}
-  Нека \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'')\] са {\em тотални}.
-  Определяме автомата $\A = \FA$, който разпознава $\L(\A') \cup \L(\A'')$ по следния начин:
-  \begin{itemize}
-  \item
-    $Q = Q'\times Q''$;
-  \item
-    \marginpar{Едновременно симулираме изчисление и по двата автомата}
-    \marginpar{\writedown Проверете, че $\L(\A) = \L(\A')\cup \L(\A'')$}
-    Определяме за всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
-    \[\delta(\pair{r_1,r_2},a) = \pair{\delta'(r_1,a),\delta''(r_2,a)};\]
-  \item
-    $\qstart = \pair{\qstart',\qstart''}$;
-  \item
-    $F = \{\pair{r_1,r_2}\mid r_1\in F'' \vee r_2 \in F''\} = (F'\times Q'')\cup (Q'\times F'')$.
-  \end{itemize}
-\end{hint}
-
-\begin{cor}
-  Класът на автоматните езици е затворен относно операцията {\bf сечение}.
-  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
-  също е автоматен език.
-\end{cor}
-\begin{hint}
-  \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cap L_2$!}
-  Използвайте конструкцията на автомата $\A$ от \Prop{automata-union},
-  с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
-  \[F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2.\]
-\end{hint}
-
-\begin{prop}
-  \label{pr:automata-complement}
-  Нека $L$ е автоматен език.
-  Тогава $\Sigma^\star\setminus L$ също е автоматен език.
-\end{prop}
-\begin{hint}
-  \marginpar{Защо искаме $\A$ да бъде тотален ?}
-  Нека $L = L(\A)$, където $\A = \FA$ е {\bf тотален}.
-  Да вземем автомата $\A' = \pair{Q,\Sigma,s,\delta,Q\setminus F}$,
-  т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
-  са тези състояния, които {\bf не} са финални в $\A$.
-  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
-\end{hint}
 
 \begin{example}
   \label{ex:automata-pictures}
@@ -639,6 +589,59 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \alpha_{(2)} \equiv 2\ (\bmod\ 3)\}$}
   \end{figure}
 \end{framed}
+
+
+\begin{prop}
+  \label{pr:automata-union}
+  Класът на автоматните езици е затворен относно операцията {\em обединение}.
+  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cup L_2$
+  също е автоматен език.
+\end{prop}
+\begin{hint}
+  \marginpar{Защо изискваме $\A'$ и $\A''$ да са тотални?}
+  Нека \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'')\] са {\em тотални}.
+  Определяме автомата $\A = \FA$, който разпознава $\L(\A') \cup \L(\A'')$ по следния начин:
+  \begin{itemize}
+  \item
+    $Q = Q'\times Q''$;
+  \item
+    \marginpar{Едновременно симулираме изчисление и по двата автомата}
+    \marginpar{\writedown Проверете, че $\L(\A) = \L(\A')\cup \L(\A'')$}
+    Определяме за всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
+    \[\delta(\pair{r_1,r_2},a) = \pair{\delta'(r_1,a),\delta''(r_2,a)};\]
+  \item
+    $\qstart = \pair{\qstart',\qstart''}$;
+  \item
+    $F = \{\pair{r_1,r_2}\mid r_1\in F'' \vee r_2 \in F''\} = (F'\times Q'')\cup (Q'\times F'')$.
+  \end{itemize}
+\end{hint}
+
+\begin{cor}
+  Класът на автоматните езици е затворен относно операцията {\bf сечение}.
+  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
+  също е автоматен език.
+\end{cor}
+\begin{hint}
+  \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cap L_2$!}
+  Използвайте конструкцията на автомата $\A$ от \Prop{automata-union},
+  с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
+  \[F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2.\]
+\end{hint}
+
+\begin{prop}
+  \label{pr:automata-complement}
+  Нека $L$ е автоматен език.
+  Тогава $\Sigma^\star\setminus L$ също е автоматен език.
+\end{prop}
+\begin{hint}
+  \marginpar{Защо искаме $\A$ да бъде тотален ?}
+  Нека $L = L(\A)$, където $\A = \FA$ е {\bf тотален}.
+  Да вземем автомата $\A' = \pair{Q,\Sigma,s,\delta,Q\setminus F}$,
+  т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
+  са тези състояния, които {\bf не} са финални в $\A$.
+  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
+\end{hint}
+
 
 
 %%% Local Variables:
