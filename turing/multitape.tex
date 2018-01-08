@@ -50,10 +50,11 @@
 
 В началото втората лента е празна. Имаме две глави, които се движат независимо една от друга.
 \begin{align*}
-  (q_1, \frac{\hat{a}}{\hat{\blank}}\frac{b}{\blank}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}) & \vdash (q_1, \frac{a}{a}\frac{\hat{b}}{\hat{\blank}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}) \vdash (q_1, \frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank})\\
-                                                                                                           & \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{a}{\blank}\frac{\hat{b}}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}\frac{\hat{\blank}}{\blank})\\
-                                                                                                           & \vdash (q_3, \frac{a}{a}\frac{b}{\hat{b}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{\hat{b}}{\blank}) \vdash (q_3, \frac{a}{\hat{a}}\frac{b}{b}\frac{\sharp}{\blank}\frac{\hat{a}}{\blank}\frac{b}{\blank}) \vdash (q_3, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank})\\
-                                                                                                           & \vdash (q_4, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}).
+  (q_1, \frac{\hat{a}}{\hat{\blank}}\frac{b}{\blank}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}) & \vdash (q_1, \frac{a}{a}\frac{\hat{b}}{\hat{\blank}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}) \vdash (q_1, \frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}) \\
+                                                                                                           & \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank})\\
+                                                                                                           & \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{a}{\blank}\frac{\hat{b}}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}\frac{\hat{\blank}}{\blank})\\
+                                                                                                           & \vdash (q_3, \frac{a}{a}\frac{b}{\hat{b}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{\hat{b}}{\blank}) \vdash (q_3, \frac{a}{\hat{a}}\frac{b}{b}\frac{\sharp}{\blank}\frac{\hat{a}}{\blank}\frac{b}{\blank}) \\
+                                                                                                           & \vdash (q_3, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}) \vdash (q_4, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}).
 \end{align*}
 
 \end{example}
@@ -96,13 +97,12 @@
         
         \begin{scope}% [every node/.style={scale=.8}]
           \path
-          (1) edge [loop above] node [above] {$\frac{x}{y};\goleft$} (1)
-          % (1) edge [loop below] node [below] {$\frac{b}{\blank} / \frac{b}{b};\frac{\goright}{\goright}$} (1)
-          (1) edge [bend left=15] node [above] {$\frac{x}{\hat{b}}/\frac{x}{a};\goleft$} (2)
-          (2) edge [bend left=15] node [above] {$\frac{x}{y}/\frac{x}{\hat{y}};\goright$} (3)
-          (3) edge [loop above] node [above] {$\frac{x}{y};\goright$} (3)
-          (3) edge [bend left=15] node [above] {$\frac{\hat{a}}{y}/\frac{c}{y};\goright$} (4)
-          (4) edge [bend left=15] node [above] {$\frac{a}{y}/\frac{\hat{a}}{y};\goleft$} (5)
+          (1) edge [loop above]    node [above] {$\frac{x}{y};\goleft$} (1)
+          (1) edge [bend left=15]  node [above] {$\frac{x}{\hat{b}}/\frac{x}{a};\goleft$} (2)
+          (2) edge [bend left=15]  node [above] {$\frac{x}{y}/\frac{x}{\hat{y}};\goright$} (3)
+          (3) edge [loop above]    node [above] {$\frac{x}{y};\goright$} (3)
+          (3) edge [bend left=15]  node [above] {$\frac{\hat{a}}{y}/\frac{c}{y};\goright$} (4)
+          (4) edge [bend left=15]  node [above] {$\frac{a}{y}/\frac{\hat{a}}{y};\goleft$} (5)
           (4) edge [bend right=15] node [right] {$\frac{b}{y}/\frac{\hat{b}}{y};\goleft$} (6)
           (4) edge [bend right=15] node [left] {$\frac{\blank}{y}/\frac{\hat{\blank}}{y};\goleft$} (7);
         \end{scope}

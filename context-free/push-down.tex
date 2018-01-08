@@ -37,16 +37,16 @@
 \begin{itemize}
 \item
   $\L_F(P)$ е езика, който се разпознава от $P$ {\bf с финално състояние},
-  \[\L_F(P) = \{\omega \mid (\qstart,\omega,\#) \vdash^\star_P (q,\varepsilon,\alpha),\text{ за някои } q \in F,\alpha\in\Gamma^\star\}.\]    
+  \[\L_F(P) = \{\omega \mid (\exists q \in F)(\exists \gamma \in \Gamma^\star)[\ (\qstart,\omega,\#) \vdash^\star_P (q,\varepsilon,\gamma)\ ]\}.\]    
 \item
-  $\L_S(P)$ е езика, който се разпознава от $P$  {\bf с празен стек},
-  \[\L_S(P) = \{\omega \mid (\qstart,\omega,\#) \vdash^\star_P (q,\varepsilon,\varepsilon),\text{ за някое }q \in Q\}.\]    
+  $\L_\emptyset(P)$ е езика, който се разпознава от $P$  {\bf с празен стек},
+  \[\L_\emptyset(P) = \{\omega \mid (\exists q \in Q)[\ (\qstart,\omega,\#) \vdash^\star_P (q,\varepsilon,\varepsilon)\ ]\}.\]
 \end{itemize}
 
 \begin{example}
   \label{ex:anbn}
   За езика $L = \{a^nb^n\mid n\in\Nat\}$ съществува стеков автомат $P$, такъв че
-  $L = \L_S(P)$.
+  $L = \L_\emptyset(P)$.
   Да разгледаме $P = \PDA$, където
   \begin{itemize}
   \item
@@ -90,7 +90,7 @@
 \begin{example}
   \label{ex:omega-omega-r}
   За езика $L = \{\omega\omega^{rev} \mid \omega \in \{a,b\}^\star\}$ съществува стеков автомат $P$, такъв че
-  $L = \L_S(P)$.
+  $L = \L_\emptyset(P)$.
   Нека $P = \PDA$, където:
   \begin{itemize}
   \item 
@@ -157,7 +157,7 @@
 \begin{example}
   За езика 
   \[L = \{\ \omega \in \{\texttt{[},\texttt{]}\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\ \}\] съществува стеков автомат $P$, такъв че
-  $L = \L_S(P)$.
+  $L = \L_\emptyset(P)$.
 
   Нека $P = \PDA$, където:
   \begin{itemize}
@@ -203,7 +203,7 @@
 \begin{example}
   За езика 
   \[L = \{\ \omega \in \{\texttt{[},\texttt{]}\}^\star \mid \omega\text{ е балансирана дума}\ \}\] съществува стеков автомат $P$, такъв че
-  $L = \L_S(P)$.
+  $L = \L_\emptyset(P)$.
 
   Нека $P = \PDA$, където:
   \begin{itemize}
@@ -282,9 +282,9 @@
   Нека $L$ е произволен език над азбука $\Sigma$.
   \begin{enumerate}[1)]
   \item 
-    Ако съществува НСА $P$, за който $L = \L_F(P)$, то съществува НСА $P^\prime$, за който $L = \L_S(P^\prime)$.
+    Ако съществува НСА $P$, за който $L = \L_F(P)$, то съществува НСА $P^\prime$, за който $L = \L_\emptyset(P^\prime)$.
   \item
-    Ако съществува НСА $P$, за който $L = \L_S(P)$, то съществува НСА $P^\prime$, за който $L = \L_F(P^\prime)$.
+    Ако съществува НСА $P$, за който $L = \L_\emptyset(P)$, то съществува НСА $P^\prime$, за който $L = \L_F(P^\prime)$.
   \end{enumerate}
   С други думи, езиците разпознавани от НСА с празен стек са точно езиците разпознавани от НСА с финално състояние.
 \end{thm}
@@ -452,7 +452,7 @@
     & A \to aAa\ |\ a\\
     & B \to bBb\ |\ b.
   \end{align*}
-  Ще построим стеков автомат $P = \PDA$, такъв че $\L_S(P) = \L(G)$.
+  Ще построим стеков автомат $P = \PDA$, такъв че $\L_\emptyset(P) = \L(G)$.
   \begin{itemize}
   \item
     $\Sigma = \{a,b\}$;

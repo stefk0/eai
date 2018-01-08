@@ -45,7 +45,7 @@
   \begin{framed}
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=60pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto]
         
         \node[state,initial]    (1) {$q_0$};
@@ -56,16 +56,15 @@
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
-          (1) edge [loop above] node [above] {$x;\goright$} (1)
+          (1) edge [loop above]    node [above] {$x;\goright$} (1)
           (1) edge [bend right=15] node [left] {$\blank;\goright$} (5)
-          % (1) edge [bend left=15] node [left] {$\{b,c\}$} (6)
-          (1) edge [bend left=15] node [above] {$a/x;\goright$} (2)
-          (2) edge [bend left=15] node [above] {$b/x;\goright$} (3)
-          (2) edge [loop above] node   [above] {$\{a,x\};\goright$} (2)
-          (3) edge [bend left=15] node [above] {$c/x;\goleft$} (4)
-          (3) edge [loop above] node   [above] {$\{b,x\};\goright$} (3)
-          (4) edge [loop right] node   [below right] {$\{a,b,x\};\goleft$} (4)
-          (4) edge [in=65,out=115,above] node [above] {$\blank;\goright$} (1);
+          (1) edge [bend left=15]  node [above] {$a/x;\goright$} (2)
+          (2) edge [bend left=15]  node [above] {$b/x;\goright$} (3)
+          (2) edge [loop above]    node [above] {$\{a,x\};\goright$} (2)
+          (3) edge [bend left=15]  node [above] {$c/x;\goleft$} (4)
+          (3) edge [loop above]    node [above] {$\{b,x\};\goright$} (3)
+          (4) edge [loop right]    node [right] {$\{a,b,x\};\goleft$} (4)
+          (4) edge [bend left=30]  node [below] {$\blank;\goright$} (1);
         \end{scope}
       \end{tikzpicture}
     \end{center}
@@ -88,7 +87,7 @@
 \begin{framed}
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=60pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto]
         
         \node[state,initial]    (1) {$q_0$};
@@ -100,23 +99,20 @@
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
-          (1) edge [loop above] node [above] {$x;\goright$} (1)
-          (1) edge [bend right=15] node [left] {$\blank;\stay$} (5)
-          % (1) edge [bend left=15] node [left] {$\{b,c\}$} (6)
-          (1) edge [bend left=15] node [above] {$a/x;\goright$} (2)
-          (2) edge [bend left=15] node [above] {$b/x;\goright$} (3)
-          (2) edge [loop above] node [above] {$\{a,x\};\goright$} (2)
-          (3) edge [bend left=15] node [above] {$c/x;\goleft$} (4)
-          (3) edge [loop above] node [above] {$\{b,x\};\goright$} (3)
-          (4) edge [loop right] node [below right] {$\{a,b,x\};\goleft$} (4)
+          (1) edge [loop above]    node [above] {$x;\goright$} (1)
+          (1) edge [bend right=15] node [left]  {$\blank;\stay$} (5)
+          (1) edge [bend left=15]  node [above] {$a/x;\goright$} (2)
+          (2) edge [bend left=15]  node [above] {$b/x;\goright$} (3)
+          (2) edge [loop above]    node [above] {$\{a,x\};\goright$} (2)
+          (3) edge [bend left=15]  node [above] {$c/x;\goleft$} (4)
+          (3) edge [loop above]    node [above] {$\{b,x\};\goright$} (3)
+          (4) edge [loop right]    node [below right] {$\{a,b,x\};\goleft$} (4)
           (4) edge [in=65,out=115,above] node [above] {$\blank;\goright$} (1);
 
           \path
           (1) edge [dashed, bend right=15] node [left] {$\{b,c\};\stay$} (6)
           (2) edge [dashed, bend left=30] node [left] {$\{c,\blank\};\stay$} (6)
           (3) edge [dashed, bend left=25] node [right] {$\{a,\blank\};\stay$} (6);
-          % (5) edge [dashed, loop below] node [below] {$\{a,b,c,x,\blank\};\stay$} (5)
-          % (6) edge [dashed, loop below] node [below] {$\{a,b,c,x,\blank\};\stay$} (6);
         \end{scope}
       \end{tikzpicture}
     \end{center}
@@ -172,7 +168,7 @@
   \begin{framed}
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=60pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
         
         \node[state,initial]    (1) {$q_0$};
@@ -187,22 +183,22 @@
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
-          (1) edge [bend left=15] node [below right] {$a/x;\goright$} (2)
+          (1) edge [bend left=15]  node [below right] {$a/x;\goright$} (2)
               edge [bend right=15] node [above right] {$b/x;\goright$} (3)
               edge [bend right=15] node [left] {$\sharp;\goright$} (8)
-          (2) edge [loop above] node [above] {$\{a,b\};\goright$} (2)
-              edge [bend left=15] node [above] {$\sharp;\goright$} (4)
-          (3) edge [loop below] node [below] {$\{a,b\};\goright$} (3)
+          (2) edge [loop above]    node [above] {$\{a,b\};\goright$} (2)
+              edge [bend left=15]  node [above] {$\sharp;\goright$} (4)
+          (3) edge [loop below]    node [below] {$\{a,b\};\goright$} (3)
               edge [bend right=15] node [below] {$\sharp;\goright$} (5)
-          (4) edge [loop above] node [above] {$x;\goright$} (4)
-              edge [bend left=15] node [below left] {$a/x;\goleft$} (6)
-          (5) edge [loop below] node [below] {$x;\goright$} (5)
+          (4) edge [loop above]    node [above] {$x;\goright$} (4)
+              edge [bend left=15]  node [below left] {$a/x;\goleft$} (6)
+          (5) edge [loop below]    node [below] {$x;\goright$} (5)
               edge [bend right=15] node [above left] {$b/x;\goleft$} (6)
-          (6) edge [loop right] node [right] {$x;\goleft$} (6)
+          (6) edge [loop right]    node [right] {$x;\goleft$} (6)
               edge [bend right=15] node [right] {$\sharp;\goleft$} (7)
-          (7) edge [loop right] node [right] {$\{a,b\};\goleft$} (7)
+          (7) edge [loop right]    node [right] {$\{a,b\};\goleft$} (7)
               edge [out=130,in=120,above,distance=2.5cm] node [above] {$x;\goright$} (1)
-          (8) edge [loop left] node [left] {$x;\goright$} (8)
+          (8) edge [loop left]     node [left] {$x;\goright$} (8)
               edge [bend right=15] node [left] {$\blank;\stay$} (9);
         \end{scope}
       \end{tikzpicture}

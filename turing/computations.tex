@@ -12,16 +12,22 @@
   \begin{prop}
     Да фиксираме една машина на Тюринг $\M$. 
     Тогава следните езици за безконтекстни:
-    \begin{itemize}
-    \item 
-      $\texttt{ValidStep}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \}$;
-    \item
-      $\texttt{ValidStep}'(\M)\df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \}$;
-    \item
-      $\texttt{InvalidStep}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\ \}$;
-    \item
-      $\texttt{InvalidStep}'(\M) \df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\ \}$.
-    \end{itemize}
+    \begin{align*}
+      & \texttt{Valid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \} \\
+      & \texttt{Valid}'(\M)\df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \} \\
+      & \texttt{Invalid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\ \}\\
+      & \texttt{Invalid}'(\M) \df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\ \}.
+    \end{align*}
+    % \begin{itemize}
+    % \item 
+    %   $\texttt{Valid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \}$;
+    % \item
+    %   $\texttt{Valid}'(\M)\df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \}$;
+    % \item
+    %   $\texttt{Invalid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\ \}$;
+    % \item
+    %   $\texttt{Invalid}'(\M) \df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\ \}$.
+    % \end{itemize}
   \end{prop}  
 \end{framed}
 
@@ -34,15 +40,15 @@
     & (\alpha_1z, q, x\alpha_2) \vdash_\M (\alpha_1z, p, y\alpha_2) & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}.
   \end{align*}
 
-  Думите в езика $\texttt{ValidStep}(\M)$ кодират релацията $\vdash_\M$. Това означава, че всяка дума на 
-  $\texttt{ValidStep}(\M)$ има някое от следните представяния:
+  Думите в езика $\texttt{Valid}(\M)$ кодират релацията $\vdash_\M$. Това означава, че всяка дума на 
+  $\texttt{Valid}(\M)$ има някое от следните представяния:
   \begin{align*}
     & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 p y z \alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
     & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 y z p \alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
     & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 y p z\alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}
   \end{align*}
 
-  Ще опишем неформално стеков автомат $P$ за езика $\texttt{ValidStep}(\M)$.
+  Ще опишем неформално стеков автомат $P$ за езика $\texttt{Valid}(\M)$.
   Нека 
   \[Q^{P} \df \{r_q \mid q \in Q^\M\} \cup \{r, \hat{r}\}.\]
 
@@ -76,9 +82,9 @@
 
 \begin{remark}
   Да обърнем внимание, че горната конструкция на стековия автомат $P$ е {\bf ефективна}, т.е.
-  съществува алгоритъм, който при вход машина на Тюринг $\M$ връща като изход стеков автомат $P$ за езика $\texttt{ValidStep}(\M)$.
+  съществува алгоритъм, който при вход машина на Тюринг $\M$ връща като изход стеков автомат $P$ за езика $\texttt{Valid}(\M)$.
   С други думи, езикът 
-  \[\{\code{\M} \cdot \code{P} \mid \L(P) = \texttt{ValidStep}(\M)\}\]
+  \[\{\code{\M} \cdot \code{P} \mid \L(P) = \texttt{Valid}(\M)\}\]
   е разрешим.
 \end{remark}
 
@@ -110,8 +116,8 @@
 \begin{hint}
   Да разгледаме езиците:
   \begin{align*}
-    & L_1 \df (\texttt{ValidStep}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp)\\
-    & L_2 \df \qstart\Sigma^\star \sharp (\texttt{ValidStep}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp),
+    & L_1 \df (\texttt{Valid}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp)\\
+    & L_2 \df \qstart\Sigma^\star \sharp (\texttt{Valid}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp),
   \end{align*}
   за които е ясно, че са безконтекстни.
 \end{hint}

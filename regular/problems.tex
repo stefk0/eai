@@ -63,9 +63,9 @@
   \item
     $L = \{a,b\}^\star\setminus\{\varepsilon\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid a \text{ и } b \text{ се срещат четен брой пъти в }w\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ и }N_b(\omega)\text{ са четни}\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid a \text{ се среща четен брой, докато $b$ нечетен брой пъти в }w\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ е четно}\ \&\ N_b(\omega)\text{ е нечетно}\}$;
   \item
     $L = \{a^nb^m\mid n,m \geq 0\}$;
   \item
@@ -73,20 +73,20 @@
   \item
     $L = \{a,b\}^\star \setminus \{a\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\mbox{ или не повече от три }b\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\ \lor\ N_b(\omega) \leq 3 \}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid \mbox{съдържа поне две }a\mbox{ и поне едно }b\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\ \&\ N_b(\omega) \geq 1\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid \mbox{на всяка нечетна позиция на }w\mbox{ е буквата }a\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \mbox{на всяка нечетна позиция на }\omega\mbox{ е буквата }a\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w\mbox{ съдържа четен брой }a\mbox{ и най-много едно }b\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ е четно }\&\ N_b(\omega) \leq 1\}$;
   \item
     \marginpar{$\abs{w} \df $ дължината на думата $w$}
-    $L = \{w \in \{a,b\}^\star\mid \abs{w} \leq 3\}$;
+    $L = \{\omega \in \{a,b\}^\star\mid \abs{\omega} \leq 3\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w \mbox{ не започва с }ab\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \mbox{ не започва с }ab\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w \mbox{ завършва с }ab\mbox{ или ba}\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \mbox{ завършва с }ab\mbox{ или ba}\}$;
   % \item
   %   $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа }bab\}$;
   % \item
@@ -94,13 +94,13 @@
   % \item
     % $L = \{w \in \{a,b\}^\star \mid w \mbox{ няма две последователни }a\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва или завършва с буквата } a\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega\mbox{ започва или завършва с } a\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid w\mbox{ започва с $a$ точно тогава, когато завършва с $b$}\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega\text{ започва с }a \iff \omega\text{ завършва с }b\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ \omega \mbox{ съдържа точно едно }a\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ N_a(\omega) = 1\}$;
   \item
-    $L = \{w \in \{a,b\}^\star \mid \mbox{ всяко }a\mbox{ в }w\mbox{ се следва от поне едно }b\}$;
+    $L = \{w \in \{a,b\}^\star \mid \text{ всяко }a\mbox{ в }w\text{ се следва от поне едно }b\}$;
   \item
     $L = \{w \in \{a,b\}^\star \mid \abs{w} \equiv 0 \bmod 3\}$;
   \item
@@ -109,7 +109,7 @@
   \item
     $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 3\ \&\ N_b(\omega) \equiv 1 \bmod 2\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 2\ \vee\ \omega\mbox{ съдържа точно две }b\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 2\ \vee\ N_b(\omega) = 2\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа равен брой срещания на }ab\text{ и на }ba\}$.
   \item

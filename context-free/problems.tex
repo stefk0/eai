@@ -264,27 +264,27 @@
     \ifhints
     \marginpar{Да}
     \fi
-    $L \df \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\}$;
+    $\{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\}$;
   \item
     \ifhints
     \marginpar{Да}
     \fi
-    $L \df \{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) \geq 1\}$;
+    $\{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) \geq 1\}$;
   \item
     \ifhints 
     \marginpar{Не}
     \fi
-    $L \df \{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) \geq 1\}$;
+    $\{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) \geq 1\}$;
   \item
     \ifhints 
     \marginpar{Да}
     \fi
-    $L \df \{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) \geq 1\}$;
+    $\{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) \geq 1\}$;
   \item
     \ifhints
     \marginpar{Не}
     \fi
-    $L \df \{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) = 1\}$;
+    $\{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) = 1\}$;
   % \item
   %   $L \df \{\alpha\sharp\beta\sharp\gamma \mid \alpha, \beta, \gamma \in \{a,b\}^\star\ \&\ |\alpha| = |\beta| = |\gamma|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\ \&\ \texttt{diff}(\beta,\gamma^{rev}) = 1\}$;
   \end{enumerate}
@@ -292,7 +292,7 @@
 
 \begin{problem}
     Да разгледаме езика
-    \[D_1 \df \{\alpha_1 \sharp \alpha_2 \sharp \cdots \sharp \alpha_n \mid n \geq 2\ \&\ |\alpha_i| = |\alpha_{i+1}|\ \&\ \texttt{diff}(\alpha_i,\alpha^{rev}_{i+1}) = 1\}.\]
+    \[D_1 \df \{\alpha_1 \sharp \cdots \sharp \alpha_n \mid n \geq 2\ \&\ |\alpha_i| = |\alpha_{i+1}|\ \&\ \texttt{diff}(\alpha_i,\alpha^{rev}_{i+1}) = 1\}.\]
     \begin{itemize}
     \item 
       Докажете, че $D_1$ не е безконтекстен.
@@ -382,7 +382,7 @@
   Нека $L_1$ е произволен регулярен език над азбуката $\Sigma$, 
   а $L_2$ е езика от всички думи палиндроми над $\Sigma$.
   Докажете, че $L$ е безконтекстен език, където:
-  \[L = \{\alpha_1\alpha_2\cdots\alpha_{3n}\beta_1\cdots\beta_m\gamma_1\cdots\gamma_n \mid \alpha_i,\gamma_j \in L_1, \beta_k\in L_2, m,n \in \Nat\}.\]
+  \[L = \{\alpha_1 \cdots\alpha_{3n}\beta_1\cdots\beta_m\gamma_1\cdots\gamma_n \mid \alpha_i,\gamma_j \in L_1, \beta_k\in L_2, m,n \in \Nat\}.\]
 \end{problem}
 
 \begin{problem}

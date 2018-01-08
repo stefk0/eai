@@ -17,7 +17,7 @@
 С $\vdash^\star_\N$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\N$.
 
 Тогава за недетерминистична машина на Тюринг $\N$, 
-\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\varepsilon, \qstart, \alpha) \vdash^\star_\N (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
+\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\exists \beta,\gamma \in \Gamma^\star)[(\varepsilon, \qstart, \alpha) \vdash^\star_\N (\beta, \qaccept, \gamma) ]\}.\]
 
 \begin{remark}
   Върху дадена дума $\omega$, недетерминистичната машина на Тюринг $\N$ може да има много различни изчисления.
@@ -30,7 +30,8 @@
 
 \begin{problem}
   \marginpar{\cite{hopcroft2}}
-  $\N = (\{q_0,q_1,q_2,q_f\}, \{0,1\}, \{0,1,\blank\}, \Delta, q_0, \{q_f\})$,
+  Нека
+  \[\N = (\{q_0,q_1,q_2,q_f\}, \{0,1\}, \{0,1,\blank\}, \Delta, q_0, \{q_f\}),\]
   \begin{itemize}
   \item 
     $\Delta(q_0,0) = \{(q_0,1,\goright),(q_1,1,\goright)\}$;
@@ -53,18 +54,18 @@
   \begin{framed}
     \begin{figure}[H]
       \begin{center}
-        \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=65pt]
           \tikzstyle{every state}=[circle,minimum size=10pt,scale=.9]
           
-          \node[state,initial]    (1) {$q_0$};
+          \node[state,initial below]    (1) {$q_0$};
           \node[state]            (2) [right of=1]{$q_1$};
-          \node[state]            (3) [right of=2,node distance=70pt]{$q_2$};
+          \node[state]            (3) [right of=2,node distance=80pt]{$q_2$};
           \node[state]            (4) [below of=3]{$q_3$};
-          \node[state]            (5) [below right of=4,node distance=70pt]{$q_4$};
+          \node[state]            (5) [below right of=4,node distance=80pt]{$q_4$};
           \node[state]            (6) [right of=4]{$q_5$};
           \node[state]            (7) [above of=6]{$q_6$};
-          \node[state]            (8) [right of=6,node distance=80pt]{$q_7$};
-          \node[state]            (9) [right of=7,node distance=70pt]{$q_8$};
+          \node[state]            (8) [right of=6,node distance=90pt]{$q_7$};
+          \node[state]            (9) [right of=7,node distance=90pt]{$q_8$};
           \node[state,accepting]  (10)[below right of=5]{$q_{9}$};
           
           \begin{scope}[every node/.style={scale=.8}]
@@ -82,10 +83,10 @@
             (6) edge [bend right=15] node [right] {$\sharp;\goright$} (7)
             (7) edge [loop right] node [right] {$\blank;\goright$} (7)
             (7) edge [bend left=15] node [below] {$a/\blank;\goleft$} (3)
-            (8) edge [loop right] node [right] {$\{a,b\};\goright$} (8)
+            (8) edge [loop right] node [below] {$\{a,b\};\goright$} (8)
             (5) edge [bend right=30] node [right] {$b/\blank;\goright$} (8)
             (8) edge [bend right=15] node [right] {$\sharp;\goright$} (9)
-            (9) edge [loop right] node [right] {$\blank;\goright$} (9)
+            (9) edge [loop right] node [above] {$\blank;\goright$} (9)
             (9) edge [bend right=45] node [above] {$b/\blank;\goleft$} (3)
             (5) edge [bend right=15] node [left] {$\sharp;\stay$} (10);
           \end{scope}
@@ -94,15 +95,17 @@
     \end{figure}
   \end{framed}
   Да видим, че $\M$ успешно разпознава, че думата $ab\sharp aabb$ принадлежи на езика $L$.
-
   \begin{align*}
-    (q_0, \underline{a}b\sharp aabb) & \vdash (q_0, a\underline{b}\sharp aabb) \vdash (q_0, ab\underline{\sharp} aabb) \vdash (q_1, ab\sharp\underline{a}abb) \vdash (q_1, ab\sharp\blank\underline{a}bb)\\
-                                     & \vdash (q_2, ab\sharp\underline{\blank}abb) \vdash (q_2, ab\underline{\sharp}\blank abb) \vdash (q_3, a\underline{b}\sharp\blank abb) \vdash (q_3, \underline{a}b\sharp\blank abb)\\
-                                     & \vdash (q_3, \underline{\blank}ab\sharp\blank abb) \vdash (q_4, \underline{a}b\sharp\blank abb) \vdash (q_5, \blank\underline{b}\sharp \blank abb) \vdash (q_5, \blank b\underline{\sharp} \blank abb)\\
-                                     & \vdash (q_6, \blank b \sharp \underline{\blank} abb) \vdash (q_6, \blank b \sharp \blank \underline{a}bb) \vdash (q_2, \blank b \sharp \underline{\blank}\blank bb) \vdash (q_2, \blank b \underline{\sharp} \blank\blank bb)\\
-                                     & \vdash (q_3, \blank \underline{b} \sharp \blank\blank bb) \vdash (q_3, \underline{\blank} b \sharp \blank\blank bb) \vdash (q_4,  \blank \underline{b} \sharp \blank\blank bb) \vdash (q_7, \blank \blank \underline{\sharp} \blank\blank bb)\\
-                                     & \vdash (q_8, \blank \blank \sharp \underline{\blank}\blank bb)\vdash (q_8, \blank \blank \sharp \blank \underline{\blank} bb) \vdash (q_8, \blank \blank \sharp \blank \blank \underline{b}b)\\
-    & \vdash (q_2, \blank \blank \sharp \blank \underline{\blank} \blank b) \vdash \cdots \vdash (q_4, \blank\blank\underline{\sharp}\blank\blank\blank b) \vdash (q_9, \blank\blank\underline{\sharp}\blank\blank\blank b)
+    (q_0, \underline{a}b\sharp aabb) & \vdash (q_0, a\underline{b}\sharp aabb) \vdash (q_0, ab\underline{\sharp} aabb) \vdash (q_1, ab\sharp\underline{a}abb) \\
+                                     & \vdash (q_1, ab\sharp\blank\underline{a}bb) \vdash (q_2, ab\sharp\underline{\blank}abb) \vdash (q_2, ab\underline{\sharp}\blank abb)\\
+                                     & \vdash (q_3, a\underline{b}\sharp\blank abb) \vdash (q_3, \underline{a}b\sharp\blank abb) \vdash (q_3, \underline{\blank}ab\sharp\blank abb)\\
+                                     & \vdash (q_4, \underline{a}b\sharp\blank abb) \vdash (q_5, \blank\underline{b}\sharp \blank abb) \vdash (q_5, \blank b\underline{\sharp} \blank abb)\\
+                                     & \vdash (q_6, \blank b \sharp \underline{\blank} abb) \vdash (q_6, \blank b \sharp \blank \underline{a}bb) \vdash (q_2, \blank b \sharp \underline{\blank}\blank bb)\\
+                                     & \vdash (q_2, \blank b \underline{\sharp} \blank\blank bb) \vdash (q_3, \blank \underline{b} \sharp \blank\blank bb) \vdash (q_3, \underline{\blank} b \sharp \blank\blank bb)\\
+                                     & \vdash (q_4,  \blank \underline{b} \sharp \blank\blank bb) \vdash (q_7, \blank \blank \underline{\sharp} \blank\blank bb) \\
+                                     & \vdash (q_8, \blank \blank \sharp \underline{\blank}\blank bb) \vdash (q_8, \blank \blank \sharp \blank \underline{\blank} bb) \\
+                                     & \vdash (q_8, \blank \blank \sharp \blank \blank \underline{b}b) \vdash (q_2, \blank \blank \sharp \blank \underline{\blank} \blank b)\\
+                                     & \vdash \cdots \vdash (q_4, \blank\blank\underline{\sharp}\blank\blank\blank b) \vdash (q_9, \blank\blank\underline{\sharp}\blank\blank\blank b)
   \end{align*}
 \end{example}
 

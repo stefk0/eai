@@ -45,10 +45,10 @@
 \begin{framed}
 \begin{figure}[H]
   \begin{center}
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
       \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.7]
       
-      \node[state,initial]    (1) {$q_0$};
+      \node[state,initial below]    (1) {$q_0$};
       \node[state]            (2) [right of=1]{$q_1$};
       \node[state]            (3) [right of=2]{$q_2$};
       \node[state]            (4) [right of=3]{$q_3$};
@@ -89,8 +89,9 @@
 \end{framed}
 
 \begin{align*}
-  (q_0, \underline{1}1) & \vdash (q_1, \underline{\blank}11) \vdash  (q_2, \underline{\blank} \blank 11) \vdash  (q_3, \underline{\blank} 1 \blank 11) \vdash (q_4, 1\underline{1}\blank 11) \vdash (q_4, 11 \underline{\blank} 11)\\
-  & \vdash (q_5, 11\blank \underline{1}1) \vdash \cdots \vdash (q_7, 11 \blank \underline{1}\blank) \vdash \cdots
+  (q_0, \underline{1}1) & \vdash (q_1, \underline{\blank}11) \vdash  (q_2, \underline{\blank} \blank 11) \vdash  (q_3, \underline{\blank} 1 \blank 11)\\
+                        & \vdash (q_4, 1\underline{1}\blank 11) \vdash (q_4, 11 \underline{\blank} 11) \vdash (q_5, 11\blank \underline{1}1)\\
+                        & \vdash \cdots \vdash (q_7, 11 \blank \underline{1}\blank) \vdash \cdots
 \end{align*}
 
 \end{example}
@@ -168,7 +169,7 @@
   Да разгледаме тоталната функция 
   \[f:\{0,1\}^\star \to 1\cdot\{0,1\}^\star,\]
   дефинирана като
-  \[(f(\alpha))_2 = (\alpha)_2 + 1.\]
+  \[\ov{f(\alpha)}_2 = \ov{\alpha}_2 + 1.\]
   Нека да видим, че тази функция е изчислима с машина на Тюринг.
 
   \begin{itemize}
@@ -188,7 +189,7 @@
       \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
         \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.9]
         
-        \node[state,initial]    (0) {$q_0$};
+        \node[state,initial below]    (0) {$q_0$};
         \node[state]            (1) [right of=0]{$q_1$};
         \node[state]            (2) [right of=1]{$q_2$};
         \node[state]            (3) [right of=2]{$q_3$};
@@ -215,9 +216,10 @@
 Да проследим изчислението на $\M$ върху вход $01011$.
 
 \begin{align*}
-  (q_0, 0\underline{1}011) & \vdash (q_0,\underline{1}011) \vdash (q_1, 1\underline{0}11) \vdash (q_1, 10\underline{1}1) \vdash (q_1, 101\underline{1}) \vdash (q_1, 1011\underline{\blank})\\
-  & \vdash (q_2, 101\underline{1}) \vdash (q_2, 10\underline{1}0) \vdash (q_2, 1\underline{0}00) \vdash (q_3, \underline{1}100) \vdash (q_3, \underline{\blank}1100)\\
-  & \vdash (q_4, \underline{1}100).
+  (q_0, 0\underline{1}011) & \vdash (q_0,\underline{1}011) \vdash (q_1, 1\underline{0}11) \vdash (q_1, 10\underline{1}1)\\
+                           & \vdash (q_1, 101\underline{1}) \vdash (q_1, 1011\underline{\blank}) \vdash (q_2, 101\underline{1})\\
+                           & \vdash (q_2, 10\underline{1}0) \vdash (q_2, 1\underline{0}00) \vdash (q_3, \underline{1}100)\\
+                           & \vdash (q_3, \underline{\blank}1100) \vdash (q_4, \underline{1}100).
 \end{align*}
 \end{example}
 
@@ -227,7 +229,7 @@
   Да разгледаме тоталната функция 
   \[f:\Sigma^\star \to (\Sigma\setminus\{0\})\cdot\Sigma^\star,\]
   дефинирана като
-  \[(f(\alpha))_k = (\alpha)_k + 1.\]
+  \[\ov{f(\alpha)}_k = \ov{\alpha}_k + 1.\]
   Дефинирайте машина на Тюринг $\M$, която изчислява функцията $f$.
 \end{problem}
 
