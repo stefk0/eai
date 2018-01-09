@@ -476,7 +476,7 @@
   Да разгледаме азбуката:
   \[\Sigma_3 = \left\{\begin{bmatrix} 0\\0\\0\end{bmatrix},\begin{bmatrix} 0\\0\\1\end{bmatrix},\begin{bmatrix} 0\\1\\0\end{bmatrix},\begin{bmatrix} 0\\1\\1\end{bmatrix},\dots,\begin{bmatrix} 1\\1\\1\end{bmatrix}\right\}.\]
   Докажете, че 
-  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}\right\}$
+  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \ov{\alpha}_{(2)}+\ov{\beta}_{(2)} = \ov{\gamma}_{(2)}\right\}$
   е автоматен език.
 \end{problem}
 \ifhints
@@ -539,11 +539,12 @@
   Да разгледаме езиците:
   \begin{itemize}
   \item 
-    $L_1 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е по-голямо число от горния ред}\}$;
+    $L_1 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid \ov{\alpha}_{(2)} < \ov{\beta}_{(2)}\right\}$;
   \item
-    $L_2 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е три пъти по-голямо число от горния}\}$;
+    $L_2 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid 3(\ov{\alpha}_{(2)}) = \ov{\beta}_{(2)}\right\}$;
+    % $L_2 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е три пъти по-голямо число от горния}\}$;
   \item
-    $L_3 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е обратния низ на горния ред}\}$.
+    $L_3 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid \alpha = \beta^{rev}\right\}$;
   \end{itemize}
   Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
 \end{problem}

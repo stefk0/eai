@@ -218,7 +218,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Да разгледаме $\A = \FA$ с функция на преходите
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial, accepting, state] (0) {$s$};
@@ -305,7 +305,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{framed}
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         
         \node[initial,state]      (00) {$00$};
@@ -316,12 +316,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         \path 
         (00) edge  [bend left=15]  node [above]  {$a$} (10)
         (10) edge  [bend left=15]  node [below]  {$a$} (00)
-        (01) edge  [bend right=15]  node [above]  {$b$} (00)
-        (00) edge  [bend right=15]  node [below]  {$b$} (01)
+        (01) edge  [bend right=15] node [above]  {$b$} (00)
+        (00) edge  [bend right=15] node [below]  {$b$} (01)
         (10) edge  [bend left=15]  node [above]  {$b$} (11)
         (11) edge  [bend left=15]  node [below]  {$b$} (10)
-        (01) edge  [bend right=15]  node [below]  {$a$} (11)
-        (11) edge  [bend right=15]  node [above]  {$a$} (01);
+        (01) edge  [bend right=15] node [below]  {$a$} (11)
+        (11) edge  [bend right=15] node [above]  {$a$} (01);
       \end{tikzpicture}
     \end{center}
     \caption{$\L(\A) \stackrel{?}{=} L$}
@@ -350,12 +350,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \begin{framed}
     \begin{figure}[H]
       \begin{center}
-        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
           \tikzstyle{every state}=[circle,minimum size=15pt,auto]
           
-          \node[initial,state]      (0) {$q_0$};
-          \node[accepting, state]              (1) [right of=0]{$q_1$};
-          \node[state]   (2) [right of=1]{$q_2$};
+          \node[initial,state]    (0) {$q_0$};
+          \node[accepting, state] (1) [right of=0]{$q_1$};
+          \node[state]            (2) [right of=1]{$q_2$};
           
           \path 
           (0) edge  [bend left=15]  node [above]  {$0,1$} (1)
@@ -404,26 +404,34 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   т.е. всяко състояние отговаря на определен остатък при деление на три.
   Понеже искаме нашия автомат да разпознава тези думи $\alpha$,
   за които $\alpha_{(2)} \equiv 2\mod 3$, финалното състояние ще бъде $q_2$.
-  Дефинираме функцията $\delta$ следвайки свойствата:
-  \begin{itemize}
-  \item
-    $\delta(q_0,0) = q_0$, защото ако $\ov{\alpha}_{(2)} \equiv 0 \bmod 3$, то $\ov{\alpha 0}_{(2)} \equiv 0 \bmod 3$;
-  \item 
-    $\delta(q_0,1) = q_1$, защото ако $\ov{\alpha}_{(2)} \equiv 0 \bmod 3$, то $\ov{\alpha 1}_{(2)} \equiv 1 \bmod 3$;
-  \item
-    $\delta(q_1,0) = q_2$, защото ако $\ov{\alpha}_{(2)} \equiv 1 \bmod 3$, то $\ov{\alpha 0}_{(2)} \equiv 2 \bmod 3$;
-  \item 
-    $\delta(q_1,1) = q_0$, защото ако $\ov{\alpha}_{(2)} \equiv 1 \bmod 3$, то $\ov{\alpha 1}_{(2)} \equiv 0 \bmod 3$;
-  \item
-    $\delta(q_2,0) = q_1$, защото ако $\ov{\alpha}_{(2)} \equiv 2 \bmod 3$, то $\ov{\alpha 0}_{(2)} \equiv 1 \bmod 3$;
-  \item 
-    $\delta(q_2,1) = q_2$, защото ако $\ov{\alpha}_{(2)} \equiv 2 \bmod 3$, то $\ov{\alpha 1}_{(2)} \equiv 2 \bmod 3$.
-  \end{itemize}
+  Дефинираме функцията $\delta$ по следния начин:
+  \begin{align*}
+    & \delta(q_0,0) = q_0 & \comment{\ \ov{\alpha}_{(2)} \equiv 0 \bmod 3 \implies \ov{\alpha 0}_{(2)} \equiv 0 \bmod 3 }\\
+    & \delta(q_0,1) = q_1 & \comment{\ \ov{\alpha}_{(2)} \equiv 0 \bmod 3 \implies \ov{\alpha 1}_{(2)} \equiv 1 \bmod 3 }\\
+    & \delta(q_1,0) = q_2 & \comment{\ \ov{\alpha}_{(2)} \equiv 1 \bmod 3 \implies \ov{\alpha 0}_{(2)} \equiv 2 \bmod 3 }\\
+    & \delta(q_1,1) = q_0 & \comment{\ \ov{\alpha}_{(2)} \equiv 1 \bmod 3 \implies \ov{\alpha 1}_{(2)} \equiv 0 \bmod 3 }\\
+    & \delta(q_2,0) = q_1 & \comment{\ \ov{\alpha}_{(2)} \equiv 2 \bmod 3 \implies \ov{\alpha 0}_{(2)} \equiv 1 \bmod 3 }\\
+    & \delta(q_2,1) = q_2 & \comment{\ \ov{\alpha}_{(2)} \equiv 2 \bmod 3 \implies \ov{\alpha 1}_{(2)} \equiv 2 \bmod 3 }.
+  \end{align*}
+  % \begin{itemize}
+  % \item
+    
+  % \item 
+
+  % \item
+
+  % \item 
+
+  % \item
+
+  % \item 
+
+  % \end{itemize}
   Ето и картинка на автомата $\A$:
   \begin{framed}
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         
         \node[initial,state]      (0) {$q_0$};
@@ -433,9 +441,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         \path 
         (0) edge  [loop above]    node [above]  {$0$} (0)
         (0) edge  [bend left=15]  node [above]  {$1$} (1)
-        (2) edge  [bend left=15] node [below]  {$0$} (1)
+        (2) edge  [bend left=15]  node [below]  {$0$} (1)
         (1) edge  [bend left=15]  node [below]  {$1$} (0)
-        (1) edge  [bend left=15] node [above]  {$0$} (2)
+        (1) edge  [bend left=15]  node [above]  {$0$} (2)
         (2) edge  [loop above]    node [above]  {$1$} (2);
       \end{tikzpicture}
       \end{center}
@@ -570,7 +578,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \begin{framed}
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         
         \node[initial,state]      (0) {$L$};

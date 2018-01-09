@@ -198,7 +198,7 @@
 \begin{framed}
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=65pt]
       \tikzstyle{every state}=[circle,minimum size=20pt,auto]
       
       \node[initial, state]        (L) {$L$};
@@ -251,10 +251,10 @@
 \begin{framed}  
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
       \tikzstyle{every state}=[circle,minimum size=15pt,auto]
       
-      \node[initial, state]                   (0) {$L$};
+      \node[state, initial above]             (0) {$L$};
       \node[state]                            (1) [right of=0]{$L_1$};
       \node[state]                            (2) [right of=1]{$L_2$};
       \node[state]                            (3) [right of=2]{$L_3$};
