@@ -59,6 +59,23 @@
     $F = \emptyset$, защото разпознаваме с празен стек, а не с финално състояние;
   \item
     Функцията на преходите $\Delta$ има следната дефиниция:
+
+    % \begin{align*}
+    %   & \Delta(\qstart,a,\#) = \{(\qstart, A\#), (p, A\#)\} & \comment{\text{записваме още едно прочетено $a$}}\\
+    %   & \Delta(\qstart,a,A) = \{(\qstart, AA), (p, AA)\} & \comment{\text{като допускаме и това да е последното $a$}}\\
+    %   & \Delta(\qstart,\varepsilon,\#) = \{(\qstart,\varepsilon)\} & \comment{\text{трябва да приемем и празната дума}}\\
+    %   & \Delta(\qstart,\varepsilon, A) = \emptyset & \\
+    %   & \Delta(\qstart, b, A) = \emptyset & \comment{\text{не позволяваме разбъкване на $a$-та и $b$-та}}\\
+    %   & \Delta(\qstart, b, \#) = \emptyset & \comment{\text{не можем да започнем с четене на $b$-та}}\\
+    %   & \Delta(p, b, A) = \{(p,\varepsilon)\} & \comment{\text{намаляваме разликата между прочетените $a$-та и $b$-та}}\\
+    %   & \Delta(p, b, \#) = \emptyset & \comment{\text{не позволяваме да прочетем повече $b$-та от $a$-та}}\\
+    %   & \Delta(p, a, A) = \emptyset & \comment{\text{не позволяваме разбъкване на $a$-та и $b$-та}} \\
+    %   & \Delta(p, a, \#) = \emptyset & \comment{\text{не позволяваме разбъкване на $a$-та и $b$-та}}.
+    % \end{align*}
+
+    За да бъде коректна дефиницията на $\Delta$ функцията, трябва да посочим стойността ѝ за $|Q| . (|\Sigma| + 1) . |\Gamma|$ на брой тройки.
+    За удобство, обикновено изпускаме тези редове, за които $\Delta$ функцията връща $\emptyset$.
+   
     \begin{enumerate}[(1)]
     \item
       $\Delta(\qstart,a,\#) = \{(\qstart, A\#), (p, A\#)\}$;
@@ -66,25 +83,39 @@
       $\Delta(\qstart,a,A) = \{(\qstart, AA), (p, AA)\}$;
     \item 
       $\Delta(\qstart,\varepsilon,\#) = \{(\qstart,\varepsilon)\}$;
+    \item 
+      $\Delta(\qstart,\varepsilon, А) = \emptyset$;
     \item
       $\Delta(\qstart, b, A) = \emptyset$;
     \item
       $\Delta(\qstart, b, \#) = \emptyset$;
     \item 
       $\Delta(p, b, A) = \{(p,\varepsilon)\}$;
+    \item
+      $\Delta(p, \varepsilon, \#) = \{(p, \varepsilon)\}$.
     \item 
       $\Delta(p, b, \#) = \emptyset$;
+    \item 
+      $\Delta(p, a, \#) = \emptyset$;
+    \item 
+      $\Delta(p, a, A) = \emptyset$;
+    \item
+      $\Delta(p, \varepsilon, \#) = \emptyset$.
     \end{enumerate}
   \end{itemize}
   Да видим как думата $a^2b^2$ се разпознава от автомата с празен стек:
-  \marginpar{\writedown Докажете, че $L = \L_S(P)$!}
+  \marginpar{\writedown Докажете, че $L = \L_\emptyset(P)$!}
   \begin{align*}
     (\qstart, a^2b^2, \#) & \vdash_P (\qstart, ab^2, A\#) & \comment{\text{правило }(1)}\\
     & \vdash_P (p, b^2, AA\#) & \comment{\text{правило }(2)}\\
-    & \vdash_P (p, b, A\#) & \comment{\text{правило }(6)}\\
-    & \vdash_P (p, \varepsilon, \#) & \comment{\text{правило }(6)}\\
-    & \vdash_P (p, \varepsilon, \varepsilon) & \comment{\text{правило }(7)}\\
+    & \vdash_P (p, b, A\#) & \comment{\text{правило }(7)}\\
+    & \vdash_P (p, \varepsilon, \#) & \comment{\text{правило }(7)}\\
+    & \vdash_P (p, \varepsilon, \varepsilon) & \comment{\text{правило }(8)}
   \end{align*}
+  Поличихме, че
+  \[(\qstart, a^2b^2, \#) \vdash^\star_P (p, \varepsilon, \varepsilon),\]
+  откъдето следва, че $a^2b^2 \in \L_\emptyset(P)$.
+  
 \end{example}
 
 \begin{example}
@@ -103,6 +134,7 @@
     $F = \emptyset$, защото разпознаваме с празен стек;
   \item
     Функцията на преходите $\Delta$ има следната дефиниция:
+    \marginpar{Формално погледнато, трябва да имаме $2.3.3 = 18$ реда в дефиницията на $\Delta$. За всички липсващи редове приемаме, че $\Delta$ връща $\emptyset$}
     \begin{enumerate}[(1)]
     \item 
       $\Delta(\qstart, a, \#) = \{(\qstart, A\#)\}$;
@@ -149,7 +181,7 @@
                      & \vdash_P (\qstart, a, BA\#) & \comment{\text{правило }(6)}\\
                      & \vdash_P (\qstart, \varepsilon, ABA\#). & \comment{\text{правило }(5)}
   \end{align*}
-  \marginpar{\writedown Докажете, че $\L_S(P) = L$ !}
+  \marginpar{\writedown Докажете, че $\L_\emptyset(P) = L$ !}
   От последното моментно описание на автомата нямаме нито един преход, следователно
   думата $aba$ не се разпознава от $P$ с празен стек.
 \end{example}
