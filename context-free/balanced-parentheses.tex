@@ -59,7 +59,7 @@
 
   За включването $L \subseteq \L(G)$, нека $\alpha \in L$.
   Ще докажем с индукция по дължината на думата, че $\alpha \in \L(G)$.
-  Ясно е, че за всички нетривиални случаи, можем да запишем думата $\alpha$ като $\alpha = \texttt{[}\beta\texttt{]}$.
+  Ясно е, че във всички нетривиални случаи можем да запишем думата $\alpha$ като $\alpha = \texttt{[}\beta\texttt{]}$.
   Проблемът е, че в общия случай не е ясно дали можем да приложим индукционното предположение за $\beta$,
   защото е възможно $\beta \not\in L$. Например, $\alpha = \texttt{[][]}$.
   Тогава $\beta = \texttt{][} \not \in L$.
@@ -76,12 +76,14 @@
   \item
     Нека $\alpha$ да няма същински префикс $\gamma \in L$.
     Ясно е, че тогава $\alpha = \texttt{[}\beta\texttt{]}$, за някое $\beta$
-    и $\texttt{left}(\beta) = \texttt{right}(\beta)$. 
+    и $\texttt{left}(\beta) = \texttt{right}(\beta)$.
+    Да видим защо $\beta \in L$.
+    
     Ако $\beta \in L$, то ще можем да приложим {\bf И.П.} за $\beta$ и ще сме готови.
     За всеки префикс $\gamma$ на $\beta$ имаме, че $\texttt{[}\gamma$ е префикс на $\alpha$,
-    и понеже $\alpha \in L$, то $\texttt{left}(\texttt{[}\gamma) \geq \texttt{\texttt{[}right}(\gamma)$.
+    и понеже $\alpha \in L$, то $\texttt{left}(\texttt{[}\gamma) \geq \texttt{right}(\texttt{[}\gamma)$.
     Възможно ли е $\texttt{left}(\gamma) < \texttt{right}(\gamma)$ ?
-    Това може да се случи единствено ако $\texttt{left}(\texttt{[}\gamma) = \texttt{\texttt{[}right}(\gamma)$.
+    Това може да се случи единствено ако $\texttt{left}(\texttt{[}\gamma) = \texttt{right}(\texttt{[}\gamma)$.
     Но тогава $\texttt{[}\gamma$ е същински префикс на $\alpha$, за който $\texttt{[}\gamma \in L$,
     което противоречи на случая, който разглеждаме.
     Това означава, че за произволен префикс $\gamma$ на $\beta$,
