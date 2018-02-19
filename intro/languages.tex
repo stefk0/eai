@@ -51,7 +51,7 @@
   Например $aba\cdot bb = ababb$.
   Обърнете внимание, че в общия 
   случай $\alpha\cdot\beta \neq \beta\cdot\alpha$. 
-  \marginpar{\comment{Често ще пишем $\alpha\beta$ вместо $\alpha\cdot\beta$}}
+  \marginpar{Често ще пишем $\alpha\beta$ вместо $\alpha\cdot\beta$}
   Можем да дадем формална индуктивна дефиниция на операцията конкатенация по
   дължината на думата $\beta$.
   \begin{itemize}
@@ -63,22 +63,25 @@
     Тогава $\alpha\cdot\beta \df (\alpha\cdot\gamma)b$.
   \end{itemize}
 \item
-  \marginpar{обръщане на дума}
+  \index{обръщане на дума}
   Друга често срещана операция върху думи е {\bf обръщането} на дума.
-  Дефинираме думата $\alpha^R$ като обръщането на $\alpha$ по следния начин.
+  Дефинираме думата $\alpha^{rev}$ като обръщането на $\alpha$ по следния начин.
+  \marginpar{Например, $reverse^{rev} = esrever$}
   \begin{itemize}
   \item 
-    Ако $\abs{\alpha} = 0$, то $\alpha = \varepsilon$ и $\alpha^R \df \varepsilon$.
+    Ако $\abs{\alpha} = 0$, то $\alpha = \varepsilon$ и $\alpha^{rev} \df \varepsilon$.
   \item
     Ако $\abs{\alpha} = n+1$, то $\alpha = a\beta$, където $\abs{\beta} = n$.
-    Тогава $\alpha^R \df (\beta^R)a$.
+    Тогава $\alpha^{rev} \df (\beta^{rev})a$.
   \end{itemize}
-  Например, $reverse^R = esrever$.
 \item
   \index{дума!префикс}
-  \index{дума!суфикс}
   Казваме, че думата $\alpha$ е {\bf префикс} на думата $\beta$,
   ако съществува дума $\gamma$, такава че $\beta = \alpha\cdot\gamma$.
+  Да обърнем внимание, че позволяваме $\gamma = \varepsilon$. Тогава $\beta$ е префикс на самата себе си.
+  Ако се ограничим до думи $\gamma \neq \varepsilon$, то ще казваме, че $\alpha$ е същински префикс на $\beta$.
+\item
+  \index{дума!суфикс}
   $\alpha$ е {\bf суфикс} на $\beta$, ако $\beta = \gamma\cdot\alpha$, за някоя дума $\gamma$.
 \item
   \marginpar{Обърнете внимание, че $\emptyset\cdot A = A\cdot\emptyset = \emptyset$}
@@ -109,10 +112,10 @@
 % \subsection*{Премахване на префикс}
 
 Нека $\alpha$ е дума над азбуката $\Sigma$  и $L$ е език. Означаваме 
-\marginpar{\comment{Тази операция ще бъде важна за нас по-нататък}}
+\marginpar{Тази операция ще бъде важна за нас по-нататък}
 \[\alpha^{-1}(L) = \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
 Освен това, да означим 
-\marginpar{\comment{$\alpha(L) = \{\alpha\} \cdot L$}}
+\marginpar{$\alpha(L) = \{\alpha\} \cdot L$}
 \[\alpha(L) = \{\alpha\omega \in \Sigma^\star \mid \omega \in L\}.\]
 Имаме свойството, че
 \[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}(L)\}.\]
@@ -136,10 +139,13 @@
     $\{\varepsilon\}^\star = \{\varepsilon\}$;
   \item
     за произволно множество от думи $A$,
-    $A^\star = A^\star\cdot A^\star$ и $(A^\star)^\star = A^\star$;
+    \[A^\star = A^\star\cdot A^\star$ и $(A^\star)^\star = A^\star;\]
   \item
     за произволни букви $a$ и $b$,
-    $\{a,b\}^\star = \{a\}^\star\cdot(\{b\}\cdot\{a\}^\star)^\star$.
+    \[\{a,b\}^\star = \{a\}^\star\cdot(\{b\}\cdot\{a\}^\star)^\star;\]
+  \item
+    за произволни букви $a$ и $b$,
+    \[\{a,b\}^\star = (\{a\}^\star\cdot \{b\}^\star)^\star;\]
   \end{enumerate}
 \end{problem}
 
@@ -148,28 +154,29 @@
   Докажете, че за всеки две думи $\alpha$ и $\beta$ е изпълено:
   \begin{enumerate}[a)]
   \item 
-    $(\alpha\cdot\beta)^R = \beta^R\cdot\alpha^R$;
+    $(\alpha\cdot\beta)^{rev} = \beta^{rev}\cdot\alpha^{rev}$;
   \item
-    $\alpha$ е префикс на $\beta$ точно тогава, когато $\alpha^R$ е суфикс на $\beta^R$;
+    $\alpha$ е префикс на $\beta$ точно тогава, когато $\alpha^{rev}$ е суфикс на $\beta^{rev}$;
   \item
-    $(\alpha^R)^R = \alpha$;
+    $(\alpha^{rev})^{rev} = \alpha$;
   \item
-    $(\alpha^n)^R = (\alpha^R)^n$, за всяко $n \geq 0$.
+    $(\alpha^n)^{rev} = (\alpha^{rev})^n$, за всяко $n \geq 0$.
   \end{enumerate}
 \end{problem}
 
-\begin{problem}
-  \marginpar{\comment{С други думи, ако $\varepsilon \not\in X$, то $X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$, където неизвестната променлива е $Z$.}}
-  Нека $X, Y, Z \subseteq \Sigma^\star$ със свойството, че $Z = XZ \cup Y$.
-  \begin{enumerate}[a)]
-  \item 
-    Докажете, че за всяко $n \in \Nat$, $X^nY \subseteq Z$.
-    Заключете, че $X^\star Y \subseteq Z$.
-  \item
-    Да предположим, че $\varepsilon \not\in X$.
-    Докажете, че за всяка дума $\omega \in Z$ е изпълнено, че $\omega \in X^\star Y$.
-  \end{enumerate}
-\end{problem}
+% \begin{problem}
+%   \marginpar{С други думи, ако $\varepsilon \not\in X$, то $X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$, където неизвестната променлива е $Z$.}
+%   За фиксирани езици $X,Y \subseteq \Sigma^\star$,
+%   да разгледаме езиците $Z$, които удовлетворяват свойството, че $Z = XZ \cup Y$.
+%   \begin{enumerate}[a)]
+%   \item 
+%     Докажете, че за всяко $n \in \Nat$, $X^nY \subseteq Z$.
+%     Заключете, че $X^\star Y \subseteq Z$.
+%   \item
+%     Да предположим, че $\varepsilon \not\in X$.
+%     Докажете, че за всяка дума $\omega \in Z$ е изпълнено, че $\omega \in X^\star Y$.
+%   \end{enumerate}
+% \end{problem}
 
 
 %%% Local Variables:

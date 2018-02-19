@@ -21,7 +21,7 @@
     $F\subseteq Q$ е множеството от финални състояния
   \end{enumerate}
 \end{dfn}
-
+\marginpar{Възможно е да се позволят и $\varepsilon$-преходи, но това е излишно}
 \index{автомат!детерминиран}\index{автомат!тотален детерминиран}
 Ако функцията на преходите $\delta$ е тотална функция, то казваме, 
 че автоматът $\A$ е {\bf тотален}. Това означава, че за всяка двойка $(q,a) \in Q \times \Sigma$,
@@ -90,7 +90,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Сега можем да дефинираме $\vdash^\star_\A$ като:
 \[(q,\alpha) \vdash^\star_\A (p,\beta) \dff (\exists n\in\Nat)[(q,\alpha) \vdash^n_\A (p,\beta)].\]
 Получаваме, че 
-\[\L(\A) = \{\alpha\in\Sigma^\star \mid (s,\alpha) \vdash^\star_\A(p,\varepsilon)\ \&\ p \in F\}.\]
+\[\L(\A) = \{\alpha\in\Sigma^\star \mid (\exists q \in F)[(\qstart,\alpha) \vdash^\star_\A(p,\varepsilon)]\}.\]
 
 Нашата дефиниция на автомат позволява $\delta$ да бъде частична функция, т.е.
 може да има $q\in Q$ и $a\in\Sigma$, за които $\delta(q,a)$ не е дефинирана.
@@ -134,10 +134,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
-        \node[initial below, state]   (0) {$s$};
-        \node[state]            (1) [right of=0]{$q_1$};
-        \node[state]            (2) [right of=1]{$q_2$};
-        \node[state,accepting]  (3) [right of=2]{$q_3$};
+        \node[initial below, state]   (0) {$q_0$};
+        \node[state]                  (1) [right of=0]{$q_1$};
+        \node[state]                  (2) [right of=1]{$q_2$};
+        \node[state,accepting]        (3) [right of=2]{$q_3$};
         
         \path 
         (0) edge [loop above]   node [above] {$a$}    (0)
@@ -155,9 +155,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
-        \node[initial below, state]   (0) {$s$};
-        \node[state]            (1) [right of=0]{$q_1$};
-        \node[state,accepting]  (2) [right of=1]{$q_2$};
+        \node[initial below, state]   (0) {$q_0$};
+        \node[state]                  (1) [right of=0]{$q_1$};
+        \node[state,accepting]        (2) [right of=1]{$q_2$};
         
         \path 
         (0) edge [loop above]   node [above] {$b$}    (0)
@@ -172,8 +172,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
-        \node[initial below, accepting, state] (0) {$s$};
-        \node[state]                     (1) [right of=0]{$q_1$};
+        \node[initial below, accepting, state] (0) {$q_0$};
+        \node[state]                           (1) [right of=0]{$q_1$};
         
         \path 
         (0) edge [loop above]   node [above] {$b$}   (0)
@@ -187,9 +187,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
-        \node[initial below, state, accepting]   (0) {$s$};
-        \node[state]                       (1) [right of=0]{$q_1$};
-        \node[state]                       (2) [right of=1]{$q_2$};
+        \node[initial below, state, accepting]   (0) {$q_0$};
+        \node[state]                             (1) [right of=0]{$q_1$};
+        \node[state]                             (2) [right of=1]{$q_2$};
         
         \path 
         (0) edge [loop above]   node   [above] {$b$}    (0)
@@ -221,9 +221,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
-        \node[initial, accepting, state] (0) {$s$};
-        \node[accepting, state]   (1) [right of=0]{$q_1$};
-        \node[state]   (2) [right of=1]{$q_2$};
+        \node[initial, accepting, state] (0) {$q_0$};
+        \node[accepting, state]          (1) [right of=0]{$q_1$};
+        \node[state]                     (2) [right of=1]{$q_2$};
         
         \path 
         (0) edge [loop above]   node [above] {$b$}   (0)
