@@ -11,9 +11,7 @@
   \item
     $\Sigma$ е азбука;
   \item
-    % \marginpar{Тук нямаме $\varepsilon$-преходи}
-    % \marginpar{В \cite{sipser1} се разглеждат тотални $\delta$ функции}
-\marginpar{Възможно е за някои двойки $(q,a)$ функцията $\delta$ да не е дефинирана.}
+    \marginpar{Възможно е за някои двойки $(q,a)$ функцията $\delta$ да не е дефинирана.}
     $\delta:Q\times\Sigma\to Q$ е (частична) функция на преходите;
   \item
     $\qstart\in Q$ е начално състояние;
@@ -64,8 +62,24 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
 \end{prop}
 \begin{hint}
-  % \marginpar{\ding{45} Напише доказателството!}
   Индукция по дължината на $\alpha$.
+
+  \begin{itemize}
+  \item
+    $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава за произволна дума $\beta$ имаме:
+    \[\delta^\star(q, \varepsilon\beta) = \delta^\star( \underbrace{\delta^\star(q, \varepsilon)}_{q}, \beta).\]
+  \item
+    Да приемем, че твърдението е изпълнено за думи $\alpha$ с дължина $n$.
+  \item
+    Нека $|\alpha| = n+1$, т.е. $\alpha = a\cdot \gamma$, където $|\gamma| = n$. Тогава за произволна дума $\beta$ имаме:
+    \begin{align*}
+      \delta^\star(q, \alpha\beta) & = \delta^\star(q, a\gamma\beta)\\
+                                   & = \delta^\star(\delta(q,a), \gamma\beta) & \comment{\text{от деф. на }\delta^\star}\\
+                                   & = \delta^\star(\delta^\star(\delta(q,a), \gamma), \beta) & \comment{\text{от И.П. за }\gamma}\\
+                                   & =\delta^\star(\delta^\star(q,a\gamma), \beta) & \comment{\text{от деф. на }\delta^\star}\\
+                                   & = \delta^\star(\delta^\star(q,\alpha), \beta).
+    \end{align*}
+  \end{itemize}
 \end{hint}
 
 \index{моментно описание}
@@ -119,7 +133,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a)$ не е дефинирано, то
     $\delta'(q,a) = q_e$.
   \end{itemize}
-  \marginpar{\writedown Довършете доказателството!}
   Сега лесно може да се докаже, че $\L(\A) = \L(\A')$.
 \end{hint}
 
@@ -241,11 +254,11 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  Ще докажем с индукция по дължината на думата $\alpha$, че:
  \begin{enumerate}[(1)]
  \item 
-   ако $\delta^\star(\qstart,\alpha) = \qstart$, то
+   ако $\delta^\star(q_0,\alpha) = q_0$, то
    $\alpha$ не съдържа две поредни срещания на $a$
    и ако $\abs{\alpha} > 0$, то $\alpha$ завършва на $b$;
  \item
-   ако $\delta^\star(\qstart,\alpha) = q_1$, то
+   ако $\delta^\star(q_0,\alpha) = q_1$, то
    $\alpha$ не съдържа две поредни срещания на $a$
    и завършва на $a$.
  \end{enumerate}
@@ -256,13 +269,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  Ще докажем (1) и (2) за $\alpha$.
  \begin{itemize}[-]
  \item 
-   Нека $\delta^\star(\qstart,\beta x) = s = \delta(\delta^\star(\qstart,\beta),x)$.
-   Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(\qstart,\beta) \in \{s,q_1\}$.
+   Нека $\delta^\star(q_0,\beta x) = q_0 = \delta(\delta^\star(q_0,\beta),x)$.
+   Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(q_0,\beta) \in \{q_0,q_1\}$.
    Тогава по {\bf И.П.} за (1) и (2), $\beta$ не съдържа две поредни срещания на $a$.
    Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
  \item
-   Нека $\delta^\star(\qstart,\beta x) = q_1 = \delta(\delta^\star(\qstart,\beta),x)$.
-   Според дефиницията на $\delta$, $x = a$ и $\delta^\star(\qstart,\beta) = s$.
+   Нека $\delta^\star(q_0,\beta x) = q_1 = \delta(\delta^\star(q_0,\beta),x)$.
+   Според дефиницията на $\delta$, $x = a$ и $\delta^\star(q_0,\beta) = q_0$.
    Тогава по {\bf И.П.} за (2), $\beta$ не съдържа две поредни срещания на $a$
    и завършва на $b$.
    Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
@@ -270,35 +283,36 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  
  Така доказахме с индукция по дължината на думата, че за всяка дума $\alpha$
  са  изпълнени твърденията $(1)$ и $(2)$. По дефиниция, ако $\alpha \in \L(\A)$,
- то $\delta^\star(\qstart,\alpha) \in \{\qstart,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
+ то $\delta^\star(q_0,\alpha) \in \{q_0,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
  $\alpha$ не съдържа две поредни срещания на буквата $a$, т.е. $\alpha \in L$.
  С други думи, доказахме, че 
  \[\L(\A) \subseteq L.\]
 
  Сега ще докажем другата посока, т.е. $L \subseteq \L(\A)$.
  Това означава да докажем, че
- \[(\forall \alpha \in \Sigma^\star)[\alpha \in L\ \Rightarrow\ \delta^\star(\qstart,\alpha) \in F],\]
+ \[(\forall \alpha \in \Sigma^\star)[\alpha \in L\ \Rightarrow\ \delta^\star(q_0,\alpha) \in F],\]
  \marginpar{Да напомним, че $p \Rightarrow q \equiv \neg q \Rightarrow \neg  p$}
  което е еквивалентно на
  \begin{equation}
    \label{eq:case2}
-   (\forall \alpha \in \Sigma^\star)[\delta^\star(\qstart,\alpha) \not\in F \ \Rightarrow\ \alpha\not\in L].
+   (\forall \alpha \in \Sigma^\star)[\delta^\star(q_0,\alpha) \not\in F \ \Rightarrow\ \alpha\not\in L].
  \end{equation}
  Това е лесно да се съобрази.
- Щом $\delta^\star(\qstart,\alpha) \not\in F$, то 
- $\delta^\star(\qstart,\alpha) = q_2$ и думата $\alpha$ може да се представи по следния начин:
- \[\alpha = \beta a \gamma\ \&\ \delta^\star(\qstart,\beta) = q_1.\]
+ Щом $\delta^\star(q_0,\alpha) \not\in F$, то 
+ $\delta^\star(q_0,\alpha) = q_2$ и думата $\alpha$ може да се представи по следния начин:
+ \[\alpha = \beta a \gamma\ \&\ \delta^\star(q_0,\beta) = q_1.\]
  
- Използвайки свойство (2) от по-горе, понеже $\delta^\star(\qstart,\beta) = q_1$, то
+ Използвайки свойство (2) от по-горе, понеже $\delta^\star(q_0,\beta) = q_1$, то
  $\beta$ не съдържа две поредни срещания на $a$, но завършва на $a$.
  Сега е очевидно, че $\beta a$ съдържа две поредни срещания на $a$ и 
  щом $\beta a$ е префикс на $\alpha$, то думата $\alpha \not\in L$.
  С това доказахме Свойство \ref{eq:case2}, а следователно и посоката $L\subseteq \L(\A)$.
 \end{proof}
 
+
 \begin{problem}
   Докажете, че следният език е автоматен:
-  \[L = \{w \in \{a,b\}^\star \mid a \text{ се среща четен брой, докато $b$ нечетен брой пъти в }w\}.\]
+  \[L = \{\omega \in \{a,b\}^\star \mid a \text{ се среща четен брой, докато $b$ нечетен брой пъти в }\omega\}.\]
 \end{problem}
 \begin{hint}
   Разгледайте автомата $\A$:
@@ -342,10 +356,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 
 \begin{problem}
-  Докажете, че езикът $L = \{w \in \{0,1\}^\star \mid |w| \equiv 1 \bmod 3\}$ е автоматен.
+  Докажете, че езикът $L = \{\omega \in \{0,1\}^\star \mid |\omega| \equiv 1 \bmod 3\}$ е автоматен.
 \end{problem}
 \begin{hint}
-  \marginpar{$|w| = $ дължината на думата $w$}
   Разгледайте автомата $\A$:
   \begin{framed}
     \begin{figure}[H]
@@ -363,17 +376,17 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
           (2) edge  [bend left=30]  node [below]  {$0,1$} (0);
         \end{tikzpicture}
       \end{center}
-      \caption{$\L(\A) \stackrel{?}{=} \{w\in\{0,1\}^\star \mid |w| \equiv 1 \bmod 3\}$}
+      \caption{$\L(\A) \stackrel{?}{=} \{\omega\in\{0,1\}^\star \mid |\omega| \equiv 1 \bmod 3\}$}
     \end{figure}  
   \end{framed}
- Докажете с индукция по дължината на думата $w$ едновременно следните три твърдения:
+ Докажете с индукция по дължината на думата $\omega$ едновременно следните три твърдения:
  \begin{enumerate}[(1)]
  \item
-   $\delta^\star(q_0, w) = q_0 \implies |w| \equiv 0 \bmod 3$;
+   $\delta^\star(q_0, \omega) = q_0 \implies |\omega| \equiv 0 \bmod 3$;
  \item 
-   $\delta^\star(q_0, w) = q_1 \implies |w| \equiv 1 \bmod 3$;
+   $\delta^\star(q_0, \omega) = q_1 \implies |\omega| \equiv 1 \bmod 3$;
  \item
-   $\delta^\star(q_0, w) = q_2 \implies |w| \equiv 2 \bmod 3$.
+   $\delta^\star(q_0, \omega) = q_2 \implies |\omega| \equiv 2 \bmod 3$.
  \end{enumerate}
 \end{hint}
 
