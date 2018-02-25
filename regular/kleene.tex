@@ -8,70 +8,73 @@
 \begin{proof}
   \marginpar{\cite[стр. 79]{papadimitriou}; \cite[стр. 33]{hopcroft1}}
   Нека  $L = \L(\A)$, за някой краен детерминиран автомат $\A$.
-  Да фиксираме едно изброяване на състоянията $Q = \{q_1,\dots,q_n\}$,
-  като $\qstart = q_1$.
-  \marginpar{Обикновено започваме да индексираме състоянията от $0$, но тук смятам, че е по-удобно ако започнем да индексираме състоянията от $1$.}
+  Да фиксираме едно изброяване на състоянията
+  \[Q = \{q_0,\dots,q_{n-1}\},\]
+  като $\qstart = q_0$.
   Ще означаваме с $L(i,j,k)$ множеството от тези думи, които
   могат да се разпознаят от автомата по път, който започва от $q_i$,
-  завършва в $q_j$, и междинните състояния имат индекси $\leq k$.
-  Например, за думата $\alpha = a_1a_2\cdots a_n$ имаме, че $\alpha \in L(i,j,k)$
-  точно тогава, когато съществуват състояния $q_{l_1},\dots,q_{l_{n-1}}$, като $l_1,\dots,l_{n-1} \leq k$ и
-  \[q_i\stackrel{a_1}{\rightarrow} q_{l_1} \stackrel{a_2}{\rightarrow} q_{l_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{n-1}}{\rightarrow} q_{l_{n-1}}\stackrel{a_n}{\rightarrow} q_j.\]
+  завършва в $q_j$, и междинните състояния имат индекси $< k$.
+  Например, за думата $\alpha = a_1a_2\cdots a_s$ имаме, че $\alpha \in L(i,j,k)$
+  точно тогава, когато съществуват състояния $q_{l_1},\dots,q_{l_{s-1}}$, като $l_1,\dots,l_{s-1} < k$ и
+  \[q_i\stackrel{a_1}{\rightarrow} q_{l_1} \stackrel{a_2}{\rightarrow} q_{l_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{s-1}}{\rightarrow} q_{l_{s-1}}\stackrel{a_s}{\rightarrow} q_j.\]
   Тогава за $n = \abs{Q}$, 
   \[L(i,j,n) = \{\alpha\in\Sigma^\star\mid \delta^\star(q_i,\alpha) = q_j\}.\]
   Така получаваме, че 
   \[\L(\A) = \bigcup\{L(1,j,n)\mid q_j \in F\} = \bigcup_{q_j\in F}L(1,j,n).\]
-  Ще докажем с {\em индукция по $k$}, че за всяко $i,j,k$, множествата от думи $L(i,j,k)$
-  се описват с регулярен израз $\mathbf{r}^k_{i,j}$
+  Ще докажем с {\em индукция по $k$}, че за всеки три състояния $q_i,q_j,q_k \in Q$, множествата от думи $L(i,j,k)$
+  се описват с регулярен израз $\mathbf{r}^k_{i,j}$.
   \begin{enumerate}[a)]
   \item
-    Нека $k = 0$. Ще докажем, че за всяко $i,j$, $L(i,j,0)$ се описва с регулярен израз.
+    Нека $k = 0$. Ще докажем, че за всеки две състояния $q_i,q_j \in Q$, езикът $L(i,j,0)$ се описва с регулярен израз.
     Имаме да разгледаме два случая.
-    
-    Ако $i = j$, то 
-    \begin{equation}
-      \label{eq:kleene-equal}
-      L(i, j, 0) = \{\varepsilon\}\cup\{a\in\Sigma \mid \delta(q_i,a) = q_j\}.
-    \end{equation}
-    Ако $i \neq j$, то
-    \[L(i, j, 0) = \{a\in\Sigma \mid \delta(q_i, a) = q_j\}.\]
+    \begin{itemize}
+    \item
+      Ако $i = j$, то 
+      \begin{equation}
+        \label{eq:kleene-equal}
+        L(i, j, 0) = \{\varepsilon\}\cup\{a\in\Sigma \mid \delta(q_i,a) = q_j\}.
+      \end{equation}
+    \item
+      Ако $i \neq j$, то
+      \[L(i, j, 0) = \{a\in\Sigma \mid \delta(q_i, a) = q_j\}.\]      
+    \end{itemize}
     И в двата случая, понеже $L(i,j,0)$ е краен език, то е ясно, че той се описва с регулярен израз.
   \item
-    Да предположим, че $k > 0$, и за всяко $i,j \leq n$, имаме регулярните изрази $\mathbf{r}^{k-1}_{i,j}$, които
-    описват езиците $L(i,j,k-1)$, т.е. имаме индукционното предположение, че
-    \[(\forall i,j \leq n)[L(i,j,k-1) = \L(\mathbf{r}^{k-1}_{i,j})].\] 
-    Ще докажем, че съществуват регулярни изрази $\mathbf{r}^k_{i,j}$, такива че
-    \[(\forall i,j \leq n)[L(i,j,k) = \L(\mathbf{r}^{k}_{i,j})].\] 
-    За всяка дума $\alpha \in L(i,j,k)$ имаме един от следните случаи:
+    Да предположим, че за всяко $q_i,q_j\in Q$ имаме регулярните изрази $\mathbf{r}^{k}_{i,j}$, които
+    описват езиците $L(i,j,k)$, т.е. имаме индукционното предположение, че
+    \[(\forall i,j < n)[L(i,j,k) = \L(\mathbf{r}^{k}_{i,j})].\] 
+    Ще докажем, че съществуват регулярни изрази $\mathbf{r}^{k+1}_{i,j}$, такива че
+    \[(\forall i,j < n)[L(i,j,k+1) = \L(\mathbf{r}^{k+1}_{i,j})].\] 
+    За всяка дума $\alpha \in L(i,j,k+1)$ имаме един от следните случаи:
     \begin{itemize}
     \item
       Състоянието $q_k$ не е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху думата $\alpha$, т.е. имаме следната ситуация:
-      \[q_i\stackrel{a_1}{\rightarrow} q_{l_1} \stackrel{a_2}{\rightarrow} q_{l_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{n-1}}{\rightarrow} q_{l_{n-1}}\stackrel{a_n}{\rightarrow} q_j,\]
-      където $l_1,\dots,l_{n-1} \leq k-1$.
-      Това означава, че $\alpha \in L(i,j,k-1)$.
+      \[q_i\stackrel{a_1}{\rightarrow} q_{l_1} \stackrel{a_2}{\rightarrow} q_{l_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{s-1}}{\rightarrow} q_{l_{s-1}}\stackrel{a_s}{\rightarrow} q_j,\]
+      където $l_1,\dots,l_{s-1} < k$.
+      Това означава, че $\alpha \in L(i,j,k)$.
     \item
       Състоянието $q_k$ е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху думата $\alpha$.
-      Ако състоянието $q_k$ се среща да кажем $m$ пъти, то $\alpha = \alpha_1\alpha_2\cdots\alpha_{m+1}$ и имаме следната ситуация:
-      \[q_i\stackrel{\alpha_1}{\rightarrow\cdots\rightarrow} q_{k} \stackrel{\alpha_2}{\rightarrow\cdots\rightarrow} q_k \rightarrow\cdots\rightarrow q_{k} \stackrel{\alpha_{m+1}}{\rightarrow} q_j,\]
-      За всяко $l=1,\dots,m+1$, състоянието $q_k$ не е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху $\alpha_l$, т.е. индексите на всички вътрешни състояния са $\leq k-1$.
-      Това означава, че $\alpha_1 \in L(i,k,k-1)$, $\alpha_l \in L(k,k,k-1)$ за $l=2,\dots,m$, и $\alpha_{m+1} \in L(k,j,k-1)$, т.е.
-      \marginpar{Възможно е $m = 1$. Тогава $L(k,k,k-1)^{m-1} = \{\varepsilon\}$.}
-      \[\alpha \in L(i,j,k-1) \cdot L(k,k,k-1)^{m-1} \cdot L(k,j,k-1).\]
+      Ако състоянието $q_k$ се среща да кажем $m$ пъти, то можем да представим думата $\alpha$ като $\alpha = \alpha_1\alpha_2\cdots\alpha_{m+1}$ и имаме следната ситуация:
+      \[q_i\stackrel{\alpha_1}{\rightarrow\cdots\rightarrow} q_{k} \stackrel{\alpha_2}{\rightarrow\cdots\rightarrow} q_k \rightarrow\cdots\rightarrow q_{k} \stackrel{\alpha_{m+1}}{\rightarrow\cdots\rightarrow} q_j,\]
+      За всяко $l=1,\dots,m+1$, състоянието $q_k$ не е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху $\alpha_l$, т.е. индексите на всички вътрешни състояния са $<k$.
+      Това означава, че $\alpha_1 \in L(i,k,k)$, $\alpha_l \in L(k,k,k)$ за $l=2,\dots,m$, и $\alpha_{m+1} \in L(k,j,k)$, т.е.
+      \marginpar{Възможно е $m = 1$. Тогава $L(k,k,k)^{m-1} = \{\varepsilon\}$.}
+      \[\alpha \in L(i,j,k) \cdot L(k,k,k)^{m-1} \cdot L(k,j,k).\]
       Понеже направихме това разсъждение за произволно $m$,
       можем да заключим, че ако $q_k$ се среща измежду вътрешните състояния, които участва в изчислението на автомата $\A$ върху думата $\alpha$,
-      то \[\alpha \in L(i,j,k-1) \cdot L(k,k,k-1)^\star \cdot L(k,j,k-1).\]
+      то \[\alpha \in L(i,j,k) \cdot L(k,k,k)^\star \cdot L(k,j,k).\]
     \end{itemize}
-    От направените по-горе разсъждения следва, че можем да изразим езика $L(i,j,k)$ по следния начин:
-    \[L(i,j,k) = \underbrace{L(i,j,k-1)}_{\L(\mathbf{r}^{k-1}_{i,j})}\ \cup\ \underbrace{L(i,k,k-1)}_{\L(\mathbf{r}^{k-1}_{i,k})}\cdot (\underbrace{L(k,k,k-1)}_{\L(\mathbf{r}^{k-1}_{k,k})})^\star \cdot \underbrace{L(k,j,k-1)}_{\L(\mathbf{r}^{k-1}_{k,j})}.\]
+    От направените по-горе разсъждения следва, че можем да изразим езика $L(i,j,k+1)$ по следния начин:
+    \[L(i,j,k+1) = \underbrace{L(i,j,k)}_{\L(\mathbf{r}^{k}_{i,j})}\ \cup\ \underbrace{L(i,k,k)}_{\L(\mathbf{r}^{k}_{i,k})}\cdot (\underbrace{L(k,k,k)}_{\L(\mathbf{r}^{k}_{k,k})})^\star \cdot \underbrace{L(k,j,k)}_{\L(\mathbf{r}^{k}_{k,j})}.\]
     Тогава по {\bf И.П.} следва, че $L(i,j,k)$ може да се опише с регулярния израз
     \begin{equation}
       \label{eq:kleene}
-      \mathbf{r}^k_{i,j} = \mathbf{r}^{k-1}_{i,j} + \mathbf{r}^{k-1}_{i,k}\cdot (\mathbf{r}^{k-1}_{k,k})^\star\cdot \mathbf{r}^{k-1}_{k,j}.
+      \mathbf{r}^{k+1}_{i,j} = \mathbf{r}^{k}_{i,j} + \mathbf{r}^{k}_{i,k}\cdot (\mathbf{r}^{k}_{k,k})^\star\cdot \mathbf{r}^{k}_{k,j}.
     \end{equation}
   \end{enumerate}
-  Заключаваме, че за всяко $i,j,k \leq n$, $L(i,j,k)$ може да се опише с регулярен израз $\mathbf{r}^{k}_{i,j}$.
-  Тогава ако $F = \{q_{i_1},\dots,q_{i_k}\}$, то $\L(\A)$ се описва с регулярния израз
-  \[\mathbf{r}^n_{1,i_1} + \mathbf{r}^n_{1,i_2} + \dots + \mathbf{r}^n_{1,i_k}.\]
+  Заключаваме, че за всеки три състояния $q_i,q_j,q_k \in Q$, $L(i,j,k)$ може да се опише с регулярен израз $\mathbf{r}^{k}_{i,j}$.
+  Тогава ако $F = \{q_{i_1},\dots,q_{i_m}\}$, то $\L(\A)$ се описва с регулярния израз
+  \[\mathbf{r}^n_{1,i_1} + \mathbf{r}^n_{1,i_2} + \dots + \mathbf{r}^n_{1,i_m}.\]
 \end{proof}
 
 \begin{cor}
@@ -113,23 +116,23 @@
 езикът на този автомат се описва с регулярния израз $\mathbf{r}^2_{1,2}$, защото началното състояние е $q_1$, финалното е $q_2$ и 
 броят на състоянията в автомата е $2$.
 \begin{align*}
-  \mathbf{r}^2_{1,2} & = \underbrace{\mathbf{r}^{1}_{1,2}}_{\mathbf{1^\star 0}} + \underbrace{\mathbf{r}^{1}_{1,2}}_{\mathbf{1^\star 0}}\cdot \underbrace{\mathbf{(r^1_{2,2})^\star}}_{\mathbf{(\varepsilon+0+1)^\star}} \cdot \underbrace{\mathbf{r}^1_{2,2}}_{\mathbf{\varepsilon+0+1}} & \comment \text{според (\ref{eq:kleene}}) \\
-                     &  = \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^\star (\varepsilon + 0 + 1)}\\
-                     & = \mathbf{1^\star0 + 1^\star 0 (\varepsilon + 0 + 1)^+} & \comment \mathbf{r^+ \df r^\star r}\\
-                     & = \mathbf{1^\star0 + 1^\star 0 (0 + 1)^\star} & \comment \mathbf{r^\star = (\varepsilon + r)^+}\\
-                     & = \mathbf{1^\star 0 (\varepsilon + (0 + 1)^\star)} & \comment \mathbf{r + rq = r(\varepsilon + q)}\\
-                     & = \mathbf{1^\star 0 (0 + 1)^\star} & \comment \mathbf{r^\star = \varepsilon + r^\star}
+  \mathbf{r}^2_{1,2} & = \underbrace{\mathbf{r}^{1}_{1,2}}_{\mathbf{1^\star 0}} + \underbrace{\mathbf{r}^{1}_{1,2}}_{\mathbf{1^\star 0}}\cdot \underbrace{\mathbf{(r^1_{2,2})^\star}}_{\mathbf{(\bm{\varepsilon}+0+1)^\star}} \cdot \underbrace{\mathbf{r}^1_{2,2}}_{\mathbf{\bm{\varepsilon}+0+1}} & \comment \text{според (\ref{eq:kleene}}) \\
+                     &  = \mathbf{1^\star0 + 1^\star 0 (\bm{\varepsilon} + 0 + 1)^\star (\bm{\varepsilon} + 0 + 1)}\\
+                     & = \mathbf{1^\star0 + 1^\star 0 (\bm{\varepsilon} + 0 + 1)^+} & \comment \mathbf{r^+ \df r^\star r}\\
+                     & = \mathbf{1^\star0 + 1^\star 0 (0 + 1)^\star} & \comment \mathbf{r^\star = (\bm{\varepsilon} + r)^+}\\
+                     & = \mathbf{1^\star 0 (\bm{\varepsilon} + (0 + 1)^\star)} & \comment \mathbf{r + rq = r(\bm{\varepsilon} + q)}\\
+                     & = \mathbf{1^\star 0 (0 + 1)^\star} & \comment \mathbf{r^\star = \bm{\varepsilon} + r^\star}
 \end{align*}
 
 Тук използвахме, че:
 \begin{align*}
-  \mathbf{r^1_{1,2}} & = \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}} + \underbrace{\mathbf{r^0_{1,1}}}_{\mathbf{\varepsilon + 1}}\cdot\underbrace{\mathbf{(r^0_{1,1})^\star}}_{\mathbf{(\varepsilon+1)^\star}} \cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
-                     & = \mathbf{0 + (\varepsilon + 1)(\varepsilon + 1)^\star0} \\
-                     & = \mathbf{0 + 1^\star 0}  & \comment \mathbf{r}^\star = \varepsilon + \mathbf{r}^\star \\
-                     & = \mathbf{1^\star0}, \\
-  \mathbf{r^1_{2,2}} & = \underbrace{\mathbf{r^0_{2,2}}}_{\mathbf{\varepsilon+0+1}} + \underbrace{\mathbf{r^0_{2,1}}}_{\mathbf{\emptyset}} \cdot \underbrace{\mathbf{(r^0_{1,1})^\star}}_{\mathbf{\varepsilon+1}}\cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
-                     & = \mathbf{\varepsilon + 0 + 1 + \emptyset(\varepsilon + 1)^\star0}\\
-                     & = \varepsilon + 0 + 1 & \comment \text{защото }\mathbf{\emptyset \cdot r = \emptyset}
+  \mathbf{r^1_{1,2}} & = \underbrace{\mathbf{r}^0_{1,2}}_{\mathbf{0}} + \underbrace{\mathbf{r}^0_{1,1}}_{\bm{\varepsilon + 1}}\cdot\underbrace{\mathbf{(r^0_{1,1})^\star}}_{\bm{(\varepsilon+1)^\star}} \cdot \underbrace{\mathbf{r^0_{1,2}}}_{\mathbf{0}}\\
+                     & = \bm{0 + (\varepsilon + 1)(\varepsilon + 1)^\star0} \\
+                     & = \mathbf{0 + 1^\star 0}  & \comment \mathbf{r}^\star = \bm{\varepsilon} + \mathbf{r}^\star \\
+                     & = \mathbf{1^\star0} \\
+  \mathbf{r}^1_{2,2} & = \underbrace{\mathbf{r}^0_{2,2}}_{\bm{\varepsilon+0+1}} + \underbrace{\mathbf{r}^0_{2,1}}_{\bm{\emptyset}} \cdot \underbrace{(\mathbf{r}^0_{1,1})^\star}_{\bm{\varepsilon+1}} \cdot \underbrace{\mathbf{r}^0_{1,2}}_{\bm{0}}\\
+                     & = \bm{\varepsilon + 0 + 1 + \emptyset(\varepsilon + 1)^\star0}\\
+                     & = \bm{\varepsilon + 0 + 1} & \comment \text{защото }\bm{\emptyset \cdot r = \emptyset}
 \end{align*}
 \end{example}
 
@@ -163,19 +166,19 @@
 \begin{solution}
   $\L(\A) = \L(\mathbf{r}^3_{1,3})$.
   \begin{align*}
-    \mathbf{r}^3_{1,3} & = \underbrace{\mathbf{r}^2_{1,3}}_{a^\star b} + \underbrace{\mathbf{r}^2_{1,3}}_{a^\star b} \cdot \underbrace{(\mathbf{r}^2_{3,3})^\star}_{(\varepsilon+a+b)^\star} \cdot \underbrace{\mathbf{r}^2_{3,3}}_{\varepsilon+a+b}\\
-    & = a^\star b + a^\star b \cdot (a+b)^\star \cdot (\varepsilon+a+b) \\
-    & = a^\star b + a^\star b \cdot (a+b)^\star & \comment \mathbf{r}^\star = \mathbf{r}^\star \cdot (\varepsilon + \mathbf{r})\\
-    & = a^\star b (\varepsilon + (a+b)^\star)\\
-    & = a^\star b (a+b)^\star & \comment \mathbf{r}^\star = \varepsilon + \mathbf{r}^\star.
+    \mathbf{r}^3_{1,3} & = \underbrace{\mathbf{r}^2_{1,3}}_{\bm{a^\star b}} + \underbrace{\mathbf{r}^2_{1,3}}_{\bm{a^\star b}} \cdot \underbrace{(\mathbf{r}^2_{3,3})^\star}_{\bm{(\varepsilon+a+b)^\star}} \cdot \underbrace{\mathbf{r}^2_{3,3}}_{\bm{\varepsilon+a+b}}\\
+                       & = \bm{a^\star b + a^\star b \cdot (a+b)^\star \cdot (\varepsilon+a+b)} \\
+                       & = \bm{a^\star b + a^\star b \cdot (a+b)^\star} & \comment \bm{r^\star} = \bm{r^\star \cdot (\varepsilon + r)}\\
+                       & = \bm{a^\star b (\varepsilon + (a+b)^\star)}\\
+                       & = \bm{a^\star b (a+b)^\star} & \comment \bm{r^\star} = \bm{\varepsilon + r^\star}.
   \end{align*}
-
+  
   Тук използвахме, че:
   \begin{align*}
     \mathbf{r}^2_{1,3} & = \mathbf{r}^1_{1,3} + \mathbf{r}^1_{1,2} \cdot (\mathbf{r}^1_{2,2})^\star \cdot \mathbf{r}^1_{2,3}\\
-                       & = b + a \cdot a^\star \cdot b\\
-                       & = (\varepsilon + a^+)\cdot b & \comment \mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star\\
-                       & = a^\star b & \comment \mathbf{r}^\star = \varepsilon + \mathbf{r}^+.г
+                       & = \bm{b + a \cdot a^\star \cdot b}\\
+                       & = \bm{(\varepsilon + a^+)\cdot b} & \comment \mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star\\
+                       & = \bm{a^\star b} & \comment \mathbf{r}^\star = \bm{\varepsilon + r^+.г}
   \end{align*}
 \end{solution}
 
