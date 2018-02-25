@@ -1,38 +1,30 @@
 \section{Автоматни езици}
 
-% Един от източниците е втора и трета глава от книгата на Сипсер, \cite{sipser}.
-% Друг основен източник е книгата на Пападимитриу и Люис, \cite{papadimitriou}.
-%По Сипсер, стр. 35
 \begin{dfn}
   Краен автомат е петорка $\A = \FA$, където
-  \begin{enumerate}[1)]
+  \begin{itemize}
   \item
     $Q$ е крайно множество от състояния;
   \item
     $\Sigma$ е азбука;
   \item
-    \marginpar{Възможно е за някои двойки $(q,a)$ функцията $\delta$ да не е дефинирана.}
-    $\delta:Q\times\Sigma\to Q$ е (частична) функция на преходите;
+    $\delta:Q\times\Sigma\to Q$ е {\em тотална} функция на преходите;
   \item
     $\qstart\in Q$ е начално състояние;
   \item
     $F\subseteq Q$ е множеството от финални състояния
-  \end{enumerate}
+  \end{itemize}
 \end{dfn}
-\marginpar{Възможно е да се позволят и $\varepsilon$-преходи, но това е излишно}
-\index{автомат!детерминиран}\index{автомат!тотален детерминиран}
-Ако функцията на преходите $\delta$ е тотална функция, то казваме, 
-че автоматът $\A$ е {\bf тотален}. Това означава, че за всяка двойка $(q,a) \in Q \times \Sigma$,
-съществува $q' \in Q$, за което $\delta(q,a) = q'$.
+\index{автомат!детерминиран}
 
-Нека имаме една дума $\alpha \in \Sigma^\star$, $\alpha = a_1a_2\cdots a_n$.
+Нека имаме една дума $\alpha \in \Sigma^\star$, $\alpha = a_0a_1\cdots a_{n-1}$.
 Казваме, че $\alpha$ се {\bf разпознава} от автомата $\A$, ако
 съществува редица от състояния $q_0,q_1,q_2,\dots,q_n$, такива че:
 \begin{itemize}
 \item
   $q_0 = \qstart$, началното състояние на автомата;
 \item
-  $\delta(q_i,a_{i+1}) = q_{i+1}$, за всяко $i = 0, \dots, n-1$;
+  $\delta(q_i,a_{i}) = q_{i+1}$, за всяко $i = 0, \dots, n-1$;
 \item
   $q_n \in F$.
 \end{itemize}
@@ -43,48 +35,52 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \index{език!автоматен}
 В такъв случай ще казваме, че езикът $L$ е {\bf автоматен}.
 
-При дадена (частична) функция на преходите $\delta$,
-често е удобно да разглеждаме (частичната) функция $\delta^\star:Q\times\Sigma^\star \to Q$, която е дефинирана по следния начин:
+При дадена функция на преходите $\delta$,
+често е удобно да разглеждаме функция $\delta^\star:Q\times\Sigma^\star \to Q$, която е дефинирана по следния начин:
 % \marginpar{Това е пример за индуктивна (рекурсивна) дефиниция по дължината на думата $\alpha$}
 \begin{itemize}
 \item 
   $\delta^\star(q,\varepsilon) = q$, за всяко $q\in Q$;
 \item
-  $\delta^\star(q,a\beta) = \delta^\star(\delta(q,a),\beta)$, за всяко $q\in Q$, всяко $a\in\Sigma$ и $\beta\in\Sigma^\star$.
+  $\delta^\star(q,\beta a) = \delta(\delta^\star(q,\beta), a)$, за всяко $q\in Q$, всяко $a\in\Sigma$ и $\beta\in\Sigma^\star$.
 \end{itemize}
-Тогава една дума $\alpha$ се {\em разпознава} от автомата $\A$ точно тогава, когато $\delta^\star(\qstart,\alpha) \in F$.
+Лесно се съобразява, че една дума $\alpha$ се {\em разпознава} от автомата $\A$ точно тогава, когато $\delta^\star(\qstart,\alpha) \in F$.
 Оттук следва, че
 \begin{framed}
-\[\L(\A) = \{\ \alpha\in\Sigma^\star \mid \delta^\star(\qstart,\alpha) \in F\ \}.\]
+\[\L(\A) \df \{\ \alpha\in\Sigma^\star \mid \delta^\star(\qstart,\alpha) \in F\ \}.\]
 \end{framed}
 
+\marginpar{Обърнете внимание, че $\delta(q,a) = \delta^\star(q,a)$ за $a\in\Sigma$}
+
 \begin{prop}
+  \label{pr:delta-star}
   $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
 \end{prop}
 \begin{hint}
-  Индукция по дължината на $\alpha$.
+  Индукция по дължината на $\beta$.
 
   \begin{itemize}
   \item
-    $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава за произволна дума $\beta$ имаме:
-    \[\delta^\star(q, \varepsilon\beta) = \delta^\star( \underbrace{\delta^\star(q, \varepsilon)}_{q}, \beta).\]
+    $|\beta| = 0$, т.е. $\beta = \varepsilon$. Тогава за произволна дума $\alpha$ имаме:
+    \[\delta^\star(q, \alpha\varepsilon) = \delta^\star( \underbrace{\delta^\star(q, \alpha)}_{q}, \varepsilon).\]
   \item
-    Да приемем, че твърдението е изпълнено за думи $\alpha$ с дължина $n$.
+    Да приемем, че твърдението е изпълнено за думи $\beta$ с дължина $n$.
   \item
-    Нека $|\alpha| = n+1$, т.е. $\alpha = a\cdot \gamma$, където $|\gamma| = n$. Тогава за произволна дума $\beta$ имаме:
+    Нека $|\beta| = n+1$, т.е. $\beta = \gamma b$, където $|\gamma| = n$. Тогава за произволна дума $\alpha$ имаме:
     \begin{align*}
-      \delta^\star(q, \alpha\beta) & = \delta^\star(q, a\gamma\beta)\\
-                                   & = \delta^\star(\delta(q,a), \gamma\beta) & \comment{\text{от деф. на }\delta^\star}\\
-                                   & = \delta^\star(\delta^\star(\delta(q,a), \gamma), \beta) & \comment{\text{от И.П. за }\gamma}\\
-                                   & =\delta^\star(\delta^\star(q,a\gamma), \beta) & \comment{\text{от деф. на }\delta^\star}\\
-                                   & = \delta^\star(\delta^\star(q,\alpha), \beta).
+      \delta^\star(q, \alpha\beta) & = \delta^\star(q, \alpha \gamma b)\\
+                                   & = \delta( \delta^\star(q, \alpha\gamma),b) & \comment\text{от деф. на }\delta^\star\\
+                                   & = \delta(\delta^\star(\underbrace{\delta^\star(q,\alpha)}_{p}, \gamma), b) & \comment{\text{от И.П. приложено за }\gamma}\\
+                                   & = \delta( \delta^\star(p, \gamma), b) \\
+                                   & = \delta^\star( p, \gamma b) & \comment\text{от деф. на }\delta^\star\\
+                                   & = \delta^\star(\delta^\star(q, \alpha), \beta).
     \end{align*}
   \end{itemize}
 \end{hint}
 
 \index{моментно описание}
-\marginpar{(На англ. {\em instantaneous description}). В случая въвеждането на това понятие не е напълно необходимо, но по-късно, когато въведем стекови автомати и машини на Тюринг, ще работим с такива моментни описания на изчисления и затова е добре още отначало да свикнем с него}
-{\em Моментното описание} на изчисление с краен автомат представлява двойка от вида $(q,\alpha) \in Q\times\Sigma^\star$,
+\marginpar{(На англ. {\em instantaneous description}). В случая въвеждането на това понятие не е напълно необходимо, но по-късно, когато въведем стекови автомати и машини на Тюринг, ще работим с такива моментни описания на изчисления и затова е добре още отначало да свикнем с него.}
+{\bf Моментното описание} на изчисление с краен автомат представлява двойка от вида $(q,\alpha) \in Q\times\Sigma^\star$,
 т.е. автоматът се намира в състояние $q$, а думата, която остава да се прочете е $\alpha$.
 Удобно е да въведем бинарната релация $\vdash_\A$ над $Q\times\Sigma^\star$,
 която ще ни казва как моментното описание на автомата $\A$ се променя след изпълнение на една стъпка:
@@ -103,38 +99,40 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{itemize}
 Сега можем да дефинираме $\vdash^\star_\A$ като:
 \[(q,\alpha) \vdash^\star_\A (p,\beta) \dff (\exists n\in\Nat)[(q,\alpha) \vdash^n_\A (p,\beta)].\]
+Друг начин да дефинираме релацията $\vdash^\star_\A$ е следния:
+\[(q,\alpha\beta) \vdash^\star_\A (p, \beta) \iff \delta^\star(q,\alpha) = p.\]
 Получаваме, че 
-\[\L(\A) = \{\alpha\in\Sigma^\star \mid (\exists q \in F)[(\qstart,\alpha) \vdash^\star_\A(p,\varepsilon)]\}.\]
+\[\L(\A) = \{\alpha\in\Sigma^\star \mid (\exists q \in F)[(\qstart,\alpha) \vdash^\star_\A(q,\varepsilon)]\}.\]
 
-Нашата дефиниция на автомат позволява $\delta$ да бъде частична функция, т.е.
-може да има $q\in Q$ и $a\in\Sigma$, за които $\delta(q,a)$ не е дефинирана.
-Следващото твърдение ни казва, че ние съвсем спокойно можем да разглеждаме автомати
-само с тотални функции на преходите  $\delta$.
-\begin{prop}
-  За всеки краен автомат $\A$, съществува {\em тотален} краен автомат $\A'$,
-  за който $\L(\A) = \L(\A')$.
-\end{prop}
-\begin{hint}
-  Нека $\A = \FA$.
-  Дефинираме тоталния автомат 
-  \[\A' = \pair{Q\cup\{q_e\}, \Sigma, \qstart, \delta', F},\]
-  като за всеки преход $(q,a)$, за който $\delta$ не е дефинирана, 
-  дефинираме $\delta'$ да отива в новото състояние $q_e$.
-  Ето и цялата дефиниция на новата функция на преходите $\delta'$:
-  \begin{itemize}
-  \item 
-    \marginpar{$q_e$ - error състояние}
-    $\delta'(q_e,a) = q_e$, за всяко $a\in\Sigma$;
-  \item
-    \marginpar{$\A'$ симулира $\A$}
-    За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a) = p$, то
-    $\delta'(q,a) = p$;
-  \item
-    За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a)$ не е дефинирано, то
-    $\delta'(q,a) = q_e$.
-  \end{itemize}
-  Сега лесно може да се докаже, че $\L(\A) = \L(\A')$.
-\end{hint}
+% Нашата дефиниция на автомат позволява $\delta$ да бъде частична функция, т.е.
+% може да има $q\in Q$ и $a\in\Sigma$, за които $\delta(q,a)$ не е дефинирана.
+% Следващото твърдение ни казва, че ние съвсем спокойно можем да разглеждаме автомати
+% само с тотални функции на преходите  $\delta$.
+% \begin{prop}
+%   За всеки краен автомат $\A$, съществува {\em тотален} краен автомат $\A'$,
+%   за който $\L(\A) = \L(\A')$.
+% \end{prop}
+% \begin{hint}
+%   Нека $\A = \FA$.
+%   Дефинираме тоталния автомат 
+%   \[\A' = \pair{Q\cup\{q_e\}, \Sigma, \qstart, \delta', F},\]
+%   като за всеки преход $(q,a)$, за който $\delta$ не е дефинирана, 
+%   дефинираме $\delta'$ да отива в новото състояние $q_e$.
+%   Ето и цялата дефиниция на новата функция на преходите $\delta'$:
+%   \begin{itemize}
+%   \item 
+%     \marginpar{$q_e$ - error състояние}
+%     $\delta'(q_e,a) = q_e$, за всяко $a\in\Sigma$;
+%   \item
+%     \marginpar{$\A'$ симулира $\A$}
+%     За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a) = p$, то
+%     $\delta'(q,a) = p$;
+%   \item
+%     За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a)$ не е дефинирано, то
+%     $\delta'(q,a) = q_e$.
+%   \end{itemize}
+%   Сега лесно може да се докаже, че $\L(\A) = \L(\A')$.
+% \end{hint}
 
 
 \begin{example}
@@ -143,7 +141,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   Дефинирайте функцията на преходите $\delta$ за всеки автомат.
 
   \begin{figure}[H]
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -163,8 +161,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \end{tikzpicture}
       \caption{$\{\omega \in \{a,b\}^\star \mid \omega\mbox{ съдържа }bab\}$}
     \end{subfigure}
-    \quad
-    \begin{subfigure}[b]{0.4\textwidth}
+    \qquad
+    \begin{subfigure}[b]{0.45\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -181,22 +179,25 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \end{tikzpicture}
       \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\}$}
     \end{subfigure}
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial below, accepting, state] (0) {$q_0$};
         \node[state]                           (1) [right of=0]{$q_1$};
+        \node[state]                           (2) [right of=1]{$q_2$};
         
         \path 
         (0) edge [loop above]   node [above] {$b$}   (0)
         (0) edge [bend left=15] node [above] {$a$}   (1)
-        (1) edge [bend left=15] node [below] {$b$}   (0);
+        (1) edge [bend left=15] node [below] {$b$}   (0)
+        (1) edge [bend left=15] node [above] {$a$}   (2)
+        (2) edge [loop above] node   [above] {$a,b$} (2);
       \end{tikzpicture}
       \caption{$\{\omega \in \{a,b\}^\star \mid $ всяко $a$ в $\omega$ се следва от поне едно $b\}$ }
     \end{subfigure}
     \qquad
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.45\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -223,11 +224,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Ще разгледаме няколко такива примера.
 
 \begin{problem}
-  Докажете, че езикът $L$ е автоматен, където
-  \[L = \{\alpha \in \{a,b\}^\star\ \mid\ \alpha\mbox{ не съдържа две поредни срещания на }a\}.\]
+  Докажете, че езикът
+  \[L = \{\alpha \in \{a,b\}^\star\ \mid\ \alpha\mbox{ не съдържа две поредни срещания на }a\}\]
+  е автоматен.
 \end{problem}
 \begin{proof}
-  \marginpar{Най-лесния начин да се сетим как да построим $\A$ е като първо построим тотален автомат за езика, който разпознава тези думи, в които се съдържат две поредни срещания на $a$ и вземем неговото допълнение съгласно Твърдение \ref{pr:automata-complement}. По-късно ще разгледаме общ метод за строене на автомат по език.}
+  \marginpar{Най-лесния начин да се сетим как да построим $\A$ е като първо построим автомат за езика, който разпознава тези думи, в които се съдържат две поредни срещания на $a$ и вземем неговото допълнение съгласно Твърдение \ref{pr:automata-complement}. По-късно ще разгледаме общ метод за строене на автомат по език.}
   Да разгледаме $\A = \FA$ с функция на преходите
   \begin{figure}[H]
     \begin{center}
@@ -263,27 +265,31 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
    и завършва на $a$.
  \end{enumerate}
 
- За $\abs{\alpha} = 0$, то твърденията (1) и (2) са ясни (Защо?).
- Да приемем, че твърденията $(1)$ и $(2)$ са верни за произволни думи $\alpha$ с дължина $n$.
- Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, където $\abs{\beta} = n$ и $x \in \Sigma$.
- Ще докажем (1) и (2) за $\alpha$.
- \begin{itemize}[-]
- \item 
-   Нека $\delta^\star(q_0,\beta x) = q_0 = \delta(\delta^\star(q_0,\beta),x)$.
-   Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(q_0,\beta) \in \{q_0,q_1\}$.
-   Тогава по {\bf И.П.} за (1) и (2), $\beta$ не съдържа две поредни срещания на $a$.
-   Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
+ \begin{itemize}
  \item
-   Нека $\delta^\star(q_0,\beta x) = q_1 = \delta(\delta^\star(q_0,\beta),x)$.
-   Според дефиницията на $\delta$, $x = a$ и $\delta^\star(q_0,\beta) = q_0$.
-   Тогава по {\bf И.П.} за (2), $\beta$ не съдържа две поредни срещания на $a$
-   и завършва на $b$.
-   Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
+   За $\abs{\alpha} = 0$, т.е. $\alpha = \varepsilon$, твърденията (1) и (2) са ясни (Защо?).
+ \item
+   Да приемем, че твърденията $(1)$ и $(2)$ са верни за произволни думи $\alpha$ с дължина $n$.
+ \item
+   Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, където $\abs{\beta} = n$ и $x \in \Sigma$.
+   Ще докажем (1) и (2) за $\alpha$.
+   \begin{itemize}[-]
+   \item 
+     Нека $\delta^\star(q_0,\beta x) = q_0 = \delta(\delta^\star(q_0,\beta),x)$.
+     Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(q_0,\beta) \in \{q_0,q_1\}$.
+     Тогава по {\bf И.П.} за (1) и (2), $\beta$ не съдържа две поредни срещания на $a$.
+     Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
+   \item
+     Нека $\delta^\star(q_0,\beta x) = q_1 = \delta(\delta^\star(q_0,\beta),x)$.
+     Според дефиницията на $\delta$, $x = a$ и $\delta^\star(q_0,\beta) = q_0$.
+     Тогава по {\bf И.П.} за (2), $\beta$ не съдържа две поредни срещания на $a$
+     и завършва на $b$.
+     Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
+   \end{itemize}
  \end{itemize}
- 
- Така доказахме с индукция по дължината на думата, че за всяка дума $\alpha$
- са  изпълнени твърденията $(1)$ и $(2)$. По дефиниция, ако $\alpha \in \L(\A)$,
- то $\delta^\star(q_0,\alpha) \in \{q_0,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
+  
+ Така доказахме с индукция по дължината на думата, че за всяка дума $\alpha$ са  изпълнени твърденията $(1)$ и $(2)$.
+ По дефиниция, ако $\alpha \in \L(\A)$, то $\delta^\star(q_0,\alpha) \in F = \{q_0,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
  $\alpha$ не съдържа две поредни срещания на буквата $a$, т.е. $\alpha \in L$.
  С други думи, доказахме, че 
  \[\L(\A) \subseteq L.\]
@@ -291,7 +297,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
  Сега ще докажем другата посока, т.е. $L \subseteq \L(\A)$.
  Това означава да докажем, че
  \[(\forall \alpha \in \Sigma^\star)[\alpha \in L\ \Rightarrow\ \delta^\star(q_0,\alpha) \in F],\]
- \marginpar{Да напомним, че $p \Rightarrow q \equiv \neg q \Rightarrow \neg  p$}
+ \marginpar{Да напомним, че от съждителното смятане знаем, че $p \rightarrow q \equiv \neg q \rightarrow \neg  p$.}
  което е еквивалентно на
  \begin{equation}
    \label{eq:case2}
@@ -311,8 +317,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 
 \begin{problem}
-  Докажете, че следният език е автоматен:
-  \[L = \{\omega \in \{a,b\}^\star \mid a \text{ се среща четен брой, докато $b$ нечетен брой пъти в }\omega\}.\]
+  Докажете, че езикът
+  \[L = \{\omega \in \{a,b\}^\star \mid a \text{ се среща четен брой, докато $b$ нечетен брой пъти в }\omega\}\]
+  е автоматен.
 \end{problem}
 \begin{hint}
   Разгледайте автомата $\A$:
@@ -322,10 +329,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         
-        \node[initial,state]      (00) {$00$};
-        \node[state]              (10) [above right of=00]{$10$};
-        \node[accepting, state]   (01) [below right of=00]{$01$};
-        \node[state]              (11) [below right of=10]{$11$};
+        \node[initial,state]      (00) {$q_{00}$};
+        \node[state]              (10) [above right of=00]{$q_{10}$};
+        \node[accepting, state]   (01) [below right of=00]{$q_{01}$};
+        \node[state]              (11) [below right of=10]{$q_{11}$};
         
         \path 
         (00) edge  [bend left=15]  node [above]  {$a$} (10)
@@ -342,6 +349,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{figure}
 \end{framed}
   Докажете с индукция по дължината на думата $\omega$, че:
+  \marginpar{Озн. $N_a(\omega)$ - броят на срещанията на буквата $a$ в думата $\omega$}
   \begin{enumerate}[a)]
   \item 
     $\delta^\star(q_{00}, \omega) = q_{00} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k\ \&\ N_b(\omega) = 2n]$;
@@ -352,48 +360,53 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item 
     $\delta^\star(q_{00}, \omega) = q_{11} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k+1\ \&\ N_b(\omega) = 2n+1]$;
   \end{enumerate}
+  Оттук направете извода, че за произволна дума $\omega$,
+  \[(\forall i<2)(\forall j<2)[\ \delta^\star(q_{00},\omega) = q_{ij} \iff N_a(\omega) \equiv i \bmod 2\ \&\ N_b(\omega) \equiv j \bmod 2\ ].\]
 \end{hint}
 
 
-\begin{problem}
-  Докажете, че езикът $L = \{\omega \in \{0,1\}^\star \mid |\omega| \equiv 1 \bmod 3\}$ е автоматен.
-\end{problem}
-\begin{hint}
-  Разгледайте автомата $\A$:
-  \begin{framed}
-    \begin{figure}[H]
-      \begin{center}
-        \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
-          \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+% \begin{problem}
+%   Докажете, че езикът $L = \{\omega \in \{0,1\}^\star \mid |\omega| \equiv 1 \bmod 3\}$ е автоматен.
+% \end{problem}
+% \begin{hint}
+%   Разгледайте автомата $\A$:
+%   \begin{framed}
+%     \begin{figure}[H]
+%       \begin{center}
+%         \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+%           \tikzstyle{every state}=[circle,minimum size=15pt,auto]
           
-          \node[initial,state]    (0) {$q_0$};
-          \node[accepting, state] (1) [right of=0]{$q_1$};
-          \node[state]            (2) [right of=1]{$q_2$};
+%           \node[initial,state]    (0) {$q_0$};
+%           \node[accepting, state] (1) [right of=0]{$q_1$};
+%           \node[state]            (2) [right of=1]{$q_2$};
           
-          \path 
-          (0) edge  [bend left=15]  node [above]  {$0,1$} (1)
-          (1) edge  [bend left=15]  node [above]  {$0,1$} (2)
-          (2) edge  [bend left=30]  node [below]  {$0,1$} (0);
-        \end{tikzpicture}
-      \end{center}
-      \caption{$\L(\A) \stackrel{?}{=} \{\omega\in\{0,1\}^\star \mid |\omega| \equiv 1 \bmod 3\}$}
-    \end{figure}  
-  \end{framed}
- Докажете с индукция по дължината на думата $\omega$ едновременно следните три твърдения:
- \begin{enumerate}[(1)]
- \item
-   $\delta^\star(q_0, \omega) = q_0 \implies |\omega| \equiv 0 \bmod 3$;
- \item 
-   $\delta^\star(q_0, \omega) = q_1 \implies |\omega| \equiv 1 \bmod 3$;
- \item
-   $\delta^\star(q_0, \omega) = q_2 \implies |\omega| \equiv 2 \bmod 3$.
- \end{enumerate}
-\end{hint}
+%           \path 
+%           (0) edge  [bend left=15]  node [above]  {$0,1$} (1)
+%           (1) edge  [bend left=15]  node [above]  {$0,1$} (2)
+%           (2) edge  [bend left=30]  node [below]  {$0,1$} (0);
+%         \end{tikzpicture}
+%       \end{center}
+%       \caption{$\L(\A) \stackrel{?}{=} \{\omega\in\{0,1\}^\star \mid |\omega| \equiv 1 \bmod 3\}$}
+%     \end{figure}  
+%   \end{framed}
+%  Докажете с индукция по дължината на думата $\omega$ едновременно следните три твърдения:
+%  \begin{enumerate}[(1)]
+%  \item
+%    $\delta^\star(q_0, \omega) = q_0 \implies |\omega| \equiv 0 \bmod 3$;
+%  \item 
+%    $\delta^\star(q_0, \omega) = q_1 \implies |\omega| \equiv 1 \bmod 3$;
+%  \item
+%    $\delta^\star(q_0, \omega) = q_2 \implies |\omega| \equiv 2 \bmod 3$.
+%  \end{enumerate}
+%  Оттук направете извода, че 
+%  \[(\forall \omega \in \Sigma^\star)(\forall i < 3)[\ \delta^\star(q_0, \omega) = q_i\ \iff\ |\omega| \equiv i \bmod 3\ ].\]
+% \end{hint}
 
 За една дума $\alpha \in \{0,1\}^\star$, 
 нека с $\ov{\alpha}_{(k)}$ да означим числото, което се представя в $k$-ична бройна система като $\alpha$.
 Например, 
 \[\ov{1101}_{(2)} = 1 \cdot 2^3+1\cdot 2^2+0\cdot 2^1+1\cdot 2^0 = \ov{13}_{(10)} = 1.10^1 + 3.10^0.\]
+\marginpar{Да отбележим, че за всяко число $n$ има безкрайно много думи $\alpha$, за които $\ov{\alpha}_{(2)} = n$. Например, $\ov{10}_{(2)} = \ov{010}_{(2)} = \ov{0010}_{(2)} = \cdots$}
 За $k = 2$, имаме следната дефиниция:
 \begin{itemize}
 \item
@@ -403,16 +416,18 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \item
   $\ov{\alpha 1}_{(2)} = 2\cdot \ov{\alpha}_{(2)} + 1$.
 \end{itemize}
-\marginpar{Да отбележим, че за всяко число $n$ има безкрайно много думи $\alpha$, за които $\ov{\alpha}_{(2)} = n$. Например, $\ov{10}_{(2)} = \ov{010}_{(2)} = \ov{0010}_{(2)} = \cdots$}
+
 
 \begin{problem}
-  Докажете, че $L = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$ е автоматен.
+  Докажете, че езикът
+  \[L = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}\]
+  е автоматен.
 \end{problem}
 \begin{proof}
   Нашият автомат ще има три състояния $\{q_0,q_1,q_2\}$, като началното състояние ще бъде $q_0$.
   Целта ни е да дефинираме така автомата, че да имаме следното свойство:
   \begin{equation}
-    (\forall\alpha\in\Sigma^\star)(\forall i < 3)[\ov{\alpha}_{(2)} \equiv i\ (\bmod\ 3)\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i],
+    (\forall\alpha\in\Sigma^\star)(\forall i < 3)[\ \ov{\alpha}_{(2)} \equiv i\ (\bmod\ 3)\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i\ ],
   \end{equation}
   т.е. всяко състояние отговаря на определен остатък при деление на три.
   Понеже искаме нашия автомат да разпознава тези думи $\alpha$,
@@ -424,22 +439,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     & \delta(q_1,0) = q_2 & \comment{\ \ov{\alpha}_{(2)} \equiv 1 \bmod 3 \implies \ov{\alpha 0}_{(2)} \equiv 2 \bmod 3 }\\
     & \delta(q_1,1) = q_0 & \comment{\ \ov{\alpha}_{(2)} \equiv 1 \bmod 3 \implies \ov{\alpha 1}_{(2)} \equiv 0 \bmod 3 }\\
     & \delta(q_2,0) = q_1 & \comment{\ \ov{\alpha}_{(2)} \equiv 2 \bmod 3 \implies \ov{\alpha 0}_{(2)} \equiv 1 \bmod 3 }\\
-    & \delta(q_2,1) = q_2 & \comment{\ \ov{\alpha}_{(2)} \equiv 2 \bmod 3 \implies \ov{\alpha 1}_{(2)} \equiv 2 \bmod 3 }.
+    & \delta(q_2,1) = q_2 & \comment{\ \ov{\alpha}_{(2)} \equiv 2 \bmod 3 \implies \ov{\alpha 1}_{(2)} \equiv 2 \bmod 3 }
   \end{align*}
-  % \begin{itemize}
-  % \item
-    
-  % \item 
-
-  % \item
-
-  % \item 
-
-  % \item
-
-  % \item 
-
-  % \end{itemize}
   Ето и картинка на автомата $\A$:
   \begin{framed}
   \begin{figure}[H]
@@ -460,7 +461,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (2) edge  [loop above]    node [above]  {$1$} (2);
       \end{tikzpicture}
       \end{center}
-      \caption{$\L(\A) \stackrel{?}{=} \{\alpha\in\{0,1\}^\star \mid \alpha_{(2)} \equiv 2\ (\bmod\ 3)\}$}
+      \caption{$\L(\A) \stackrel{?}{=} \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
  \end{figure}
  \end{framed}
  \noindent Да разгледаме твърденията:
@@ -472,15 +473,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item 
     $\delta^\star(q_0,\alpha) = q_2 \implies \ov{\alpha}_{(2)} \equiv 2 \mod 3$.
   \end{enumerate}
+  \marginpar{Обърнете внимание, че в доказателството на (3) използваме И.П. не само за (3), но и за (2). Поради тази причина трябва да докажем трите свойства едновременно}
   Ще докажем (1), (2) и (3) {\em едновременно} с индукция по дължината на думата $\alpha$.
   За $\abs{\alpha} = 0$, всички условия са изпълнени. (Защо?)
   Да приемем, че (1), (2) и (3) са изпълнени за думи с дължина $n$.
   Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, $\abs{\beta} = n$.
-  За да приложим индукционното предположение, ще използваме следното свойство:
-  \[\delta^\star(q_0,\beta x) = \delta(\delta^\star(q_0,\beta),x).\]
-  
+
   Ще докажем подробно само (3) понеже другите твърдения се доказват по сходен начин.
-  \marginpar{Обърнете внимание, че в доказателството на (3) използваме И.П. не само за (3), но и за (2). Поради тази причина трябва да докажем трите свойства едновременно}
   Нека $\delta^\star(q_0,\beta x) = q_2$. 
   Имаме два случая:
   \begin{itemize}
@@ -497,11 +496,11 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     Тогава, по дефиницията на $\delta$, $\delta(q_2,1) = q_2$ и следователно,
     $\delta^\star(q_0,\beta) = q_2$.
     По {\bf И.П.} за (3) с $\beta$,
-    \[\delta^\star(q_0,\beta) = q_2\ \Rightarrow\ \ov{\beta}_{(2)} \equiv 2 \mod 3.\]
+    \[\delta^\star(q_0,\beta) = q_2\ \Rightarrow\ \ov{\beta}_{(2)} \equiv 2 \bmod 3.\]
     Тогава, $\ov{\beta1}_{(2)} \equiv 2 \mod 3$. Така доказахме, че
-    \[\delta^\star(q_0,\beta 1) = q_2\ \Rightarrow\ \ov{\beta 1}_{(2)} \equiv 2 \mod 3.\]
+    \[\delta^\star(q_0,\beta 1) = q_2\ \Rightarrow\ \ov{\beta 1}_{(2)} \equiv 2 \bmod 3.\]
   \end{itemize}
-  
+  \marginpar{\writedown Довършете доказателствата на (1) и (2)}
   За да докажем (1), нека $\delta^\star(q_0,\beta x) = q_0$. 
   \begin{itemize}
   \item 
@@ -517,152 +516,189 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     При $x = 1$, използваме {\bf И.П.} за (1).
   \end{itemize}
-
-  От (1), (2) и (3) следва директно, че $\L(\A) \subseteq L$.
-  
-  За другата посока, нека $\alpha \in L$, т.е. $\ov{\alpha}_{(2)} \equiv 2 \bmod 3$.
-  Ако допуснем, че $\alpha \not\in \L(\A)$, то това означава, че $\delta^\star(q_0,\alpha) \in \{q_0,q_1\}$.
-  Но в тези случаи получаваме от твърдения (1) и (2), че $\ov{\alpha}_{(2)} \equiv 0 \bmod 3$ или $\ov{\alpha}_{(2)} \equiv 1 \bmod 3$.
-  Това е противоречие с избора на $\alpha \in L$. Следователно, ако $\alpha \in L$, то $\delta(q_0,\alpha) = q_2$.
-  Така доказахме и посоката $L \subseteq \L(\A)$.
+  \marginpar{\writedown Защо?}
+  От (1), (2) и (3) следва директно, че
+  \[(\forall\alpha\in\Sigma^\star)(\forall i < 3)[\ \ov{\alpha}_{(2)} \equiv i\ (\bmod\ 3)\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i\ ],\]
+  откъдето получаваме, че $\L(\A) = L$.
 \end{proof}
 
-Можем да дадем и следнта дефиниция на $\ov{\alpha}_{(2)}$:
-\begin{itemize}
-\item
-  $\ov{\varepsilon}_{(2)} = 0$,
-\item
-  $\ov{0\alpha}_{(2)} = \ov{\alpha}_{(2)}$,
-\item
-  $\ov{1\alpha}_{(2)} = 2^{|\alpha|} + \ov{\alpha}_{(2)}$.
-\end{itemize}
 
-Тогава:
-\begin{align*}
-  0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-            & = L\\
-  \\
-  1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-            & \df L_1.
-\end{align*}
+% Можем да дадем и следната дефиниция на $\ov{\alpha}_{(2)}$:
+% \begin{itemize}
+% \item
+%   $\ov{\varepsilon}_{(2)} = 0$,
+% \item
+%   $\ov{0\alpha}_{(2)} = \ov{\alpha}_{(2)}$,
+% \item
+%   $\ov{1\alpha}_{(2)} = 2^{|\alpha|} + \ov{\alpha}_{(2)}$.
+% \end{itemize}
 
-Лесно се съобразява, че $L \neq L_1$, защото например за думата $\alpha = 10$
-имаме, че $\alpha \in L$, но $\alpha \not\in L_1$.
-Продължаваме нататък:
-\begin{align*}
-  0^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_1\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & \df L_2\\
-  \\
-  1^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_1\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = L.
-\end{align*}
-Да проверим, че $L_2 \neq L$ и $L_2 \neq L_1$.
-Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
-Непосредствено се проверява, че $\alpha \in L_2$, $\alpha \not\in L$, $\alpha \not\in L_1$.
-Продължаваме нататък:
-\begin{align*}
-  0^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_2\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = L_1
-  \\
-  1^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_2\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-              & = L_2.
-\end{align*}
+% Тогава:
+% \begin{align*}
+%   0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
+%             & = \{\alpha \in \{0,1\}^\star \mid \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%             & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%             & = L\\
+%   \\
+%   1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
+%             & = \{\alpha \in \{0,1\}^\star \mid \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%             & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%             & \df L_1.
+% \end{align*}
 
-Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
+% Лесно се съобразява, че $L \neq L_1$, защото например за думата $\alpha = 10$
+% имаме, че $\alpha \in L$, но $\alpha \not\in L_1$.
+% Продължаваме нататък:
+% \begin{align*}
+%   0^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_1\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & \df L_2\\
+%   \\
+%   1^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_1\}\\
+%             & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%             & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = L.
+% \end{align*}
+% Да проверим, че $L_2 \neq L$ и $L_2 \neq L_1$.
+% Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
+% Непосредствено се проверява, че $\alpha \in L_2$, $\alpha \not\in L$, $\alpha \not\in L_1$.
+% Продължаваме нататък:
+% \begin{align*}
+%   0^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_2\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = L_1
+%   \\
+%   1^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_2\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+%               & = L_2.
+% \end{align*}
 
-\begin{framed}
-  \begin{figure}[H]
-    \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
-        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+% Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
+
+% \begin{framed}
+%   \begin{figure}[H]
+%     \begin{center}
+%       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+%         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         
-        \node[initial,state]      (0) {$L$};
-        \node[state]              (1) [right of=0]{$L_1$};
-        \node[accepting, state]   (2) [right of=1]{$L_2$};
+%         \node[initial,state]      (0) {$L$};
+%         \node[state]              (1) [right of=0]{$L_1$};
+%         \node[accepting, state]   (2) [right of=1]{$L_2$};
         
-        \path 
-        (0) edge  [loop above]    node [above]  {$0$} (0)
-        (0) edge  [bend left=15]  node [above]  {$1$} (1)
-        (2) edge  [bend left=15]  node [below]  {$0$} (1)
-        (1) edge  [bend left=15]  node [below]  {$1$} (0)
-        (1) edge  [bend left=15]  node [above]  {$0$} (2)
-        (2) edge  [loop above]    node [above]  {$1$} (2);
-      \end{tikzpicture}
-    \end{center}
-    \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \alpha_{(2)} \equiv 2\ (\bmod\ 3)\}$}
-  \end{figure}
-\end{framed}
+%         \path 
+%         (0) edge  [loop above]    node [above]  {$0$} (0)
+%         (0) edge  [bend left=15]  node [above]  {$1$} (1)
+%         (2) edge  [bend left=15]  node [below]  {$0$} (1)
+%         (1) edge  [bend left=15]  node [below]  {$1$} (0)
+%         (1) edge  [bend left=15]  node [above]  {$0$} (2)
+%         (2) edge  [loop above]    node [above]  {$1$} (2);
+%       \end{tikzpicture}
+%     \end{center}
+%     \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
+%   \end{figure}
+% \end{framed}
 
+\subsection*{Затвореност на автоматните езици относно сечиение, обединение, разлика}
 
 \begin{prop}
-  \label{pr:automata-union}
-  Класът на автоматните езици е затворен относно операцията {\em обединение}.
-  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cup L_2$
-  също е автоматен език.
-\end{prop}
-\begin{hint}
-  \marginpar{Защо изискваме $\A'$ и $\A''$ да са тотални?}
-  Нека \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'')\] са {\em тотални}.
-  Определяме автомата $\A = \FA$, който разпознава $\L(\A') \cup \L(\A'')$ по следния начин:
-  \begin{itemize}
-  \item
-    $Q = Q'\times Q''$;
-  \item
-    \marginpar{Едновременно симулираме изчисление и по двата автомата}
-    \marginpar{\writedown Проверете, че $\L(\A) = \L(\A')\cup \L(\A'')$}
-    Определяме за всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
-    \[\delta(\pair{r_1,r_2},a) = \pair{\delta'(r_1,a),\delta''(r_2,a)};\]
-  \item
-    $\qstart = \pair{\qstart',\qstart''}$;
-  \item
-    $F = \{\pair{r_1,r_2}\mid r_1\in F'' \vee r_2 \in F''\} = (F'\times Q'')\cup (Q'\times F'')$.
-  \end{itemize}
-\end{hint}
-
-\begin{cor}
-  Класът на автоматните езици е затворен относно операцията {\bf сечение}.
+  \index{автоматни езици!сечение}
+  \label{pr:automata-cap}
+  Класът на автоматните езици е затворен относно операцията {\em сечение}.
   Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
   също е автоматен език.
-\end{cor}
-\begin{hint}
-  \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cap L_2$!}
-  Използвайте конструкцията на автомата $\A$ от \Prop{automata-union},
-  с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
-  \[F = \{\pair{q_1,q_2} \mid q_1 \in F_1\ \&\ q_2 \in F_2\} = F_1\times F_2.\]
-\end{hint}
+\end{prop}
+\begin{proof}
+  Да разгледаме два автомата \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'').\]
+  Определяме автомата $\A = \FA$, по следния начин:
+  \marginpar{Изчислението на автомата $\A$ върху думата $\alpha$ едновременно симулира изчислението на $\A'$ и $\A''$ върху $\alpha$.}
+  \begin{itemize}
+  \item
+    $Q \df Q'\times Q''$;
+  \item
+    За всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
+    \[\delta(\pair{r_1,r_2},a) \df \pair{\delta_1(r_1,a),\delta_2(r_2,a)};\]
+  \item
+    $\qstart \df \pair{\qstart',\qstart''}$;
+  \item
+    $F \df \{\pair{r_1,r_2}\mid r_1\in F''\ \&\ r_2 \in F''\} = F' \times F''$
+  \end{itemize}
+  Ще докажем с индукция по дължината на думата $\alpha$, че за всяка дума $\alpha$:
+  \begin{equation}
+    \label{eq:7}
+    (\forall p\in Q')(\forall q\in Q'')[\ \delta^\star(\pair{p,q},\alpha) = \pair{ \delta^\star_1(p,\alpha), \delta^\star_2(q,\alpha) }\ ].
+  \end{equation}
+  \begin{itemize}
+  \item
+    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава всичко е ясно, защото
+    \begin{align*}
+      \delta^\star( \pair{p,q}, \varepsilon) & \df \pair{p,q}\\
+                                             & = \pair{\delta^\star_1(p,\varepsilon), \delta^\star_2(q,\varepsilon) }.
+    \end{align*}
+  \item
+    Да приемем, че (\ref{eq:7}) е изпълнено за думи $\alpha$ с дължина $n$.
+  \item
+    Нека $|\alpha| = n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава:
+    \begin{align*}
+      \delta^\star(\pair{p, q},\beta a) & = \delta( \delta^\star( \pair{p, q}, \beta ), a) & \comment{\text{деф. на }\delta^\star}\\
+                                        & = \delta( \pair{ \delta^\star_1(p, \beta), \delta^\star_2(q, \beta)}, a ) & \comment{\text{ от И.П.}}\\
+                                        & = \pair{ \delta_1( \delta^\star_1(p, \beta), a), \delta_2(\delta^\star_2(q,\beta), a)} & \comment\text{деф. на }\delta\\
+                                        & = \pair{ \delta^\star_1(p, \beta a), \delta^\star_2(q, \beta a) } & \comment{\text{деф. на $\delta^\star_1$ и $\delta^\star_2$}}.
+    \end{align*}
+  \end{itemize}
+  Използвайки Свойство (\ref{eq:7}) лесно можем да докажем, че
+  \[\L(\A) = \L(\A') \cap \L(\A'').\]
+  Имаме следните еквивалентности:
+  \begin{align*}
+    \omega \in \L(\A) & \iff \delta^\star(\qstart, \omega) \in F \\
+                      & \iff \delta^\star(\pair{\qstart',\qstart''}, \omega) \in F' \times F'' & \comment\text{деф. на }\A\\
+                      & \iff \pair{\delta^\star_1(\qstart',\omega), \delta^\star_2(\qstart'',\omega)} \in F' \times F'' & \comment{\text{от (\ref{eq:7})}}\\
+                      & \iff \delta^\star_1(\qstart',\omega) \in F'\ \&\ \delta^\star_2(\qstart'',\omega) \in F''\\
+                      & \iff \omega \in \L(\A')\ \&\ \omega\in\L(\A'') \\
+                      & \iff \omega \in \L(\A') \cap \L(\A'').
+  \end{align*}
+  
+\end{proof}
 
 \begin{prop}
+  \index{автоматни езици!допълнение}
   \label{pr:automata-complement}
+  \marginpar{Това означава, че автоматните езици са затворени относно операцията допълнение.}
   Нека $L$ е автоматен език.
   Тогава $\Sigma^\star\setminus L$ също е автоматен език.
 \end{prop}
 \begin{hint}
-  \marginpar{Защо искаме $\A$ да бъде тотален ?}
-  Нека $L = L(\A)$, където $\A = \FA$ е {\bf тотален}.
-  Да вземем автомата $\A' = \pair{Q,\Sigma,s,\delta,Q\setminus F}$,
+  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
+  Нека $L = L(\A)$, където $\A = \FA$.
+  Да вземем автомата
+  \[\A' = \pair{Q,\Sigma,\qstart,\delta,Q\setminus F},\]
   т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
   са тези състояния, които {\bf не} са финални в $\A$.
-  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
 \end{hint}
 
+\begin{prop}
+  \index{автоматни езици!обединение}
+  \label{pr:automata-union}
+  Класът на автоматните езици е затворен относно операцията {\bf обединение}.
+  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cup L_2$
+  също е автоматен език.
+\end{prop}
+\begin{hint}
+  \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cup L_2$!}
+  Първият подход е да използвайте конструкцията на автомата $\A$ от \Prop{automata-cap},
+  с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
+  \[F \df \{\pair{q',q''} \in Q' \times Q'' \mid q' \in F'\ \lor\ q'' \in F''\} = F'\times Q'' \cup Q'\times F''.\]
+  Друг подход е да се използва правилото на Де Морган, а именно:
+  \[L_1 \cup L_2 = \ov{\ov{L_1} \cap \ov{L_2}}.\]
+\end{hint}
 
 
 %%% Local Variables:
