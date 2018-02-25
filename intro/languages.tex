@@ -102,12 +102,45 @@
 \item
   За едно множеството от думи $A$, дефинираме:
   \marginpar{Операцията $\star$ е известна като звезда на Клини}
+  \index{Звезда на Клини}
   \begin{align*}
     A^\star & \df \bigcup_{n\geq 0} A^n\\
     & = A^0 \cup A^1 \cup A^2 \cup A^3 \cup \dots\\
     A^+ & \df A\cdot A^\star.
   \end{align*}
 \end{itemize}
+
+\begin{example}
+  Нека да разгледаме няколко примера какво точно представлява прилагането
+  на операцията звезда на Клини върху един език.
+  \begin{itemize}
+  \item 
+    Нека $L = \{0,11\}$. Тогава:
+    \begin{itemize}
+    \item 
+      $L^0 = \{\varepsilon\}$, $L^1 = L$,
+    \item
+      $L^2 = L^1\cdot L^1 = \{00,011,110,1111\}$,
+    \item
+      $L^3 = L^1\cdot L^2 = \{000,0011,0110,01111,1100,11011,11110,111111\}$.
+    \end{itemize}
+  \item
+    Нека $L = \emptyset$.
+    Тогава:
+    \begin{itemize}
+    \item 
+      $L^0 = \{\varepsilon\}$,
+    \item
+      $L^1 = \emptyset$,
+    \item
+      $L^2 = L^1 \cdot L^1 = \emptyset$.
+    \end{itemize}    
+    Получаваме, че $L^\star = \{\varepsilon\}$, т.е. {\em краен} език
+  \item
+    Нека $L = \{0^i\mid i \in \Nat\} = \{\varepsilon, 0, 00, 000, \dots\}$.
+    Тогава лесно може да се види, че $L = L^\star$.
+  \end{itemize}
+\end{example}
 
 % \subsection*{Премахване на префикс}
 
@@ -139,7 +172,7 @@
     $\{\varepsilon\}^\star = \{\varepsilon\}$;
   \item
     за произволно множество от думи $A$,
-    \[A^\star = A^\star\cdot A^\star$ и $(A^\star)^\star = A^\star;\]
+    \[A^\star = A^\star\cdot A^\star\text{ и }(A^\star)^\star = A^\star;\]
   \item
     за произволни букви $a$ и $b$,
     \[\{a,b\}^\star = \{a\}^\star\cdot(\{b\}\cdot\{a\}^\star)^\star;\]
