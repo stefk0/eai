@@ -3,16 +3,16 @@
 Да фиксираме една непразна азбука $\Sigma$.
 \index{регулярен израз}
 {\bf Регулярните изрази} $\mathbf{r}$ могат да се опишат със следната абстрактна граматика
-\[\mathbf{r} ::= \underline{\emptyset}\ |\ \underline{\varepsilon}\ |\ \mathbf{a}\ |\ \mathbf{ r_1 \cdot r_2}\ |\ \mathbf{r_1 + r_2}\ |\ \mathbf{r^\star_1},\]
+\[\mathbf{r} ::= \bm{\emptyset}\ |\ \bm{\varepsilon}\ |\ \mathbf{a}\ |\ \mathbf{ r_1 \cdot r_2}\ |\ \mathbf{r_1 + r_2}\ |\ \mathbf{r^\star_1},\]
 където $\varepsilon$ означава празната дума и $a$ е произволна буква от азбуката $\Sigma$.
 
 Регулярните изрази могат да се опишат и по следния начин:
 \marginpar{Това е пример за индуктивна дефиниция}
 \begin{itemize}
 \item 
-  Символите $\underline{\emptyset}$, $\underline{\varepsilon}$ и $\mathbf{a}$, за всяка буква $a \in \Sigma$, са регулярен изрази;
+  Символите $\bm{\emptyset}$, $\bm{\varepsilon}$ и $\mathbf{a}$, за всяка буква $a \in \Sigma$, са регулярен изрази;
 \item
-  Ако $\mathbf{r_1}$ и $\mathbf{r_2}$ са регулярни изрази, то $\mathbf{r_1 \cdot r_2}$, $\mathbf{r_1 + r_2}$ и $\mathbf{r^\star_1}$
+  Ако $\mathbf{r_1}$ и $\mathbf{r_2}$ са регулярни изрази, то $(\mathbf{r_1} \cdot \mathbf{r_2})$, $(\mathbf{r_1} + \mathbf{r_2})$ и $\mathbf{r^\star_1}$
   също са регулярни изрази;
 \item
   Всеки регулярен израз е получен по някое от горните правила.
@@ -27,14 +27,14 @@
 \begin{itemize}
 \item
   $\emptyset$ е регулярен език,
-  който се разпознава от регулярния израз $\underline{\emptyset}$. Означаваме $\L(\underline{\emptyset}) = \emptyset$;
+  който се описва от регулярния израз $\bm{\emptyset}$. Означаваме $\L(\bm{\emptyset}) = \emptyset$;
 \item
   $\{\varepsilon\}$ е регулярен език,
-  който се разпознава от регулярния израз $\underline{\varepsilon}$.
-  Означаваме $\L(\underline{\varepsilon}) = \{\varepsilon\}$;
+  който се описва от регулярния израз $\bm{\varepsilon}$.
+  Означаваме $\L(\bm{\varepsilon}) = \{\varepsilon\}$;
 \item
   за всяка буква $a \in \Sigma$, $\{a\}$ е регулярен език,
-  който се разпознава от регулярния израз $\mathbf{a}$.
+  който се описва от регулярния израз $\mathbf{a}$.
   Означаваме $\L(\mathbf{a}) = \{a\}$;
 \item
   Нека $L_1$ и $L_2$ са регулярни езици, т.е. съществуват регулярни изрази $\mathbf{r}_1$
@@ -76,82 +76,50 @@
 \end{remark}
 
 \begin{example}
-  Нека да разгледаме няколко примера какво точно представлява прилагането
-  на операцията звезда на Клини върху един език.
-  \begin{itemize}
-  \item 
-    Нека $L = \{0,11\}$. Тогава:
-    \begin{itemize}
-    \item 
-      $L^0 = \{\varepsilon\}$, $L^1 = L$,
-    \item
-      $L^2 = L^1\cdot L^1 = \{00,011,110,1111\}$,
-    \item
-      $L^3 = L^1\cdot L^2 = \{000,0011,0110,01111,1100,11011,11110,111111\}$.
-    \end{itemize}
-  \item
-    Нека $L = \emptyset$.
-    Тогава:
-    \begin{itemize}
-    \item 
-      $L^0 = \{\varepsilon\}$,
-    \item
-      $L^1 = \emptyset$,
-    \item
-      $L^2 = L^1 \cdot L^1 = \emptyset$.
-    \end{itemize}    
-    Получаваме, че $L^\star = \{\varepsilon\}$, т.е. {\em краен} език
-  \item
-    Нека $L = \{0^i\mid i \in \Nat\} = \{\varepsilon, 0, 00, 000, \dots\}$.
-    Тогава лесно може да се види, че $L = L^\star$.
-  \end{itemize}
-\end{example}
-
-\begin{example}
   \marginpar{В \cite[стр. 73]{sipser1} е показан алгоритъм, за който по един автомат може да се получи регулярен израз описващ езика на автомата. Ние няма да разглеждаме този алгоритъм. }
   Нека да построим регулярни изрази за всеки от езиците от \Ex{automata-pictures}.
   \begin{enumerate}[a)]
   \item 
-    Нека $\mathbf{r} = \mathbf{(a+b)^\star bab(a+b)^\star}$. Тогава
+    Нека $\mathbf{r} \equiv \mathbf{(a+b)^\star bab(a+b)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа } bab\}.\]
   \item
-    Нека $\mathbf{r} = \mathbf{b^\star ab^\star a(a+b)^\star}$. Тогава
+    Нека $\mathbf{r} \equiv \mathbf{b^\star ab^\star a(a+b)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\}.\]
   \item
-    Нека $\mathbf{r} = \mathbf{(b^\star abb^\star)^\star}$. Тогава
+    Нека $\mathbf{r} \equiv \mathbf{(b^\star abb^\star)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid \text{ всяко $a$ в $\omega$ се следва от поне едно $b$}\}.\]
   \item
-    Нека $\mathbf{r} = \mathbf{(b^\star ab^\star ab^\star ab^\star)^\star}$. Тогава
+    Нека $\mathbf{r} \equiv \mathbf{(b^\star ab^\star ab^\star ab^\star)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 3\}.\]
   \end{enumerate}
 \end{example}
 
-
 \begin{problem}
-  За произволни регулярни изрази $r$ и $s$, проверете дали са изпълнени следните равенства:
+  \marginpar{Когато пишем $\bm{r} = \bm{s}$ имаме предвид, че $\L(\bf{r}) = \L(\bm{s})$.}
+  За произволни регулярни изрази $\bm{r}$ и $\bm{s}$, проверете дали са изпълнени следните равенства:
   \begin{enumerate}[a)]
   \item 
-    $r+s = s + r$;
+    $\bm{r + s} = \bm{s + r}$;
   \item
-    $(\varepsilon + r)^\star = r^\star$;
+    $\bm{(\varepsilon + r)^\star} = \bm{r^\star}$;
   \item
-    $\emptyset^\star = \varepsilon$;
+    $\bm{\emptyset^\star} = \bm{\varepsilon}$;
   \item
-    $(r^\star s^\star) = (r+s)^\star$;
+    $\bm{(r^\star s^\star)^\star} = \bm{(r+s)^\star}$;
   \item
-    $(r^\star)^\star = r^\star$;
+    $\bm{(r^\star)^\star} = \bm{r^\star}$;
   \item
-    $(rs + r)^\star r = r(sr+r)^\star$;
+    $\bm{(rs + r)^\star r} = \bm{r(sr+r)^\star}$;
   \item
-    $s(rs+s)^\star r = rr^\star s(rr^\star s)^\star$;
+    $\bm{s(rs+s)^\star r} = \bm{rr^\star s(rr^\star s)^\star}$;
   \item
-    $(r+s)^\star = r^\star + s^\star$;
+    $\bm{(r+s)^\star} = \bm{r^\star + s^\star}$;
   \item
-    $(r+s)^\star s = (r^\star s)^\star$;
+    $\bm{(r+s)^\star s} = \bm{(r^\star s)^\star}$;
   \item
-    $(rs + r)^\star rs = (rr^\star s)^\star$;
+    $\bm{(rs + r)^\star rs} = \bm{(rr^\star s)^\star}$;
   \item
-    $\emptyset^\star = \varepsilon^\star$;
+    $\bm{\emptyset^\star} = \bm{\varepsilon^\star}$;
   \end{enumerate}
 \end{problem}
 
