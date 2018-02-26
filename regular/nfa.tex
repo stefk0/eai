@@ -268,7 +268,7 @@
   \item
     $Q = Q_1 \cup Q_2$;
   \item
-    $\qstart = \qstart''$;
+    $\qstart = \qstart'$;
   \item
     $F = \begin{cases}
       F_1 \cup F_2, & \text{ ако } \qstart'' \in F_2\\
@@ -284,7 +284,7 @@
   \end{itemize}
   
   Първо ще докажем, че $\L(\A_1)\cdot\L(\A_2) \subseteq \L(\N)$.
-  За целта, нека разгледаме думата $\alpha \in \L(\A_1)$, където $\alpha = a_0a_1\cdots a_{l-1}$, и нека редицата $(q_i)^n_{i=0}$ описва приемащото изчисление на $\A_1$ върху думата $\alpha$.
+  За целта, нека разгледаме думата $\alpha \in \L(\A_1)$, където $\alpha = a_0a_1\cdots a_{n-1}$, и нека редицата $(q_i)^n_{i=0}$ описва приемащото изчисление на $\A_1$ върху думата $\alpha$.
   Това означава, че:
   \begin{itemize}
   \item
@@ -304,7 +304,7 @@
   \item
     $p_m \in F_2$.
   \end{itemize}  
-  От конструкцията на $\N$ се вижда лесно, че $(q_i)^l_{i=0}$ описва изчисление на $\N$ върху $\alpha$ и
+  От конструкцията на $\N$ се вижда лесно, че $(q_i)^n_{i=0}$ описва изчисление на $\N$ върху $\alpha$ и
   $(p_i)^{m}_{i=0}$ описва изчисление на $\N$ върху $\beta$.
   Това означава, че:
   \begin{itemize}
@@ -314,14 +314,14 @@
     $p_{i+1} \in \Delta(p_i,b_i)$ за $i < m$.
   \end{itemize}
   Тогава:
-  \[(q_0,\alpha\beta) \vdash^\star_\N (q_l,\beta)\text{ и } (p_0, \underbrace{b_0b_1\cdots b_{m-1}}_{\beta}) \vdash_\N (p_1,b_1\cdots b_{m-1}) \vdash^\star_{\N} (p_m,\varepsilon).\]
-  Понеже $q_l \in F_1$, а $p_0 = \qstart''$, то от конструкцията на $\N$ следва, че
-  \[(q_l, \underbrace{b_0b_1\cdots b_{m-1}}_{\beta}) \vdash_\N (p_1,b_1\cdots b_{m-1}),\]
-  защото $\delta_2(\qstart'',b_0) \in \Delta(q_l,b_0)$.
+  \[(q_0,\alpha\beta) \vdash^\star_\N (q_n,\beta)\text{ и } (p_0, \underbrace{b_0b_1\cdots b_{m-1}}_{\beta}) \vdash_\N (p_1,b_1\cdots b_{m-1}) \vdash^\star_{\N} (p_m,\varepsilon).\]
+  Понеже $q_n \in F_1$, а $p_0 = \qstart''$, то от конструкцията на $\N$ следва, че
+  \[(q_n, \underbrace{b_0b_1\cdots b_{m-1}}_{\beta}) \vdash_\N (p_1,b_1\cdots b_{m-1}),\]
+  защото $\delta_2(\qstart'',b_0) \in \Delta(q_n,b_0)$.
   
   Обединявайки всичко това, получаваме, че:
   \begin{align*}
-    (\qstart, \alpha\beta) & \vdash^\star_\N (q_l,\beta)\\
+    (\qstart, \alpha\beta) & \vdash^\star_\N (q_n,\beta)\\
                            & \vdash_\N (p_1,b_1\cdots b_{m-1})\\
                            & \vdash^\star_\N(p_m,\varepsilon).
   \end{align*}
@@ -558,82 +558,69 @@
   \item
     $q_n \in F$.
   \end{itemize}
-  \marginpar{Възможно е $l = 0$ и съответно тази подредица да е празна.}
-  Да разгледаме подредицата $(q_{i_j})^{l-1}_{j = 0}$ на $(q_i)^{n}_{i=0}$ съставена от тези състояния, за които
-  \[ q_{i_j} \in F\ \&\ \delta(\qstart,a_{i_j}) = q_{i_j+1}.\]
-
-  Да положим:
+  Да разгледаме максималната подпоследователност от състояния $(q_{i_j})^{l+1}_{j = 0}$ на $(q_i)^{n}_{i=0}$ съставена от тези състояния, за които
+  \begin{itemize}
+  \item
+    $q_{i_0} = \qstart$;
+  \item
+    $q_{i_j} \in F\ \&\ \delta(\qstart,a_{i_j}) = q_{i_j+1}$, за $j = 1,\dots,l$;
+  \item
+    $q_{i_{l+1}} = q_n$.
+  \end{itemize}
+  Да разбием думата $\alpha$ като $\alpha = \alpha_0\alpha_1\cdots\alpha_l$, където:
   \begin{align*}
-    & \alpha_{i_0} \df a_0\cdots a_{i_0-1};\\
-    & \alpha_{i_{j+1}} \df a_{i_j}\cdots a_{i_{j+1}-1}\text{, за }0\leq j \leq l-2\\
-    & \alpha_{i_l} \df a_{i_{l-1}}\cdots a_{n-1}.
+    & \alpha_0 \df a_{i_0} \alpha'_0\\
+    & \alpha_1 \df a_{i_1}\alpha'_1\\
+    & \cdots\\
+    & \alpha_l \df a_{i_l}\alpha'_l.
   \end{align*}
-  Ясно е, че $\alpha = \alpha_{i_0}\alpha_{i_1}\cdots\alpha_{i_l}$.
-
   Сега можем да разбием изчислението на $\N$ върху $\alpha$ по следния начин:
   \begin{align*}
-    (q_0,\alpha_{i_0}\alpha_{i_1}\cdots \alpha_{i_l}) & \vdash^\star_\N (q_{i_0}, \alpha_{i_1}\cdots \alpha_{i_l})\\
-                                                           & \vdash^\star_\N (q_{i_1},\alpha_{i_2}\cdots \alpha_{i_l})\\
-                                                           & \cdots\\
-                                                           & \vdash^\star_\N (q_{i_{l-1}}, \alpha_{i_l})\\
-                                                           & \vdash^\star_\N(q_n,\varepsilon).
+    (q_{i_0},\alpha_{0}\alpha_{1}\cdots \alpha_{l}) & \vdash^\star_\N (q_{i_1}, \alpha_{1}\cdots \alpha_{l}) & \comment{ q_{i_0} = \qstart}\\
+                                                    & \vdash^\star_\N (q_{i_2},\alpha_{2}\cdots \alpha_{l})\\
+                                                    & \cdots\\
+                                                    & \vdash^\star_\N (q_{i_{l}}, \alpha_{l})\\
+                                                    & \vdash^\star_\N(q_{i_{l+1}},\varepsilon). & \comment{ q_{i_{l+1}} = q_n \in F}
   \end{align*}
   Да разгледаме само първата част на изчислението:
-  \[\underbrace{(q_0,\alpha_{i_0}) \vdash^\star_\N (q_{i_0}, \varepsilon)}_{\text{само преходи от }\A}.\]
-  Понеже $q_0 = \qstart$ и $q_{i_0} \in F$, то е ясно, че $\alpha_{i_0} \in \L(\A)$.
+  \[\underbrace{(q_{i_0},\alpha_0) \vdash^\star_\N (q_{i_1}, \varepsilon)}_{\text{само преходи от }\A}.\]
+  Понеже $q_0 = \qstart$ и $q_{i_1} \in F$, то е ясно, че $\alpha_0 \in \L(\A)$.
   
-  За $j < l$, изчислението    
-  \[(q_{i_j},\alpha_{i_{j+1}}) \vdash^\star_\N (q_{i_{j+1}},\varepsilon)\]
+  За $j = 0,\dots,l$, изчислението
+  \[(q_{i_j},\alpha_j) \vdash^\star_\N (q_{i_{j+1}},\varepsilon)\]
   може по-подробно да се запише и така:
-  \[(q_{i_j},a_{i_j}a_{i_j+1}\cdots a_{i_{j+1}-1}) \vdash_\N \underbrace{(q_{i_j+1}, a_{i_j+1}\cdots a_{i_{j+1}-1})  \vdash^\star_\N (q_{i_{j+1}},\varepsilon)}_{\text{само преходи от }\A}.\]
+  \[(q_{i_j}, a_{i_{j}}\alpha'_j) \vdash_\N \underbrace{(q_{i_j+1}, \alpha'_j)  \vdash^\star_\N (q_{i_{j+1}},\varepsilon)}_{\text{само преходи от }\A}.\]
   Понеже имаме, че $\delta(\qstart,a_{i_j}) = q_{i_j+1}$, то оттук следва, че:
-  \[\underbrace{(\qstart,a_{i_j}a_{i_j+1}\cdots a_{i_{j+1}-1}) \vdash_\N (q_{i_j+1}, a_{i_j+1}\cdots a_{i_{j+1}-1})}_{\text{преход от }\A}  \vdash^\star_\A (q_{i_{j+1}},\varepsilon).\]
+  \[\underbrace{(\qstart,a_{i_j}\alpha'_{j}) \vdash_\N (q_{i_j+1}, \alpha'_{j})}_{\text{преход от }\A}  \vdash^\star_\A (q_{i_{j+1}},\varepsilon).\]
   Заключаваме, че
-  \[(\qstart,\alpha_{i_{j+1}}) \vdash^\star_\A (q_{i_{j+1}},\varepsilon).\]
-  Понеже $q_{i_{j+1}} \in F$, ведната следва, че $\alpha_{i_{j+1}} \in \L(\A)$.
+  \[(\qstart,\alpha_{j}) \vdash^\star_\A (q_{i_{j+1}},\varepsilon).\]
+  Понеже $q_{i_{j+1}} \in F$, ведната следва, че $\alpha_{j} \in \L(\A)$.
   
-  За последната част от изчислението, имаме следното:
-  \[(q_{i_l-1}, \alpha_{i_l}) \vdash^\star_\N (q_n, \varepsilon),\]
-  което може по-подробно да се запише така:
-  \[(q_{i_{l-1}},a_{i_l}a_{i_l+1}\cdots a_{n-1}) \vdash_\N \underbrace{(q_{i_{l-1}+1}, a_{i_l+1}\cdots a_{n-1})  \vdash^\star_\N (q_n,\varepsilon)}_{\text{само преходи от }\A}.\]
-  Понеже имаме, че $\delta(\qstart,a_{i_{l-1}}) = q_{i_{l-1}+1}$, то оттук следва, че:
-  \[\underbrace{(\qstart,a_{i_l}a_{i_l+1}\cdots a_{n-1}) \vdash_\N (q_{i_{l-1}+1}, a_{i_l+1}\cdots a_{n-1})}_{\text{преход от }\A}  \vdash^\star_\A (q_n,\varepsilon).\]
-  Заключаваме, че
-  \[(\qstart,\alpha_{i_l}) \vdash^\star_\A (q_n,\varepsilon).\]
-  Понеже $q_n \in F$, ведната следва, че $\alpha_{i_l} \in \L(\A)$.
   От всичко дотук заключваме, че $\alpha \in (\L(\A))^+$.
 
-
-  За другата посока, нека $\alpha = a_0\cdots a_{n-1} \in (\L(\A))^+$.
-  Нека дефинираме
-  \begin{align*}
-    & \alpha_{i_0} \df a_0\cdots a_{i_0-1}\\
-    & \alpha_{i_{j+1}} \df a_{i_j}\cdots a_{i_{j+1}-1}\text{ и } q_{i_{j}} \df \delta(\qstart, a_{i_j})\text{, за }0\leq j \leq l-2\\
-    & \alpha_{i_l} \df a_{i_{l-1}}\cdots a_{n-1} \text{ и } q_{i_l-1} \df \delta(\qstart, a_{i_{l-1}}),
-  \end{align*}
-  за които $\alpha_{i_j} \in \L(\A)$, за $j = 0,\dots,l$.
-  
-  Оттук получаваме следните изчисления:
-  \begin{align*}
-    &(\qstart, \alpha_{i_0}) \vdash^\star_\A (f_{0}, \varepsilon) & \comment\text{за някое }f_0 \in F\\
-    &(\qstart, \alpha_{i_1}) \vdash_\A (q_{i_0}, a_{i_0+1}\cdots a_{i_1-1}) \vdash^\star_\A (f_{1}, \varepsilon) & \comment\text{за някое }f_1 \in F\\
-    &(\qstart, \alpha_{i_2}) \vdash_\A (q_{i_1}, a_{i_1+1}\cdots a_{i_2-1}) \vdash^\star_\A (f_{2}, \varepsilon) & \comment\text{за някое }f_2 \in F\\
-    &\dots\\
-    &(\qstart, \alpha_{i_l}) \vdash_\A (q_{i_{l-1}}, a_{i_{l-1}+1}\cdots a_n) \vdash^\star_\A (f_{l}, \varepsilon). & \comment\text{за някое }f_l \in F
-  \end{align*}
+  За другата посока, нека $\alpha \in (\L(\A))^+$.
+  Това означава, че думата $\alpha$ може да се представи като
+  $\alpha = \alpha_0\alpha_1\cdots\alpha_l$, където $\alpha_j \in \L(\A)$ и $\alpha_j \neq \varepsilon$, за $j = 0,\dots, l$.
+  Нека за $j=0,\dots,l$ да положим
+  \[\alpha_j \df a_j \cdot \alpha'_j\text{ и } q_{j} \df \delta(\qstart, a_j).\]
+  Оттук получаваме за $j = 0,\dots,l$ следните изчисления:
+  \[(\qstart, \alpha_{j}) \vdash_\A (q_{j}, \alpha'_j) \vdash^\star_\A (f_{j}, \varepsilon),\]
+  за някои $f_j \in F$.
+  Понеже функцията на преходите на $\N$ разширява функцията на преходите на $\A$, то е ясно е, че имаме също така и следното:
+  \[(\qstart, \alpha_{j}) \vdash_\N (q_{j}, \alpha'_j) \vdash^\star_\N (f_{j}, \varepsilon),\]
 
   За $1 \leq j < l$,
-  понеже $\delta(\qstart,a_{i_j}) = q_{i_j}$ и $f_{j-1} \in F$, то според конструкцията на $\N$,
-  \[q_{i_j} \in \Delta(f_{j-1}, a_{i_j}).\]
+  понеже $\delta(\qstart,a_{j}) = q_{j}$ и $f_{j} \in F$, то според конструкцията на $\N$,
+  \[q_{j} \in \Delta(f_{j-1}, a_{j}).\]
   Оттук следва, че имаме следното изчисление на $\N$ върху $\alpha$:
   \begin{align*}
-    &(\qstart, \alpha_{i_0}) \vdash^\star_\N (f_{0}, \varepsilon) & \comment\text{за някое }f_0 \in F\\
-    &(f_0, \alpha_{i_1}) \vdash_\N (q_{i_0}, a_{i_0+1}\cdots a_{i_1-1}) \vdash^\star_\N (f_{1}, \varepsilon) & \comment\text{за някое }f_1 \in F\\
-    &(f_1, \alpha_{i_2}) \vdash_\N (q_{i_1}, a_{i_1+1}\cdots a_{i_2-1}) \vdash^\star_\N (f_{2}, \varepsilon) & \comment\text{за някое }f_2 \in F\\
+    &(\qstart, \alpha_{0}) \vdash^\star_\N (f_{0}, \varepsilon) & \comment\text{за някое }f_0 \in F\\
+    &(f_0, \alpha_{1}) \vdash_\N (q_{1}, \alpha'_1) \vdash^\star_\N (f_{1}, \varepsilon) & \comment\text{за някое }f_1 \in F\\
+    &(f_1, \alpha_{2}) \vdash_\N (q_{2}, \alpha'_2) \vdash^\star_\N (f_{2}, \varepsilon) & \comment\text{за някое }f_2 \in F\\
     &\dots\\
-    &(f_{l-1}, \alpha_{i_l}) \vdash_\N (q_{i_{l-1}}, a_{i_{l-1}+1}\cdots a_n) \vdash^\star_\N (f_{l}, \varepsilon). & \comment\text{за някое }f_l \in F
+    &(f_{l-1}, \alpha_{l}) \vdash_\N (q_{l}, \alpha'_l) \vdash^\star_\N (f_{l}, \varepsilon). & \comment\text{за някое }f_l \in F
   \end{align*}
-  Заключаваме, че $\alpha \in \L(\N)$.
+  Обединявайки всичко това, заключаваме, че $\alpha \in \L(\N)$.
 
   Така доказахме, че $\L(\N) = (\L(\A))^+$.
   Сега ще построим недетерминистичен автомат
