@@ -591,27 +591,92 @@
 \begin{proof}
   Нека е даден автомата $\A = \pair{\Sigma,Q,\qstart,\delta,F}$, за който е изпънено, че
   $\L(\A) = \L(\mathbf{r})$.
-  Първата стъпка е да построим $\N_1 = \NFAn{1}$, такъв че 
-  \[\L(\N_1) = \bigcup_{n\geq 1} (\L(\N))^n = \bigcup_{n\geq 1} (\L(\mathbf{r}))^n = \L(\mathbf{r^+}).\]
+  
+  Ще построим $\N = \pair{\Sigma,Q', \qstart', \Delta, F'}$, такъв че
+  \[\L(\N) = (\L(\A))^\star.\]
+
+
+  
+
+  % Първата стъпка е да построим $\N_1 = \NFAn{1}$, такъв че 
+  % \[\L(\N_1) = \bigcup_{n\geq 1} (\L(\N))^n = \bigcup_{n\geq 1} (\L(\mathbf{r}))^n = \L(\mathbf{r^+}).\]
   Това можем да направим по следния начин:
   \begin{itemize}
   \item
-    $Q_1 = Q$;
+    $Q' = Q \cup \{\qstart'\}$;
   \item
-    $s_1 = s$;
+    $F' = F \cup \{\qstart'\}$;
   \item
-    $F_1 = F$;
-  \item
-    Функцията на преходите $\Delta_1$ включва всичко от $\Delta$ като добавя нови преходи към наследниците на началното състояние $s$ на $\N$. Дефиницията на $\Delta_1$ може да се запише така:
-    \[\Delta_1(q,a) = 
-    \begin{cases}
-      \Delta(q,a), & \text{ ако } q\in Q\setminus F, a \in \Sigma\\
-      \Delta(q,a) \cup \Delta(s,a), & \text{ ако } q\in F, a\in\Sigma.
-    \end{cases}\]
+    За $q \in Q$ и $a \in \Sigma$, определяме функцията на преходите $\Delta$ по следния начин:
+    \begin{align*}
+      \Delta(q,a) \df
+      \begin{cases}
+        \{\delta(q,a)\}, & \text{ако }\delta(q,a) \not\in F\\
+        \{\delta(q,a), \qstart\}, & \text{ако }\delta(q,a) \in F.
+      \end{cases}
+    \end{align*}
+    За $a \in \Sigma$,
+    \begin{align*}
+      \Delta(\qstart',a) \df
+      \begin{cases}
+        \{\delta(\qstart, a)\}, & \text{ако }\delta(\qstart,a) \not\in F\\
+        \{\delta(\qstart, a), \qstart\}, & \text{ако }\delta(\qstart,a) \in F.
+      \end{cases}
+    \end{align*}
   \end{itemize}
-  Накрая строим желания автомат $\hat\N$, така че $\L(\hat\N) = \{\varepsilon\} \cup \L(\N_1)$.
-  Ние знаем как да построим $\hat\N$, защото можем да посторим автомат $\N_0$ за езика $\{\varepsilon\}$
-  (\Lem{automata-basic}) и тогава $\hat\N$ се получава от конструкцията за обединение от \Lem{union} приложена върху $\N_0$ и $\N_1$.
+
+
+  Нека $\alpha = a_0a_1\cdots a_{n-1} \in \L(\N)$.
+  Това означава, че $(\qstart',\alpha) \vdash^\star_\N (f,\varepsilon)$ за някое $f \in F$.
+  Нека редицата от състояния $(q_i)^n_{i=0}$ описва едно приемащо изчисление на $\N$ върху $\alpha$, т.е.
+  \begin{itemize}
+  \item
+    $q_0 = \qstart'$;
+  \item
+    $q_{i+1} \in \Delta(q_i,a_i)$;
+  \item
+    $q_n \in F$.
+  \end{itemize}
+  \marginpar{Възможно е $l = 0$ и съответно тази подредица да е празна.}
+  Да разгледаме подредицата $(q_{i_j})^{l-1}_{j = 0}$ на $(q_i)^{n}_{i=0}$ съставена от тези състояния, за които
+  \[\delta(q_{i_j}, a_{i_j}) \in F\ \&\ q_{i_j+1} = \qstart.\]
+
+  Да положим:
+  \begin{align*}
+    & \alpha_{i_0} \df a_0\cdots a_{i_0};\\
+    & \alpha_{i_{j+1}} \df a_{i_j+1}\cdots a_{i_{j+1}}\text{, за }0\leq j \leq l-2\\
+    & \alpha_{i_l} \df a_{i_{l-1}+1}\cdots a_n.
+  \end{align*}
+  Ясно е, че $\alpha = \alpha_{i_0}\alpha_{i_1}\cdots\alpha_{i_l}$.
+
+  Сега можем да разбием изчислението на $\N$ върху $\alpha$ по следния начин:
+  \begin{align*}
+    (\qstart',\alpha_{i_0}\alpha_{i_1}\cdots \alpha_{i_l}) & \vdash^\star_\N (q_{i_0+1}, \alpha_{i_1}\cdots \alpha_{i_l})\\
+                                                           & \vdash^\star_\N (q_{i_1+1},\alpha_{i_2}\cdots \alpha_{i_l})\\
+                                                           & \vdash^\star_\N\\
+                                                           & \cdots\\
+                                                           & \vdash^\star_\N (q_{i_{l-1}+1}, \alpha_{i_l})\\
+                                                           & \vdash^\star_\N(q_n,\varepsilon).
+  \end{align*}
+
+  За $j = 0$ имаме, че:
+  \[(\qstart',\alpha_{i_0}) \vdash_\N (q_1, a_1\cdots a_{i_0}) \vdash^\star_\N (q_{i_0}, a_{i_0}) \vdash_\N (q_{i_0+1}, \varepsilon).\]
+
+  Понеже, според конструкцията на $\N$, $\delta(\qstart, a_0) = q_1$ и освен това $\delta(q_{i_0}, a_{i_0}) = p$, за някое $p \in F$, то 
+  \[(\qstart,\alpha_{i_0}) \vdash_\A (q_1, a_1\cdots a_{i_0}) \vdash^\star_\A (q_{i_0}, a_{i_0}) \vdash_\A (p, \varepsilon).\]
+  Оттук следва, че думата $\alpha_{i_0} \in \L(\A)$.
+  В случая, когато $\alpha_{i_0} = a_0$, то $\delta(\qstart,a_0) \in F$ и $q_{i_0} = \qstart$
+  
+  
+  За всяко $j$, където $0<j<l$, понеже $\delta(q_{i_j}, a_{i_j}) = p$, за някое $p \in F$, то 
+  \[(q_{i_j+1}, \alpha_{i_j}) \vdash^\star_\A (q_{i_{j+1}}, a_{i_{j+1}}) \vdash_\A (p, \varepsilon).\]
+  Понеже $q_{i_j+1} = \qstart$, то оттук следва, че думата $\alpha_{i_j} \in \L(\A)$.
+
+  За $j = l$ имаме, че
+  \[(q_{i_l+1}, \alpha_{i_l}) \vdash^\star_\A (q_n, \varepsilon).\]
+  Понеже, $q_{i_{l+1}} = \qstart$ и $q_n \in F$, то $\alpha_{i_l} \in F$.
+
+  Накрая заключаваме, че $\alpha \in \L(\A)^\star$.
 \end{proof}
 
 
