@@ -203,20 +203,6 @@
   Докажете, че ако $L$ е автоматен език, то $L^{rev} = \{\omega^{rev} \mid \omega \in L\}$
   също е автоматен.
 \end{problem}
-% \begin{hint}
-%   Нека $\A = \FA$, $L = \L(\A)$, е само с едно финално състояние, т.е. $F = \{\qaccept\}$.
-%   Разгледайте недетерминистичния краен автомат $\N = \pair{\Sigma,Q,\qstart',\Delta,F'}$, където
-%   \begin{itemize}
-%   \item
-%     $\Delta(q,a) = \{p \in Q \mid \delta(p,a) = q\}$;
-%   \item
-%     $\qstart' = \qaccept$;
-%   \item
-%     $F' = \{\qstart\}$;
-%   \end{itemize}
-
-% \end{hint}
-
 
 \begin{lemma}
   \label{lem:automata-basic}
@@ -284,8 +270,7 @@
   \item
     $\qstart = \qstart''$;
   \item
-    $F = 
-    \begin{cases}
+    $F = \begin{cases}
       F_1 \cup F_2, & \text{ ако } \qstart'' \in F_2\\
       F_2,          & \text{ иначе}.
     \end{cases}$
@@ -297,55 +282,6 @@
       \{\delta_2(q,a)\},                      & \text{ ако }q\in Q_2\ \&\ a\in\Sigma.
     \end{cases}$
   \end{itemize}
-
-  % \begin{enumerate}[(1)]
-  % \item 
-  %   $(\forall q,p \in Q_1)[(q, \alpha\beta) \vdash^\star_{\A_1} (p, \beta) \iff (q, \alpha\beta) \vdash^\star_{\N} (p, \beta)]$;
-  % \item
-  %   $(\forall q,p \in Q_2)[ (q,\alpha\beta) \vdash^\star_{\A_2} (p, \beta) \implies (q,\alpha\beta) \vdash^\star_\N (p, \beta)]$;
-  % % \item
-  % %   Нека $q \in Q_1$ и $p \in Q_2$ са произволни състояния, за които $(q,\omega) \vdash^\star_\N (p,\varepsilon)$.
-  % %   Тогава съществува $f_1 \in F_1$ и $\omega = \omega_1 b\omega_2$, такива че:
-  % %   $(q,\omega_1\omega_2) \vdash^\star_{\A_1} (f_1,b\omega_2) \vdash_\N (r, \omega_2) \vdash^\star_{\A_2} (p,\varepsilon)$.
-  % \end{enumerate}
-  % \marginpar{\writedown Разгледайте и случая, когато $\beta = \varepsilon$!}
-  % Нека $\alpha \in \L(\A_1)$ и $\beta = b\gamma \in \L(\A_2)$.
-  % Тогава имаме, че:
-  % \begin{enumerate}[(a)]
-  % \item
-  %   $(\qstart',\alpha) \vdash^\star_{\A_1}(f_1,\varepsilon)$, за някое $f_1 \in F_1$;
-  % \item
-  %   $(\qstart'',b\gamma) \vdash_{\A_2} (p, \gamma) \vdash^\star_{\A_2}(f_2,\varepsilon)$, за някое $p \in Q_2$ и $f_2 \in F_2$.
-  % \end{enumerate}
-  
-  % \begin{align*}
-  %   (q,\alpha b\gamma) & \vdash^\star_\N(f_1,b\gamma) & \comment\text{от (1) и (а) }\\
-  %                      & \vdash_\N(p,\gamma) & \comment\text{от деф. на $\N$ и (б)}\\
-  %                      & \vdash^\star_\N(f_2,\varepsilon) & \comment\text{от (2) и (б)}.
-  % \end{align*}
-
-  % Оттук заключаваме, че $\L(\A_1) \cdot \L(\A_2) \subseteq \L(\N)$.
-
-  % Нека сега $\alpha \in \L(\N)$, т.е.
-  % $(\qstart,\alpha) \vdash^\star_\N (p, \varepsilon)$, за някое $p \in F$.
-  % Нека $p \in F_2$.
-  % За $\alpha = a_0a_1\cdots a_{n-1}$, да разгледаме редицата $q_0,q_1,\dots,q_n$,
-  % която отговаря на някое от успешните изчисления на $\N$ върху $\alpha$, завършващи в $p$, т.е.
-  % \begin{itemize}
-  % \item
-  %   $q_0 = \qstart$;
-  % \item
-  %   $q_{i+1} \in \Delta(q_i,a_i)$;
-  % \item
-  %   $q_n = p \in F_2$.
-  % \end{itemize}
-  % От конструкцията на $\N$ следва, че редицата $(q_i)^n_{i=0}$ може да се разбие на две части:
-  % $q_i \in Q_1$ за $0 \leq i \leq l$ и $q_i \in Q_2$ за $l < i \leq n$.
-  % Тогава от конструкцията на $\N$ следва, че:
-  % \[(q_0,\alpha) \vdash^\star_{\A_1} ( q_l, a_la_{l+1}\cdots a_n) \vdash_\N (q_{l+1},a_{l+1}\cdots a_n) \vdash^\star_{\A_2} (q_n,\varepsilon).\]
-  % От конструкцията на $\N$ следва, че $q_l \in F_1$ и щом $q_{l+1} \in Q_2$, то $\delta_2(\qstart'',a_l) = q_{l+1}$.
-  % Оттук заключаваме, че $a_0a_1\cdots a_l \in \L(\A_1)$ и $a_{l+1}\cdots a_{n-1} \in \L(\A_2)$.
-
   
   Първо ще докажем, че $\L(\A_1)\cdot\L(\A_2) \subseteq \L(\N)$.
   За целта, нека разгледаме думата $\alpha \in \L(\A_1)$, където $\alpha = a_0a_1\cdots a_{l-1}$, и нека редицата $(q_i)^n_{i=0}$ описва приемащото изчисление на $\A_1$ върху думата $\alpha$.
@@ -443,8 +379,9 @@
       \node[state,accepting]              (4) [below right of=2] {$q_3$};
       \path
       (1) edge [loop above] node [above] {$b$} (1)
-      (1) edge node [above] {$a,b$} (2)
+      (1) edge node [above] {$a$} (2)
       (2) edge node [above] {$a$} (3)
+      (3) edge [loop right] node [right] {$b$} (3)
       (2) edge node [below] {$b$} (4)
       (3) edge [bend right=30] node [above] {$a$} (1)
       (4) edge [bend right=15] node [right] {$a$} (3)
@@ -463,6 +400,7 @@
       \node[state,accepting]     [below right of=1] (3) {$q_5$};
       \path
       (1) edge [bend left=15] node  [above] {$a$} (2)
+      (2) edge [loop above] node [above] {$b$} (2)
       (2) edge [bend left=15] node  [right] {$a$} (3)
       (3) edge [loop right]  node [right] {$a,b$} (3)
       (1) edge [bend right=15] node [below] {$b$} (3);
@@ -480,25 +418,30 @@
       % \begin{subfigure}[b]{0.3\textwidth}
       \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=2cm]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
-        \node[initial,state]                      (1) {$s_1$};
+        \node[initial,state]                      (1) {$q'_0$};
         \node[state] [right of=1]                 (2) {$q_1$};
         \node[state] [above right of=2]           (3) {$q_2$};
         \node[state] [below right of=2]           (4) {$q_3$};
-        \node[state] [right=4cm of 1]             (5) {$s_2$};
+        \node[state] [right=4cm of 1]             (5) {$q''_0$};
         \node[state] [above right of=5]           (6) {$q_4$};
         \node[state,accepting] [below right of=5] (7) {$q_5$};
         \path
+        (1) edge [loop above] node [above] {$b$} (1)
         (1) edge node [above]                         {$a$} (2)
         (2) edge node [above]                         {$a$} (3)
         (2) edge node [below]                         {$b$} (4)
+        (3) edge [loop right] node [right]            {$b$} (3)
+        (6) edge [loop above] node [above]            {$b$} (6)
+        (7) edge [loop right] node [right]            {$a,b$} (7)
         (3) edge [bend right=15] node [above]         {$a$} (1)
         (4) edge [bend left=15] node [below]          {$b$} (1)
+        (4) edge [bend left=15] node [left]          {$a$} (3)
         (5) edge [bend left=15] node [below]          {$a$} (6)
         (6) edge [bend left=15] node [right]          {$a$} (7)
         (5) edge [bend right=15] node [above]         {$b$} (7)
         (1) edge [dashed, bend left=45] node [above]  {$a$} (6)
         (1) edge [dashed, bend right=45] node [below] {$b$} (7)
-        (4) edge [dashed, bend left=45] node [above]  {$a$} (6)
+        (4) edge [dashed, bend left=30] node [above]  {$a$} (6)
         (4) edge [dashed, bend left=10] node [above]  {$b$} (7);
       \end{tikzpicture}
       \caption{$\L(\N) = \L(\A_1)\cdot\L(\A_2)$}
@@ -542,10 +485,9 @@
   \end{itemize}
 \end{hint}
 
-
 \begin{example}
-    За да построим автомат, който разпознава обединението на $\L(\N_1)$ и $\L(\N_2)$,
-    трябва да добавим ново начално състояние, което да свържем с наследниците на началните състояния на $\N_1$ и $\N_2$.
+    За да построим автомат, който разпознава обединението на $\L(\A_1)$ и $\L(\A_2)$,
+    трябва да добавим ново начално състояние, което да свържем с наследниците на началните състояния на $\A_1$ и $\A_2$.
     
     \begin{figure}[H]
       \center
@@ -589,49 +531,28 @@
   ако $\L(\A) = L$, то съществува $\N$, за който $\L(\N) = L^\star$.
 \end{lemma}
 \begin{proof}
-  Нека е даден автомата $\A = \pair{\Sigma,Q,\qstart,\delta,F}$, за който е изпънено, че
-  $\L(\A) = \L(\mathbf{r})$.
-  
-  Ще построим $\N = \pair{\Sigma,Q', \qstart', \Delta, F'}$, такъв че
-  \[\L(\N) = (\L(\A))^\star.\]
+  Да разгледаме автомата $\A = \pair{\Sigma,Q,\qstart,\delta,F}$.
+  Първо ще построим недетерминистичен автомат $\N = \pair{\Sigma, Q, \qstart, \Delta, F}$, такъв че
+  \[\L(\N) = (\L(\A))^+.\]
+  После ще построим недетерминистичен автомат $\N'$, за който
+  \[\L(\N') = \L(\N) \cup \{\varepsilon\} = (\L(\A))^\star.\]
 
-
-  
-
-  % Първата стъпка е да построим $\N_1 = \NFAn{1}$, такъв че 
-  % \[\L(\N_1) = \bigcup_{n\geq 1} (\L(\N))^n = \bigcup_{n\geq 1} (\L(\mathbf{r}))^n = \L(\mathbf{r^+}).\]
-  Това можем да направим по следния начин:
-  \begin{itemize}
-  \item
-    $Q' = Q \cup \{\qstart'\}$;
-  \item
-    $F' = F \cup \{\qstart'\}$;
-  \item
-    За $q \in Q$ и $a \in \Sigma$, определяме функцията на преходите $\Delta$ по следния начин:
-    \begin{align*}
-      \Delta(q,a) \df
-      \begin{cases}
-        \{\delta(q,a)\}, & \text{ако }\delta(q,a) \not\in F\\
-        \{\delta(q,a), \qstart\}, & \text{ако }\delta(q,a) \in F.
-      \end{cases}
-    \end{align*}
-    За $a \in \Sigma$,
-    \begin{align*}
-      \Delta(\qstart',a) \df
-      \begin{cases}
-        \{\delta(\qstart, a)\}, & \text{ако }\delta(\qstart,a) \not\in F\\
-        \{\delta(\qstart, a), \qstart\}, & \text{ако }\delta(\qstart,a) \in F.
-      \end{cases}
-    \end{align*}
-  \end{itemize}
-
-
+  Дефинираме функцията на преходите $\Delta$ на $\N$ по следния начин:
+  За $q \in Q$ и $a \in \Sigma$, определяме функцията на преходите $\Delta$ по следния начин:
+  \begin{align*}
+    \Delta(q,a) \df
+    \begin{cases}
+      \{\delta(q,a)\}, & \text{ако } q \not\in F\\
+      \{\delta(q,a), \delta(\qstart,a) \}, & \text{ако } q \in F.
+    \end{cases}
+  \end{align*}
+    
   Нека $\alpha = a_0a_1\cdots a_{n-1} \in \L(\N)$.
-  Това означава, че $(\qstart',\alpha) \vdash^\star_\N (f,\varepsilon)$ за някое $f \in F$.
+  Това означава, че $(\qstart,\alpha) \vdash^\star_\N (f,\varepsilon)$ за някое $f \in F$.
   Нека редицата от състояния $(q_i)^n_{i=0}$ описва едно приемащо изчисление на $\N$ върху $\alpha$, т.е.
   \begin{itemize}
   \item
-    $q_0 = \qstart'$;
+    $q_0 = \qstart$;
   \item
     $q_{i+1} \in \Delta(q_i,a_i)$;
   \item
@@ -639,123 +560,209 @@
   \end{itemize}
   \marginpar{Възможно е $l = 0$ и съответно тази подредица да е празна.}
   Да разгледаме подредицата $(q_{i_j})^{l-1}_{j = 0}$ на $(q_i)^{n}_{i=0}$ съставена от тези състояния, за които
-  \[\delta(q_{i_j}, a_{i_j}) \in F\ \&\ q_{i_j+1} = \qstart.\]
+  \[ q_{i_j} \in F\ \&\ \delta(\qstart,a_{i_j}) = q_{i_j+1}.\]
 
   Да положим:
   \begin{align*}
-    & \alpha_{i_0} \df a_0\cdots a_{i_0};\\
-    & \alpha_{i_{j+1}} \df a_{i_j+1}\cdots a_{i_{j+1}}\text{, за }0\leq j \leq l-2\\
-    & \alpha_{i_l} \df a_{i_{l-1}+1}\cdots a_n.
+    & \alpha_{i_0} \df a_0\cdots a_{i_0-1};\\
+    & \alpha_{i_{j+1}} \df a_{i_j}\cdots a_{i_{j+1}-1}\text{, за }0\leq j \leq l-2\\
+    & \alpha_{i_l} \df a_{i_{l-1}}\cdots a_{n-1}.
   \end{align*}
   Ясно е, че $\alpha = \alpha_{i_0}\alpha_{i_1}\cdots\alpha_{i_l}$.
 
   Сега можем да разбием изчислението на $\N$ върху $\alpha$ по следния начин:
   \begin{align*}
-    (\qstart',\alpha_{i_0}\alpha_{i_1}\cdots \alpha_{i_l}) & \vdash^\star_\N (q_{i_0+1}, \alpha_{i_1}\cdots \alpha_{i_l})\\
-                                                           & \vdash^\star_\N (q_{i_1+1},\alpha_{i_2}\cdots \alpha_{i_l})\\
-                                                           & \vdash^\star_\N\\
+    (q_0,\alpha_{i_0}\alpha_{i_1}\cdots \alpha_{i_l}) & \vdash^\star_\N (q_{i_0}, \alpha_{i_1}\cdots \alpha_{i_l})\\
+                                                           & \vdash^\star_\N (q_{i_1},\alpha_{i_2}\cdots \alpha_{i_l})\\
                                                            & \cdots\\
-                                                           & \vdash^\star_\N (q_{i_{l-1}+1}, \alpha_{i_l})\\
+                                                           & \vdash^\star_\N (q_{i_{l-1}}, \alpha_{i_l})\\
                                                            & \vdash^\star_\N(q_n,\varepsilon).
   \end{align*}
-
-  За $j = 0$ имаме, че:
-  \[(\qstart',\alpha_{i_0}) \vdash_\N (q_1, a_1\cdots a_{i_0}) \vdash^\star_\N (q_{i_0}, a_{i_0}) \vdash_\N (q_{i_0+1}, \varepsilon).\]
-
-  Понеже, според конструкцията на $\N$, $\delta(\qstart, a_0) = q_1$ и освен това $\delta(q_{i_0}, a_{i_0}) = p$, за някое $p \in F$, то 
-  \[(\qstart,\alpha_{i_0}) \vdash_\A (q_1, a_1\cdots a_{i_0}) \vdash^\star_\A (q_{i_0}, a_{i_0}) \vdash_\A (p, \varepsilon).\]
-  Оттук следва, че думата $\alpha_{i_0} \in \L(\A)$.
-  В случая, когато $\alpha_{i_0} = a_0$, то $\delta(\qstart,a_0) \in F$ и $q_{i_0} = \qstart$
+  Да разгледаме само първата част на изчислението:
+  \[\underbrace{(q_0,\alpha_{i_0}) \vdash^\star_\N (q_{i_0}, \varepsilon)}_{\text{само преходи от }\A}.\]
+  Понеже $q_0 = \qstart$ и $q_{i_0} \in F$, то е ясно, че $\alpha_{i_0} \in \L(\A)$.
   
+  За $j < l$, изчислението    
+  \[(q_{i_j},\alpha_{i_{j+1}}) \vdash^\star_\N (q_{i_{j+1}},\varepsilon)\]
+  може по-подробно да се запише и така:
+  \[(q_{i_j},a_{i_j}a_{i_j+1}\cdots a_{i_{j+1}-1}) \vdash_\N \underbrace{(q_{i_j+1}, a_{i_j+1}\cdots a_{i_{j+1}-1})  \vdash^\star_\N (q_{i_{j+1}},\varepsilon)}_{\text{само преходи от }\A}.\]
+  Понеже имаме, че $\delta(\qstart,a_{i_j}) = q_{i_j+1}$, то оттук следва, че:
+  \[\underbrace{(\qstart,a_{i_j}a_{i_j+1}\cdots a_{i_{j+1}-1}) \vdash_\N (q_{i_j+1}, a_{i_j+1}\cdots a_{i_{j+1}-1})}_{\text{преход от }\A}  \vdash^\star_\A (q_{i_{j+1}},\varepsilon).\]
+  Заключаваме, че
+  \[(\qstart,\alpha_{i_{j+1}}) \vdash^\star_\A (q_{i_{j+1}},\varepsilon).\]
+  Понеже $q_{i_{j+1}} \in F$, ведната следва, че $\alpha_{i_{j+1}} \in \L(\A)$.
   
-  За всяко $j$, където $0<j<l$, понеже $\delta(q_{i_j}, a_{i_j}) = p$, за някое $p \in F$, то 
-  \[(q_{i_j+1}, \alpha_{i_j}) \vdash^\star_\A (q_{i_{j+1}}, a_{i_{j+1}}) \vdash_\A (p, \varepsilon).\]
-  Понеже $q_{i_j+1} = \qstart$, то оттук следва, че думата $\alpha_{i_j} \in \L(\A)$.
+  За последната част от изчислението, имаме следното:
+  \[(q_{i_l-1}, \alpha_{i_l}) \vdash^\star_\N (q_n, \varepsilon),\]
+  което може по-подробно да се запише така:
+  \[(q_{i_{l-1}},a_{i_l}a_{i_l+1}\cdots a_{n-1}) \vdash_\N \underbrace{(q_{i_{l-1}+1}, a_{i_l+1}\cdots a_{n-1})  \vdash^\star_\N (q_n,\varepsilon)}_{\text{само преходи от }\A}.\]
+  Понеже имаме, че $\delta(\qstart,a_{i_{l-1}}) = q_{i_{l-1}+1}$, то оттук следва, че:
+  \[\underbrace{(\qstart,a_{i_l}a_{i_l+1}\cdots a_{n-1}) \vdash_\N (q_{i_{l-1}+1}, a_{i_l+1}\cdots a_{n-1})}_{\text{преход от }\A}  \vdash^\star_\A (q_n,\varepsilon).\]
+  Заключаваме, че
+  \[(\qstart,\alpha_{i_l}) \vdash^\star_\A (q_n,\varepsilon).\]
+  Понеже $q_n \in F$, ведната следва, че $\alpha_{i_l} \in \L(\A)$.
+  От всичко дотук заключваме, че $\alpha \in (\L(\A))^+$.
 
-  За $j = l$ имаме, че
-  \[(q_{i_l+1}, \alpha_{i_l}) \vdash^\star_\A (q_n, \varepsilon).\]
-  Понеже, $q_{i_{l+1}} = \qstart$ и $q_n \in F$, то $\alpha_{i_l} \in F$.
 
-  Накрая заключаваме, че $\alpha \in \L(\A)^\star$.
+  За другата посока, нека $\alpha = a_0\cdots a_{n-1} \in (\L(\A))^+$.
+  Нека дефинираме
+  \begin{align*}
+    & \alpha_{i_0} \df a_0\cdots a_{i_0-1}\\
+    & \alpha_{i_{j+1}} \df a_{i_j}\cdots a_{i_{j+1}-1}\text{ и } q_{i_{j}} \df \delta(\qstart, a_{i_j})\text{, за }0\leq j \leq l-2\\
+    & \alpha_{i_l} \df a_{i_{l-1}}\cdots a_{n-1} \text{ и } q_{i_l-1} \df \delta(\qstart, a_{i_{l-1}}),
+  \end{align*}
+  за които $\alpha_{i_j} \in \L(\A)$, за $j = 0,\dots,l$.
+  
+  Оттук получаваме следните изчисления:
+  \begin{align*}
+    &(\qstart, \alpha_{i_0}) \vdash^\star_\A (f_{0}, \varepsilon) & \comment\text{за някое }f_0 \in F\\
+    &(\qstart, \alpha_{i_1}) \vdash_\A (q_{i_0}, a_{i_0+1}\cdots a_{i_1-1}) \vdash^\star_\A (f_{1}, \varepsilon) & \comment\text{за някое }f_1 \in F\\
+    &(\qstart, \alpha_{i_2}) \vdash_\A (q_{i_1}, a_{i_1+1}\cdots a_{i_2-1}) \vdash^\star_\A (f_{2}, \varepsilon) & \comment\text{за някое }f_2 \in F\\
+    &\dots\\
+    &(\qstart, \alpha_{i_l}) \vdash_\A (q_{i_{l-1}}, a_{i_{l-1}+1}\cdots a_n) \vdash^\star_\A (f_{l}, \varepsilon). & \comment\text{за някое }f_l \in F
+  \end{align*}
+
+  За $1 \leq j < l$,
+  понеже $\delta(\qstart,a_{i_j}) = q_{i_j}$ и $f_{j-1} \in F$, то според конструкцията на $\N$,
+  \[q_{i_j} \in \Delta(f_{j-1}, a_{i_j}).\]
+  Оттук следва, че имаме следното изчисление на $\N$ върху $\alpha$:
+  \begin{align*}
+    &(\qstart, \alpha_{i_0}) \vdash^\star_\N (f_{0}, \varepsilon) & \comment\text{за някое }f_0 \in F\\
+    &(f_0, \alpha_{i_1}) \vdash_\N (q_{i_0}, a_{i_0+1}\cdots a_{i_1-1}) \vdash^\star_\N (f_{1}, \varepsilon) & \comment\text{за някое }f_1 \in F\\
+    &(f_1, \alpha_{i_2}) \vdash_\N (q_{i_1}, a_{i_1+1}\cdots a_{i_2-1}) \vdash^\star_\N (f_{2}, \varepsilon) & \comment\text{за някое }f_2 \in F\\
+    &\dots\\
+    &(f_{l-1}, \alpha_{i_l}) \vdash_\N (q_{i_{l-1}}, a_{i_{l-1}+1}\cdots a_n) \vdash^\star_\N (f_{l}, \varepsilon). & \comment\text{за някое }f_l \in F
+  \end{align*}
+  Заключаваме, че $\alpha \in \L(\N)$.
+
+  Така доказахме, че $\L(\N) = (\L(\A))^+$.
+  Сега ще построим недетерминистичен автомат
+  \[\N' = \pair{\Sigma,Q',\qstart',\Delta',F'},\]
+  такъв че
+  \[\L(\N') = \L(\N)\cup\{\varepsilon\} = (\L(\A))^+ \cup \{\varepsilon\} = (\L(\A))^\star.\]
+  \begin{itemize}
+  \item
+    $Q' = Q \cup \{\qstart'\}$;
+  \item
+    $F' = F \cup \{\qstart'\}$;
+  \item
+    $\Delta'(\qstart',a) = \Delta(\qstart,a)$, за всяко $a \in \Sigma$;
+  \item
+    $\Delta'(q,a) = \Delta(q,a)$, за всяко $a \in \Sigma$ и $q\in Q$.
+  \end{itemize}
+  Лесно се съобразява, че $\L(\N') = \L(\N)\cup\{\varepsilon\}$.
 \end{proof}
 
-
 \begin{example}
-  Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\N)^\star$.
+  Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\A)^\star$.
   
   \begin{figure}[H]
     % \center
     \begin{subfigure}[b]{0.3\textwidth}
-      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        \node[initial,state]      (1) {$s$};
-        \node[state]              (2) [right of=1] {$q_1$};
-        \node[state,accepting]    (3) [right of=2] {$q_2$};
-        \node[state,accepting]    (4) [above of=2] {$q_3$};
+        \node[initial below,state] (1) {$q_0$};
+        \node[state]               (2) [right of=1] {$q_1$};
+        \node[state,accepting]     (3) [right of=2] {$q_2$};
+        \node[state,accepting]     (4) [above of=2] {$q_3$};
+        \node[state]               (5) [above of=3] {$q_4$};
         \path
-        (1) edge node [above] {$a$} (2)
-        (1) edge [bend left=15] node [above] {$b$} (4)
-        (2) edge node [above] {$b$} (3)
-        (3) edge [bend left=45] node [below] {$a$} (1);
+        (1) edge [bend right=15] node [below] {$a$} (2)
+        (1) edge [bend left=15]  node [above] {$b$} (4)
+        (2) edge [bend left=15]  node [left] {$a$} (4)
+        (2) edge [bend right=15] node [below] {$b$} (3)
+        (5) edge [loop above]    node [above] {$a,b$} (5)
+        (4) edge [bend left=15]  node [above] {$a,b$} (5)
+        (3) edge [bend right=15] node [right] {$b$} (5)
+        (3) edge [bend left=45]  node [below] {$a$} (1);
       \end{tikzpicture}
-      \caption{автомат $\N$}
+      \caption{автомат $\A$}
     \end{subfigure}
     \hspace{2cm}
     \begin{subfigure}[b]{0.5\textwidth}
-      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        % \node[initial above,state,accepting] (0) {$s'$};
-        \node[initial, state]                (1) [below right of=0] {$s$};
-        \node[state]                         (2) [right of=1] {$q_1$};
-        \node[state,accepting]               (3) [right of=2] {$q_2$};
-        \node[state,accepting]               (4) [above of=2] {$q_3$};
+        
+        \node[initial below, state] (1) [below right of=0] {$q_0$};
+        \node[state]                (2) [right of=1] {$q_1$};
+        \node[state,accepting]      (3) [right of=2] {$q_2$};
+        \node[state,accepting]      (4) [above of=2] {$q_3$};
+        \node[state]                (5) [above of=3] {$q_4$};
         \path
-        % (0) edge [dashed, bend left=15] node [above] {$a$} (2)
-        % (0) edge [dashed, bend left=15] node [above] {$b$} (4)
         (1) edge [bend left=15] node [above] {$b$} (4)
-        (1) edge node [above] {$a$} (2)
-        (2) edge node [below] {$b$} (3)
-        (3) edge [bend left=45] node [below] {$a$} (1)
-        (3) edge [dashed, bend right=45] node [above] {$b$} (4)
-        (4) edge [dashed] node [left] {$a$} (2)
+        (1) edge [bend right=15] node [below] {$a$} (2)
+        (2) edge [bend right=15] node [below] {$b$} (3)
+        (2) edge [bend left=15]  node [left] {$a$} (4)
+        (3) edge [bend left=45]  node [below] {$a$} (1)
+        (3) edge [dashed, bend right=20] node [above] {$b$} (4)
+        (4) edge [dashed,bend left=15] node [right] {$a$} (2)
         (4) edge [dashed, loop above] node {$b$} (4)
-        (3) edge [dashed, bend right=45] node [above] {$a$} (2);        
+        (5) edge [loop above] node [above] {$a,b$} (5)
+        (4) edge [bend left=15] node [above] {$a,b$} (5)
+        (3) edge [bend right=15] node [right] {$b$} (5)
+        (3) edge [dashed, bend right=15] node [above] {$a$} (2);        
       \end{tikzpicture}
-      \caption{$\L(\N_1) = \L(\N)^+$}
+      \caption{$\L(\N) = \L(\A)^+$}
     \end{subfigure}
   \end{figure}
     
-  \marginpar{Лесно се вижда, че $\L(\N) = \{b\} \cup \{aba\}^\star \cdot ab$}
-  След като построим автомат за езика $\L(\N)^+$, трябва да приложим
-  конструкцията за обединение на автомата за езика $\L(\N)^+$ с автомата за езика $\{\varepsilon\}$.
-  Защо трябва да добавим ново начално състояние $s'$?
-  Да допуснем, че вместо това сме направили $s$ финално.
+  \marginpar{Лесно се вижда, че $\L(\A) = \{b\} \cup \{ab\}\cdot\{aba\}^\star$}
+  След като построим автомат за езика $\L(\A)^+$, трябва да приложим
+  конструкцията за обединение на автомата за езика $\L(\A)^+$ с автомата за езика $\{\varepsilon\}$.
+  Защо трябва да добавим ново начално състояние $q_0'$?
+  Да допуснем, че вместо това сме направили $q_0$ финално.
   Тогава има опасност да разпознаем повече думи. Например, думата $aba$ би се разпознала от този автомат,
-  но $aba \not\in\L(\N)^\star$.
+  но $aba \not\in\L(\A)^\star$.
   
   \begin{figure}[H]
     \centering
+    % \begin{subfigure}[b]{0.3\textwidth}
+    %   \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+    %     \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+    %     \node[initial below,state] (1) {$q_0$};
+    %     \node[state]               (2) [right of=1] {$q_1$};
+    %     \node[state,accepting]     (3) [right of=2] {$q_2$};
+    %     \node[state,accepting]     (4) [above of=2] {$q_3$};
+    %     \node[state]               (5) [above of=3] {$q_4$};
+    %     \path
+    %     (1) edge [bend right=15] node [below] {$a$} (2)
+    %     (1) edge [bend left=15]  node [above] {$b$} (4)
+    %     (2) edge [bend left=15]  node [left] {$a$} (4)
+    %     (2) edge [bend right=15] node [below] {$b$} (3)
+    %     (5) edge [loop above]    node [above] {$a,b$} (5)
+    %     (4) edge [bend left=15]  node [above] {$a,b$} (5)
+    %     (3) edge [bend right=15] node [right] {$b$} (5)
+    %     (3) edge [bend left=45]  node [below] {$a$} (1);
+    %   \end{tikzpicture}
+    %   \caption{автомат $\A$}
+    % \end{subfigure}
+    % \hspace{2cm}
     % \begin{subfigure}[b]{0.5\textwidth}
-      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        \node[initial, state, accepting]     (0) {$s'$};
-        \node[state]                         (1) [below right of=0] {$s$};
-        \node[state]                         (2) [right of=1] {$q_1$};
-        \node[state, accepting]              (3) [right of=2] {$q_2$};
-        \node[state, accepting]              (4) [above of=2] {$q_3$};
+        \node[initial, state, accepting] (0) [left above of=1] {$q'_0$};
+        \node[state] (1) [below right of=0] {$q_0$};
+        \node[state]                (2) [right of=1] {$q_1$};
+        \node[state,accepting]      (3) [right of=2] {$q_2$};
+        \node[state,accepting]      (4) [above of=2] {$q_3$};
+        \node[state]                (5) [above of=3] {$q_4$};
         \path
-        (0) edge [dashed, bend left=15] node [above] {$a$} (2)
         (0) edge [dashed, bend left=15] node [above] {$b$} (4)
+        (0) edge [dashed, bend left=15] node [above] {$a$} (2)
         (1) edge [bend left=15] node [above] {$b$} (4)
-        (1) edge node [above] {$a$} (2)
-        (2) edge node [below] {$b$} (3)
-        (3) edge [bend left=45] node [below] {$a$} (1)
-        (3) edge [dashed, bend right=45] node [above] {$b$} (4)
-        (4) edge [dashed] node [left] {$a$} (2)
+        (1) edge [bend right=15] node [below] {$a$} (2)
+        (2) edge [bend right=15] node [below] {$b$} (3)
+        (2) edge [bend left=15]  node [left] {$a$} (4)
+        (3) edge [bend left=45]  node [below] {$a$} (1)
+        (3) edge [dashed, bend right=20] node [above] {$b$} (4)
+        (4) edge [dashed,bend left=15] node [right] {$a$} (2)
         (4) edge [dashed, loop above] node {$b$} (4)
-        (3) edge [dashed, bend right=45] node [above] {$a$} (2);        
+        (5) edge [loop above] node [above] {$a,b$} (5)
+        (4) edge [bend left=15] node [above] {$a,b$} (5)
+        (3) edge [bend right=15] node [right] {$b$} (5)
+        (3) edge [dashed, bend right=15] node [above] {$a$} (2);        
       \end{tikzpicture}
-      \caption{$\L(\hat\N) = \L(\N)^\star = \L(\N)^+ \cup \{\varepsilon\}$}    
+      \caption{$\L(\N') = \L(\N) \cup \{\varepsilon\} = \L(\A)^\star$}    
   \end{figure}
 
 \end{example}
