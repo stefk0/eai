@@ -55,11 +55,10 @@
   \item
     Нека $\beta = \gamma b$, където $|\gamma| = n$.
     \begin{align*}
-      \Delta^\star(R, \alpha\gamma b) & = \bigcup_{q \in \Delta^\star(R,\alpha\gamma)} \Delta(q, b) & \comment\text{от деф. на }\Delta^\star\\
-                                      & = \bigcup_{q \in \Delta^\star(\Delta^\star(R,\alpha),\gamma)} \Delta(q,b) & \comment\text{от И.П.}\\
-                                      & = \Delta^\star( \Delta^\star(R,\alpha), \gamma b) & \comment\text{от деф. на }\Delta^\star.
+      \Delta^\star(R, \alpha\gamma b) & = \Delta( \Delta^\star(R, \alpha\beta), b) & \comment\text{деф. на }\Delta^\star\\
+                                      & = \Delta( \Delta^\star(R, \alpha),\beta), b) \comment\text{от И.П.}\\
+                                      & = \Delta^\star( \Delta^\star(R,\alpha), \beta b). & \comment\text{деф. на }\Delta^\star
     \end{align*}
-    
   \end{itemize}
 \end{proof}
 
@@ -110,8 +109,7 @@
     За произволна буква $a\in\Sigma$ и произволно $R \subseteq Q$,
     \begin{align*}
       \delta(R,a) & = \{q\in Q\mid (\exists r\in R)[q\in\Delta(r,a)]\}\\
-                  & = \bigcup_{r\in R}\Delta(r,a)\\
-                  & = \Delta^\star(R,a).
+                  & = \bigcup_{r\in R}\Delta(r,a).
     \end{align*}
   \item
     $\qstart' = \{\qstart\}$;
@@ -133,8 +131,8 @@
     Нека сега $\alpha$ има дължина $n+1$, т.е. $\alpha = \beta a$, където $|\beta| =n$ и $a \in \Sigma$.
     Тогава:
     \begin{align*}
-      \Delta^\star(R, \beta a) & = \Delta^\star(\Delta^\star(R,\beta), a) & \comment\text{деф. на }\Delta^\star\\
-                               & = \Delta^\star(\delta^\star(R,\beta), a) & \comment\text{от И.П.}\\
+      \Delta^\star(R, \beta a) & = \bigcup_{q\in\Delta^\star(R,\beta)}\Delta(q, a) & \comment\text{деф. на }\Delta^\star\\
+                               & = \bigcup_{q\in\delta^\star(R,\beta)}\Delta(q, a) & \comment\text{от И.П.}\\
                                & = \delta( \delta^\star(R, \beta), a) & \comment\text{деф. на }\delta\\
                                & = \delta^\star( R, \beta a) & \comment\text{деф. на }\delta^\star
     \end{align*}
