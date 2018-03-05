@@ -33,10 +33,12 @@
   С $\abs{\Sigma^\star/_{\sim_\A}}$ ще означаваме броя на класовете на еквивалентност на релацията $\sim_\A$.
 \item
   Съобразете, че всяко състояние на $\A$, което е достижимо от началното състояние, определя клас на еквивалентност относно 
-  релацията $\sim_\A$. Това означава, че ако за всяка дума означим  $q_\alpha = \delta^\star_\A(s,\alpha)$, то
-  $\alpha \sim_\A \beta$ точно тогава, когато $q_\alpha = q_\beta$. Заключаваме, че броят на класовете на еквивалентност
-  на $\sim_\A$ е равен на броя на достижимите от $s$ състояния. Следователно,
-  \[|\Sigma^\star/_{\sim_\A}| \leq |Q^\A|.\]
+  релацията $\sim_\A$. Това означава, че функцията $g:\Sigma^\star/_\A \to Q$, където
+  \[g([\alpha]_\A) \df \delta^\star(\qstart,\alpha)\]
+  е инекция. Следователно,
+  \[|\Sigma^\star/_{\sim_\A}| \leq |Q|.\]
+  Ако в автомата $\A$ няма недостижими от $\qstart$ състояния, то $g$ е биекция и съответно
+  \[|\Sigma^\star/_{\sim_\A}| = |Q|.\]
 \item
   Релациите $\approx_\L$ и $\sim_\A$ са дясно-инвариантни, т.е. за всеки две думи $\alpha$ и $\beta$
   е изпълнено:
@@ -46,96 +48,63 @@
   \end{align*}
 \end{itemize}
 
-\begin{prop}
-  $\alpha \in L \iff [\alpha]_L \subseteq L$.
-\end{prop}
+\begin{problem}
+  Докажете, че за всяка дума $\alpha \in \Sigma^\star$,
+  \[\alpha \in L \iff [\alpha]_L \subseteq L.\]
+\end{problem}
+
+% \begin{remark}
+%   Нека $\A$ е детерминистичен краен автомат.
+%   Тогава функцията $g:\Sigma^\star/_{\sim_\A} \to Q$, където
+%   \[g([\alpha]_\A) \df \delta^\star(\qstart, \alpha)\]
+%   е инективна.
+%   Ако $\A$ няма недостожими състояния, то функцията $g$ е биективна.
+%   Това означава, че тогава $|Q| = |\Sigma^\star/_{\sim_\A}|$.
+% \end{remark}
 
 \begin{prop}
   \label{pr:rel-finer}
-  Нека $\A = \FA$ е ДКА и $L = \L(\A)$.
-  Тогава
+  Нека $\A = \FA$ е ДКА и $L = \L(\A)$. Тогава
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
-  Това означава, че
-  $[\alpha]_\A \subseteq [\alpha]_{L}$, за всяка дума $\alpha \in \Sigma^\star$.
 \end{prop}
 \begin{proof}
   Нека $\alpha \sim_\A \beta$, т.е. $\delta^\star(\qstart, \alpha) = \delta^\star(\qstart,\beta)$.
   Ще проверим, че  $\alpha \approx_{L} \beta$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$.
   За произволно $\gamma \in \Sigma^\star$ имаме:
   \begin{align*}
-    \gamma \in \alpha^{-1}(L) & \dff \alpha\gamma \in L\\
+    \gamma \in \alpha^{-1}(L) & \iff \alpha\gamma \in L\\
                               & \iff \alpha\gamma \in \L(\A) & \comment{L = \L(\A)}\\
                               & \iff \delta^\star(\qstart,\alpha\gamma)\in F & \comment{L = \L(\A)}\\
-                              & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment{\text{по деф. на }\delta^\star}\\
+                              & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment{\text{деф. на }\delta^\star}\\
                               & \iff \delta^\star(\delta^\star(\qstart,\beta),\gamma) \in F & \comment{\text{защото }\alpha \sim_\A \beta}\\
                               & \iff \delta^\star(\qstart,\beta\gamma) \in F & \comment{\text{свойство на }\delta^\star}\\
-                              & \dff \beta\gamma \in \L(\A)\\
+                              & \iff \beta\gamma \in \L(\A) & \comment\text{деф. на }\L(\A)\\
                               & \iff \beta\gamma \in L & \comment{L = \L(\A)} \\
-                              & \dff \gamma \in \beta^{-1}(L)
+                              & \iff \gamma \in \beta^{-1}(L)
   \end{align*}
   Заключаваме, че 
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
 \end{proof}
 
 \begin{cor}
-  За всяка дума $\alpha$ имаме, че:
-  \[[\alpha]_\A \subseteq [\alpha]_L.\]
-\end{cor}
-
-
-\begin{prop}
-  Нека $\A$ е тотален ДКА и нека $L = \L(\A)$.
-  Тогава за всяка дума $\alpha$,
-  \[[\alpha]_{L} = \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
-\end{prop}
-\begin{proof}
-  Нека $\beta \in [\alpha]_L$. Тогава 
-  \[\beta \in [\beta]_\A \subseteq [\beta]_L = [\alpha]_L.\]
-  Заключаваме, че
-  \[[\alpha]_L \subseteq \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
-
-  Обратно, нека $\gamma \in [\beta]_\A$, където $\beta \in [\alpha]_L$.
-  Тогава 
-  \[\gamma \in [\beta]_\A \subseteq [\beta]_L = [\alpha]_L.\]
-  Заключаваме, че
-  \[\bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A \subseteq [\alpha]_L.\]
-\end{proof}
-
-
-\begin{cor}
   \label{cor:approx-less-sim}
-  Нека $\A$ е тотален ДКА и нека $L = \L(\A)$.
+  Нека $\A$ е ДКА и нека $L = \L(\A)$.
   Тогава 
   \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
 \end{cor}
 \begin{hint}
-  Функцията $f([\alpha]_\A) = [\alpha]_L$ е сюрекция.
+  Да разгледаме функцията $f: \Sigma^\star/_{\approx_L} \to \Sigma^\star/_{\sim_\A}$, където
+  \[f([\alpha]_L) \df [\alpha]_\A.\]
+  Директно от \Prop{rel-finer} се съобразява, че
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\ [\alpha]_L \neq [\beta]_L\ \implies f([\alpha]_\A) \neq f([\beta]_\A)\ ],\]
+  откъдето следва, че $f$ е инективна функция.
 \end{hint}
-% \begin{hint}
-%   Да разгледаме изображението 
-%   \[f([\alpha]_L) \df \{[\gamma]_\A \mid \gamma \approx_L \alpha\}.\]
-%   Получаваме, че
-%   \[[\alpha]_L = \bigcup f([\alpha]_L).\]
-
-%   \begin{itemize}
-%   \item
-%     Ясно е, че за всяко $\alpha$, $f([\alpha]_L) \neq \emptyset$, защото $[\alpha]_\A \in f([\alpha]_L)$.
-%   \item 
-%     Съобразете, че $f$ е {\bf функция}, т.е. 
-%     \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \approx_L \beta \implies f([\alpha]_L) = f([\beta]_L)].\]
-%   \item
-%     Съобразете, че 
-%     \[(\forall\alpha,\beta\in\Sigma^\star)[\alpha \not\approx_L \beta \implies f([\alpha]_L) \cap f([\beta]_L) = \emptyset].\]
-%   \item
-%     Заключете, че \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
-%   \end{itemize}
-% \end{hint}
 
 \begin{framed}
   \begin{cor}
     \label{cor:upper-bound}
-    Нека $L$ е произволен регулярен език $L$.  
-    Всеки тотален ДКА $\A$, който разпознава $L$ има свойството
+    Нека $L$ е произволен регулярен език.
+    Всеки детерминистичен краен автомат $\A$, за който $L = \L(\A)$ има свойството
     \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
     т.е. броят на класовете на еквивалентност на релацията $\approx_L$
     не надвишава броя на състоянията на автомата.
@@ -148,11 +117,39 @@
   Комбинирайки със \Cor{approx-less-sim},
   \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{\Sigma^\star/_{\sim_\A}} \leq \abs{Q}.\]
 \end{proof}
-Така получаваме {\em долна граница} за броя на състоянията в тотален автомат разпознаващ езика $L$.
+
+\begin{problem}
+  \marginpar{Съобразете, че за всяка дума $\alpha \in \Sigma^\star$, $[\alpha]_\A \subseteq [\alpha]_{L}$.}
+  Докажете, че за ДКА $\A$ и $L = \L(\A)$,
+  за всяка дума $\alpha$,
+  \[[\alpha]_{L} = \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
+\end{problem}
+
+\begin{prop}
+  \label{pr:bijection-classes}
+  Нека $L$ е произволен регулярен език и $\A$ е детерминистичен краен автомат, за който $L = \L(\A)$.
+  Ако $|Q| = |\Sigma^\star/_{\approx_L}|$, то функцията $h:\Sigma^\star/_{\approx_L} \to Q$, където
+  \[h([\alpha]_L) \df \delta^\star(\qstart,\alpha),\]
+  е биекция.
+\end{prop}
+\begin{proof}
+  Имаме, че:
+  \[|Q| = |\Sigma^\star/_{\approx_L}| \leq |\Sigma^\star/_{\sim_\A}| \leq |Q|,\]
+  откъдето следва, че
+  \[|\Sigma^\star/_{\approx_L}| = |\Sigma^\star/_{\sim_\A}| = |Q|.\]
+  Това означава, че функцията $g:\Sigma^\star/_{\sim_\A} \to Q$, където
+  \[g([\alpha]_\A) \df \delta^\star(\qstart,\alpha)\] е биекция,
+  защото $|\Sigma^\star/_{\sim_\A}| = |Q|$.
+  Освен това, функцията $f:\Sigma^\star/_{\approx_L} \to \Sigma^\star/_{\sim_\A}$, където
+  \[f([\alpha]_L) \df [\alpha]_\A\] е биекция,
+  защото знаем, че $f$ е инекция и
+  $|\Sigma^\star/_{\approx_L}| = |\Sigma^\star/_{\sim_\A}|$.
+  Оттук заключаваме, че $h = g \circ f$ е биекция, защото е композиция на две биекции.
+\end{proof}
+
+Така получаваме {\em долна граница} за броя на състоянията в краен детерминистичен автомат разпознаващ езика $L$.
 Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
 В следващия раздел ще видим, че тази долна граница може да бъде достигната.
-
-
 
 %%% Local Variables:
 %%% mode: latex
