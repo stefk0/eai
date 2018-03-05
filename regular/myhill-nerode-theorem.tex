@@ -10,10 +10,10 @@
   \end{thm}  
 \end{framed}
 \begin{proof}
-%  \marginpar{стр. 96 от \cite{papadimitriou}}
+  % \marginpar{стр. 96 от \cite{papadimitriou}}
   \marginpar{на англ. Myhill-Nerode}
   Да фиксираме регулярния език $L$.
-  Ще дефинираме тотален ДКА $\A = \FA$, разпознаващ $L$, като:
+  Ще дефинираме детерминистичен краен автомат $\M = \FA$, разпознаващ $L$, като:
   \begin{itemize}
   \item
     $Q \df \{\ [\alpha]_L\mid \alpha\in \Sigma^\star\ \}$;
@@ -29,9 +29,9 @@
   
   Първо, трябва да се уверим, че множеството от състояния $Q$ е крайно, т.е.
   релацията $\approx_L$ има крайно много класове на еквивалентност.
-  И така, тъй като $L$ е регулярен език, то той се разпознава от някой тотален ДКА $\A'$.
-  От \Cor{upper-bound} имаме, че $\abs{Q^{\A'}} \geq \abs{\Sigma^\star/_{\approx_L}}$.
-  Понеже $Q^{\A'}$ е крайно множество, то $\approx_L$ има крайно много класове и 
+  И така, тъй като $L$ е регулярен език, то той се разпознава от някой детерминистичен краен автомат $\A$.
+  От \Cor{upper-bound} имаме, че $\abs{Q^{\A}} \geq \abs{\Sigma^\star/_{\approx_L}}$.
+  Понеже $Q^{\A}$ е крайно множество, то $\approx_L$ има крайно много класове и 
   следователно $Q$ също е крайно множество.
 
   Второ, трябва да се уверим, че изображението $\delta$ задава функция, т.е. 
@@ -40,12 +40,13 @@
   Но това се вижда веднага, защото от определението на релацията $\approx_L$ следва, че
   ако $\alpha \approx_L \beta$, то за всяка буква $x$, $\alpha x \approx_L \beta x$,
   т.е. $[\alpha x]_L = [\beta x]_L$ и 
+  \marginpar{Функцията на преходите $\delta$ е дефинирана чрез произволен представител на всеки клас на еквивалентност относно $\approx_L$. Трябва да съобразим, че няма значение кой представител сме избрали.}
   \begin{align*}
     [\alpha]_L = [\beta]_L & \implies [\alpha x]_L = [\beta x]_L & \comment{\text{свойство на }\approx_L}\\
                            & \implies \delta([\alpha]_L,x) \df [\alpha x]_L = [\beta x]_L \df \delta([\beta]_L,x).
   \end{align*}
   
-  Така вече сме показали, че $\M$ е коректно зададен тотален ДКА.
+  Така вече сме показали, че $\M$ е коректно зададен детерминистичен краен автомат.
   Остава да покажем, че $\M$ разпознава езика $L$, т.е. $\L(\M) = L$.
   За целта, първо ще докажем едно помощно твърдение.
   \begin{prop}
@@ -74,10 +75,10 @@
   \end{proof}
   \noindent За да се убедим, че $L = \L(\M)$ е достатъчно да проследим еквивалентностите:
   \begin{align*}
-    \alpha\in \L(\M) & \iff \delta^\star(\qstart,\alpha) \in F & \comment{\text{от деф. на }\L(\M)}\\
+    \alpha\in \L(\M) & \iff \delta^\star(\qstart,\alpha) \in F & \comment{\text{деф. на }\L(\M)}\\
                      & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & \comment{\qstart \df [\varepsilon]_L}\\
                      & \iff \delta^\star([\varepsilon]_L,\alpha) = [\varepsilon\alpha]_L\in F & \comment{\text{от (\ref{eq:4})}}\\
-                     & \iff \alpha\in L & \comment{\text{от деф. на }F}.
+                     & \iff \alpha\in L & \comment{\text{деф. на }F}.
   \end{align*}
 \end{proof}
 
