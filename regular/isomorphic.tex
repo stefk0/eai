@@ -157,59 +157,39 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
   \begin{thm}
     \label{th:regular:isomorphic:minimal}
     Нека е даден регулярния език $L$.
-    Нека $\A = \FA$ е произволен тотален автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
+    Нека $\A = \FA$ е произволен детерминистичен краен автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
     Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
   \end{thm}  
 \end{framed}
 \begin{proof}
   Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
   Искаме да докажем, че $\A \cong \M$.
-  Понеже $\A$ е свързан, за всяко състояние $q$ можем да намерим дума $\omega_q$,
-  за която $\delta^\star(\qstart,\omega_q) = q$.
-  Да дефинираме изображението $f:Q^\A\to Q^\M$ като 
-  \[f(q) \df [\omega_q]_L.\]
-  Ще докажем, че $f$ задава изоморфизъм на $\A$ върху $\M$. 
+  Да дефинираме биекцията $h:Q^\M\to Q^\A$ както в \Prop{bijection-classes}, т.е.
+  \[h([\alpha]_L) \df \delta^\star_\A(\qstart,\alpha).\]
+  Ще докажем, че $h$ задава изоморфизъм на $\A$ върху $\M$. 
   \begin{enumerate}[(1)]
   \item
-    Първо да съобразим, че $f:Q^\A \to Q^\M$ е биекция.
-    \begin{itemize}
-    \item
-      Първо да съобразим, че ако $\delta^\star_\A(\qstart,\alpha) = q$, то $[\omega_q]_L = [\alpha]_L$.
-      Понеже $\delta^\star_\A(\qstart,\alpha) = q = \delta^\star_\A(\qstart,\omega_q)$, то $\omega_q \sim_\A \alpha$.
-      От \Prop{rel-finer} имаме, че
-      \[\omega_q \sim_\A \alpha \implies \omega_q \approx_L \alpha.\]
-      Това означава, че $[\omega_q]_L = [\alpha]_L$ и следователно $f$ е определена коректно, т.е. $f$ е {\bf функция}.
-    \item
-      Ще проверим, че $f$ е {\bf инективна}, т.е.
-      \[(\forall q_1,q_2 \in Q)[q_1\neq q_2 \implies f(q_1) \neq f(q_2)].\]
-      Да допуснем, че има състояния $q_1 \neq q_2$, за които 
-      \[f(q_1) = [\omega_{q_1}]_L = [\omega_{q_2}]_L = f(q_2).\]
-      Тогава $\omega_{q_1} \not\sim_\A \omega_{q_2}$ и $\omega_{q_1} \approx_L \omega_{q_2}$.
-      \marginpar{\writedown Обяснете!}
-      Но тогава от \Cor{upper-bound} получаваме, че $\abs{Q} = \abs{\Sigma^\star/_{\sim_\A}} > \abs{\Sigma^\star/_{\approx_L}}$,
-      което противоречи с минималността на $\A$.
-    \item
-      За да бъде $f$ {\bf сюрективна} трябва за всеки клас $[\beta]_L$ да съществува състояние $q$, за което $f(q) = [\beta]_L$.
-      Понеже $\A$ е свързан, съществува състояние $q$, за което $\delta^\star_\A(\qstart,\beta) = q$.
-      Вече се убедихме, че в този случай $\beta \approx_L \omega_q$, защото $\beta \sim_\A \omega_q$.
-      Тогава $f(q) = [\omega_q]_L = [\beta]_L$.
-    \end{itemize}
+    Вече знаем, че $h$ е биекция.
   \item
     Понеже $\delta^\star_\A(\qstart,\varepsilon) = \qstart$,
-    то е ясно, че $f(\qstart) = [\varepsilon]_L$.
+    то е ясно, че
+    \[h([\varepsilon]_L) \df \delta^\star_\A(\qstart,\varepsilon) = \qstart.\]
   \item
     Също лесно се съобразява, че
-    $q \in F^\A \iff f(q) \in F^\M$.
-  \item
-    За последно оставихме проверката, че $f$ наистина е {\bf изоморфизъм}:
     \begin{align*}
-      f(\delta_\A(q,a)) & = f(\delta_\A(\delta^\star_\A(\qstart,\omega_q),a)) & \comment{\text{от избора на }\omega_q}\\
-      & = f(\delta^\star_\A(\qstart,\omega_qa)) & \comment{\text{от деф. на }\delta^\star_\A}\\
-      & = [\omega_qa]_L & \comment{\text{от деф. на }f}\\
-      & = \delta^\star_{\M}([\varepsilon]_L, \omega_qa) & \comment{\text{от деф. на }\M}\\ 
-      & = \delta_{\M}(\delta^\star_{\M}([\varepsilon]_L, \omega_q),a) & \comment{\text{от деф. на }\delta^\star_{\M}}\\
-      & = \delta_{\M}([\omega_q]_L, a) & \comment{\text{свойство на }\delta^\star_{\M}}\\
-      & = \delta_{\M}(f(q), a) & \comment{f(q) \df [\omega_q]_L}.
+      [\alpha]_L \in F^\M & \iff [\alpha]_L \subseteq L\\
+                          & \iff \alpha \in L & \comment\text{свойство на }\approx_L\\
+                          & \iff \alpha \in \L(\A) & \comment{L = \L(\A)}\\
+                          & \iff \delta^\star_\A(\qstart,\alpha) \in F^\A & \comment\text{деф. на }\L(\A)\\
+                          & \iff h([\alpha]_L) \in F^\A. & \comment\text{деф. на }h
+    \end{align*}
+  \item
+    За последно оставихме проверката, че $h$ наистина е {\bf изоморфизъм}:
+    \begin{align*}
+      h(\delta_\M([\alpha]_L,x)) & = h([\alpha x]_L) & \comment\text{деф. на }\delta_\M\\
+                                 & = \delta^\star_\A(\qstart, \alpha x) & \comment\text{деф. на }h\\
+                                 & = \delta_\A(\delta^\star_\A(\qstart,\alpha), x) & \comment\text{деф. на }\delta^\star_\A\\
+                                 & = \delta_\A( h([\alpha]_L), x). & \comment\text{деф. на }h
     \end{align*}
   \end{enumerate}
 \end{proof}
