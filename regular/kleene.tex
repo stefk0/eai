@@ -164,13 +164,13 @@
   \end{framed}
 \end{example}
 \begin{solution}
-  $\L(\A) = \L(\mathbf{r}^3_{0,2})$.
+  $\L(\A) = \L(\mathbf{r}^3_{0,2})$, където:
   \begin{align*}
     \mathbf{r}^3_{0,2} & = \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} + \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} \cdot \underbrace{(\mathbf{r}^2_{2,2})^\star}_{\bm{(\varepsilon+a+b)^\star}} \cdot \underbrace{\mathbf{r}^2_{2,2}}_{\bm{\varepsilon+a+b}}\\
                        & = \bm{a^\star b + a^\star b \cdot (a+b)^\star \cdot (\varepsilon+a+b)} \\
                        & = \bm{a^\star b + a^\star b \cdot (a+b)^\star} & \comment \bm{r^\star} = \bm{r^\star \cdot (\varepsilon + r)}\\
-                       & = \bm{a^\star b (\varepsilon + (a+b)^\star)}\\
-                       & = \bm{a^\star b (a+b)^\star} & \comment \bm{r^\star} = \bm{\varepsilon + r^\star}.
+                       & = \bm{a^\star b (\varepsilon + (a+b)^\star)} & \comment\bm{r_1 + r_1\cdot r_2 = r_1 \cdot (\varepsilon+r_2)}\\
+                       & = \bm{a^\star b (a+b)^\star}. & \comment \bm{r^\star} = \bm{\varepsilon + r^\star}
   \end{align*}
   
   Тук използвахме, че:
@@ -178,7 +178,7 @@
     \mathbf{r}^2_{0,2} & = \mathbf{r}^1_{0,2} + \mathbf{r}^1_{0,1} \cdot (\mathbf{r}^1_{1,1})^\star \cdot \mathbf{r}^1_{1,2}\\
                        & = \bm{b + a \cdot a^\star \cdot b}\\
                        & = \bm{(\varepsilon + a^+)\cdot b} & \comment \mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star\\
-                       & = \bm{a^\star b} & \comment \mathbf{r}^\star = \bm{\varepsilon + r^+.г}
+                       & = \bm{a^\star b}. & \comment \mathbf{r}^\star = \bm{\varepsilon + r^+.г}
   \end{align*}
 \end{solution}
 

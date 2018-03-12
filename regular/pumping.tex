@@ -31,14 +31,14 @@
   Нека разделим думата $\alpha$ на три части по следния начин:
   \[x = a_1\cdots a_i,\quad y = a_{i+1}\cdots a_j,\quad z = a_{j+1}\cdots a_k.\]
   Ясно е, че $\abs{y} \geq 1$ и $\abs{xy} = j \leq p$.
-  \marginpar{\ding{45} Докажете!}
-  Освен това, лесно се съобразява, че за всяко $i \in\Nat$,
-  $xy^iz \in L$. Да разгледаме случая за $i = 0$.
+  Да разгледаме случая за $i = 0$.
   Думата $xy^0z = xz \in L$, защото имаме следното изчисление:
   \[\qstart\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{j+1}}{\rightarrow}q_{j+1}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F,\]
   защото $q_i = q_j$.
   Да разгледаме и случая $i = 2$. Тогава думата $xy^2z \in L$, защото имаме следното изчисление:
   \[\qstart\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{j+1}}{\rightarrow}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F.\]
+  \marginpar{\writedown Докажете!}
+  Вече лесно можем да съобразим, че за всяко $i \in\Nat$, $xy^iz \in L$.
 \end{hint}
 
 Практически е по-полезно да разглеждаме следната еквивалентна формулировка на лемата за покачването.
@@ -276,7 +276,8 @@
 \subsection*{Следствия от лемата за покачването}
 
 \begin{prop}
-  Езикът на автомата $\A = \FA$ е {\em непразен} е точно тогава, когато съдържа дума $\alpha, \abs{\alpha} < \abs{Q}$.
+  Езикът на автомата $\A = \FA$ е {\em непразен} точно тогава, когато съдържа дума $\alpha$,
+  за която $abs{\alpha} < \abs{Q}$.
 \end{prop}
 \begin{proof}
   Ще разгледаме двете посоки на твърдението.
@@ -346,7 +347,7 @@
   Езикът $L = \{c^ka^nb^m\mid k,n,m \in \Nat\ \&\ k = 1\implies m = n\}$
   {\bf не} е регулярен, но $P_{\text{reg}}(L)$.
 \end{example}
-\begin{proof}
+\begin{hint}
   Да допуснем, че $L$ е регулярен.
   Тогава ще следва, че 
   \[L_1 = L\cap ca^\star b^\star = \{ca^nb^n \mid n\in\Nat\}\]
@@ -381,7 +382,7 @@
     $\alpha = c^ka^nb^m$, $k \geq 3$.
     Избираме $x = \varepsilon$, $y = c$, $z = c^{k-1}a^nb^m$.
   \end{itemize}
-\end{proof}
+\end{hint}
 
 
 
