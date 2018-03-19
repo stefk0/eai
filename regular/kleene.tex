@@ -1,5 +1,5 @@
 \begin{framed}
-\begin{thm}[Клини 1951]
+\begin{thm}[Клини \cite{kleene-regular}]
   \label{th:regular-kleene}
   \index{Клини}
   Всеки автоматен език се описва с регулярен израз.
@@ -20,7 +20,7 @@
   Тогава за $n = \abs{Q}$, 
   \[L(i,j,n) = \{\alpha\in\Sigma^\star\mid \delta^\star(q_i,\alpha) = q_j\}.\]
   Така получаваме, че 
-  \[\L(\A) = \bigcup\{L(1,j,n)\mid q_j \in F\} = \bigcup_{q_j\in F}L(1,j,n).\]
+  \[\L(\A) = \bigcup\{L(0,j,n)\mid q_j \in F\} = \bigcup_{q_j\in F}L(0,j,n).\]
   Ще докажем с {\em индукция по $k$}, че за всеки три състояния $q_i,q_j,q_k \in Q$, множествата от думи $L(i,j,k)$
   се описват с регулярен израз $\mathbf{r}^k_{i,j}$.
   \begin{enumerate}[a)]
