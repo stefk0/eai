@@ -1,0 +1,76 @@
+\subsection*{Следствия от лемата за покачването}
+
+\begin{prop}
+  Езикът на автомата $\A = \FA$ е {\em непразен} точно тогава, когато съдържа дума $\alpha$,
+  за която $\abs{\alpha} < \abs{Q}$.
+\end{prop}
+\begin{proof}
+  Ще разгледаме двете посоки на твърдението.
+  \begin{description}
+  \item[$(\Rightarrow)$]
+    Нека $L$ е непразен език и нека $m = \min\{\abs{\alpha} \mid \alpha \in L\}$.
+    Ще докажем, че $m < \abs{Q}$.    
+    За целта, да допуснем, че $m \geq \abs{Q}$ и да изберем $\alpha \in L$, за която $\abs{\alpha} = m$.
+    Според доказателството на \Lem{pumping-reg}, съществува разбиване $xyz = \alpha$, 
+    такова че $xz \in L$.
+    При положение, че $\abs{y} \geq 1$, то $\abs{xz} < m$, което 
+    е противоречие с минималността на думата $\alpha$.
+    Заключаваме, че нашето допускане е грешно. Тогава $m < \abs{Q}$, откъдето следва, че 
+    съществува дума $\alpha \in L$ с $\abs{\alpha} < \abs{Q}$.
+  \item[$(\Leftarrow)$]
+    Тази посока е тривиална.
+    Ако $L$ съдържа дума $\alpha$, за която $\abs{\alpha} < \abs{Q}$,
+    то е очевидно, че $L$ е непразен език.
+  \end{description}
+\end{proof}
+
+\begin{cor}
+  \marginpar{\writedown Обяснете!}
+  Съществува алгоритъм, който проверява дали даден регулярен език е празен или не.
+\end{cor}
+
+
+\begin{cor}
+  \marginpar{$(L_1\setminus L_2) \cup (L_2 \setminus L_1) = \emptyset$?}
+  Съществува алгоритъм, който определя дали два автомата $\A_1$ и $\A_2$ разпознават един и същ език.
+\end{cor}
+
+\begin{prop}
+  Регулярният език $L$, 
+  разпознаван от КДА $\A$, е {\em безкраен} точно тогава, когато съдържа дума $\alpha, \abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
+\end{prop}
+\begin{proof}
+  Да разгледаме двете посоки на твърдението.
+  \begin{description}
+  \item[$(\Leftarrow)$]
+    Нека $L$ е регулярен език, за който съществува дума $\alpha$, такава че $\abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
+    Тогава от \Lem{pumping-reg} следва, че съществува разбиване $\alpha = xyz$ със свойството, че
+    за всяко $i \in \Nat$, $xy^iz \in L$. Следователно, $L$ е безкраен, защото $\abs{y} \geq 1$.
+  \item[$(\Rightarrow)$]
+    Нека $L$ е безкраен език и % да приемем, че няма думи $\alpha$ със
+    % свойството $\abs{Q} \leq \abs{\alpha} <  2\abs{Q}$.
+    да вземем {\em най-късата} дума $\alpha \in L$, за която $\abs{\alpha} \geq 2\abs{Q}$.
+    Понеже $L$ е безкраен, знаем, че такава дума съществува.
+    Тогава отново по \Lem{pumping-reg}, имаме следното разбиване на $\alpha$:
+    \[\alpha = xyz,\ \abs{xy} \leq \abs{Q},\ 1\leq \abs{y},\ xz \in L.\]
+    Но понеже $\abs{xyz} \geq 2\abs{Q}$, а $1 \leq \abs{y} \leq \abs{Q}$, то $\abs{xyz} > \abs{xz} \geq \abs{Q}$ и понеже избрахме $\alpha = xyz$
+    да бъде най-късата дума с дължина поне $2\abs{Q}$, заключаваме, че $\abs{Q} \leq \abs{xz} < 2\abs{Q}$ и $xz \in L$.
+  \end{description}
+\end{proof}
+
+\begin{cor}
+  \marginpar{\writedown Обяснете!}
+  Съществува алгоритъм, който проверява дали даден регулярен език е безкраен.
+\end{cor}
+
+\begin{cor}
+  \marginpar{\writedown Обяснете!}
+  Съществува алгоритъм, който проверява дали симетричната разлика на два регулярни езика е
+  крайна.
+\end{cor}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
