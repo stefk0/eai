@@ -24,6 +24,7 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
   \end{thm}  
 \end{framed}
 \begin{hint}
+  \marginpar{Съобразете, че в общия случай нямаме обратната посока на тази теорема.}
   Нека $\A' \cong_f \A''$. Първо с индукция по дължината на думата $\alpha$ ще докажем, че за произволно състояние $q \in Q'$,
   \begin{equation}
     \label{eq:3}
@@ -48,13 +49,54 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
   \end{itemize}
   Сега вече е лесно:
   \begin{align*}
-    \alpha \in \L(\A') & \dff \delta^\star_{\A'}(\qstart',\alpha) \in F' \\
-                       & \iff f(\delta^\star_{\A'}(\qstart',\alpha)) \in F'' & \comment{\text{от деф. на изоморфизъм}}\\
+    \alpha \in \L(\A') & \iff \delta^\star_{\A'}(\qstart',\alpha) \in F' & \comment\text{деф. на }\L(\A')\\
+                       & \iff f(\delta^\star_{\A'}(\qstart',\alpha)) \in F'' & \comment{q\in F'\iff f(q) \in F''}\\
                        & \iff \delta^\star_{\A''}(f(\qstart'),\alpha) \in F'' & \comment{\text{от (\ref{eq:3})}}\\
                        & \iff \delta^\star_{\A''}(\qstart'',\alpha) \in F'' & \comment{f(\qstart') \df \qstart''}\\
-                       & \dff \alpha \in \L(\A'').
+                       & \iff \alpha \in \L(\A''). & \comment\text{деф. на }\L(\A'')
   \end{align*}
 \end{hint}
+
+\begin{framed}
+  \begin{thm}
+    \label{th:regular:isomorphic:minimal}
+    Нека е даден регулярния език $L$.
+    Нека $\A = \FA$ е произволен детерминистичен краен автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
+    Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
+  \end{thm}  
+\end{framed}
+\begin{proof}
+  Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
+  Искаме да докажем, че $\A \cong \M$.
+  Да дефинираме функцията $h:\Sigma^\star/_{\approx_L} \to Q$ като
+  \[h([\alpha]_L) \df \delta^\star_\A(\qstart,\alpha).\]
+  Ще докажем, че $h$ задава изоморфизъм на $\A$ върху $\M$. 
+  \begin{enumerate}[(1)]
+  \item
+    Понеже $|\Sigma^\star/_{\approx_L}| = |Q|$, от \Prop{bijection-classes} знаем, че $h$ е биекция.
+  \item
+    Понеже $\delta^\star_\A(\qstart,\varepsilon) = \qstart$,
+    то е ясно, че
+    \[h([\varepsilon]_L) \df \delta^\star_\A(\qstart,\varepsilon) = \qstart.\]
+  \item
+    Също лесно се съобразява, че
+    \begin{align*}
+      [\alpha]_L \in F^\M & \iff [\alpha]_L \subseteq L & \comment\text{деф. на }F^\M\\
+                          & \iff \alpha \in L & \comment\text{свойство на }\approx_L\\
+                          & \iff \alpha \in \L(\A) & \comment{L = \L(\A)}\\
+                          & \iff \delta^\star_\A(\qstart,\alpha) \in F^\A & \comment\text{деф. на }\L(\A)\\
+                          & \iff h([\alpha]_L) \in F^\A. & \comment\text{деф. на }h
+    \end{align*}
+  \item
+    За последно оставихме проверката, че $h$ наистина е {\bf изоморфизъм}:
+    \begin{align*}
+      h(\delta_\M([\alpha]_L,x)) & = h([\alpha x]_L) & \comment\text{деф. на }\delta_\M\\
+                                 & = \delta^\star_\A(\qstart, \alpha x) & \comment\text{деф. на }h\\
+                                 & = \delta_\A(\delta^\star_\A(\qstart,\alpha), x) & \comment\text{деф. на }\delta^\star_\A\\
+                                 & = \delta_\A( h([\alpha]_L), x). & \comment\text{деф. на }h
+    \end{align*}
+  \end{enumerate}
+\end{proof}
 
 \index{Бжозовски}
 Нека е даден регулярен език $L$ над азбуката $\Sigma$.
@@ -63,11 +105,15 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
 \item 
   $Q^\B \df \{\alpha^{-1}(L) \mid \alpha \in \Sigma^\star\}$;
 \item
-  $\qstart^\B \df L$;
+  $\qstart^\B \df L = \varepsilon^{-1}(L)$;
 \item
-  $F^\B \df \{N \in Q^\B \mid \varepsilon \in N\}$;
+  $F^\B \df \{\alpha^{-1}(L) \mid \alpha \in L\} = \{N \in Q^\B \mid \varepsilon \in N\}$;
 \item
   $\delta_\B(N,x) \df x^{-1}(N)$, за произволни $x \in \Sigma$ и $N \in Q^\B$.
+  С други думи,
+  \begin{align*}
+    \delta_\B(\alpha^{-1}(L),x) = x^{-1}(\alpha^{-1}(L)) = (\alpha x)^{-1}(L).
+  \end{align*}
 \end{itemize}
 
 Да припомним конструкцията на минималния автомат $\M$ според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}.
@@ -151,49 +197,6 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
 \begin{cor}
   Автоматът $\B$, построен по метода на Бжожовски, за регулярния език $L$ е минимален.
 \end{cor}
-
-
-\begin{framed}
-  \begin{thm}
-    \label{th:regular:isomorphic:minimal}
-    Нека е даден регулярния език $L$.
-    Нека $\A = \FA$ е произволен детерминистичен краен автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
-    Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
-  \end{thm}  
-\end{framed}
-\begin{proof}
-  Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
-  Искаме да докажем, че $\A \cong \M$.
-  Да дефинираме биекцията $h:Q^\M\to Q^\A$ както в \Prop{bijection-classes}, т.е.
-  \[h([\alpha]_L) \df \delta^\star_\A(\qstart,\alpha).\]
-  Ще докажем, че $h$ задава изоморфизъм на $\A$ върху $\M$. 
-  \begin{enumerate}[(1)]
-  \item
-    Вече знаем, че $h$ е биекция.
-  \item
-    Понеже $\delta^\star_\A(\qstart,\varepsilon) = \qstart$,
-    то е ясно, че
-    \[h([\varepsilon]_L) \df \delta^\star_\A(\qstart,\varepsilon) = \qstart.\]
-  \item
-    Също лесно се съобразява, че
-    \begin{align*}
-      [\alpha]_L \in F^\M & \iff [\alpha]_L \subseteq L\\
-                          & \iff \alpha \in L & \comment\text{свойство на }\approx_L\\
-                          & \iff \alpha \in \L(\A) & \comment{L = \L(\A)}\\
-                          & \iff \delta^\star_\A(\qstart,\alpha) \in F^\A & \comment\text{деф. на }\L(\A)\\
-                          & \iff h([\alpha]_L) \in F^\A. & \comment\text{деф. на }h
-    \end{align*}
-  \item
-    За последно оставихме проверката, че $h$ наистина е {\bf изоморфизъм}:
-    \begin{align*}
-      h(\delta_\M([\alpha]_L,x)) & = h([\alpha x]_L) & \comment\text{деф. на }\delta_\M\\
-                                 & = \delta^\star_\A(\qstart, \alpha x) & \comment\text{деф. на }h\\
-                                 & = \delta_\A(\delta^\star_\A(\qstart,\alpha), x) & \comment\text{деф. на }\delta^\star_\A\\
-                                 & = \delta_\A( h([\alpha]_L), x). & \comment\text{деф. на }h
-    \end{align*}
-  \end{enumerate}
-\end{proof}
-
 
 
 
