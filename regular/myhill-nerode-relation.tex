@@ -49,7 +49,7 @@
 \end{itemize}
 
 \begin{problem}
-  Докажете, че за всяка дума $\alpha \in \Sigma^\star$,
+  Докажете, че за всяка дума $\alpha \in \Sigma^\star$ е изпълнено, че:
   \[\alpha \in L \iff [\alpha]_L \subseteq L.\]
 \end{problem}
 
@@ -86,38 +86,6 @@
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
 \end{proof}
 
-\begin{cor}
-  \label{cor:approx-less-sim}
-  Нека $\A$ е ДКА и нека $L = \L(\A)$.
-  Тогава 
-  \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
-\end{cor}
-\begin{hint}
-  Да разгледаме функцията $f: \Sigma^\star/_{\approx_L} \to \Sigma^\star/_{\sim_\A}$, където
-  \[f([\alpha]_L) \df [\alpha]_\A.\]
-  Директно от \Prop{rel-finer} се съобразява, че
-  \[(\forall \alpha,\beta \in \Sigma^\star)[\ [\alpha]_L \neq [\beta]_L\ \implies f([\alpha]_\A) \neq f([\beta]_\A)\ ],\]
-  откъдето следва, че $f$ е инективна функция.
-\end{hint}
-
-\begin{framed}
-  \begin{cor}
-    \label{cor:upper-bound}
-    Нека $L$ е произволен регулярен език.
-    Всеки детерминистичен краен автомат $\A$, за който $L = \L(\A)$ има свойството
-    \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
-    т.е. броят на класовете на еквивалентност на релацията $\approx_L$
-    не надвишава броя на състоянията на автомата.
-  \end{cor}  
-\end{framed}
-\begin{proof}
-  Да изберем $\A$, който разпознава $L$. % да бъде такъв, че да {\em няма недостижими състояния}.
-  Тъй като всяко достижимо състояние на $\A$ определя клас на еквивалентност относно $\sim_\A$,
-  то получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} \leq |Q|$.
-  Комбинирайки със \Cor{approx-less-sim},
-  \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{\Sigma^\star/_{\sim_\A}} \leq \abs{Q}.\]
-\end{proof}
-
 \begin{problem}
   \marginpar{Съобразете, че за всяка дума $\alpha \in \Sigma^\star$, $[\alpha]_\A \subseteq [\alpha]_{L}$.}
   Докажете, че за ДКА $\A$ и $L = \L(\A)$,
@@ -125,6 +93,54 @@
   \[[\alpha]_{L} = \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
 \end{problem}
 
+\begin{problem}
+  Нека $A$ и $B$ са крайни множества, за които съществува сюрективна функция $f: A \to B$.
+  Тогава $|B| \leq |A|$.
+\end{problem}
+
+\begin{prop}
+  \label{pr:approx-less-sim}
+  Нека $\A$ е ДКА и нека $L = \L(\A)$.
+  Тогава 
+  \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
+\end{prop}
+\begin{hint}
+  Да разгледаме функцията $f: \Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$, където
+  \[f([\alpha]_\A) \df [\alpha]_L.\]
+  Директно от \Prop{rel-finer} се съобразява, че
+  \[(\forall \alpha,\beta \in \Sigma^\star)[\ [\alpha]_\A = [\beta]_\A\ \implies f([\alpha]_\A) = f([\beta]_\A)\ ],\]
+  откъдето следва, че $f$ е добре дефинирана.
+  Ясно е, че $f$ е сюрективна функция.
+  Оттук следва, че
+  \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
+\end{hint}
+
+\begin{framed}
+  \begin{prop}
+    \label{pr:upper-bound}
+    Нека $L$ е произволен регулярен език.
+    Всеки детерминистичен краен автомат $\A$, за който $L = \L(\A)$ има свойството
+    \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
+    т.е. броят на класовете на еквивалентност на релацията $\approx_L$
+    не надвишава броя на състоянията на автомата.
+  \end{prop}  
+\end{framed}
+\begin{proof}
+  Да изберем $\A$, който разпознава $L$. % да бъде такъв, че да {\em няма недостижими състояния}.
+  Тъй като всяко достижимо състояние на $\A$ определя клас на еквивалентност относно $\sim_\A$,
+  то получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} \leq |Q|$.
+  Комбинирайки със \Prop{approx-less-sim},
+  \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{\Sigma^\star/_{\sim_\A}} \leq \abs{Q}.\]
+\end{proof}
+
+
+Така получаваме {\em долна граница} за броя на състоянията в краен детерминистичен автомат разпознаващ езика $L$.
+Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
+В следващия раздел ще видим, че тази долна граница може да бъде достигната.
+
+
+Ще завършим с едно твърдение, което ще ни бъде полезно по-нататък, когато искаме да докажем, че за всеки регулярен език съществува
+единствен минимален краен детерминистичен автомат.
 \begin{prop}
   \label{pr:bijection-classes}
   Нека $L$ е произволен регулярен език и $\A$ е детерминистичен краен автомат, за който $L = \L(\A)$.
@@ -140,16 +156,11 @@
   Това означава, че функцията $g:\Sigma^\star/_{\sim_\A} \to Q$, където
   \[g([\alpha]_\A) \df \delta^\star(\qstart,\alpha)\] е биекция,
   защото $|\Sigma^\star/_{\sim_\A}| = |Q|$.
-  Освен това, функцията $f:\Sigma^\star/_{\approx_L} \to \Sigma^\star/_{\sim_\A}$, където
-  \[f([\alpha]_L) \df [\alpha]_\A\] е биекция,
-  защото знаем, че $f$ е инекция и
-  $|\Sigma^\star/_{\approx_L}| = |\Sigma^\star/_{\sim_\A}|$.
-  Оттук заключаваме, че $h = g \circ f$ е биекция, защото е композиция на две биекции.
+  От \Prop{approx-less-sim} имаме, че функцията $f:\Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$, където
+  \[f([\alpha]_\A) \df [\alpha]_L\] е биекция,
+  защото знаем, че $f$ е сюрекция и $|\Sigma^\star/_{\approx_L}| = |\Sigma^\star/_{\sim_\A}|$.
+  Оттук заключаваме, че $h = g \circ f^{-1}$ е биекция, защото е композиция на две биекции.
 \end{proof}
-
-Така получаваме {\em долна граница} за броя на състоянията в краен детерминистичен автомат разпознаващ езика $L$.
-Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
-В следващия раздел ще видим, че тази долна граница може да бъде достигната.
 
 %%% Local Variables:
 %%% mode: latex
