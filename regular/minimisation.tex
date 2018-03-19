@@ -1,19 +1,22 @@
 \section{Алгоритъм за строене на минимален автомат}
 \begin{itemize}
 \item
-  Да фиксираме произволен тотален ДКА $\A = \FA$.
+  Да фиксираме произволен детерминистичен краен автомат
+  \[\A = \FA.\]
 \item
   За състояние $p$ в автомата $\A$, да означим с $\L_\A(p)$ езикът, който се разпознава от автомата $\A$,
   ако приемем, че $p$ е началното състояние на автомата, т.е.
   \[\L_\A(p) \df \{\omega \in \Sigma^\star \mid \delta^\star(p,\omega) \in F\}.\]
   В частност, $\L(\A) = \L_\A(\qstart)$.
 \item
+  \marginpar{Може да е малко объркващо, но релацията $\equiv_\A$ няма нищо общо с релацията $\sim_\A$.
+  Релацията $\sim_\A$ е върху думи, докато $\equiv_\A$ е върху състояния.}
   Сега дефинираме следната релация между състояния на автомата $\A$:
   \[p \equiv_\A q\ \dff\ \L_\A(p) = \L_\A(q).\]
   Това означава, че $p \equiv_\A q$ точно тогава, когато
   \begin{equation}
     \label{eq:1}
-    (\forall \omega\in \Sigma^\star)[\delta^\star(p,\omega) \in F\ \iff\ \delta^\star(q,\omega) \in F].
+    (\forall \omega\in \Sigma^\star)[\ \delta^\star(p,\omega) \in F\ \iff\ \delta^\star(q,\omega) \in F\ ].
   \end{equation}
 \item
   Релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност. 
@@ -22,10 +25,15 @@
   \[Q/_{\equiv_\A} \df \{[q]_{\equiv_\A} \mid q \in Q\}.\]
 \end{itemize}
 
+\begin{problem}
+  Докажете, че
+  \[[q]_{\equiv_\A} \cap F \neq \emptyset \iff [q]_{\equiv_\A} \subseteq F.\]
+\end{problem}
+
 \begin{framed}
   \begin{prop}
     \label{pr:equal-number}
-    Нека $\A = \FA$ е тотален ДКА {\em без недостижими състояния от} $\qstart$.
+    Нека $\A = \FA$ е детерминистичен краен автомат {\em без недостижими състояния от} $\qstart$.
     Тогава
     \[\abs{Q/_{\equiv_\A}} = \abs{\Sigma^\star/_{\approx_{\L(\A)}}}.\]  
   \end{prop}  
@@ -53,42 +61,38 @@
   е биекция.  
 \end{hint}
 
-\begin{problem}
-  Докажете, че
-  \[[q]_{\equiv_\A} \cap F \neq \emptyset \iff [q]_{\equiv_\A} \subseteq F.\]
-\end{problem}
-
-
-При даден език $L$ и тотален ДКА $\A = \FA$, който го разпознава, нашата цел е да построим нов ДКА $\A_0$,
-който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_\L$.
+При даден език $L$ и тотален ДКА $\A = \FA$, който го разпознава, целта ни е да построим нов ДКА $\M$,
+който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_L$.
 Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
-Това означава, че всяко състояние на $\A_0$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
-Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \gamma \in \Sigma^\star$
+Според \Prop{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
+Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \omega \in \Sigma^\star$
 във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
 
-Да фиксираме автомата $\A$ и $L = \L(\A)$.
 Да означим 
 \[\L^n_\A(p) \df \{\omega \in \Sigma^\star \mid \abs{\omega} \leq n\ \&\ \delta^\star(p,\omega) \in F\}.\]
 Лесно се съобразява, че
+\marginpar{Можем ли да дадем горна граница на $n$?}
 \[L(\A) = \bigcup_{n\geq 0} \L^n_\A(\qstart).\]
 
 За всяко естествено число $n$, дефинираме бинарните релации $\equiv_n$ върху $Q$ по следния начин:
 \[p \equiv_n q \dff \L^n_\A(p) = \L^n_\A(q).\]
 
-% Алгоритъмът представлява намирането на релации $\equiv_n$, където
-% \[p\equiv_n q \iff (\forall\gamma\in\Sigma^\star)[\abs{\gamma}\leq n\ \rightarrow\ (\delta^\star(p,\gamma) \in F\ \iff\ \delta^\star(q,\gamma) \in F)].\]
 Релациите $\equiv_n$ представляват апроксимации на релацията $\equiv_\A$.
 Обърнете внимание, че за всяко $n$, $\equiv_n$ е {\em по-груба} релация от $\equiv_{n+1}$, 
 която на свой ред е по-груба от $\equiv_\A$.
-Алгоритъмът строи $\equiv_n$ докато не срещнем $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
+Алгоритъмът строи $\equiv_n$ докато не срещнем $n$, за което
+\[\equiv_n\ =\ \equiv_{n+1}.\]
 Тъй като броят на класовете на еквивалентност на $\equiv_\A$ е краен (той е $\leq \abs{Q}$), то 
 със сигурност ще намерим такова $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
-Тогава заключаваме, че $\equiv_\A\ =\ \equiv_n$.
+Тогава заключаваме, че за това $n$ имаме, че
+\[\equiv_\A\ =\ \equiv_n.\]
 
 Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
 лесно се съобразява, че $\equiv_0$ има два класа на еквивалентност.
 Единият е $F$, а другият е $Q\setminus F$.
 
+Вече имаме базовия случай за $n=0$.
+Да видим сега как можем да намерим $\equiv_{n+1}$ при положение, че вече сме намерили $\equiv_n$.
 \begin{framed}
   \begin{prop}
     \label{pr:one-letter-test}
@@ -105,10 +109,30 @@
   \marginpar{\cite[стр. 99]{papadimitriou}}
   \begin{align*}
     p \equiv_{n+1} q & \iff \L^{n+1}_\A(p) = \L^{n+1}_\A(q)\\
-    & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))]\\
-    & \iff p \equiv_n q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv_n \delta(q,a)].
+                     & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))]\\
+                     & \iff p \equiv_n q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv_n \delta(q,a)].
   \end{align*}
 \end{hint}
+
+\begin{problem}
+  Докажете, че ако $\equiv_n\ =\ \equiv_{n+1}$, то
+  \[(\forall m \geq n)[\ \equiv_n\ =\ \equiv_m\ ].\]
+\end{problem}
+
+\begin{problem}
+  Докажете, че ако $\equiv_n\ =\ \equiv_{n+1}$, то
+  \[\equiv_n\ =\ \equiv_\A.\]
+\end{problem}
+
+\begin{problem}
+  Докажете, че ако $n \geq |Q|$, то
+  \[\equiv_n\ =\ \equiv_\A.\]
+\end{problem}
+
+\begin{problem}
+  Докажете, че за произволни $p,q \in Q$ и произволно $a\in\Sigma$,
+  \[p \equiv_\A q \implies \delta(p,a) \equiv_\A \delta(q,a).\]
+\end{problem}
 
 Нека е даден автомата $A = \FA$.
 След като сме намерили релацията $\equiv_\A$ за $\A$, 
@@ -132,15 +156,15 @@
 \begin{hint}
   Лесно се съобразява, че $\L(\A) = \L(\A')$.
   От \Prop{equal-number} знаем, че $|Q'| = |\Sigma^\star/_{\approx_{\L(\A)}}|$.
-  Тогава от \Cor{upper-bound} следва, че $\A'$ е минимален автомат.
+  Тогава от \Prop{upper-bound} следва, че $\A'$ е минимален автомат.
 \end{hint}
 
 \begin{example}
   Да разгледаме следния краен детерминиран автомат $\A$.
   \marginpar{$\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
-    \begin{figure}[H]
+  \begin{framed}
+  \begin{figure}[H]
       \begin{subfigure}[b]{0.45\textwidth}
-        \begin{framed}
         \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
           \tikzstyle{every state}=[circle,minimum size=20pt,auto]
           
@@ -164,12 +188,10 @@
           (5) edge [loop above]   node [above] {$a,b$}  (5);
         \end{tikzpicture}
         \caption{Ще построим минимален автомат разпознаващ $\L(\A)$}
-        \end{framed}
       \end{subfigure}
       \quad
       \quad
       \begin{subfigure}[b]{0.4\textwidth}
-      \begin{framed}
         \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto,scale=.9]
         
@@ -182,11 +204,11 @@
         (1) edge [bend left=15] node [above] {$a,b$}   (2)
         (2) edge [loop above] node [above] {$a,b$}   (2);
       \end{tikzpicture}
-      \caption{Получаваме минималния автомат $\A_0$, $\L(\A_0) = \L(\A)$}
+      \caption{Получаваме минималния автомат $\M$, $\L(\M) = \L(\A)$}
       \label{sub:min1}
-    \end{framed}
     \end{subfigure}
   \end{figure}
+\end{framed}
 
 
 Ще приложим алгоритъма за минимизация за да получим минималния автомат за езика $L$.
@@ -299,7 +321,7 @@
         (2) edge [bend left=15] node [above] {$a,b$}   (3)
         (3) edge [loop above]   node [above] {$a,b$}   (3);
       \end{tikzpicture}
-      \caption{Получаваме минималния автомат $\A_0$, $\L(\A_0) = \L(\A)$}
+      \caption{Получаваме минималния автомат $\M$, $\L(\M) = \L(\A)$}
       \label{sub:min2}
     \end{subfigure}
   \end{figure}
