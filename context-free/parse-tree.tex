@@ -1,0 +1,55 @@
+\section{Дървета на извод}
+
+
+
+\begin{itemize}
+\item
+  Крайното множество $P \subseteq \{0,1,\dots,b-1\}^\star$ се нарича {\bf дърво},
+  ако $P$ е затворено относно префикси, т.е.
+  \[\alpha \in P\ \&\ \beta \prec \alpha\ \implies\ \beta \in P.\]
+\item
+  Дефинираме $\texttt{height}(P) = \max\{\abs{\alpha}\ \mid\ \alpha \in P\}$.
+\item
+  Да дефинираме
+  \[Ext(\alpha) = \{ i < b \mid \alpha i \in P\}.\]
+\item
+  Дървото $P$, заедно с функцията $f:P \to V \cup \Sigma$ се нарича дърво на извод съвместимо с $G$, ако:
+  \begin{itemize}
+  \item
+    Да означим $f(\alpha) = X_\alpha \in V \cup \Sigma \cup \{\varepsilon\}$.
+  \item
+    Ако $\alpha i \in P$, то $\alpha j \in P$ за всяко $j < i$.
+  \item
+    $\alpha \in P$ и $Ext(\alpha) \neq \emptyset$, то $X_\alpha \in V$ и за $i = \max\{ j < b\mid j \in Ext(\alpha)\}$,
+    \[X_\alpha \to_G X_{\alpha 0} X_{\alpha 1} \cdots X_{\alpha i}.\] 
+  \end{itemize}
+\item
+  Нека $\alpha_0, \alpha_1,\dots,\alpha_k$ са всички думи от множеството $\{\alpha \in P \mid Ext(\alpha) = \emptyset\}$,
+  подредени във възходящ ред относно лексикографската наредба. Тогава 
+  $\omega(P,f) = X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}$.
+\end{itemize}
+
+\begin{lemma}
+  Нека $A \to^\star_G \beta$. Тогава съществува дърво на извод $(P,f)$ съвместимо с $G$,
+  за което $\omega(P) = \beta$.
+\end{lemma}
+\begin{proof}
+  Индукция по дължината на извода $A \to^l_G \beta$.
+  \begin{itemize}
+  \item
+    $l = 0$, т.е. $A \to^0_\G A$.
+    Тогава $P = \{\varepsilon\}$ и $f(\varepsilon) = A$.
+    Ясно е, че $Ext(\varepsilon) = \emptyset$ и следователно $\omega(P) = A$.
+  \item
+    Нека $A \to^{l+1}_G \beta$.
+    Да разгледаме $A \to_G X_0X_1\cdots X_k \to^l_G \beta$.
+    Имаме, че $X_i \to^{l_i}_G \beta_i$, $\beta = \beta_0\cdots b_k$ и $l = l_0+l_1+\cdots + l_k$.
+    Тогава $P = \{ i\alpha \mid \alpha \in P_i\ \&\ i \leq k\}$,
+    
+  \end{itemize}
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
