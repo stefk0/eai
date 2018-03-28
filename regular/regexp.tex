@@ -3,16 +3,17 @@
 Да фиксираме една непразна азбука $\Sigma$.
 \index{регулярен израз}
 {\bf Регулярните изрази} $\mathbf{r}$ могат да се опишат със следната абстрактна граматика
-\[\mathbf{r} ::= \bm{\emptyset}\ |\ \bm{\varepsilon}\ |\ \mathbf{a}\ |\ \mathbf{ r_1 \cdot r_2}\ |\ \mathbf{r_1 + r_2}\ |\ \mathbf{r^\star_1},\]
-където $\varepsilon$ означава празната дума и $a$ е произволна буква от азбуката $\Sigma$.
+\[\mathbf{r} ::= \bm{\emptyset}\ |\ \bm{\varepsilon}\ |\ \mathbf{a}\ |\ \bm{r}_1 \cdot \bm{r}_2\ |\ \bm{r}_1 + \bm{r_2}\ |\ \bm{r}^\star_1.\]
 
 Регулярните изрази могат да се опишат и по следния начин:
 \marginpar{Това е пример за индуктивна дефиниция}
 \begin{itemize}
 \item 
-  Символите $\bm{\emptyset}$, $\bm{\varepsilon}$ и $\mathbf{a}$, за всяка буква $a \in \Sigma$, са регулярен изрази;
+  Символите $\bm{\emptyset}$, $\bm{\varepsilon}$ са регулярни изрази;
 \item
-  Ако $\mathbf{r_1}$ и $\mathbf{r_2}$ са регулярни изрази, то $(\mathbf{r_1} \cdot \mathbf{r_2})$, $(\mathbf{r_1} + \mathbf{r_2})$ и $\mathbf{r^\star_1}$
+  за всяка буква $a \in \Sigma$, символът $\bm{a}$ е регулярен израз;
+\item
+  ако $\mathbf{r_1}$ и $\mathbf{r_2}$ са регулярни изрази, то думите $(\bm{r}_1 \cdot \bm{r}_2)$, $(\bm{r}_1 + \bm{r}_2)$ и $\bm{r}^\star_1$
   също са регулярни изрази;
 \item
   Всеки регулярен израз е получен по някое от горните правила.
@@ -43,12 +44,12 @@
   \begin{itemize}
   \item 
     \index{регулярни операции!обединение}
-    $L_1 \cup L_2$ е регулярен език, който се описва с регулярния израз $\mathbf{r}_1 + \mathbf{r}_2$.
+    $L_1 \cup L_2$ е регулярен език, който се описва с регулярния израз $(\mathbf{r}_1 + \mathbf{r}_2)$.
     Това означава, че $\L(\mathbf{r}_1) \cup \L(\mathbf{r}_2) = \L(\mathbf{r}_1 + \mathbf{r}_2)$.
   \item
     \index{регулярни операции!конкатенация}
     \marginpar{Тази операция се нарича конкатенация. Обикновено изпускаме знака $\cdot$}
-    $L_1 \cdot L_2$ е регулярен език, който се описва с регулярния израз $\mathbf{r}_1 \cdot \mathbf{r}_2$.
+    $L_1 \cdot L_2$ е регулярен език, който се описва с регулярния израз $(\mathbf{r}_1 \cdot \mathbf{r}_2)$.
     Това означава, че $\L(\mathbf{r}_1) \cdot \L(\mathbf{r}_2) = \L(\mathbf{r}_1 \cdot \mathbf{r}_2)$.
   \item
     \marginpar{Звезда на Клини}
@@ -95,31 +96,31 @@
 \end{example}
 
 \begin{problem}
-  \marginpar{Когато пишем $\bm{r} = \bm{s}$ имаме предвид, че $\L(\bf{r}) = \L(\bm{s})$.}
+  \marginpar{Когато пишем $\bm{r} \equiv \bm{s}$ имаме предвид, че $\L(\bf{r}) = \L(\bm{s})$.}
   За произволни регулярни изрази $\bm{r}$ и $\bm{s}$, проверете дали са изпълнени следните равенства:
   \begin{enumerate}[a)]
   \item 
-    $\bm{r + s} = \bm{s + r}$;
+    $\bm{r + s} \equiv \bm{s + r}$;
   \item
-    $\bm{(\varepsilon + r)^\star} = \bm{r^\star}$;
+    $\bm{(\varepsilon + r)^\star} \equiv \bm{r^\star}$;
   \item
-    $\bm{\emptyset^\star} = \bm{\varepsilon}$;
+    $\bm{\emptyset^\star} \equiv \bm{\varepsilon}$;
   \item
-    $\bm{(r^\star s^\star)^\star} = \bm{(r+s)^\star}$;
+    $\bm{(r^\star s^\star)^\star} \equiv \bm{(r+s)^\star}$;
   \item
-    $\bm{(r^\star)^\star} = \bm{r^\star}$;
+    $\bm{(r^\star)^\star} \equiv \bm{r^\star}$;
   \item
-    $\bm{(rs + r)^\star r} = \bm{r(sr+r)^\star}$;
+    $\bm{(rs + r)^\star r} \equiv \bm{r(sr+r)^\star}$;
   \item
-    $\bm{s(rs+s)^\star r} = \bm{rr^\star s(rr^\star s)^\star}$;
+    $\bm{s(rs+s)^\star r} \equiv \bm{rr^\star s(rr^\star s)^\star}$;
   \item
-    $\bm{(r+s)^\star} = \bm{r^\star + s^\star}$;
+    $\bm{(r+s)^\star} \equiv \bm{r^\star + s^\star}$;
   \item
-    $\bm{(r+s)^\star s} = \bm{(r^\star s)^\star}$;
+    $\bm{(r+s)^\star s} \equiv \bm{(r^\star s)^\star}$;
   \item
-    $\bm{(rs + r)^\star rs} = \bm{(rr^\star s)^\star}$;
+    $\bm{(rs + r)^\star rs} \equiv \bm{(rr^\star s)^\star}$;
   \item
-    $\bm{\emptyset^\star} = \bm{\varepsilon^\star}$;
+    $\bm{\emptyset^\star} \equiv \bm{\varepsilon^\star}$;
   \end{enumerate}
 \end{problem}
 
