@@ -85,6 +85,29 @@
 \end{example}
 
 \begin{framed}
+  \begin{thm}
+    Всеки регулярен език е безконтекстен.
+  \end{thm}
+\end{framed}
+\begin{proof}
+  Ще направим индукция по построението на регулярните езици.
+  \begin{itemize}
+  \item
+    Всеки от езиците $\emptyset$, $\{\varepsilon\}$ и $\{a\}$, за всяка буква $a \in \Sigma$ е безконтекстен.
+  \item
+    Нека $L_1$ и $L_2$ са безконтекстни езици. Тогава:
+    \begin{itemize}
+    \item
+      $L_1 \cup L_2$ е безконтекстен език.
+    \item
+      $L_1 \cdot L_2$ е безконтекстен език.
+    \item
+      $L^\star_1$ е безконтекстен език.
+    \end{itemize}
+  \end{itemize}
+\end{proof}
+
+\begin{framed}
   \begin{problem}
     Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
   \end{problem}  
@@ -239,28 +262,52 @@
   \begin{align*}
     & S \to^\star \alpha b \gamma \sharp \beta a \delta\ \&\ |\alpha| = |\beta|,\\
     & S \to^\star \alpha a \gamma \sharp \beta b \delta\ \&\ |\alpha| = |\beta|, \text{ или}\\
-    & S \to^\star \alpha \sharp \beta\ \&\ |\alpha| \neq |\beta|\\
+    & S \to^\star \alpha \sharp \beta\ \&\ |\alpha| \neq |\beta|.
   \end{align*}      
 \end{hint}
-
-\begin{problem}
-  Нека $L_1$ и $L_2$ са произволни безконтекстни езици.
-  Докажете, че:
-  \begin{itemize}
-  \item 
-    $L_1 \cup L_2$ е безконтекстен език;
-  \item
-    $L_1 \cdot L_2$ е безконтекстен език;
-  \item
-    $L^\star_1$ е безконтекстен език.
-  \end{itemize}
-\end{problem}
 
 \begin{problem}
   Да разгледаме граматиката $G$ с правила
   \[S \to AA\ |\ B,\ A \to B\ |\ bb,\ B \to aa\ |\ aB.\]
   Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
+
+
+\begin{prop}
+  \label{pr:grammar:add}
+  Ако $\alpha \stackrel{n}{\to} \beta$ и $\gamma \in (V \cup \Sigma)^\star$, то $\alpha\gamma \stackrel{n}{\to} \beta \gamma$ и $\gamma\alpha \stackrel{n}{\to} \gamma \beta$.
+\end{prop}
+
+\begin{prop}
+  \label{pr:grammar:concat}
+  Ако $\alpha_1 \stackrel{n_1}{\to} \beta_1, \dots, \alpha_k \stackrel{n_k}{\to} \beta_k$, тогава $\alpha_1\cdots\alpha_k \stackrel{n}{\to} \beta_1\cdots\beta_k$,
+  където $n = \sum^k_{i=1} n_i$.
+\end{prop}
+
+\begin{prop}
+  \label{pr:grammar:divide}
+  Нека $\alpha_1\cdots \alpha_k \stackrel{n}{\to} \beta$.
+  Тогава съществуват $\beta_1,\dots,\beta_k$, такива че $\alpha_i \stackrel{n_i}{\to} \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $n = n_1 + \cdots + n_k$.
+\end{prop}
+\begin{proof}
+  Индукция по $n$.
+  \begin{itemize}
+  \item
+    Нека $n = 0$. Тогава $\beta = \alpha_1 \cdots \alpha_k$ и е ясно, че в този случай $\beta_i = \alpha_i$ и $n_i = 0$.
+  \item
+    Нека $n > 0$. Тогава за някое $i$, $\alpha_i \to \alpha'_i$ и
+    като приложим \Prop{grammar:add} получаваме, че
+    \[\alpha_1\cdots\alpha_i\cdots\alpha_k \to \alpha_1\cdots\alpha'_i\cdots\alpha_k.\]
+    Според дефиницията на релацията $\stackrel{n}{\to}$ имаме, че
+    \[\alpha_1\cdots\alpha'_i\cdots\alpha_k \stackrel{n-1}{\to} \beta.\]
+    От И.П. получаваме, че съществуват думи $\beta_1,\dots,\beta_k$, такива че $\beta = \beta_1 \cdots \beta_k$
+    и $\alpha_j \stackrel{n_j}{\to} \beta_j$ за $j \neq i$ и $\alpha'_i \stackrel{n'_i}{\to} \beta_i$, като
+    \[n-1 = n'_i + \sum_{j\neq i} n_j.\]
+    Понеже имаме, че $\alpha_i \to \alpha'_i \stackrel{n'_i}{\to} \beta_i$,
+    то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \stackrel{n_i}{\to} \beta_i$.
+  \end{itemize}
+\end{proof}
+
 
 
 %%% Local Variables: 
