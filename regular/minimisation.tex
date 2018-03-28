@@ -61,9 +61,10 @@
   \end{equation}
   защото
   \begin{align*}
-    h([\alpha]_L) = h([\beta]_L) & \iff \L_\A(\delta^\star(\qstart,\alpha)) = \L_\A(\delta^\star(\qstart,\beta))\\
+    h([\alpha]_L) = h([\beta]_L) & \iff [\delta^\star(\qstart,\alpha)]_{\equiv_\A} = [\delta^\star(\qstart,\beta)]_{\equiv_\A} & \comment\text{деф. на }h\\ 
+                                 & \iff \L_\A(\delta^\star(\qstart,\alpha)) = \L_\A(\delta^\star(\qstart,\beta)) & \comment\text{деф. на }\equiv_\A\\
                                  & \iff \alpha^{-1}(L) = \beta^{-1}(L) & \comment\text{от (\ref{eq:8})}\\
-                                 & \iff [\alpha]_L = [\beta]_L.
+                                 & \iff [\alpha]_L = [\beta]_L. & \comment\text{деф. на }\approx_L
   \end{align*}
   
   \begin{itemize}
@@ -155,19 +156,47 @@
   \[p \equiv_\A q \implies \delta(p,a) \equiv_\A \delta(q,a).\]
 \end{problem}
 
+
 Нека е даден автомата $A = \FA$.
 След като сме намерили релацията $\equiv_\A$ за $\A$, 
-строим автомата $\A' = (Q',\Sigma,\qstart',\delta',F')$, където:
+строим автомата $\A' = (\Sigma,Q',\qstart',\delta_1,F')$, където:
 \begin{itemize}
 \item
   $Q' \df \{[q]_{\equiv_\A} \mid q\in Q\}$;
 \item
   $\qstart' \df [\qstart]_{\equiv_\A}$;
 \item
-  $\delta'([q]_{\equiv_\A}, a) \df [\delta(q,a)]_{\equiv_\A}$;
+  $\delta_1([q]_{\equiv_\A}, a) \df [\delta(q,a)]_{\equiv_\A}$;
 \item
-  $F' \df \{[q]_{\equiv_\A}\mid [q]_{\equiv_\A} \subseteq F\}$;
+  $F' \df \{[q]_{\equiv_\A}\mid [q]_{\equiv_\A} \cap F \neq \emptyset\}$;
 \end{itemize}
+
+\begin{problem}
+  Докажете, че $\delta_1$ е добре дефинирана, т.е. $\delta_1$ е функция.
+\end{problem}
+
+
+\begin{prop}
+  \label{pr:minimisation-delta-1}
+  За всяко състояние $q \in Q$ и дума $\alpha$ е изпълнено, че
+  \[\delta^\star_1([q]_{\equiv_\A}, \alpha) = [\delta^\star(q,\alpha)]_{\equiv_\A}.\]
+\end{prop}
+\begin{proof}
+  Индукция по дължината на думата $\alpha$.
+  \begin{itemize}
+  \item
+    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава
+    \[\delta^\star_1([q]_{\equiv_\A},\varepsilon) = [q]_{\equiv_\A} = [\delta^\star(q,\varepsilon)]_{\equiv_\A}.\]
+  \item
+    Нека $|\alpha| > 0$, т.е. $\alpha = \beta a$. Тогава
+    \begin{align*}
+      \delta^\star_1([q]_{\equiv_\A},\beta a) & = \delta_1(\delta^\star_1([q]_{\equiv_\A},\beta),a) & \comment\text{деф. на }\delta^\star_1\\
+                                             & = \delta_1([\delta^\star(q,\beta)]_{\equiv_\A},a) & \comment\text{И.П. за }\beta\\
+                                             & = [\delta(\delta^\star(q,\beta),a)]_{\equiv_\A} & \comment\text{деф. на }\delta_1\\
+                                             & = [\delta^\star(q,\beta a)]_{\equiv_\A}. & \comment\text{деф. на }\delta^\star
+    \end{align*}
+  \end{itemize}
+\end{proof}
 
 \begin{framed}
   \begin{thm}
@@ -175,7 +204,13 @@
   \end{thm}
 \end{framed}
 \begin{hint}
-  Лесно се съобразява, че $\L(\A) = \L(\A')$.
+  Лесно се съобразява, че $\L(\A) = \L(\A')$, защото
+  \begin{align*}
+    \alpha \in \L(\A) & \iff \delta^\star(\qstart,\alpha) \in F & \comment\text{деф. на }\L(\A)\\
+                      & \iff [\delta^\star(\qstart,\alpha)]_{\equiv_\A} \in F' & \comment\text{деф. на }F'\\
+                      & \iff \delta^\star_1([\qstart]_{\equiv_\A},\alpha) \in F' & \comment\text{\Prop{minimisation-delta-1}}\\
+                      & \iff \alpha \in \L(\A'). & \comment\text{деф. на }\L(\A')
+  \end{align*}
   От \Prop{equal-number} знаем, че $|Q'| = |\Sigma^\star/_{\approx_{\L(\A)}}|$.
   Тогава от \Prop{upper-bound} следва, че $\A'$ е минимален автомат.
 \end{hint}
