@@ -4,25 +4,28 @@
 
 \begin{itemize}
 \item
-  Ако $\alpha$ е префикс на $\beta$, то означаваме с $\alpha \preceq \beta$.
+  За всеки две думи $\alpha$ и $\beta$, с $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$.
 \item
   За две думи $\alpha$ и $\beta$ ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
   \[(\exists i < \min\{|\alpha|,|\beta|\})[\ (\forall j < i)[\ \alpha[j] = \beta[j]\ ]\ \&\ \alpha[i] \neq \beta[i]\ ].\]
 \item
   Непразното множество $T \subseteq \{0,1,\dots,b-1\}^\star$ се нарича {\bf дърво},
   ако $T$ е затворено относно префикси, т.е.
-  \[\alpha \in T\ \&\ \beta \prec \alpha\ \implies\ \beta \in T.\]
+  \[(\forall \alpha, \beta)[\ \alpha \in T\ \&\ \beta \prec \alpha\ \implies\ \beta \in T\ ].\]
 \item
-  Нека $\texttt{height}(T) \df \max\{\abs{\alpha}\ \mid\ \alpha \in T\}$.
-\item
-  Нека $\texttt{ext}_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\}$.
-\item
-  Нека $\texttt{sub}_T(\alpha) \df \{\beta \mid \alpha\beta \in T\}$.
-\item
-  Нека $\texttt{front}(T) \df \{ \alpha \in T \mid \texttt{ext}_T(\alpha) = \emptyset \}$.
+  Нека да въведем следните означения:
+  \begin{align*}
+    & \texttt{height}(T) \df \max\{\ \abs{\alpha}\ \mid\ \alpha \in T\ \}\\
+    & \texttt{ext}_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\}\\
+    & T_\alpha \df \{\beta \mid \alpha\beta \in T\}\\
+    & \texttt{front}(T) \df \{ \alpha \in T \mid \texttt{ext}_T(\alpha) = \emptyset \}.
+  \end{align*}
 \item
   С всяко дърво $T$ ще асоциираме функцията $f: T \to V \cup \Sigma \cup \{\varepsilon\}$.
   Нека положим $X_\alpha \df f(\alpha)$.
+\item
+  За всяка такава функция $f$ и $\alpha \in T$, дефинираме $f_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
+  \[f_\alpha(\beta) \df f(\alpha\beta).\]
 \item
   Двойката $P = (T,f)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
@@ -34,14 +37,21 @@
     \marginpar{Тук $\alpha_i = \alpha i$.}
     Ако $\alpha \in T$ и $\texttt{ext}_T(\alpha) \neq \emptyset$, то $X_\alpha \in V$.
     Освен това, ако $\alpha_0,\dots,\alpha_k$ са всички думи от множеството $\texttt{ext}_T(\alpha)$
-    подредени във възходящ ред относно лексикографската наредба, то
+    подредени във възходящ ред относно лексикографската наредба, то имаме, че:
     \[X_\alpha \to_G X_{\alpha_0} X_{\alpha_1} \cdots X_{\alpha_k}.\] 
   \end{itemize}
 \item
   Нека $\alpha_0, \alpha_1,\dots,\alpha_k$ са всички думи от множеството $\texttt{front}(T)$
   подредени във възходящ ред относно лексикографската наредба. Тогава 
-  \[\texttt{yield}(P) = X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}.\]
+  \[\texttt{yield}(P) \df X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}.\]
+\item
+  Нека $P = (T,f)$ и $\alpha \in T$. Тогава
+  \[P_\alpha \df (T_\alpha, f_\alpha).\]
 \end{itemize}
+
+\begin{problem}
+  Докажете, че $T = \texttt{Pref}(\texttt{front}(T))$.
+\end{problem}
 
 \begin{lemma}
   Нека $T \subseteq \{0,\dots,b-1\}^\star$ е крайно дърво. Тогава
@@ -51,39 +61,39 @@
   Индукция по $\texttt{height}(T)$.
   \begin{itemize}
   \item
-    Нека $\texttt{height}(T) = 0$. Тогава е ясно, че $|\texttt{front}(T)| = 1$ и следователно $1 \leq b^0$.
+    Нека $\texttt{height}(T) = 0$. Тогава е ясно, че $|\texttt{front}(T)| = |\{\varepsilon\}| = 1 \leq b^0$.
   \item
     Нека $\texttt{height}(T) > 0$.
-    За $i \in T$, нека $T_i \df \texttt{sub}_T(i)$.
-    Ясно е, че $\texttt{height}(T_i) < \texttt{height}(T)$ и $\texttt{front}(T) = \bigcup_i \texttt{front}(T_i)$.
+    За всяко $i \in T$ е ясно, че $\texttt{height}(T_i) < \texttt{height}(T)$ и $\texttt{front}(T) = \bigcup_i \texttt{front}(T_i)$.
     Тогава
     \begin{align*}
       |\texttt{front}(T)| & = \sum_{i \in T}|\texttt{front}(T_i)| \\
-                          & \leq \sum_{i\in T}b^{\texttt{height}(T_i)}\\
+                          & \leq \sum_{i\in T}b^{\texttt{height}(T_i)} & \comment\text{от И.П.}\\
                           & \leq \sum_{i < b}b^{\texttt{height}(T_i)} \\
-                          & \leq \sum_{i < b}b^{\texttt{height}(T)-1} \\
+                          & \leq \sum_{i < b}b^{\texttt{height}(T)-1} & \comment \texttt{height}(T_i) \leq \texttt{height}(T)-1 \\
                           & = b^{\texttt{height}(T)}.
     \end{align*}
   \end{itemize}
 \end{proof}
 
-\begin{cor}
-  \label{cr:tree:upper-bound}
-  Нека $P = (T,f)$ е дърво на извод съвместимо с $G$. Тогава
-  \[|\texttt{yield}(T)| \leq b^{\texttt{height}(T)}.\]
-\end{cor}
+\begin{framed}
+  \begin{cor}
+    \label{cor:tree:upper-bound}
+    Нека $P = (T,f)$ е дърво на извод съвместимо с $G$. Тогава
+    \[|\texttt{yield}(T)| \leq b^{\texttt{height}(T)}.\]
+  \end{cor}  
+\end{framed}
 \begin{proof}
   Следва директно от горното твърдение след като съобразим, че
   \[|\texttt{yield}(P)| \leq |\texttt{front}(T)|.\]
 \end{proof}
 
-
-
-\begin{lemma}
-  Нека $X \to^\star_G \beta$, където $X \in V \cup \Sigma \cup \{\varepsilon\}$.
-  Тогава съществува дърво на извод $P = (T,f)$, за което $X_\varepsilon = X$, съвместимо с $G$,
-  за което $\texttt{yield}(P) = \beta$.
-\end{lemma}
+\begin{framed}
+  \begin{lemma}
+    Нека $X \to^\star_G \beta$.
+    Тогава съществува дърво на извод $P = (T,f)$ с корен $X$ за думата $\beta$ в $G$.
+  \end{lemma}  
+\end{framed}
 \begin{proof}
   Индукция по дължината на извода $X \stackrel{l}{\to}_G \beta$.
   \begin{itemize}
@@ -95,48 +105,91 @@
     Нека $l > 0$ и $X \stackrel{l}{\to}_G \beta$.
     Да разгледаме извода
     \[X \to_G X_0X_1\cdots X_k \stackrel{l-1}{\to}_G \beta.\]
-    От \Prop{grammar:divide} имаме, че $X_i \stackrel{l_i}{\to}_G \beta_i$, $\beta = \beta_0\cdots b_k$ и $l-1 = \sum^k_{j=1} l_j$.
-    От И.П. имаме, че същствуват дървета на извод $P_i = (T_i,f_i)$, такива че $f_i(\varepsilon) = X_i$ и $\texttt{yield}(P_i) = \beta_i$.
-    
+    От \Prop{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
+    \begin{itemize}
+    \item
+      $\beta = \beta_0 \cdots b_{k}$;
+    \item
+      $X_i \stackrel{l_i}{\to}_G \beta_i$;
+    \item
+      $l-1 = \sum^k_{j=1} l_j$.
+    \end{itemize}
+    От И.П. имаме, че същствуват дървета на извод $P^{i} = (T^i,f^i)$ съвместими с $G$, такива че:
+    \begin{itemize}
+    \item
+      $f^i(\varepsilon) = X_i$;
+    \item
+      $\texttt{yield}(P^i) = \beta_i$.
+    \end{itemize}
     Тогава дефинираме $P = (T,f)$ по следния начин:
     \begin{itemize}
     \item
-      $T \df \{ i\alpha \mid \alpha \in T_i\ \&\ i \leq k\}$;
+      $T \df \{ i\alpha \mid \alpha \in T^i\ \&\ i \leq k\}$;
     \item
-      $f(\varepsilon) \df A$;
+      $f(\varepsilon) \df X$;
     \item
-      $f(i\alpha) \df f_i(\alpha)$.
+      $f(i\alpha) \df f^i(\alpha)$.
     \end{itemize}
   \end{itemize}
 \end{proof}
 
-\begin{lemma}
-  Нека $P = (T,f)$ е дърво на извод съвместимо с $G$ и $\texttt{yield}(P) = \beta$.
-  Тогава $X_\varepsilon \to^\star_G \beta$.
-\end{lemma}
+\begin{framed}
+  \begin{lemma}
+    Нека $P = (T,f)$ е дърво на извод за думата $\beta$ в $G$.
+    Тогава $X_\varepsilon \to^\star_G \beta$.
+  \end{lemma}  
+\end{framed}
 \begin{proof}
   Индукция по $\texttt{height}(T)$.
   \begin{itemize}
   \item
     Нека $\texttt{height}(T) = 0$. Това означава, че $T = \{\varepsilon\}$ и $\texttt{yield}(P) = X_\varepsilon$.
-    Ясно е, че $X_\varepsilon \to^0_G X_\varepsilon$.
+    Ясно е, че $X_\varepsilon \to^\star_G X_\varepsilon$ и $0 < b^0$.
   \item
     Нека $\texttt{height}(T) > 0$ и $\beta = \texttt{yield}(T)$.
-    Нека $|\texttt{ext}_P(\varepsilon)| = k+1$.
+    Нека $|\texttt{ext}_P(\varepsilon)| = k$.
     Понеже $P$ е съвместимо с $G$, то
-    \[X_\varepsilon \to X_{0}\cdots X_k.\]
-    Дефинираме дърветата $T_i \df \texttt{sub}_T(i)$ за $i \leq k$ и
-    функциите $f_i(\alpha) \df f(i\alpha)$.
+    \[X_\varepsilon \to_G X_{0}\cdots X_{k-1}.\]
     Лесно се съобразява, че $P_i \df (T_i,f_i)$ са дървета на извод съвместими с $G$ и
     $\texttt{height}(T_i) < \texttt{height}(T)$. Нека $\beta_i = \texttt{yield}(T_i)$.
-    Също така е ясно, че $\beta = \beta_0 \cdots \beta_k$.
-    Това означава, че можем да приложим И.П. за $P_i$ и прилагаме \Prop{grammar:concat}.
-    Получаваме, че
+    Също така е ясно, че $\beta = \beta_0 \cdots \beta_{k-1}$.
+    Тогава от И.П. получаваме, че за $i < k$,
+    \[X_i \stackrel{l_i}{\to}_G \beta_i.\]
+    Сега прилагаме \Prop{grammar:concat} и получаваме, че
     \[X_\varepsilon \to_G X_0\cdots X_k \to^\star_G \beta_0 \cdots \beta_k.\]
     Заключаваме, че
     \[X_\varepsilon \to^\star_G \beta.\]
   \end{itemize}
 \end{proof}
+
+\begin{problem}
+  Нека $P = (T,f)$ е дърво на извод за думата $\alpha$ в $G$. Докажете, че:
+  \marginpar{Ясно е, че $l < b^{\texttt{height}(T)}$.}
+  \[X_\varepsilon \stackrel{l}{\to}_G \alpha\text{, където }l \leq \sum_{i < \texttt{height}(T)}b^i.\]
+\end{problem}
+
+\begin{problem}
+  Нека $P = (T,f)$ е дърво на извод съвместимо с $G$.
+  Докажете, че ако $\alpha \preceq \beta$, то $\texttt{yield}(T_\beta)$ е инфикс на $\texttt{yield}(T_\alpha)$.
+\end{problem}
+
+\begin{problem}
+  Нека $P = (T,f)$ и $P' = (T',f')$ са дървета на извод съвместими с $G$,
+  като $X_\beta = X'_\varepsilon$. Дефинираме $P''(T'',f'')$ по следния начин:
+  \begin{itemize}
+  \item
+    $T'' = \{\alpha \mid \alpha \in T\ \&\ \beta\not\prec \alpha\} \cup \beta \cdot T'$;
+  \item
+    $f''(\alpha) =
+    \begin{cases}
+      f(\alpha), & \text{ако }\beta\not\prec\alpha\\
+      f'(\gamma), & \text{ако }\alpha = \beta\gamma.
+    \end{cases}$
+  \end{itemize}
+  Докажете, че $P''$ е дърво на извод съвместимо с $G$ и ако
+  $\texttt{yield}(T) = xyz$ и $y = \texttt{yield}(T_\beta)$, то
+  $\texttt{yield}(T'') = xy'z$, където $y' = \texttt{yield}(T')$.  
+\end{problem}
 
 
 
