@@ -1,14 +1,14 @@
 \section{Дървета на извод}
-\index{дърво}
-\index{дърво на извод}
 
 \begin{itemize}
 \item
   За всеки две думи $\alpha$ и $\beta$, с $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$.
 \item
+  \index{наредба!лексикографска}
   За две думи $\alpha$ и $\beta$ ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
   \[(\exists i < \min\{|\alpha|,|\beta|\})[\ (\forall j < i)[\ \alpha[j] = \beta[j]\ ]\ \&\ \alpha[i] \neq \beta[i]\ ].\]
 \item
+  \index{дърво}
   Непразното множество $T \subseteq \{0,1,\dots,b-1\}^\star$ се нарича {\bf дърво},
   ако $T$ е затворено относно префикси, т.е.
   \[(\forall \alpha, \beta)[\ \alpha \in T\ \&\ \beta \prec \alpha\ \implies\ \beta \in T\ ].\]
@@ -17,7 +17,7 @@
   \begin{align*}
     & \texttt{height}(T) \df \max\{\ \abs{\alpha}\ \mid\ \alpha \in T\ \}\\
     & \texttt{ext}_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\}\\
-    & T_\alpha \df \{\beta \mid \alpha\beta \in T\}\\
+    & T_\alpha \df \alpha^{-1}(T)\\
     & \texttt{front}(T) \df \{ \alpha \in T \mid \texttt{ext}_T(\alpha) = \emptyset \}.
   \end{align*}
 \item
@@ -27,6 +27,7 @@
   За всяка такава функция $f$ и $\alpha \in T$, дефинираме $f_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
   \[f_\alpha(\beta) \df f(\alpha\beta).\]
 \item
+  \index{дърво на извод}
   Двойката $P = (T,f)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
@@ -50,7 +51,13 @@
 \end{itemize}
 
 \begin{problem}
-  Докажете, че $T = \texttt{Pref}(\texttt{front}(T))$.
+  Докажете, че:
+  \begin{itemize}
+  \item
+    $T = \texttt{Pref}(\texttt{front}(T))$;
+  \item
+    $T = T' \iff \texttt{front}(T) = \texttt{front}(T')$.
+  \end{itemize}
 \end{problem}
 
 \begin{lemma}
@@ -64,8 +71,8 @@
     Нека $\texttt{height}(T) = 0$. Тогава е ясно, че $|\texttt{front}(T)| = |\{\varepsilon\}| = 1 \leq b^0$.
   \item
     Нека $\texttt{height}(T) > 0$.
-    За всяко $i \in T$ е ясно, че $\texttt{height}(T_i) < \texttt{height}(T)$ и $\texttt{front}(T) = \bigcup_i \texttt{front}(T_i)$.
-    Тогава
+    За всяко $i \in T$ е ясно, че $\texttt{height}(T_i) < \texttt{height}(T)$. Тогава:
+    \marginpar{$\texttt{front}(T) = \bigcup_{i\in T} i\cdot \texttt{front}(T_i)$.}
     \begin{align*}
       |\texttt{front}(T)| & = \sum_{i \in T}|\texttt{front}(T_i)| \\
                           & \leq \sum_{i\in T}b^{\texttt{height}(T_i)} & \comment\text{от И.П.}\\
@@ -98,7 +105,7 @@
   Индукция по дължината на извода $X \stackrel{l}{\to}_G \beta$.
   \begin{itemize}
   \item
-    $l = 0$, т.е. $X \to^0_G X$.
+    $l = 0$, т.е. $X \stackrel{0}{\to}_G X$.
     Тогава $T = \{\varepsilon\}$ и $f(\varepsilon) = X$.
     Ясно е, че $\texttt{ext}_T(\varepsilon) = \emptyset$ и следователно $\texttt{yield}(P) = X$.
   \item
@@ -108,7 +115,7 @@
     От \Prop{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
     \begin{itemize}
     \item
-      $\beta = \beta_0 \cdots b_{k}$;
+      $\beta = \beta_0 \cdots \beta_{k}$;
     \item
       $X_i \stackrel{l_i}{\to}_G \beta_i$;
     \item
@@ -144,7 +151,7 @@
   \begin{itemize}
   \item
     Нека $\texttt{height}(T) = 0$. Това означава, че $T = \{\varepsilon\}$ и $\texttt{yield}(P) = X_\varepsilon$.
-    Ясно е, че $X_\varepsilon \to^\star_G X_\varepsilon$ и $0 < b^0$.
+    Ясно е, че $X_\varepsilon \to^\star_G X_\varepsilon$.
   \item
     Нека $\texttt{height}(T) > 0$ и $\beta = \texttt{yield}(T)$.
     Нека $|\texttt{ext}_P(\varepsilon)| = k$.
@@ -163,9 +170,10 @@
 \end{proof}
 
 \begin{problem}
-  Нека $P = (T,f)$ е дърво на извод за думата $\alpha$ в $G$. Докажете, че:
+  Нека $P = (T,f)$ е дърво на извод за думата $\alpha$ в $G$. Докажете, че съществува извод
   \marginpar{Ясно е, че $l < b^{\texttt{height}(T)}$.}
-  \[X_\varepsilon \stackrel{l}{\to}_G \alpha\text{, където }l \leq \sum_{i < \texttt{height}(T)}b^i.\]
+  $X_\varepsilon \stackrel{l}{\to}_G \alpha$, където
+  \[l \leq \sum_{i < \texttt{height}(T)}b^i.\]
 \end{problem}
 
 \begin{problem}
@@ -174,24 +182,65 @@
 \end{problem}
 
 \begin{problem}
-  Нека $P = (T,f)$ и $P' = (T',f')$ са дървета на извод съвместими с $G$,
-  като $X_\beta = X'_\varepsilon$. Дефинираме $P''(T'',f'')$ по следния начин:
+  Нека $P = (T,f)$ и $P' = (T',f')$ са дървета на извод съвместими с $G$ и нека $\alpha \in \texttt{front}(T)$, където:
   \begin{itemize}
   \item
-    $T'' = \{\alpha \mid \alpha \in T\ \&\ \beta\not\prec \alpha\} \cup \beta \cdot T'$;
+    $\texttt{yield}(P) = \omega_1 X_\alpha \omega_2$ и $\omega_1, \omega_2 \in \Sigma^\star$.
   \item
-    $f''(\alpha) =
+    $X'_\varepsilon = X_\alpha$.
+  \end{itemize}
+  Да дефинираме $P'' = (T'',f'')$ по следния начин:
+  \begin{itemize}
+  \item
+    \marginpar{Ясно е, че $\alpha \in T$ и $\alpha \in \alpha\cdot T'$, но понеже $X_\alpha = X'_\varepsilon$, то нямаме проблем.}
+    $T'' \df T \cup \alpha \cdot T'$;
+  \item
+    $f''(\gamma) \df
     \begin{cases}
-      f(\alpha), & \text{ако }\beta\not\prec\alpha\\
-      f'(\gamma), & \text{ако }\alpha = \beta\gamma.
+      f(\gamma), & \text{ако }\gamma \in T\\
+      f'(\beta), & \text{ако }\gamma = \alpha\beta\ \&\ \beta \in T'.
     \end{cases}$
   \end{itemize}
-  Докажете, че $P''$ е дърво на извод съвместимо с $G$ и ако
-  $\texttt{yield}(T) = xyz$ и $y = \texttt{yield}(T_\beta)$, то
-  $\texttt{yield}(T'') = xy'z$, където $y' = \texttt{yield}(T')$.  
+  Тогава $P''$ е дърво на извод съвместимо с $G$ и
+  \[\texttt{yield}(P'') = \omega_1 \cdot \texttt{yield}(P') \cdot \omega_2.\]
+  Нека в такъв случай да дефинираме $P \odot P' = P''$.
 \end{problem}
 
+Сега да разгледаме частния случай, когато $P = P'$. Тогава имаме, че $X_\varepsilon = X_\alpha$.
+Дефинираме $n$-тата степен на дървото $P$ по следния начин:
+\begin{itemize}
+\item
+  $P^{(0)} = (T_0,f_0)$, където $T_0 = \{\varepsilon\}$ и $f_0(\varepsilon) = X_\varepsilon$;
+\item
+  $P^{(n+1)} = P^{(n)} \odot P$.
+\end{itemize}
 
+\begin{problem}
+  Докажете, че $P^{(n+k)} = P^{(n)} \odot P^{(k)}$.
+\end{problem}
+
+\begin{framed}
+  \begin{problem}
+    \label{prob:tree:iteration}
+    Нека $\texttt{yield}(P) = \omega_1 X_\alpha \omega_2$.
+    Докажете, че за всяко естествено число $n$,
+    \[\texttt{yield}(P^{(i)}) = \omega^i_1 X_\alpha \omega^i_2.\]
+  \end{problem}
+\end{framed}
+
+\begin{problem}
+  Нека $P = (T,f)$ е дърво на извод съвместимо с $G$ и $\alpha \in T$.
+  Дефинираме $P \setminus P_\alpha = (T',f')$ по следния начин:
+  \begin{itemize}
+  \item
+    \marginpar{Съобразете, че $\alpha \in \texttt{front}(T')$.}
+    $T' = T \setminus \{ \gamma \in T\mid \alpha \prec \gamma\}$;
+  \item
+    $f'(\gamma) = f(\gamma)$ за $\gamma \in T'$.
+  \end{itemize}
+  Докажете, че $P'$ е дърво на извод съвместимо с $G$ и 
+  \[P = (P\setminus P_\alpha) \odot P_\alpha.\]
+\end{problem}
 
 %%% Local Variables:
 %%% mode: latex

@@ -18,53 +18,110 @@
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-  Нека $G$ е граматиката за езика $L$ в нормална форма на Чомски.
-  \marginpar{Възлите във вътрешността на дървото са променливи, а листата са букви}
+  Нека $G$ е граматиката за езика $L$. Да положим
+  \[b = \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
   Нека
-  \[p = 2^{\abs{V} + 1}.\]
+  \[p = b^{\abs{V} + 1}.\]
   Ще покажем, че $p$ е константа на покачването за граматиката $G$.
   
   Да разгледаме произволна дума $\alpha \in \L(G)$, за която $\abs{\alpha} \geq p$.
   Понеже $\L(G)$ е безкраен език, то такива думи съществуват.
   Тогава от \Cor{tree:upper-bound} следва, че ако $P = (T,f)$ е дърво на извод за $\alpha$ в $G$, за което $X_\varepsilon = S$, то
-  \[2^{|V| + 1}\leq |\alpha| \leq 2^{\texttt{height}(T)}.\]
+  \[b^{|V| + 1}\leq |\alpha| \leq b^{\texttt{height}(T)}.\]
   Оттук следва, че
   \[|V| + 1 \leq \texttt{height}(T).\]
+  Нека измежду всички дървета на извод $P = (T,f)$ за $\alpha$ в граматиката $G$ сме избрали такова с минимална мнощност на $T$.
   Да фиксираме максимален път $\pi$ в $T$, т.е. дума $\pi \in T$ и $|\pi| = \texttt{height}(T)$.
   Ясно е, че
-  \[|V| + 1 \leq |\{ X_\alpha \mid \alpha \prec \pi\}| = \texttt{height}(T),\]
+  \marginpar{Броят на върховете по пътя $\pi$ е 1 + броя на ребрата.}
+  \[|V| + 1 \leq |\{ X_\gamma \mid \gamma \prec \pi\}| = \texttt{height}(T).\]
+  Тук нарочно не броим $X_\pi$, защото $X_\pi \in \Sigma$, а ние се интересуваме само от променливите.
   От принципа на Дирихле следва, че съществува $\beta \prec \pi$, за което
   \begin{equation}
     \label{eq:10}
-    X_\beta \in \{X_\alpha \mid \beta \prec \alpha \prec \pi\}.
+    X_\beta \in \{X_\gamma \mid \beta \prec \gamma \prec \pi\}.
   \end{equation}
   Нека $\beta$ е най-дългата дума, за която е изпълнено свойството (\ref{eq:10}).
-  Да означим с $\alpha$ една от думите, за която $\beta \prec \alpha \prec \pi$ и $X_\alpha = X_\beta$.
+  Да означим с $\gamma$ една от думите, за която $\beta \prec \gamma \prec \pi$ и $X_\gamma = X_\beta$.
   От избора на $\beta$ следва, че
   \begin{equation}
     \label{eq:11}
-    \texttt{height}(T_\beta) = |\{ X_\alpha \mid \beta \preceq \alpha \prec \pi\}| \leq |V| + 1.
+    \texttt{height}(T_\beta) = |\{ X_\gamma \mid \beta \preceq \gamma \prec \pi\}| \leq |V| + 1,
   \end{equation}
-  Нека $u = \texttt{yield}(P_\alpha)$. Тогава $yuv = \texttt{yield}(P_\beta)$.
+  защото ако допуснем противното, то ще следва, че $|\{ X_\gamma \mid \beta \prec \gamma \prec \pi\}| \geq |V| + 1$ и от принципа на Дирихле ще следва, че
+  съществува по-дълга от $\beta$ дума, за която е изпълнено свойството (\ref{eq:10}).
+  
+  Нека $u = \texttt{yield}(P_\alpha)$. Тогава $yuv = \texttt{yield}(P_\beta)$, за някои думи $y,v \in \Sigma^\star$.
   Това означава, че думата $\alpha$ може да се запише като $\alpha = xyuvw$, за някои $x, w \in \Sigma^\star$.
-  \marginpar{По пътя $\pi$ е възможно да срещнем много различни двойки повтарящи се променливи, ние избрахме възможно най-долната.}
+  % \marginpar{По пътя $\pi$ е възможно да срещнем много различни двойки повтарящи се променливи, ние избрахме възможно най-долната.}
   Освен това имаме свойствата:
   \begin{enumerate}[1)]
   \item
-    $\abs{yv}\geq 1$,
-    защото граматиката е в нормална форма на Чомски.
-    За да получим, че $|yv| = 0$, то трябва да имаме правила от вида $X \to Y$ или $X \to \varepsilon$.
+    Да видим първо защо $\abs{yv}\geq 1$.
+    Ако допуснем, че $|yv| = 0$, то това означава, че $\alpha = xuw$ и тази дума
+    би имала дърво на извод $(P \setminus P_\beta) \odot P_\alpha$, защото:
+    \begin{itemize}
+    \item 
+      $\texttt{yield}(P_\alpha) = u$;
+    \item
+      $\texttt{yield}(P \setminus P_\beta) = x X_\beta w$;
+    \item
+      $X_\alpha = X_\beta$.
+    \end{itemize}
+    Но това противоречи на избора на $P$ като дървото на извод за думата $\alpha$ с минимален брой елементи в $T$.
   \item
-    $\abs{yuv} \leq p$, защото
+    $\abs{yuv} \leq p$, защото $yuv = \texttt{yield}(T_\beta)$ и оттук следва, че:
     \begin{align*}
-      \abs{yuv} & \leq 2^{\texttt{height}(T_\beta)} & \comment\text{от \Cor{tree:upper-bound}}\\
-                & \leq 2^{|V|+1} & \comment\text{от (\ref{eq:11})}\\
+      \abs{yuv} & \leq b^{\texttt{height}(T_\beta)} & \comment\text{от \Cor{tree:upper-bound}}\\
+                & \leq b^{|V|+1} & \comment\text{от (\ref{eq:11})}\\
                 & = p
     \end{align*}
   \item
-    $xy^iuv^iw \in L$, защото можем да заменим поддървото $T_\alpha$ с поддървото $T_\beta$ и в новополученото дърво отново да заменим поддървото $T_\alpha$ с $T_\beta$
-    и така нататък, краен брой пъти.
-    В случая $i = 0$, заменяме поддървото $T_\beta$ с дървото $T_\alpha$.
+    Остана само да видим защо за всяко естествено число $i$ е изпълнено, че $xy^iuv^iw \in L$.
+    \begin{itemize}
+    \item
+      Нека $i = 0$. Тогава $xy^0uv^0w = xuv$ има дърво на извод $(P \setminus P_\beta ) \odot P_\alpha$,
+      защото:
+      \begin{itemize}
+      \item 
+        $\texttt{yield}(P_\alpha) = u$;
+      \item
+        $\texttt{yield}(P \setminus P_\beta) = x X_\beta w$;
+      \item
+        $X_\alpha = X_\beta$.
+      \end{itemize}
+    \item
+      Нека $i = 1$. Ясно е от условието, че $xyuvw \in L$, но нека да направим наблюдението, че дървото на извод $P$ за думата $\alpha$ в $G$
+      може да се запише и така:
+      \[P = (P \setminus P_\beta) \odot (P_\beta \setminus P_\alpha) \odot P_\alpha, \]
+      защото:
+      \begin{itemize}
+      \item
+        $\texttt{yield}(P\setminus P_\beta) = x X_\beta w$;
+      \item
+        $\texttt{yield}(P_\beta \setminus P_\alpha) = y X_\alpha v$;
+      \item
+        $\texttt{yield}(P_\alpha) = u$;
+      \item
+        $X_\beta = X_\alpha$.
+      \end{itemize}
+      Сега вече имаме идея как да обобщим горната конструкция за $i > 1$.
+    \item
+      Нека $i > 1$. Тогава $xy^iuv^iw$ има дърво на извод
+      \[(P \setminus P_\beta) \odot (P_\beta \setminus P_\alpha)^{(i)} \odot P_\alpha,\]
+      защото:
+      \begin{itemize}
+      \item
+        $\texttt{yield}(P\setminus P_\beta) = x X_\beta w$;
+      \item
+        $\texttt{yield}((P_\beta \setminus P_\alpha)^{(i)}) = y^i X_\alpha v^i$ от \Prob{tree:iteration};
+      \item
+        $\texttt{yield}(P_\alpha) = u$;
+      \item
+        $X_\beta = X_\alpha$.
+      \end{itemize}
+    \end{itemize}
+
   \end{enumerate}
 \end{proof}
 
