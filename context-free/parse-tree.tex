@@ -50,6 +50,24 @@
   \[P_\alpha \df (T_\alpha, f_\alpha).\]
 \end{itemize}
 
+\begin{example}
+  Да разгледаме граматиката $G$, където правилата са следните:
+  \begin{align*}
+    & S \to aS\ |\ aSc\ |\ B\\
+    & B \to bB\ |\ bBc\ |\ \varepsilon.
+  \end{align*}
+  Вече знаем, че $\L(G) = \{a^nb^kc^l \mid n+k\geq l\}$.
+  Да разгледаме следното дърво:
+
+  \qtreecenterfalse
+  \Tree [.$\varepsilon$ $0$ [.$1$ $10$ [.$11$ [.$110$ $1100$ [.$1101$ $11010$ ] $1102$ ] ] $12$ ] ]
+  \quadd
+  \Tree [.S a [.S a [.S [.B b [.B $\varepsilon$ ] c ] ] c ] ]      
+  
+\end{example}
+
+
+
 \begin{problem}
   Докажете, че:
   \begin{itemize}
