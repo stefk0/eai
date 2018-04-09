@@ -21,14 +21,14 @@
     & \texttt{front}(T) \df \{ \alpha \in T \mid \texttt{ext}_T(\alpha) = \emptyset \}.
   \end{align*}
 \item
-  С всяко дърво $T$ ще асоциираме функцията $f: T \to V \cup \Sigma \cup \{\varepsilon\}$.
-  Нека положим $X_\alpha \df f(\alpha)$.
+  С всяко дърво $T$ ще асоциираме функцията $\lambda: T \to V \cup \Sigma \cup \{\varepsilon\}$.
+  Нека положим $X_\alpha \df \lambda(\alpha)$.
 \item
-  За всяка такава функция $f$ и $\alpha \in T$, дефинираме $f_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
-  \[f_\alpha(\beta) \df f(\alpha\beta).\]
+  За всяка такава функция $\lambda$ и $\alpha \in T$, дефинираме $\lambda_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
+  \[\lambda_\alpha(\beta) \df \lambda(\alpha\beta).\]
 \item
   \index{дърво на извод}
-  Двойката $P = (T,f)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
+  Двойката $P = (T,\lambda)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
     $T$ е крайно.
@@ -46,8 +46,8 @@
   подредени във възходящ ред относно лексикографската наредба. Тогава 
   \[\texttt{yield}(P) \df X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}.\]
 \item
-  Нека $P = (T,f)$ и $\alpha \in T$. Тогава
-  \[P_\alpha \df (T_\alpha, f_\alpha).\]
+  Нека $P = (T,\lambda)$ и $\alpha \in T$. Тогава
+  \[P_\alpha \df (T_\alpha, \lambda_\alpha).\]
 \end{itemize}
 
 \begin{example}
@@ -57,16 +57,49 @@
     & B \to bB\ |\ bBc\ |\ \varepsilon.
   \end{align*}
   Вече знаем, че $\L(G) = \{a^nb^kc^l \mid n+k\geq l\}$.
-  Да разгледаме следното дърво:
+  Да разгледаме дървото на извод $P = (T, \lambda)$, където:
 
-  \qtreecenterfalse
-  \Tree [.$\varepsilon$ $0$ [.$1$ $10$ [.$11$ [.$110$ $1100$ [.$1101$ $11010$ ] $1102$ ] ] $12$ ] ]
-  \quadd
-  \Tree [.S a [.S a [.S [.B b [.B $\varepsilon$ ] c ] ] c ] ]      
+  \begin{framed}
+    \qtreecenterfalse
+      \Tree [.$\varepsilon$ $0$ [.$1$ $10$ [.$11$ [.$110$ $1100$ [.$1101$ $11010$ ] $1102$ ] ] $12$ ] ]
+    \hskip 0.3in
+    \Tree [.S a [.S a [.S [.B b [.B $\varepsilon$ ] c ] ] c ] ]      
+  \end{framed}
   
+  \begin{itemize}
+  \item
+    $\texttt{height}(T) = 5$;
+  \item
+    $\texttt{front}(T) = \{0, 10, 1100, 11010, 1102\}$;
+  \item
+    $\texttt{yield}(P) = aab\varepsilon cc = aabcc$.
+  \item
+    $\texttt{ext}_T(100) = \{1100, 1101, 1102\}$;
+  \item
+    $\lambda(\varepsilon) = S$;
+  \item
+    $\lambda(0) = a$, $\lambda(1) = S$;
+  \item
+    Ясно е, че $\lambda(\varepsilon) \to_G \lambda(0)\lambda(1)$;
+  \item
+    $\lambda(10) = a$, $\lambda(11) = S$, $\lambda(12) = c$;
+  \item
+    Ясно е, че $\lambda(1) \to_G \lambda(10)\lambda(11)\lambda(12)$;
+  \item
+    $\lambda(110) = B$;
+  \item
+    Ясно е, че $\lambda(11) \to_G \lambda(110)$;
+  \item
+    $\lambda(1100) = b$, $\lambda(1101) = B$, $\lambda(1102) = c$;
+  \item
+    Ясно е, че $\lambda(110) = \lambda(1100)\lambda(1101)\lambda(1102)$;
+  \item
+    $\lambda(11010) = \varepsilon$;
+  \item
+    Ясно е, че $\lambda(1101) \to_G \lambda(11010)$;
+  \end{itemize}
+  От всичко по-горе следва, че $P = (T,\lambda)$ е дърво на извод за думата $aabcc$ в граматиката $G$.  
 \end{example}
-
-
 
 \begin{problem}
   Докажете, че:
@@ -104,7 +137,7 @@
 \begin{framed}
   \begin{cor}
     \label{cor:tree:upper-bound}
-    Нека $P = (T,f)$ е дърво на извод съвместимо с $G$. Тогава
+    Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$. Тогава
     \[|\texttt{yield}(T)| \leq b^{\texttt{height}(T)}.\]
   \end{cor}  
 \end{framed}
@@ -116,7 +149,7 @@
 \begin{framed}
   \begin{lemma}
     Нека $X \to^\star_G \beta$.
-    Тогава съществува дърво на извод $P = (T,f)$ с корен $X$ за думата $\beta$ в $G$.
+    Тогава съществува дърво на извод $P = (T,\lambda)$ с корен $X$ за думата $\beta$ в $G$.
   \end{lemma}  
 \end{framed}
 \begin{proof}
@@ -139,21 +172,21 @@
     \item
       $l-1 = \sum^k_{j=1} l_j$.
     \end{itemize}
-    От И.П. имаме, че същствуват дървета на извод $P^{i} = (T^i,f^i)$ съвместими с $G$, такива че:
+    От И.П. имаме, че същствуват дървета на извод $P^{i} = (T^i,\lambda^i)$ съвместими с $G$, такива че:
     \begin{itemize}
     \item
-      $f^i(\varepsilon) = X_i$;
+      $\lambda^i(\varepsilon) = X_i$;
     \item
       $\texttt{yield}(P^i) = \beta_i$.
     \end{itemize}
-    Тогава дефинираме $P = (T,f)$ по следния начин:
+    Тогава дефинираме $P = (T,\lambda)$ по следния начин:
     \begin{itemize}
     \item
       $T \df \{ i\alpha \mid \alpha \in T^i\ \&\ i \leq k\}$;
     \item
-      $f(\varepsilon) \df X$;
+      $\lambda(\varepsilon) \df X$;
     \item
-      $f(i\alpha) \df f^i(\alpha)$.
+      $\lambda(i\alpha) \df \lambda^i(\alpha)$.
     \end{itemize}
   \end{itemize}
 \end{proof}
@@ -188,35 +221,35 @@
 \end{proof}
 
 \begin{problem}
-  Нека $P = (T,f)$ е дърво на извод за думата $\alpha$ в $G$. Докажете, че съществува извод
+  Нека $P = (T,\lambda)$ е дърво на извод за думата $\alpha$ в $G$. Докажете, че съществува извод
   \marginpar{Ясно е, че $l < b^{\texttt{height}(T)}$.}
   $X_\varepsilon \stackrel{l}{\to}_G \alpha$, където
   \[l \leq \sum_{i < \texttt{height}(T)}b^i.\]
 \end{problem}
 
 \begin{problem}
-  Нека $P = (T,f)$ е дърво на извод съвместимо с $G$.
+  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$.
   Докажете, че ако $\alpha \preceq \beta$, то $\texttt{yield}(T_\beta)$ е инфикс на $\texttt{yield}(T_\alpha)$.
 \end{problem}
 
 \begin{problem}
-  Нека $P = (T,f)$ и $P' = (T',f')$ са дървета на извод съвместими с $G$ и нека $\alpha \in \texttt{front}(T)$, където:
+  Нека $P = (T,\lambda)$ и $P' = (T',\lambda')$ са дървета на извод съвместими с $G$ и нека $\alpha \in \texttt{front}(T)$, където:
   \begin{itemize}
   \item
     $\texttt{yield}(P) = \omega_1 X_\alpha \omega_2$ и $\omega_1, \omega_2 \in \Sigma^\star$.
   \item
     $X'_\varepsilon = X_\alpha$.
   \end{itemize}
-  Да дефинираме $P'' = (T'',f'')$ по следния начин:
+  Да дефинираме $P'' = (T'',\lambda''')$ по следния начин:
   \begin{itemize}
   \item
     \marginpar{Ясно е, че $\alpha \in T$ и $\alpha \in \alpha\cdot T'$, но понеже $X_\alpha = X'_\varepsilon$, то нямаме проблем.}
     $T'' \df T \cup \alpha \cdot T'$;
   \item
-    $f''(\gamma) \df
+    $\lambda''(\gamma) \df
     \begin{cases}
-      f(\gamma), & \text{ако }\gamma \in T\\
-      f'(\beta), & \text{ако }\gamma = \alpha\beta\ \&\ \beta \in T'.
+      \lambda(\gamma), & \text{ако }\gamma \in T\\
+      \lambda'(\beta), & \text{ако }\gamma = \alpha\beta\ \&\ \beta \in T'.
     \end{cases}$
   \end{itemize}
   Тогава $P''$ е дърво на извод съвместимо с $G$ и
@@ -228,7 +261,7 @@
 Дефинираме $n$-тата степен на дървото $P$ по следния начин:
 \begin{itemize}
 \item
-  $P^{(0)} = (T_0,f_0)$, където $T_0 = \{\varepsilon\}$ и $f_0(\varepsilon) = X_\varepsilon$;
+  $P^{(0)} = (T_0,\lambda_0)$, където $T_0 = \{\varepsilon\}$ и $\lambda_0(\varepsilon) = X_\varepsilon$;
 \item
   $P^{(n+1)} = P^{(n)} \odot P$.
 \end{itemize}
@@ -247,14 +280,14 @@
 \end{framed}
 
 \begin{problem}
-  Нека $P = (T,f)$ е дърво на извод съвместимо с $G$ и $\alpha \in T$.
-  Дефинираме $P \setminus P_\alpha = (T',f')$ по следния начин:
+  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$ и $\alpha \in T$.
+  Дефинираме $P \setminus P_\alpha = (T',\lambda')$ по следния начин:
   \begin{itemize}
   \item
     \marginpar{Съобразете, че $\alpha \in \texttt{front}(T')$.}
     $T' = T \setminus \{ \gamma \in T\mid \alpha \prec \gamma\}$;
   \item
-    $f'(\gamma) = f(\gamma)$ за $\gamma \in T'$.
+    $\lambda'(\gamma) = \lambda(\gamma)$ за $\gamma \in T'$.
   \end{itemize}
   Докажете, че $P'$ е дърво на извод съвместимо с $G$ и 
   \[P = (P\setminus P_\alpha) \odot P_\alpha.\]
