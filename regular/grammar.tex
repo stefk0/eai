@@ -17,15 +17,20 @@
 \item
   $S \in V$ е началната променлива (нетерминал). 
 \end{itemize}
-
 Казваме, че имаме {\bf извод} $\omega \to_G \omega'$, ако $\omega = \alpha\beta\gamma \in (V\cup\Sigma)^\star$,
 $\omega' = \alpha\beta'\gamma \in (V\cup\Sigma)^\star$ и имаме правило $\beta \to \beta'$ в граматиката $G$.
-Нека $\to^\star_G$ е рефлексивното и транзитивно затваряне на релацията $\to_G$, т.е.
-\begin{align*}
-  & \alpha \to^\star_G \alpha\\
-  & \alpha \to^\star_G \alpha'\ \&\ \alpha' \to_G \alpha'' \implies \alpha \to^\star_G \alpha''.
-\end{align*}
 
+Дефинираме извод на думата $\beta$ от думата $\alpha$ в граматиката $G$ за $n$ стъпки с индукция по $n$ по следния начин:
+\begin{itemize}
+\item
+  $\alpha \to^0_G \alpha$, за всяка $\alpha \in (V \cup \Sigma)^\star$;
+\item
+  $\alpha \to^1_G \beta$, ако $\alpha \to_G \beta$;
+\item
+  $\alpha \to^{n+1}_G \beta$, ако $\alpha \to^n_G \gamma$ и $\gamma \to^1_G \beta$.
+\end{itemize}
+Нека $\to^\star_G$ е рефлексивното и транзитивно затваряне на релацията $\to_G$, т.е.
+\[ \alpha \to^\star_G \beta\ \iff\ (\exists n\in\Nat)[\ \alpha \to^n_G \beta\ ].\]
 Езикът, който се поражда от граматиката $G$ е
 \[\L(G) = \{\omega \in \Sigma^\star \mid S \to^\star_G \omega\}.\]
 
