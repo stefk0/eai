@@ -51,7 +51,7 @@
   защото ако допуснем противното, то ще следва, че $|\{ X_\gamma \mid \beta \prec \gamma \prec \pi\}| \geq |V| + 1$ и от принципа на Дирихле ще следва, че
   съществува по-дълга от $\beta$ дума, за която е изпълнено свойството (\ref{eq:10}).
   
-  Нека $u = \texttt{yield}(P_\alpha)$. Тогава $yuv = \texttt{yield}(P_\beta)$, за някои думи $y,v \in \Sigma^\star$.
+  Нека $u = \texttt{yield}(P_\gamma)$. Тогава $yuv = \texttt{yield}(P_\beta)$, за някои думи $y,v \in \Sigma^\star$.
   Това означава, че думата $\alpha$ може да се запише като $\alpha = xyuvw$, за някои $x, w \in \Sigma^\star$.
   % \marginpar{По пътя $\pi$ е възможно да срещнем много различни двойки повтарящи се променливи, ние избрахме възможно най-долната.}
   Освен това имаме свойствата:
@@ -59,10 +59,10 @@
   \item
     Да видим първо защо $\abs{yv}\geq 1$.
     Ако допуснем, че $|yv| = 0$, то това означава, че $\alpha = xuw$ и тази дума
-    би имала дърво на извод $(P \setminus P_\beta) \odot P_\alpha$, защото:
+    би имала дърво на извод $(P \setminus P_\beta) \odot P_\gamma$, защото:
     \begin{itemize}
     \item 
-      $\texttt{yield}(P_\alpha) = u$;
+      $\texttt{yield}(P_\gamma) = u$;
     \item
       $\texttt{yield}(P \setminus P_\beta) = x X_\beta w$;
     \item
@@ -78,47 +78,51 @@
     \end{align*}
   \item
     Остана само да видим защо за всяко естествено число $i$ е изпълнено, че $xy^iuv^iw \in L$.
+    Това е най-сложното разсъждение в лемата, затова нека да го разгледаме внимателно.
+    Понеже $\beta \prec \gamma$, нека $\rho$ е тази дума, за която $\gamma = \beta \cdot \rho$.
+    Ясно е, че $P_\beta\setminus P_\gamma = (P\setminus P_\gamma)_\beta$.
     \begin{itemize}
     \item
-      Нека $i = 0$. Тогава $xy^0uv^0w = xuv$ има дърво на извод $(P \setminus P_\beta ) \odot P_\alpha$,
-      защото:
+      Нека $i = 0$. Тогава $xy^0uv^0w = xuv$ има дърво на извод $(P \setminus P_\beta ) \odot P_\gamma$,
+      защото от избора на $\gamma$ и $\beta$ имаме, че:
       \begin{itemize}
       \item 
-        $\texttt{yield}(P_\alpha) = u$;
+        $\texttt{yield}(P_\gamma) = u$;
       \item
         $\texttt{yield}(P \setminus P_\beta) = x X_\beta w$;
       \item
         $X_\alpha = X_\beta$.
       \end{itemize}
     \item
-      Нека $i = 1$. Ясно е от условието, че $xyuvw \in L$, но нека да направим наблюдението, че дървото на извод $P$ за думата $\alpha$ в $G$
+      Нека $i = 1$.
+      Ясно е от условието, че $xyuvw \in L$, но нека да направим наблюдението, че дървото на извод $P$ за думата $\alpha$ в $G$
       може да се запише и така:
-      \[P = (P \setminus P_\beta) \odot (P_\beta \setminus P_\alpha) \odot P_\alpha, \]
+      \[P = (P \setminus P_\beta) \odot (P_\beta \setminus P_\rho) \odot P_\gamma, \]
       защото:
       \begin{itemize}
       \item
         $\texttt{yield}(P\setminus P_\beta) = x X_\beta w$;
       \item
-        $\texttt{yield}(P_\beta \setminus P_\alpha) = y X_\alpha v$;
+        $\texttt{yield}(P_\beta \setminus P_\rho) = y X_\gamma v$;
       \item
-        $\texttt{yield}(P_\alpha) = u$;
+        $\texttt{yield}(P_\gamma) = u$;
       \item
-        $X_\beta = X_\alpha$.
+        $X_\beta = X_\gamma$.
       \end{itemize}
       Сега вече имаме идея как да обобщим горната конструкция за $i > 1$.
     \item
       Нека $i > 1$. Тогава $xy^iuv^iw$ има дърво на извод
-      \[(P \setminus P_\beta) \odot (P_\beta \setminus P_\alpha)^{(i)} \odot P_\alpha,\]
+      \[(P \setminus P_\beta) \odot (P_\beta \setminus P_\rho)^{(i)} \odot P_\gamma,\]
       защото:
       \begin{itemize}
       \item
         $\texttt{yield}(P\setminus P_\beta) = x X_\beta w$;
       \item
-        $\texttt{yield}((P_\beta \setminus P_\alpha)^{(i)}) = y^i X_\alpha v^i$ от \Prob{tree:iteration};
+        $\texttt{yield}((P_\beta \setminus P_\rho)^{(i)}) = y^i X_\gamma v^i$ от \Prob{tree:iteration};
       \item
-        $\texttt{yield}(P_\alpha) = u$;
+        $\texttt{yield}(P_\gamma) = u$;
       \item
-        $X_\beta = X_\alpha$.
+        $X_\beta = X_\gamma$.
       \end{itemize}
     \end{itemize}
 
@@ -218,7 +222,7 @@
 \begin{problem}
   Докажете, че езикът
   \[L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}\]
-  не е безконтекстен език.
+  не е безконтекстен.
 \end{problem}
 \begin{proof}
   \begin{description}

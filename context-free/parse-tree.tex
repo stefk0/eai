@@ -28,6 +28,7 @@
   \[\lambda_\alpha(\beta) \df \lambda(\alpha\beta).\]
 \item
   \index{дърво на извод}
+  \marginpar{Също се нарича синтактично дърво}
   Двойката $P = (T,\lambda)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
@@ -61,11 +62,14 @@
 
   \begin{framed}
     \qtreecenterfalse
-      \Tree [.$\varepsilon$ $0$ [.$1$ $10$ [.$11$ [.$110$ $1100$ [.$1101$ $11010$ ] $1102$ ] ] $12$ ] ]
-    \hskip 0.3in
+    \Tree [.$\varepsilon$ $0$ [.$1$ $10$ [.$11$ [.$110$ $1100$ [.$1101$ $11010$ ] $1102$ ] ] $12$ ] ]
+    \hskip 0.4in
+    $\stackrel{\lambda}{\Rightarrow}$
+    \hskip 0.4in
     \Tree [.S a [.S a [.S [.B b [.B $\varepsilon$ ] c ] ] c ] ]      
   \end{framed}
-  
+
+  Имаме, че:
   \begin{itemize}
   \item
     $\texttt{height}(T) = 5$;
@@ -92,7 +96,7 @@
   \item
     $\lambda(1100) = b$, $\lambda(1101) = B$, $\lambda(1102) = c$;
   \item
-    Ясно е, че $\lambda(110) = \lambda(1100)\lambda(1101)\lambda(1102)$;
+    Ясно е, че $\lambda(110) \to_G \lambda(1100)\lambda(1101)\lambda(1102)$;
   \item
     $\lambda(11010) = \varepsilon$;
   \item
@@ -157,7 +161,7 @@
   \begin{itemize}
   \item
     $l = 0$, т.е. $X \stackrel{0}{\to}_G X$.
-    Тогава $T = \{\varepsilon\}$ и $f(\varepsilon) = X$.
+    Тогава $T = \{\varepsilon\}$ и $\lambda(\varepsilon) = X$.
     Ясно е, че $\texttt{ext}_T(\varepsilon) = \emptyset$ и следователно $\texttt{yield}(P) = X$.
   \item
     Нека $l > 0$ и $X \stackrel{l}{\to}_G \beta$.
@@ -189,11 +193,12 @@
       $\lambda(i\alpha) \df \lambda^i(\alpha)$.
     \end{itemize}
   \end{itemize}
+  Сега лесно се съобразява, че $P$ е дърво на извод с корен $X$ за думата $\beta$ в граматиката $G$.
 \end{proof}
 
 \begin{framed}
   \begin{lemma}
-    Нека $P = (T,f)$ е дърво на извод за думата $\beta$ в $G$.
+    Нека $P = (T,\lambda)$ е дърво на извод за думата $\beta$ в $G$.
     Тогава $X_\varepsilon \to^\star_G \beta$.
   \end{lemma}  
 \end{framed}
@@ -289,9 +294,11 @@
   \item
     $\lambda'(\gamma) = \lambda(\gamma)$ за $\gamma \in T'$.
   \end{itemize}
-  Докажете, че $P'$ е дърво на извод съвместимо с $G$ и 
+  Докажете, че $P\setminus P_\alpha$ е дърво на извод съвместимо с $G$ и 
   \[P = (P\setminus P_\alpha) \odot P_\alpha.\]
 \end{problem}
+
+
 
 %%% Local Variables:
 %%% mode: latex
