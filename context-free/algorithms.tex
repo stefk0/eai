@@ -1,5 +1,17 @@
 \section{Алгоритми}
 
+Тук ще докажем, че съществуват {\em полиномиални} алгоритми, които за дадена безконтекстна граматика $G$ проверяват:
+\begin{itemize}
+\item
+  дали $\L(G) = \emptyset$;
+\item
+  дали $|\L(G)| = \infty$;
+\item
+  дали $|\L(G)| < \infty$;
+\item
+  по дадена дума $\alpha$ дали $\alpha \in \L(G)$.
+\end{itemize}
+
 \subsection{Опростяване на безконтекстни граматики}
 
 \input{context-free/useless}
@@ -12,7 +24,7 @@
 
 \input{context-free/normal-form}
 
-\input{context-free/belong-problem}
+\input{context-free/cyk}
 
 %%% Local Variables: 
 %%% mode: latex

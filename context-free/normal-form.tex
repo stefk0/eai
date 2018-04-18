@@ -26,42 +26,24 @@
   \item
     Добавяме нов начален символ $S_0$ и правило $S_0 \to S$.
   \item
-    \marginpar{Време $\mathcal{O}(|G|)$}
-    {\em Премахваме дългите правила.}
-    Заменяме правилата от вида $A\to X_1X_2\dots X_n$, $n\geq 3$ с
-    правилата \[A\to X_1A_1,\ A_1\to X_2A_2,\ \dots,\ A_{n-2} \to X_{n-1}X_n.\]
-    където $A_i$ са нови променливи.
+    Премахваме дългите правила.
+    Това можем да направим за време $\mathcal{O}(|G|)$
+    като новата граматика ще има дължина $\mathcal{O}(|G|)$.
   \item
-    \marginpar{Време $\mathcal{O}(|G|^2)$}
-    {\em Премахваме $\varepsilon$-правилата.}
-    За всяка променлива $A \neq S_0$ премахваме правилата от вида $A\to\varepsilon$.
-    Това правим по следния начин.
-    
-    Ако имаме правило от вида $R \to Au$ или $R\to u A$, $u \in V \cup \Sigma$,
-    то добавяме правилото $R\to u$.
-    %Правим това за всяко срещане на променливата $A$ в дясната страна на правило.
-    Например, 
-    \begin{itemize}
-    \item 
-      ако имаме правило $R\to aA$, то добавяме правилото $R \to a$;
-    \item
-      ако имаме правило $R\to AA$, то добавяме правилото $R \to A$.
-    \end{itemize}
-    Ако имаме правило от вида $R\to A$, то добавяме правилото $R\to\varepsilon$
-    само ако променливата $R$ още не е преминала през процедурата за премахване на $\varepsilon$.
+    Премахваме $\varepsilon$-правилата.
+    Това можем да направим за време $\mathcal{O}(|G|^2)$
+    като новата граматика ще има дължина $\mathcal{O}(|G|)$.
   \item
-    \marginpar{Време $\mathcal{O}(|G|^2)$}
-    \marginpar{Памет $\mathcal{O}(|G|^2)$}
-    Премахваме преименуващите правила, т.е. правила от вида $A\to B$.
-    Заменяме всяко правило от вида $B \to \beta$ с $A\to \beta$,
-    освен ако $A \to \beta$ е вече премахнато преименуващо правило.
+    Премахваме преименуващите правила.
+    Това можем да направим за време $\mathcal{O}(|G|^2)$
+    като новата граматика ще има дължина $\mathcal{O}(|G|^2)$.
   \item
-    \marginpar{Време $\mathcal{O}(|G|)$}
     За правила от вида $A\to u_1 u_2$, където $u_1, u_2 \in V \cup \Sigma$, 
     заменяме всяка буква $u_i$ с новата променлива $U_i$
     и добавяме правилото $U_i\to u_i$.
     Например, правилото $A \to aB$ се заменя с правилото $A \to XB$ и добавяме правилото $X \to a$,
     където $X$ е нова променлива.
+    Това можем да направим за време $\mathcal{O}(|G|)$ и новата граматика ще има дължина $\mathcal{O}(|G|)$.
   \end{itemize}
 \end{proof}
 
@@ -71,47 +53,49 @@
   като получената граматика е с дължина $\mathcal{O}(|G|^2)$.
 \end{thm}
 
+\begin{thm}
+  \marginpar{\cite[стр. 137]{hopcroft1}}
+  Съществуват алгоритми, които определят по дадена безконтекстна граматика $G$ дали:
+  \begin{enumerate}[a)]
+  \item
+    $\abs{\L(G)} < \infty$;
+  \item
+    $\abs{\L(G)} = \infty$.
+  \end{enumerate}
+\end{thm}
+\begin{proof}
+  Нека е дадена една безконтекстна граматика $G$.
+  Нека да разгледаме граматиката $G'$ в НФЧ без безполезни променливи, за която $\L(G) = \L(G')$.
+  От граматиката $G' = \pair{V',\Sigma,S,R'}$ строим граф с възли променливите от $V'$ като
+  за $A,B \in V'$ имаме ребро $A \to B$ точно тогава, когато съществува $C \in V'$,
+  за което $A \to BC$ или $A \to CB$ е правило в $R'$.
+  
+  Ако в получения граф имаме цикъл, то $\L(G') = \infty$.
 
-% \begin{problem}
-%   Нека е дадена граматиката  $G = \pair{\{S,A,B,C,D,E\}, \{a,b\},S, R}$.
-%   \begin{enumerate}[a)]
-%   \item
-%     Намерете множеството $\{X \in V \mid X \rightarrow^\star_G \varepsilon\}$.
-%   \item
-%     Вярно ли е, че $\varepsilon \in L(G)$?
-%   \item
-%     Постройте граматика $G_1$ без $\varepsilon$-правила, за която $L(G_1)=L(G)\setminus\{\varepsilon\}$.
-%   \end{enumerate}
-%   Множеството от правила $R$ на граматиката $G$ е зададено като:
-%   \begin{enumerate}[a)]
-%   \item
-%     $R = \{S\rightarrow D,D\rightarrow AD|b,A\rightarrow ACB|BC|a, B\rightarrow ABCA|CEC,C\rightarrow \varepsilon|CA|a, E\rightarrow \varepsilon|aEb\}$;
-%   \item
-%     $R = \{S \rightarrow aD, D\rightarrow \varepsilon|ABBA|ADD,A\rightarrow DEB|a,B\rightarrow DDD|DC|b,C\rightarrow CCE|a, E\rightarrow \varepsilon|bEa\}$;
-%   \item
-%     $R = \{ S\rightarrow D,D\rightarrow AD|b,A\rightarrow AB|BC|a, B\rightarrow AB|CC, C\rightarrow \varepsilon|CA|a, E\rightarrow a|EB\}$;
-%   \item
-%     $R = \{ S \rightarrow AD|a, D\rightarrow \varepsilon|BB|AD,A\rightarrow DB|a,B\rightarrow DD|DC|b,C\rightarrow CE|a, E\rightarrow AB|b|EA\}$;
-%   \item
-%     $R =\{S\rightarrow AS|SB|SS,B\rightarrow CA|b, C\rightarrow AA|a|BA,A\rightarrow \varepsilon|BS\}$;
-%   % \item
-%   %   $R = \{S\rightarrow AB|AC,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a,C\rightarrow CS|a\}$;
-%   % \item
-%   %   $R = \{S\rightarrow AS|SB|SS,B\rightarrow AC|b, C\rightarrow A|a|AB,A\rightarrow \varepsilon|BS\}$;
-%   \item
-%     $R = \{S\rightarrow BA|CA,B\rightarrow \varepsilon |BC|b,A\rightarrow BB|CC|a, C\rightarrow CS|a\}$;
-%   \item
-%     $R = \{S\rightarrow AS|b,A\rightarrow AC|BC|a, B\rightarrow BC|CC,C\rightarrow \varepsilon|CA|a\}$;
-%   \item
-%     $R = \{S\rightarrow \varepsilon|BA|AS,A\rightarrow SB|a,B\rightarrow SS|SC|b,
-%     C\rightarrow CC|a\}$; 
-%   \end{enumerate}
-% \end{problem}
+  Да разгледаме един такъв цикъл:
+  \[A_0 \to \alpha_1 A_1 \beta_1 \to \alpha_2 A_2 \beta_2 \to \cdots \to \alpha_n A_n \beta_n \to \alpha_{n+1} A_0 \beta_{n+1}.\]
+  Понеже граматиката е в НФЧ имаме, че $|\alpha_i\beta_i| = i$.
+  Понеже няма безполезни символи в граматика и тя е в НФЧ следва, че $\alpha_{n+1} \to^\star \omega$ и $\beta_{n+1} \to^\star \rho$,
+  където $|\omega\rho| \geq n+1$, защото $|\alpha_{n+1}\beta_{n+1}| = n+1$.
+  Понеже няма безполезни символи в граматиката, то съществуват $\delta, \gamma \in \Sigma^\star$, за които
+  $S \to^\star_G \delta  A_0 \gamma$. Получаваме:
+  \[ S \to^\star_G \delta A_0 \gamma \to^\star_G \delta \alpha_{n+1} A_0 \beta_{n+1} \gamma \to^\star_G \delta \omega A_0 \rho\gamma \to^\star \cdots \to^\star \delta \omega^i A_0 \rho^i \gamma \to \delta\omega^i\alpha\rho^i\gamma,\]
+  където $A_0 \to^\star_G \alpha$.
+
+  Ако в графът няма цикли, то езикът $\L(G)$ е краен, защото ако от променливата $A$ най-дългият път има дължина $k+1$,
+  то за променливите $B$ и $C$, за които имаме правилото $A\to BC$, най-дългият път от $B$ и $C$ има дължина най-много $k$.
+
+  Може да се докаже с индукция по $k$, че ако най-дългият път от $A$ има дължина $k$, то от $A$ се извеждат само думи с дължина $\leq 2^k$.
+  \begin{itemize}
+  \item
+    Ако дължината $k = 0$, то няма върхове излизащи от $A$. Това означава, че в граматиката единствената възможност е $A \to a$, за някои букви $a \in \Sigma$.
+  \item
+    Нека $k > 0$. Тогава имаме поне едно правило $A \to BC$ и дължината от $B$ и $C$ е най-много $k$.
+    Тогава от И.П. следва, че от $B$ и $C$ се извеждат само думи с дължина $\leq 2^{k-1}$. Тогава от $A$ се извеждат думи с дължина $\leq 2^{k-1} + 2^{k-1} = 2^k$.
+  \end{itemize}
+\end{proof}
 
 
-% \begin{problem}
-%   Намерете безконтекстна граматика в нормална форма на Чомски за езиците от задача 6.
-% \end{problem}
 
 
 %%% Local Variables:

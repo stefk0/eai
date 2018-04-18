@@ -8,6 +8,22 @@
 ако $B \to \alpha$ е правило в $R$, което не е преименуващо,
 то добавяме към $R'$ правилото $A \to \alpha$.
 
+Първо намираме множеството от двойки
+\[\texttt{Ren} = \{(A,B) \in V\times V \mid A \to^\star_G B\}.\]
+
+\begin{itemize}
+\item
+  Ясно е, че $\texttt{Ren}_0 = \{(A,A) \mid A \in V\}$.
+\item
+  Нека имаме $\texttt{Ren}_n$. Тогава дефинираме
+  \[\texttt{Ren}_{n+1} = \texttt{Ren}_n \cup \{(A,B) \in V\times V \mid (\exists C\in V)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren}_n]\}.\]
+\item
+  Спираме на първото $n$, за което $\texttt{Ren}_n = \texttt{Ren}_{n+1}$. Тогава $\texttt{Ren} = \texttt{Ren}_n$.
+\end{itemize}
+
+Нека $R'_0 \df R \setminus \texttt{Ren}$ са правилата на $R$, които не са преименуващи. Тогава
+\[R' \df R'_0 \cup \{\ (A,\alpha) \in V \times (V\cup\Sigma)^\star \mid (\exists B)[(A,B) \in \texttt{Ren}\ \&\ (B,\alpha) \in R'_0]\ \}.\]
+
 \begin{example}
   Нека е дадена граматиката $G$ с правила  
   \begin{align*}

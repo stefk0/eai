@@ -12,57 +12,74 @@
 
 \begin{lemma}
   \label{lem:useless1}
-  Нека е дадена безконтекстната граматика $G = \CFG$ и $\L(G) \neq \emptyset$.
-  Съществува алгоритъм, който намира граматика $G' = \pair{V',\Sigma,S,R'}$, за която 
-  $\L(G) = \L(G')$, и за всяка променлива $A' \in V'$, съществува дума $\alpha \in \Sigma^\star$,
-  за която $A' \to^\star \alpha$.
+  Нека е дадена безконтекстната граматика $G$ и $\L(G) \neq \emptyset$.
+  Съществува алгоритъм, който намира граматика $G'$, за която
+  $\L(G) = \L(G')$ и със свойството, че  за всяка променлива $A' \in V'$, съществува дума $\alpha \in \Sigma^\star$,
+  за която $A' \to^\star_{G'} \alpha$.
 \end{lemma}
 \begin{hint}
-  Да разгледаме следната проста итеративна процедура.
-  \begin{algorithm}[H]
-    \caption{Намираме $V' = \{A \in V\mid (\exists \alpha \in \Sigma^\star)[A \to^\star \alpha]\}$}
-    \label{alg:useless}
-    \begin{algorithmic}[1]
-      \State $V' := \emptyset$
-      \State $V'' := \{A \in V \mid (\exists \alpha \in \Sigma^\star)[A \to \alpha]\}$
-      \While{$V' \neq V''$}
-      \State $V' := V''$
-      \State $V'' := V' \cup \{A \in V \mid (\exists \alpha \in (\Sigma \cup V')^\star)[A \to \alpha]\}$
-      \EndWhile
-      \State \Return $V'$
-    \end{algorithmic}
-  \end{algorithm}
-  Трябва да докажем, че във $V'$ са точно полезните променливи за $G$.
-  Очевидно е, че ако $A \in V'$, то $A$ е полезна променлива.
-  \marginpar{\writedown Докажете!}
-  За другата посока, с индукция по дължината на извода се доказва, че ако $A \to^\star_G \omega$,
-  то $A \in V'$.
-  
-  Правилата на $G'$ са всички правила на $G$, в които участват променливи от $V'$ и букви от $\Sigma$.
+  Ще построим множествата
+  \[V_n = \{A \in V \mid A \stackrel{\leq n}{\to}_G \alpha\ \&\ \alpha\in\Sigma^\star\}.\]
+
+  \begin{itemize}
+  \item
+    Ясно е, че $V_0 = \emptyset$;
+  \item
+    Нека сме намерили $V_n$. Тогава
+    \[V_{n+1} = V_n \cup \{A\in V \mid A \to_G \alpha\ \&\ \alpha \in (\Sigma \cup V_n)^\star \}.\]
+  \item
+    Когато намерим първото $n$, за което $V_n = V_{n+1}$,
+    то знаем, че
+    \[V_n = \{A \in V \mid A \to^\star_G \alpha\ \&\ \alpha \in \Sigma^\star \}.\]
+    Дефинираме $G'$ като $V' = V_n$ и правилата на $G'$ са само тези правила на $G$, в които участват променливи от $V_n$ и букви от $\Sigma$.
+  \end{itemize}
 \end{hint}
+
+\begin{cor}
+  Съществува алгоритъм, който определя дали за всяка безконтекстна граматика $G$ дали $\L(G) = \emptyset$.
+\end{cor}
+\begin{proof}
+  Прилагаме алгоритъма от \Lem{useless1}.
+  Тогава $\L(G) = \emptyset$ точно тогава, когато $S \not\in V'$.  
+\end{proof}
 
 \begin{lemma}
   \label{lem:useless2}
   Съществува алгоритъм, който по дадена безконтекстна граматика $G = \CFG$, намира $G' = \pair{V',\Sigma',S,R'}$, $\L(G') = \L(G)$,
-  със свойството, че за всяко $x \in V' \cup \Sigma'$ съществуват $\alpha, \beta \in (V'\cup\Sigma')^\star$,
-  за които $S \to^\star \alpha x \beta$,
+  със свойството, че за всяко $X \in V' \cup \Sigma'$ съществуват $\alpha, \beta \in (V'\cup\Sigma')^\star$,
+  за които $S \to^\star \alpha X \beta$,
   т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
 \end{lemma}
 \begin{hint}
-  Намираме $V'$ и $\Sigma'$ итеративно, като в началото $V' = \{S\}$, $\Sigma' = \emptyset$.
-  Ако $A \in V'$ и имаме правила в $G$:
-  \[A \to \alpha_0\ |\ \alpha_1\ |\ \cdots\ |\ \alpha_n,\]
-  то за всяко $i = 0,\dots,n$ добавяме всички променливи на $\alpha_i$ към $V'$ и всички нетерминали на $\alpha_i$ към $\Sigma'$.
+  Строим множествата
+  \begin{align*}
+    & V_n = \{A \in V \mid S \stackrel{\leq n}{\to}_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}\\
+    & \Sigma_n = \{a \in \Sigma \mid S \stackrel{\leq n}{\to}_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star\}.
+  \end{align*}
+  \begin{itemize}
+  \item
+    Ясно е, че $V_0 = \{S\}$ и $\Sigma_0 = \emptyset$.
+  \item
+    \marginpar{Всяка итерация отнема време $\mathcal{O}(|G|)$. Следователно, можем да намерим $G'$ за време $\mathcal{O}(|G|^2)$.}
+    Нека имаме $V_n$ и $\Sigma_n$. Тогава:
+    \begin{align*}
+      & V_{n+1} = \{A \in V \mid (\exists B \in V_n)[ B \to_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star]\}\\
+      & \Sigma_{n+1} = \{a \in \Sigma \mid (\exists B \in V_n)[ B \to_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star]\}.
+    \end{align*}
+  \item
+    Спираме, когато намерим първото $n$, за което $V_n = V_{n+1}$ и $\Sigma_n = \Sigma_{n+1}$.
+    Тогава $V' = V_n$ и $\Sigma' = \Sigma_n$.
+  \end{itemize}
 \end{hint}
 
 \begin{thm}
-  За всяка безконтекстна граматика $G$, $\L(G) = \emptyset$ точно тогава, когато $S$ е безполезно правило в граматиката.
+  За всяка безконтекстна граматика $G$, за която $\L(G) \neq \emptyset$, съществува еквивалетнтна на нея безконтекстна граматика $G'$ без безполезни правила.
+  Освен това, граматиката $G'$ може да се намери за полиномиално време.
 \end{thm}
-\begin{proof}
+\begin{hint}
   \marginpar{Защо е важна последователността на прилагане?}
-  Нека е дадена безконтекстна граматика $G$ пораждаща $L$.
   Прилагаме върху $G$ първо процедурата от \Lem{useless1} и след това върху резултата прилагаме процедурата от \Lem{useless2}.
-\end{proof}
+\end{hint}
 
 \begin{example}
   Да разгледаме следната граматика $G$:
@@ -103,6 +120,8 @@
     & C \to CB\ |\ SC\ |\ AS.
   \end{align*}
 \end{problem}
+
+
 
 %%% Local Variables:
 %%% mode: latex

@@ -51,6 +51,14 @@
 
   Думата $x * y + z$ има две различни дървета на извод.
 
+  \begin{framed}
+    \qtreecenterfalse
+    \Tree [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$S$ [.$V$ $y$ ] ] $+$ [.$S$ [.$V$ $z$ ] ] ] ]
+    \hskip 0.4in
+    \Tree [.$S$ [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$V$ $y$ ] ] ]  $+$  [.$S$ [.$V$ $z$ ] ] ]
+  \end{framed}
+  
+  
   Да разгледаме граматика с правила
   \begin{align*}
     & S \to E + S\ |\ E\\
@@ -58,6 +66,10 @@
     & V \to x\ |\ y\ |\ z
   \end{align*}
   Сега думата $x * y + z$ има само едно дърво на извод.
+
+  \begin{framed}
+    \Tree [.$S$ [.$E$ [.$V$ $x$ ] $*$ [.$E$ [.$V$ $y$ ] ] ] $+$ [.$S$ [.$E$ [.$V$ $z$ ] ] ] ]
+  \end{framed}
 \end{example}
 
 \begin{example}
