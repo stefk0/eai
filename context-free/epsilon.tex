@@ -2,8 +2,8 @@
 \index{$\varepsilon$-правила}
 
 \begin{lemma}
-  За всяка безконтекстна граматика $G$, съществува безконтекстна граматика $G'$ без правила от вида $A \to \varepsilon$,
-  за която $\L(G') = \L(G) \setminus \{\varepsilon\}$.
+  Съществува {\em експоненциален} алгоритъм, такъв че превръща всяка безконтекстна граматика $G$ в безконтекстна граматика $G'$ без правила от вида $A \to \varepsilon$,
+  и $\L(G') = \L(G) \setminus \{\varepsilon\}$.
 \end{lemma}
 \begin{hint}
   За да премахнем правилата от вида $A \to \varepsilon$ от граматиката, следваме процедурата:
@@ -11,14 +11,15 @@
   \item 
     Намираме множеството
     \[E = \{A \in V \mid A \to^\star \varepsilon\}\]
-    като започваме да намираме множествата
+    като строим множествата
     \[E_n = \{A \in V \mid A \stackrel{\leq n}{\to}_G \varepsilon \}.\]
-    \marginpar{На всяка стъпка трябва да обходим цялата граматика.}
+    \marginpar{На всяка стъпка трябва да обходим цялата граматика, следователно всяка итерация отнема $\mathcal{O}(|G|)$ време.}
     \begin{itemize}[-]
     \item
       Ясно е, че $E_0 = \emptyset$;
     \item
       Нека имаме $E_n$. Тогава дефинираме
+      \marginpar{Обърнете внимание, че имаме $E^\star_n$.}
       \[E_{n+1} = E_n \cup \{ B \in V \mid B \to_G \alpha\ \&\ \alpha \in E^\star_n\}.\]
     \item
       \marginpar{Намираме $E$ за време $\mathcal{O}(|G|^2)$.}
@@ -37,7 +38,14 @@
     \item
       не всички $Y_i$ са $\varepsilon$.
     \end{itemize}
+    \marginpar{\writedown Докажете сами!}
     Лесно се съобразява, че $\L(G') = \L(G) \setminus \{\varepsilon\}$.
+    \begin{itemize}
+    \item
+      Нека $A \stackrel{l}{\to_G} \omega$ за $\omega \neq \varepsilon$. Тогава $A \to\star_{G'} \omega$.
+    \item
+      Нека $A \stackrel{l}{\to_{G'}} \omega$ за $\omega \neq \varepsilon$. Тогава $A \to\star_{G} \omega$.
+    \end{itemize}
   \end{enumerate}
 \end{hint}
 

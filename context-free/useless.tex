@@ -28,6 +28,7 @@
     Нека сме намерили $V_n$. Тогава
     \[V_{n+1} = V_n \cup \{A\in V \mid A \to_G \alpha\ \&\ \alpha \in (\Sigma \cup V_n)^\star \}.\]
   \item
+    \marginpar{Всяка итерация на алгоритъма отнема $\mathcal{O}(|G|)$ време. Следователно, изпълнението на целия алгоритъм отнема $\mathcal{O}(|G|^2)$ време.}
     Когато намерим първото $n$, за което $V_n = V_{n+1}$,
     то знаем, че
     \[V_n = \{A \in V \mid A \to^\star_G \alpha\ \&\ \alpha \in \Sigma^\star \}.\]
@@ -35,9 +36,11 @@
   \end{itemize}
 \end{hint}
 
-\begin{cor}
-  Съществува алгоритъм, който определя дали за всяка безконтекстна граматика $G$ дали $\L(G) = \emptyset$.
-\end{cor}
+\begin{framed}
+  \begin{cor}
+    Съществува {\em полиномиален} алгоритъм, който определя за всяка безконтекстна граматика $G$ дали $\L(G) = \emptyset$.
+  \end{cor}  
+\end{framed}
 \begin{proof}
   Прилагаме алгоритъма от \Lem{useless1}.
   Тогава $\L(G) = \emptyset$ точно тогава, когато $S \not\in V'$.  
@@ -51,7 +54,7 @@
   т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
 \end{lemma}
 \begin{hint}
-  Строим множествата
+  Строим едновременно множествата
   \begin{align*}
     & V_n = \{A \in V \mid S \stackrel{\leq n}{\to}_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}\\
     & \Sigma_n = \{a \in \Sigma \mid S \stackrel{\leq n}{\to}_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star\}.
@@ -77,7 +80,8 @@
   Освен това, граматиката $G'$ може да се намери за полиномиално време.
 \end{thm}
 \begin{hint}
-  \marginpar{Защо е важна последователността на прилагане?}
+  \marginpar{\writedown Защо е важна последователността на прилагане?}
+  \marginpar{Алгоритъмът описан тук е квадратичен. Има и линеен такъв. Вижте \cite[стр. 296]{hopcroft2}}
   Прилагаме върху $G$ първо процедурата от \Lem{useless1} и след това върху резултата прилагаме процедурата от \Lem{useless2}.
 \end{hint}
 

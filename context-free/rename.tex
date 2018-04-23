@@ -1,23 +1,33 @@
 \subsubsection*{Премахване на преименуващи правила}
 \index{преименуващи правила}
 Преименуващите правила са от вида $A \to B$.
-Нека е дадена граматика $G = \CFG$, в която има преименуващи правила.
+Нека е дадена граматика $G = \CFG$.
 Ще построим еквивалентна граматика $G'$ без преименуващи правила.
 В началото нека в $R'$ да добавим всички правила от $R$, които не са преименуващи.
 След това, за всякa променлива $A$, за която $A \to^\star_G B$,
 ако $B \to \alpha$ е правило в $R$, което не е преименуващо,
 то добавяме към $R'$ правилото $A \to \alpha$.
 
+\begin{lemma}
+  Съществува {\em полиномиален} алгоритъм, такъв че превръща всяка безконтекстна граматика $G$ в безконтекстна граматика $G'$ без преименуващи правила
+  и $\L(G') = \L(G) \setminus \{\varepsilon\}$.
+\end{lemma}
+
+
 Първо намираме множеството от двойки
-\[\texttt{Ren} = \{(A,B) \in V\times V \mid A \to^\star_G B\}.\]
+\[\texttt{Ren} = \{(A,B) \in V\times V \mid A \to^\star_G B\}\]
+като строим множествата
+\[\texttt{Ren}_n = \{(A,B) \in V\times V \mid A \stackrel{\leq n}{\to}_G B\}\]
 
 \begin{itemize}
 \item
   Ясно е, че $\texttt{Ren}_0 = \{(A,A) \mid A \in V\}$.
 \item
   Нека имаме $\texttt{Ren}_n$. Тогава дефинираме
+  \marginpar{Всяка итерация отнема $\mathcal{O}(|G|)$ време.}
   \[\texttt{Ren}_{n+1} = \texttt{Ren}_n \cup \{(A,B) \in V\times V \mid (\exists C\in V)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren}_n]\}.\]
 \item
+  \marginpar{$|\texttt{Ren}|$ има големина $\mathcal{O}(|G|^2)$.}
   Спираме на първото $n$, за което $\texttt{Ren}_n = \texttt{Ren}_{n+1}$. Тогава $\texttt{Ren} = \texttt{Ren}_n$.
 \end{itemize}
 
@@ -32,8 +42,12 @@
     & B \to C\ |\ BC\\
     & C \to AB\ |\ a\ |\ b.
   \end{align*}
-  % \[A\rightarrow B|S,B\rightarrow C|BC,C\rightarrow AB|a|b,S\rightarrow B|CC|b.\]
-  Първо добавяме към $R'$ правилата $B \to BC, C \to AB\ |\ a\ |\ b, S \to CC\ |\ b$.
+  Първо добавяме към $R'$ правилата, които не са преименуващи, а именно:
+  \begin{align*}
+    & B \to BC\\
+    & C \to AB\ |\ a\ |\ b\\
+    & S \to CC\ |\ b.
+  \end{align*}
   \begin{itemize}
   \item 
     Лесно се съобразява, че $A \to^\star_G B,S,C$.
