@@ -9,6 +9,7 @@
 \item
   $Q$ е крайно множество от състояния;
 \item  
+  \marginpar{Озн. $\Sigma_\varepsilon = \Sigma \cup \{\varepsilon\}$ и $\Gamma_\varepsilon = \Gamma \cup \{\varepsilon\}$.}
   $\Sigma$ е крайна входна азбука;
 \item
   $\Gamma$ е крайна стекова азбука;
@@ -19,7 +20,7 @@
 \item
   \marginpar{Озн. $\Ps_{fin}(A)$ - крайните подмножества на $A$}
   \marginpar{Дефиницията на стеков автомат има много вариации, всички еквивалентни помежду си}
-  $\Delta:Q\times(\Sigma \cup \{\varepsilon\})\times (\Gamma \cup \{\varepsilon\})\rightarrow \Ps_{fin}(Q\times\Gamma^\star)$ 
+  $\Delta:Q\times\Sigma_\varepsilon\times \Gamma_\varepsilon \rightarrow \Ps_{fin}(Q\times\Gamma^\star)$ 
   е функция на преходите;    
 \item
   $F\subseteq Q$ е множество от заключителни състояния.
@@ -40,6 +41,7 @@
 Сега вече можем да дадем дефиниция на език, разпознаван от стеков автомат $P$.
 % \begin{itemize}
 % \item
+\marginpar{Възможно е да се даде и друга еквивалентна дефиниция - разпознаване с празен стек.}
 Езикът $\L(P)$, който се разпознава от $P$, има следната дефиниция:
 \[\L(P) = \{\omega \in \Sigma^\star \mid (\exists q \in F)(\exists \gamma \in \Gamma^\star)[\ (\qstart,\omega,\varepsilon) \vdash^\star_P (q,\varepsilon,\gamma)\ ]\}.\]    
 % \item
@@ -55,13 +57,13 @@
   Да разгледаме $P = \PDA$, където
   \begin{itemize}
   \item
-    $Q = \{\qstart,q,p,f\}$;
+    $Q = \{\qstart,q,p,\qaccept\}$;
   \item
     $\Sigma = \{a,b\}$;
   \item
     $\Gamma = \{\sharp,a\}$, където символът $\sharp$ служи за дъно на стека, а броят на $a$-тата в стека ще показват колко букви $a$ сме прочели от думата;
   \item
-    $F = \{f\}$;
+    $F = \{\qaccept\}$;
   \item
     Релацията на преходите $\Delta$ има следната дефиниция:
     \begin{enumerate}[(1)]
@@ -72,25 +74,11 @@
     \item
       $\Delta(q,a,a) = \{(q, aa), (p, aa)\}$;
     \item 
-      $\Delta(q,\varepsilon,\sharp) = \{(q,\varepsilon)\}$;
-    % \item 
-    %   $\Delta(\qstart,\varepsilon, a) = \emptyset$;
-    % \item
-    %   $\Delta(\qstart, b, a) = \emptyset$;
-    % \item
-    %   $\Delta(\qstart, b, \sharp) = \emptyset$;
+      $\Delta(q,\varepsilon,\sharp) = \{(q,\varepsilon)\}$\quad \comment{трябва да разпознаем и $\varepsilon$};
     \item 
       $\Delta(p, b, a) = \{(p,\varepsilon)\}$;
     \item
-      $\Delta(p, \varepsilon, \sharp) = \{(f, \varepsilon)\}$.
-    % \item 
-    %   $\Delta(p, b, \sharp) = \emptyset$;
-    % \item 
-    %   $\Delta(p, a, \sharp) = \emptyset$;
-    % \item 
-    %   $\Delta(p, a, A) = \emptyset$;
-    % \item
-    %   $\Delta(p, \varepsilon, \sharp) = \emptyset$.
+      $\Delta(p, \varepsilon, \sharp) = \{(\qaccept, \varepsilon)\}$.
     \item
       За всички останали тройки $(r,x,y)$, нека $\Delta(r,x,y) = \emptyset$.
     \end{enumerate}
@@ -103,11 +91,11 @@
                                    & \vdash_P (p, b^2, aa\sharp) & \comment{\text{правило }(3)}\\
                                    & \vdash_P (p, b, a\sharp) & \comment{\text{правило }(5)}\\
                                    & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(5)}\\
-                                   & \vdash_P (f, \varepsilon, \varepsilon) & \comment{\text{правило }(6)}
+                                   & \vdash_P (\qaccept, \varepsilon, \varepsilon) & \comment{\text{правило }(6)}
   \end{align*}
   \marginpar{\writedown Докажете, че $L = \L(P)$!}
   Получихме, че
-  \[(\qstart, a^2b^2, \varepsilon) \vdash^\star_P (f, \varepsilon, \varepsilon),\]
+  \[(\qstart, a^2b^2, \varepsilon) \vdash^\star_P (\qaccept, \varepsilon, \varepsilon),\]
   откъдето следва, че $a^2b^2 \in \L(P)$.
 
   \begin{enumerate}[a)]
@@ -115,7 +103,7 @@
     \marginpar{Индукция по $n$}
     Докажете, че за всяко естествено число $n$,
     \begin{align*}
-      & (q, a^nb^n, \sharp) \vdash^\star_P (q, b^n, a^n\sharp)\\
+      & (q, a^n\beta, \sharp) \vdash^\star_P (q, \beta, a^n\sharp)\\
       & (p, b^n, a^n\sharp) \vdash^\star_P (p, \varepsilon,\sharp).
     \end{align*}
     Заключете, че $L \subseteq \L(P)$.
@@ -411,6 +399,7 @@
 \begin{proof}
   \marginpar{\cite[стр. 136]{papadimitriou}}
   \marginpar{Доказателството в \cite[стр. 117]{sipser3} не ми харесва}
+  \marginpar{Тук приемаме, че винаги правим най-ляв извод в граматиката}
   Нека е дадена безконтекстната граматика $G = \CFG$.
   Нашата цел е да построим стеков автомат $P = \PDA$, който разпознава $\L(G)$.
   % Нека  \[P = \langle{\{\qstart,q,f\},\Sigma,\Sigma\cup V \cup\{\sharp\},q,\Delta,\{f\}}\rangle,\]
@@ -459,8 +448,8 @@
     Базовият случай, когато дължината на извода е $0$, е тривиален, защото тогава $\alpha = \varepsilon$ и $\gamma = S$.
     Ясно е, че $(q,\varepsilon,S\sharp) \vdash^0_P (q,\varepsilon,S\sharp)$.
 
-    Нека $S \to^{l+1}_G \alpha\gamma$. Това означава, че този извод може да се запише по следния начин:
-    \[S \to^l_G \alpha_1A\gamma_2 \to_G \underbrace{\alpha_1\alpha_2}_{\alpha}\underbrace{\gamma_1\gamma_2}_{\gamma},\]
+    Нека $S \stackrel{l+1}{\to}_G \alpha\gamma$. Това означава, че този извод може да се запише по следния начин:
+    \[S \stackrel{l}{\to}_G \alpha_1A\gamma_2 \to^\star_G \underbrace{\alpha_1\alpha_2}_{\alpha}\underbrace{\gamma_1\gamma_2}_{\gamma},\]
     където $A \to_G \alpha_2\gamma_1$ е правилото в граматиката, което сме приложили най-накрая. Тогава от И.П. имаме, че
     \begin{equation}
       \label{eq:5}
@@ -495,22 +484,18 @@
 \begin{prop}
   \marginpar{\writedown Докажете!}
   За всеки стеков автомат $P$,
-  съществува стеков автомат $\hat{P}$, такъв че $\L(P) = \L(\hat{P})$,
-  където
-  \begin{itemize}
-  \item
-    $\hat{Q} = Q \cup \{\hat{q}_{\texttt{start}}, \qaccept\}$;
-  \item
-    $\hat{V} = V \cup \{\sharp\}$, $\sharp \not\in V$;
-  \item
-    $\hat{\Delta}(\hat{q}_{\texttt{start}},\varepsilon,\varepsilon) = \{(\qstart, \sharp)\}$;
-  \item
-    $\hat{F} = \{\qaccept\}$;
-  \item
-    всяко успешно изчисление на $\hat{P}$ завършва с празен стек.
-  \end{itemize}
+  съществува стеков автомат $P'$, такъв че $\L(P) = \L(P')$ и има следните свойства:
+   \begin{itemize}
+   \item
+     $Q'$ съдържа нови състояния $\qstart'$ и $\qaccept'$;
+   \item
+     $V' = V \cup \{\sharp\}$, като $\sharp \not\in V$;
+   \item
+     $F' = \{\qaccept'\}$;
+   \item
+     $\L(P) = \{ \alpha \in \Sigma^\star \mid (\qstart', \alpha, \sharp) \vdash^\star_{P'} (\qaccept',\varepsilon,\varepsilon)\}$.
+   \end{itemize}
 \end{prop}
-
 
 \begin{framed}
   \begin{lemma}
@@ -518,10 +503,12 @@
   \end{lemma}
 \end{framed}
 \begin{proof}
-  Можем да приемем, че работим със стеков $P$ притежаващ свойствата на стековия автомат $\hat{P}$ от предишното твърдение.
+  Можем да приемем, че работим със стеков автомат $P$ притежаващ свойствата на стековия автомат $P'$ от предишното твърдение, т.е.
+  $F = \{\qaccept\}$, $\sharp$ е символът за дъно на стека и 
+  \[\L(P) = \{\alpha \in \Sigma^\star \mid (\qstart, \alpha, \sharp) \vdash^\star_P (\qaccept, \varepsilon, \varepsilon)\}.\]
   Ще дефинираме безконтекстна граматика $G$, за която $\L(P) = \L(G)$.
   Променливите на граматика са 
-  \[V = \{[q,A,p] \mid q,p \in \hat{Q}, A \in \hat{\Gamma}\}.\]
+  \[V = \{[q,A,p] \mid q,p \in Q, A \in \Gamma\}.\]
   Правилата на $G$ са следните:
   \begin{itemize}
   \item
@@ -530,29 +517,30 @@
     Нека имаме $(q_1,B_1\dots B_m) \in \Delta(q, a, A)$.
     Тогава добавяме правилата в граматиката:
     \[[q,A,p] \to_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots [q_m,B_m,p],\]
-    за всеки $q,q_1,\dots,q_{m},p \in Q$, $a \in \Sigma \cup \{\varepsilon\}$.
+    за всеки $q,q_1,\dots,q_{m},p \in Q$, $a \in \Sigma_\varepsilon$.
   \item
     Нека имаме $(p,\varepsilon) \in \Delta(q,a,A)$.
     Тогава добавяме правилата в граматиката:
     \[[q,A,p] \to a,\]
-    където $a \in \Sigma \cup \{\varepsilon\}$.
+    където $a \in \Sigma_\varepsilon$.
   \end{itemize}
   Трябва да докажем, че за произволна дума $\alpha \in \Sigma^\star$, произволни състояния $q,p \in Q$,
   и произволна буква $A \in \Gamma$, е изпълнено, че:
   \[[q,A,p] \rightarrow^\star_G \alpha\ \Leftrightarrow\ (q,\alpha,A) \vdash^\star_{P} (p,\varepsilon,\varepsilon).\]
   \begin{description}
   \item[$(\Rightarrow)$]
-    С пълна индукция по броят на стъпките $l$ в изчислението на стековия автомата $P$ ще докажем, че:
+    С пълна индукция по броят на стъпките $l$ в изчислението на стековия автомат $P$ ще докажем, че:
     \[(q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon)\ \implies\ [q,A,p] \to^\star_G \alpha.\]
-    Ако $l = 1$, то е лесно, защото $\alpha \in \Sigma \cup\{\varepsilon\}$ и $m = 0$.
-    Според конструкцията на граматиката $G$ имаме правилото $[q,A,p] \to a$.
+    Ако $l = 1$, то е лесно, защото $\alpha = a \in \Sigma_\varepsilon$.
+    Тогава $(p,\varepsilon) \in \Delta(q,a,A)$ и според конструкцията на граматиката $G$ имаме правилото $[q,A,p] \to_G a$.
     
-    Ако $l > 1$, нека $\alpha = a\beta$, където е възможно $a = \varepsilon$. Тогава:
-    \marginpar{Възможно е $a = \varepsilon$}
+    Ако $l > 1$, нека $\alpha = a\beta$, където $a \in \Sigma_\varepsilon$. Тогава:
+    \marginpar{Първата стъпка в това изчисление сме я направили, защото имаме, че $(q_1,B_1\dots B_n) \in \Delta(q,a,A)$}
     \[(q,a\beta,A) \vdash_P (q_1,\beta,B_1\dots B_n) \vdash^{l-1}_P (p, \varepsilon, \varepsilon).\]
-    Да разбием думата $\beta$ на $n$ части, $\beta = \beta_1\cdots \beta_n$, със свойството, че след като прочетем $\beta_i$ 
+    Да разбием думата $\beta$ на $n$ части, $\beta = \beta_1\cdots \beta_n$, със свойството, че след като прочетем $\beta_i$
+    \marginpar{Това тук не е точно казано. В конкретната ситуация искаме да кажем, че $\beta_i$ е тази част, която сме прочели докато стигнем първия момент, когато размерът на стека е $n-i$.}
     сме премахнали променливата $B_i$ от върха на стека.
-    Понеже най-накрая искаме стекът да е празен то със сигурност ще има такъва стъпка от изчислението.
+    Понеже най-накрая искаме стекът да е празен, то със сигурност ще има такава стъпка от изчислението.
     Това означава, че съществуват състояния $q_2,\dots,q_{n}$:
     \begin{align*}
       & (q_1, \beta_1, B_1) \vdash^{l_1}_P (q_{2},\varepsilon,\varepsilon)\\
@@ -561,45 +549,51 @@
       & (q_n, \beta_n, B_n) \vdash^{l_n}_P (p,\varepsilon,\varepsilon),
     \end{align*}
     където $l_1+l_2+\cdots+l_n = l-1$.
-    Сега по {\bf И.П.} получаваме:
+    Сега от {\bf И.П.} получаваме:
     \begin{align*}
       & (q_1, \beta_1, B_1) \vdash^{l_1}_P (q_{2},\varepsilon,\varepsilon) \implies [q_1,B_1, q_{2}] \to^\star_G \beta_1\\
       & (q_2, \beta_2, B_2) \vdash^{l_2}_P (q_{3},\varepsilon,\varepsilon) \implies [q_2,B_2, q_{3}] \to^\star_G \beta_2\\
       & \ \vdots\\
       & (q_n, \beta_n, B_n) \vdash^{l_n}_P (p,\varepsilon,\varepsilon) \implies [q_n,B_n, p] \to^\star_G \beta_n.
     \end{align*}
+    Като използваме \Prop{grammar:concat}, получваме, че
+    \[[q_1,B_1,q_2]\dots[q_n,B_n,p] \to^\star_G \beta_1\cdots\beta_n.\]
     Понеже имаме правилото $\Delta(q,a,A) \ni (q_1,B_1\cdots B_n)$, то в граматиката имаме правилото
     \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2]\dots[q_n,B_n,p].\]
     Обединявайки всичко, получаваме извода
     \[[q,A,p] \rightarrow^\star_G a\beta.\]
   \item[$(\Leftarrow)$]
-    Този път с пълна индукция по дължината на извода $l$ ще докажем, че
+    Този път с пълна индукция по дължината на извода $l$ в граматиката $G$ ще докажем, че
     \[[q,A,p] \rightarrow^\star_G \alpha \implies (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
-    Ако $l = 1$, то имаме $[q,A,p] \rightarrow \alpha$, където $\alpha = a$ или $\alpha = \varepsilon$.
-    Ако $l > 1$, то имаме, че $\alpha = a\beta$ и за някое $n$, 
-    \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,p] \rightarrow^{l-1}_G \beta.\]
-    Отново нека $\beta = \beta_1\dots \beta_n$, където 
+    Ако $l = 1$, то имаме $[q,A,p] \rightarrow \alpha$, където $\alpha \in \Sigma_\varepsilon$.
+    Този случай е ясен от дефиницията на граматиката $G$.
+
+    Ако $l > 1$, то имаме, че $\alpha = a\beta$ и според правилата на граматиката $G$, за някое $n$, 
+    \marginpar{Тук отново е възможно $a = \varepsilon$. Това не е проблем, защото правим индукция по дължината на извода, а не по дължината на думата $\alpha$.}
+    \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,p] \stackrel{l-1}{\to}_G a\beta.\]
+    От \Prop{grammar:divide} следва, че имаме разбиване на думата $\beta$ като $\beta = \beta_1\dots \beta_n$, където 
     \begin{align*}
-      & [q_1,B_1,q_{2}] \to^{l_1}_G \beta_1\\
-      & [q_2,B_2,q_{3}] \to^{l_2}_G \beta_2\\
+      & [q_1,B_1,q_{2}] \stackrel{l_1}{\to}_G \beta_1\\
+      & [q_2,B_2,q_{3}] \stackrel{l_2}{\to}_G \beta_2\\
       & \ \vdots\\
-      & [q_{n},B_n, p] \rightarrow^{l_n}_G \beta_n,
+      & [q_{n},B_n, p] \stackrel{l_n}{\to}_G \beta_n,
     \end{align*}
     където $l_1 + l_2 + \cdots + l_n = l-1$.
     От {\bf И.П.} получаваме, че 
     \begin{align*}
-      & [q_1,B_1,q_{2}] \to^{l_1}_G \beta_1 \implies (q_1,\beta_1,B_1) \vdash^\star_P (q_{2},\varepsilon,\varepsilon) \\
-      & [q_2,B_2,q_{3}] \to^{l_2}_G \beta_2 \implies (q_2,\beta_2,B_2) \vdash^\star_P (q_{3},\varepsilon,\varepsilon)\\
+      & [q_1,B_1,q_{2}] \stackrel{l_1}{\to}_G \beta_1 \implies (q_1,\beta_1,B_1) \vdash^\star_P (q_{2},\varepsilon,\varepsilon) \\
+      & [q_2,B_2,q_{3}] \stackrel{l_2}{\to}_G \beta_2 \implies (q_2,\beta_2,B_2) \vdash^\star_P (q_{3},\varepsilon,\varepsilon)\\
       & \ \vdots\\
-      & [q_{n},B_n, p] \rightarrow^{l_n}_G \beta_n \implies  (q_{n},\beta_n,B_n) \vdash^\star_P (p,\varepsilon,\varepsilon).
+      & [q_{n},B_n, p] \stackrel{l_n}{\to}_G \beta_n \implies  (q_{n},\beta_n,B_n) \vdash^\star_P (p,\varepsilon,\varepsilon).
     \end{align*}
-    Правилото $[q,A,p] \rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,p]$ е добавено в граматиката, 
-    защото $\Delta(q,a,A) \ni (q_1, B_1B_2\cdots B_n)$. 
+    Правилото
+    \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\cdots[q_n,B_n,p]\]
+    е добавено в граматиката, защото $\Delta(q,a,A) \ni (q_1, B_1B_2\cdots B_n)$. 
     Обединявайки всичко, което знаем, получаваме:
     \begin{align*}
       (q, a\beta, A) & \vdash_P (q_1, \beta_1\beta_2\cdots\beta_n, B_1B_2\cdots B_n)\\
                      & \vdash^\star_P (q_2, \beta_{2}\cdots\beta_n, B_2\cdots B_n)\\
-                     & \dots\\
+                     & \hspace{0.3cm} \vdots\\
                      & \vdash^\star_P (q_n, \beta_n, B_n)\\
                      & \vdash^\star_P (p, \varepsilon, \varepsilon)
     \end{align*}
@@ -614,105 +608,9 @@
   класа на безконтекстните езици.
 \end{thm}
 \end{framed}
-% \begin{proof}
-%   \marginpar{\cite[стр. 117]{hopcroft1}}
-%   Ще разгледаме двете посоки на твърдението поотделно.
-%   \begin{enumerate}[1)]
-%   \item 
-%     Нека е дадена безконтекстна граматика $G = \CFG$.
-%     Нашата цел е да построим стеков автомат $P$, така че $\L_S(P) = \L(G)$.
-%     Нека  \[P = \langle{\{q\},\Sigma,\Sigma\cup V,S,q,\Delta,\emptyset}\rangle,\]
-%     където функцията на преходите е:
-%     \begin{align*}
-%       & \Delta(q,\varepsilon,A) = \{(q,\alpha)\mid A\to\alpha\mbox{ е правило в граматиката }G\}\\
-%       & \Delta(q,a,a) = \{(q,\varepsilon)\}
-%     \end{align*}
-%   \item
-%     Нека имаме $P = \langle{Q, \Sigma, \Gamma, \Delta, s, \#, \emptyset}\rangle$.
-%     Ще дефинираме безконтекстна граматика $G$, за която $\L_S(P) = \L(G)$.
-%     Променливите на граматика са 
-%     \[V = \{[q,A,p] \mid q,p \in Q, A \in \Gamma\}.\]
-%     Правилата на $G$ са следните:
-%     \begin{itemize}
-%     \item
-%       $S \to [s,\#,q]$, за всяко $q \in Q$;
-%     \item
-%       $[q,A,p] \to a[q_1,B_1,q_2][q_2,B_2,q_3]\dots [q_m,B_m,p]$,
-%       където 
-%       \[(q_1,B_1\dots B_m) \in \Delta(q, a, A)\]
-%       и произволни $q,q_1,\dots,q_{m},p \in Q$,
-%       $a \in \Sigma \cup \{\varepsilon\}$.
-
-%       Да обърнем внимание, че е възможно $m = 0$.
-%       Това означава, че $(p,\varepsilon) \in \Delta(q, a, A)$ и тогава имаме правилото $[q,A,p] \to a$, където $a \in \Sigma \cup \{\varepsilon\}$.
-%     \end{itemize}
-%     Трябва да докажем, че:
-%     \[[q,A,p] \rightarrow^\star_G \alpha\ \Leftrightarrow\ (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
-%     \begin{description}
-%     \item[$(\Rightarrow)$]
-%       С пълна индукция по $i$, ще докажем, че 
-%       \[(q,\alpha,A) \vdash^i_P (p,\varepsilon,\varepsilon)\ \implies\ [q,A,p] \to^\star_G \alpha.\]
-%       Ако $i = 1$, то е лесно, защото $\alpha \in \Sigma \cup\{\varepsilon\}$ и $m = 0$.
-%       Според конструкцията на граматиката $G$ имаме правилото $[q,A,p] \to a$.
-
-%       Ако $i > 1$, нека $\alpha = a\beta$. Тогава:
-%       \marginpar{Възможно е $a = \varepsilon$}
-%       \[(q,a\beta,A) \vdash_P (q_1,\beta,B_1\dots B_n) \vdash^{i-1}_P (p, \varepsilon, \varepsilon).\]
-%       Да разбием думата $\beta$ на $n$ части, $\beta = \beta_1\cdots \beta_n$, със свойството, че след като прочетем $\beta_i$ 
-%       сме премахнали променливата $B_i$ от върха на стека. Това означава, че съществуват състояния $q_2,\dots,q_{n}$:
-%       \begin{align*}
-%         & (q_1, \beta_1, B_1) \vdash^{l_1}_P (q_{2},\varepsilon,\varepsilon)\\
-%         & (q_2, \beta_2, B_2) \vdash^{l_2}_P (q_{3},\varepsilon,\varepsilon)\\
-%         & \ \vdots\\
-%         & (q_n, \beta_n, B_n) \vdash^{l_n}_P (p,\varepsilon,\varepsilon),
-%       \end{align*}
-%       където $l_1+l_2+\cdots+l_n = i-1$.
-%       Сега по {\bf И.П.} получаваме:
-%       \begin{align*}
-%         & (q_1, \beta_1, B_1) \vdash^{l_1}_P (q_{2},\varepsilon,\varepsilon) \implies [q_1,B_1, q_{2}] \to^\star_G \beta_1\\
-%         & (q_2, \beta_2, B_2) \vdash^{l_2}_P (q_{3},\varepsilon,\varepsilon) \implies [q_2,B_2, q_{3}] \to^\star_G \beta_2\\
-%         & \ \vdots\\
-%         & (q_n, \beta_n, B_n) \vdash^{l_n}_P (p,\varepsilon,\varepsilon) \implies [q_n,B_n, p] \to^\star_G \beta_n.
-%       \end{align*}
-%       Понеже имаме правилото $\Delta(q,a,A) \ni (q_1,B_1\cdots B_n)$, то в граматиката имаме правилото
-%       \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2]\dots[q_n,B_n,p].\]
-%       Обединявайки всичко, получаваме извода
-%       \[[q,A,p] \rightarrow^\star_G a\beta.\]
-%     \item[$(\Leftarrow)$]
-%       Отново с пълна индукция по $i$ ще докажем, че
-%       \[[q,A,p] \rightarrow^i_G \alpha \implies (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
-%       Ако $i = 1$, то имаме $[q,A,p] \rightarrow \alpha$, където $\alpha = a$ или $\alpha = \varepsilon$.
-%       Ако $i > 1$, то имаме, че $\alpha = a\beta$ и за някое $n$, 
-%       \[[q,A,p] \rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,p] \rightarrow^{i-1}_G \beta.\]
-%       Отново нека $\beta = \beta_1\dots \beta_n$, където 
-%       \begin{align*}
-%         & [q_1,B_1,q_{2}] \to^{i_1}_G \beta_1\\
-%         & [q_2,B_2,q_{3}] \to^{i_2}_G \beta_2\\
-%         & \ \vdots\\
-%         & [q_{n},B_n, p] \rightarrow^{i_n}_G \beta_n,
-%       \end{align*}
-%       където $i_1 + i_2 + \cdots + i_n = i-1$.
-%       От {\bf И.П.} получаваме, че 
-%       \begin{align*}
-%         & [q_1,B_1,q_{2}] \to^{i_1}_G \beta_1 \implies (q_1,\beta_1,B_1) \vdash^\star_P (q_{2},\varepsilon,\varepsilon) \\
-%         & [q_2,B_2,q_{3}] \to^{i_2}_G \beta_2 \implies (q_2,\beta_2,B_2) \vdash^\star_P (q_{3},\varepsilon,\varepsilon)\\
-%         & \ \vdots\\
-%         & [q_{n},B_n, p] \rightarrow^{i_n}_G \beta_n \implies  (q_{n},\beta_n,B_n) \vdash^\star_P (p,\varepsilon,\varepsilon).
-%       \end{align*}
-%       Правилото $[q,A,p] \rightarrow_G a[q_1,B_1,q_2][q_2,B_2,q_3]\dots[q_n,B_n,p]$ е добавено в граматиката, 
-%       защото $\Delta(q,a,A) \ni (q_1, B_1B_2\cdots B_n)$. 
-%       Обединявайки всичко, което знаем, получаваме:
-%       \begin{align*}
-%         (q, a\beta, A) & \vdash_P (q_1, \beta_1\cdots\beta_n, B_1\cdots B_n)\\
-%         & \vdash^\star_P (q_2, \beta_{2}\cdots\beta_n, B_2\cdots B_n)\\
-%         & \dots\\
-%         & \vdash^\star_P (q_n, \beta_n, B_n)\\
-%         & \vdash^\star_P (p, \varepsilon, \varepsilon)
-%       \end{align*}
-%     \end{description}
-%   \end{enumerate}
-% \end{proof}
-
+\begin{proof}
+  Предишните две леми дават двете посоки на еквивалентността.
+\end{proof}
 
 \begin{example}
   Нека е дадена граматиката $G$ с правила 
@@ -755,37 +653,37 @@
 \end{example}
 
 
-\begin{example}
-  Да видим как по стековия автомат за езика 
-  \[L = \{\omega\omega^{rev} \mid \omega \in \{a,b\}^\star\}\]
-  от \Ex{omega-omega-r} можем да построим граматика, следвайки конструкцията от \Th{push-down-context-free}.
+% \begin{example}
+%   Да видим как по стековия автомат за езика 
+%   \[L = \{\omega\omega^{rev} \mid \omega \in \{a,b\}^\star\}\]
+%   от \Ex{omega-omega-r} можем да построим граматика, следвайки конструкцията от \Th{push-down-context-free}.
 
-  \begin{itemize}
-  \item
-    Променливите на граматиката са $2 \cdot 3 \cdot 2 + 1 = 13$.
-  \item
-    Началната променлива е $[q,\sharp,\qaccept]$.
-  \item
-    Понеже $\Delta(q, a, \sharp) = \{(q, a\sharp)\}$, то имаме правилата
-    \begin{align*}
-      & [q, \sharp, q] \to a[q,a,q][q,\sharp,q]\ |\ a[q,a,p][p,\sharp,q]\\
-      & [q, \sharp, p] \to a[q,a,q][q,\sharp,p]\ |\ a[q,a,p][p,\sharp,p].
-    \end{align*}
-  \item
-    Понеже $\Delta(q, a, a) = \{(q, aa), (p, \varepsilon)\}$, то добавяме правилата:
-    \begin{align*}
-      & [q,a,q] \to a[q, a, q][q,a,q]\ |\ a[q,a,p][p,a,q]\\
-      & [q,a,p] \to a\ |\ a[q, a, q][q,a,p]\ |\ a[q,a,p][p,a,p].
-    \end{align*}
-  \item
-    \marginpar{\ding{45} Довършете граматиката и след това я опростете!}
-    Понеже $\Delta(q, a, b) = \{(q, ab)\}$, то добавяме правилата:
-    \begin{align*}
-      & [q,b,q] \to a[q,a,q][q,b,q]\ |\ a[q,a,p][p,b,q]\\
-      & [q,b,p] \to a[q,a,q][q,b,p]\ |\ a[q,a,p][p,b,p].
-    \end{align*}
-  \end{itemize}
-\end{example}
+%   \begin{itemize}
+%   \item
+%     Променливите на граматиката са $2 \cdot 3 \cdot 2 + 1 = 13$.
+%   \item
+%     Началната променлива е $[q,\sharp,\qaccept]$.
+%   \item
+%     Понеже $\Delta(q, a, \sharp) = \{(q, a\sharp)\}$, то имаме правилата
+%     \begin{align*}
+%       & [q, \sharp, q] \to a[q,a,q][q,\sharp,q]\ |\ a[q,a,p][p,\sharp,q]\\
+%       & [q, \sharp, p] \to a[q,a,q][q,\sharp,p]\ |\ a[q,a,p][p,\sharp,p].
+%     \end{align*}
+%   \item
+%     Понеже $\Delta(q, a, a) = \{(q, aa), (p, \varepsilon)\}$, то добавяме правилата:
+%     \begin{align*}
+%       & [q,a,q] \to a[q, a, q][q,a,q]\ |\ a[q,a,p][p,a,q]\\
+%       & [q,a,p] \to a\ |\ a[q, a, q][q,a,p]\ |\ a[q,a,p][p,a,p].
+%     \end{align*}
+%   \item
+%     \marginpar{\ding{45} Довършете граматиката и след това я опростете!}
+%     Понеже $\Delta(q, a, b) = \{(q, ab)\}$, то добавяме правилата:
+%     \begin{align*}
+%       & [q,b,q] \to a[q,a,q][q,b,q]\ |\ a[q,a,p][p,b,q]\\
+%       & [q,b,p] \to a[q,a,q][q,b,p]\ |\ a[q,a,p][p,b,p].
+%     \end{align*}
+%   \end{itemize}
+% \end{example}
 
 \begin{framed}
   \begin{thm}
@@ -798,8 +696,8 @@
   \marginpar{\cite[стр. 144]{papadimitriou}}
   Нека имаме стеков автомат
   \[P = \pair{Q',\Sigma,\Gamma,q'_{\texttt{start}}, \Delta', F'}, \text{ където } \L(P) = L,\]
-  и краен автомат 
-  \[\A = \pair{Q'', \Sigma, q''_{\texttt{start}}, \Delta'', F''}, \text{ където } \L(\A) = R.\]
+  и краен тотален детерминиран автомат 
+  \[\A = \pair{Q'', \Sigma, q''_{\texttt{start}}, \delta'', F''}, \text{ където } \L(\A) = R.\]
   Ще определим нов стеков автомат $\M = \PDA$, където
   \begin{itemize}
   \item 
@@ -813,17 +711,29 @@
     \begin{itemize}
     \item 
       \marginpar{симулираме едновременно изчислението и на двата автомата}
-      Ако $(r_1,Z) \in \Delta'(q_1, a, Y)$ и $r_2 \in \Delta''(q_2,a)$, то
-      \[(\pair{r_1,r_2}, Z) \in \Delta(\pair{q_1,q_2},a,Y).\]
+      Ако $(r_1,Z) \in \Delta'(q_1, a, Y)$, то
+      \[(\pair{r_1,\delta''(q_2,a)}, Z) \in \Delta(\pair{q_1,q_2},a,Y).\]
     \item
-      \marginpar{празен ход на автомата $M_2$}
+      \marginpar{Нищо не четем от входната дума, следователно правим празен ход на $\A$}
       Ако $(r_1,Z) \in \Delta'(q_1,\varepsilon,Y)$ и всяко $q_2 \in Q''$, то
       \[(\pair{r_1,q_2}, Z) \in \Delta(\pair{q_1,q_2},\varepsilon,Y).\]
     \item
-      \marginpar{\writedown Докажете, че $\L(\M) = \L(\M_1) \cap \L(\M_2)$ !}
+      \marginpar{\writedown Докажете, че $\L(\M) = \L(P) \cap \L(\A)$ !}
       $\Delta$ не съдържа други преходи;
     \end{itemize}
   \end{itemize}
+
+  \begin{itemize}
+  \item
+    \marginpar{Индукция по броя стъпки в изчислението на $\M$.}
+    Докажете, че ако $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$, то
+    $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$.
+  \item
+    \marginpar{Индукция по броя стъпки в изчислението на $P$.}
+    Докажете, че ако $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$, то
+    $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$.
+  \end{itemize}
+  
 \end{proof}
 
 \Th{intersection-context-reg} е удобна, когато искаме да докажем, че даден език не е безконтекстен.
@@ -836,6 +746,15 @@
   Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от \Prob{anbncn}, че {\em не} е безконтекстен.
   Достигнахме до противоречие. Следователно, $L$ не е безконтекстен език.
 \end{example}
+
+\begin{framed}
+  \begin{remark}
+    Не е вярно, че сечението на всеки два безконтекстни езика е безконтекстен език.
+
+    Например, $L_1 = \{a^nb^nc^k \mid n,k\in\Nat\}$ и $L_2 = \{a^kb^nc^n \mid n,k\in\Nat\}$
+    са безконтекстни езици, но ние знаем, че $L_1 \cap L_2 = \{a^nb^nc^n \mid n \in \Nat\}$ не е безконтекстен.
+  \end{remark}
+\end{framed}
 
 %%% Local Variables: 
 %%% mode: latex
