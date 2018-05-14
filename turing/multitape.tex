@@ -93,7 +93,7 @@
         \node[state]            (4) [right of=3]{$q'''_{a,\goleft}$};
         \node[state]            (5) [right of=4]{$p_{a,\goleft}$};
         \node[state]            (6) [below of=5]{$p_{b,\goleft}$};
-        \node[state]            (7) [below of=4]{$p_{\blank,\goleft}$};
+        \node[state]            (7) [below of=3]{$p_{\blank,\goleft}$};
         
         \begin{scope}% [every node/.style={scale=.8}]
           \path
@@ -101,10 +101,10 @@
           (1) edge [bend left=15]  node [above] {$\frac{x}{\hat{b}}/\frac{x}{a};\goleft$} (2)
           (2) edge [bend left=15]  node [above] {$\frac{x}{y}/\frac{x}{\hat{y}};\goright$} (3)
           (3) edge [loop above]    node [above] {$\frac{x}{y};\goright$} (3)
-          (3) edge [bend left=15]  node [above] {$\frac{\hat{a}}{y}/\frac{c}{y};\goright$} (4)
+          (3) edge [bend left=15]  node [above] {$\frac{\hat{a}}{y}/\frac{b}{y};\goright$} (4)
           (4) edge [bend left=15]  node [above] {$\frac{a}{y}/\frac{\hat{a}}{y};\goleft$} (5)
-          (4) edge [bend right=15] node [right] {$\frac{b}{y}/\frac{\hat{b}}{y};\goleft$} (6)
-          (4) edge [bend right=15] node [left] {$\frac{\blank}{y}/\frac{\hat{\blank}}{y};\goleft$} (7);
+          (4) edge [bend left=15]  node [left] {$\frac{b}{y}/\frac{\hat{b}}{y};\goleft$} (6)
+          (4) edge [bend left=15]  node [left] {$\frac{\blank}{y}/\frac{\hat{\blank}}{y};\goleft$} (7);
         \end{scope}
       \end{tikzpicture}
     \end{center}
@@ -129,7 +129,7 @@
   Това означава, че след симулацията на $s$ стъпки, в най-лошия случай, 
   двете глави са на разстояние $2s$. Това означава, че за да симулираме $(s+1)$-вата стъпка на $\M$,
   първо трябва да отидем $2s$ стъпки наляво, после $2s$ стъпки надясно.
-  Следователно $(s+1)$-вата стъпка на $\M$ се симулира за $\approx 2s$ стъпки.
+  Следователно $(s+1)$-вата стъпка на $\M$ се симулира за $\approx 4s$ стъпки.
 \item
   Ако изчислението на $\M$ върху вход $\alpha$ отнема $s$ стъпки,
   то симулираното изчисление върху $\alpha$ ще отнеме в най-лошия случай приблизително $\sum^s_{i=0}4i = 2s^2+2s$ стъпки.

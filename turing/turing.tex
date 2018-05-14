@@ -68,11 +68,13 @@
 \item
   {\bf Началната конфигурация} за входната дума $\alpha \in \Sigma^\star$ представлява 
   \[(\varepsilon, \qstart, \alpha).\]
-  Това означава, че лентата има вида \[\cdots\blank\blank\underline{x}\alpha'\blank\blank\cdots,\]
-  където $\alpha = x\alpha'$, ако $\alpha \in \Sigma^+$.
-\item
-  Ако $\alpha = \varepsilon$, то началната конфигурация е $(\varepsilon, \qstart, \varepsilon)$ и лентата има вида
-  \[\tape{\underline{\blank}}.\]
+  \begin{itemize}
+  \item
+    Ако $\alpha = x\alpha'$, за $x \in \Sigma$, то  лентата има вида \[\cdots\blank\blank\underline{x}\alpha'\blank\blank\cdots,\]
+  \item
+    Ако $\alpha = \varepsilon$, то началната конфигурация е $(\varepsilon, \qstart, \varepsilon)$ и лентата има вида
+    \[\tape{\underline{\blank}}.\]    
+  \end{itemize}
 \item
   {\bf Заключителна конфигурация} представлява тройка от вида
   \[(\beta, \qaccept, \gamma), \text{ или }(\beta, \qreject, \gamma).\]
@@ -84,14 +86,18 @@
 която ще казва как моментната конфигурация на машината $\M$ се променя при изпълнение на една стъпка.
 \begin{itemize}
 \item
-  Ако $\delta_\M(q,z) = (p,y,\goright)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha y, p, \beta)$.
+  Ако $\delta_\M(q,z) = (p,y,\goright)$, то дефинираме $(\alpha, q, zx\beta) \vdash_\M (\alpha y, p, x\beta)$.
   Това означава, че ако лентата е имала вида 
-  \[\tape{\alpha\underline{z}\beta},\]
-  след тази стъпка лентата има вида 
-  \[\tape{\alpha y\underline{b}\beta'},\]
-  ако $\beta = b\beta'$, или 
-  \[\tape{\alpha y\underline{\blank}},\]
-  ако $\beta = \varepsilon$.
+  \[\tape{\alpha\underline{z}x\beta},\]
+  след тази стъпка лентата има следния вид:
+  % \begin{itemize}
+  % \item
+  %   ако $\beta = b\beta'$, то
+    \[\tape{\alpha y\underline{x}\beta'}\]
+  % \item
+  %   ако $\beta = \varepsilon$, то
+  %   \[\tape{\alpha y\underline{\blank}}.\]
+  % \end{itemize}
 \item 
   Ако $\delta_\M(q,z) = (p,y,\goleft)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\M (\alpha , p, xy\beta)$.
   Това означава, че ако лентата е имала вида 
