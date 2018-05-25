@@ -89,7 +89,7 @@
 \end{remark}
 
 \subsection*{История на машина на Тюринг}
-\marginpar{история на приемащо изчисление}
+\index{история на приемащо изчисление}
 
 Дума от вида  $\omega_1 \sharp \omega^{rev}_2 \sharp \omega_3 \sharp \omega^{rev}_4\sharp\omega_5\cdots$
 се нарича {\bf история на приемащо изчисление} на машината на Тюринг $\M$, ако
@@ -117,16 +117,23 @@
   Да разгледаме езиците:
   \begin{align*}
     & L_1 \df (\texttt{Valid}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp)\\
-    & L_2 \df \qstart\Sigma^\star \sharp (\texttt{Valid}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp),
+    & L_2 \df \qstart\Sigma^\star \sharp (\texttt{Valid'}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp),
   \end{align*}
   за които е ясно, че са безконтекстни.
 \end{hint}
 
+\begin{problem}
+  Обяснете как може ефективно да се кодира всяка безконтекстна граматика $G$ като дума $\code{G}$ над азбуката $\{0,1\}$.
+\end{problem}
+
+
+\begin{framed}
 \begin{thm}
   Езикът
   \[L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) \cap \L(G_2) = \emptyset\}\]
   е неразрешим.
-\end{thm}
+\end{thm}  
+\end{framed}
 \begin{hint}
   По дадена дума $\code{\M}$, можем ефективно да намерим $G_1$ и $G_2$, за които
   $\L(G_1) \cap \L(G_2)$ са точно валидните изчисления на $\M$.

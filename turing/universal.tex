@@ -3,12 +3,12 @@
 \begin{framed}
   \begin{thm}
     Езикът 
-    \[L_{\texttt{univ}} \df \{\code{\M} \cdot \omega \mid \text{$\M$ е М.Т. и }\omega\in \L(\M)\}\]
+    \[L_{\texttt{univ}} \df \{\ \code{\M} \cdot \omega \mid \text{$\M$ е машина на Тюринг и }\omega\in \L(\M)\ \}\]
     е полуразрешим, но {\bf не} е разрешим.
   \end{thm}
 \end{framed}
-
 \begin{hint}
+  \marginpar{Разсъждението е много сходно с това защо $L_{\texttt{halt}}$ е полуразрешим.}
   Първо да съобразим защо $L_{\texttt{univ}}$ е полуразрешим език.
   Дефинираме машина на Тюринг $\M'$, която работи по следния начин:
   \begin{itemize}
@@ -16,7 +16,8 @@
     вход дума $\alpha$;
   \item 
     $\M'$ проверява дали $\alpha$ има вида $\code{\M} \cdot \omega$,
-    за някоя машина на Тюринг $\M$ и дума $\omega$;
+    за някоя машина на Тюринг $\M$ и дума $\omega$. Това става лесно, защото $\omega$
+    започва веднага след второ срещане на $111$ в $\alpha$.
   \item
     Ако $\alpha = \code{\M} \cdot \omega$, 
     то $\M'$ симулира работата на $\M$ върху $\omega$.
@@ -33,7 +34,7 @@
     \end{itemize}
   \item
     Ако $\alpha$ няма вида $\code{\M} \cdot \omega$,
-    то $\M'$ завършва като отхвърля думата $\alpha$.
+    то $\M'$ завършва веднага като отхвърля думата $\alpha$.
   \end{itemize}
   Получаваме, че
   \[\alpha \in L_{\texttt{univ}} \iff \alpha \in \L(\M').\]
@@ -52,6 +53,9 @@
   \[\ov{L}_{\texttt{univ}} \df \{\code{\M} \cdot \omega \mid \code{\M} \text{ е М.Т. и }\omega\not\in \L(\M)\}\]
   {\bf не} е полуразрешим.
 \end{cor}
+
+
+
 
 %%% Local Variables:
 %%% mode: latex

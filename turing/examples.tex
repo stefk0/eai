@@ -72,11 +72,12 @@
   \end{figure}
   \end{framed}
 
-  Например,
+  Горната схема определя точно функцията на преходите $\delta$. Например,
   \begin{align*}
     & \delta(q_0, a) = (q_1, x, \goright)\\
     & \delta(q_3, \blank) = (q_0, \blank, \goright)\\
-    & \delta(q_1, a) = (q_1, a, \goright).
+    & \delta(q_1, a) = (q_1, a, \goright)\\
+    & \delta(q_1, x) = (q_1, x, \goright).
   \end{align*}
 
   Съобразете, че тази машина на Тюринг може да се направи тотална като се добави ново състояние $\qreject$
