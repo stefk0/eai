@@ -18,16 +18,6 @@
       & \texttt{Invalid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\ \}\\
       & \texttt{Invalid}'(\M) \df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\ \}.
     \end{align*}
-    % \begin{itemize}
-    % \item 
-    %   $\texttt{Valid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \}$;
-    % \item
-    %   $\texttt{Valid}'(\M)\df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \}$;
-    % \item
-    %   $\texttt{Invalid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\ \}$;
-    % \item
-    %   $\texttt{Invalid}'(\M) \df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\ \}$.
-    % \end{itemize}
   \end{prop}  
 \end{framed}
 
@@ -56,20 +46,20 @@
   \item
     Първо четем $\alpha_1$ и я записваме в стека като $\alpha^{rev}_1$.
     Това правим като дефинираме функцията на преходите като 
-    \[(\forall a,z \in \Sigma)[\ \delta_{P}(r,a,z) \df \{(r,az)\}\ ].\]
+    \[(\forall a,z \in \Sigma)[\ \Delta_{P}(r,a,z) \df \{(r,az)\}\ ].\]
   \item 
     Правим това докато не срещнем някое $q \in Q^\M$. Тогава трябва да направим преход на $\M$.
     Тук трябва да внимаваме, защото за да направим преход, трябва да знаем състоянието $q$ и да прочетем следващия символ.
     Един начин да разрешим този проблем е като запомним кое състояние сме прочели на машината на Тюринг в състоянията на стековия автомат:
-    \[(\forall q \in Q^\M)(\forall z \in \Sigma)[\ \delta_{P}(r,q,z) = \{(r_q,z)\}\ ].\]
+    \[(\forall q \in Q^\M)(\forall z \in \Sigma)[\ \Delta_{P}(r,q,z) = \{(r_q,z)\}\ ].\]
     \begin{itemize}
     \item 
       \marginpar{Стекът представлява $z\alpha^{rev}_1$}
       ако $\delta_\M(q,x) = (p,y,\goright)$, то слагаме $yp$ на върха на стека, т.е.
-      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, ypz)\}.\]
+      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, pyz)\}.\]
     \item
       ако $\delta_\M(q,x) =(p,y,\goleft)$, то ако $z$ е върха на стека, заменяме $z$ с $pzy$, т.е.
-      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, pzy)\}.\]
+      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, yzp)\}.\]
     \item
       ако $\delta_\M(q,x) =(p,y,\stay)$, то ако $z$ е върха на стека, заменяме $z$ с $ypz$, т.е.
       \[\delta_{P}(r_q,x,z) = \{(\hat{r}, ypz)\}.\]
@@ -83,9 +73,9 @@
 \begin{remark}
   Да обърнем внимание, че горната конструкция на стековия автомат $P$ е {\bf ефективна}, т.е.
   съществува алгоритъм, който при вход машина на Тюринг $\M$ връща като изход стеков автомат $P$ за езика $\texttt{Valid}(\M)$.
-  С други думи, езикът 
-  \[\{\code{\M} \cdot \code{P} \mid \L(P) = \texttt{Valid}(\M)\}\]
-  е разрешим.
+  % С други думи, езикът 
+  % \[\{\code{\M} \cdot \code{P} \mid \L(P) = \texttt{Valid}(\M)\}\]
+  % е разрешим.
 \end{remark}
 
 \subsection*{История на машина на Тюринг}
@@ -176,6 +166,7 @@
   \end{thm}
 \end{framed}
 \begin{hint}
+  \marginpar{Тук използваме, че ако $\L(\M) = \emptyset$, то $\overline{\texttt{Accept}(\M)} = \Sigma^\star$.}
   По дадена дума $\code{\M}$, можем ефективно да намерим $G$, за която
   $\L(G)$ са точно невалидните изчисления на $\M$.
   Тогава ако допуснем, че $L$ е разрешим език, то $L_{\texttt{Empty}}$ е разрешим, което е противоречие.
