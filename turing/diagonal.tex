@@ -1,9 +1,14 @@
 \subsection{Диагоналният език $L_{\texttt{diag}}$}
 
+\newcommand{\Luniv}{L_{\texttt{univ}}}
+\newcommand{\Lhalt}{L_{\texttt{halt}}}
+\newcommand{\Laccept}{L_{\texttt{accept}}}
+
+
 \begin{framed}
   \begin{thm}
     Езикът 
-    \[L_{\texttt{diag}} \df \{\ \code{\M} \mid \M \text{ е М.Т. и }\code{\M} \not\in L(\M)\ \}\]
+    \[L_{\texttt{diag}} \df \{\ \code{\M} \mid \M \text{ е машина на Тюринг и }\code{\M} \not\in L(\M)\ \}\]
     не се разпознава от машина на Тюринг, т.е. $L_{\texttt{diag}}$ {\bf не} е полуразрешим език.
   \end{thm}
 \end{framed}
@@ -21,12 +26,12 @@
 \begin{framed}
   \begin{prop}
     Езикът 
-    \[L_{\texttt{halt}} \df \{\ \code{\M} \mid \text{$\M$ е машина на Тюринг и }\code{\M} \in \L(\M)\ \}\]
+    \[\Laccept \df \{\ \code{\M} \mid \text{$\M$ е машина на Тюринг и }\code{\M} \in \L(\M)\ \}\]
     е полуразрешим, но не е разрешим.
   \end{prop}  
 \end{framed}
 \begin{hint}
-  Лесно се съобразява, че $L_{\texttt{halt}}$ е полуразрешим.
+  Лесно се съобразява, че $\Laccept$ е полуразрешим.
   Дефинираме машина на Тюринг $\M'$, която работи по следния начин:
   \begin{itemize}
   \item
@@ -53,12 +58,12 @@
     то $\M'$ завършва като отхвърля думата $\alpha$.
   \end{itemize}
   Получаваме, че
-  \[\alpha \in L_{\texttt{halt}} \iff \alpha \in \L(\M'),\]
-  откъдето следва, че $L_{\texttt{halt}}$ е полуразрешим език.
+  \[\alpha \in \Laccept \iff \alpha \in \L(\M'),\]
+  откъдето следва, че $\Laccept$ е полуразрешим език.
 
-  Ако допуснем, че $L_{\texttt{halt}}$ е разрешим,
+  Ако допуснем, че $\Laccept$ е разрешим,
   то 
-  \[L_{\texttt{diag}} = (\{0,1\}^\star \setminus L_{\texttt{halt}}) \cap \{\code{\M} \mid \text{$\M$ е М.Т.}\}\]
+  \[L_{\texttt{diag}} = (\{0,1\}^\star \setminus \Laccept) \cap \{\code{\M} \mid \text{$\M$ е М.Т.}\}\]
   е разрешим език, което е противоречие.
 \end{hint}
 
@@ -70,6 +75,11 @@
   Съществуват полуразрешими езици $L$, за които $\ov{L}$ не са полуразрешими.
 \end{cor}
 
+\begin{problem}
+  Докажете, че езикът
+  \[\Lhalt = \{\code{\M} \mid \M\text{ е машина на Тюринг и }\M\text{ спира при вход }\code{\M}\}\]
+  е полуразрешим, но не е разрешим.
+\end{problem}
 
 
 
