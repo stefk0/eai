@@ -5,10 +5,11 @@
 \begin{itemize}
 \item 
   \index{азбука}
+  \index{буква}
   {\bf Азбука} ще наричаме всяко крайно множество,
   като обикновено ще я означаваме със $\Sigma$.
   \marginpar{Често ще използваме буквите $a$, $b$, $c$ за да означаваме букви.}
-  Елементите на азбуката $\Sigma$ ще наричаме {\bf букви} или символи.
+  Елементите на азбуката $\Sigma$ ще наричаме {\bf букви}.
 \item
   \index{дума}
   {\bf Дума} над азбуката $\Sigma$ е произволна крайна редица от елементи на $\Sigma$.
@@ -16,6 +17,7 @@
   С $\abs{\alpha}$ ще означаваме дължината на думата $\alpha$.
   \marginpar{Обикновено ще означаваме думите с $\alpha$, $\beta$, $\gamma$, $\omega$.}
 \item
+  \index{празна дума}
   Обърнете внимание, че имаме единствена дума с дължина $0$.
   Тази дума ще означаваме с $\varepsilon$ и ще я наричаме {\bf празната дума},
   т.е. $\abs{\varepsilon} = 0$.
@@ -44,8 +46,8 @@
 \subsection*{Операции върху думи}
 
 \begin{itemize}
-\item 
-  \index{конкатенация}
+\item
+  \index{дума!конкатенация}
   Операцията {\bf конкатенация} взима две думи $\alpha$ и $\beta$ и образува 
   новата дума $\alpha\cdot\beta$ като слепва двете думи.
   Например $aba\cdot bb = ababb$.
@@ -63,7 +65,7 @@
     Тогава $\alpha\cdot\beta \df (\alpha\cdot\gamma)b$.
   \end{itemize}
 \item
-  \index{обръщане на дума}
+  \index{дума!обръщане}
   Друга често срещана операция върху думи е {\bf обръщането} на дума.
   Дефинираме думата $\alpha^{rev}$ като обръщането на $\alpha$ по следния начин.
   \marginpar{Например, $reverse^{rev} = esrever$}
@@ -187,13 +189,13 @@
   Докажете, че за всеки две думи $\alpha$ и $\beta$ е изпълено:
   \begin{enumerate}[a)]
   \item 
-    $(\alpha\cdot\beta)^{rev} = \beta^{rev}\cdot\alpha^{rev}$;
+    $(\alpha\cdot\beta)^{\rev} = \beta^{\rev}\cdot\alpha^{\rev}$;
   \item
-    $\alpha$ е префикс на $\beta$ точно тогава, когато $\alpha^{rev}$ е суфикс на $\beta^{rev}$;
+    $\alpha$ е префикс на $\beta$ точно тогава, когато $\alpha^{\rev}$ е суфикс на $\beta^{\rev}$;
   \item
-    $(\alpha^{rev})^{rev} = \alpha$;
+    $(\alpha^{\rev})^{\rev} = \alpha$;
   \item
-    $(\alpha^n)^{rev} = (\alpha^{rev})^n$, за всяко $n \geq 0$.
+    $(\alpha^n)^{\rev} = (\alpha^{\rev})^n$, за всяко $n \geq 0$.
   \end{enumerate}
 \end{problem}
 
