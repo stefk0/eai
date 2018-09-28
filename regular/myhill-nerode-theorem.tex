@@ -60,11 +60,13 @@
     Ще докажем това свойство с индукция по дължината на думата $\beta$.
     \begin{itemize}
     \item
-      За $\beta = \varepsilon$ свойството следва директно от дефиницията на $\delta^\star$, т.е.
-      $\delta^\star([\alpha]_L,\varepsilon) = [\alpha]_L$.
+      Нека $|\beta| = 0$, т.е. $\beta = \varepsilon$. В този случай, свойството следва директно от дефиницията на $\delta^\star$, т.е.
+      \[\delta^\star([\alpha]_L,\varepsilon) = [\alpha]_L.\]
     \item
-      Нека $\abs{\beta} = n+1$ и да приемем, че сме доказали твърдението за думи с дължина $n$.
-      Тогава $\beta = \gamma a$, където $\abs{\gamma} = n$. Свойството следва от следните равенства:
+      Да приемем, че свойството (\ref{eq:4}) е изпълнено за всички думи $\beta$ с дължина $n$.
+    \item
+      Нека $\abs{\beta} = n+1$. Тогава $\beta = \gamma a$, където $\abs{\gamma} = n$.
+      В този случай, свойството (\ref{eq:4}) следва от следните равенства:
       \begin{align*}
         \delta^\star([\alpha]_L, \gamma a) & = \delta(\delta^\star([\alpha]_L,\gamma),a) & \comment{\text{деф. на }\delta^\star}\\
                                           & = \delta([\alpha\gamma]_L,a) & \comment{\text{от {\bf И.П.} за }\gamma}\\
@@ -78,6 +80,7 @@
     \alpha\in \L(\M) & \iff \delta^\star(\qstart,\alpha) \in F & \comment{\text{деф. на }\L(\M)}\\
                      & \iff \delta^\star([\varepsilon]_L,\alpha) \in F & \comment{\qstart \df [\varepsilon]_L}\\
                      & \iff \delta^\star([\varepsilon]_L,\alpha) = [\varepsilon\alpha]_L\in F & \comment{\text{от (\ref{eq:4})}}\\
+                     & \iff [\alpha]_L \in F \\
                      & \iff \alpha\in L & \comment{\text{деф. на }F}.
   \end{align*}
 \end{proof}
