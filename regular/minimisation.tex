@@ -1,7 +1,7 @@
 \section{Алгоритъм за строене на минимален автомат}
 \begin{itemize}
 \item
-  Да фиксираме произволен детерминистичен краен автомат
+  Да фиксираме произволен краен детерминиран автомат
   \[\A = \FA.\]
 \item
   За състояние $p$ в автомата $\A$, да означим с $\L_\A(p)$ езикът, който се разпознава от автомата $\A$,
@@ -9,6 +9,7 @@
   \[\L_\A(p) \df \{\omega \in \Sigma^\star \mid \delta^\star(p,\omega) \in F\}.\]
   В частност, $\L(\A) = \L_\A(\qstart)$.
 \item
+  \index{$\equiv_\A$}
   \marginpar{Може да е малко объркващо, но релацията $\equiv_\A$ няма нищо общо с релацията $\sim_\A$.
   Релацията $\sim_\A$ е върху думи, докато $\equiv_\A$ е върху състояния.}
   Сега дефинираме следната релация между състояния на автомата $\A$:
@@ -19,10 +20,11 @@
     (\forall \omega\in \Sigma^\star)[\ \delta^\star(p,\omega) \in F\ \iff\ \delta^\star(q,\omega) \in F\ ].
   \end{equation}
 \item
+  \marginpar{\writedown Защо?}
   Релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност. 
 \item
   Да означим
-  \[Q/_{\equiv_\A} \df \{[q]_{\equiv_\A} \mid q \in Q\}.\]
+  \[Q/_{\equiv_\A} \df \{\ [q]_{\equiv_\A} \mid q \in Q\ \}.\]
 \end{itemize}
 
 \begin{problem}
@@ -33,7 +35,7 @@
 \begin{framed}
   \begin{prop}
     \label{pr:equal-number}
-    Нека $\A = \FA$ е детерминистичен краен автомат {\em без недостижими състояния от} $\qstart$.
+    Нека $\A = \FA$ е краен детерминиран автомат {\em без недостижими състояния от} $\qstart$.
     Тогава
     \[\abs{Q/_{\equiv_\A}} = \abs{\Sigma^\star/_{\approx_{\L(\A)}}}.\]  
   \end{prop}  
@@ -50,7 +52,7 @@
   \begin{align*}
     \gamma \in \L_\A(\delta^\star(\qstart,\alpha)) & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F\\
                                                    & \iff \delta^\star(\qstart,\alpha\gamma) \in F & \comment\text{свойство на }\delta^\star\\
-                                                   & \iff \alpha \gamma \in \L(\A)\\
+                                                   & \iff \alpha \gamma \in \L(\A) & \comment\text{деф. на }\L(\A)\\
                                                    & \iff \gamma \in \alpha^{-1}(\L(\A))\\
                                                    & \iff \gamma \in \alpha^{-1}(L). & \comment\L(\A) = L
   \end{align*}
@@ -83,19 +85,20 @@
   \end{itemize}
 \end{hint}
 
-При даден език $L$ и тотален ДКА $\A = \FA$, който го разпознава, целта ни е да построим нов ДКА $\M$,
+При даден език $L$ и тотален краен детерминиран автомат $\A = \FA$, който го разпознава, целта ни е да построим нов краен детерминиран автомат $\M$,
 който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_L$.
 Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
 Според \Prop{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
 Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \omega \in \Sigma^\star$
 във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
-
-Да означим 
+За да разрешим този проблем, ще разгледаме апроксимации на езиците $\L_\A(q)$.
+За ествено число $n$, да означим 
 \[\L^n_\A(p) \df \{\omega \in \Sigma^\star \mid \abs{\omega} \leq n\ \&\ \delta^\star(p,\omega) \in F\}.\]
 Лесно се съобразява, че
 \marginpar{Можем ли да дадем горна граница на $n$?}
 \[L(\A) = \bigcup_{n\geq 0} \L^n_\A(\qstart).\]
 
+\index{$\equiv_n$}
 За всяко естествено число $n$, дефинираме бинарните релации $\equiv_n$ върху $Q$ по следния начин:
 \[p \equiv_n q \dff \L^n_\A(p) = \L^n_\A(q).\]
 
@@ -131,8 +134,8 @@
   \marginpar{\cite[стр. 99]{papadimitriou}}
   \begin{align*}
     p \equiv_{n+1} q & \iff \L^{n+1}_\A(p) = \L^{n+1}_\A(q)\\
-                     & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))]\\
-                     & \iff p \equiv_n q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv_n \delta(q,a)].
+                     & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\ \L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))\ ]\\
+                     & \iff p \equiv_n q\ \&\ (\forall a \in \Sigma)[\ \delta(p,a) \equiv_n \delta(q,a)\ ].
   \end{align*}
 \end{hint}
 

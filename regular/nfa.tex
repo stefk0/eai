@@ -47,15 +47,15 @@
   Отново индукция по дължината на $\beta$.
   \begin{itemize}
   \item
-    Нека $\beta = \varepsilon$. Тогава:
+    Нека $|\beta| = 0$, т.е. $\beta = \varepsilon$. Тогава:
     \begin{align*}
       \Delta^\star(R,\alpha\varepsilon) & = \Delta^\star(R,\alpha) \\
                                         & = \Delta^\star( \Delta^\star(R,\alpha), \varepsilon). & \comment\text{деф. на }\Delta^\star
     \end{align*}
   \item
-    Да приемем, че твърдението е вярно за думи с дължина $n$.
+    Да приемем, че твърдението е вярно за думи $\beta$ с дължина $n$.
   \item
-    Нека $\beta = \gamma b$, където $|\gamma| = n$.
+    Нека $|\beta| = n+1$, т.е. $\beta = \gamma b$, където $|\gamma| = n$.
     \begin{align*}
       \Delta^\star(R, \alpha\gamma b) & = \Delta( \Delta^\star(R, \alpha\beta), b) & \comment\text{деф. на }\Delta^\star\\
                                       & = \Delta( \Delta^\star(R, \alpha),\beta), b) & \comment\text{от И.П.}\\
