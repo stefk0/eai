@@ -14,7 +14,7 @@
     $\Sigma$ е крайна азбука;
   \item
     $\Delta: Q\times\Sigma \to \Ps(Q)$ е функцията на преходите.
-    \marginpar{Да напомним, че $\Ps(Q) = \{R\mid R\subseteq Q\}$, $\abs{\Ps(Q)} = 2^{\abs{Q}}$}
+    \marginpar{Да напомним, че $\Ps(Q) \df \{R\mid R\subseteq Q\}$, $\abs{\Ps(Q)} = 2^{\abs{Q}}$}
     Да обърнем внимание, че е възможно за някоя двойка $(q,a)$ да няма нито един преход в автомата.
     Това е възможно, когато $\Delta(q,a) = \emptyset$;
   \item
@@ -32,7 +32,7 @@
 \item 
   $\Delta^\star(R, \varepsilon) = R$, за произволно $R \subseteq Q$;
 \item
-  $\Delta^\star(R, \alpha x) = \bigcup_{p \in \Delta^\star(R,\alpha)} \Delta(p, x)$, за произволни $x \in \Sigma$, $\alpha \in \Sigma^\star$, $q\in Q$.
+  $\Delta^\star(R, \alpha b) = \bigcup_{p \in \Delta^\star(R,\alpha)} \Delta(p, b)$, за произволни $b \in \Sigma$, $\alpha \in \Sigma^\star$, $q\in Q$.
 \end{itemize}
 
 \begin{framed}
@@ -57,9 +57,12 @@
   \item
     Нека $|\beta| = n+1$, т.е. $\beta = \gamma b$, където $|\gamma| = n$.
     \begin{align*}
-      \Delta^\star(R, \alpha\gamma b) & = \Delta( \Delta^\star(R, \alpha\beta), b) & \comment\text{деф. на }\Delta^\star\\
-                                      & = \Delta( \Delta^\star(R, \alpha),\beta), b) & \comment\text{от И.П.}\\
-                                      & = \Delta^\star( \Delta^\star(R,\alpha), \beta b). & \comment\text{деф. на }\Delta^\star
+      \Delta^\star(R, \alpha\gamma b)  & \df \bigcup_{p \in \Delta^\star(R,\alpha\gamma)} \Delta(p,b)\\
+                                       & = \bigcup_{p \in \Delta^\star(\Delta^\star(R,\alpha),\gamma))} \Delta(p,b) & \comment\text{от И.П. за }\gamma\\
+                                       & = \bigcup_{p \in \Delta^\star(U,\gamma)} \Delta(p,b) & \comment{\text{нека }U \df \Delta^\star(R,\alpha)}\\
+                                       & \df \Delta^\star(U,\gamma b) \\
+                                       & = \Delta^\star(U,\beta) & \comment{\beta = \gamma b}\\
+                                       & = \Delta^\star( \Delta^\star(R,\alpha), \beta). & \comment{\text{защото }U = \Delta^\star(R,\alpha)}
     \end{align*}
   \end{itemize}
 \end{proof}
