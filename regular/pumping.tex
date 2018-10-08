@@ -4,8 +4,7 @@
   \index{лема за покачването!регулярни езици}
   \label{lem:pumping-reg}
   \marginpar{На англ. се нарича \\ Pumping Lemma}
-  \marginpar{Има подобна лема и за безконтекстни езици}
-  \marginpar{Обърнете внимание, че $0 \in \Nat$ и $xy^0z =  xz$}
+  \marginpar{Има подобна лема и за безконтекстни езици, която ще разгледаме по-нататък.}
   Нека $L$ да бъде {\em безкраен} регулярен език.
   Съществува число $p\geq 1$, зависещо само от $L$, 
   за което за всяка дума $\alpha\in L, \abs{\alpha}\geq p$ може да 
@@ -15,14 +14,16 @@
     $|y|\geq 1$;
   \item
     $|xy|\leq p$;
+    \marginpar{Обърнете внимание, че $0 \in \Nat$ и $xy^0z =  xz$}
   \item
     $(\forall i\in\Nat)[xy^iz \in L]$.
   \end{enumerate}
 \end{lemma}
 \begin{hint}
-  \marginpar{\cite[стр. 88]{papadimitriou}, \cite[стр. 78]{sipser1}}
-  Понеже $L$ е регулярен, то $L$ е и автоматен език. Нека $\A = \FA$ е краен детерминиран 
-  автомат, за който $L = \L(\A)$.
+  \marginpar{Тази лема я има във всеки учебник по този предмет. Например, \cite[стр. 88]{papadimitriou}, \cite[стр. 77]{sipser3}.}
+  Понеже $L$ е регулярен, то $L$ е и автоматен език. Нека
+  \[\A = \FA\]
+  е краен детерминиран автомат, за който $L = \L(\A)$.
   Да положим $p = \abs{Q}$ и нека $\alpha = a_1a_2\cdots a_k$ е дума, за която $k \geq p$.
   Да разгледаме първите $p$ стъпки от изпълнението на $\alpha$ върху $\A$:
   \[\qstart\stackrel{a_1}{\rightarrow} q_1 \stackrel{a_2}{\rightarrow}q_2 \dots \stackrel{a_p}{\rightarrow} q_p.\]
@@ -38,7 +39,7 @@
   Да разгледаме и случая $i = 2$. Тогава думата $xy^2z \in L$, защото имаме следното изчисление:
   \[\qstart\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{j+1}}{\rightarrow}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F.\]
   \marginpar{\writedown Докажете!}
-  Вече лесно можем да съобразим, че за всяко $i \in\Nat$, $xy^iz \in L$.
+  Вече лесно можем да съобразим, че за всяко естествено число $i$, е изпълнено $xy^iz \in \L(\A)$.
 \end{hint}
 
 Практически е по-полезно да разглеждаме следната еквивалентна формулировка на лемата за покачването.
@@ -65,9 +66,7 @@
     (\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[ & \alpha = xyz \land \abs{y} \geq 1 \land \abs{xy} \leq p\\
     & \land\ (\forall i\in\Nat)[xy^iz \in L]]].
   \end{align*}
-  
   Така условието на \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
-  
   \begin{center}
     {\em ,,Aко $L$ е регулярен език, то е изпълнено $P_{\text{reg}}(L)$.''}
   \end{center}
@@ -104,7 +103,7 @@
     докажем, че за всяко нейно разбиване на три части $x,y,z$, със свойствата
     $\abs{y} \geq 1$ и $\abs{xy} \leq p$,
   \item[($\exists$)]
-    можем да намерим $i$, за което $xy^iz \not\in L$,
+    можем да намерим естествено число $i$, за което $xy^iz \not\in L$,
   \end{description}
   то можем да заключим, че езикът $L$ не е регулярен.
 \end{proof}
@@ -119,24 +118,24 @@
   Формално трябва докажем, че
   {\scriptsize
     \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
-  Доказателството следва стъпките:
+  Както обяснихме по-горе, доказателството следва стъпките:
   \begin{description}
   \item[$(\forall)$]
-    \marginpar{нямаме власт над избора на числото $p$}
+    \marginpar{Нямаме власт над избора на числото $p$.}
     Разглеждаме произволно число $p \geq 1$.
   \item[$(\exists)$]
-    \marginpar{Няма общо правило, което да ни казва как избираме думата $\alpha$}
+    \marginpar{Няма общо правило, което да ни казва как избираме думата $\alpha$. Трябва сами да се досетим.}
     Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
     си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
-    \marginpar{Обърнете внимание, че думата $\alpha$ зависи от константата $p$}
+    \marginpar{Обърнете внимание, че думата $\alpha$ зависи от константата $p$.}
     Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$.
     Очевидно е, че $\abs{\alpha} \geq p$.
   \item[$(\forall)$]
-    \marginpar{не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства}
+    \marginpar{Не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства.}
     Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
     за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
   \item[$(\exists)$]
-    \marginpar{Изборът на $i$ може да зависи разбиването $x$, $y$, $z$.}
+    \marginpar{Изборът на $i$ може да зависи разбиването $x$, $y$, $z$. В конкретния пример, не зависи.}
     Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
     Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
     Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
@@ -146,6 +145,7 @@
 \end{proof}
 
 \begin{remark}
+  \marginpar{\writedown Съобразете сами!}
   Много често студентите правят следното разсъждение:
   \[(\forall L,L' \subseteq \Sigma^\star)[L \text{ е регулярен}\ \&\ L' \subseteq L \implies L'\text{ е регулярен}].\]
   Съобразете, че в общия случай това твърдение е {\em невярно}.

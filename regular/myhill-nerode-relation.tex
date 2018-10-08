@@ -3,6 +3,7 @@
 \begin{itemize}
 \item
   \index{Майхил-Нероуд!релация}
+  \index{$\approx_L$}
   \marginpar{$\approx_L$ е известна като релация на Майхил-Нероуд}
   Нека $L \subseteq \Sigma^\star$ е език и нека $\alpha,\beta \in \Sigma^\star$.
   Казваме, че $\alpha$ и $\beta$ са {\bf еквивалентни относно} $L$, което записваме 
@@ -12,7 +13,8 @@
   \[\alpha \approx_L \beta \iff (\forall \omega \in \Sigma^\star)[\ \alpha\omega \in L \iff \beta\omega \in L\ ].\]
 \item
   \marginpar{Трябва ли $\A$ да е тотален?}
-  Нека $\A = \FA$ е ДКА.
+  Нека $\A = \FA$ е краен детерминиран автомат.
+  \index{$\sim_\A$}
   Казваме, че две думи $\alpha,\beta \in \Sigma^\star$ са {\bf еквивалентни относно $\A$},
   което означаваме с $\alpha \sim_\A \beta$, ако 
   \[\delta^\star(\qstart,\alpha) = \delta^\star(\qstart,\beta).\]
@@ -53,24 +55,15 @@
   \[\alpha \in L \iff [\alpha]_L \subseteq L.\]
 \end{problem}
 
-% \begin{remark}
-%   Нека $\A$ е детерминистичен краен автомат.
-%   Тогава функцията $g:\Sigma^\star/_{\sim_\A} \to Q$, където
-%   \[g([\alpha]_\A) \df \delta^\star(\qstart, \alpha)\]
-%   е инективна.
-%   Ако $\A$ няма недостожими състояния, то функцията $g$ е биективна.
-%   Това означава, че тогава $|Q| = |\Sigma^\star/_{\sim_\A}|$.
-% \end{remark}
-
 \begin{prop}
   \label{pr:rel-finer}
-  Нека $\A = \FA$ е ДКА и $L = \L(\A)$. Тогава
+  Нека $\A = \FA$ е краен детерминиран автомат и $L = \L(\A)$. Тогава е изпълнено, че:
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
 \end{prop}
 \begin{proof}
-  Нека $\alpha \sim_\A \beta$, т.е. $\delta^\star(\qstart, \alpha) = \delta^\star(\qstart,\beta)$.
+  Да вземем две произволни думи $\alpha$ и $\beta$, за които $\alpha \sim_\A \beta$, т.е. $\delta^\star(\qstart, \alpha) = \delta^\star(\qstart,\beta)$.
   Ще проверим, че  $\alpha \approx_{L} \beta$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$.
-  За произволно $\gamma \in \Sigma^\star$ имаме:
+  За произволна дума $\gamma$ имаме следното:
   \begin{align*}
     \gamma \in \alpha^{-1}(L) & \iff \alpha\gamma \in L\\
                               & \iff \alpha\gamma \in \L(\A) & \comment{L = \L(\A)}\\
@@ -80,7 +73,7 @@
                               & \iff \delta^\star(\qstart,\beta\gamma) \in F & \comment{\text{свойство на }\delta^\star}\\
                               & \iff \beta\gamma \in \L(\A) & \comment\text{деф. на }\L(\A)\\
                               & \iff \beta\gamma \in L & \comment{L = \L(\A)} \\
-                              & \iff \gamma \in \beta^{-1}(L)
+                              & \iff \gamma \in \beta^{-1}(L).
   \end{align*}
   Заключаваме, че 
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
@@ -119,10 +112,10 @@
   \begin{prop}
     \label{pr:upper-bound}
     Нека $L$ е произволен регулярен език.
-    Всеки детерминистичен краен автомат $\A$, за който $L = \L(\A)$ има свойството
+    Всеки краен детерминиран автомат $\A$, за който $L = \L(\A)$ има свойството
     \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
     т.е. броят на класовете на еквивалентност на релацията $\approx_L$
-    не надвишава броя на състоянията на автомата.
+    не надвишава броя на състоянията на автомата $\A$.
   \end{prop}  
 \end{framed}
 \begin{proof}

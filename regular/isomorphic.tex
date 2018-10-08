@@ -41,7 +41,7 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
     \begin{align*}
       f(\delta^\star_{\A'}(q,\beta c)) & = f(\delta_{\A'}(\delta^\star_{\A'}(q,\beta), c)) & \comment{\text{от деф. на }\delta^\star_{\A'}}\\
                                        & = \delta_{\A''}( f(\delta^\star_{\A'}(q,\beta)), c) & \comment{f\text{ е изоморфизъм}}\\
-                                       & = \delta_{\A''}( \delta^\star_{\A''}(f(q),\beta), c) & \comment{\text{от И.П.}}\\
+                                       & = \delta_{\A''}( \delta^\star_{\A''}(f(q),\beta), c) & \comment{\text{от И.П. за }\beta}\\
                                        & = \delta^\star_{\A''}(f(q), \beta c) & \comment{\text{от деф. на }\delta^\star_{\A''}}.
     \end{align*}
   \end{itemize}
@@ -53,7 +53,7 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
   \end{prop}  
 \end{framed}
 \begin{hint}
-  \marginpar{Лесно можем да съобразим, че в общия случай нямаме обратната посока на тази теорема.}
+  \marginpar{Лесно можем да съобразим, че в общия случай нямаме обратната посока на това твърдение.}
   Нека $\A' \cong_f \A''$. Тогава имаме следните еквивалентности:
   \begin{align*}
     \alpha \in \L(\A') & \iff \delta^\star_{\A'}(\qstart',\alpha) \in F' & \comment\text{деф. на }\L(\A')\\
@@ -67,8 +67,8 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
 \begin{framed}
   \begin{thm}
     \label{th:regular:isomorphic:minimal}
-    Нека е даден регулярния език $L$.
-    Нека \[\A = \FA\] е краен детерминиран автомат, за който $\L(\A) = L$ и $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
+    Нека регулярния език $L$ се разпознава от крайния детерминиран автомат 
+    \[\A = \FA\], за който $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
     Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
   \end{thm}  
 \end{framed}
