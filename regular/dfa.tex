@@ -104,37 +104,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Получаваме, че 
 \[\L(\A) = \{\alpha\in\Sigma^\star \mid (\exists q \in F)[(\qstart,\alpha) \vdash^\star_\A(q,\varepsilon)]\}.\]
 
-% Нашата дефиниция на автомат позволява $\delta$ да бъде частична функция, т.е.
-% може да има $q\in Q$ и $a\in\Sigma$, за които $\delta(q,a)$ не е дефинирана.
-% Следващото твърдение ни казва, че ние съвсем спокойно можем да разглеждаме автомати
-% само с тотални функции на преходите  $\delta$.
-% \begin{prop}
-%   За всеки краен автомат $\A$, съществува {\em тотален} краен автомат $\A'$,
-%   за който $\L(\A) = \L(\A')$.
-% \end{prop}
-% \begin{hint}
-%   Нека $\A = \FA$.
-%   Дефинираме тоталния автомат 
-%   \[\A' = \pair{Q\cup\{q_e\}, \Sigma, \qstart, \delta', F},\]
-%   като за всеки преход $(q,a)$, за който $\delta$ не е дефинирана, 
-%   дефинираме $\delta'$ да отива в новото състояние $q_e$.
-%   Ето и цялата дефиниция на новата функция на преходите $\delta'$:
-%   \begin{itemize}
-%   \item 
-%     \marginpar{$q_e$ - error състояние}
-%     $\delta'(q_e,a) = q_e$, за всяко $a\in\Sigma$;
-%   \item
-%     \marginpar{$\A'$ симулира $\A$}
-%     За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a) = p$, то
-%     $\delta'(q,a) = p$;
-%   \item
-%     За всяко $q\in Q$, $a\in\Sigma$, ако $\delta(q,a)$ не е дефинирано, то
-%     $\delta'(q,a) = q_e$.
-%   \end{itemize}
-%   Сега лесно може да се докаже, че $\L(\A) = \L(\A')$.
-% \end{hint}
-
-
 \begin{example}
   \label{ex:automata-pictures}
   Да разгледаме няколко примера за автомати и езиците, които разпознават.
@@ -217,6 +186,104 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \end{subfigure}
   \end{figure}    
 \end{example}
+
+\subsection*{Затвореност на автоматните езици относно сечиение, обединение, разлика}
+
+\begin{framed}
+  \begin{prop}
+    \index{автоматни езици!сечение}
+    \label{pr:automata-cap}
+    Класът на автоматните езици е затворен относно операцията {\em сечение}.
+    Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
+    също е автоматен език.
+  \end{prop}  
+\end{framed}
+\begin{proof}
+  Да разгледаме два автомата \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'').\]
+  Определяме автомата $\A = \FA$, по следния начин:
+  \marginpar{Изчислението на автомата $\A$ върху думата $\alpha$ едновременно симулира изчислението на $\A'$ и $\A''$ върху $\alpha$.}
+  \begin{itemize}
+  \item
+    $Q \df Q'\times Q''$;
+  \item
+    За всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
+    \[\delta(\pair{r_1,r_2},a) \df \pair{\delta_1(r_1,a),\delta_2(r_2,a)};\]
+  \item
+    $\qstart \df \pair{\qstart',\qstart''}$;
+  \item
+    $F \df \{\pair{r_1,r_2}\mid r_1\in F''\ \&\ r_2 \in F''\} = F' \times F''$
+  \end{itemize}
+  Ще докажем с индукция по дължината на думата $\alpha$, че за всяка дума $\alpha$:
+  \begin{equation}
+    \label{eq:7}
+    (\forall p\in Q')(\forall q\in Q'')[\ \delta^\star(\pair{p,q},\alpha) = \pair{ \delta^\star_1(p,\alpha), \delta^\star_2(q,\alpha) }\ ].
+  \end{equation}
+  \begin{itemize}
+  \item
+    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава всичко е ясно, защото
+    \begin{align*}
+      \delta^\star( \pair{p,q}, \varepsilon) & \df \pair{p,q}\\
+                                             & = \pair{\delta^\star_1(p,\varepsilon), \delta^\star_2(q,\varepsilon) }.
+    \end{align*}
+  \item
+    Да приемем, че (\ref{eq:7}) е изпълнено за думи $\alpha$ с дължина $n$.
+  \item
+    Нека $|\alpha| = n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава:
+    \begin{align*}
+      \delta^\star(\pair{p, q},\beta a) & = \delta( \delta^\star( \pair{p, q}, \beta ), a) & \comment{\text{деф. на }\delta^\star}\\
+                                        & = \delta( \pair{ \delta^\star_1(p, \beta), \delta^\star_2(q, \beta)}, a ) & \comment{\text{ от И.П.}}\\
+                                        & = \pair{ \delta_1( \delta^\star_1(p, \beta), a), \delta_2(\delta^\star_2(q,\beta), a)} & \comment\text{деф. на }\delta\\
+                                        & = \pair{ \delta^\star_1(p, \beta a), \delta^\star_2(q, \beta a) } & \comment{\text{деф. на $\delta^\star_1$ и $\delta^\star_2$}}.
+    \end{align*}
+  \end{itemize}
+  Използвайки Свойство (\ref{eq:7}) лесно можем да докажем, че
+  \[\L(\A) = \L(\A') \cap \L(\A'').\]
+  Имаме следните еквивалентности:
+  \begin{align*}
+    \omega \in \L(\A) & \iff \delta^\star(\qstart, \omega) \in F \\
+                      & \iff \delta^\star(\pair{\qstart',\qstart''}, \omega) \in F' \times F'' & \comment\text{деф. на }\A\\
+                      & \iff \pair{\delta^\star_1(\qstart',\omega), \delta^\star_2(\qstart'',\omega)} \in F' \times F'' & \comment{\text{от (\ref{eq:7})}}\\
+                      & \iff \delta^\star_1(\qstart',\omega) \in F'\ \&\ \delta^\star_2(\qstart'',\omega) \in F''\\
+                      & \iff \omega \in \L(\A')\ \&\ \omega\in\L(\A'') \\
+                      & \iff \omega \in \L(\A') \cap \L(\A'').
+  \end{align*}
+  
+\end{proof}
+
+\begin{framed}
+  \begin{prop}
+    \index{автоматни езици!допълнение}
+    \label{pr:automata-complement}
+    Класът на автоматните езици са затворени относно операцията допълнение, т.е.
+    ако $L$ е автоматен език, то $\Sigma^\star\setminus L$ също е автоматен език.
+  \end{prop}  
+\end{framed}
+\begin{hint}
+  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
+  Нека $L = L(\A)$, където $\A = \FA$.
+  Да вземем автомата
+  \[\A' = \pair{Q,\Sigma,\qstart,\delta,Q\setminus F},\]
+  т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
+  са тези състояния, които {\bf не} са финални в $\A$.
+\end{hint}
+
+\begin{framed}
+  \begin{prop}
+    \index{автоматни езици!обединение}
+    \label{pr:automata-union}
+    Класът на автоматните езици е затворен относно операцията {\bf обединение}.
+    Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика, то $L_1\cup L_2$
+    също е автоматен език.
+  \end{prop}  
+\end{framed}
+\begin{hint}
+  \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cup L_2$!}
+  Първият подход е да използвайте конструкцията на автомата $\A$ от \Prop{automata-cap},
+  с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
+  \[F \df \{\pair{q',q''} \in Q' \times Q'' \mid q' \in F'\ \lor\ q'' \in F''\} = F'\times Q'' \cup Q'\times F''.\]
+  Друг подход е да се използва правилото на Де Морган, а именно:
+  \[L_1 \cup L_2 = \ov{\ov{L_1} \cap \ov{L_2}}.\]
+\end{hint}
 
 В повечето от горните примери може сравнително лесно да се съобрази, че построения автомат разпознава желания език.
 При по-сложни задачи обаче, ще се наложи да дадем доказателство, като обикновено се прилага 
@@ -606,99 +673,6 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 %     \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
 %   \end{figure}
 % \end{framed}
-
-\subsection*{Затвореност на автоматните езици относно сечиение, обединение, разлика}
-
-\begin{prop}
-  \index{автоматни езици!сечение}
-  \label{pr:automata-cap}
-  Класът на автоматните езици е затворен относно операцията {\em сечение}.
-  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
-  също е автоматен език.
-\end{prop}
-\begin{proof}
-  Да разгледаме два автомата \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'').\]
-  Определяме автомата $\A = \FA$, по следния начин:
-  \marginpar{Изчислението на автомата $\A$ върху думата $\alpha$ едновременно симулира изчислението на $\A'$ и $\A''$ върху $\alpha$.}
-  \begin{itemize}
-  \item
-    $Q \df Q'\times Q''$;
-  \item
-    За всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
-    \[\delta(\pair{r_1,r_2},a) \df \pair{\delta_1(r_1,a),\delta_2(r_2,a)};\]
-  \item
-    $\qstart \df \pair{\qstart',\qstart''}$;
-  \item
-    $F \df \{\pair{r_1,r_2}\mid r_1\in F''\ \&\ r_2 \in F''\} = F' \times F''$
-  \end{itemize}
-  Ще докажем с индукция по дължината на думата $\alpha$, че за всяка дума $\alpha$:
-  \begin{equation}
-    \label{eq:7}
-    (\forall p\in Q')(\forall q\in Q'')[\ \delta^\star(\pair{p,q},\alpha) = \pair{ \delta^\star_1(p,\alpha), \delta^\star_2(q,\alpha) }\ ].
-  \end{equation}
-  \begin{itemize}
-  \item
-    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава всичко е ясно, защото
-    \begin{align*}
-      \delta^\star( \pair{p,q}, \varepsilon) & \df \pair{p,q}\\
-                                             & = \pair{\delta^\star_1(p,\varepsilon), \delta^\star_2(q,\varepsilon) }.
-    \end{align*}
-  \item
-    Да приемем, че (\ref{eq:7}) е изпълнено за думи $\alpha$ с дължина $n$.
-  \item
-    Нека $|\alpha| = n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава:
-    \begin{align*}
-      \delta^\star(\pair{p, q},\beta a) & = \delta( \delta^\star( \pair{p, q}, \beta ), a) & \comment{\text{деф. на }\delta^\star}\\
-                                        & = \delta( \pair{ \delta^\star_1(p, \beta), \delta^\star_2(q, \beta)}, a ) & \comment{\text{ от И.П.}}\\
-                                        & = \pair{ \delta_1( \delta^\star_1(p, \beta), a), \delta_2(\delta^\star_2(q,\beta), a)} & \comment\text{деф. на }\delta\\
-                                        & = \pair{ \delta^\star_1(p, \beta a), \delta^\star_2(q, \beta a) } & \comment{\text{деф. на $\delta^\star_1$ и $\delta^\star_2$}}.
-    \end{align*}
-  \end{itemize}
-  Използвайки Свойство (\ref{eq:7}) лесно можем да докажем, че
-  \[\L(\A) = \L(\A') \cap \L(\A'').\]
-  Имаме следните еквивалентности:
-  \begin{align*}
-    \omega \in \L(\A) & \iff \delta^\star(\qstart, \omega) \in F \\
-                      & \iff \delta^\star(\pair{\qstart',\qstart''}, \omega) \in F' \times F'' & \comment\text{деф. на }\A\\
-                      & \iff \pair{\delta^\star_1(\qstart',\omega), \delta^\star_2(\qstart'',\omega)} \in F' \times F'' & \comment{\text{от (\ref{eq:7})}}\\
-                      & \iff \delta^\star_1(\qstart',\omega) \in F'\ \&\ \delta^\star_2(\qstart'',\omega) \in F''\\
-                      & \iff \omega \in \L(\A')\ \&\ \omega\in\L(\A'') \\
-                      & \iff \omega \in \L(\A') \cap \L(\A'').
-  \end{align*}
-  
-\end{proof}
-
-\begin{prop}
-  \index{автоматни езици!допълнение}
-  \label{pr:automata-complement}
-  \marginpar{Това означава, че автоматните езици са затворени относно операцията допълнение.}
-  Нека $L$ е автоматен език.
-  Тогава $\Sigma^\star\setminus L$ също е автоматен език.
-\end{prop}
-\begin{hint}
-  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
-  Нека $L = L(\A)$, където $\A = \FA$.
-  Да вземем автомата
-  \[\A' = \pair{Q,\Sigma,\qstart,\delta,Q\setminus F},\]
-  т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
-  са тези състояния, които {\bf не} са финални в $\A$.
-\end{hint}
-
-\begin{prop}
-  \index{автоматни езици!обединение}
-  \label{pr:automata-union}
-  Класът на автоматните езици е затворен относно операцията {\bf обединение}.
-  Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cup L_2$
-  също е автоматен език.
-\end{prop}
-\begin{hint}
-  \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cup L_2$!}
-  Първият подход е да използвайте конструкцията на автомата $\A$ от \Prop{automata-cap},
-  с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
-  \[F \df \{\pair{q',q''} \in Q' \times Q'' \mid q' \in F'\ \lor\ q'' \in F''\} = F'\times Q'' \cup Q'\times F''.\]
-  Друг подход е да се използва правилото на Де Морган, а именно:
-  \[L_1 \cup L_2 = \ov{\ov{L_1} \cap \ov{L_2}}.\]
-\end{hint}
 
 
 %%% Local Variables:
