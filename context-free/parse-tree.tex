@@ -1,35 +1,53 @@
 \section{Дървета на извод}
 
+\tikzset{
+  photon/.style={decorate, decoration={snake}, draw=black}
+}
+
+\marginpar{Понятието дърво е едно от най-основните в информатиката и може да се дефинира по много различни начини, в зависимост от това за какви цели се използва. Тук на практика следваме \cite{nerode-shore}, защото е важно да имаме наредба между възлите на дървото.}
 \begin{itemize}
 \item
-  За всеки две думи $\alpha$ и $\beta$, с $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$.
+  За всеки две думи $\alpha$ и $\beta$ над $\{0,1,\dots,b-1\}$, с $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$.
 \item
   \index{наредба!лексикографска}
-  За две думи $\alpha$ и $\beta$ ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
-  \[(\exists i < \min\{|\alpha|,|\beta|\})[\ (\forall j < i)[\ \alpha[j] = \beta[j]\ ]\ \&\ \alpha[i] \neq \beta[i]\ ].\]
+  За две думи $\alpha$ и $\beta$ над $\{0,1,\dots,b-1\}$ ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
+  \[(\exists i < \min\{|\alpha|,|\beta|\})[\ (\forall j < i)[\ \alpha[j] = \beta[j]\ ]\ \&\ \alpha[i] < \beta[i]\ ].\]
 \item
   \index{дърво}
   \marginpar{Всеки възел в дървото еднозначно се определя от пътя от възела до корена.}
   Непразното множество $T \subseteq \{0,1,\dots,b-1\}^\star$ се нарича {\bf дърво},
-  ако $T$ е затворено относно префикси, т.е.
-  \[(\forall \alpha, \beta)[\ \alpha \in T\ \&\ \beta \prec \alpha\ \implies\ \beta \in T\ ].\]
+  ако $T$ е затворено относно префикси, т.е. $\texttt{Pref}(T) = T$.
+  С други думи,
+  \[(\forall \alpha, \beta)[\ \alpha \in T\ \&\ \beta \preceq \alpha\ \implies\ \beta \in T\ ].\]
+  \marginpar{При нас всички дървета са крайно разклонени.}
 \item
   Нека да въведем следните означения:
   \begin{align*}
-    & \texttt{height}(T) \df \max\{\ \abs{\alpha}\ \mid\ \alpha \in T\ \}\\
-    & \texttt{ext}_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\}\\
-    & T_\alpha \df \alpha^{-1}(T)\\
-    & \texttt{front}(T) \df \{ \alpha \in T \mid \texttt{ext}_T(\alpha) = \emptyset \}.
+    & \texttt{height}(T) \df \max\{\ \abs{\alpha}\ \mid\ \alpha \in T\ \} & \comment\text{височина}\\
+    & \texttt{ext}_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\ \&\ i < b\} & \comment\text{наследниците на }\alpha\\
+    & T_\alpha \df \alpha^{-1}(T) & \comment\text{поддървото на }\alpha\\
+    & \texttt{front}(T) \df \{ \alpha \in T \mid \texttt{ext}_T(\alpha) = \emptyset \}. & \comment\text{листата на }T
   \end{align*}
+
+  \begin{tikzpicture}
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (-2,-3);
+    \coordinate (C) at (2,-3);
+    \coordinate (D) at (0,-1.5);
+    \coordinate (E) at (-1,-3);
+    \coordinate (F) at (1,-3);
+    \draw (A) -- node[above left]{$T$} (B) -- node[below]{$T_\alpha$}(C) -- (A);
+    \draw (D) -- (E);
+    \draw (D) -- (F);
+    \draw [photon] (A) -- node[left]{$\alpha$} (D);
+  \end{tikzpicture}
 \item
+  Нека фиксираме граматиката $G = (\Sigma,V,S,R)$.
   С всяко дърво $T$ ще асоциираме функцията $\lambda: T \to V \cup \Sigma \cup \{\varepsilon\}$.
   Нека положим $X_\alpha \df \lambda(\alpha)$.
 \item
-  За всяка такава функция $\lambda$ и $\alpha \in T$, дефинираме $\lambda_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
-  \[\lambda_\alpha(\beta) \df \lambda(\alpha\beta).\]
-\item
   \index{дърво на извод}
-  \marginpar{Също се нарича синтактично дърво}
+  \marginpar{Също се нарича синтактично дърво. На англ. \emph{parse tree}.}
   Двойката $P = (T,\lambda)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
@@ -37,16 +55,22 @@
   \item
     Ако $\alpha i \in T$, то $\alpha j \in T$ за всяко $j < i$.
   \item
-    \marginpar{Тук $\alpha_i = \alpha i$.}
-    Ако $\alpha \in T$ и $\texttt{ext}_T(\alpha) \neq \emptyset$, то $X_\alpha \in V$.
-    Освен това, ако $\alpha_0,\dots,\alpha_k$ са всички думи от множеството $\texttt{ext}_T(\alpha)$
-    подредени във възходящ ред относно лексикографската наредба, то имаме, че:
-    \[X_\alpha \to_G X_{\alpha_0} X_{\alpha_1} \cdots X_{\alpha_k}.\] 
+    Ако $\alpha \in T$ и $|\texttt{ext}_T(\alpha)| = k+1$, за някое $k \in \Nat$, то $X_\alpha \in V$,
+    като имаме също така и 
+    % Освен това, ако $\alpha_0,\dots,\alpha_k$ са всички думи от множеството $\texttt{ext}_T(\alpha)$
+    % подредени във възходящ ред относно лексикографската наредба, то имаме, че:
+    \marginpar{С други думи,
+      \[\lambda(\alpha)\to_G\lambda(\alpha 0)\cdots\lambda(\alpha k).\]}
+    \[X_\alpha \to_G X_{\alpha 0} X_{\alpha 1} \cdots X_{\alpha k}.\] 
   \end{itemize}
 \item
   Нека $\alpha_0, \alpha_1,\dots,\alpha_k$ са всички думи от множеството $\texttt{front}(T)$
   подредени във възходящ ред относно лексикографската наредба. Тогава 
   \[\texttt{yield}(P) \df X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}.\]
+\item
+  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$.
+  За всяко $\alpha \in T$, дефинираме $\lambda_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
+  \[\lambda_\alpha(\beta) \df \lambda(\alpha \cdot \beta).\]
 \item
   Нека $P = (T,\lambda)$ и $\alpha \in T$. Тогава
   \[P_\alpha \df (T_\alpha, \lambda_\alpha).\]
@@ -165,6 +189,7 @@
     Тогава $T = \{\varepsilon\}$ и $\lambda(\varepsilon) = X$.
     Ясно е, че $\texttt{ext}_T(\varepsilon) = \emptyset$ и следователно $\texttt{yield}(P) = X$.
   \item
+    \marginpar{Знаем, че $k < b$.}
     Нека $l > 0$ и $X \stackrel{l}{\to}_G \beta$.
     Да разгледаме извода
     \[X \to_G X_0X_1\cdots X_k \stackrel{l-1}{\to}_G \beta.\]
@@ -173,9 +198,9 @@
     \item
       $\beta = \beta_0 \cdots \beta_{k}$;
     \item
-      $X_i \stackrel{l_i}{\to}_G \beta_i$;
+      $X_i \stackrel{l_i}{\to}_G \beta_i$, за $i = 0,\dots,k$;
     \item
-      $l-1 = \sum^k_{j=1} l_j$.
+      $l-1 = \sum^k_{i=1} l_i$.
     \end{itemize}
     От И.П. имаме, че същствуват дървета на извод $P^{i} = (T^i,\lambda^i)$ съвместими с $G$, такива че:
     \begin{itemize}
@@ -201,7 +226,7 @@
   \begin{lemma}
     Нека $P = (T,\lambda)$ е дърво на извод за думата $\beta$ в $G$.
     Тогава $X_\varepsilon \to^\star_G \beta$.
-  \end{lemma}  
+  \end{lemma}
 \end{framed}
 \begin{proof}
   Индукция по $\texttt{height}(T)$.
@@ -211,13 +236,13 @@
     Ясно е, че $X_\varepsilon \to^\star_G X_\varepsilon$.
   \item
     Нека $\texttt{height}(T) > 0$ и $\beta = \texttt{yield}(T)$.
-    Нека $|\texttt{ext}_P(\varepsilon)| = k$.
+    Нека $|\texttt{ext}_P(\varepsilon)| = k+1$.
     Понеже $P$ е съвместимо с $G$, то
-    \[X_\varepsilon \to_G X_{0}\cdots X_{k-1}.\]
+    \[X_\varepsilon \to_G X_{0}\cdots X_{k}.\]
     Лесно се съобразява, че $P_i \df (T_i,f_i)$ са дървета на извод съвместими с $G$ и
     $\texttt{height}(T_i) < \texttt{height}(T)$. Нека $\beta_i = \texttt{yield}(T_i)$.
-    Също така е ясно, че $\beta = \beta_0 \cdots \beta_{k-1}$.
-    Тогава от И.П. получаваме, че за $i < k$,
+    Също така е ясно, че $\beta = \beta_0 \cdots \beta_{k}$.
+    Тогава от И.П. получаваме, че за $i \leq k$,
     \[X_i \stackrel{l_i}{\to}_G \beta_i.\]
     Сега прилагаме \Prop{grammar:concat} и получаваме, че
     \[X_\varepsilon \to_G X_0\cdots X_k \to^\star_G \beta_0 \cdots \beta_k.\]
@@ -237,6 +262,36 @@
   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$.
   Докажете, че ако $\alpha \preceq \beta$, то $\texttt{yield}(T_\beta)$ е инфикс на $\texttt{yield}(T_\alpha)$.
 \end{problem}
+\begin{hint}
+  Нека $\beta = \alpha \cdot \gamma$. Тогава:
+
+  
+  \tikzset{
+    photon/.style={decorate, decoration={snake}, draw=black}
+  }
+  \begin{tikzpicture}
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (-3,-4);
+    \coordinate (C) at (3,-4);
+    \coordinate (D) at (0,-1.5);
+    \coordinate (E) at (-2,-4);
+    \coordinate (F) at (2,-4);
+    \coordinate (G) at (0,-2.5);
+    \coordinate (H) at (-1,-4);
+    \coordinate (I) at (1,-4);
+
+    \draw (A) -- node[left]{$T$} (B) -- (C) -- (A);
+
+    \draw (D) -- node[left]{$T_\alpha$}(E);
+    \draw (D) -- (F);
+
+    \draw (G) -- node[left]{$T_\beta$}(H);
+    \draw (G) -- (I);
+
+    \draw [photon] (A) -- node[left]{$\alpha$} (D);
+    \draw [photon] (D) -- node[below left]{$\gamma$} (G);
+  \end{tikzpicture}
+\end{hint}
 
 \begin{problem}
   Нека $P = (T,\lambda)$ и $P' = (T',\lambda')$ са дървета на извод съвместими с $G$ и нека $\alpha \in \texttt{front}(T)$, където:
@@ -255,12 +310,48 @@
     $\lambda''(\gamma) \df
     \begin{cases}
       \lambda(\gamma), & \text{ако }\gamma \in T\\
-      \lambda'(\beta), & \text{ако }\gamma = \alpha\beta\ \&\ \beta \in T'.
+      \lambda'(\beta), & \text{ако }\gamma \in \alpha \cdot T'.
     \end{cases}$
+    
+    Понеже $\alpha \in \texttt{front}(T)$, то двата случая в дефиницията на $\lambda''$ имат празно сечение.
   \end{itemize}
   Тогава $P''$ е дърво на извод съвместимо с $G$ и
   \[\texttt{yield}(P'') = \omega_1 \cdot \texttt{yield}(P') \cdot \omega_2.\]
   Нека в такъв случай да дефинираме $P \odot P' = P''$.
+
+  
+  \tikzset{
+    photon/.style={decorate, decoration={snake}, draw=black}
+  }
+  \begin{tikzpicture}
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (-2,-2.5);
+    \coordinate (C) at (2,-2.5);
+    \coordinate (D) at (0,-2.5);
+    \coordinate (E) at (-1,-3.5);
+    \coordinate (F) at (1,-3.5);
+    
+    \draw (A) -- node[above left]{$T$} (B) -- (C) -- (A);
+    \draw (D) -- node[left]{$T'$} (E) -- (F) -- (D);
+
+    \draw [photon] (A) -- node[left]{$\alpha$} (D);
+  \end{tikzpicture}
+  \hskip 0.4in
+  $\stackrel{\lambda}{\Rightarrow}$
+  \hskip 0.4in
+  \begin{tikzpicture}
+    \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
+    \coordinate (B) at (-2,-2.5);
+    \coordinate (C) at (2,-2.5);
+    \node (D) at (0,-2.5) {${\scriptstyle X_\alpha}$};
+    \coordinate (E) at (-1,-3.5);
+    \coordinate (F) at (1,-3.5);
+    
+    \draw (A) -- node[above left]{${\scriptstyle P\ =\ }$} (B) -- node[below]{$\omega_1$}(D) -- node[below]{$\omega_2$}(C) -- (A);
+    \draw (D) -- node[left]{${\scriptstyle P'\ =\ }$}(E) -- node[below]{$\texttt{yield}(P')$}(F) -- (D);
+
+    % \draw [photon] (A) -- node[left]{$\alpha$} (D);
+  \end{tikzpicture}
 \end{problem}
 
 Сега да разгледаме частния случай, когато $P = P'$. Тогава имаме, че $X_\varepsilon = X_\alpha$.
@@ -284,6 +375,40 @@
     \[\texttt{yield}(P^{(i)}) = \omega^i_1 X_\varepsilon \omega^i_2.\]
   \end{problem}
 \end{framed}
+\begin{hint}
+  Картинката за $i = 2$ изглежда така:
+  
+  \begin{tikzpicture}
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (-2,-2.5);
+    \coordinate (C) at (2,-2.5);
+    \coordinate (D) at (0,-2.5);
+    \coordinate (E) at (-2,-5);
+    \coordinate (F) at (2,-5);
+    \coordinate (G) at (0,-5);
+    
+    \draw (A) -- node[above left]{$T$} (B) -- (C) -- (A);
+    \draw (D) -- node[left]{$T$} (E) -- (F) -- (D);
+
+    \draw [photon] (A) -- node[left]{$\alpha$} (D);
+    \draw [photon] (D) -- node[left]{$\alpha$} (G);
+  \end{tikzpicture}
+  \hskip 0.4in
+  $\stackrel{\lambda}{\Rightarrow}$
+  \hskip 0.4in
+  \begin{tikzpicture}
+    \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
+    \coordinate (B) at (-2,-2.5);
+    \coordinate (C) at (2,-2.5);
+    \node (D) at (0,-2.5) {${\scriptstyle X_\varepsilon}$};
+    \coordinate (E) at (-2,-5);
+    \coordinate (F) at (2,-5);
+    \node (G) at (0,-5) {${\scriptstyle X_\varepsilon}$};
+        
+    \draw (A) -- node[above left]{${\scriptstyle P\ =\ }$} (B) -- node[below]{$\omega_1$}(D) -- node[below]{$\omega_2$}(C) -- (A);
+    \draw (D) -- node[above left]{${\scriptstyle P\ =\ }$}(E) -- node[below]{$\omega_1$} (G) -- node[below]{$\omega_2$} (F) -- (D);
+  \end{tikzpicture}
+\end{hint}
 
 \begin{problem}
   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$ и $\alpha \in T$.
@@ -298,6 +423,71 @@
   Докажете, че $P\setminus P_\alpha$ е дърво на извод съвместимо с $G$ и 
   \[P = (P\setminus P_\alpha) \odot P_\alpha.\]
 \end{problem}
+\begin{hint}
+  Имаме следната картинка:
+  
+  \begin{tikzpicture}
+    \coordinate (A) at (0,0);
+    \coordinate (B) at (-2,-2.5);
+    \coordinate (C) at (2,-2.5);
+    \coordinate (D) at (-0.9,-2.5);
+    \coordinate (E) at (0.9,-2.5);
+    \coordinate (F) at (0,-1.5);
+
+    \coordinate (G) at (0,-2.3);
+    \coordinate (H) at (-0.9,-3.3);
+    \coordinate (I) at (0.9,-3.3);
+    
+    \draw (A) -- node[above left]{${\scriptstyle T'\ =\ }$}(B) -- (D) -- (F) -- (E) -- (C) -- (A);
+    \draw (G) -- node[left]{${\scriptstyle T_\alpha\ =\ }$} (H) -- (I) -- (G);
+
+    \draw [photon] (A) -- node[left]{$\alpha$} (F);
+  \end{tikzpicture}
+  \hskip 0.4in
+  $\stackrel{\lambda}{\Rightarrow}$
+  \hskip 0.4in  
+  \begin{tikzpicture}
+    \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
+    \coordinate (B) at (-2,-2.5);
+    \coordinate (C) at (2,-2.5);
+    \coordinate (D) at (-0.9,-2.5);
+    \coordinate (E) at (0.9,-2.5);
+    \node (F) at (0,-1.5) {${\scriptstyle X_\alpha}$};
+
+    \node (G) at (0,-2.3) {${\scriptstyle X_\alpha}$};
+    \coordinate (H) at (-0.9,-3.3);
+    \coordinate (I) at (0.9,-3.3);
+    
+    \draw (A) -- node[above left]{${\scriptstyle P\setminus P_\alpha}\ =\ $}(B) -- (D) -- (F) -- (E) -- (C) -- (A);
+    \draw (G) -- node[left]{${\scriptstyle P_\alpha}\ =\ $} (H) -- (I) -- (G);
+  \end{tikzpicture}
+\end{hint}
+
+
+\subsection*{Ляв извод в граматика}
+
+В нашата дефиниция на извод, изборът върху коя променлива да приложим правило от граматиката е недетерминистичен.
+В някои случаи, за нас ще бъде важно винаги да правим детерминистичен избор на това върху коя променлива прилагаме правило.
+
+За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf ляв извод} в граматиката $G$, $\alpha \to_{G,\texttt{L}} \beta$,  по следния начин:
+ако $\alpha = \alpha_1A\alpha_2$ и $\alpha_1 \in \Sigma^\star$, $A \to_G \gamma$ е правило в граматиката $G$, то
+$\beta = \alpha_1\gamma \alpha_2$.
+
+Както преди, с $\to^\star_{G,\texttt{L}}$ ще означаваме рефлексивното и транзитивно затваряне на релацията $\to_{G,\texttt{L}}$.
+
+Ясно е, че ако $\alpha \to^\star_{G,\texttt{L}} \beta$, то $\alpha \to^\star_G \beta$.
+Да видим защо имаме и обратната посока.
+
+Очевидно е, че ако $\alpha \to^\star_{G,\texttt{L}} \beta$, то $\alpha \to^\star_G \beta$.
+Това означава, че ако $X \to^\star_{G,\texttt{L}} \beta$, то същестува дърво на извод с корен $X$ за думата $\beta$.
+
+\begin{lemma}
+  Нека $P = (T,\lambda)$ е дърво на извод за думата $\beta \in (V\cup\Sigma)^\star$ в $G$.
+  Тогава $X_\varepsilon \to^\star_{G,\texttt{L}} \beta$.
+\end{lemma}  
+\begin{hint}
+  Индукция по $\texttt{height}(T)$.
+\end{hint}
 
 
 
