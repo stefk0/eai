@@ -1,8 +1,10 @@
 \section{Безконтекстни граматики}
+
 \index{граматика!безконтекстна}
 \marginpar{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$}
 \marginpar{На англ. {\em context-free grammar}}
 \marginpar{Други срещани наименования на български са {\em контекстно-свободна}, {\em контекстно-независима}}
+
 В Раздел \ref{sect:regular-grammar} въведохме понятието граматика. След това видяхме как можем да опишем регулярните езици
 със специален вид граматики, които нарекохме регулярни граматики.
 Сега ще разгледаме още един вид граматики, които описват по-широк клас от езици.
@@ -226,7 +228,7 @@
   \marginpar{
     $S \to aS \mid aSc \mid aB \mid bB$\\
     $B \to bB \mid bBc \mid \varepsilon$
-}
+  }
   Докажете, че езикът 
   \[L = \{a^mb^nc^k\mid m+n \geq k + 1\}\]
   е безконтекстен.  
@@ -299,9 +301,9 @@
   Индукция по $k \geq 1$.
   \begin{itemize}
   \item
-    За $k = 1$ е очевидно.
+    За $k = 1$ е очевидно. В този случай $n_1 = n$.
   \item
-   Нека $k > 1$. Тогава от И.П. имаме, че
+   Нека $k > 1$. Тогава от И.П. за $k-1$ имаме, че
    $\alpha_1\cdots\alpha_{k-1} \stackrel{n'}{\to} \beta_1\cdots\beta_{k-1}$ и $n' = \sum^{k-1}_{i=1} n_i$.
    От \Prop{grammar:add} имаме, че
    \[\alpha_1\cdots\alpha_{k-1}\alpha_{k} \stackrel{n'}{\to} \beta_1\cdots\beta_{k-1}\alpha_k.\]
@@ -327,7 +329,7 @@
   \item
     Нека $n = 0$. Тогава $\beta = \alpha_1 \cdots \alpha_k$ и е ясно, че в този случай $\beta_i = \alpha_i$ и $n_i = 0$.
   \item
-    Нека $n > 0$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
+    Нека $n > 0$ и $\alpha_1\cdots \alpha_k \stackrel{n}{\to}_G \beta$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
     като приложим \Prop{grammar:add} получаваме, че
     \[\alpha_1\cdots\alpha_i\cdots\alpha_k \to_G \alpha_1\cdots\alpha'_i\cdots\alpha_k.\]
     Според дефиницията на релацията $\stackrel{n}{\to}_G$ имаме, че
@@ -336,10 +338,10 @@
     и $\alpha_j \stackrel{n_j}{\to}_G \beta_j$ за $j \neq i$ и $\alpha'_i \stackrel{n'_i}{\to}_G \beta_i$, като
     \[n-1 = n'_i + \sum_{j\neq i} n_j.\]
     Понеже имаме, че $\alpha_i \to_G \alpha'_i \stackrel{n'_i}{\to}_G \beta_i$,
-    то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \stackrel{n_i}{\to}_G \beta_i$.
+    то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \stackrel{n_i}{\to}_G \beta_i$ и
+    \[n = \sum^{k}_{i=1} n_i.\]
   \end{itemize}
 \end{proof}
-
 
 
 %%% Local Variables: 

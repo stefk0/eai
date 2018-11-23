@@ -44,6 +44,7 @@
 \item
   Релациите $\approx_\L$ и $\sim_\A$ са дясно-инвариантни, т.е. за всеки две думи $\alpha$ и $\beta$
   е изпълнено:
+  \marginpar{\writedown Проверете!}
   \begin{align*}
     \alpha \sim_\A \beta  &\implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\A \beta\gamma],\\
     \alpha \approx_\L \beta & \implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \approx_\L \beta\gamma].
@@ -57,6 +58,7 @@
 
 \begin{prop}
   \label{pr:rel-finer}
+  \marginpar{С други думи,\\ $[\alpha]_\A \subseteq [\alpha]_L$.}
   Нека $\A = \FA$ е краен детерминиран автомат и $L = \L(\A)$. Тогава е изпълнено, че:
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
 \end{prop}
@@ -80,20 +82,34 @@
 \end{proof}
 
 \begin{problem}
-  \marginpar{Съобразете, че за всяка дума $\alpha \in \Sigma^\star$, $[\alpha]_\A \subseteq [\alpha]_{L}$.}
   Докажете, че за ДКА $\A$ и $L = \L(\A)$,
   за всяка дума $\alpha$,
   \[[\alpha]_{L} = \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
 \end{problem}
+% \begin{hint}
+%   Първо, нека $\gamma \in \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A$, т.е. за някое $\beta \in [\alpha]_L$ имаме, че $\gamma \in [\beta]_\A$.
+%   Но щом $\beta \in [\alpha]_L$, то тогава $[\beta]_L = [\alpha]_L$, а от $\gamma \in [\beta]_\A$, по \Prop{rel-finer} следва, че $\gamma \in [\beta]_L = [\alpha]_L$.
+%   Заключаваме, че $\bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A \subseteq [\alpha]_L$.
+
+%   Нека сега $\gamma \in [\alpha]_L$. Но тогава е ясно, че $\gamma \in [\gamma]_\A$ и следователно директно получаваме, че
+%   $[\alpha]_L \subseteq \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A$.
+% \end{hint}
 
 \begin{problem}
+  \marginpar{Тук говорим за тотални функции.}
   Нека $A$ и $B$ са крайни множества, за които съществува сюрективна функция $f: A \to B$.
   Тогава $|B| \leq |A|$.
 \end{problem}
 
+\begin{problem}
+  Нека $A$ и $B$ са крайни множества, за които $|A| = |B|$.
+  Ако $g:A \to B$ е сюрекция, то $g$ е биекция.
+\end{problem}
+
+
 \begin{prop}
   \label{pr:approx-less-sim}
-  Нека $\A$ е ДКА и нека $L = \L(\A)$.
+  Нека $\A$ е краен детерминиран автомат и $L = \L(\A)$.
   Тогава 
   \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
 \end{prop}
@@ -119,7 +135,7 @@
   \end{prop}  
 \end{framed}
 \begin{proof}
-  Да изберем $\A$, който разпознава $L$. % да бъде такъв, че да {\em няма недостижими състояния}.
+  Да изберем $\A$, който разпознава $L$. 
   Тъй като всяко достижимо състояние на $\A$ определя клас на еквивалентност относно $\sim_\A$,
   то получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} \leq |Q|$.
   Комбинирайки със \Prop{approx-less-sim},
@@ -136,7 +152,7 @@
 единствен минимален краен детерминистичен автомат.
 \begin{prop}
   \label{pr:bijection-classes}
-  Нека $L$ е произволен регулярен език и $\A$ е детерминистичен краен автомат, за който $L = \L(\A)$.
+  Нека $L$ е произволен регулярен език и $\A$ е краен детерминиран автомат, за който $L = \L(\A)$.
   Ако $|Q| = |\Sigma^\star/_{\approx_L}|$, то функцията $h:\Sigma^\star/_{\approx_L} \to Q$, където
   \[h([\alpha]_L) \df \delta^\star(\qstart,\alpha),\]
   е биекция.

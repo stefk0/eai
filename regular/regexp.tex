@@ -3,8 +3,7 @@
 Да фиксираме една непразна азбука $\Sigma$.
 \index{регулярен израз}
 {\bf Регулярните изрази} $\mathbf{r}$ могат да се опишат със следната абстрактна граматика
-\[\mathbf{r} ::= \bm{\emptyset}\ |\ \bm{\varepsilon}\ |\ \mathbf{a}\ |\ \bm{r}_1 \cdot \bm{r}_2\ |\ \bm{r}_1 + \bm{r_2}\ |\ \bm{r}^\star_1.\]
-
+\[\mathbf{r} ::= \bm{\emptyset}\ |\ \bm{\varepsilon}\ |\ \mathbf{a}\ |\ (\bm{r}_1 \cdot \bm{r}_2)\ |\ (\bm{r}_1 + \bm{r_2})\ |\ \bm{r}^\star_1.\]
 Регулярните изрази могат да се опишат и по следния начин:
 \marginpar{Това е пример за индуктивна дефиниция}
 \begin{itemize}
@@ -39,6 +38,7 @@
   който се описва от регулярния израз $\mathbf{a}$.
   Означаваме $\L(\mathbf{a}) = \{a\}$;
 \item
+  \marginpar{Понякога, когато приоритетът на операциите е ясен, ще изпускаме да пишем скоби.}
   Нека $L_1$ и $L_2$ са регулярни езици, т.е. съществуват регулярни изрази $\mathbf{r}_1$
   и $\mathbf{r}_2$, за които $\L(\mathbf{r}_1) = L_1$ и $\L(\mathbf{r}_2) = L_2$.
   Тогава:
@@ -78,27 +78,29 @@
 \end{remark}
 
 \begin{example}
-  \marginpar{В \cite[стр. 73]{sipser1} е показан алгоритъм, за който по един автомат може да се получи регулярен израз описващ езика на автомата. Ние няма да разглеждаме този алгоритъм. }
+  \marginpar{В \cite[стр. 70]{sipser3} е показан алгоритъм, за който по един автомат може да се получи регулярен израз описващ езика на автомата. Ние няма да разглеждаме този алгоритъм. }
   Нека да построим регулярни изрази за всеки от езиците от \Ex{automata-pictures}.
   \begin{enumerate}[a)]
   \item 
-    Нека $\mathbf{r} \equiv \mathbf{(a+b)^\star bab(a+b)^\star}$. Тогава
+    Нека $\mathbf{r} \df \mathbf{(a+b)^\star bab(a+b)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа } bab\}.\]
   \item
-    Нека $\mathbf{r} \equiv \mathbf{b^\star ab^\star a(a+b)^\star}$. Тогава
+    Нека $\mathbf{r} \df \mathbf{b^\star ab^\star a(a+b)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\}.\]
   \item
-    Нека $\mathbf{r} \equiv \mathbf{(b^\star abb^\star)^\star}$. Тогава
+    Нека $\mathbf{r} \df \mathbf{(b^\star abb^\star)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid \text{ всяко $a$ в $\omega$ се следва от поне едно $b$}\}.\]
   \item
-    Нека $\mathbf{r} \equiv \mathbf{(b^\star ab^\star ab^\star ab^\star)^\star}$. Тогава
+    Нека $\mathbf{r} \df \mathbf{(b^\star ab^\star ab^\star ab^\star)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 3\}.\]
   \end{enumerate}
 \end{example}
 
+
+  
 \begin{problem}
-  \marginpar{Когато пишем $\bm{r} \equiv \bm{s}$ имаме предвид, че $\L(\bf{r}) = \L(\bm{s})$.}
-  За произволни регулярни изрази $\bm{r}$ и $\bm{s}$, проверете дали са изпълнени следните равенства:
+  За произволни регулярни изрази $\bm{r}$ и $\bm{s}$, ще пишем $\bm{r} \equiv \bm{s}$, ако $\L(\bf{r}) = \L(\bm{s})$.
+  Проверете дали са изпълнени следните равенства:
   \begin{enumerate}[a)]
   \item 
     $\bm{r + s} \equiv \bm{s + r}$;
@@ -121,7 +123,7 @@
   \item
     $\bm{(rs + r)^\star rs} \equiv \bm{(rr^\star s)^\star}$;
   \item
-    $\bm{\emptyset^\star} \equiv \bm{\varepsilon^\star}$;
+    $\bm{\emptyset^\star} \equiv \bm{\varepsilon^\star}$.
   \end{enumerate}
 \end{problem}
 

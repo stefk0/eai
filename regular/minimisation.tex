@@ -10,7 +10,7 @@
   В частност, $\L(\A) = \L_\A(\qstart)$.
 \item
   \index{$\equiv_\A$}
-  \marginpar{Може да е малко объркващо, но релацията $\equiv_\A$ няма нищо общо с релацията $\sim_\A$.
+  \marginpar{Може да е малко объркващо, но релацията $\equiv_\A$ е различна от релацията $\sim_\A$.
   Релацията $\sim_\A$ е върху думи, докато $\equiv_\A$ е върху състояния.}
   Сега дефинираме следната релация между състояния на автомата $\A$:
   \[p \equiv_\A q\ \dff\ \L_\A(p) = \L_\A(q).\]
@@ -35,14 +35,14 @@
 \begin{framed}
   \begin{prop}
     \label{pr:equal-number}
-    Нека $\A = \FA$ е краен детерминиран автомат {\em без недостижими състояния от} $\qstart$.
+    Нека $\A = \FA$ е краен детерминиран автомат {\em без недостижими от} $\qstart$ състояния.
     Тогава
     \[\abs{Q/_{\equiv_\A}} = \abs{\Sigma^\star/_{\approx_{\L(\A)}}}.\]  
   \end{prop}  
 \end{framed}
-\begin{hint}
-  Да разгледаме $f:\Sigma^\star/_{\approx_L} \to Q/_{\equiv_\A}$, където
-  \[h([\alpha]_L) \df [\underbrace{\delta^\star(\qstart,\alpha)}_{q_\alpha}]_{\equiv_\A}.\]
+\begin{proof}
+  Нека $L = \L(\A)$ и да разгледаме $f:\Sigma^\star/_{\approx_L} \to Q/_{\equiv_\A}$, където
+  \[h([\alpha]_L) \df [\delta^\star(\qstart,\alpha)]_{\equiv_\A}.\]
   Ще докажем, че $h$ е биекция като използваме свойството, че
   \begin{equation}
     \label{eq:8}
@@ -71,90 +71,23 @@
   
   \begin{itemize}
   \item
-    Първо да се убедим, че $h$ е добре дефинирана, т.е. $h$ наистина е функция.
+    Ясно е, че $h$ е добре дефинирана, т.е. $h$ наистина е функция.
     Това е така, защото от (\ref{eq:9}) имаме, че
     \[[\alpha]_L = [\beta]_L \implies h([\alpha]_L) = h([\beta]_L).\]
   \item
+    \marginpar{Ако в $\A$ има недостижими от $\qstart$ състояния, то ще получим, че $|\Sigma^\star/_{\approx_L}| \leq |Q/_{\equiv_\A}|$.}
     В $\A$ няма недостижими състояния, откъдето следва, че за всеки клас на еквивалентност $[q]_{\equiv_\A}$,
     съществува дума $\alpha$, за която $\delta^\star(\qstart,\alpha) = q$.
     Това означава, че $h([\alpha]_L) = [q]_{\equiv_\A}$ и следователно $h$ е сюрекция.
   \item
     Остава да проверим, че $h$ е инективна, т.е.
-    \[h([\alpha]_L) = h([\beta]_L) \implies [\alpha]_L = [\beta]_L,\]
-    което следва веднага от (\ref{eq:9}).
+    \[h([\alpha]_L) = h([\beta]_L) \implies [\alpha]_L = [\beta]_L.\]
+    Но това следва веднага от (\ref{eq:9}).
   \end{itemize}
-\end{hint}
-
-При даден език $L$ и тотален краен детерминиран автомат $\A = \FA$, който го разпознава, целта ни е да построим нов краен детерминиран автомат $\M$,
-който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_L$.
-Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
-Според \Prop{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
-Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \omega \in \Sigma^\star$
-във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
-За да разрешим този проблем, ще разгледаме апроксимации на езиците $\L_\A(q)$.
-За ествено число $n$, да означим 
-\[\L^n_\A(p) \df \{\omega \in \Sigma^\star \mid \abs{\omega} \leq n\ \&\ \delta^\star(p,\omega) \in F\}.\]
-Лесно се съобразява, че
-\marginpar{Можем ли да дадем горна граница на $n$?}
-\[L(\A) = \bigcup_{n\geq 0} \L^n_\A(\qstart).\]
-
-\index{$\equiv_n$}
-За всяко естествено число $n$, дефинираме бинарните релации $\equiv_n$ върху $Q$ по следния начин:
-\[p \equiv_n q \dff \L^n_\A(p) = \L^n_\A(q).\]
-
-Релациите $\equiv_n$ представляват апроксимации на релацията $\equiv_\A$.
-Обърнете внимание, че за всяко $n$, $\equiv_n$ е {\em по-груба} релация от $\equiv_{n+1}$, 
-която на свой ред е по-груба от $\equiv_\A$.
-Алгоритъмът строи $\equiv_n$ докато не срещнем $n$, за което
-\[\equiv_n\ =\ \equiv_{n+1}.\]
-Тъй като броят на класовете на еквивалентност на $\equiv_\A$ е краен (той е $\leq \abs{Q}$), то 
-със сигурност ще намерим такова $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
-Тогава заключаваме, че за това $n$ имаме, че
-\[\equiv_\A\ =\ \equiv_n.\]
-
-Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
-лесно се съобразява, че $\equiv_0$ има два класа на еквивалентност.
-Единият е $F$, а другият е $Q\setminus F$.
-
-Вече имаме базовия случай за $n=0$.
-Да видим сега как можем да намерим $\equiv_{n+1}$ при положение, че вече сме намерили $\equiv_n$.
-\begin{framed}
-  \begin{prop}
-    \label{pr:one-letter-test}
-    За всеки две състояния $p,q \in Q$, и всяко естествено число $n$, $p \equiv_{n+1} q$ точно тогава, когато
-    \begin{enumerate}[a)]
-    \item
-      $p \equiv_{n} q$ и
-    \item
-      $(\forall a \in \Sigma)[\delta(q,a) \equiv_{n} \delta(p,a)]$.
-    \end{enumerate}
-  \end{prop}  
-\end{framed}
-\begin{hint}
-  \marginpar{\cite[стр. 99]{papadimitriou}}
-  \begin{align*}
-    p \equiv_{n+1} q & \iff \L^{n+1}_\A(p) = \L^{n+1}_\A(q)\\
-                     & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\ \L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))\ ]\\
-                     & \iff p \equiv_n q\ \&\ (\forall a \in \Sigma)[\ \delta(p,a) \equiv_n \delta(q,a)\ ].
-  \end{align*}
-\end{hint}
+\end{proof}
 
 \begin{problem}
-  Докажете, че ако $\equiv_n\ =\ \equiv_{n+1}$, то
-  \[(\forall m \geq n)[\ \equiv_n\ =\ \equiv_m\ ].\]
-\end{problem}
-
-\begin{problem}
-  Докажете, че ако $\equiv_n\ =\ \equiv_{n+1}$, то
-  \[\equiv_n\ =\ \equiv_\A.\]
-\end{problem}
-
-\begin{problem}
-  Докажете, че ако $n \geq |Q|$, то
-  \[\equiv_n\ =\ \equiv_\A.\]
-\end{problem}
-
-\begin{problem}
+  \label{prob:equiv-delta}
   Докажете, че за произволни $p,q \in Q$ и произволно $a\in\Sigma$,
   \[p \equiv_\A q \implies \delta(p,a) \equiv_\A \delta(q,a).\]
 \end{problem}
@@ -177,6 +110,9 @@
 \begin{problem}
   Докажете, че $\delta_1$ е добре дефинирана, т.е. $\delta_1$ е функция.
 \end{problem}
+\begin{hint}
+  Използвайте Задача \ref{prob:equiv-delta}.
+\end{hint}
 
 
 \begin{prop}
@@ -191,11 +127,15 @@
     Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава
     \[\delta^\star_1([q]_{\equiv_\A},\varepsilon) = [q]_{\equiv_\A} = [\delta^\star(q,\varepsilon)]_{\equiv_\A}.\]
   \item
-    Нека $|\alpha| > 0$, т.е. $\alpha = \beta a$. Тогава
+    Да приемем, че твърдението е вярно за думи с дължина $n$.
+  \item
+    Нека $|\alpha| = n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
     \begin{align*}
       \delta^\star_1([q]_{\equiv_\A},\beta a) & = \delta_1(\delta^\star_1([q]_{\equiv_\A},\beta),a) & \comment\text{деф. на }\delta^\star_1\\
-                                             & = \delta_1([\delta^\star(q,\beta)]_{\equiv_\A},a) & \comment\text{И.П. за }\beta\\
-                                             & = [\delta(\delta^\star(q,\beta),a)]_{\equiv_\A} & \comment\text{деф. на }\delta_1\\
+                                              & = \delta_1([\underbrace{\delta^\star(q,\beta)}_{p}]_{\equiv_\A},a) & \comment\text{И.П. за }\beta\\
+                                              & = \delta_1([p]_{\equiv_\A},a) \\
+                                              & = [\delta(p,a)]_{\equiv_\A} & \comment\text{деф. на }\delta_1\\
+                                             & = [\delta(\delta^\star(q,\beta),a)]_{\equiv_\A} & \comment{p = \delta^\star_1(q,\beta)}\\
                                              & = [\delta^\star(q,\beta a)]_{\equiv_\A}. & \comment\text{деф. на }\delta^\star
     \end{align*}
   \end{itemize}
@@ -217,6 +157,77 @@
   От \Prop{equal-number} знаем, че $|Q'| = |\Sigma^\star/_{\approx_{\L(\A)}}|$.
   Тогава от \Prop{upper-bound} следва, че $\A'$ е минимален автомат.
 \end{hint}
+
+При даден език $L$ и краен детерминиран автомат $\A = \FA$, който го разпознава, целта ни е да построим нов краен детерминиран автомат $\M$,
+който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_L$.
+Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
+Според \Prop{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
+Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \omega \in \Sigma^\star$
+във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
+За да разрешим този проблем, ще разгледаме апроксимации на езиците $\L_\A(q)$.
+За ествено число $n$, да означим 
+\[\L^n_\A(p) \df \{\omega \in \Sigma^\star \mid \abs{\omega} \leq n\ \&\ \delta^\star(p,\omega) \in F\}.\]
+Лесно се съобразява, че
+\marginpar{Можем ли да дадем горна граница на $n$?}
+\[L(\A) = \bigcup_{n\geq 0} \L^n_\A(\qstart).\]
+
+\index{$\equiv^n_\A$}
+За всяко естествено число $n$, дефинираме бинарните релации $\equiv^n_\A$ върху $Q$ по следния начин:
+\[p \equiv^n_\A q \dff \L^n_\A(p) = \L^n_\A(q).\]
+
+Релациите $\equiv^n_\A$ представляват апроксимации на релацията $\equiv_\A$.
+Обърнете внимание, че за всяко $n$, $\equiv^n_\A$ е {\em по-груба} релация от $\equiv^{n+1}_\A$, 
+която на свой ред е по-груба от $\equiv_\A$.
+Алгоритъмът строи $\equiv^n_\A$ докато не срещнем $n$, за което
+\[\equiv^n_\A\ =\ \equiv^{n+1}_\A.\]
+Тъй като броят на класовете на еквивалентност на $\equiv_\A$ е краен (той е $\leq \abs{Q}$), то 
+със сигурност ще намерим такова $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
+Тогава заключаваме, че за това $n$ имаме, че
+\[\equiv_\A\ =\ \equiv^n_\A.\]
+
+\marginpar{Ако $q \in F$, то $\L^0_\A(q) = F$ и ако $q \not\in F$, то $\L^0_\A(q) = Q\setminus F$.}
+Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
+лесно се съобразява, че $\equiv^0_\A$ има два класа на еквивалентност.
+Единият е $F$, а другият е $Q\setminus F$.
+
+Вече имаме базовия случай за $n=0$.
+Да видим сега как можем да намерим $\equiv^{n+1}_\A$ при положение, че вече сме намерили $\equiv^n_\A$.
+\begin{framed}
+  \begin{prop}
+    \label{pr:one-letter-test}
+    За всеки две състояния $p,q \in Q$, и всяко естествено число $n$, $p \equiv^{n+1}_\A q$ точно тогава, когато
+    \begin{enumerate}[a)]
+    \item
+      $p \equiv^n_\A q$ и
+    \item
+      $(\forall a \in \Sigma)[\delta(q,a) \equiv^n_\A \delta(p,a)]$.
+    \end{enumerate}
+  \end{prop}  
+\end{framed}
+\begin{hint}
+  \marginpar{\cite[стр. 99]{papadimitriou}}
+  \begin{align*}
+    p \equiv^{n+1}_\A q & \iff \L^{n+1}_\A(p) = \L^{n+1}_\A(q)\\
+                     & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\ \L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))\ ]\\
+                     & \iff p \equiv^n_\A q\ \&\ (\forall a \in \Sigma)[\ \delta(p,a) \equiv^n_\A \delta(q,a)\ ].
+  \end{align*}
+\end{hint}
+
+\begin{problem}
+  Докажете, че ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то
+  \[(\forall m \geq n)[\ \equiv^n_\A\ =\ \equiv_m\ ].\]
+\end{problem}
+
+\begin{problem}
+  Докажете, че ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то
+  \[\equiv^n_\A\ =\ \equiv_\A.\]
+\end{problem}
+
+\begin{problem}
+  Докажете, че ако $n \geq |Q|$, то
+  \[\equiv^n_\A\ =\ \equiv_\A.\]
+\end{problem}
+
 
 \begin{example}
   Да разгледаме следния краен детерминиран автомат $\A$.
@@ -271,22 +282,22 @@
 
 
 Ще приложим алгоритъма за минимизация за да получим минималния автомат за езика $L$.
-За всяко $n = 0,1,2,\dots$, ще намерим класовете на еквивалентност на $\equiv_n$,
-докато не намерим $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
+За всяко $n = 0,1,2,\dots$, ще намерим класовете на еквивалентност на $\equiv^n_\A$,
+докато не намерим $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
 
 \begin{itemize}
 \item 
-  Класовете на еквивалентност на $\equiv_0$ са два.
+  Класовете на еквивалентност на $\equiv^0_\A$ са два.
   Те са $A_0 = Q\setminus F = \{0,1,2\}$ и $A_1 = F = \{3,4,5\}$.
 \item
-  Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv_0$.
+  Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv^0_\A$.
   
   \begin{tabular}{|c|c|c|c|c|c|c|}
     \hline
     $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
     \hline
     \hline
-    $\equiv_0$ & $A_0$ & $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
+    $\equiv^0_\A$ & $A_0$ & $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
     \hline
     $a$ & $A_0$& $A_1$ & $A_1$ & $A_1$ & $A_1$ & $A_1$\\
     \hline
@@ -294,18 +305,18 @@
     \hline
   \end{tabular}
 
-  Виждаме, че $0 \not\equiv_1 1$ и $1 \equiv_1 2$.
-  Класовете на еквивалентност на $\equiv_1$ са 
+  Виждаме, че $0 \not\equiv^1_\A 1$ и $1 \equiv^1_\A 2$.
+  Класовете на еквивалентност на $\equiv^1_\A$ са 
   $B_0 = \{0\}$, $B_1 = \{1,2\}$, $B_2 = \{3,4,5\}$.
 \item
-  Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv_1$.
+  Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv^1_\A$.
   
   \begin{tabular}{|c|c|c|c|c|c|c|}
     \hline
     $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
     \hline
     \hline
-    $\equiv_1$ & $B_0$ & $B_1$ & $B_1$ & $B_2$ & $B_2$ & $B_2$\\
+    $\equiv^1_\A$ & $B_0$ & $B_1$ & $B_1$ & $B_2$ & $B_2$ & $B_2$\\
     \hline
     $a$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
     \hline
@@ -313,8 +324,8 @@
     \hline
   \end{tabular}
 
-  Виждаме, че $\equiv_1\ =\ \equiv_2$.
-  \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv_1$}
+  Виждаме, че $\equiv^1_\A\ =\ \equiv^2_\A$.
+  \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv^1_\A$}
   Следователно, минималният автомат има три състояния.
   Той е изобразен на Фигура \ref{sub:min1}.  
   Минималният автомат може да се представи и таблично:
@@ -389,21 +400,21 @@
   \marginpar{Съобразете, че $\L(\A) = \{a,b\} \cup \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 3\}$.}
   
   Отново следваме същата процедура за минимизация.
-  Ще намерим класовете на еквивалентност на $\equiv_n$,
-  докато не намерим $n$, за което $\equiv_n\ =\ \equiv_{n+1}$.
+  Ще намерим класовете на еквивалентност на $\equiv^n_\A$,
+  докато не намерим $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
   \begin{itemize}
   \item
-    Класовете на екиваленост на $\equiv_0$ са 
+    Класовете на екиваленост на $\equiv^0_\A$ са 
     $A_0 = Q\setminus F = \{0,3,4\}$ и $A_1 = F = \{1,2,5\}$.
   \item
-    Разбиваме класовете на еквивалентност на $\equiv_0$ като използваме \Prop{one-letter-test}.
+    Разбиваме класовете на еквивалентност на $\equiv^0_\A$ като използваме \Prop{one-letter-test}.
     
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
       \hline
       \hline
-      $\equiv_0$ & $A_0$ & $A_1$ & $A_1$ & $A_0$ & $A_0$ & $A_1$\\
+      $\equiv^0_\A$ & $A_0$ & $A_1$ & $A_1$ & $A_0$ & $A_0$ & $A_1$\\
       \hline
       $a$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
       \hline
@@ -411,19 +422,19 @@
       \hline
     \end{tabular}
     
-    Виждаме, че $1 \not\equiv_1 5$ и $1 \equiv_0 5$.
-    Следователно, $\equiv_0\ \neq\ \equiv_1$.
-    Класовете на еквивалентност на $\equiv_1$ са 
+    Виждаме, че $1 \not\equiv^1_\A 5$ и $1 \equiv^0_\A 5$.
+    Следователно, $\equiv^0_\A\ \neq\ \equiv^1_\A$.
+    Класовете на еквивалентност на $\equiv^1_\A$ са 
     $B_0 = \{0,3,4\}$, $B_1 = \{1,2\}$, $B_2 = \{5\}$.
   \item
-    Сега се опитваме да разбием класовете на еквивалентност на $\equiv_1$.
+    Сега се опитваме да разбием класовете на еквивалентност на $\equiv^1_\A$.
 
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
       \hline
       \hline
-      $\equiv_1$ & $B_0$ & $B_1$ & $B_1$ & $B_0$ & $B_0$ & $B_2$\\
+      $\equiv^1_\A$ & $B_0$ & $B_1$ & $B_1$ & $B_0$ & $B_0$ & $B_2$\\
       \hline
       $a$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
       \hline
@@ -431,18 +442,18 @@
       \hline
     \end{tabular}
     
-    Имаме, че $0 \equiv_1 3$, но $0 \not\equiv_2 3$. Следователно $\equiv_1\ \neq\ \equiv_2$.
-    Класовете на еквивалентност на $\equiv_2$ са 
+    Имаме, че $0 \equiv^1_\A 3$, но $0 \not\equiv^2_\A 3$. Следователно $\equiv^1_\A\ \neq\ \equiv^2_\A$.
+    Класовете на еквивалентност на $\equiv^2_\A$ са 
     $C_0 = \{0\}$, $C_1 = \{1,2\}$, $C_2 = \{3,4\}$, $C_3 = \{5\}$.
   \item
-    Отново опитваме да разбием класовете на $\equiv_2$.
+    Отново опитваме да разбием класовете на $\equiv^2_\A$.
 
       \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
         $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
         \hline
         \hline
-        $\equiv_2$ & $C_0$ & $C_1$ & $C_1$ & $C_2$ & $C_2$ & $C_3$\\
+        $\equiv^2_\A$ & $C_0$ & $C_1$ & $C_1$ & $C_2$ & $C_2$ & $C_3$\\
         \hline
         $a$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
         \hline
@@ -451,8 +462,8 @@
       \end{tabular}
       
       Виждаме, че не можем да разбием $C_1$ или $C_2$.
-      \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv_2$}
-      Следователно, $\equiv_2\ =\ \equiv_3$ и минималният автомат разпознаващ езика $L$
+      \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv^2_\A$}
+      Следователно, $\equiv^2_\A\ =\ \equiv^3_\A$ и минималният автомат разпознаващ езика $L$
       има четири състояния. Вижте Фигура \ref{sub:min2} за преходите на минималния автомат.
       Минималният автомат може да се представи и таблично:
 

@@ -1,15 +1,15 @@
 \section{Метод на Бжозовски за строене на автомат}
 \index{Бжозовски}
 
-\marginpar{Бжозовски описва алгоритъм за строене на автомат по регулярен израз в статията \cite{brzozowski-derivatives}}
+\marginpar{Бжозовски \cite{brzozowski-derivatives} описва алгоритъм за строене на автомат по регулярен израз.}
 
-Да видим как можем директно да построим минимален тотален детерминиран автомат $\A$
+Да видим как можем директно да построим минимален тотален краен детерминиран автомат $\A$
 разпознаващ регулярен език $L$, където \[\A = \pair{Q,\Sigma,\qstart,\delta,F}.\]
-\marginpar{За момента няма как да знаем, че автоматът, който ще построим е минимален. Това ще докажем по-късно след като разгледаме теоремата на Майхил-Нероуд}
-Състоянията на автомата ще бъдат от вида $N$, където $N \subseteq \Sigma^\star$, така че накрая искаме да имаме свойството
-\[N = \{\omega \in \Sigma^\star \mid \delta^\star(N,\omega) \in F\}.\]
-Тогава е ясно, че $\qstart = L$, защото 
-\[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star(L,\omega) \in F\}.\]
+%\marginpar{За момента няма как да знаем, че автоматът, който ще построим е минимален. Това ще докажем по-късно след като разгледаме теоремата на Майхил-Нероуд}
+Състоянията на автомата ще бъдат от вида $q_N$, където $N \subseteq \Sigma^\star$, така че накрая искаме да имаме свойството
+\[N = \{\omega \in \Sigma^\star \mid \delta^\star(q_N,\omega) \in F\}.\]
+Тогава е ясно, че трябва да имаме $\qstart = q_L$, защото 
+\[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star(q_L,\omega) \in F\}.\]
 Нека да разгледаме езика $L = \L(\mathbf{((a+b)^+\cdot a)^\star})$.
 Сега едновременно ще строим състоянията на автомата $Q$ и функцията на преходите $\delta$.
 Преди да започнем, удобно е да имаме предвид следното представяне
@@ -32,13 +32,13 @@
   \end{align*}
 \item
   $b^{-1}(L) = \{a,b\}^\star aL = M$;
-  Следователно, $\delta_\A(L,b) = M$.
+  Следователно, $\delta_\A(q_L,b) = q_M$.
 \item
   $a^{-1}(M) = L \cup M \df N$. 
   Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
   Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
-  Понеже $N \neq L, M$, имаме ново състояние $N$ в автомата и 
-  $\delta_\A(M,a) = N$.
+  Понеже $N \neq L, M$, имаме ново състояние $q_N$ в автомата и 
+  $\delta_\A(q_M,a) = q_N$.
   Освен това,
   \begin{align*}
     N & \df L \cup M \\
@@ -46,21 +46,21 @@
     & = \{\varepsilon\} \cup aM \cup bM \cup aL.
   \end{align*}
 \item
-  $b^{-1}(M) = M$. Следователно, $\delta_\A(M,b) = M$.
+  $b^{-1}(M) = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
 \item
-  $a^{-1}(N) = L \cup M = N$. Следователно, $\delta_\A(N,a) = N$.
+  $a^{-1}(N) = L \cup M = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
 \item
   $b^{-1}(N) = M$.
-  Следователно, $\delta_\A(M,b) = M$.
+  Следователно, $\delta_\A(q_M,b) = q_M$.
 \end{itemize}
 От горните сметки следва, че 
 \[(\forall \alpha \in \Sigma^\star)[\alpha^{-1}(L) \in \{L, N, M\}].\]
 Така получихме, че 
-\[Q = \{L, N, M\}.\]
+\[Q = \{q_L, q_N, q_M\}.\]
 Нека сега да съобразим кои са финалните състояния.
 Понеже имаме свойството 
 \[L = \{\alpha \in \Sigma^\star \mid \varepsilon \in \alpha^{-1}(L)\},\]
-то следва, че финалните състояния на автомата $\A$ са  $L$ и $N$,
+то следва, че финалните състояния на автомата $\A$ са $q_L$ и $q_N$,
 защото $\varepsilon \in L,N$. 
 Сега вече сме готови да нарисуваме картинка на автомата.
 
@@ -69,9 +69,9 @@
   \begin{subfigure}[b]{.4\textwidth}
     \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
       \tikzstyle{every state}=[circle,minimum size=20pt,font=\small]
-      \node[initial above, state,accepting]   (L) {$L$};
-      \node[state]                            (M) [right of=L]{$M$};
-      \node[state,accepting]                  (N) [right of=M]{$N$};
+      \node[initial above, state,accepting]   (L) {$q_L$};
+      \node[state]                            (M) [right of=L]{$q_M$};
+      \node[state,accepting]                  (N) [right of=M]{$q_N$};
       
       
       \path 
@@ -110,13 +110,13 @@
 Конструкцията на автомата $\A$ е следната:
 \begin{itemize}
 \item 
-  $Q^\A = \{\alpha^{-1}(L) \mid \alpha \in \Sigma^\star\}$;
+  $Q^\A = \{q_M \mid M = \alpha^{-1}(L) \text{, за някоя }\alpha \in \Sigma^\star\}$;
 \item
-  $\qstart^\A = L$;
+  $\qstart^\A = q_L$;
 \item
-  $F^\A = \{N \in Q^\A \mid \varepsilon \in N\}$;
+  $F^\A = \{q_N \in Q^\A \mid \varepsilon \in N\}$;
 \item
-  $\delta_\A(N,x) = x^{-1}(N)$.
+  $\delta_\A(q_N,a) = q_M$, където $M = a^{-1}(N)$.
 \end{itemize}
 
 \begin{example}
@@ -125,24 +125,25 @@
   \item 
     $a^{-1}(L) = \{a,b\}^\star b \df M$.
     Имаме, че $M \neq L$, защото $b \in M$, но $b \not\in L$.
-    Тогава $\delta(L, a) \df M$.
+    Тогава $\delta(q_L, a) \df q_M$.
     За по-нататък ще е удобно да представим $M$ по следния начин:
     \[M = a\cdot \{a,b\}^\star \cdot b \cup b\cdot \{a,b\}^\star \cdot b \cup \{b\}.\]
   \item
-    $b^{-1}(L) = \emptyset$. Тогава $\delta(L,b) \df \emptyset$;
+    $b^{-1}(L) = \emptyset$. Тогава $\delta(q_L,b) \df q_\emptyset$;
   \item
     $a^{-1}(M) = \{a,b\}^\star b = M$.
-    Тогава $\delta(M,a) = M$.
+    Тогава $\delta(q_M,a) = q_M$.
   \item
     $b^{-1}(M) = \{\varepsilon\} \cup \{a,b\}^\star b \df N$.
-    Ясно е, че $N \neq L,M$, защото $\varepsilon \in N$, но $\varepsilon \not\in L,M$.
-    Тогава $\delta(M,b) = N$. Също така, $N$ е финално състояние.
-    Нека за удобство да представим $N$ по следния начин:
+    Ясно е, че $N \neq L,M$, защото $\varepsilon \in N$, но $\varepsilon \not\in L,M$. Тогава
+    \[\delta(q_M,b) = q_N.\]
+    Също така, $q_N$ е финално състояние.
+    Нека за удобство да представим езика $N$ по следния начин:
     \[N = \{\varepsilon\} \cup a\cdot\{a,b\}^\star\cdot b \cup b\cdot\{a,b\}^\star\cdot b \cup \{b\}.\]
   \item
-    $a^{-1}(N) = \{a,b\}^\star b = M$, т.е. $\delta(N,a) = M$;
+    $a^{-1}(N) = \{a,b\}^\star b = M$, т.е. $\delta(q_N,a) = q_M$;
   \item
-    $b^{-1}(N) = \{a,b\}^\star b = M$, т.е. $\delta(N,b) = N$;
+    $b^{-1}(N) = \{a,b\}^\star b = M$, т.е. $\delta(q_N,b) = q_N$;
   \item
     Ясно е, че $a^{-1}(\emptyset) = b^{-1}(\emptyset) = \emptyset$, т.е.
     $\delta(\emptyset,a) = \delta(\emptyset,b) = \emptyset$.
@@ -153,10 +154,10 @@
     \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
       \tikzstyle{every state}=[circle,minimum size=20pt,auto]
       
-      \node[initial, state]                   (L) {$L$};
-      \node[state]                            (M) [above right of=L]{$M$};
-      \node[state]                            (E) [below right of=L]{$\emptyset$};
-      \node[state,accepting]                  (N) [right of=M]{$N$};
+      \node[initial, state]                   (L) {$q_L$};
+      \node[state]                            (M) [above right of=L]{$q_M$};
+      \node[state]                            (E) [below right of=L]{$q_\emptyset$};
+      \node[state,accepting]                  (N) [right of=M]{$q_N$};
       
       \path 
       (L) edge [bend left=15]  node [above] {$a$} (M)
@@ -178,13 +179,13 @@
   Нека да видим дали можем да построим автомат за този език.
   \begin{itemize}
   \item 
-    $a^{-1}(L) = M \df \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и точно едно $b$}\}$;
+    $a^{-1}(L) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и точно едно $b$}\} \df M$;
   \item 
-    $b^{-1}(L) = N \df \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа четен брой $a$ и нито едно $b$}\}$;
+    $b^{-1}(L) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа четен брой $a$ и нито едно $b$}\} \df N$;
   \item
     $a^{-1}(M) = L$;
   \item
-    $b^{-1}(M) = P \df \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и нито едно $b$}\}$;
+    $b^{-1}(M) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и нито едно $b$}\} \df P$;
   \item
     $a^{-1}(N) = P$;
   \item
@@ -201,11 +202,11 @@
     \begin{tikzpicture}[->,>=stealth,thick,node distance=65pt]
       \tikzstyle{every state}=[circle,minimum size=20pt,auto]
       
-      \node[initial, state]        (L) {$L$};
-      \node[state]                 (M) [above right of=L]{$M$};
-      \node[state, accepting]      (N) [below right of=M]{$N$};
-      \node[state]                 (P) [right of=M]{$P$};
-      \node[state]                 (E) [right of=N]{$\emptyset$};
+      \node[initial, state]        (L) {$q_L$};
+      \node[state]                 (M) [above right of=L]{$q_M$};
+      \node[state, accepting]      (N) [below right of=M]{$q_N$};
+      \node[state]                 (P) [right of=M]{$q_P$};
+      \node[state]                 (E) [right of=N]{$q_\emptyset$};
             
       \path 
       (L) edge [bend right=15]  node [below] {$a$} (M)

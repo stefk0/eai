@@ -68,14 +68,12 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
   \begin{thm}
     \label{th:regular:isomorphic:minimal}
     Нека регулярния език $L$ се разпознава от крайния детерминиран автомат 
-    \[\A = \FA\], за който $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
+    \[\A = \FA,\] за който $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
     Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
   \end{thm}  
 \end{framed}
 \begin{proof}
-  \marginpar{\writedown Защо?}
-  Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.
-  Искаме да докажем, че $\A \cong \M$.
+  \marginpar{Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.}
   Да дефинираме функцията $h:\Sigma^\star/_{\approx_L} \to Q$ по следния начин:
   \[h([\alpha]_L) \df \delta^\star_\A(\qstart,\alpha).\]
   Ще докажем, че $h$ задава изоморфизъм на $\A$ върху $\M$. 

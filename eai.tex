@@ -48,12 +48,9 @@
 \usepackage[shortlabels]{enumitem}
 \setlist{leftmargin=*}
 
-%%%%%%%%%%%%%%% TIKZ Package %%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{tikz, pgf}
-\usetikzlibrary{arrows,automata}
-\usetikzlibrary{positioning}
-\usetikzlibrary{backgrounds}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetikzlibrary{arrows, automata, positioning, backgrounds, decorations.pathmorphing, decorations.markings}
+
 \usepackage{caption, subcaption}
 
 \theoremstyle{definition}
@@ -66,9 +63,9 @@
 \newtheorem{example}{Пример}[chapter]
 \newtheorem{question}{Въпрос}[chapter]
 \newtheorem*{remark}{Забележка}
-\renewenvironment{proof}{\noindent{\bf Доказателство.}\hspace*{1em}}{\qed\par}
-\newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par}
-\newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par}
+\renewenvironment{proof}{\noindent{\bf Доказателство.}\hspace*{1em}}{\qed\par\vspace*{1em}}
+\newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par\vspace*{1em}}
+\newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par\vspace*{1em}}
 
 \usepackage{mysymbols}
 
