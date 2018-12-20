@@ -9,18 +9,21 @@
   За да премахнем правилата от вида $A \to \varepsilon$ от граматиката, следваме процедурата:
   \begin{enumerate}[1)]
   \item 
-    Намираме множеството
-    \[E = \{A \in V \mid A \to^\star \varepsilon\}\]
-    като строим множествата
-    \[E_n = \{A \in V \mid A \stackrel{\leq n}{\to}_G \varepsilon \}.\]
     \marginpar{На всяка стъпка трябва да обходим цялата граматика, следователно всяка итерация отнема $\mathcal{O}(|G|)$ време.}
+    Намираме множеството
+    \[E = \{A \in V \mid A \to^\star_G \varepsilon\}\]
+    като строим множествата $E_n$, където
+    $A \in E_n$ точно тогава, когато съществува дърво на извод $P$, за което
+    $A = \texttt{root}(P)$, $\texttt{yield}(P) = \varepsilon$ и $\texttt{height}(P) \leq n$.
+    % \[E_n = \{A \in V \mid A \stackrel{\leq n}{\to}_G \varepsilon \}.\]
     \begin{itemize}[-]
     \item
       Ясно е, че $E_0 = \emptyset$;
     \item
       Нека имаме $E_n$. Тогава дефинираме
       \marginpar{Обърнете внимание, че имаме $E^\star_n$, а не просто $E_n$.}
-      \[E_{n+1} = E_n \cup \{ B \in V \mid B \to_G \alpha\ \&\ \alpha \in E^\star_n\}.\]
+      \[E_{n+1} = E_n \cup \{ B \in V \mid B \to_G \alpha\ \&\ \alpha \in E^\star_n\},\]
+      защото увеличаваме височината на дърветата на извод с $1$.
     \item
       \marginpar{Намираме $E$ за време $\mathcal{O}(|G|^2)$.}
       Спираме на първото $n$, за което $E_n = E_{n+1}$. Тогава $E = E_n$.    
@@ -40,12 +43,12 @@
     \end{itemize}
     \marginpar{\writedown Докажете сами!}
     Лесно се съобразява, че $\L(G') = \L(G) \setminus \{\varepsilon\}$.
-    \begin{itemize}
-    \item
-      Нека $A \stackrel{l}{\to_G} \omega$ за $\omega \neq \varepsilon$. Тогава $A \to^\star_{G'} \omega$.
-    \item
-      Нека $A \stackrel{l}{\to_{G'}} \omega$ за $\omega \neq \varepsilon$. Тогава $A \to^\star_{G} \omega$.
-    \end{itemize}
+    % \begin{itemize}
+    % \item
+    %   Нека $A \stackrel{l}{\to_G} \omega$ за $\omega \neq \varepsilon$. Тогава $A \to^\star_{G'} \omega$.
+    % \item
+    %   Нека $A \stackrel{l}{\to_{G'}} \omega$ за $\omega \neq \varepsilon$. Тогава $A \to^\star_{G} \omega$.
+    % \end{itemize}
   \end{enumerate}
 \end{hint}
 

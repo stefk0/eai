@@ -25,7 +25,7 @@
 \item
   Нека имаме $\texttt{Ren}_n$. Тогава дефинираме
   \marginpar{Всяка итерация отнема $\mathcal{O}(|G|)$ време.}
-  \[\texttt{Ren}_{n+1} = \texttt{Ren}_n \cup \{(A,B) \in V\times V \mid (\exists C\in V)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren}_n]\}.\]
+  \[\texttt{Ren}_{n+1} = \{(A,B) \in V\times V \mid (\exists C\in V)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren}_n]\}.\]
 \item
   \marginpar{$|\texttt{Ren}|$ има големина $\mathcal{O}(|G|^2)$.}
   Спираме на първото $n$, за което $\texttt{Ren}_n = \texttt{Ren}_{n+1}$. Тогава $\texttt{Ren} = \texttt{Ren}_n$.
