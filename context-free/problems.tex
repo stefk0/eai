@@ -17,11 +17,8 @@
   Докажете, че следните езици са безконтекстни.
   \begin{enumerate}[a)]
   \item
-    \marginpar{$S \rightarrow aSa\ \vert\ bSb\ \vert\ \varepsilon$}
-    $L = \{ww^R \mid w \in \{a,b\}^\star\}$;
-  \item
     \marginpar{$S \rightarrow aSa\ \vert\ bSb\ \vert\ a\vert\ b\ \vert\ \varepsilon$}
-    $L = \{w \in \{a,b\}^\star \mid w = w^R\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega = \omega^{\texttt{rev}}\}$;
   \item
     $L = \{a^nb^{2m}c^{n} \mid m,n \in \Nat\}$;
   \item
@@ -34,12 +31,6 @@
     $L = \{a^nb^k \mid n > k\}$;
   \item
     $L = \{a^nb^k \mid n \geq 2k\}$;
-  % \item
-  %   \marginpar{$S \rightarrow aSc | B,\ B \rightarrow bBc | \varepsilon$}
-  %   $L = \{a^nb^mc^{n+m}\mid n,m \in \Nat\}$;
-  % \item
-  %   \marginpar{$S \rightarrow aSc | aS | B$, $B\rightarrow bBc | bB | \varepsilon$}
-  %   $L = \{a^nb^kc^m \mid n + k \geq m\}$;
   \item
     \marginpar{$S \rightarrow aSc | aS | aB | bB$,\\$B\rightarrow bBc | bB | \varepsilon$}
     $L = \{a^nb^kc^m \mid n + k \geq m+1\}$;
@@ -65,20 +56,16 @@
     $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) \geq N_b(\alpha)\}$;
   \item
     $L = \{\alpha \in \{a,b\}^\star\mid N_a(\alpha) > N_b(\alpha)\}$;
-  % \item
-  %   $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha \neq \beta\}$;
-  % \item
-  %   $L = \{\alpha\beta \in \{a,b\}^\star \mid\ |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}$;
   \item
     $L = \{\alpha \in \{a,b\}^\star \mid \text{ във всеки префикс $\beta$ на $\alpha$, } N_b(\beta) \leq N_a(\beta)\}$;
   \item
-    $L = \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha^R\mbox{ е поддума на }\beta \}$.
+    $L = \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha^{\texttt{rev}}\mbox{ е поддума на }\beta \}$.
   \item
     $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ \omega_1,\omega_2,\dots,\omega_n \in \{a,b\}^\star\ \&\ \abs{\omega_1} = \abs{\omega_2}\}$;
   \item
-    $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ \omega_1,\dots,\omega_n \in \{a,b\}^\star\ \&\ (\exists i \neq j)[\abs{\omega_i} = \abs{\omega_j}]\}$;
+    $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ \omega_1,\dots,\omega_n \in \{a,b\}^\star\ \&\ (\exists i \neq j)[\ \abs{\omega_i} = \abs{\omega_j}\ ]\}$;
   \item
-    $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ (\forall i\in[1,n])[\omega_i \in \{a,b\}^\star\ \&\ \abs{\omega_i} = \abs{\omega_{n+1-i}}]\}$.
+    $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ (\forall i\in[1,n])[\ \omega_i \in \{a,b\}^\star\ \&\ \abs{\omega_i} = \abs{\omega_{n+1-i}}\ ]\}$.
   \end{enumerate}
 \end{problem}
 \begin{hint}
@@ -138,11 +125,9 @@
     $\{a^nb^mc^k\mid k = n\cdot m\}$;
   \item
     $L^\star$, където
-    $L = \{\alpha\alpha^R \mid \alpha \in \{a,b\}^\star\}$;
+    $L = \{\alpha\alpha^{\texttt{rev}} \mid \alpha \in \{a,b\}^\star\}$;
   \item
     $\{www\mid w\in \{a,b\}^\star\}$;
-  % \item
-  %   $\{ww^R\mid w\in \{a,b\}^\star\}$;
   \item
     $\{a^{n^2}b^n\ \mid n \in \Nat\}$;
   \item
@@ -267,12 +252,12 @@
     \ifhints
     \marginpar{Да}
     \fi
-    $\{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\}$;
+    $\{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{\texttt{rev}}) = 1\}$;
   \item
     \ifhints
     \marginpar{Да}
     \fi
-    $\{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) \geq 1\}$;
+    $\{\alpha \sharp \beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta^{\texttt{rev}}) \geq 1\}$;
   \item
     \ifhints 
     \marginpar{Не}
@@ -288,14 +273,12 @@
     \marginpar{Не}
     \fi
     $\{\alpha\beta \mid \alpha, \beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\ \&\ \texttt{diff}(\alpha,\beta) = 1\}$;
-  % \item
-  %   $L \df \{\alpha\sharp\beta\sharp\gamma \mid \alpha, \beta, \gamma \in \{a,b\}^\star\ \&\ |\alpha| = |\beta| = |\gamma|\ \&\ \texttt{diff}(\alpha,\beta^{rev}) = 1\ \&\ \texttt{diff}(\beta,\gamma^{rev}) = 1\}$;
   \end{enumerate}
 \end{problem}    
 
 \begin{problem}
     Да разгледаме езика
-    \[D_1 \df \{\alpha_1 \sharp \cdots \sharp \alpha_n \mid n \geq 2\ \&\ |\alpha_i| = |\alpha_{i+1}|\ \&\ \texttt{diff}(\alpha_i,\alpha^{rev}_{i+1}) = 1\}.\]
+    \[D_1 \df \{\alpha_1 \sharp \cdots \sharp \alpha_n \mid n \geq 2\ \&\ |\alpha_i| = |\alpha_{i+1}|\ \&\ \texttt{diff}(\alpha_i,\alpha^{\texttt{rev}}_{i+1}) = 1\}.\]
     \begin{itemize}
     \item 
       Докажете, че $D_1$ не е безконтекстен.
@@ -305,7 +288,7 @@
 \end{problem}
 \begin{hint}
   Да разгледаме безконтекстния език 
-  \[L_1 = \{\alpha_1 \sharp \alpha_2 \mid |\alpha_1| = |\alpha_{2}|\ \&\ \texttt{diff}(\alpha_1,\alpha^{rev}_{2}) = 1\}.\]
+  \[L_1 = \{\alpha_1 \sharp \alpha_2 \mid |\alpha_1| = |\alpha_{2}|\ \&\ \texttt{diff}(\alpha_1,\alpha^{\texttt{rev}}_{2}) = 1\}.\]
   Тогава
   \begin{align*}
     D_1 =\ & L_1 \cdot (\sharp L_1)^\star \cdot (\{\varepsilon\} \cup \sharp\{a,b\}^\star)\ \cap \\
@@ -345,7 +328,7 @@
 
 \begin{problem}
   Докажете, че ако $L$ е безконтекстен език, то 
-  \[L^{rev} = \{\omega^{rev} \mid \omega \in L\}\]
+  \[L^{\texttt{rev}} = \{\omega^{\texttt{rev}} \mid \omega \in L\}\]
   също е безконтекстен.
 \end{problem}
 

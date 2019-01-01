@@ -10,20 +10,6 @@
   $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$.
 \end{itemize}
 
-% \begin{prop}
-%   Нека $\alpha \in \{\texttt{[},\texttt{]}\}^\star$ е балансирана дума.
-%   Тогава:
-%   \begin{itemize}
-%   \item 
-%     $\alpha = \texttt{[}\beta\texttt{]}$, където $\beta$ е балансирана, или
-%   \item
-%     $\alpha = \beta\gamma$, където $\beta$ и $\gamma$ са балансирани думи, $\beta,\gamma \neq \varepsilon$.
-%   \end{itemize}
-% \end{prop}
-% \begin{hint}
-  
-% \end{hint}
-
 \begin{framed}
   \begin{problem}
     Докажете, че езикът 
@@ -41,9 +27,9 @@
   Първо ще докажем включването $\L(G) \subseteq L$.
   Да разгледаме \[M \df \{\ \alpha \in \{\texttt{[},\texttt{]}, S\}^\star \mid \alpha\text{ е балансирана}\ \}.\]
   
-  Нека $S \to^\star_G \alpha$. Ще докажем с индукция по дължината на извода на $\alpha$ от $S$,
-  че $\alpha \in M$. Случаят, когато дължината на извода е $0$ е очевиден.
-  Нека $S \to^{l}_G \beta \to^1_G \alpha$.
+  Нека $S \to^\star_G \alpha$. Ще докажем с индукция по дължината $\ell$ на извода на $\alpha$ от $S$,
+  че $\alpha \in M$. Случаят, когато $\ell = 0$ е очевиден.
+  Нека $S \to^{\ell}_G \beta \to^1_G \alpha$.
   От {\bf И.П.} имаме, че $\beta \in M$, т.е. $\beta$ е балансирана.
 
   Лесно се съобразява, че във всички случаи за думите $\beta$ и $\alpha$ имаме следното:

@@ -1,6 +1,6 @@
 \chapter{Машини на Тюринг}
 
-\newcommand{\tape}[1]{\dots\blank\blank\blank{#1}\blank\blank\blank\dots}
+\newcommand{\tape}[1]{\cdots\blank\blank\blank{#1}\blank\blank\blank\cdots}
 
 \newcommand{\goleft}{\lhd}
 \newcommand{\goright}{\rhd}
@@ -36,7 +36,7 @@
   $\qreject \in Q$ - отхвърлящо състояние.
 \item
   % \marginpar{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
-  \marginpar{Това означава, че веднъж достигнем ли заключително състояние, то не можем да правим повече преходи}
+  \marginpar{Това означава, че веднъж достигнем ли заключително състояние, не можем да правим повече преходи.}
   $\delta:Q'\times\Gamma \to Q\times \Gamma \times \{\goleft,\goright,\stay\}$ - функция на преходите, където
   $Q' = Q \setminus\{\qaccept, \qreject\}$.
 \end{itemize}
@@ -48,7 +48,7 @@
   
 \begin{itemize}
 \item 
-  \marginpar{\comment На англ. instanteneous description}
+  \marginpar{На англ. instanteneous description}
   Формално, {\bf моментната конфигурация} (или описание) на едно изчисление на машина на Тюринг
   е тройка от вида 
   \[(\alpha, q, x\beta) \in \Gamma^\star\times Q \times \Gamma^\star,\]
@@ -59,7 +59,7 @@
 \item
   \marginpar{Тази ситуация можем да опишем като $(q, \alpha\underline{\blank})$}
   Ако $\beta = \varepsilon$, това означава, че главата на машината е върху $\blank$, т.е.
-  лентата има вида  \[\tape{\alpha\underline{\blank}}\]
+  лентата има вида  \[\tape{\alpha\ \underline{\blank}}\]
 \item
   Макар и да имаме безкрайна лента, моментната конфигурация, която може да се представи като {\em крайна} дума,
   описва цялото моментно състояние на машината на Тюринг.
@@ -70,10 +70,10 @@
   \[(\varepsilon, \qstart, \alpha).\]
   \begin{itemize}
   \item
-    Ако $\alpha = x\alpha'$, за $x \in \Sigma$, то  лентата има вида \[\cdots\blank\blank\underline{x}\alpha'\blank\blank\cdots,\]
+    Ако $\alpha = x\alpha'$, за $x \in \Sigma$, то  лентата има вида \[\cdots\blank\blank\ \underline{x}\alpha'\blank\blank\cdots,\]
   \item
     Ако $\alpha = \varepsilon$, то началната конфигурация е $(\varepsilon, \qstart, \varepsilon)$ и лентата има вида
-    \[\tape{\underline{\blank}}.\]    
+    \[\tape{\underline{\blank}}\]
   \end{itemize}
 \item
   {\bf Заключителна конфигурация} представлява тройка от вида
@@ -89,26 +89,19 @@
   Ако $\delta_\M(q,z) = (p,y,\goright)$, то дефинираме $(\alpha, q, zx\beta) \vdash_\M (\alpha y, p, x\beta)$.
   Това означава, че ако лентата е имала вида 
   \[\tape{\alpha\underline{z}x\beta},\]
-  след тази стъпка лентата има следния вид:
-  % \begin{itemize}
-  % \item
-  %   ако $\beta = b\beta'$, то
+  след този преход $\M$ лентата има следния вид:
     \[\tape{\alpha y\underline{x}\beta'}\]
-  % \item
-  %   ако $\beta = \varepsilon$, то
-  %   \[\tape{\alpha y\underline{\blank}}.\]
-  % \end{itemize}
 \item 
   Ако $\delta_\M(q,z) = (p,y,\goleft)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\M (\alpha , p, xy\beta)$.
   Това означава, че ако лентата е имала вида 
   \[\tape{\alpha x\underline{z}\beta},\]
-  след тази стъпка лентата има вида 
+  след този преход на $\M$ лентата има вида 
   \[\tape{\alpha \underline{x}y\beta}\]
 \item
   Ако $\delta_\M(q, z) = (p, y, \stay)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha , p, y\beta)$.
   Това означава, че ако лентата е имала вида 
   \[\tape{\alpha \underline{z}\beta},\]
-  след тази стъпка лентата има вида 
+  след този преход на $\M$ лентата има вида 
   \[\tape{\alpha \underline{y}\beta}\]
   
 \end{itemize}
@@ -142,6 +135,9 @@
   Езикът $L$ се нарича {\bf полуразрешим}, ако съществува машина на Тюринг $\M$, за която
   $L = \L(\M)$.
   В този случай се казва, че $\M$ разпознава езика $L$.
+  
+  Ако една дума $\alpha \in L$, то след крайно много стъпки ще достигнем до състоянието $\qaccept$.
+  Ако $\alpha \not\in L$, то не е ясно дали какво се случва с изчислението на $\M$ върху $\alpha$. Възможно е да достигнем до състоянието $\qreject$, но може да попаднем в безкрайно изчисление.
 \item
   \index{език!разрешим}
   \marginpar{На англ. {\bf decidable language}}
@@ -156,9 +152,12 @@
   \end{prop}
 \end{framed}
 
-\begin{remark}
-  По-късно, ще видим, че съществуват полуразрешими езици, чиито допълнения не са полуразрешими.
-\end{remark}
+От дефинициите е ясно, че всеки разрешим език е полуразрешим.
+По-късно, ще видим, че съществуват полуразрешими езици, чиито допълнения не са полуразрешими,
+т.е. не всеки полуразрешим език е разрешим.
+Една от основните ни задачи ще бъде да класифицираме различни езици като (не)раз\-ре\-ши\-ми и (не)полуразрешими.
+За да придобием по-добра интуиция за тези нови понятия, ще разгледаме подробно няколко примера.
+Ще видим също как можем да изобразяваме функцията на преходите на $\M$ графично.
 
 \input{turing/examples}
 
