@@ -123,7 +123,7 @@
 езикът на този автомат се описва с регулярния израз $\mathbf{r}^2_{0,1}$, защото началното състояние е $q_0$, финалното е $q_1$ и 
 броят на състоянията в автомата е $2$.
 \begin{align*}
-  \mathbf{r}^2_{0,1} & = \underbrace{\mathbf{r}^{1}_{0,1}}_{\mathbf{1^\star 0}} + \underbrace{\mathbf{r}^{1}_{0,1}}_{\mathbf{1^\star 0}}\cdot \underbrace{\mathbf{(r^1_{1,1})^\star}}_{\mathbf{(\bm{\varepsilon}+0+1)^\star}} \cdot \underbrace{\mathbf{r}^1_{1,1}}_{\mathbf{\bm{\varepsilon}+0+1}} & \comment \text{според (\ref{eq:kleene}}) \\
+  \bm{r}^2_{0,1} & = \underbrace{\bm{r}^{1}_{0,1}}_{\bm{1^\star 0}} + \underbrace{\bm{r}^{1}_{0,1}}_{\bm{1^\star 0}}\cdot \underbrace{\bm{(r^1_{1,1})^\star}}_{\mathbf{(\bm{\varepsilon}+0+1)^\star}} \cdot \underbrace{\mathbf{r}^1_{1,1}}_{\mathbf{\bm{\varepsilon}+0+1}} & \comment \text{според (\ref{eq:kleene}}) \\
                      &  = \mathbf{1^\star0 + 1^\star 0 (\bm{\varepsilon} + 0 + 1)^\star (\bm{\varepsilon} + 0 + 1)} & \comment{\text{просто заместваме}}\\
                      & = \mathbf{1^\star0 + 1^\star 0 (\bm{\varepsilon} + 0 + 1)^+} & \comment \mathbf{r^+ \df r^\star r}\\
                      & = \mathbf{1^\star0 + 1^\star 0 (0 + 1)^\star} & \comment \mathbf{r^\star = (\bm{\varepsilon} + r)^+}\\
