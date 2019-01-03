@@ -3,10 +3,8 @@
 Една {\em тотална} функция $f:\Sigma^\star \to \Sigma^\star$ се нарича изчислима с машина на Тюринг $\M$, ако 
 за всяка дума $\alpha \in \Sigma^\star$,
 \[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\varepsilon, \qaccept, f(\alpha)).\]
-Това означава, че машината на Тюринг $\M$ е тотална.
-
-Лесно може да се съобрази, че тогава езикът
-\[Graph(f) = \{\alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\}\]
+Това означава, че машината на Тюринг $\M$ винаги завършва. Лесно се съобразява, че езикът
+\[\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}\]
 е разрешим.
 
 \begin{problem}
@@ -40,7 +38,9 @@
 
 \begin{example}
   Да разгледаме функцията $f:\{1\}^\star \to \{1\}^\star$
-  дефинирана като $|f(\alpha)| = 2|\alpha|$.
+  дефинирана като
+  \[|f(\alpha)| = 2|\alpha|.\]
+  Да видим защо $f$ е изчислима с машина на Тюринг.
   
 \begin{framed}
 \begin{figure}[H]
@@ -111,7 +111,6 @@
   \item
     $\qaccept = q_6$
   \end{itemize}
-  
   \begin{framed}
   \begin{figure}[H]
     \begin{center}
@@ -148,7 +147,9 @@
   \end{figure}
 \end{framed}
 
-Да проследим работата на $\M$ върху думата $ab$:
+Да проследим работата на $\M$ върху думата $ab$.
+Първо копираме добавяме $AB$ и така лентата съдържа $abAB$. 
+След това заменяме $A$ с $a$ и $B$ с $b$. Така най-накравя полуваме върху лентата думата $abab$.
 
 \begin{align*}
   (q_0, \underline{a}b) & \vdash (q_1, x\underline{b}) \vdash (q_1,xb\underline{\blank}) \vdash (q_2, x\underline{b}A) \vdash (q_2, \underline{x}bA)\\
@@ -157,10 +158,13 @@
                         & \vdash (q_5, aba\underline{b}) \vdash (q_5, ab\underline{a}b) \vdash (q_5, a\underline{b}ab) \vdash (q_5, \underline{a}bab)\\
                         & \vdash (q_5, \underline{\blank}abab) \vdash (q_6, \underline{a}bab).
 \end{align*}
+
+Не можем директно да започнем да копираме $\alpha$, защото така няма да знаем къде е края на първото копие на $\alpha$.
+Това можем да направим като първо запишем на лентата $\alpha \sharp \alpha$ и след това второто копие на $\alpha$ го изместим с една позиция наляво.
 \end{example}
 
 \begin{example}
-  \marginpar{Изискваме $f(\alpha)$ да започва с $1$ за да може $f$ да бъде функция}
+  \marginpar{Изискваме $f(\alpha)$ да започва с $1$ за да може $f$ да бъде функция, т.е. $f(\alpha)$ е най-късият двоичен запис на числото $\ov{\alpha}_{(2)}+1$.}
   Да разгледаме тоталната функция 
   \[f:\{0,1\}^\star \to 1\cdot\{0,1\}^\star,\]
   дефинирана като
@@ -205,6 +209,7 @@
         \end{scope}
       \end{tikzpicture}
     \end{center}
+    \caption{Машина на Тюринг изчисляваща $f$, за която $\ov{f(\alpha)}_{(2)}= \ov{\alpha}_{(2)} + 1$.}
   \end{figure}
 \end{framed}
 
@@ -224,7 +229,7 @@
   Да разгледаме тоталната функция 
   \[f:\Sigma^\star \to (\Sigma\setminus\{0\})\cdot\Sigma^\star,\]
   дефинирана като
-  \[\ov{f(\alpha)}_k = \ov{\alpha}_k + 1.\]
+  \[\ov{f(\alpha)}_{(k)} = \ov{\alpha}_{(k)} + 1.\]
   Дефинирайте машина на Тюринг $\M$, която изчислява функцията $f$.
 \end{problem}
 

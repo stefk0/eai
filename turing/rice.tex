@@ -3,7 +3,7 @@
 \marginpar{Sipser нарича това Mapping Reducibility \cite[235]{sipser3}.}
 
 \begin{framed}
-  Доказателството, че $\Laccept$ не е разрешим е пример за една обща схема, с която можем да докажем, че даден език не е разрешим:
+  Доказателството, че $\Luniv$ не е разрешим е пример за една обща схема, с която можем да докажем, че даден език не е разрешим:
   \begin{itemize}
   \item 
     Нека имаме езика $K$, за който вече знаем, че не е разрешим.
@@ -21,13 +21,13 @@
 
 \begin{prop}
   Докажете, че езикът
-  \[L_{\texttt{All}} \df \{\code{\M} \mid \M\text{ е машина на Тюринг и }\L(\M) = \Sigma^\star\}\]
+  \[L_{\Sigma^\star} \df \{\code{\M} \mid \M\text{ е машина на Тюринг и }\L(\M) = \Sigma^\star\}\]
   не е разрешим.
 \end{prop}
 \begin{proof}
-  \marginpar{Този език не е дори полуразрешим, но за момента не знаем как да докажем това.}
+  \marginpar{$L_{\Sigma^\star}$ не е дори полуразрешим, но за момента не знаем как да докажем това.}
   Ще покажем, че съществува тотална изчислима функция $f$, за която:
-  \[\alpha \in \Laccept \iff f(\alpha) \in L_{\texttt{All}}.\]
+  \[\alpha \in \Laccept \iff f(\alpha) \in L_{\Sigma^\star}.\]
 
   Ще опишем алгоритъм, за който при входна дума $\code{\M}$ 
   връща код на машината на Тюринг $\M'$, която работи по следния начин:
@@ -54,8 +54,8 @@
   \end{itemize}
   Получаваме, че:
   \begin{align*}
-    & \code{\M} \in \Laccept \implies \L(\M') = \Sigma^\star \implies \code{\M'} \in L_{\texttt{All}},\\
-    & \code{\M} \not\in \Laccept \implies \L(\M') = \emptyset \implies \code{\M'} \not\in L_{\texttt{All}}.
+    & \code{\M} \in \Laccept \implies \L(\M') = \Sigma^\star \implies \code{\M'} \in L_{\Sigma^\star},\\
+    & \code{\M} \not\in \Laccept \implies \L(\M') = \emptyset \implies \code{\M'} \not\in L_{\Sigma^\star}.
   \end{align*}
   Сега вече трябва да е ясно, че следната тотална функция е изчислима:
   \begin{align*}
@@ -66,33 +66,33 @@
     \end{cases}
   \end{align*}
   Тогава получаваме, че
-  \[\alpha \in \Laccept \iff f(\alpha) \in L_{\texttt{All}}\]
-  и ако допуснем, че $L_{\texttt{All}}$ е разрешим език, то $\Laccept$ също ще е разрешим, което е противоречие.
+  \[\alpha \in \Laccept \iff f(\alpha) \in L_{\Sigma^\star}\]
+  и ако допуснем, че $L_{\Sigma^\star}$ е разрешим език, то $\Laccept$ също ще е разрешим, което е противоречие.
 \end{proof}
 
 \begin{cor}
   Езикът
-  \[\ov{L}_{\texttt{Empty}} \df \{\code{\M} \mid \M\text{ е М.Т. и }\L(\M) \neq \emptyset\}\]
+  \[\ov{L}_{\emptyset} \df \{\code{\M} \mid \M\text{ е машина на Тюринг и }\L(\M) \neq \emptyset\}\]
   е полуразрешим, но не е разрешим.
 \end{cor}
 
 \begin{cor}
   Езикът
-  \[L_{\texttt{Empty}} \df \{\code{\M} \mid \M\text{ е М.Т. и }\L(\M) = \emptyset\}\]
+  \[L_{\emptyset} \df \{\code{\M} \mid \M\text{ е машина на Тюринг и }\L(\M) = \emptyset\}\]
   не е полуразрешим.
 \end{cor}
 \begin{hint}
-  Ако $L_{\texttt{Empty}}$ беше разрешим, то
-  \[\ov{L}_{\texttt{Empty}} = \{0,1\}^\star \setminus L_{\texttt{Empty}} \cap \{\code{\M} \mid \M\text{ е М.Т.}\}\]
+  Ако $L_{\emptyset}$ беше разрешим, то
+  \[\ov{L}_{\emptyset} = \{0,1\}^\star \setminus L_{\texttt{Empty}} \cap \{\code{\M} \mid \M\text{ е М.Т.}\}\]
   щеше да е разрешим език, което е противоречие.
 
-  Ако $L_{\texttt{Empty}}$ беше полуразрешим, тогава, използвайки, че $\ov{L}_{\texttt{Empty}}$ е полуразрешим, от теоремата на Клини-Пост щеше да следва, че
-  $L_{\texttt{Empty}}$ е разрешим, което е противоречие
+  Ако $L_{\emptyset}$ беше полуразрешим, тогава, използвайки, че $\ov{L}_{\emptyset}$ е полуразрешим, от теоремата на Клини-Пост щеше да следва, че
+  $L_{\emptyset}$ е разрешим, което е противоречие
 \end{hint}
 
 \begin{problem}
   Докажете, че езикът
-  \[L_{\texttt{Tot}} = \{\code{\M} \mid \M\text{ е тотална машина на Тюринг}\}\]
+  \[L_{\texttt{Dec}} = \{\code{\M} \mid \M\text{ е разрешител }\}\]
   не е разрешим.
 \end{problem}
 
