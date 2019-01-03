@@ -15,19 +15,15 @@
   
   \begin{itemize}
   \item
-    $Q = \{q_1,q_2,q_3,q_4,q_5\}$, $Q' = \{q_1,q_2,q_3\}$;
+    $Q = \{q_1,q_2,q_3,q_4,q_5\}$;
   \item
-    $\qstart = q_1$;
-  \item
-    $\qaccept = q_4$;
-  \item
-    $\qreject = q_5$;
+    $\qstart = q_1$, $\qaccept = q_4$ и $\qreject = q_5$;
   \item
     $\Sigma \df \{a,b,\sharp\}$;
   \item
-    $\Gamma \df \{a,b,\sharp,\blank\}$
+    $\Gamma \df \{a,b,\sharp,\blank\}$;
   \item
-    $\delta:Q'\times\Gamma^2 \to Q\times\Gamma^2\times \{\goleft, \goright, \stay\}^2$;
+    $\delta:Q'\times\Gamma^2 \to Q\times\Gamma^2\times \{\goleft, \goright, \stay\}^2$, където $Q' = \{q_1,q_2,q_3\}$.
   \end{itemize}
   
 \begin{framed}
@@ -136,6 +132,7 @@
 \item
   В еднолентовата машина на Тюринг, за удобство пишем $\frac{x}{y}$ вместо наредената двойка $(x,y)$.
 \item
+  \marginpar{\todo Помислете как да обобщите тази идея за машина на Тюринг с $n$ ленти. Важното е, че във всяко състояние кодираме крайна информация.}
   За всяко състояние $q$ на $\M$ и всяко $a$ от $\Gamma$, в машината $\M'$ ще имаме състояния от вида 
   $q_{a,\goleft}, q_{a,\goright}, q_{a,\stay}$, които носят информацията, че в състояние $q$ на симулираната двулентова машина на Тюринг $\M$,
   главата на първата лента е върху символа $a$ и главата на втората лента е разположена наляво/надясно/на същата позиция спрямо главата на първата лента.

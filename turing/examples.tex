@@ -1,4 +1,5 @@
 \section{Примери за разрешими езици}
+\label{sect:turing:examples}
 
 \begin{example}
   \marginpar{Знаем, че $L$ не е безконтекстен.}
@@ -33,11 +34,7 @@
   \item
     $\Gamma = \{a,b,c,x,\blank\}$, за някой нов символ $x$;
   \item
-    $Q = \{q_0,q_1,q_2,q_3,q_4\}$;
-  \item
-    $\qstart = q_0$;
-  \item
-    $\qaccept = q_4$;
+    $Q = \{q_0,q_1,q_2,q_3,q_4\}$, където $\qstart = q_0$ и $\qaccept = q_4$;
   \item
     Непълната функция на преходите $\delta:(Q\setminus\{q_4\})\times\Gamma \to Q\times\Gamma\times\{\goleft,\goright,\stay\}$
     е описана на схемата отдолу. Остава да добавим състоянието $\qreject$.
@@ -119,7 +116,7 @@
         \end{scope}
       \end{tikzpicture}
     \end{center}
-    \caption{Детерминистична машина на Тюринг $\M$, за която $\L(\M) = \{a^nb^nc^n \mid n \in \Nat\}$. }
+    \caption{Детерминистична машина на Тюринг $\M$, за която $\L(\M) = \{a^nb^nc^n \mid n \in \Nat\}$.}
   \end{figure}
 \end{framed}
 
@@ -128,7 +125,8 @@
 \begin{example}
   \marginpar{Да напомним, че този език не е безконтекстен}
   \marginpar{В \cite[стр. 155]{hopcroft1} е дадено по-различно решение. Тук следваме \cite[стр. 173]{sipser3}. Там има малка грешка}
-  Да разгледаме езика $L = \{\omega \sharp \omega \mid \omega\in\{a,b\}^\star\}$.
+  Да разгледаме езика
+  \[L = \{\omega \sharp \omega \mid \omega\in\{a,b\}^\star\}.\]
 
   Първо неформално ще опишем алгоритъм, който да разпознава думите на езика $L$.
   Нека една дума е копирана върху лентата и четящата глава е поставена върху първия символ от думата.
@@ -164,9 +162,7 @@
   \item
     $Q = \{q_0,q_1,\dots,q_8\}$;
   \item
-    $\qstart = q_0$;
-  \item
-    $\qaccept = q_8$;
+    $\qstart = q_0$ и $\qaccept = q_8$;
   \end{itemize}
 
   \begin{framed}
