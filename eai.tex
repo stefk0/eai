@@ -6,6 +6,36 @@
 \usepackage{cmap}
 \usepackage{gitinfo2}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ИНДЕКСИ
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% работи само с memoir:
+%\xindyindex\makeindex\makeindex[names]
+
+%\usepackage{index}\makeindex%[program=truexindy,options=-M texindy -L bulgarian -C utf8]
+%\usepackage{makeidx}\makeindex%\makeatletter
+%\def\imki@progdefault{xindy} \makeatother
+%\renewcommand{\indexname}{New name}
+
+% вж. 'How to move from makeindex to xindy?.html'
+\usepackage[xindy]{imakeidx}
+\def\xindylangopt{-M lang/bulgarian/utf8-lang.xdy}
+\makeindex[options = \xindylangopt]
+% \makeindex[name=names, title = Именен указател, options = \xindylangopt]
+% \makeindex[name=proglangs, title = Изчислителни машини и програмни езици, options = \xindylangopt]
+% \makeindex[name=organisations, title = Организации и фирми, options = \xindylangopt]
+
+% \makeindex[options = \xindylangopt]
+\makeatletter
+\let\original@index\index
+\renewcommand{\index}[2][\imki@jobname]{%
+  \original@index[#1]{\detokenize{#2}}%
+}
+
+
+
 %%%%%%%%%%%%%
 %% MARGINS %%
 %%%%%%%%%%%%%
@@ -89,6 +119,7 @@
 \newcommand{\Prob}[1]{{\em Задача~\ref{prob:#1}}}
 \newcommand{\Prop}[1]{{\em Твърдение~\ref{pr:#1}}}
 \newcommand{\Ex}[1]{{\em Пример~\ref{ex:#1}}}
+\newcommand{\Figure}[1]{{\em Фигура~\ref{fig:#1}}}
 
 \newif\ifhints
 \newif\ifcode
@@ -105,7 +136,7 @@
 \author{Стефан Вътев\thanks{Това е чернова. Възможни са неточности и грешки, а също и несъответсвия с терминологията въведена на лекции. За забележки и коментари: \href{mailto:stefanv@fmi.uni-sofia.bg}{stefanv@fmi.uni-sofia.bg}.
     Конкретната версия на \LaTeX файловете, от които е компилиран този файл, може да бъде намерена \href{https://github.com/stefk0/eai/commit/\gitHash}{тук}.}}
 
-\makeindex
+% \makeindex
 \begin{document}
 \maketitle
 % \layout
@@ -132,3 +163,4 @@
 %%% mode: latex
 %%% TeX-master: t
 %%% End: 
+
