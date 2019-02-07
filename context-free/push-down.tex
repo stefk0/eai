@@ -66,7 +66,7 @@
     \item
       $\Delta(q,a,a) = \{(q, aa), (p, aa)\}$;
     \item 
-      $\Delta(q,\varepsilon,\sharp) = \{(q,\varepsilon)\}$\quad \comment{трябва да разпознаем и $\varepsilon$};
+      $\Delta(q,\varepsilon,\sharp) = \{(f,\varepsilon)\}$\quad \comment{трябва да разпознаем и $\varepsilon$};
     \item 
       $\Delta(p, b, a) = \{(p,\varepsilon)\}$;
     \item
@@ -78,11 +78,11 @@
   
   Да видим как думата $a^2b^2$ се разпознава от автомата с празен стек:
   \begin{align*}
-    (q, a^2b^2, \sharp) & \vdash_P (q, ab^2, a\sharp) & \comment{\text{правило }(2)}\\
-                        & \vdash_P (p, b^2, aa\sharp) & \comment{\text{правило }(3)}\\
-                        & \vdash_P (p, b, a\sharp) & \comment{\text{правило }(5)}\\
-                        & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(5)}\\
-                        & \vdash_P (f, \varepsilon, \varepsilon) & \comment{\text{правило }(6)}
+    (q, a^2b^2, \sharp) & \vdash_P (q, ab^2, a\sharp) & \comment{\text{правило }(1)}\\
+                        & \vdash_P (p, b^2, aa\sharp) & \comment{\text{правило }(2)}\\
+                        & \vdash_P (p, b, a\sharp) & \comment{\text{правило }(4)}\\
+                        & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(4)}\\
+                        & \vdash_P (f, \varepsilon, \varepsilon) & \comment{\text{правило }(5)}
   \end{align*}
   \marginpar{\writedown Докажете, че $L = \L(P)$!}
   Получихме, че
@@ -154,23 +154,23 @@
   Да видим защо $P$ разпознава думата $abaaba$ с празен стек.
   Започваме по следния начин:
   \begin{align*}
-    (q, abaaba,\sharp) & \vdash_P (q, baaba, a\sharp)   & \comment{\text{правило }(2)}\\
-                       & \vdash_P (q, aaba, ba\sharp)   & \comment{\text{правило }(7)}\\
-                       & \vdash_P (q, aba,  aba\sharp). & \comment{\text{правило }(6)}
+    (q, abaaba,\sharp) & \vdash_P (q, baaba, a\sharp)   & \comment{\text{правило }(1)}\\
+                       & \vdash_P (q, aaba, ba\sharp)   & \comment{\text{правило }(6)}\\
+                       & \vdash_P (q, aba,  aba\sharp). & \comment{\text{правило }(5)}
   \end{align*}
   Сега можем да направим два избора как да продължим. Състоянието $p$ служи за маркер, което ни казва, че вече сме започнали 
   да четем $\omega^{\texttt{rev}}$. Поради тази причина, продължаваме така:
   \begin{align*}
-    (q, aba, aba\sharp) & \vdash_P (p, ba, ba\sharp) & \comment{\text{правило }(5)}\\
-                    & \vdash_P (p, a, a\sharp) & \comment{\text{правило }(10)}\\
-                    & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(9)}\\
-                    & \vdash_P (f,\varepsilon,\varepsilon). & \comment{\text{правило }(11)}
+    (q, aba, aba\sharp) & \vdash_P (p, ba, ba\sharp) & \comment{\text{правило }(4)}\\
+                    & \vdash_P (p, a, a\sharp) & \comment{\text{правило }(9)}\\
+                    & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(8)}\\
+                    & \vdash_P (f,\varepsilon,\varepsilon). & \comment{\text{правило }(10)}
   \end{align*}
   Да проиграем още един пример. Да видим защо думата $aba$ не се извежда от автомата.
   \begin{align*}
-    (q, aba, \sharp) & \vdash_P (q, ba, a\sharp) & \comment{\text{правило }(2)}\\
-                   & \vdash_P (q, a, ba\sharp) & \comment{\text{правило }(7)}\\
-                   & \vdash_P (q, \varepsilon, aba\sharp). & \comment{\text{правило }(6)}
+    (q, aba, \sharp) & \vdash_P (q, ba, a\sharp) & \comment{\text{правило }(1)}\\
+                   & \vdash_P (q, a, ba\sharp) & \comment{\text{правило }(6)}\\
+                   & \vdash_P (q, \varepsilon, aba\sharp). & \comment{\text{правило }(5)}
   \end{align*}
   От последното моментно описание на автомата нямаме нито един преход, следователно
   думата $aba$ не се разпознава от $P$.
@@ -232,13 +232,13 @@
   \end{itemize}
   Да видим защо думата $\texttt{[]]][[} \in \L(P)$.
   \begin{align*}
-    (q, \texttt{[]]][[}, \sharp) & \vdash_P (q,\ \texttt{]]][[},\ \texttt{[}\sharp) & \comment{\text{правило }(3)}\\
-                             & \vdash_P (q,\ \texttt{]][[},\ \sharp) & \comment{\text{правило }(7)}\\
-                             & \vdash_P (q,\ \texttt{][[},\ \texttt{]}\sharp) & \comment{\text{правило }(4)}\\
-                             & \vdash_P (q,\ \texttt{[[},\ \texttt{]]}\sharp) & \comment{\text{правило }(8)}\\
-                             & \vdash_P (q,\ \texttt{[},\ \texttt{]}\sharp) & \comment{\text{правило }(6)}\\
-                             & \vdash_P (q,\ \varepsilon,\ \sharp) & \comment{\text{правило }(6)}\\
-                             & \vdash_P (f,\ \varepsilon,\ \varepsilon). & \comment{\text{правило }(2)}
+    (q, \texttt{[]]][[}, \sharp) & \vdash_P (q,\ \texttt{]]][[},\ \texttt{[}\sharp) & \comment{\text{правило }(2)}\\
+                                 & \vdash_P (q,\ \texttt{]][[},\ \sharp) & \comment{\text{правило }(6)}\\
+                                 & \vdash_P (q,\ \texttt{][[},\ \texttt{]}\sharp) & \comment{\text{правило }(3)}\\
+                                 & \vdash_P (q,\ \texttt{[[},\ \texttt{]]}\sharp) & \comment{\text{правило }(7)}\\
+                                 & \vdash_P (q,\ \texttt{[},\ \texttt{]}\sharp) & \comment{\text{правило }(5)}\\
+                                 & \vdash_P (q,\ \varepsilon,\ \sharp) & \comment{\text{правило }(5)}\\
+                                 & \vdash_P (f,\ \varepsilon,\ \varepsilon). & \comment{\text{правило }(1)}
   \end{align*}
 
   \begin{enumerate}[a)]
@@ -480,7 +480,7 @@
   \item[$(\Leftarrow)$]
     Този път с пълна индукция по дължината на извода $\ell$ в граматиката $G$ ще докажем, че
     \[[q,A,p] \rightarrow^\star_G \alpha \implies (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
-    Ако $l = 1$, то имаме $[q,A,p] \rightarrow \alpha$, където $\alpha \in \Sigma_\varepsilon$.
+    Ако $\ell = 1$, то имаме $[q,A,p] \rightarrow \alpha$, където $\alpha \in \Sigma_\varepsilon$.
     Този случай е ясен от дефиницията на граматиката $G$, т.е. $\Delta(q,a,A) \ni (p,\varepsilon)$.
 
     Ако $\ell > 1$, то имаме, че $\alpha = a\beta$ и според правилата на граматиката $G$ имаме два случая.
@@ -631,7 +631,9 @@
     Не е вярно, че сечението на всеки два безконтекстни езика е безконтекстен език.
 
     Например, $L_1 = \{a^nb^nc^k \mid n,k\in\Nat\}$ и $L_2 = \{a^kb^nc^n \mid n,k\in\Nat\}$
-    са безконтекстни езици, но ние знаем, че $L_1 \cap L_2 = \{a^nb^nc^n \mid n \in \Nat\}$ не е безконтекстен.
+    са безконтекстни езици, но ние знаем, че
+    \[L_1 \cap L_2 = \{a^nb^nc^n \mid n \in \Nat\}\]
+    не е безконтекстен.
   \end{remark}
 \end{framed}
 
