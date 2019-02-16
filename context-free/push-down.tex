@@ -332,13 +332,14 @@
     \item
       $\Delta(p,\varepsilon,A) = \{(p,\alpha)\mid A\to_G \alpha\}, \text{ за всяка променлива }A \in V$;
     \item
-      $\Delta(p,a,a) = \{(q,\varepsilon)\}, \text{ за всяка буква } a \in \Sigma$;
+      $\Delta(p,a,a) = \{(p,\varepsilon)\}, \text{ за всяка буква } a \in \Sigma$;
     \item
       $\Delta(p,\varepsilon,\sharp) = \{(\qaccept, \varepsilon)\}$.
     \end{enumerate}
   \end{itemize}
   
   Ще докажем, че за всяка променлива $A \in V$, за всяка дума $\alpha \in \Sigma^\star$ и $\gamma \in (\Sigma \cup V)^\star$, то е изпълнено, че:
+  \marginpar{Трябва да се каже, че $S \to^\star_G \alpha \gamma$ го правим като заместваме най-лявата променлива.}
   \begin{enumerate}[(a)]
   \item
     ако $S \to^\star_G \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
@@ -390,7 +391,7 @@
       Тогава от И.П. получаваме, че $\gamma_1 \to^\star_G \beta$ и оттук
       \[\underbrace{a \gamma_1}_{\gamma} \to^\star_G \underbrace{a\beta}_{\alpha}.\]
     \item
-      $\Delta(p,a,A) \ni (p,a)$. Това означава, че $A \to_G a$, $\gamma = A\gamma_1$ и
+      $\Delta(p,\varepsilon,A) \ni (p,a)$. Това означава, че $A \to_G a$, $\gamma = A\gamma_1$ и
       \[(p, \alpha, \gamma \sharp) \vdash_P (p,\alpha,a\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
       Тогава от И.П. получаваме, че $a\gamma_1 \to^\star_G \alpha$ и оттук
       \[\underbrace{A\gamma_1}_{\gamma} \to^\star_G \alpha.\]
@@ -606,10 +607,10 @@
   \item
     \marginpar{Индукция по броя стъпки в изчислението на $\M$.}
     Докажете, че ако $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$, то
-    $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$.
+    $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$.
   \item
     \marginpar{Индукция по броя стъпки в изчислението на $P$.}
-    Докажете, че ако $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$, то
+    Докажете, че ако $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$, то
     $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$.
   \end{itemize}
   

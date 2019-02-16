@@ -259,10 +259,10 @@
       \node[state]                            (1) [right of=0]{$L_1$};
       \node[state]                            (2) [right of=1]{$L_2$};
       \node[state]                            (3) [right of=2]{$L_3$};
-      \node[state]                            (A) [below of=1]{$\emptyset$};
+      \node[state,accepting]                  (A) [below of=1]{$\{\varepsilon\}$};
       \node[state]                            (B) [below right of=1]{$\{b\}$};
       \node[state]                            (BB) [below right of=2]{$\{bb\}$};
-      \node[state, accepting]                 (E) [below of=A]{$\{\varepsilon\}$};
+      \node[state]                            (E) [below of=A]{$\emptyset$};
       
       \coordinate[right of=3] (4);
       \coordinate[below right of=3] (BBB);
@@ -274,7 +274,7 @@
       (2) edge [bend left=15]   node [above] {$a$} (3)
       (0) edge [bend right=30]  node [left] {$b$} (E)
       (E) edge [loop left]      node [left] {$a,b$} (E)
-      (1) edge [bend right=30]  node [left] {$b$} (E)
+      (1) edge [bend right=30]  node [left] {$b$} (A)
       (2) edge [bend right=15]  node [left] {$b$} (B)
       (3) edge [bend right=15]  node [left] {$b$} (BB)
       (B) edge [bend right=15]  node [above] {$b$} (A)
