@@ -95,7 +95,6 @@
 Получаваме, че 
 \[\L(\N) = \{\alpha\in\Sigma^\star \mid (\exists q \in F)[(\qstart,\alpha) \vdash^\star_\N (q,\varepsilon)]\}.\]
 
-
 \begin{framed}
 \begin{thm}[Рабин-Скот \cite{rabin-scott}]
   За всеки недетерминиран краен автомат $\N$ съществува еквивалентен на него детерминиран краен автомат $\D$, т.е. $\L(\N) = \L(\D)$.
@@ -153,7 +152,7 @@
 \end{hint}
 
 \begin{problem}
-  За всеки краен недетерминиран автомат $\N$ съществува краен недетерминиран автомат $\N'$ с едно финално състояние, 
+  За всеки недетерминиран краен автомат $\N$ съществува недетерминиран краен автомат $\N'$ с едно финално състояние, 
   за който $\L(\N) = \L(\N')$.
 \end{problem}
 \begin{hint}
@@ -209,7 +208,9 @@
 \end{problem}
 
 \begin{example}
+  
   \begin{figure}[H]
+    \label{fig:nfa:exp}
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
       \tikzstyle{every state}=[circle,minimum size=20pt,auto]
       \node[initial below,state]              (0) {$q_0$};
@@ -228,20 +229,19 @@
       \draw [dashed,->,shorten >=0pt] (3) to[bend left=15] node[above] {$a,b$} (4);
       \draw [dashed,->,shorten >=0pt] (5) to[bend left=15] node[above] {$a,b$} (6);
     \end{tikzpicture}
-    \label{fig:nfa-exp}
     \caption{автомат $\N$}
   \end{figure}
-
-  Лесно се съобразява, че за $n > 0$, крайният недетерминиран автомат $\N$ на Фигура \ref{fig:nfa-exp} с $n+1$ на брой състояния разпознава езика
+  
+  Лесно се съобразява, че за $n > 0$, недетерминирният краен автомат $\N$ на \Figure{nfa:exp} с $n+1$ на брой състояния разпознава езика
   \[L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta \cdot a \cdot \gamma\ \&\ |\gamma| = n-1\}.\]
   Нека да съобразим, че не е възможно да съществува краен детерминиран автомат $\A = \FA$ разпознаващ същия език $L$ с по-малко от $2^n$ състояния.
 
   Да допуснем, че $|Q| < 2^n$. От принципа на Дирихле имаме, че съществуват две различни думи $\alpha$ и $\beta$ с дължина $n$,
-  за които
-  \marginpar{Да напомним, че броят на всички думи с дължина $n$ над азбука с $k$ букви е $k^n$.}
+  за които съществува $q \in Q$ и
+  \marginpar{Да напомним, че броят на всички думи с дължина $n$ над азбука с $k$ букви е $k^n$. В нашия случай, $k = 2$.}
   \[\delta^\star(\qstart,\alpha) = q = \delta^\star(\qstart,\beta).\]
 
-  Да видим къде е първата разлика на позиция $i$ в тези две думи.
+  Нека първата разлика в тези две думи е на позиция $i < n$.
   \begin{itemize}
   \item
     Ако $i = 0$, то нека без ограничение на общността да имаме, че $\alpha[0] = a$ и $\beta[0] = b$.
@@ -255,9 +255,9 @@
       & \beta_0 = \beta \cdot a^{i}.
     \end{align*}
     Така отново получаваме, че $\alpha_0 \in L$, но $\beta_0 \not\in L$.
-    Получаваме противоречие, защото
-    \[\delta^\star(\qstart,\alpha_0) = p = \delta^\star(\qstart,\beta_0)\]
-    и състоянието $p$ трябва да е едновременно финално и нефинално.
+    И в този случай получаваме противоречие, защото
+    \[\delta^\star(\qstart,\alpha_0) = q = \delta^\star(\qstart,\beta_0)\]
+    и състоянието $q$ трябва да е едновременно финално и нефинално.
   \end{itemize}  
 \end{example}
 
@@ -350,12 +350,8 @@
     & (\qstart',\alpha) \vdash^\star_{\A_1} (q_1,\varepsilon), \text{за някое }q_1 \in F_1\\
     & (\qstart'',\beta) \vdash^\star_{\A_2} (q_2,\varepsilon), \text{за някое }q_2 \in F_2.
   \end{align*}
-  Според дефиницията на крайния недетерминиран автомат $\N$ е ясно, че:
+  Според дефиницията на недетерминирания краен автомат $\N$ е ясно, че:
   \[(\qstart',\alpha) \vdash^\star_{\N} (q_1,\varepsilon), \text{за някое }q_1 \in F_1.\]
-  % \begin{align*}
-  %   & (\qstart',\alpha) \vdash^\star_{\N} (q_1,\varepsilon), \text{за някое }q_1 \in F_1\\
-  %   & (\qstart'',\beta) \vdash^\star_{\N} (q_2,\varepsilon), \text{за някое }q_2 \in F_2.
-  % \end{align*}
   
   Ако $\beta = \varepsilon$, то това означава, че $\qstart'' \in F_2$ и следователно $F_1 \subseteq F$.
   Тогава получаваме, че $\alpha \cdot \beta = \alpha \in \L(\N)$, защото
@@ -365,7 +361,7 @@
   \[(\qstart'',b\gamma) \vdash_{\A_2} (q,\gamma) \vdash^\star_{\A_2} (q_2,\varepsilon), \text{за някое }q_2 \in F_2,\]
   където $q = \delta_2(\qstart'',b)$.
   
-  Според дефиницията на крайния недетерминиран автомат $\N$ е ясно, че:
+  Според дефиницията на недетерминирния краен автомат $\N$ е ясно, че:
   \[(q,\gamma) \vdash^\star_{\N} (q_2,\varepsilon), \text{за някое }q_2 \in F_2.\]
   Освен това, имаме, че $q \in \Delta(q_1,b)$, защото $q_1 \in F_1$. Това означава, че
   \[(q_1,c\gamma) \vdash_\N (q,\gamma).\]
@@ -374,51 +370,6 @@
   Сега съединяваме и изчислението за $\alpha$ и получаваме, че:
   \[(\qstart',\alpha\beta) \vdash^\star_\N (q_1,\beta) \vdash^\star_\N (q_2,\varepsilon),\text{ за някое }q_2 \in F_2.\]
   Оттук заключаваме, че във всички случаи за $\beta$, $\alpha \cdot \beta \in \L(\N)$.
-
-
-  % където $\alpha = a_0a_1\cdots a_{n-1}$, и нека редицата $(q_i)^n_{i=0}$ описва приемащото изчисление на $\A_1$ върху думата $\alpha$.
-  % Това означава, че:
-  % \begin{itemize}
-  % \item
-  %   $q_0 = \qstart'$;
-  % \item
-  %   $q_{i+1} = \delta_1(q_i,a_i)$ за $i < n$;
-  % \item
-  %   $q_n \in F_1$.
-  % \end{itemize}  
-  % Също така, нека разгледаме думата $\beta \in \L(\A_2)$, където $\beta = b_0b_1\cdots b_{m-1}$, и нека редицата $(p_i)^m_{i=0}$ описва приемащото изчисление на $\A_2$ върху думата $\beta$.
-  % Това означава, че:
-  % \begin{itemize}
-  % \item
-  %   $p_0 = \qstart''$;
-  % \item
-  %   $p_{i+1} = \delta_2(p_i,b_i)$ за $i < m$;
-  % \item
-  %   $p_m \in F_2$.
-  % \end{itemize}  
-  % От конструкцията на $\N$ се вижда лесно, че $(q_i)^n_{i=0}$ описва изчисление на $\N$ върху $\alpha$ и
-  % $(p_i)^{m}_{i=0}$ описва изчисление на $\N$ върху $\beta$.
-  % Това означава, че:
-  % \begin{itemize}
-  % \item
-  %   $q_{i+1} \in \Delta(q_i,a_i)$ за $i < n$;
-  % \item
-  %   $p_{i+1} \in \Delta(p_i,b_i)$ за $i < m$.
-  % \end{itemize}
-  % Тогава:
-  % \[(q_0,\alpha\beta) \vdash^\star_\N (q_n,\beta)\text{ и } (p_0, \underbrace{b_0b_1\cdots b_{m-1}}_{\beta}) \vdash_\N (p_1,b_1\cdots b_{m-1}) \vdash^\star_{\N} (p_m,\varepsilon).\]
-  % Понеже $q_n \in F_1$, а $p_0 = \qstart''$, то от конструкцията на $\N$ следва, че
-  % \[(q_n, \underbrace{b_0b_1\cdots b_{m-1}}_{\beta}) \vdash_\N (p_1,b_1\cdots b_{m-1}),\]
-  % защото $\delta_2(\qstart'',b_0) \in \Delta(q_n,b_0)$.
-  
-  % Обединявайки всичко това, получаваме, че:
-  % \begin{align*}
-  %   (\qstart, \alpha\beta) & \vdash^\star_\N (q_n,\beta)\\
-  %                          & \vdash_\N (p_1,b_1\cdots b_{m-1})\\
-  %                          & \vdash^\star_\N(p_m,\varepsilon).
-  % \end{align*}
-  % Понеже $p_m \in F_2$, то $\alpha\beta \in \L(\N)$.
-  
 
   Сега ще докажем, че
   \[\L(\N) \subseteq \L(\A_1) \cdot \L(\A_2).\]
@@ -629,10 +580,10 @@
 \begin{proof}
   Да разгледаме крайния детерминиран автомат
   \[\A = \pair{\Sigma,Q,\qstart,\delta,F}.\]
-  Първо ще построим краен недетерминиран автомат
+  Първо ще построим недетерминиран краен автомат
   \[\N = \pair{\Sigma, Q, \qstart, \Delta, F},\] такъв че
   \[\L(\N) = (\L(\A))^+.\]
-  После ще построим краен недетерминиран автомат $\N'$, за който
+  После ще построим недетерминиран краен автомат $\N'$, за който
   \[\L(\N') = \L(\N) \cup \{\varepsilon\} = (\L(\A))^\star.\]
 
   Дефинираме функцията на преходите $\Delta$ на $\N$ като за $q \in Q$ и $a \in \Sigma$ определяме функцията на преходите $\Delta$ по следния начин:
@@ -707,7 +658,7 @@
   \[(\qstart, \alpha_{j}) \vdash_\N (q_{j}, \alpha'_j) \vdash^\star_\N (f_{j}, \varepsilon), \text{ за някои }f_j \in F.\]
 
   За $1 \leq j < l$,
-  понеже $\delta(\qstart,a_{j}) = q_{j}$ и $f_{j-1} \in F$, то според конструкцията на крайния недетерминиран автомат $\N$,
+  понеже $\delta(\qstart,a_{j}) = q_{j}$ и $f_{j-1} \in F$, то според конструкцията на недетерминирания краен автомат $\N$,
   \[q_{j} \in \Delta(f_{j-1}, a_{j}).\]
   Оттук следва, че имаме следното изчисление на $\N$ върху $\alpha$:
   \begin{align*}
@@ -720,7 +671,7 @@
   Обединявайки всичко това, заключаваме, че  $\alpha \in \L(\N)$.
 
   Така доказахме, че $\L(\N) = (\L(\A))^+$.
-  Сега ще построим недетерминистичен автомат
+  Сега ще построим недетерминиран краен автомат
   \[\N' = \pair{\Sigma,Q',\qstart',\Delta',F'},\]
   такъв че
   \[\L(\N') = \L(\N)\cup\{\varepsilon\} = (\L(\A))^+ \cup \{\varepsilon\} = (\L(\A))^\star.\]
