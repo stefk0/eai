@@ -40,6 +40,8 @@
 %% MARGINS %%
 %%%%%%%%%%%%%
 
+% \reversemarginpar
+% \usepackage{marginnote}
 \setlength{\marginparsep}{1cm}
 \setlength{\oddsidemargin}{0.3cm}
 \setlength{\hoffset}{-0.75in}
@@ -61,13 +63,17 @@
 
 %%%%%%%%%%%%%%
 
+\usepackage[T2A]{fontenc}
 \usepackage[bulgarian]{babel}
-\usepackage[OT2,T1]{fontenc}
+% \usepackage[OT2,T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[pdfauthor={Stefan Vatev}, pdftitle={Languages, Automata, Computability}, colorlinks=true, linkcolor=blue, pdfstartview=FitV, citecolor=green, urlcolor=blue]{hyperref}
-\usepackage{pifont}
-\usepackage{amssymb, amsmath, amsthm, mathrsfs, latexsym, bm}
 
+\usepackage[pdfencoding=unicode, colorlinks=true, linkcolor=blue, pdfstartview=FitV, citecolor=green, urlcolor=blue]{hyperref}
+\usepackage{pifont}
+\usepackage{amssymb, amsmath, amsthm, mathrsfs, latexsym, bm, mathtools}
+\hypersetup{pdfauthor={Стефан Вътев},pdftitle={Езици, Автомати и Изчислимост},pdftex,unicode}
+
+\usepackage{epigraph}
 \usepackage{makeidx}
 \usepackage{layout, framed}
 \usepackage{qtree, bussproofs, algorithm, minted}
@@ -82,21 +88,25 @@
 \usetikzlibrary{arrows, automata, positioning, backgrounds, decorations.pathmorphing, decorations.markings}
 
 \usepackage{caption, subcaption}
+\usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 
-\theoremstyle{definition}
-\newtheorem{thm}{Теорема}[chapter]
-\newtheorem{cor}{Следствие}[chapter]
-\newtheorem{lemma}{Лема}[chapter]
-\newtheorem{prop}{Твърдение}[chapter]
-\newtheorem{dfn}{Определение}[chapter]
-\newtheorem{problem}{Задача}[chapter]
-\newtheorem{example}{Пример}[chapter]
-\newtheorem{question}{Въпрос}[chapter]
-\newtheorem*{remark}{Забележка}
-\renewenvironment{proof}{\noindent{\bf Доказателство.}\hspace*{1em}}{\qed\par\vspace*{1em}}
-\newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par\vspace*{1em}}
-\newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par\vspace*{1em}}
+% \theoremstyle{definition}
+% \newtheorem{thm}{Теорема}[chapter]
+% \newtheorem{theorem}{Теорема}[chapter]
+% \newtheorem{cor}{Следствие}[chapter]
+% \newtheorem{corollary}{Следствие}[chapter]
+% \newtheorem{lemma}{Лема}[chapter]
+% \newtheorem{prop}{Твърдение}[chapter]
+% \newtheorem{dfn}{Определение}[chapter]
+% \newtheorem{problem}{Задача}[chapter]
+% \newtheorem{example}{Пример}[chapter]
+% \newtheorem{question}{Въпрос}[chapter]
+% \newtheorem*{remark}{Забележка}
+% \renewenvironment{proof}{\noindent{\bf Доказателство.}\hspace*{1em}}{\qed\par\vspace*{1em}}
+% \newenvironment{hint}{\noindent{\bf Упътване.}\hspace*{1em}}{\qed\par\vspace*{1em}}
+% \newenvironment{solution}{\noindent{\bf Решение.}\hspace*{1em}}{\qed\par\vspace*{1em}}
 
+\usepackage{mybgdef}
 \usepackage{mysymbols}
 
 \newcommand{\writedown}{\ding{45}\ }
@@ -126,6 +136,9 @@
 \hintstrue
 \codetrue
 
+\usepackage[scaled=0.89]{PTSerif}
+\usepackage[scaled=0.89]{PTSans}
+
 
 % \setsecheadstyle{\large\usefont{T2A}{fag}{b}{r}} %\scshape
 % \setsubsecheadstyle{\bfseries\sffamily}
@@ -134,7 +147,11 @@
 
 \title{Записки по ,,Езици, автомати, изчислимост''}
 \author{Стефан Вътев\thanks{Това е чернова. Възможни са неточности и грешки, а също и несъответсвия с терминологията въведена на лекции. За забележки и коментари: \href{mailto:stefanv@fmi.uni-sofia.bg}{stefanv@fmi.uni-sofia.bg}.
-    Конкретната версия на \LaTeX файловете, от които е компилиран този файл, може да бъде намерена \href{https://github.com/stefk0/eai/commit/\gitHash}{тук}.}}
+    Конкретната версия на \LaTeX файловете, от които е компилиран този файл, може да бъде намерена
+    \href{https://github.com/stefk0/eai/commit/\gitHash}{тук} от \gitAuthorDate.}
+% Revision\gitRel: \gitAbbrevHash{} (\gitBranch)\\
+% \gitAuthorDate}
+  }
 
 % \makeindex
 \begin{document}
