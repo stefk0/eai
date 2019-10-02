@@ -1,7 +1,7 @@
 \section{Автоматни езици}
 
-\begin{dfn}
-  Краен автомат е петорка $\A = \FA$, където
+\begin{definition}
+  Детерниниран краен автомат е петорка $\A = \FA$, където
   \begin{itemize}
   \item
     $Q$ е крайно множество от състояния;
@@ -14,7 +14,7 @@
   \item
     $F\subseteq Q$ е множеството от финални състояния
   \end{itemize}
-\end{dfn}
+\end{definition}
 \index{автомат!детерминиран}
 
 Нека имаме една дума $\alpha \in \Sigma^\star$, $\alpha = a_0a_1\cdots a_{n-1}$.
@@ -280,7 +280,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cup L_2$!}
   Първият подход е да използвайте конструкцията на автомата $\A$ от \Prop{automata-cap},
   с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
-  \[F \df \{\pair{q',q''} \in Q' \times Q'' \mid q' \in F'\ \lor\ q'' \in F''\} = F'\times Q'' \cup Q'\times F''.\]
+  \begin{align*}
+    F & \df \{\pair{q',q''} \in Q' \times Q'' \mid q' \in F'\ \lor\ q'' \in F''\}\\
+      & = F'\times Q'' \cup Q'\times F''.
+  \end{align*}
   Друг подход е да се използва правилото на Де Морган, а именно:
   \[L_1 \cup L_2 = \ov{\ov{L_1} \cap \ov{L_2}}.\]
 \end{hint}
@@ -291,69 +294,72 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Ще разгледаме няколко такива примера.
 
 \begin{problem}
+  \marginpar{Най-лесния начин да се сетим как да построим $\A$ е като първо построим автомат за езика, който разпознава тези думи, в които се съдържат две поредни срещания на $a$ и вземем неговото допълнение съгласно Твърдение \ref{pr:automata-complement}. По-късно ще разгледаме общ метод за строене на автомат по език.}
   Докажете, че езикът
   \[L = \{\alpha \in \{a,b\}^\star\ \mid\ \alpha\mbox{ не съдържа две поредни срещания на }a\}\]
   е автоматен.
 \end{problem}
 \begin{proof}
-  \marginpar{Най-лесния начин да се сетим как да построим $\A$ е като първо построим автомат за езика, който разпознава тези думи, в които се съдържат две поредни срещания на $a$ и вземем неговото допълнение съгласно Твърдение \ref{pr:automata-complement}. По-късно ще разгледаме общ метод за строене на автомат по език.}
-  Да разгледаме $\A = \FA$ с функция на преходите
-  \begin{figure}[H]
-    \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        
-        \node[initial, accepting, state] (0) {$q_0$};
-        \node[accepting, state]          (1) [right of=0]{$q_1$};
-        \node[state]                     (2) [right of=1]{$q_2$};
-        
-        \path 
-        (0) edge [loop above]   node [above] {$b$}   (0)
-        (0) edge [bend left=15] node [above] {$a$}   (1)
-        (1) edge [bend left=15] node [below] {$b$}   (0)
-        (1) edge [bend left=15] node [above] {$a$}   (2)
-        (2) edge [loop above]   node [above] {$a,b$} (2);
-      \end{tikzpicture}
-    \end{center}
- \end{figure}
-
- Ще докажем, че $L = \L(\A)$.
- Първо ще се концентрираме върху доказателството на $\L(\A) \subseteq L$.
- \marginpar{Озн. $\abs{\alpha}$ - дължината на думата $\alpha$}
- Ще докажем с индукция по дължината на думата $\alpha$, че:
- \begin{enumerate}[(1)]
- \item 
-   ако $\delta^\star(q_0,\alpha) = q_0$, то
-   $\alpha$ не съдържа две поредни срещания на $a$
-   и ако $\abs{\alpha} > 0$, то $\alpha$ завършва на $b$;
- \item
-   ако $\delta^\star(q_0,\alpha) = q_1$, то
-   $\alpha$ не съдържа две поредни срещания на $a$
-   и завършва на $a$.
- \end{enumerate}
-
- \begin{itemize}
- \item
-   За $\abs{\alpha} = 0$, т.е. $\alpha = \varepsilon$, твърденията (1) и (2) са ясни (Защо?).
- \item
-   Да приемем, че твърденията $(1)$ и $(2)$ са верни за произволни думи $\alpha$ с дължина $n$.
- \item
-   Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, където $\abs{\beta} = n$ и $x \in \Sigma$.
-   Ще докажем (1) и (2) за $\alpha$.
-   \begin{itemize}[-]
-   \item 
-     Нека $\delta^\star(q_0,\beta x) = q_0 = \delta(\delta^\star(q_0,\beta),x)$.
-     Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(q_0,\beta) \in \{q_0,q_1\}$.
-     Тогава по {\bf И.П.} за (1) и (2), $\beta$ не съдържа две поредни срещания на $a$.
-     Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
-   \item
-     Нека $\delta^\star(q_0,\beta x) = q_1 = \delta(\delta^\star(q_0,\beta),x)$.
-     Според дефиницията на $\delta$, $x = a$ и $\delta^\star(q_0,\beta) = q_0$.
-     Тогава по {\bf И.П.} за (2), $\beta$ не съдържа две поредни срещания на $a$
-     и завършва на $b$.
-     Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
-   \end{itemize}
- \end{itemize}
+  Да разгледаме $\A = \FA$ с функция на преходите описана на \Figure{dfa:not-two-a}.
+  \begin{framed}
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+          \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+          
+          \node[initial, accepting, state] (0) {$q_0$};
+          \node[accepting, state]          (1) [right of=0]{$q_1$};
+          \node[state]                     (2) [right of=1]{$q_2$};
+          
+          \path 
+          (0) edge [loop above]   node [above] {$b$}   (0)
+          (0) edge [bend left=15] node [above] {$a$}   (1)
+          (1) edge [bend left=15] node [below] {$b$}   (0)
+          (1) edge [bend left=15] node [above] {$a$}   (2)
+          (2) edge [loop above]   node [above] {$a,b$} (2);
+        \end{tikzpicture}
+      \end{center}
+      \label{fig:dfa:not-two-a}
+      \caption{Автомат разпознаващ думите, които не съдържат две поредни срещания на $a$}
+    \end{figure}
+  \end{framed}
+  
+  Ще докажем, че $L = \L(\A)$.
+  Първо ще се концентрираме върху доказателството на $\L(\A) \subseteq L$.
+  \marginpar{Озн. $\abs{\alpha}$ - дължината на думата $\alpha$}
+  Ще докажем с индукция по дължината на думата $\alpha$, че:
+  \begin{enumerate}[(1)]
+  \item 
+    ако $\delta^\star(q_0,\alpha) = q_0$, то
+    $\alpha$ не съдържа две поредни срещания на $a$
+    и ако $\abs{\alpha} > 0$, то $\alpha$ завършва на $b$;
+  \item
+    ако $\delta^\star(q_0,\alpha) = q_1$, то
+    $\alpha$ не съдържа две поредни срещания на $a$
+    и завършва на $a$.
+  \end{enumerate}
+  
+  \begin{itemize}
+  \item
+    За $\abs{\alpha} = 0$, т.е. $\alpha = \varepsilon$, твърденията (1) и (2) са ясни (Защо?).
+  \item
+    Да приемем, че твърденията $(1)$ и $(2)$ са верни за произволни думи $\alpha$ с дължина $n$.
+  \item
+    Нека $\abs{\alpha} = n+1$, т.е. $\alpha = \beta x$, където $\abs{\beta} = n$ и $x \in \Sigma$.
+    Ще докажем (1) и (2) за $\alpha$.
+    \begin{itemize}[-]
+    \item 
+      Нека $\delta^\star(q_0,\beta x) = q_0 = \delta(\delta^\star(q_0,\beta),x)$.
+      Според дефиницията на функцията $\delta$, $x = b$ и $\delta^\star(q_0,\beta) \in \{q_0,q_1\}$.
+      Тогава по {\bf И.П.} за (1) и (2), $\beta$ не съдържа две поредни срещания на $a$.
+      Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
+    \item
+      Нека $\delta^\star(q_0,\beta x) = q_1 = \delta(\delta^\star(q_0,\beta),x)$.
+      Според дефиницията на $\delta$, $x = a$ и $\delta^\star(q_0,\beta) = q_0$.
+      Тогава по {\bf И.П.} за (1), $\beta$ не съдържа две поредни срещания на $a$ и ако $|\beta| > 0$, то $\beta$ завършва на $b$.
+      Тогава е очевидно, че $\beta x$ също не съдържа две поредни срещания на $a$.
+    \end{itemize}
+  \end{itemize}
   
  Така доказахме с индукция по дължината на думата, че за всяка дума $\alpha$ са  изпълнени твърденията $(1)$ и $(2)$.
  По дефиниция, ако $\alpha \in \L(\A)$, то $\delta^\star(q_0,\alpha) \in F = \{q_0,q_1\}$ и от $(1)$ и $(2)$ следва, че и в двата случа
