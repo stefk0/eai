@@ -1,5 +1,7 @@
 \chapter{Машини на Тюринг}
 
+\setlength{\epigraphwidth}{0.65\textwidth}\epigraph{Turing’s ‘Machines’. These machines are humans who calculate. (Wittgenstein 1947 [1980]: 1096).}
+
 \newcommand{\tape}[1]{\cdots\blank\blank\blank{#1}\blank\blank\blank\cdots}
 
 \newcommand{\goleft}{\lhd}
@@ -13,10 +15,10 @@
 
 \section{Основни понятия}
 \index{Тюринг}
-\index{машина на Тюринг!детерминистична}
+\index{машина на Тюринг!детерминирана}
 \marginpar{Тук до голяма степен следваме \cite[Глава 3]{sipser3}}
 \marginpar{Понятието за машина на Тюринг има много еквивалентни дефиниции. }
-{\em Детерминистична} машина на Тюринг ще наричаме осморка от вида 
+{\em Детерминирана} машина на Тюринг ще наричаме осморка от вида 
 \[\M = \TM,\] където:
 \begin{itemize}
 \item 
@@ -51,11 +53,11 @@
   \marginpar{На англ. instanteneous description}
   Формално, {\bf моментната конфигурация} (или описание) на едно изчисление на машина на Тюринг
   е тройка от вида 
-  \[(\alpha, q, x\beta) \in \Gamma^\star\times Q \times \Gamma^\star,\]
+  \[(\alpha, q, \beta) \in \Gamma^\star\times Q \times \Gamma^\star,\]
   като интерпретацията на тази тройка е, че машината се намира в състояние $q$ и лентата има вида
-  \[\tape{\alpha\underline{x}\beta},\]
+  \[\tape{\alpha\underline{x}\beta'},\]
   \marginpar{Понякога за удобство ще означаваме моментната конфигурация като $(q,\alpha\underline{x}\beta)$}
-  като четящата глава на машината  е поставена върху първия символ на $\beta$.  
+  където $\beta = x\beta'$ и четящата глава на машината е поставена върху $x$.
 \item
   \marginpar{Тази ситуация можем да опишем като $(q, \alpha\underline{\blank})$}
   Ако $\beta = \varepsilon$, това означава, че главата на машината е върху $\blank$, т.е.
@@ -63,10 +65,10 @@
 \item
   Макар и да имаме безкрайна лента, моментната конфигурация, която може да се представи като {\em крайна} дума,
   описва цялото моментно състояние на машината на Тюринг.
-  Обърнете внимание, че тройката $(\blank\blank ab, q, \blank)$ описва същото моментно състояние както и 
-  тройката $(ab, q, \varepsilon)$.
+  % Обърнете внимание, че тройката $(\blank\blank ab, q, \blank)$ описва същото моментно състояние както и 
+  % тройката $(ab, q, \varepsilon)$.
 \item
-  {\bf Началната конфигурация} за входната дума $\alpha \in \Sigma^\star$ представлява 
+  {\bf Началната конфигурация} за входната дума $\alpha \in \Sigma^\star$ представлява тройката
   \[(\varepsilon, \qstart, \alpha).\]
   \begin{itemize}
   \item
@@ -86,24 +88,43 @@
 която ще казва как моментната конфигурация на машината $\M$ се променя при изпълнение на една стъпка.
 \begin{itemize}
 \item
-  Ако $\delta_\M(q,z) = (p,y,\goright)$, то дефинираме $(\alpha, q, zx\beta) \vdash_\M (\alpha y, p, x\beta)$.
+  \marginpar{Понеже $z \in \Gamma$, то е възможно и $z = \blank$.}
+  Ако $\delta_\M(q,z) = (p,y,\goright)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha y, p, \beta)$.
   Това означава, че ако лентата е имала вида 
-  \[\tape{\alpha\underline{z}x\beta},\]
+  \[\tape{\alpha\underline{z}\beta},\]
   след този преход на $\M$ лентата има следния вид:
-    \[\tape{\alpha y\underline{x}\beta'}\]
+  \[\tape{\alpha y\underline{x}\beta'}, \text{ ако }\beta = x\beta',\]
+  или 
+  \[\tape{\alpha y\underline{\blank}}, \text{ ако }\beta = \varepsilon.\]
+\item
+  Ако $\delta_\M(q,\blank) = (p,y,\goright)$, то дефинираме също така и $(\alpha, q, \varepsilon) \vdash_\M (\alpha y, p, \varepsilon)$.
+  Това означава, че ако лентата е имала вида 
+  \[\tape{\alpha\underline{\blank}},\]
+  след този преход на $\M$ лентата има следния вид:
+  \[\tape{\alpha y\underline{\blank}}\]
 \item 
   Ако $\delta_\M(q,z) = (p,y,\goleft)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\M (\alpha , p, xy\beta)$.
   Това означава, че ако лентата е имала вида 
   \[\tape{\alpha x\underline{z}\beta},\]
   след този преход на $\M$ лентата има вида 
   \[\tape{\alpha \underline{x}y\beta}\]
+  Също така, в тази ситуация трябва да дефинираме и
+  $(\varepsilon, q, z\beta) \vdash_\M (\varepsilon , p, \blank y\beta)$.
+  Това означава, че ако лентата е имала вида 
+  \[\tape{\underline{z}\beta},\]
+  след този преход на $\M$ лентата има вида 
+  \[\tape{ \underline{\blank}y\beta}\]
+\item
+  Ако $\delta_\M(q,\blank) = (p,y,\goleft)$, то дефинираме и $(\alpha x, q, \varepsilon) \vdash_\M (\alpha , p, xy)$,
+  а също така и $(\varepsilon, q, \varepsilon) \vdash_\M (\varepsilon , p, \blank y)$,
 \item
   Ако $\delta_\M(q, z) = (p, y, \stay)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha , p, y\beta)$.
-  Това означава, че ако лентата е имала вида 
-  \[\tape{\alpha \underline{z}\beta},\]
-  след този преход на $\M$ лентата има вида 
-  \[\tape{\alpha \underline{y}\beta}\]
-  
+  % Това означава, че ако лентата е имала вида 
+  % \[\tape{\alpha \underline{z}\beta},\]
+  % след този преход на $\M$ лентата има вида 
+  % \[\tape{\alpha \underline{y}\beta}\]
+\item
+  Ако $\delta_\M(q, \blank) = (p, y, \stay)$, то дефинираме и $(\alpha, q, \varepsilon) \vdash_\M (\alpha , p, y)$.
 \end{itemize}
 С $\vdash^\star_\M$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\M$.
 
@@ -122,7 +143,8 @@
   Машината на Тюринг $\M$ {\bf не приема} думата $\alpha$, 
   ако $\M$ отхвърля $\alpha$ или $\M$ никога не завършва при начална конфигурация $(\varepsilon,\qstart,\alpha)$.
 \item
-  \marginpar{На англ. такава машина на Тюринг се нарича {\bf decider} \cite[стр. 170]{sipser3}.}
+  \index{машина на Тюринг!разрешител}
+  \marginpar{На англ. такава машина на Тюринг се нарича {\bf decider} \cite[стр. 170]{sipser3}. Може такива машини на Тюринг да се наричат и тотални \cite[стр. 213]{kozen}.}
   Една машина на Тюринг се нарича {\bf разрешител}, ако при всеки вход достига до заключително състояние,
   т.е. достига до $\qaccept$ или $\qreject$.
 \item 
@@ -275,43 +297,7 @@
 %   \end{itemize}
 % \end{proof}
 
-
-
-
-% \subsection*{Тезис на Чърч-Тюринг}
-
-% \section{Универсална машина на Тюринг}
-% За простота, нека $\Sigma = \{0,1\}$ и $\Gamma = \{0,1,\blank\}$.
-% \begin{itemize}
-% \item 
-%   $X_1 = 0$, $X_2 = 1$, $X_3 = \blank$;
-% \item
-%   $D_1 = L$, $D_2 = R$
-% \end{itemize}
-
-
 \input{turing/coding}
-
-
-% \begin{problem}
-%   За произволно естествено число $n$, дефинирайте МТ $\M_n$ с $n+11$ състояния, за която,
-%   ако главата е на най-лявата $1$-ца върху блок от $1$-ци, то $\M_n$
-%   завършва като записва $2n$ единици на лентата и завършва в стандартна конфигурация.
-% \end{problem}
-
-% \begin{thm}
-%   За всяко $k$, съществуват функции от вида $f:\Nat^k\to\Nat$, които не са изчислими с МТ.
-% \end{thm}
-% \begin{proof}
-%   Знаем, че всяка МТ може да се кодира с естествено число.
-%   Това означава, че съществуват изброимо безкрайно много различни машини на Тюринг.
-%   Също така, ние знаем, че съществуват неизброимо много различни функции от вида $f:\Nat^k\to\Nat$.
-%   Заключаваме, че със сигурност съществуват функции, които не са изчислими с МТ.
-% \end{proof}
-
-
-% Ще разгледаме два основни примера за езици. Единият ще бъде за език, който не е полуразрешим, а другият за език, който е 
-% полуразрешим, но не е разрешим.
 
 \input{turing/diagonal}
 
@@ -322,34 +308,33 @@
 \input{turing/rice-shapiro}
 
 \input{turing/computations}
-% \newpage
-% \input{turing/grammar}
+\input{turing/greibach}
+\newpage
+\input{turing/grammar}
 
-\input{turing/context-sensitive}
+% \input{turing/context-sensitive}
 
 \input{turing/complexity}
 
 \input{turing/problems}
 
-\section*{Бележки}
+\input{turing/restrictions}
 
-\begin{itemize}
-\item
-  За основните дефиниции следваме основно Глава 3 от \cite{sipser3}.
-\item 
-  За въпросите за неразрешимост следваме основно Глава 8 от \cite{hopcroft1}.
-% \item
-%   За по-задълбочено запознаване с теория на изчислимостта, добри уводни книги са
-%   \cite{ditchev-soskov} и \cite{nikolova-soskova}.
-\end{itemize}
+\input{turing/lba}
+
+\input{turing/pcp}
+
+% \section*{Бележки}
 
 % \begin{itemize}
+% \item
+%   За основните дефиниции следваме основно Глава 3 от \cite{sipser3}.
 % \item 
-% \item
-% \item
-
+%   За въпросите за неразрешимост следваме основно Глава 8 от \cite{hopcroft1}.
+% % \item
+% %   За по-задълбочено запознаване с теория на изчислимостта, добри уводни книги са
+% %   \cite{ditchev-soskov} и \cite{nikolova-soskova}.
 % \end{itemize}
-
 
 %%% Local Variables:
 %%% mode: latex

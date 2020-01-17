@@ -1,297 +1,7 @@
 \section{Допълнителни задачи}
 
-\subsection{Лесни задачи}
+\input{regular/easy-problems}
 
-\ifcode
-\begin{problem}
-  \marginpar{Библиотеката {\bf regex} е част от си++11 стандарта на езика.}
-  Да разгледаме следната програма на езика си++
-  \begin{minted}[]{cpp}
-    #include <iostream>
-    #include <regex>
-    #include <string>
-    
-    using namespace std;
-    
-    int main() {
-      string input;
-      regex reg("your regular expression");
-      while (true) {
-        cout << "Input:" << endl;
-        cin >> input;
-        if (!cin || input=="q") break;
-        if (regex_match(input, reg)) {
-          cout << "Valid input" << endl;
-        }  
-        else {
-          cout << "Invalid input" << endl;
-        }
-      }
-    }
-  \end{minted}
-  Разучете как се създават обекти от тип {\bf regex} и попълнете дефиницията на регулярния израз {\bf reg} в горната програма, така че програмата приема за валиден вход:
-  \begin{enumerate}[a)]
-  \item 
-    само реални числа;
-  \item
-    факултетни номера във ФМИ;
-  \item
-    низове, които са съставени от поне 8 символа, измежду които се включват малки букви, големи букви,
-    и цифри.    
-  \end{enumerate}
-\end{problem}
-\fi
-
-\begin{problem}
-  Да фиксираме една дума $\alpha$ над дадена азбука $\Sigma$.
-  Опишете алгоритъм, който за вход произволен текстов файл, чието съдържание означаваме с $\beta$,
-  отговаря дали думата $\alpha$ се среща в $\beta$.
-  Каква е сложността на този алгоритъм относно дължините на $\alpha$ и $\beta$ ?
-\end{problem}
-
-\begin{problem}
-  Опишете алгоритъм, който при вход два регулярни израза $\mathbf{r}$ и $\mathbf{s}$,
-  проверява дали $\L(\mathbf{r}) \subseteq \L(\mathbf{s})$.
-\end{problem}
-
-
-\begin{problem}
-  За всеки от следните езици $L$, постройте минимален краен детерминиран автомат $\A$, който разпознава езика $L$, където:
-  \begin{enumerate}[a)]
-  \item 
-    $L = \{a^nb\mid n \geq 0\}$;
-  \item
-    $L = \{a,b\}^\star\setminus\{\varepsilon\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ и }N_b(\omega)\text{ са четни}\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ е четно}\ \&\ N_b(\omega)\text{ е нечетно}\}$;
-  \item
-    $L = \{a^nb^m\mid n,m \geq 0\}$;
-  \item
-    $L = \{a^nb^m\mid n,m \geq 1\}$;
-  \item
-    $L = \{a,b\}^\star \setminus \{a\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\ \lor\ N_b(\omega) \leq 3 \}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\ \&\ N_b(\omega) \geq 1\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid \mbox{на всяка нечетна позиция на }\omega\mbox{ е буквата }a\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ е четно }\&\ N_b(\omega) \leq 1\}$;
-  \item
-    \marginpar{$\abs{w} \df $ дължината на думата $w$}
-    $L = \{\omega \in \{a,b\}^\star\mid \abs{\omega} \leq 3\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid \omega \mbox{ не започва с }ab\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid \omega \mbox{ завършва с }ab\mbox{ или ba}\}$;
-  % \item
-  %   $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа }bab\}$;
-  % \item
-  %   $L = \{w \in \{a,b\}^\star \mid w \mbox{ не съдържа }bab\}$;
-  % \item
-    % $L = \{w \in \{a,b\}^\star \mid w \mbox{ няма две последователни }a\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid \omega\mbox{ започва или завършва с } a\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid \omega\text{ започва с }a \iff \omega\text{ завършва с }b\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ N_a(\omega) = 1\}$;
-  \item
-    $L = \{w \in \{a,b\}^\star \mid \text{ всяко }a\mbox{ в }w\text{ се следва от поне едно }b\}$;
-  \item
-    $L = \{w \in \{a,b\}^\star \mid \abs{w} \equiv 0 \bmod 3\}$;
-  \item
-    \marginpar{$N_a(w)$ - броят на срещанията на буквата $a$ в думата $w$}
-    $L = \{w \in \{a,b\}^\star \mid N_a(w) \equiv 1 \bmod 3\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 3\ \&\ N_b(\omega) \equiv 1 \bmod 2\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0 \bmod 2\ \vee\ N_b(\omega) = 2\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа равен брой срещания на }ab\text{ и на }ba\}$.
-  \item
-    $L = \{\omega_1 \sharp \omega_2 \sharp \omega_3 \mid \forall i \in [1,3](\ \omega_i \in \{a,b\}^\star\ \&\ |\omega_i| \geq i+1\ )\}$;
-  \end{enumerate}
-\end{problem}
-
-\begin{problem}
-  Докажете, че следните езици са регулярни:
-  \begin{enumerate}[a)]
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} \leq 2 \text{ за всяка представка $\omega$ на $\alpha$}\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} > 2 \text{ за някоя представка $\omega$ на $\alpha$}\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} > 2 \text{ за някоя наставка $\omega$ на $\alpha$}\}$.
-  \end{enumerate}
-\end{problem}
-
-
-\begin{problem}
-  Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
-  \begin{enumerate}[a)]
-  \item
-    $L = \{\alpha^R \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
-  \item
-    \marginpar{$\alpha = a^pb^p$}
-    $L = \{a^ib^i\ \mid\ i\in\Nat\}$;
-  \item
-    $L = \{a^ib^i\ \mid\ i,j\in\Nat\ \&\ i\neq j\}$;
-  \item
-    \marginpar{$\alpha = a^{p+1}b^p$.}
-    $L = \{a^ib^j\ \mid\ i > j\}$;
-  \item
-    $L = \{a^nb^m \mid n\mbox{ дели }m\}$.
-  \item
-    $L = \{a^{2n}\ \mid\ n\geq 1\}$;
-  \item
-    $L = \{a^mb^na^{m+n}\ \mid\ m\geq 1\ \&\ n\geq 1\}$;
-  \item
-    $L = \{a^{n.m}\mid n,m\mbox{ са прости числа}\}$;
-  \item
-    \marginpar{$N_x(\omega)$ - брой срещания на буквата $x$ в думата $\omega$}
-    $L = \{\omega\in\{a,b\}^\star \mid N_a(\omega) = N_b(\omega)\}$;
-  \item
-    \marginpar{$\alpha = a^pba^pb$}
-    $L = \{\omega\omega\mid \omega\in\{a,b\}^\star\}$;
-  \item
-    $L = \{\omega\omega^R\mid \omega\in\{a,b\}^\star\}$;
-  \item
-    $L = \{\alpha\beta\beta \in \{a,b\}^\star\mid \beta \neq \varepsilon\}$;
-  \item
-    $L = \{a^nb^nc^n\mid n\geq 0\}$;
-  \item
-    $L = \{\omega\omega\omega\mid \omega\in \Sigma^\star\}$;
-  \item
-    $L = \{a^{2^n}\mid n\geq 0\}$;
-  \item
-    $L = \{a^mb^n\mid n\neq m\}$;
-  \item
-    $L = \{a^{n!}b^{n!}\mid n\neq 1\}$;
-  \item
-    $L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{N_a(\alpha) - N_b(\alpha)} \leq 2\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \alpha\beta\alpha\ \&\ \abs{\beta} \leq \abs{\alpha}\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta\gamma\gamma^R\ \&\ \abs{\beta} \leq \abs{\gamma}\}$;
-  \item
-    $L = \{c^ka^nb^m \mid k,m,n > 0\ \&\ n \neq m\}$;
-  \item
-    $L = \{c^ka^nb^n \mid k > 0\ \&\ n \geq 0\}\cup\{a,b\}^\star$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega)\text{ не дели }N_b(\omega)\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) < N_b(\omega)\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid N_a(\omega) = 2N_b(\omega)\}$;
-  \item
-    $L = \{\omega \in \{a,b\}^\star \mid \abs{N_a(\omega) - N_b(\omega)} \leq 3\}$.
-  \end{enumerate}
-\end{problem}
-
-% \begin{problem}
-%   Нека $L$ е регулярен език над азбуката $\Sigma$. Докажете, че 
-%   \[\text{Infix}(L) = \{\alpha \mid (\exists \beta,\gamma \in \Sigma^\star)[\beta\alpha\gamma \in L]\}\]
-%   също е регулярен език.
-% \end{problem}
-% \begin{hint}
-%   Най-лесно е да се построи автомат за $\text{Infix}(L)$ като се използва автомата за $L$.
-% \end{hint}
-
-\begin{problem}
-  Нека $\Sigma = \{a,b,c,d\}$.
-  Да се докаже, че езикът
-  \[L = \{a_1a_2\cdots a_{2n} \in \Sigma^\star \mid (\forall j \in [1,n])[a_{2j-1} = a_{2j}]\ \&\ d\text{ се среща $\leq 3$ пъти}\}\]
-  е регулярен.
-\end{problem}
-
-\begin{problem}
-  Нека $L_1$ и $L_2$ са регулярни езици. Докажете, че $L$ също е регулярен език, където
-  \[L = \{\alpha \mid (\exists \beta,\gamma)[\beta\alpha\gamma \in L_1]\ \&\ \alpha \in L_2 \vee \alpha^R \in L_2\}.\]
-\end{problem}
-
-\begin{dfn}
-  Да фиксираме две азбуки $\Sigma_1$ и $\Sigma_2$.
-  Хомоморфизъм е изображение $h:\Sigma^\star_1 \to \Sigma^\star_2$ със свойството, че
-  за всеки две думи $\alpha,\beta\in\Sigma^\star_1$,
-  \[h(\alpha\beta) = h(\alpha)\cdot h(\beta).\]
-\end{dfn}
-
-Лесно се съобразява, че за всеки хомоморфизъм $h$, $h(\varepsilon) = \varepsilon$.
-
-\begin{problem}
-  Нека $L \subseteq \Sigma^\star_1$ е регулярен език и $h:\Sigma^\star_1\to\Sigma^\star_2$ е хомоморфизъм.
-  Тогава
-  $h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}$ е регулярен.
-\end{problem}
-\begin{hint}
-  Индукция по построението на регулярни езици.
-  % \begin{itemize}[-]
-  % \item 
-  %   За $L = \{a\}$, $h(L) = \{h(a)\}$.
-  % \item
-  %   $h(\emptyset) = \emptyset$.
-  % \item
-  %   Нека $L_1 = \L(r_1)$ и $L_2 = \L(r_2)$.
-  %   Ще докажем, че $h(\L(r_1\cdot r_2))$ е регулярен.
-  %   \begin{align*}
-  %     h(\L(r_1\cdot r_2)) & = h(L_1\cdot L_2) & (\text{деф. на конкатенация})\\
-  %     & = \{h(\gamma) \mid \gamma \in L_1 \cdot L_2\}\\
-  %     & = \{h(\alpha\beta) \mid \alpha\in L_1\ \&\ \beta\in L_2\}\\
-  %     & = \{h(\alpha)\cdot h(\beta) \mid \alpha \in L_1\ \&\ \beta \in L_2\} & (h\text{ е хомоморфизъм})\\
-  %     & = \{\omega\gamma \mid \omega \in h(L_1)\ \&\ \gamma \in h(L_2)\}\\
-  %     & = h(L_1)\cdot h(L_2).
-  %   \end{align*}
-  %   По И.П. имаме, че $h(L_1)$ и $h(L_2)$ са регулярни езици.
-  %   Следователно, 
-  %   \[h(\L(r_1\cdot r_2)) = h(L_1)\cdot h(L_2)\]
-  %   е регулярен език.
-  % \item
-  %   От горното свойство имаме също, че за всяко $n$, $h(L^n) = h(L)^n$.
-  % \item
-  %   Освен това, 
-  %   \begin{align*}
-  %     h(\bigcup_n L_n) & = \{h(\alpha) \mid (\exists n)[\alpha \in L_n]\}\\
-  %     & = \bigcup \{h(\alpha) \mid \alpha \in L_n\}\\
-  %     & = \bigcup_n h(L_n).
-  %   \end{align*}
-  % \item
-  %   Нека $L = \L(r^\star)$.
-  %   Ще докажем, че $h(L^\star)$ е регулярен език.
-  %   \begin{align*}
-  %     h(L^\star) & = h(\bigcup_n L^n) & (\text{деф. на звезда на Клини})\\
-  %     & = \bigcup_n h(L^n) & (\text{от горното свойство})\\
-  %     & = \bigcup_n h(L)^n & (\text{от по-горното свойство})\\
-  %     & = h(L)^\star & (\text{по деф.}).
-  %   \end{align*}
-  % \end{itemize}
-\end{hint}
-
-\begin{problem}
-  Нека $L\subseteq \Sigma^\star_2$ е регулярен език и $h:\Sigma^\star_1\to\Sigma^\star_2$ е хомоморфизъм.
-  Тогава езикът
-  $h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}$ е регулярен.  
-\end{problem}
-\begin{hint}
-  Конструкция на автомат за $h^{-1}(L)$ при даден автомат за $L$.
-  % Нека $\A$ е КДА разпознаващ езика $L$.
-  % Ще построим $\A' = \pair{Q,\Sigma_1, \delta', s, F}$,
-  % където дефинираме функцията на преходите $\delta'$ като $\delta'(q,a) = \delta^\star(q,h(a))$.
-  % Понеже $h$ е хомоморфизъм, лесно се доказва с индукция по дължината на думата $\alpha \in \Sigma^\star_1$,
-  % че $\delta'^\star(q,\alpha) = \delta^\star(q,h(\alpha))$.
-  % Сега лесно се вижда, че $h^{-1}(\L(\A)) = \L(\A')$, защото:
-  % \begin{align*}
-  %   \alpha \in \L(\A') & \iff \delta'^\star(s,\alpha) \in F\\
-  %   & \iff \delta^\star(s,h(\alpha)) \in F\\
-  %   & \iff h(\alpha) \in \L(\A)\\
-  %   & \iff \alpha \in h^{-1}(\L(\A)).
-  % \end{align*}
-\end{hint}
 
 \subsection{Не толкова лесни задачи}
 
@@ -344,7 +54,7 @@
   \item[в)]
     Най-лесно е да се построи автомат за $\text{Infix}(L)$ като се използва автомата за $L$.
   \item[г)]
-    Конструкция с автомат за $L$ и автомат за $L^R$.
+    Конструкция с автомат за $L$ и автомат за $L^{\texttt{rev}}$.
   \end{enumerate}
 \end{hint}
 
@@ -367,7 +77,7 @@
 \begin{hint}
   \begin{enumerate}[a)]
   \item 
-    За едната посока, разгледайте КДА за $L$.
+    За едната посока, разгледайте ДКА за $L$.
   \item
     За втората част, разгледайте $h:\Sigma\to\{a\}$ деф. като $(\forall b\in\Sigma)[h(b) = a]$.
     Докажете, че $h$ е поражда хомоморфизъм между $\Sigma^\star$ и $\{a\}^\star$.
@@ -483,53 +193,51 @@
 \end{problem}
 \ifhints
 \begin{hint}
-  По-удобно е да построим автомат $\A$, $\L(\A) = L^R$.
+  По-удобно е да построим автомат $\A$, $\L(\A) = L^{\texttt{rev}}$.
   Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
-  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = \gamma^R_{(2)}.\]
-  Понеже за $\varepsilon + \varepsilon = \varepsilon$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
+  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \ov{\alpha^{\texttt{rev}}}_{(2)} + \ov{\beta^{\texttt{rev}}}_{(2)} = \ov{\gamma^{\texttt{rev}}}_{(2)}.\]
+  Понеже за $\ov{\varepsilon}_{(2)} + \ov{\varepsilon}_{(2)} = \ov{\varepsilon}_{(2)}$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
   \begin{itemize}
   \item 
-    Нека $\alpha_{(2)}+\beta_{(2)} = \gamma_{(2)}$. Тогава:
+    Нека $\ov{\alpha}_{(2)}+\ov{\beta}_{(2)} = \ov{\gamma}_{(2)}$. Тогава:
     \begin{itemize}
     \item 
-      $0\alpha + 0\beta = 0\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+      $\ov{0\alpha}_{(2)} + \ov{0\beta}_{(2)} = \ov{0\gamma}_{(2)}$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}.\]
     \item
-      $0\alpha + 1\beta = 1\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+      $\ov{0\alpha}_{(2)} + \ov{1\beta}_{(2)} = \ov{1\gamma}_{(2)}$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}.\]
     \item
-      $1\alpha + 0\beta = 1\gamma$;
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
+      $\ov{1\alpha}_{(2)} + \ov{0\beta}_{(2)} = \ov{1\gamma}_{(2)}$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}.\]
     \item
-      $1\alpha + 1\beta = 10\gamma$. Този случай е по-специален и трябва да бъде разгледан отделно.
-      Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца.
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1$}
+      $\ov{1\alpha}_{(2)} + \ov{1\beta}_{(2)} = \ov{10\gamma}_{(2)}$. Този случай е по-специален и трябва да бъде разгледан отделно.
+      Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца. Затова имаме следния преход:
+      \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1.\]
     \item
-      За останалите $x \in \Sigma_3$, $\delta(q_{\scriptscriptstyle{=}},x) = q_{err}$,
-      където $q_{err}$ е състоянието, от което не можем да излезем.
-      % Остават $\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix}}) = q_{err}$;
+      За останалите $x \in \Sigma_3$ имаме, че
+      \[\delta(q_{\scriptscriptstyle{=}},x) = q_{\texttt{err}},\]
+      където $q_{\texttt{err}}$ е състоянието, от което не можем да излезем.
     \end{itemize}
   \item
     Горните разглеждания ни подсказват, че ще ни трябва и състояние $q_1$, за което искаме да е изпълнено свойството,
     че за произволно $q$,
-    \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha^R_{(2)} + \beta^R_{(2)} = 1\gamma^R_{(2)}.\]
+    \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha^{\texttt{rev}}_{(2)} + \beta^{\texttt{rev}}_{(2)} = 1\gamma^{\texttt{rev}}_{(2)}.\]
     Да разгледаме сега случая $\alpha + \beta = 1\gamma$. Тогава:
     \begin{itemize}
     \item 
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}$}
-      Очевидно е, че $0\alpha + 0\beta = 1\gamma$;
+      Очевидно е, че $0\alpha + 0\beta = 1\gamma$. Следователно,
+      \[\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}.\]
     \item
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}$}
-      $1\alpha + 1\beta = 11\gamma$;
+      $1\alpha + 1\beta = 11\gamma$. Следователно,
+      \[\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}.\]
     \item
-      \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = q_{1}$}
-      $1\alpha + 0\beta = 10\gamma$;
+      $1\alpha + 0\beta = 10\gamma$ и $0\alpha + 1\beta = 10\gamma$. Следователно,
+      \[\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}.\]
     \item
-      Аналогично, $0\alpha + 1\beta = 10\gamma$;
-    \item
-      За останалите $x \in \Sigma_3$, $\delta(q_{1},x) = q_{err}$.
+      За останалите $x \in \Sigma_3$ имаме, че
+      \[\delta(q_{1},x) = q_{\texttt{err}}.\]
     \end{itemize}    
-    \marginpar{$\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}$}
   \end{itemize}
 \end{hint}
 \fi
@@ -544,81 +252,77 @@
     $L_1 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid \ov{\alpha}_{(2)} < \ov{\beta}_{(2)}\right\}$;
   \item
     $L_2 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid 3(\ov{\alpha}_{(2)}) = \ov{\beta}_{(2)}\right\}$;
-    % $L_2 = \{\omega \in \Sigma^\star_2 \mid \text{долният ред на }\omega\text{ е три пъти по-голямо число от горния}\}$;
   \item
-    $L_3 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid \alpha = \beta^{rev}\right\}$;
+    $L_3 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid \alpha = \beta^{\texttt{rev}}\right\}$;
   \end{itemize}
   Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
 \end{problem}
 \ifhints
 \begin{hint}
-  Ще построим автомат $\A = \FA$ за езика $L^R_1$.
+  Ще построим автомат $\A = \FA$ за езика $L^{\texttt{rev}}_1$.
   За улеснение, в рамките на тази задача ще пишем:
   \begin{itemize}
   \item 
-    $\alpha \equiv \beta$, ако $(\alpha^R)_{(2)} = (\beta^R)_{(2)}$,
+    $\alpha \equiv \beta$, ако $\ov{\alpha^{\texttt{rev}}}_{(2)} = \ov{\beta^{\texttt{rev}}}_{(2)}$,
   \item
-    $\alpha < \beta$, ако $(\alpha^R)_{(2)} < (\beta^R)_{(2)}$,
+    $\alpha \prec \beta$, ако $\ov{\alpha^{\texttt{rev}}}_{(2)} < \ov{\beta^{\texttt{rev}}}_{(2)}$,
   \item
-    $\alpha > \beta$, ако $(\alpha^R)_{(2)} > (\beta^R)_{(2)}$.
+    $\alpha \succ \beta$, ако $\ov{\alpha^{\texttt{rev}}}_{(2)} > \ov{\beta^{\texttt{rev}}}_{(2)}$.
   \end{itemize}
   Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
   Искаме да е изпълнено свойствата:
   \begin{itemize}
   \item 
-    % За всяко $q \in Q$,
     $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$ точно тогава, когато $\alpha \equiv \beta$;
   \item 
-    % За всяко $q \in Q$,
-    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$ точно тогава, когато $\alpha < \beta$;
+    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$ точно тогава, когато $\alpha \prec \beta$;
   \item 
-    % За всяко $q \in Q$,
-    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$ точно тогава, когато $\alpha > \beta$.
+    $\delta^\star(q_{\scriptscriptstyle{=}}, \scriptsize{\begin{bmatrix} \alpha\\ \beta\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$ точно тогава, когато $\alpha \succ \beta$.
   \end{itemize}
-  Множеството от финални състояния ще бъде $F = \{q_{\scriptscriptstyle{<}}\}$, а началното състояние $s = q_{\scriptscriptstyle{=}}$.
+  Множеството от финални състояния ще бъде $F = \{q_{\scriptscriptstyle{<}}\}$, а началното състояние $\qstart = q_{\scriptscriptstyle{=}}$.
   За да дефинираме функцията на преходите, трябва да разгледа няколко случая, в зависимост от това какво е отношението между $\alpha$ и $\beta$.
   \begin{itemize}
   \item
     Нека $\alpha \equiv \beta$. Тогава:  
     \begin{itemize}
     \item 
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = q_{\scriptscriptstyle{=}}$}
-      $\alpha 0 \equiv \beta 0$, $\alpha 1 \equiv \beta 1$;
+      $\alpha 0 \equiv \beta 0$ и $\alpha 1 \equiv \beta 1$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = q_{\scriptscriptstyle{=}}.\]
     \item
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
-      $\alpha 0 < \beta 1$;
+      $\alpha 0 \prec \beta 1$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{>}}.\]
     \item
-      \marginpar{$\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
-      $\alpha 1 < \beta 0$;
+      $\alpha 1 \succ \beta 0$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{=}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{<}}.\]
     \end{itemize}
   \item 
-    Нека $\alpha < \beta$. Тогава:
+    Нека $\alpha \prec \beta$. Тогава:
     \begin{itemize}
     \item 
-      \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
-      $\alpha 0 < \beta 0$, $\alpha 1 < \beta 1$, $\alpha 0 < \beta 1$;
+      $\alpha 0 \prec \beta 0$, $\alpha 1 \prec \beta 1$, $\alpha 0 \prec \beta 1$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}.\]
     \item
-      \marginpar{$\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
-      $\alpha 1 > \beta 0$;
-    \end{itemize}    
+      $\alpha 1 \succ \beta 0$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{<}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}.\]
+    \end{itemize}
   \item
-    Нека $\alpha > \beta$. Тогава:
+    Нека $\alpha \succ \beta$. Тогава:
     \begin{itemize}
     \item 
-      \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}$}
-      $\alpha 0 > \beta 0$, $\alpha 1 > \beta 1$, $\alpha 1 > \beta 0$;
+      $\alpha 0 \succ \beta 0$, $\alpha 1 \succ \beta 1$, $\alpha 1 \succ \beta 0$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\0\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\1\end{bmatrix}}) = \delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 1\\0\end{bmatrix}}) = q_{\scriptscriptstyle{>}}.\]
     \item
-      $\alpha 0 < \beta 1$;
+      $\alpha 0 \prec \beta 1$. Следователно,
+      \[\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}.\]
     \end{itemize}
   \end{itemize}
-  Докажете, че за така дефинирания автомат $\A$, $\L(\A) = L^R_1$.
-  \marginpar{$\delta(q_{\scriptscriptstyle{>}},\scriptsize{\begin{bmatrix} 0\\1\end{bmatrix}}) = q_{\scriptscriptstyle{<}}$}
+  Докажете, че за така дефинирания автомат $\A$, $\L(\A) = L^{\texttt{rev}}_1$.
 \end{hint}
 \fi
 
-
 \begin{problem}
-  Докажете, че $L = \{\alpha\beta \in \{a,b\}^\star \mid |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}$ не е регулярен.
+  Докажете, че езикът
+  \[L = \{\alpha\beta \in \{a,b\}^\star \mid |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}\] не е регулярен.
 \end{problem}
 \begin{hint}
   Да допуснем, че $L$ е регулярен.

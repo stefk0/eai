@@ -10,23 +10,27 @@
   \begin{enumerate}[1)]
   \item 
     \marginpar{На всяка стъпка трябва да обходим цялата граматика, следователно всяка итерация отнема $\mathcal{O}(|G|)$ време.}
-    Намираме множеството
-    \[E = \{A \in V \mid A \to^\star_G \varepsilon\}\]
-    като строим множествата $E_n$, където
-    $A \in E_n$ точно тогава, когато съществува дърво на извод $P$, за което
-    $A = \texttt{root}(P)$, $\texttt{yield}(P) = \varepsilon$ и $\texttt{height}(P) \leq n$.
-    % \[E_n = \{A \in V \mid A \stackrel{\leq n}{\to}_G \varepsilon \}.\]
+    Първо трябва да намерим множеството
+    \[\texttt{E} = \{A \in V \mid A \to^\star_G \varepsilon\}.\]
+    Това правим като строим множествата $\texttt{E[n]}$ по следния начин:
     \begin{itemize}[-]
     \item
-      Ясно е, че $E_0 = \emptyset$;
+      $\texttt{E[0]} \df \emptyset$;
     \item
-      Нека имаме $E_n$. Тогава дефинираме
-      \marginpar{Обърнете внимание, че имаме $E^\star_n$, а не просто $E_n$.}
-      \[E_{n+1} = E_n \cup \{ B \in V \mid B \to_G \alpha\ \&\ \alpha \in E^\star_n\},\]
-      защото увеличаваме височината на дърветата на извод с $1$.
+      Нека имаме $\texttt{E[n]}$. Тогава 
+      \marginpar{Обърнете внимание, че имаме $\texttt{E[n]}^\star$, а
+        не просто $\texttt{E[n]}$.}
+      \marginpar{Също така да напомним, че $\emptyset^\star = \{\varepsilon\}$.}
+      \[\texttt{E[n+1]} \df \texttt{E[n]} \cup \{ B \in V \mid (\exists \alpha \in \texttt{E[n]}^\star)[B \to_G \alpha ]\}.\]
     \item
-      \marginpar{Намираме $E$ за време $\mathcal{O}(|G|^2)$.}
-      Спираме на първото $n$, за което $E_n = E_{n+1}$. Тогава $E = E_n$.    
+      Докажете, че за всяко $n$ е изпълнено, че
+      $A \in \texttt{E[n]}$ точно тогава, когато съществува дърво на извод $P$, за което
+    $A = \texttt{root}(P)$, $\texttt{yield}(P) = \varepsilon$ и $\texttt{height}(P) \leq n$.
+    \item
+      \marginpar{Намираме $\texttt{E}$ за време $\mathcal{O}(|G|^2)$.}
+      Спираме на първото $n$, за което $\texttt{E[n]} = \texttt{E[n+1]}$.
+      Лесно се съобразява, че за това $n$ е изпълнено, че
+      \[\texttt{E[n]} = \{A \in V \mid A \to^\star_G \varepsilon\}.\]
     \end{itemize}
   \item
     Строим множеството от правила $R'$, в което няма $\varepsilon$-правила по следния начин.
@@ -35,9 +39,9 @@
     \marginpar{Броят на правилата може да се увеличи експоненциално, защото в най-лошия случай извеждаме всички подмножества на дадено множество от променливи}
     \begin{itemize}[-]
     \item 
-      ако $X_i \not\in E$, то $Y_i = X_i$;
+      ако $X_i \not\in \texttt{E}$, то $Y_i = X_i$;
     \item
-      ако $X_i \in E$, то $Y_i = X_i$ или $Y_i = \varepsilon$;
+      ако $X_i \in \texttt{E}$, то $Y_i = X_i$ или $Y_i = \varepsilon$;
     \item
       не всички $Y_i$ са $\varepsilon$.
     \end{itemize}
@@ -63,14 +67,27 @@
     & U \to \varepsilon\ |\ aUb.
   \end{align*}
   Тогава
-  \[E = \{X \in V \mid X \rightarrow^\star_G \varepsilon\} = \{A,B,C,U\}.\]
+  \begin{itemize}[-]
+  \item
+    $\texttt{E[0]} = \emptyset$;
+  \item
+    $\texttt{E[1]} = \{C,U\}$;
+  \item
+    $\texttt{E[2]} = \{C,U,B\}$;
+  \item
+    $\texttt{E[3]} = \{C,U,B,A\}$;
+  \item
+    $\texttt{E[4]} = \texttt{E[3]}$. Следователно,
+    \[\texttt{E} = \{X \in V \mid X \rightarrow^\star_G \varepsilon\} = \{C,U,B,A\}.\]
+  \end{itemize}
+  
   Това означава, че $\varepsilon \not\in \L(G)$.
   Граматиката $G'$ без $\varepsilon$-правила, за която $\L(G') = \L(G)$ има следните правила
   \begin{align*}
     & S \to D \\
     & D\to AD\ |\ D\ |\ b \\
     & A \to A\ |\ B\ |\ C\ |\ AB\ |\ BC\ |\ a \\
-    & B\to A\ |\ E\ |\ C\ |\ AA\ |\ UC\\
+    & B\to A\ |\ C\ |\ AA\ |\ UC\\
     & C \to C\ |\ A\ |\ CA\ |\ a\\
     & U \to aUb\ |\ ab.
   \end{align*}

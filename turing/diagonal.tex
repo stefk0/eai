@@ -13,12 +13,12 @@
   \end{thm}
 \end{framed}
 \begin{proof}
-  Да допуснем, че $L_{\texttt{diag}}$ се разпознава от машина на Тюринг $\M$, т.е. 
-  \[L_{\texttt{diag}} = \L(\M).\]
-  Тогава да видим какво имаме за думата $\code{\M}$:
+  Да допуснем, че $L_{\texttt{diag}}$ се разпознава от машина на Тюринг $\M_0$, т.е. 
+  \[L_{\texttt{diag}} = \L(\M_0).\]
+  Тогава да видим какво имаме за думата $\code{\M_0}$:
   \begin{align*}
-    & \code{\M} \in L_{\texttt{diag}} \implies \code{\M} \in \L(\M) \implies \code{\M} \not\in L_{\texttt{diag}},\\
-    & \code{\M} \not\in L_{\texttt{diag}} \implies \code{\M} \not\in \L(\code{\M}) \implies \code{\M} \in L_{\texttt{diag}}.
+    & \code{\M_0} \in L_{\texttt{diag}} \implies \code{\M_0} \in \L(\M_0) \implies \code{\M_0} \not\in L_{\texttt{diag}},\\
+    & \code{\M_0} \not\in L_{\texttt{diag}} \implies \code{\M_0} \not\in \L(\code{\M_0}) \implies \code{\M_0} \in L_{\texttt{diag}}.
   \end{align*}
   Достигаме до противоречие.
 \end{proof}
@@ -33,7 +33,7 @@
 \end{framed}
 \begin{hint}
   Лесно се съобразява, че $\Laccept$ е полуразрешим.
-  Дефинираме машина на Тюринг $\M'$, която работи по следния начин:
+  Дефинираме (многолентова) машина на Тюринг $\M'$, която работи по следния начин:
   \begin{itemize}
   \item
     вход дума $\alpha$;
@@ -63,9 +63,9 @@
   откъдето следва, че $\Laccept$ е полуразрешим език.
 
   Ако допуснем, че $\Laccept$ е разрешим,
-  то 
-  \[L_{\texttt{diag}} = (\{0,1\}^\star \setminus \Laccept) \cap \{\code{\M} \mid \text{$\M$ е М.Т.}\}\]
-  е разрешим език, което е противоречие, защото ще следва, че $L_{\texttt{diag}}$ е разрешим език, а той не е е дори полуразрешим.
+  то езикът $\{0,1\}^\star \setminus \Laccept$ би бил разрешим и тогава 
+  \[L_{\texttt{diag}} = (\{0,1\}^\star \setminus \Laccept) \cap \{\code{\M} \mid \text{$\M$ е машина на Тюринг}\}\]
+  ще е разрешим език, което е противоречие, защото ще следва, че $L_{\texttt{diag}}$ е разрешим език, а той не е е дори полуразрешим.
 \end{hint}
 
 \begin{cor}

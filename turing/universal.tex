@@ -1,16 +1,21 @@
 \subsection{Универсалният език $L_{\texttt{univ}}$}
 
+\setlength{\epigraphwidth}{0.65\textwidth}\epigraph{A man provided with paper, pencil, and rubber, and subject to strict discipline, is in effect a universal machine. (Turing 1948: 416)}
+
+
+\marginpar{Можем за простота да считаме, че всички разглеждани машини на Тюринг са дефинирани над азбуката $\{0,1\}$.}
+\index{език!неразрешим}
 \begin{framed}
   \begin{thm}
     Езикът 
-    \[\Luniv \df \{\ \code{\M} \cdot \omega \mid \text{$\M$ е машина на Тюринг и }\omega\in \L(\M)\ \}\]
+    \[\Luniv \df \{\ \code{\M} \sharp \omega \mid \text{$\M$ е машина на Тюринг и }\omega\in \L(\M)\ \}\]
     е полуразрешим, но {\bf не} е разрешим.
   \end{thm}
 \end{framed}
 \begin{hint}
   \marginpar{Разсъждението е много сходно с това защо $\Laccept$ полуразрешим.}
   Първо да съобразим защо $\Luniv$ е полуразрешим език.
-  Дефинираме машина на Тюринг $\M'$, която работи по следния начин:
+  Дефинираме (многолентова) машина на Тюринг $\M'$, която работи по следния начин:
   \begin{itemize}
   \item
     вход дума $\alpha$;
@@ -19,7 +24,7 @@
     за някоя машина на Тюринг $\M$ и дума $\omega$. Това става лесно, защото $\omega$
     започва веднага след второ срещане на $111$ в $\alpha$.
   \item
-    Ако $\alpha = \code{\M} \cdot \omega$, 
+    Ако $\alpha = \code{\M} \sharp \omega$, 
     то $\M'$ симулира работата на $\M$ върху $\omega$.
     \begin{itemize}
     \item 
@@ -41,16 +46,13 @@
   
   Сега да съобразим защо $\Luniv$ не е разрешим език.
   Имаме, че за произволна дума $\omega$,
-  \begin{align*}
-    \omega \in \Laccept & \iff (\exists \M)[\M\text{ е М.Т.}\ \&\ \omega = \code{\M}\ \&\ \omega \in \L(\M)]\\
-                                       & \iff \omega \cdot \omega \in \Luniv.
-  \end{align*}
+  \[\omega \in \Laccept \iff \omega\sharp\omega \in \Luniv.\]
   Ако допуснем, че $\Luniv$ е разрешим, то тогава $\Laccept$ е разрешим език, което е противоречие.
 \end{hint}
 
 \begin{cor}
   Езикът
-  \[\ov{\Luniv} \df \{\code{\M} \cdot \omega \mid \code{\M} \text{ е машини на Тюринг и }\omega\not\in \L(\M)\}\]
+  \[\ov{\Luniv} \df \{\code{\M} \cdot \omega \mid \code{\M} \text{ е машина на Тюринг и }\omega\not\in \L(\M)\}\]
   {\bf не} е полуразрешим.
 \end{cor}
 

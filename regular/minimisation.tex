@@ -29,7 +29,7 @@
 
 \begin{problem}
   Докажете, че
-  \[[q]_{\equiv_\A} \cap F \neq \emptyset \iff [q]_{\equiv_\A} \subseteq F.\]
+  \[{[q]}_{\equiv_\A} \cap F \neq \emptyset \iff {[q]}_{\equiv_\A} \subseteq F.\]
 \end{problem}
 
 \begin{framed}
@@ -42,7 +42,7 @@
 \end{framed}
 \begin{proof}
   Нека $L = \L(\A)$ и да разгледаме $h:\Sigma^\star/_{\approx_L} \to Q/_{\equiv_\A}$, където
-  \[h([\alpha]_L) \df [\delta^\star(\qstart,\alpha)]_{\equiv_\A}.\]
+  \[h({[\alpha]}_L) \df [\delta^\star(\qstart,\alpha)]_{\equiv_\A}.\]
   Ще докажем, че $h$ е биекция като използваме свойството, че
   \begin{equation}
     \label{eq:8}
@@ -59,35 +59,34 @@
   Сега веднага получаваме, че
   \begin{equation}
     \label{eq:9}
-    [\alpha]_L = [\beta]_L \iff h([\alpha]_L) = h([\beta]_L),
+    {[\alpha]}_L = {[\beta]}_L \iff h({[\alpha]}_L) = h({[\beta]}_L),
   \end{equation}
   защото
   \begin{align*}
-    h([\alpha]_L) = h([\beta]_L) & \iff [\delta^\star(\qstart,\alpha)]_{\equiv_\A} = [\delta^\star(\qstart,\beta)]_{\equiv_\A} & \comment\text{деф. на }h\\ 
-                                 & \iff \L_\A(\delta^\star(\qstart,\alpha)) = \L_\A(\delta^\star(\qstart,\beta)) & \comment\text{деф. на }\equiv_\A\\
-                                 & \iff \alpha^{-1}(L) = \beta^{-1}(L) & \comment\text{от (\ref{eq:8})}\\
-                                 & \iff [\alpha]_L = [\beta]_L. & \comment\text{деф. на }\approx_L
+    h({[\alpha]}_L) = h({[\beta]}_L) & \iff {[\delta^\star(\qstart,\alpha)]}_{\equiv_\A} = {[\delta^\star(\qstart,\beta)]}_{\equiv_\A} & \comment\text{деф. на }h\\ 
+                                     & \iff \L_\A(\delta^\star(\qstart,\alpha)) = \L_\A(\delta^\star(\qstart,\beta)) & \comment\text{деф. на }\equiv_\A\\
+                                     & \iff \alpha^{-1}(L) = \beta^{-1}(L) & \comment\text{от (\ref{eq:8})}\\
+                                     & \iff {[\alpha]}_L = {[\beta]}_L. & \comment\text{деф. на }\approx_L
   \end{align*}
   
   \begin{itemize}
   \item
     Ясно е, че $h$ е добре дефинирана, т.е. $h$ наистина е функция.
     Това е така, защото от (\ref{eq:9}) имаме, че
-    \[[\alpha]_L = [\beta]_L \implies h([\alpha]_L) = h([\beta]_L).\]
+    \[{[\alpha]}_L = {[\beta]}_L \implies h({[\alpha]}_L) = h({[\beta]}_L).\]
   \item
     \marginpar{Ако в $\A$ има недостижими от $\qstart$ състояния, то ще получим, че $|\Sigma^\star/_{\approx_L}| \leq |Q/_{\equiv_\A}|$.}
-    В $\A$ няма недостижими състояния, откъдето следва, че за всеки клас на еквивалентност $[q]_{\equiv_\A}$,
+    В $\A$ няма недостижими състояния, откъдето следва, че за всеки клас на еквивалентност ${[q]}_{\equiv_\A}$,
     съществува дума $\alpha$, за която $\delta^\star(\qstart,\alpha) = q$.
-    Това означава, че $h([\alpha]_L) = [q]_{\equiv_\A}$ и следователно $h$ е сюрекция.
+    Това означава, че $h([\alpha]_L) = {[q]}_{\equiv_\A}$ и следователно $h$ е сюрекция.
   \item
     Остава да проверим, че $h$ е инективна, т.е.
-    \[h([\alpha]_L) = h([\beta]_L) \implies [\alpha]_L = [\beta]_L.\]
+    \[h({[\alpha]}_L) = h({[\beta]}_L) \implies {[\alpha]}_L = {[\beta]}_L.\]
     Но това следва веднага от (\ref{eq:9}).
   \end{itemize}
 \end{proof}
 
-\begin{problem}
-  \label{prob:equiv-delta}
+\begin{problem}\label{prob:equiv-delta}
   Докажете, че за произволни $p,q \in Q$ и произволно $a\in\Sigma$,
   \[p \equiv_\A q \implies \delta(p,a) \equiv_\A \delta(q,a).\]
 \end{problem}

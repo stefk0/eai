@@ -1,40 +1,41 @@
-\subsection*{Безконтекстен език за преходите в машина на Тюринг}
+\subsection{Безконтекстен език за преходите в машина на Тюринг}
 
 % \subsection*{Валидни и невалидни изчисления на машини на Тюринг}
-\marginpar{\cite{hopcroft1} стр. 201}
+\marginpar{\cite[стр. 201]{hopcroft1}}
 Да разгледаме машината на Тюринг $\M$.
-
 Една дума $\omega$ описва конфигурация на машина на Тюринг,
 ако $\omega \in \Gamma^\star Q \Gamma^\star$.
 
 \begin{framed}
   \begin{prop}
-    Да фиксираме една машина на Тюринг $\M$. 
+    Да фиксираме една детерминистична машина на Тюринг $\M$. 
     Тогава следните езици за безконтекстни:
     \begin{align*}
-      & \texttt{Valid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \} \\
-      & \texttt{Valid}'(\M)\df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \} \\
-      & \texttt{Invalid}(\M) \df \{\ \alpha\#\beta^{rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\ \}\\
-      & \texttt{Invalid}'(\M) \df \{\ \alpha^{rev}\#\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\ \}.
+      & \texttt{Valid}(\M) \df \{\ \alpha\sharp\beta^{\rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \} \\
+      & \texttt{Valid}'(\M)\df \{\ \alpha^{\rev}\sharp\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \vdash_\M \beta\ \} \\
+      & \texttt{Invalid}(\M) \df \{\ \alpha\sharp\beta^{\rev} \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\  \alpha \not\vdash_\M \beta\ \}\\
+      & \texttt{Invalid}'(\M) \df \{\ \alpha^{\rev}\sharp\beta \mid \alpha,\beta \in \Gamma^\star Q \Gamma^\star\ \&\ \alpha \not\vdash_\M \beta\ \}.
     \end{align*}
   \end{prop}  
 \end{framed}
 
 \begin{hint}
-
   Да напомним първо как дефинираме релацията $\vdash_\M$:
   \begin{align*}
-    & (\alpha_1z, q, x\alpha_2) \vdash_\M  (\alpha_1 zy, p, \alpha_2) & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
+    & (\alpha_1, q, x\alpha_2) \vdash_\M  (\alpha_1 y, p, \alpha_2) & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
+    & (\alpha_1, q, \varepsilon) \vdash_\M  (\alpha_1 y, p, \varepsilon) & \comment{\text{ ако } q \overset{\blank/y;\goright}{\longrightarrow} p} \\
     & (\alpha_1z, q, x\alpha_2) \vdash_\M (\alpha_1, p ,zy\alpha_2) & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
-    & (\alpha_1z, q, x\alpha_2) \vdash_\M (\alpha_1z, p, y\alpha_2) & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}.
+    & (\alpha_1z, q, \varepsilon) \vdash_\M (\alpha_1, p ,z) & \comment{\text{ ако } q \overset{\blank/y;\goleft}{\longrightarrow} p} \\
+    & (\varepsilon, q, x\alpha_2) \vdash_\M (\varepsilon, p ,\blank y\alpha_2) & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
+    & (\alpha_1, q, x\alpha_2) \vdash_\M (\alpha_1, p, y\alpha_2) & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}.
   \end{align*}
 
   Думите в езика $\texttt{Valid}(\M)$ кодират релацията $\vdash_\M$. Това означава, че всяка дума на 
   $\texttt{Valid}(\M)$ има някое от следните представяния:
   \begin{align*}
-    & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 p y z \alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
-    & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 y z p \alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
-    & \alpha_1zqx\alpha_2 \sharp \alpha^{rev}_2 y p z\alpha^{rev}_1 & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}
+    & \alpha_1zqx\alpha_2 \sharp \alpha^{\rev}_2 p y z \alpha^{\rev}_1 & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
+    & \alpha_1zqx\alpha_2 \sharp \alpha^{\rev}_2 y z p \alpha^{\rev}_1 & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
+    & \alpha_1zqx\alpha_2 \sharp \alpha^{\rev}_2 y p z\alpha^{\rev}_1 & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}
   \end{align*}
 
   Ще опишем неформално стеков автомат $P$ за езика $\texttt{Valid}(\M)$.
@@ -43,30 +44,31 @@
 
   \begin{itemize}
   \item
-    Първо четем $\alpha_1$ и я записваме в стека като $\alpha^{rev}_1$.
+    Първо четем $\alpha_1$ и я записваме в стека като $\alpha^{\rev}_1$.
     Това правим като дефинираме функцията на преходите като 
-    \[(\forall a,z \in \Sigma)[\ \Delta_{P}(r,a,z) \df \{(r,az)\}\ ].\]
+    \[(\forall a\in\Sigma)(z \in \Gamma)[\ \Delta_{P}(r,a,z) \df \{(r,az)\}\ ].\]
   \item 
     Правим това докато не срещнем някое $q \in Q^\M$. Тогава трябва да направим преход на $\M$.
     Тук трябва да внимаваме, защото за да направим преход, трябва да знаем състоянието $q$ и да прочетем следващия символ.
     Един начин да разрешим този проблем е като запомним кое състояние сме прочели на машината на Тюринг в състоянията на стековия автомат:
     \marginpar{$Q^\M$ са букви от азбуката на стековия автомат $P$.}
-    \[(\forall q \in Q^\M)(\forall z \in \Sigma)[\ \Delta_{P}(r,q,z) = \{(r_q,z)\}\ ].\]
+    \[(\forall q \in Q^\M)(\forall z \in \Gamma)[\ \Delta_{P}(r,q,z) = \{(r_q,z)\}\ ].\]
     \begin{itemize}
     \item 
-      \marginpar{Стекът представлява $z\alpha^{rev}_1$}
+      \marginpar{Стекът представлява $z\alpha^{\rev}_1$}
       ако $\delta_\M(q,x) = (p,y,\goright)$, то слагаме $yp$ на върха на стека, т.е.
-      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, pyz)\}.\]
+      \[\Delta_{P}(r_q,x,z) = \{(\hat{r}, pyz)\}.\]
+      \marginpar{Трябва да внимаваме, когато имаме $q\sharp$, защото това се интерпретира като четящата глава е върху $\blank$.}
     \item
       ако $\delta_\M(q,x) =(p,y,\goleft)$, то ако $z$ е върха на стека, заменяме $z$ с $pzy$, т.е.
-      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, yzp)\}.\]
+      \[\Delta_{P}(r_q,x,z) = \{(\hat{r}, yzp)\}.\]
     \item
       ако $\delta_\M(q,x) =(p,y,\stay)$, то ако $z$ е върха на стека, заменяме $z$ с $ypz$, т.е.
-      \[\delta_{P}(r_q,x,z) = \{(\hat{r}, ypz)\}.\]
+      \[\Delta_{P}(r_q,x,z) = \{(\hat{r}, ypz)\}.\]
     \end{itemize}
   \item
-    Сега вече сме в състояние $\hat{r}$ и остава да прочетем $\alpha_2$ и да я запишем в стека като $\alpha^{rev}_2$:
-    \[\delta_{P}(\hat{r},x,z) = \{(\hat{r}, xz)\}.\]
+    Сега вече сме в състояние $\hat{r}$ и остава да прочетем $\alpha_2$ и да я запишем в стека като $\alpha^{\rev}_2$:
+    \[\Delta_{P}(\hat{r},x,z) = \{(\hat{r}, xz)\}.\]
   \item
     \marginpar{За да разпознаем $\texttt{Invalid}(\M)$ трябва само да разменим условията за приемане и отхвърляне на думата.}
     Разбираме кога сме свършили с $\alpha_2$ когато стигнем до $\sharp$.
@@ -82,7 +84,7 @@
 
 \begin{remark}
   Да обърнем внимание, че горната конструкция на стековия автомат $P$ е {\bf ефективна}, т.е.
-  съществува алгоритъм, който при вход машина на Тюринг $\M$ връща като изход стеков автомат $P$ за езика $\texttt{Valid}(\M)$.
+  съществува алгоритъм, който при вход код на машина на Тюринг $\M$ връща като изход код на стеков автомат $P$ за езика $\texttt{Valid}(\M)$.
   % С други думи, езикът 
   % \[\{\code{\M} \cdot \code{P} \mid \L(P) = \texttt{Valid}(\M)\}\]
   % е разрешим.
@@ -91,7 +93,8 @@
 \subsection*{История на машина на Тюринг}
 \index{история на приемащо изчисление}
 
-Дума от вида  $\omega_1 \sharp \omega^{rev}_2 \sharp \omega_3 \sharp \omega^{rev}_4\sharp\omega_5\cdots$
+Дума от вида
+\[\omega_1 \sharp \omega_2 \sharp \omega_3 \sharp \omega_4\sharp\cdots\omega_n\sharp\]
 се нарича {\bf история на приемащо изчисление} на машината на Тюринг $\M$, ако
 \begin{itemize}
 \item
@@ -101,31 +104,31 @@
   $\omega_1 \in \qstart\Sigma^\star$ описва начална конфигурация.
 \item
   $\omega_n \in \Gamma^\star \cdot\{\qaccept\} \cdot \Gamma^\star$ описва приемаща конфигурация.
-\item 
-  $\omega_i \vdash_\M \omega_{i+1}$ за $i = 1,\dots,n-1$.
+\item
+  За четно $i < n$, $\omega^{\rev}_i \vdash_\M \omega_{i+1}$;
+\item
+  За нечетно $i < n$, $\omega_i \vdash_\M \omega^{\rev}_{i+1}$;
 \end{itemize}
+Езикът съставен от всички такива думи ще означаваме с $\texttt{Accept}(\M)$.
 
 \begin{lemma}
-  \marginpar{\cite{hopcroft1}, стр. 201}
-  Нека да означим с $\texttt{Accept}(\M)$ езикът от историите на всички приемащи изчисления за машината на Тюринг $\M$.
-  Тогава 
+  \marginpar{\cite[стр. 201]{hopcroft1}}
+  За всяка машина на Тюринг $\M$,
   \[\texttt{Accept}(\M) = L_1 \cap L_2,\]
   където $L_1$ и $L_2$ са безконтекстни езици.
-  Освен това, граматиките на $L_1$ и $L_2$ могат ефективно да бъдат построени от $\M$.
+  Освен това, граматиките на $L_1$ и $L_2$ могат ефективно да бъдат построени по кода на $\M$.
 \end{lemma}
 \begin{hint}
-  Да разгледаме езиците:
+  Разгледайте следните безконтекстни езици:
   \begin{align*}
-    & L_1 \df (\texttt{Valid}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp)\\
-    & L_2 \df \qstart\Sigma^\star \sharp (\texttt{Valid'}(\M)\sharp)^\star(\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\sharp),
+    & L_1 \df (\texttt{Valid}(\M) \cdot \{\sharp\})^\star \cdot (\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star \cdot \{\sharp\})\\
+    & L_2 \df \{\qstart\}\cdot\Sigma^\star \cdot \{\sharp\} \cdot (\texttt{Valid'}(\M) \cdot \{\sharp\})^\star \cdot (\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\cdot\{\sharp\}),
   \end{align*}
-  за които е ясно, че са безконтекстни.
 \end{hint}
 
 \begin{problem}
   Обяснете как може ефективно да се кодира всяка безконтекстна граматика $G$ като дума $\code{G}$ над азбуката $\{0,1\}$.
 \end{problem}
-
 
 \begin{framed}
 \begin{thm}
@@ -143,45 +146,50 @@
 \end{hint}
 
 \begin{lemma}
-  За всяка машина на Тюринг $\M$, $\overline{\texttt{Accept}(\M)}$ е безконтекстен език.
+  За всяка машина на Тюринг $\M$, то допълнението на $\texttt{Accept}(\M)$, което означаваме като $\overline{\texttt{Accept}(\M)}$, е безконтекстен език.
+  Освен това, по кода на $\M$ можем ефективно да намерим код на безконтекстната граматика за $\overline{\texttt{Accept}}(\M)$.
 \end{lemma}
 \begin{hint}
   Една дума $\alpha$ не е история на приемащо изчисление, ако е изпълнено някое от следните условия:
   \begin{itemize}
   \item 
     \marginpar{Можем да опишем това свойство с регулярен език}
-    $\alpha$ не е от вида $\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n$,
+    $\alpha$ не е от вида $\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n\sharp$,
     където $\omega_i \in \Gamma^\star Q \Gamma^\star$, или
   \item
-    ако $\alpha$ е от вида $\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n$,
+    ако $\alpha$ е от вида $\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n\sharp$,
     където $\omega_i \in \Gamma^\star Q \Gamma^\star$, тогава:
     \begin{itemize}
     \item 
-      $\omega_1 \not\in \qstart \Gamma^\star$, или
+      $\omega_1 \not\in \{\qstart\} \cdot \Gamma^\star$, или
     \item
       $\omega_n \not\in \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star$, или
     \item
-      $\omega_i \not\vdash_\M \omega^{rev}_{i+1}$, за някое нечетно $i$, или
+      \marginpar{т.е. $\omega_i \sharp \omega^{\rev}_{i+1} \in \texttt{Invalid}(\M)$}
+      $\omega_i \not\vdash_\M \omega^{\rev}_{i+1}$, за някое нечетно $i < n$, или
     \item
-      $\omega^{rev}_i \not\vdash_\M \omega_{i+1}$, за някое четно $i$.
+      \marginpar{и $\omega^{\rev}_i \sharp \omega_{i+1} \in \texttt{Invalid'}(\M)$}
+      $\omega^{\rev}_i \not\vdash_\M \omega_{i+1}$, за някое четно $i < n$.
     \end{itemize}
   \end{itemize}
-  Думите притежаващи някое от тези свойства могат да се опишат като обединение на три регулярни езика и двата безконтекстни езика.
+  Думите притежаващи някое от тези свойства могат да се опишат като обединение на три регулярни езика и два безконтекстни езика.
 \end{hint}
 
 \begin{framed}
   \begin{thm}
-    За дадена азбука $\Sigma$, 
-    езикът 
+    За дадена азбука $\Sigma$, езикът 
     \[\texttt{All}_{\texttt{CFG}} = \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}\]
-    не е полуразрешим език.
+    не е полуразрешим.
   \end{thm}
 \end{framed}
 \begin{hint}
-  \marginpar{Тук използваме, че ако $\L(\M) = \emptyset$, то $\overline{\texttt{Accept}(\M)} = \Sigma^\star$.}
-  По дадена дума $\code{\M}$, можем ефективно да намерим $G$, за която
-  $\L(G)$ са точно невалидните изчисления на $\M$.
-  Тогава ако допуснем, че $L$ е полуразрешим език, то $L_{\texttt{Empty}}$ е полуразрешим, което е противоречие.
+  Тук ще използваме, че ако $\L(\M) = \emptyset$, то $\overline{\texttt{Accept}(\M)} = \hat{\Sigma}^\star$,
+  където $\hat{\Sigma} = \Gamma \cup Q \cup \{\sharp\}$.
+  По даден код на машината на Тюринг $\M$, можем ефективно да намерим код на безконтекстната граматика $G$, за която
+  $\L(G)$ са точно невалидните изчисления на $\M$, т.е. съществува тотална изчислима $f$, за която
+  \[f(\code{\M}) = \code{G}\text{ и }\L(G) = \overline{\texttt{Accept}(\M)}.\]
+  Тогава, ако допуснем, че $\texttt{All}_{\texttt{CFG}}$ е полуразрешим език, то $L_{\texttt{Empty}}$ е полуразрешим, защото
+  \[\code{\M} \in L_{\texttt{Empty}} \iff f(\code{\M}) \in \texttt{All}_{\texttt{CFG}}.\]
 \end{hint}
 
 \begin{cor}
@@ -212,46 +220,6 @@
 
 \newpage
 
-\begin{framed}
-  \begin{prop}
-    Езикът 
-    \[\texttt{Reg} = \{\code{G} \mid G\text{ е безконт. грам. и $\L(G)$ е регулярен}\}\]
-    не е разрешим.
-  \end{prop}
-\end{framed}
-\begin{hint}
-  Да фиксираме език $L_0$, който е безконтекстен, но не е регулярен.
-  За произволен език $L$, да разгледаме езика
-  \[\hat{L} \df L_0 \sharp \Sigma^\star\ \cup\ \Sigma^\star \sharp L.\]
-  Първо ще докажем, че: 
-  \begin{equation}
-    \label{eq:2}
-    L = \Sigma^\star\ \iff\ \hat{L}\text{ е регулярен}.
-  \end{equation}
-  Да отбележим, че можем ефективно да получим от безконтекстна граматика $G$ за $L$
-  безконтекстна граматика $\hat{G}$ за $\hat{L}$.
-  Нека да означим с $\texttt{conv}$ изчислимата функция, за която
-  $\texttt{conv}(\code{G}) = \code{\hat{G}}$.
-
-  \begin{itemize}
-  \item 
-    Ако $L = \Sigma^\star$, то $\hat{L}$ е регулярен, защото тогава
-    $\hat{L} = \Sigma^\star \sharp \Sigma^\star$ е очевидно регулярен.
-  \item
-    \marginpar{Ако $L$ е регулярен, то $L/_\beta \df \{\alpha \mid \alpha\beta \in L\}$ е регулярен}  
-    Ако $L \neq \Sigma^\star$, то нека да фиксираме дума $\omega \not\in L$.
-    Ако допуснем, че $\hat{L}$ е регулярен, то езикът
-    $\hat{L}/_{\sharp\omega} = L_0$ ще е регулярен, което е противоречие с избора на $L_0$.
-  \end{itemize}
-  
-  Нека да означим
-  \[\texttt{Full} \df \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}.\]
-  От (\ref{eq:2}) имаме, че 
-  \[\code{G} \in \texttt{Full}\ \iff\ \texttt{conv}(\code{G}) \in \texttt{Reg}.\]
-  
-  Ако допуснем, че $\texttt{Reg}$ е разрешим език, то тогава ще следва, че
-  $\texttt{Full}$ е разрешим език, за което вече знаем, че не е вярно.
-\end{hint}
 
 
 %%% Local Variables:

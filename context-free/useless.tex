@@ -58,25 +58,59 @@
   т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
 \end{lemma}
 \begin{hint}
-  Строим едновременно множествата
-  \begin{align*}
-    & V_n = \{A \in V \mid S \stackrel{\leq n}{\to}_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}\\
-    & \Sigma_n = \{a \in \Sigma \mid S \stackrel{\leq n}{\to}_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star\}.
-  \end{align*}
+  Нашата цел е да намерим множеството
+  \[\texttt{Reach} = \{X \in \Sigma \cup V \mid S \to^\star_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+  Новата граматика $G'$ ще има букви $\Sigma' = \Sigma \cap \texttt{Reach}$ и променливи $V' = V \cap \texttt{Reach}$,
+  като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$ и $\Sigma'$.
+  Лесно се доказава, че $\L(G) = \L(G')$.
+  Остава да намерим множеството $\texttt{Reach}$.
+
+  За целта ще започнем да строим мномножествата $\texttt{Reach[i]} \subseteq V \cup \Sigma$ по следния начин:
   \begin{itemize}
   \item
-    Ясно е, че $V_0 = \{S\}$ и $\Sigma_0 = \emptyset$.
+    $\texttt{Reach[0]} \df \{S\}$.
   \item
     \marginpar{Всяка итерация отнема време $\mathcal{O}(|G|)$. Следователно, можем да намерим $G'$ за време $\mathcal{O}(|G|^2)$.}
-    Нека имаме $V_n$ и $\Sigma_n$. Тогава:
-    \begin{align*}
-      & V_{n+1} = \{A \in V \mid (\exists B \in V_n)[ B \to_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star]\}\\
-      & \Sigma_{n+1} = \{a \in \Sigma \mid (\exists B \in V_n)[ B \to_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star]\}.
-    \end{align*}
+    Нека приемем, че сме построили $\texttt{Reach[i]}$ и да положим $V_i = V \cap \texttt{Reach[i]}$.
+    Тогава
+    \[\texttt{Reach[i+1]} \df \{ X \in V \cup \Sigma \mid (\exists A \in V_i)[ A \to_G \alpha X \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}.\]
   \item
-    Спираме, когато намерим първото $n$, за което $V_n = V_{n+1}$ и $\Sigma_n = \Sigma_{n+1}$.
-    Тогава $V' = V_n$ и $\Sigma' = \Sigma_n$.
+    Докажете, че за всяко $i$,
+    \[\texttt{Reach[i]} = \{X \in \Sigma \cup V \mid S \stackrel{\leq i}{\to}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+  \item
+    \marginpar{Защо сме сигурни, че ще достигнем такава стъпка?}
+    Спираме да строим тези множества, когато достигнем до стъпка $n$, за която
+    \[\texttt{Reach[n]} = \texttt{Reach[n+1]}.\]
+    Съобразете, че за това $n$ е изпълнено, че
+    \[\texttt{Reach[n]} = \{X \in \Sigma \cup V \mid S \to^\star_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+  % \item
+  %   Новата граматика $G'$ ще има букви $\Sigma' = \Sigma \cap \texttt{Reach[n]}$ и променливи $V' = V \cap \texttt{Reach[n]}$,
+  %   като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$ и $\Sigma'$.
+  %   Ясно е, че $\L(G') \subseteq \L(G)$.
+  % \item
+  %   Докажте, че $\L(G) \subseteq \L(G')$.
   \end{itemize}
+  
+  
+  
+  % \begin{align*}
+  %   & V_n = \{A \in V \mid S \stackrel{\leq n}{\to}_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}\\
+  %   & \Sigma_n = \{a \in \Sigma \mid S \stackrel{\leq n}{\to}_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star\}.
+  % \end{align*}
+  % \begin{itemize}
+  % \item
+  %   Ясно е, че $V_0 = \{S\}$ и $\Sigma_0 = \emptyset$.
+  % \item
+  %   \marginpar{Всяка итерация отнема време $\mathcal{O}(|G|)$. Следователно, можем да намерим $G'$ за време $\mathcal{O}(|G|^2)$.}
+  %   Нека имаме $V_n$ и $\Sigma_n$. Тогава:
+  %   \begin{align*}
+  %     & V_{n+1} = \{A \in V \mid (\exists B \in V_n)[ B \to_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star]\}\\
+  %     & \Sigma_{n+1} = \{a \in \Sigma \mid (\exists B \in V_n)[ B \to_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star]\}.
+  %   \end{align*}
+  % \item
+  %   Спираме, когато намерим първото $n$, за което $V_n = V_{n+1}$ и $\Sigma_n = \Sigma_{n+1}$.
+  %   Тогава $V' = V_n$ и $\Sigma' = \Sigma_n$.
+  % \end{itemize}
 \end{hint}
 
 \begin{thm}

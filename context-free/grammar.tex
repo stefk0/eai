@@ -141,7 +141,7 @@
   \item
     $S \rightarrow^\star_G a^nS$,
   \item
-    $B \rightarrow^\star_G a^nBc^n$,
+    $B \rightarrow^\star_G b^nBc^n$,
   \item
     $B \rightarrow^\star_G b^nB$.
   \end{itemize}
@@ -157,27 +157,27 @@
   Имаме два случая:
   \begin{itemize}
   \item 
-    $k \leq m$, т.е. $m = k+l$ и $m+n = k+l+n$.
+    $k \leq m$, т.е. $m = k+\ell$ и $m+n = k+\ell+n$.
     Тогава имаме изводите:
-    \[S \rightarrow^\star a^kSc^k,\ S \rightarrow^\star a^lS,\ S \rightarrow B,\ B \rightarrow^\star b^nB,\ B \rightarrow \varepsilon.\]
+    \[S \rightarrow^\star a^kSc^k,\ S \rightarrow^\star a^\ell S,\ S \rightarrow B,\ B \rightarrow^\star b^nB,\ B \rightarrow \varepsilon.\]
     Обединявайки всичко това, получаваме:
     \[S \rightarrow^\star a^mb^nc^k.\]
   \item
-    $k > m$, т.е. $k = m+l$, за някое $l > 0$, и $m+n = k+r = m+l+r$, за някое $r$.
+    $k > m$, т.е. $k = m+\ell$, за някое $\ell > 0$, и $m+n = k+r = m+\ell+r$, за някое $r$.
     Тогава имаме изводите:
-    \[S \rightarrow^\star a^mSc^m,\ S\rightarrow B,\ B\rightarrow^\star b^lBc^l,\ B\rightarrow b^rB,\ B\rightarrow\varepsilon,\]
+    \[S \rightarrow^\star a^mSc^m,\ S\rightarrow B,\ B\rightarrow^\star b^\ell Bc^\ell,\ B\rightarrow b^rB,\ B\rightarrow\varepsilon,\]
     и отново получаваме $S \rightarrow^\star a^mb^nc^k$.
   \end{itemize}
   Така доказахме, че $\omega \in \L(G)$.
   
   Сега ще докажем, че $\L(G) \subseteq L$.
   С индукция по дължината на извода $l$,
-  ще докажем, че ако $S \stackrel{l}{\rightarrow}\omega$, то $\omega \in M$, където
+  ще докажем, че ако $S \stackrel{\ell}{\rightarrow}\omega$, то $\omega \in M$, където
   \[M = \{a^nSc^k\mid n\geq k\}\cup\{a^nb^mBc^k\mid n+m\geq k\}\cup\{a^nb^mc^k\mid n+m\geq k\}.\]
   
-  Ако $l = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$ и $S \in M$.
+  Ако $\ell = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$ и $S \in M$.
 
-  Нека $l > 0$ и $S \stackrel{l-1}{\rightarrow} \alpha \rightarrow \omega$.
+  Нека $\ell > 0$ и $S \stackrel{\ell-1}{\rightarrow} \alpha \rightarrow \omega$.
   От {\bf И.П.} имаме, че $\alpha \in M$. Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
   Разглеждаме всички варианти за думата $\alpha \in M$ и за някое правило в граматиката $G$
   за да докажем, че  $\omega \in M$.
@@ -201,7 +201,7 @@
 
 \begin{problem}
   Докажете, че езикът 
-  \[L = \{a^nb^mc^kd^l \mid n+k = m + l\}\]
+  \[L = \{a^nb^mc^kd^\ell \mid n+k = m + \ell\}\]
   е безконтекстен.
 \end{problem}
 \begin{hint}
@@ -210,7 +210,7 @@
   където правилата на $G_1$ са
   \[S_1 \to AC,\quad  A \to aAb\ |\ \varepsilon,\quad C \to bCc\ |\ \varepsilon.\]
   Нека $G_2$ е безконтекстна граматика за езика 
-  \[L_2 = \{b^mc^kd^l \mid k = m+l\},\]
+  \[L_2 = \{b^mc^kd^\ell \mid k = m+\ell\},\]
   където правилата на $G_2$ са
   \[S_2 \to BD,\quad B \to bBc\ |\ \varepsilon,\quad D \to cCd\ |\ \varepsilon.\]
   Тогава граматиката $G$ за $L$ 
@@ -220,7 +220,7 @@
 
 \begin{problem}
   Докажете, че езикът 
-  \[L = \{a^nb^mc^kd^l \mid n+k \geq m + l\}\]
+  \[L = \{a^nb^mc^kd^\ell \mid n+k \geq m + \ell\}\]
   е безконтекстен.
 \end{problem}
 
@@ -285,7 +285,6 @@
   \[S \to AA\ |\ B,\ A \to B\ |\ bb,\ B \to aa\ |\ aB.\]
   Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
-
 
 \begin{prop}
   \label{pr:grammar:add}

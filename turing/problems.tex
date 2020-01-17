@@ -4,6 +4,10 @@
   Вярно ли е, че следните езици са разрешими?
   \begin{enumerate}[a)]
   \item
+    $\{\code{\A}\cdot \omega \mid \A \text{ е ДКА и } \omega \in \L(\A)\}$;
+  \item
+    $\{\code{\A} \mid \A \text{ е ДКА и } \L(\A)\text{ е безкраен език}\}$;
+  \item
     $\{\code{\A} \mid \A \text{ е ДКА и }\L(\A) = \{0,1\}^\star\}$;
   \item 
     $\{\code{\A} \mid \A \text{ е ДКА и }\L(\A)\text{ съдържа поне една дума с равен брой нули и единици}\}$;
@@ -13,12 +17,20 @@
     $\{\code{\A} \mid \A \text{ е ДКА и }\L(\A)\text{ не съдържа дума с нечетен брой единици}\}$;
   \item
     $\{\code{\A}\cdot\code{\B} \mid \A\text{ и }\B \text{ са ДКА и }\L(\A) \subseteq \L(\B)\}$;
+  \item
+    $\{\code{\A}\cdot\code{\B} \mid \A\text{ и }\B \text{ са ДКА и }\L(\A) = \L(\B)\}$;
   \end{enumerate}
 \end{problem}
 
 \begin{problem}
   Вярно ли е, че следните езици са разрешими?
   \begin{enumerate}[a)]
+  \item
+    $\{\code{G} \cdot \omega \mid G \text{ е безконтекстна граматика и } \omega \in \L(G)\}$;
+  \item
+    $\{\code{G} \mid G \text{ е безконтекстна граматика и } \L(G) = \emptyset\}$;
+  \item 
+    $\{\code{G} \mid G \text{ е безконтекстна граматика над }\{0,1\}^\star\text{ и }\L(1^\star) \subseteq \L(G)\}$;
   \item 
     $\{\code{G} \mid G \text{ е безконтекстна граматика над }\{0,1\}^\star\text{ и }\L(1^\star) \subseteq \L(G)\}$;
   \item 
@@ -30,6 +42,21 @@
   \end{enumerate}
 \end{problem}
 
+
+\begin{problem}
+  Докажете, че езикът
+  \[L = \{\code{\M}\sharp\omega \mid \M\text{ прави движение наляво при работата си върху вход }\omega\}\]
+  е разрешим.
+\end{problem}
+\begin{hint}
+  Нужно е да симулирате работата на $\M$ върху $\omega$ само за $|\omega| + |Q^\M| + 1$ на брой стъпки.
+\end{hint}
+
+\begin{problem}
+  Докажете, че езикът
+  \[L = \{\code{\M}\sharp\omega \mid \M\text{ прави опит за движение наляво от най-лявата клетка при работата си върху вход }\omega\}\]
+  е разрешим.
+\end{problem}
 
 
 %%% Local Variables:

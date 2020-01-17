@@ -146,7 +146,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (1) edge [bend left=15] node [above] {$a$}    (2)
         (2) edge [loop above]   node [above] {$a,b$}  (2);
       \end{tikzpicture}
-      \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \geq 2\}$}
+      \caption{$\{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \geq 2\}$}
     \end{subfigure}
     \begin{subfigure}[b]{0.45\textwidth}
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
@@ -182,7 +182,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
         (2) edge [loop above]   node   [above] {$b$}    (2)
         (2) edge [bend left=30] node   [below] {$a$}    (0);
       \end{tikzpicture}
-      \caption{$\{\omega \in \{a,b\}^\star \mid N_a(\omega) \equiv 0\ (\bmod\ 3)\}$}
+      \caption{$\{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \equiv 0\ (\bmod\ 3)\}$}
     \end{subfigure}
   \end{figure}    
 \end{example}
@@ -422,19 +422,19 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{figure}
 \end{framed}
   Докажете с индукция по дължината на думата $\omega$, че:
-  \marginpar{Озн. $N_a(\omega)$ - броят на срещанията на буквата $a$ в думата $\omega$}
+  \marginpar{$\card{\omega}{a} \df $ броят на срещанията на буквата $a$ в думата $\omega$}
   \begin{enumerate}[a)]
   \item 
-    $\delta^\star(q_{00}, \omega) = q_{00} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k\ \&\ N_b(\omega) = 2n]$;
+    $\delta^\star(q_{00}, \omega) = q_{00} \implies (\exists k,n\in\Nat)[\card{\omega}{a} = 2k\ \&\ \card{\omega}{b} = 2n]$;
   \item 
-    $\delta^\star(q_{00}, \omega) = q_{01} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k\ \&\ N_b(\omega) = 2n+1]$;
+    $\delta^\star(q_{00}, \omega) = q_{01} \implies (\exists k,n\in\Nat)[\card{\omega}{a} = 2k\ \&\ \card{\omega}{b} = 2n+1]$;
   \item 
-    $\delta^\star(q_{00}, \omega) = q_{10} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k+1\ \&\ N_b(\omega) = 2n]$;
+    $\delta^\star(q_{00}, \omega) = q_{10} \implies (\exists k,n\in\Nat)[\card{\omega}{a} = 2k+1\ \&\ \card{\omega}{b} = 2n]$;
   \item 
-    $\delta^\star(q_{00}, \omega) = q_{11} \implies (\exists k,n\in\Nat)[N_a(\omega) = 2k+1\ \&\ N_b(\omega) = 2n+1]$;
+    $\delta^\star(q_{00}, \omega) = q_{11} \implies (\exists k,n\in\Nat)[\card{\omega}{a} = 2k+1\ \&\ \card{\omega}{b} = 2n+1]$;
   \end{enumerate}
   Оттук направете извода, че за произволна дума $\omega$,
-  \[(\forall i<2)(\forall j<2)[\ \delta^\star(q_{00},\omega) = q_{ij} \iff N_a(\omega) \equiv i \bmod 2\ \&\ N_b(\omega) \equiv j \bmod 2\ ].\]
+  \[(\forall i<2)(\forall j<2)[\ \delta^\star(q_{00},\omega) = q_{ij} \iff \card{\omega}{a} \equiv i \bmod 2\ \&\ \card{\omega}{b} \equiv j \bmod 2\ ].\]
 \end{hint}
 
 

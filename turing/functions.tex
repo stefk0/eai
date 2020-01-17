@@ -1,8 +1,9 @@
 \section{Изчислими функции}
 
+\marginpar{Възможно е да се дефинира и за двулентова машина на Тюринг, като $f(\alpha)$ ще бъде върху втората лента.}
 Една {\em тотална} функция $f:\Sigma^\star \to \Sigma^\star$ се нарича изчислима с машина на Тюринг $\M$, ако 
 за всяка дума $\alpha \in \Sigma^\star$,
-\[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\varepsilon, \qaccept, f(\alpha)).\]
+\[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\varepsilon, \qaccept, f(\alpha)\blank^k), \text{ за някое }k \in \Nat.\]
 Това означава, че машината на Тюринг $\M$ винаги завършва. Лесно се съобразява, че езикът
 \[\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}\]
 е разрешим.
@@ -37,56 +38,57 @@
 % \end{itemize}
 
 \begin{example}
+  \marginpar{При двулентова машина на Тюринг тази задача е много по-лесна и сложността ще бъде $\mathcal{O}(n)$ вместо $\mathcal{O}(n^2)$.}
   Да разгледаме функцията $f:\{1\}^\star \to \{1\}^\star$
   дефинирана като
-  \[|f(\alpha)| = 2|\alpha|.\]
+  \[f(1^n) = 1^{2n}.\]
   Да видим защо $f$ е изчислима с машина на Тюринг.
-  
-\begin{framed}
-\begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
-      \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.7]
-      
-      \node[state,initial below]    (1) {$q_0$};
-      \node[state]            (2) [right of=1]{$q_1$};
-      \node[state]            (3) [right of=2]{$q_2$};
-      \node[state]            (4) [right of=3]{$q_3$};
-      \node[state]            (5) [right of=4]{$q_4$};
-      \node[state]            (6) [right of=5]{$q_5$};
-      \node[state]            (7) [right of=6]{$q_6$};
-      \node[state]            (8) [right of=7]{$q_7$};
-      \node[state]            (9) [right of=8]{$q_8$};
-      \node[state]            (10) [right of=9]{$q_9$};
-      \node[state]            (11) [below of=8]{$q_{10}$};
-      \node[state,accepting]  (12) [below of=11]{$q_{11}$};
-      
-      \begin{scope}[every node/.style={scale=.8}]
-      \path
-      (1) edge [bend left=15] node [above] {$1;\goleft$} (2)
-      (1) edge [bend right=30] node [above] {$\blank;\stay$} (12)
-      (2) edge [bend left=15] node [above] {$1;\goleft$} (3)
-      (2) edge [bend right=15] node [below] {$\blank;\goleft$} (3)
-      (3) edge [bend left=15] node [above] {$\blank/1;\goleft$} (4)
-      (4) edge [bend left=15] node [above] {$\blank/1;\goright$} (5)
-      (5) edge [loop below] node [below] {$1;\goright$} (5)
-      (5) edge [bend left=15] node [above] {$\blank;\goright$} (6)
-      (6) edge [loop below] node [below] {$1;\goright$} (6)
-      (6) edge [bend left=15] node [above] {$\blank;\goleft$} (7)
-      (7) edge [bend left=15] node [above] {$1/\blank;\goleft$} (8)
-      (8) edge [bend left=15] node [above] {$1;\goleft$} (9)
-      (9) edge [loop below] node [below] {$1;\goleft$} (9)
-      (9) edge [bend right=15] node [below] {$\blank;\goleft$} (10)
-      (10) edge [loop below] node [below] {$1;\goleft$} (10)
-      (10) edge [out=140,in=60, above] node [below] {$\blank;\goright$} (2)
-      (8) edge [] node [right] {$\blank;\goleft$} (11)
-      (11) edge [loop left] node [left] {$1;\goleft$} (11)
-      (11) edge [] node [right] {$\blank;\goright$} (12);
-      \end{scope}
-    \end{tikzpicture}
-  \end{center}
-\end{figure}
-\end{framed}
+  \begin{framed}
+    \begin{figure}[H]
+      \begin{center}
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt]
+          \tikzstyle{every state}=[circle,minimum size=10pt,auto,scale=.7]
+          
+          \node[state,initial below]    (1) {$q_0$};
+          \node[state]            (2) [right of=1]{$q_1$};
+          \node[state]            (3) [right of=2]{$q_2$};
+          \node[state]            (4) [right of=3]{$q_3$};
+          \node[state]            (5) [right of=4]{$q_4$};
+          \node[state]            (6) [right of=5]{$q_5$};
+          \node[state]            (7) [right of=6]{$q_6$};
+          \node[state]            (8) [right of=7]{$q_7$};
+          \node[state]            (9) [right of=8]{$q_8$};
+          \node[state]            (10) [right of=9]{$q_9$};
+          \node[state]            (11) [below of=8]{$q_{10}$};
+          \node[state,accepting]  (12) [below of=11]{$q_{11}$};
+          
+          \begin{scope}[every node/.style={scale=.8}]
+            \path
+            (1) edge [bend left=15] node [above] {$1;\goleft$} (2)
+            (1) edge [bend right=30] node [above] {$\blank;\stay$} (12)
+            (2) edge [bend left=15] node [above] {$1;\goleft$} (3)
+            (2) edge [bend right=15] node [below] {$\blank;\goleft$} (3)
+            (3) edge [bend left=15] node [above] {$\blank/1;\goleft$} (4)
+            (4) edge [bend left=15] node [above] {$\blank/1;\goright$} (5)
+            (5) edge [loop below] node [below] {$1;\goright$} (5)
+            (5) edge [bend left=15] node [above] {$\blank;\goright$} (6)
+            (6) edge [loop below] node [below] {$1;\goright$} (6)
+            (6) edge [bend left=15] node [above] {$\blank;\goleft$} (7)
+            (7) edge [bend left=15] node [above] {$1/\blank;\goleft$} (8)
+            (8) edge [bend left=15] node [above] {$1;\goleft$} (9)
+            (9) edge [loop below] node [below] {$1;\goleft$} (9)
+            (9) edge [bend right=15] node [below] {$\blank;\goleft$} (10)
+            (10) edge [loop below] node [below] {$1;\goleft$} (10)
+            (10) edge [out=140,in=60, above] node [below] {$\blank;\goright$} (2)
+            (8) edge [] node [right] {$\blank;\goleft$} (11)
+            (11) edge [loop left] node [left] {$1;\goleft$} (11)
+            (11) edge [] node [right] {$\blank;\goright$} (12);
+          \end{scope}
+        \end{tikzpicture}
+        \caption{Машина на Тюринг за $f(1^n) = 1^{2n}$.}
+      \end{center}
+    \end{figure}
+  \end{framed}
 
 \begin{align*}
   (q_0, \underline{1}1) & \vdash (q_1, \underline{\blank}11) \vdash  (q_2, \underline{\blank} \blank 11) \vdash  (q_3, \underline{\blank} 1 \blank 11)\\
@@ -96,8 +98,8 @@
 
 \end{example}
 
-
 \begin{example}
+  \marginpar{Това пак става много по-лесно с двулентова машина на Тюринг и сложността пак ще бъде $\mathcal{O}(n)$ вместо $\mathcal{O}(n^2)$.}
   Да видим защо тоталната функция $f:\{a,b\}^\star \to \{a,b\}^\star$, дефинирана като
   $f(\alpha) = \alpha\cdot\alpha$ е изчислима с машина на Тюринг.
   
@@ -143,6 +145,7 @@
           (6) edge [bend left=15] node [above] {$\blank;\goright$} (7);
         \end{scope}
       \end{tikzpicture}
+      \caption{Машина на Тюринг за $f(\alpha) = \alpha\cdot \alpha$.}
     \end{center}
   \end{figure}
 \end{framed}
@@ -152,11 +155,11 @@
 След това заменяме $A$ с $a$ и $B$ с $b$. Така най-накравя полуваме върху лентата думата $abab$.
 
 \begin{align*}
-  (q_0, \underline{a}b) & \vdash (q_1, x\underline{b}) \vdash (q_1,xb\underline{\blank}) \vdash (q_2, x\underline{b}A) \vdash (q_2, \underline{x}bA)\\
-                        & \vdash (q_0, a\underline{b}A) \vdash (q_3, ax\underline{A}) \vdash (q_3, axA\underline{\blank}) \vdash (q_4, ax\underline{A}B)\\
-                        & \vdash (q_4, a\underline{x}AB) \vdash (q_0, ab\underline{A}B) \vdash (q_0,aba\underline{B}) \vdash (q_0, abab\underline{\blank})\\
-                        & \vdash (q_5, aba\underline{b}) \vdash (q_5, ab\underline{a}b) \vdash (q_5, a\underline{b}ab) \vdash (q_5, \underline{a}bab)\\
-                        & \vdash (q_5, \underline{\blank}abab) \vdash (q_6, \underline{a}bab).
+  (q_0, \underline{a}b) & \vdash_\M (q_1, x\underline{b}) \vdash_\M (q_1,xb\underline{\blank}) \vdash_\M (q_2, x\underline{b}A) \vdash_\M (q_2, \underline{x}bA)\\
+                        & \vdash_\M (q_0, a\underline{b}A) \vdash_\M (q_3, ax\underline{A}) \vdash_\M (q_3, axA\underline{\blank}) \vdash_\M (q_4, ax\underline{A}B)\\
+                        & \vdash_\M (q_4, a\underline{x}AB) \vdash_\M (q_0, ab\underline{A}B) \vdash_\M (q_0,aba\underline{B}) \vdash_\M (q_0, abab\underline{\blank})\\
+                        & \vdash_\M (q_5, aba\underline{b}) \vdash_\M (q_5, ab\underline{a}b) \vdash_\M (q_5, a\underline{b}ab) \vdash_\M (q_5, \underline{a}bab)\\
+                        & \vdash_\M (q_5, \underline{\blank}abab) \vdash_\M (q_6, \underline{a}bab).
 \end{align*}
 
 Не можем директно да започнем да копираме $\alpha$, защото така няма да знаем къде е края на първото копие на $\alpha$.
@@ -216,10 +219,10 @@
 Да проследим изчислението на $\M$ върху вход $01011$.
 
 \begin{align*}
-  (q_0, 0\underline{1}011) & \vdash (q_0,\underline{1}011) \vdash (q_1, 1\underline{0}11) \vdash (q_1, 10\underline{1}1)\\
-                           & \vdash (q_1, 101\underline{1}) \vdash (q_1, 1011\underline{\blank}) \vdash (q_2, 101\underline{1})\\
-                           & \vdash (q_2, 10\underline{1}0) \vdash (q_2, 1\underline{0}00) \vdash (q_3, \underline{1}100)\\
-                           & \vdash (q_3, \underline{\blank}1100) \vdash (q_4, \underline{1}100).
+  (q_0, 0\underline{1}011) & \vdash_\M (q_0,\underline{1}011) \vdash_\M (q_1, 1\underline{0}11) \vdash_\M (q_1, 10\underline{1}1)\\
+                           & \vdash_\M (q_1, 101\underline{1}) \vdash_\M (q_1, 1011\underline{\blank}) \vdash_\M (q_2, 101\underline{1})\\
+                           & \vdash_\M (q_2, 10\underline{1}0) \vdash_\M (q_2, 1\underline{0}00) \vdash_\M (q_3, \underline{1}100)\\
+                           & \vdash_\M (q_3, \underline{\blank}1100) \vdash_\M (q_4, \underline{1}100).
 \end{align*}
 \end{example}
 
