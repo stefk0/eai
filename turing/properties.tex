@@ -1,18 +1,18 @@
 \section{Основни свойства}
 
-\begin{prop}
+\begin{proposition}
   Ако $L$ е разрешим език над азбуката $\Sigma$.
   Тогава $\Sigma^\star \setminus L$ също е разрешим език.
-\end{prop}
+\end{proposition}
 \begin{hint}
   Нека $L = \L(\M)$, където $\M$ е тотална машина на Тюринг.
   Нека $\M'$ е същата като $\M$, само със сменени $\qaccept$ и $\qreject$ състояния.
   Тогава $\M'$ също е тотална машина на Тюринг и $\ov{L} = \L(\M')$.
 \end{hint}
 
-\begin{prop}
+\begin{proposition}
   Ако $L_1$ и $L_2$ са разрешими езици, то $L_1 \cup L_2$ е разрешим език.
-\end{prop}
+\end{proposition}
 \begin{hint}
   Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$.
   Строим нова машина на Тюринг $\M$, която при вход думата $\alpha$
@@ -27,13 +27,13 @@
   Всяко крайно обединение на разрешими езици е разрешим език.
 \end{cor}
 
-\begin{prop}
+\begin{proposition}
   Ако $L_1$ и $L_2$ са полуразрешими езици, то $L_1 \cup L_2$ е полуразрешим език.
-\end{prop}
+\end{proposition}
 
-\begin{prop}
+\begin{proposition}
   Ако $L_1$ и $L_2$ са разрешими езици, то $L_1 \cap L_2$ е разрешим език.
-\end{prop}
+\end{proposition}
 \begin{hint}
   Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$.
   Строим нова машина на Тюринг $\M$, която при вход думата $\alpha$

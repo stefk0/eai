@@ -30,7 +30,7 @@
   Тъй като $\abs{Q} = p$, а по този път участват $p+1$ състояния $q_0,q_1,\dots,q_p$,
   то съществуват числа $i, j$, за които $0\leq i < j\leq p$ и $q_i = q_j$.
   Нека разделим думата $\alpha$ на три части по следния начин:
-  \[x = a_1\cdots a_i,\quad y = a_{i+1}\cdots a_j,\quad z = a_{j+1}\cdots a_k.\]
+  \[\underbrace{a_1\cdots a_i}_{x}\quad \underbrace{a_{i+1}\cdots a_j}_{y}\quad \underbrace{a_{j+1}\cdots a_k}_{z}.\]
   Ясно е, че $\abs{y} \geq 1$ и $\abs{xy} = j \leq p$.
   Да разгледаме случая за $i = 0$.
   Думата $xy^0z = xz \in L$, защото имаме следното изчисление:
@@ -63,8 +63,10 @@
 \begin{proof}
   Да означим с $P_{\text{reg}}(L)$ следната формула:
   \begin{align*}
-    (\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[ & \alpha = xyz \land \abs{y} \geq 1 \land \abs{xy} \leq p\\
-    & \land\ (\forall i\in\Nat)[xy^iz \in L]]].
+    (\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\ & \alpha = xyz\ \& \\
+                                                                                                              & \abs{y} \geq 1\ \&\\
+                                                                                                              & \abs{xy} \leq p\ \&\\
+                                                                                                              & (\forall i\in\Nat)[xy^iz \in L]]].
   \end{align*}
   Така условието на \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
   \begin{center}
@@ -77,20 +79,23 @@
   \begin{center}
     {\em ,,Ако $P_{\text{reg}}(L)$ не е изпълнено, то $L$ не е регулярен език.''}
   \end{center}
-
   \marginpar{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
-
   Отрицанието на $P_{\text{reg}}(L)$ преставлява формулата
   \begin{align*}
-    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \wedge\ & (\forall x,y,z\in\Sigma^\star)[\alpha \neq xyz \vee\ \abs{y} \not\geq 1 \vee\ \abs{xy} \not\leq p\\
-    & \vee\ (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
+    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \&\ (\forall x,y,z\in\Sigma^\star)[\ & \alpha \neq xyz\ \vee\\
+                                                                                                         & \abs{y} \not\geq 1\ \vee\\
+                                                                                                         & \abs{xy} \not\leq p\ \vee\\
+                                                                                                         & (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
   \end{align*}
-  
   Горната формула е еквивалентна на:
-  \marginpar{Използваме, че $\neg P \vee \neg Q \vee R \equiv (P \wedge Q) \to R$}
+  \marginpar{Използваме, че
+    \begin{align*}
+      \neg P \vee \neg Q \vee R & \equiv \neg(P\ \&\ Q) \vee R\\
+                                & \equiv (P \wedge Q) \to R
+    \end{align*}}
   \begin{align*}
-    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \wedge\ & (\forall x,y,z\in\Sigma^\star)[\ (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p)\\
-    & \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
+    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \&\ (\forall x,y,z\in\Sigma^\star)[\ & (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p)\\
+                                                                                                         & \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
   \end{align*}
 
   Това означава, че ако

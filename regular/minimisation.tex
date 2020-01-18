@@ -33,12 +33,12 @@
 \end{problem}
 
 \begin{framed}
-  \begin{prop}
+  \begin{proposition}
     \label{pr:equal-number}
     Нека $\A = \FA$ е детерминиран краен автомат {\em без недостижими от} $\qstart$ състояния.
     Тогава
     \[\abs{Q/_{\equiv_\A}} = \abs{\Sigma^\star/_{\approx_{\L(\A)}}}.\]  
-  \end{prop}  
+  \end{proposition}  
 \end{framed}
 \begin{proof}
   Нека $L = \L(\A)$ и да разгледаме $h:\Sigma^\star/_{\approx_L} \to Q/_{\equiv_\A}$, където
@@ -114,11 +114,11 @@
 \end{hint}
 
 
-\begin{prop}
+\begin{proposition}
   \label{pr:minimisation-delta-1}
   За всяко състояние $q \in Q$ и дума $\alpha$ е изпълнено, че
   \[\delta^\star_1([q]_{\equiv_\A}, \alpha) = [\delta^\star(q,\alpha)]_{\equiv_\A}.\]
-\end{prop}
+\end{proposition}
 \begin{proof}
   Индукция по дължината на думата $\alpha$.
   \begin{itemize}
@@ -192,7 +192,7 @@
 Вече имаме базовия случай за $n=0$.
 Да видим сега как можем да намерим $\equiv^{n+1}_\A$ при положение, че вече сме намерили $\equiv^n_\A$.
 \begin{framed}
-  \begin{prop}
+  \begin{proposition}
     \label{pr:one-letter-test}
     За всеки две състояния $p,q \in Q$, и всяко естествено число $n$, $p \equiv^{n+1}_\A q$ точно тогава, когато
     \begin{enumerate}[a)]
@@ -201,7 +201,7 @@
     \item
       $(\forall a \in \Sigma)[\delta(q,a) \equiv^n_\A \delta(p,a)]$.
     \end{enumerate}
-  \end{prop}  
+  \end{proposition}  
 \end{framed}
 \begin{hint}
   \marginpar{\cite[стр. 99]{papadimitriou}}

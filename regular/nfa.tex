@@ -39,10 +39,10 @@
   \[\L(\N) \df \{\omega \in \Sigma^\star \mid \Delta^\star(\{\qstart\},\omega) \cap F \neq \emptyset \}.\]
 \end{framed}
 
-\begin{prop}
+\begin{proposition}
   За всеки две думи $\alpha,\beta \in \Sigma^\star$ и всяко $R \subseteq Q$,
   \[ \Delta^\star(R, \alpha\beta) = \Delta^\star( \Delta^\star(R,\alpha),\beta).\]
-\end{prop}
+\end{proposition}
 \begin{proof}
   \marginpar{Да напомним, че $\bigcup\{\{0,1\}, \{1,2,3\}\} = \{0,1\} \cup \{1,2,3\}$.}
   Отново индукция по дължината на $\beta$.
@@ -207,59 +207,6 @@
   също е автоматен.
 \end{problem}
 
-\begin{example}
-  
-  \begin{figure}[H]
-    \label{fig:nfa:exp}
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
-      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-      \node[initial below,state]              (0) {$q_0$};
-      \node[state]                [right of=0] (1) {$q_1$};
-      \node[state]                [right of=1] (2) {$q_2$};
-      \node[state]                [right of=2] (3) {$q_3$};
-      \coordinate[right of=3] (4);
-      \coordinate[right of=4] (5);
-      \node[state,accepting]      [right of=5] (6) {$q_n$};
-      \path
-      (0) edge [loop above] node [above] {$a,b$} (0)
-      (0) edge [bend left=15] node  [above] {$a$} (1)
-      (1) edge [bend left=15] node  [above] {$a,b$} (2)
-      (2) edge [bend left=15] node  [above] {$a,b$} (3);
-
-      \draw [dashed,->,shorten >=0pt] (3) to[bend left=15] node[above] {$a,b$} (4);
-      \draw [dashed,->,shorten >=0pt] (5) to[bend left=15] node[above] {$a,b$} (6);
-    \end{tikzpicture}
-    \caption{автомат $\N$}
-  \end{figure}
-  
-  Лесно се съобразява, че за $n > 0$, недетерминирният краен автомат $\N$ на \Figure{nfa:exp} с $n+1$ на брой състояния разпознава езика
-  \[L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta \cdot a \cdot \gamma\ \&\ |\gamma| = n-1\}.\]
-  Нека да съобразим, че не е възможно да съществува краен детерминиран автомат $\A = \FA$ разпознаващ същия език $L$ с по-малко от $2^n$ състояния.
-
-  Да допуснем, че $|Q| < 2^n$. От принципа на Дирихле имаме, че съществуват две различни думи $\alpha$ и $\beta$ с дължина $n$,
-  за които съществува $q \in Q$ и
-  \marginpar{Да напомним, че броят на всички думи с дължина $n$ над азбука с $k$ букви е $k^n$. В нашия случай, $k = 2$.}
-  \[\delta^\star(\qstart,\alpha) = q = \delta^\star(\qstart,\beta).\]
-
-  Нека първата разлика в тези две думи е на позиция $i < n$.
-  \begin{itemize}
-  \item
-    Ако $i = 0$, то нека без ограничение на общността да имаме, че $\alpha[0] = a$ и $\beta[0] = b$.
-    Това означава, че $\alpha \in L$, но $\beta \not\in L$.
-    Следователно състоянието $q$ е едновременно финално и нефинално. Това е противоречие.
-  \item
-    Ако $i > 0$, то нека без ограничение на общността да имаме, че $\alpha[i] = a$ и $\beta[i] = b$.
-    Да разгледаме следните думи:
-    \begin{align*}
-      & \alpha_0 = \alpha \cdot a^{i}\\
-      & \beta_0 = \beta \cdot a^{i}.
-    \end{align*}
-    Така отново получаваме, че $\alpha_0 \in L$, но $\beta_0 \not\in L$.
-    И в този случай получаваме противоречие, защото
-    \[\delta^\star(\qstart,\alpha_0) = q = \delta^\star(\qstart,\beta_0)\]
-    и състоянието $q$ трябва да е едновременно финално и нефинално.
-  \end{itemize}  
-\end{example}
 
 
 \begin{lemma}
@@ -392,20 +339,20 @@
   Това означава, че можем да разбием редицата от състояния $(q_i)^n_{i=0}$ на две непразни подредици:
   \begin{itemize}
   \item
-    $(q_{i})^{l}_{i=0}$ - тези които са от $Q_1$,
+    $(q_{i})^{\ell}_{i=0}$ - тези които са от $Q_1$,
   \item
-    $(q_i)^{n}_{i=l+1}$ - тези, които са от $Q_2$.
+    $(q_i)^{n}_{i=\ell+1}$ - тези, които са от $Q_2$.
   \end{itemize}
-  Нека $\alpha = a_0a_1\cdots a_{l-1}$ и $\beta = a_la_{l+1}\cdots a_{n-1}$.
+  Нека $\alpha = a_0a_1\cdots a_{\ell-1}$ и $\beta = a_{\ell}a_{\ell+1}\cdots a_{n-1}$.
   Ясно е, че:
-  \[(q_0,\alpha\beta) \vdash^\star_\N (q_{l}, \underbrace{a_{l}a_{l+1}\cdots a_{n-1}}_{\beta}) \vdash_\N (q_{l+1},a_{l+1}\cdots a_{n-1}) \vdash^\star_\N (q_n,\varepsilon).\]
-  От конструкцията на $\N$ следва, че редицата от състояния $(q_i)^{l}_{i=0}$ описва приемащо изчисление на $\A_1$ върху $\alpha$.
+  \[(q_0,\alpha\beta) \vdash^\star_\N (q_{\ell}, \underbrace{a_{\ell}a_{\ell+1}\cdots a_{n-1}}_{\beta}) \vdash_\N (q_{\ell+1},a_{\ell+1}\cdots a_{n-1}) \vdash^\star_\N (q_n,\varepsilon).\]
+  От конструкцията на $\N$ следва, че редицата от състояния $(q_i)^{\ell}_{i=0}$ описва приемащо изчисление на $\A_1$ върху $\alpha$.
   \marginpar{Това е единственият начин да направим преход от състояние на $Q_1$ към състояние на $Q_2$.}
-  Също така от конструкцията следва, че щом $q_{l+1} \in \Delta(q_l,a_l)$, то $q_l \in F_1$ и $\delta_2(\qstart'',a_l) = q_{l+1}$. Заключаваме, че:
+  Също така от конструкцията следва, че щом $q_{\ell+1} \in \Delta(q_\ell,a_\ell)$, то $q_{\ell} \in F_1$ и $\delta_2(\qstart'',a_\ell) = q_{\ell+1}$. Заключаваме, че:
   \begin{itemize}
   \item
-    $(q_0, \alpha) \vdash^\star_{\A_1} (q_l,\varepsilon)$.
-    Понеже $q_0 = \qstart'$ и $q_l \in F_1$, то $\alpha \in \L(\A_1)$.
+    $(q_0, \alpha) \vdash^\star_{\A_1} (q_\ell,\varepsilon)$.
+    Понеже $q_0 = \qstart'$ и $q_\ell \in F_1$, то $\alpha \in \L(\A_1)$.
   \item
     $(\qstart'', \beta) \vdash^\star_{\A_2} (q_n,\varepsilon)$.
     Понеже $q_n \in F_2$, то $\beta \in \L(\A_2)$.
@@ -779,6 +726,8 @@
   \end{figure}
 
 \end{example}
+
+
 
 
 

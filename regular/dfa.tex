@@ -52,10 +52,10 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \marginpar{Обърнете внимание, че $\delta(q,a) = \delta^\star(q,a)$ за $a\in\Sigma$}
 
-\begin{prop}
+\begin{proposition}
   \label{pr:delta-star}
   $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
-\end{prop}
+\end{proposition}
 \begin{hint}
   Индукция по дължината на $\beta$.
 
@@ -89,6 +89,19 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 Рефлексивното и транзитивно затваряне на $\vdash_\A$ ще означаваме с $\vdash^\star_\A$.
 За да дадем точна дефиниция на $\vdash^\star_\A$, първо ще дефинираме релацията $\vdash^n_\A$, която
 определя работата на автомата $\A$ за $n$ стъпки.
+
+\begin{prooftree}
+  \AxiomC{}
+  \UnaryInfC{$(q,\alpha) \vdash^0_\A (q,\alpha)$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\delta(q,x) = q'$}
+  \AxiomC{$(q',\alpha) \vdash^n_\A (p, \beta)$}
+  \BinaryInfC{$(q,x\alpha) \vdash^{n+1}_\A (p,\beta)$}
+\end{prooftree}
+
+
 \begin{itemize}
 \item 
   $(q,\alpha) \vdash^0_\A (q,\alpha)$, защото за $0$ стъпки се случва нищо.
@@ -99,8 +112,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{itemize}
 Сега можем да дефинираме $\vdash^\star_\A$ като:
 \[(q,\alpha) \vdash^\star_\A (p,\beta) \dff (\exists n\in\Nat)[(q,\alpha) \vdash^n_\A (p,\beta)].\]
-Друг начин да дефинираме релацията $\vdash^\star_\A$ е следния:
-\[(q,\alpha\beta) \vdash^\star_\A (p, \beta) \iff \delta^\star(q,\alpha) = p.\]
+
+\begin{problem}
+  Докажете, че 
+  \[(q,\alpha\beta) \vdash^\star_\A (p, \beta) \iff \delta^\star(q,\alpha) = p.\]  
+\end{problem}
+
 Получаваме, че 
 \[\L(\A) = \{\alpha\in\Sigma^\star \mid (\exists q \in F)[(\qstart,\alpha) \vdash^\star_\A(q,\varepsilon)]\}.\]
 
@@ -187,16 +204,16 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{figure}    
 \end{example}
 
-\subsection*{Затвореност на автоматните езици относно сечиение, обединение, разлика}
+\subsection{Затвореност относно сечиение, обединение, разлика}
 
 \begin{framed}
-  \begin{prop}
+  \begin{proposition}
     \index{автоматни езици!сечение}
     \label{pr:automata-cap}
     Класът на автоматните езици е затворен относно операцията {\em сечение}.
     Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
     също е автоматен език.
-  \end{prop}  
+  \end{proposition}  
 \end{framed}
 \begin{proof}
   Да разгледаме два автомата \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'').\]
@@ -222,7 +239,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \item
     Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава всичко е ясно, защото
     \begin{align*}
-      \delta^\star( \pair{p,q}, \varepsilon) & \df \pair{p,q}\\
+      \delta^\star( \pair{p,q}, \varepsilon) & =\pair{p,q} & \comment\text{от деф. на }\delta^\star\\
                                              & = \pair{\delta^\star_1(p,\varepsilon), \delta^\star_2(q,\varepsilon) }.
     \end{align*}
   \item
@@ -240,7 +257,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \[\L(\A) = \L(\A') \cap \L(\A'').\]
   Имаме следните еквивалентности:
   \begin{align*}
-    \omega \in \L(\A) & \iff \delta^\star(\qstart, \omega) \in F \\
+    \omega \in \L(\A) & \iff \delta^\star(\qstart, \omega) \in F & \comment\text{деф. на }\L(\A)\\
                       & \iff \delta^\star(\pair{\qstart',\qstart''}, \omega) \in F' \times F'' & \comment\text{деф. на }\A\\
                       & \iff \pair{\delta^\star_1(\qstart',\omega), \delta^\star_2(\qstart'',\omega)} \in F' \times F'' & \comment{\text{от (\ref{eq:7})}}\\
                       & \iff \delta^\star_1(\qstart',\omega) \in F'\ \&\ \delta^\star_2(\qstart'',\omega) \in F''\\
@@ -251,12 +268,12 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{proof}
 
 \begin{framed}
-  \begin{prop}
+  \begin{proposition}
     \index{автоматни езици!допълнение}
     \label{pr:automata-complement}
     Класът на автоматните езици са затворени относно операцията допълнение, т.е.
     ако $L$ е автоматен език, то $\Sigma^\star\setminus L$ също е автоматен език.
-  \end{prop}  
+  \end{proposition}  
 \end{framed}
 \begin{hint}
   \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
@@ -268,13 +285,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{hint}
 
 \begin{framed}
-  \begin{prop}
+  \begin{proposition}
     \index{автоматни езици!обединение}
     \label{pr:automata-union}
     Класът на автоматните езици е затворен относно операцията {\bf обединение}.
     Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика, то $L_1\cup L_2$
     също е автоматен език.
-  \end{prop}  
+  \end{proposition}  
 \end{framed}
 \begin{hint}
   \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cup L_2$!}

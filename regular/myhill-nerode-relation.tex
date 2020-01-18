@@ -56,12 +56,12 @@
   \[\alpha \in L \iff [\alpha]_L \subseteq L.\]
 \end{problem}
 
-\begin{prop}
+\begin{proposition}
   \label{pr:rel-finer}
   \marginpar{С други думи,\\ $[\alpha]_\A \subseteq [\alpha]_L$.}
   Нека $\A = \FA$ е краен детерминиран автомат и $L = \L(\A)$. Тогава е изпълнено, че:
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
-\end{prop}
+\end{proposition}
 \begin{proof}
   Да вземем две произволни думи $\alpha$ и $\beta$, за които $\alpha \sim_\A \beta$, т.е. $\delta^\star(\qstart, \alpha) = \delta^\star(\qstart,\beta)$.
   Ще проверим, че  $\alpha \approx_{L} \beta$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$.
@@ -107,12 +107,12 @@
 \end{problem}
 
 
-\begin{prop}
+\begin{proposition}
   \label{pr:approx-less-sim}
   Нека $\A$ е краен детерминиран автомат и $L = \L(\A)$.
   Тогава 
   \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
-\end{prop}
+\end{proposition}
 \begin{hint}
   Да разгледаме функцията $f: \Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$, където
   \[f([\alpha]_\A) \df [\alpha]_L.\]
@@ -125,14 +125,14 @@
 \end{hint}
 
 \begin{framed}
-  \begin{prop}
+  \begin{proposition}
     \label{pr:upper-bound}
     Нека $L$ е произволен регулярен език.
     Всеки краен детерминиран автомат $\A$, за който $L = \L(\A)$ има свойството
     \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
     т.е. броят на класовете на еквивалентност на релацията $\approx_L$
     не надвишава броя на състоянията на автомата $\A$.
-  \end{prop}  
+  \end{proposition}  
 \end{framed}
 \begin{proof}
   Да изберем $\A$, който разпознава $L$. 
@@ -150,13 +150,13 @@
 
 Ще завършим с едно твърдение, което ще ни бъде полезно по-нататък, когато искаме да докажем, че за всеки регулярен език съществува
 единствен минимален краен детерминистичен автомат.
-\begin{prop}
+\begin{proposition}
   \label{pr:bijection-classes}
   Нека $L$ е произволен регулярен език и $\A$ е краен детерминиран автомат, за който $L = \L(\A)$.
   Ако $|Q| = |\Sigma^\star/_{\approx_L}|$, то функцията $h:\Sigma^\star/_{\approx_L} \to Q$, където
   \[h([\alpha]_L) \df \delta^\star(\qstart,\alpha),\]
   е биекция.
-\end{prop}
+\end{proposition}
 \begin{proof}
   Имаме, че:
   \[|Q| = |\Sigma^\star/_{\approx_L}| \leq |\Sigma^\star/_{\sim_\A}| \leq |Q|,\]

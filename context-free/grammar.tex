@@ -286,16 +286,16 @@
   Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
 \end{problem}
 
-\begin{prop}
+\begin{proposition}
   \label{pr:grammar:add}
   Ако $\alpha \stackrel{n}{\to}_G \beta$ и $\gamma \in (V \cup \Sigma)^\star$, то $\alpha\gamma \stackrel{n}{\to}_G \beta \gamma$ и $\gamma\alpha \stackrel{n}{\to}_G \gamma \beta$.
-\end{prop}
+\end{proposition}
 
-\begin{prop}
+\begin{proposition}
   \label{pr:grammar:concat}
   Ако $\alpha_1 \stackrel{n_1}{\to}_G \beta_1, \dots, \alpha_k \stackrel{n_k}{\to}_G \beta_k$, тогава $\alpha_1\cdots\alpha_k \stackrel{n}{\to}_G \beta_1\cdots\beta_k$,
   където $n = \sum^k_{i=1} n_i$.
-\end{prop}
+\end{proposition}
 \begin{proof}
   Индукция по $k \geq 1$.
   \begin{itemize}
@@ -315,12 +315,12 @@
 \end{proof}
 
 \begin{framed}
-  \begin{prop}
+  \begin{proposition}
     \label{pr:grammar:divide}
     Нека $\alpha_1\cdots \alpha_k \stackrel{n}{\to}_G \beta$.
     Тогава съществуват думи $\beta_1,\dots,\beta_k$, такива че за $i = 1,\dots, k$ е изпълнено, че
     $\alpha_i \stackrel{n_i}{\to}_G \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $n = \sum^k_{i = 1}n_i$.
-  \end{prop}
+  \end{proposition}
 \end{framed}
 \begin{proof}
   Индукция по $n$.
