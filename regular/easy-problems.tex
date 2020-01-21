@@ -1,0 +1,321 @@
+\subsection{Лесни задачи}
+
+\ifcode
+\begin{problem}
+  \marginpar{Библиотеката {\bf regex} е част от си++11 стандарта на езика.}
+  Да разгледаме следната програма на езика си++
+  \begin{minted}[]{cpp}
+    #include <iostream>
+    #include <regex>
+    #include <string>
+    
+    using namespace std;
+    
+    int main() {
+      string input;
+      regex reg("your regular expression");
+      while (true) {
+        cout << "Input:" << endl;
+        cin >> input;
+        if (!cin || input=="q") break;
+        if (regex_match(input, reg)) {
+          cout << "Valid input" << endl;
+        }  
+        else {
+          cout << "Invalid input" << endl;
+        }
+      }
+    }
+  \end{minted}
+  Разучете как се създават обекти от тип {\bf regex} и попълнете дефиницията на регулярния израз {\bf reg} в горната програма, така че програмата приема за валиден вход:
+  \begin{enumerate}[a)]
+  \item 
+    само реални числа;
+  \item
+    факултетни номера във ФМИ;
+  \item
+    низове, които са съставени от поне 8 символа, измежду които се включват малки букви, големи букви,
+    и цифри.    
+  \end{enumerate}
+\end{problem}
+\fi
+
+\begin{problem}
+  Да фиксираме една дума $\alpha$ над дадена азбука $\Sigma$.
+  Опишете алгоритъм, който за вход произволен текстов файл, чието съдържание означаваме с $\beta$,
+  отговаря дали думата $\alpha$ се среща в $\beta$.
+  Каква е сложността на този алгоритъм относно дължините на $\alpha$ и $\beta$ ?
+\end{problem}
+
+\begin{problem}
+  Опишете алгоритъм, който при вход два регулярни израза $\mathbf{r}$ и $\mathbf{s}$,
+  проверява дали $\L(\mathbf{r}) \subseteq \L(\mathbf{s})$.
+\end{problem}
+
+
+\begin{problem}
+  За всеки от следните езици $L$, постройте минимален краен детерминиран автомат $\A$, който разпознава езика $L$, където:
+  \marginpar{$\card{\omega}{a} \df $ броят на срещанията на буквата $a$ в думата $\omega$.}
+  \marginpar{$\abs{\omega} \df $ дължината на думата $\omega$.}
+  \begin{enumerate}[a)]
+  \item 
+    $L = \{a^nb\mid n \geq 0\}$;
+  \item
+    $L = \{a,b\}^\star\setminus\{\varepsilon\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ и }\card{\omega}{b}\text{ са четни}\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно}\ \&\ \card{\omega}{b}\text{ е нечетно}\}$;
+  \item
+    $L = \{a^nb^m\mid n,m \geq 0\}$;
+  \item
+    $L = \{a^nb^m\mid n,m \geq 1\}$;
+  \item
+    $L = \{a,b\}^\star \setminus \{a\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \geq 2\ \lor\ \card{\omega}{b} \leq 3 \}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \geq 2\ \&\ \card{\omega}{b} \geq 1\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \mbox{на всяка нечетна позиция на }\omega\mbox{ е буквата }a\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно }\&\ \card{\omega}{b} \leq 1\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \leq 3\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \mbox{ не започва с }ab\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \mbox{ завършва с }ab\mbox{ или ba}\}$;
+  % \item
+  %   $L = \{w \in \{a,b\}^\star \mid w \mbox{ съдържа }bab\}$;
+  % \item
+  %   $L = \{w \in \{a,b\}^\star \mid w \mbox{ не съдържа }bab\}$;
+  % \item
+    % $L = \{w \in \{a,b\}^\star \mid w \mbox{ няма две последователни }a\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \omega\mbox{ започва или завършва с } a\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \omega\text{ започва с }a \iff \omega\text{ завършва с }b\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ \card{\omega}{a} = 1\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \text{ всяко }a\mbox{ в }\omega\text{ се следва от поне едно }b\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0 \bmod 3\}$;
+  \item
+    $L = \{w \in \{a,b\}^\star \mid \card{\omega}{a} \equiv 1 \bmod 3\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \equiv 0 \bmod 3\ \&\ \card{\omega}{b} \equiv 1 \bmod 2\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \equiv 0 \bmod 2\ \vee\ \card{\omega}{b} = 2\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа равен брой срещания на }ab\text{ и на }ba\}$.
+  \item
+    $L = \{\omega_1 \sharp \omega_2 \sharp \omega_3 \mid \forall i \in [1,3](\ \omega_i \in \{a,b\}^\star\ \&\ |\omega_i| \geq i+1\ )\}$;
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Докажете, че следните езици са регулярни:
+  \begin{enumerate}[a)]
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\card{\omega}{a} - \card{\omega}{b}} \leq 2 \text{ за всяка представка $\omega$ на $\alpha$}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\card{\omega}{a} - \card{\omega}{b}} > 2 \text{ за някоя представка $\omega$ на $\alpha$}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\card{\omega}{a} - \card{\omega}{b}} > 2 \text{ за някоя наставка $\omega$ на $\alpha$}\}$.
+  \end{enumerate}
+\end{problem}
+
+
+\begin{problem}
+  Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
+  \begin{enumerate}[a)]
+  \item
+    $L = \{\alpha^{\texttt{rev}} \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
+  \item
+    \marginpar{$\alpha = a^pb^p$}
+    $L = \{a^ib^i\ \mid\ i\in\Nat\}$;
+  \item
+    $L = \{a^ib^i\ \mid\ i,j\in\Nat\ \&\ i\neq j\}$;
+  \item
+    \marginpar{$\alpha = a^{p+1}b^p$.}
+    $L = \{a^ib^j\ \mid\ i > j\}$;
+  \item
+    $L = \{a^nb^m \mid n\mbox{ дели }m\}$.
+  \item
+    $L = \{a^{2n}\ \mid\ n\geq 1\}$;
+  \item
+    $L = \{a^mb^na^{m+n}\ \mid\ m\geq 1\ \&\ n\geq 1\}$;
+  \item
+    $L = \{a^{n.m}\mid n,m\mbox{ са прости числа}\}$;
+  \item
+    $L = \{\omega\in\{a,b\}^\star \mid \card{\omega}{a} = \card{\omega}{b}\}$;
+  \item
+    \marginpar{$\alpha = a^pba^pb$}
+    $L = \{\omega\omega\mid \omega\in\{a,b\}^\star\}$;
+  \item
+    $L = \{\omega\omega^\rev\mid \omega\in\{a,b\}^\star\}$;
+  \item
+    $L = \{\alpha\beta\beta \in \{a,b\}^\star\mid \beta \neq \varepsilon\}$;
+  \item
+    $L = \{a^nb^nc^n\mid n\geq 0\}$;
+  \item
+    $L = \{\omega\omega\omega\mid \omega\in \Sigma^\star\}$;
+  \item
+    $L = \{a^{2^n}\mid n\geq 0\}$;
+  \item
+    $L = \{a^mb^n\mid n\neq m\}$;
+  \item
+    $L = \{a^{n!}b^{n!}\mid n\neq 1\}$;
+  \item
+    $L = \{a^{f_n} \mid f_0 = f_1 = 1\ \&\ f_{n+2} = f_{n+1} + f_{n}\}$;
+  \item
+    $L = \{\alpha \in \Sigma^\star \mid \abs{\card{\alpha}{a} - \card{\alpha}{b}} \leq 2\}$;
+  \item
+    $L = \{\alpha\beta\alpha \mid \alpha,\beta \in \Sigma^\star\ \&\ \abs{\beta} \leq \abs{\alpha}\}$;
+  \item
+    $L = \{\beta\gamma\gamma^\rev\mid \beta, \gamma \in \Sigma^\star\ \&\ \abs{\beta} \leq \abs{\gamma}\}$;
+  \item
+    $L = \{c^ka^nb^m \mid k,m,n > 0\ \&\ n \neq m\}$;
+  \item
+    $L = \{c^ka^nb^n \mid k > 0\ \&\ n \geq 0\}\cup\{a,b\}^\star$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ не дели }\card{\omega}{b}\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} < \card{\omega}{b}\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} = 2\card{\omega}{b}\}$;
+  \item
+    $L = \{\omega \in \{a,b\}^\star \mid \abs{\card{\omega}{a} - \card{\omega}{b}} \leq 3\}$.
+  \end{enumerate}
+\end{problem}
+
+% \begin{problem}
+%   Нека $L$ е регулярен език над азбуката $\Sigma$. Докажете, че 
+%   \[\text{Infix}(L) = \{\alpha \mid (\exists \beta,\gamma \in \Sigma^\star)[\beta\alpha\gamma \in L]\}\]
+%   също е регулярен език.
+% \end{problem}
+% \begin{hint}
+%   Най-лесно е да се построи автомат за $\text{Infix}(L)$ като се използва автомата за $L$.
+% \end{hint}
+
+\begin{problem}
+  Нека $\Sigma = \{a,b,c,d\}$.
+  Да се докаже, че езикът
+  \[L = \{a_1a_2\cdots a_{2n} \in \Sigma^\star \mid (\forall j \in [1,n])[a_{2j-1} = a_{2j}]\ \&\ d\text{ се среща $\leq 3$ пъти}\}\]
+  е регулярен.
+\end{problem}
+
+\begin{problem}
+  Нека $L_1$ и $L_2$ са регулярни езици. Докажете, че $L$ също е регулярен език, където
+  \[L = \{\alpha \mid (\exists \beta,\gamma)[\beta\alpha\gamma \in L_1]\ \&\ \alpha \in L_2 \vee \alpha^{\texttt{rev}} \in L_2\}.\]
+\end{problem}
+
+\begin{definition}
+  \index{хомоморфизъм}
+  Да фиксираме две азбуки $\Sigma_1$ и $\Sigma_2$.
+  Хомоморфизъм е изображение $h:\Sigma^\star_1 \to \Sigma^\star_2$ със свойството, че
+  за всеки две думи $\alpha,\beta\in\Sigma^\star_1$,
+  \[h(\alpha\beta) = h(\alpha)\cdot h(\beta).\]
+\end{definition}
+
+Лесно се съобразява, че за всеки хомоморфизъм $h$, $h(\varepsilon) = \varepsilon$.
+
+\begin{problem}
+  Нека $L \subseteq \Sigma^\star_1$ е регулярен език и $h:\Sigma^\star_1\to\Sigma^\star_2$ е хомоморфизъм.
+  Тогава
+  $h(L) = \{h(\alpha) \in \Sigma^\star_2 \mid \alpha \in L\}$ е регулярен.
+\end{problem}
+\begin{hint}
+  Индукция по построението на регулярни езици.
+  % \begin{itemize}[-]
+  % \item 
+  %   За $L = \{a\}$, $h(L) = \{h(a)\}$.
+  % \item
+  %   $h(\emptyset) = \emptyset$.
+  % \item
+  %   Нека $L_1 = \L(r_1)$ и $L_2 = \L(r_2)$.
+  %   Ще докажем, че $h(\L(r_1\cdot r_2))$ е регулярен.
+  %   \begin{align*}
+  %     h(\L(r_1\cdot r_2)) & = h(L_1\cdot L_2) & (\text{деф. на конкатенация})\\
+  %     & = \{h(\gamma) \mid \gamma \in L_1 \cdot L_2\}\\
+  %     & = \{h(\alpha\beta) \mid \alpha\in L_1\ \&\ \beta\in L_2\}\\
+  %     & = \{h(\alpha)\cdot h(\beta) \mid \alpha \in L_1\ \&\ \beta \in L_2\} & (h\text{ е хомоморфизъм})\\
+  %     & = \{\omega\gamma \mid \omega \in h(L_1)\ \&\ \gamma \in h(L_2)\}\\
+  %     & = h(L_1)\cdot h(L_2).
+  %   \end{align*}
+  %   По И.П. имаме, че $h(L_1)$ и $h(L_2)$ са регулярни езици.
+  %   Следователно, 
+  %   \[h(\L(r_1\cdot r_2)) = h(L_1)\cdot h(L_2)\]
+  %   е регулярен език.
+  % \item
+  %   От горното свойство имаме също, че за всяко $n$, $h(L^n) = h(L)^n$.
+  % \item
+  %   Освен това, 
+  %   \begin{align*}
+  %     h(\bigcup_n L_n) & = \{h(\alpha) \mid (\exists n)[\alpha \in L_n]\}\\
+  %     & = \bigcup \{h(\alpha) \mid \alpha \in L_n\}\\
+  %     & = \bigcup_n h(L_n).
+  %   \end{align*}
+  % \item
+  %   Нека $L = \L(r^\star)$.
+  %   Ще докажем, че $h(L^\star)$ е регулярен език.
+  %   \begin{align*}
+  %     h(L^\star) & = h(\bigcup_n L^n) & (\text{деф. на звезда на Клини})\\
+  %     & = \bigcup_n h(L^n) & (\text{от горното свойство})\\
+  %     & = \bigcup_n h(L)^n & (\text{от по-горното свойство})\\
+  %     & = h(L)^\star & (\text{по деф.}).
+  %   \end{align*}
+  % \end{itemize}
+\end{hint}
+
+\begin{problem}
+  Нека $L\subseteq \Sigma^\star_2$ е регулярен език и $h:\Sigma^\star_1\to\Sigma^\star_2$ е хомоморфизъм.
+  Тогава езикът
+  $h^{-1}(L) = \{\alpha \in \Sigma^\star_1 \mid h(\alpha) \in L\}$ е регулярен.  
+\end{problem}
+\begin{hint}
+  Конструкция на автомат за $h^{-1}(L)$ при даден автомат за $L$.
+  % Нека $\A$ е КДА разпознаващ езика $L$.
+  % Ще построим $\A' = \pair{Q,\Sigma_1, \delta', s, F}$,
+  % където дефинираме функцията на преходите $\delta'$ като $\delta'(q,a) = \delta^\star(q,h(a))$.
+  % Понеже $h$ е хомоморфизъм, лесно се доказва с индукция по дължината на думата $\alpha \in \Sigma^\star_1$,
+  % че $\delta'^\star(q,\alpha) = \delta^\star(q,h(\alpha))$.
+  % Сега лесно се вижда, че $h^{-1}(\L(\A)) = \L(\A')$, защото:
+  % \begin{align*}
+  %   \alpha \in \L(\A') & \iff \delta'^\star(s,\alpha) \in F\\
+  %   & \iff \delta^\star(s,h(\alpha)) \in F\\
+  %   & \iff h(\alpha) \in \L(\A)\\
+  %   & \iff \alpha \in h^{-1}(\L(\A)).
+  % \end{align*}
+\end{hint}
+
+\begin{problem}
+  Нека $\Sigma_1$ и $\Sigma_2$ са непресичащи се азбуки, а $L_1$ и $L_2$ са езици съответно над $\Sigma_1$ и $\Sigma_2$.
+  За една дума $\omega \in (\Sigma_1 \cup \Sigma_2)^\star$, нека с $\omega_i \in \Sigma^\star_i$ да означим редицата от букви от $\Sigma_i$
+  в реда, в който се срещат в $\omega$. Да разгледаме следния език
+  \[L_1 \oplus L_2 = \{\omega \in (\Sigma_1 \cup \Sigma_2)^\star \mid \omega_1 \in L_1\ \&\ \omega_2 \in L_2\ \&\ |\omega_1| = |\omega_2|\}.\]
+  \begin{enumerate}[a)]
+  \item
+    \marginpar{Да}
+    Вярно ли е, че ако $L_1$ е краен, то $L_1 \oplus L_2$ е регулярен език?
+  \item
+    \marginpar{Не}
+    Вярно ли е, че ако $L_1$ и $L_2$ са регулярни езици, то $L_1 \oplus L_2$ е регулярен език?
+  \end{enumerate}
+\end{problem}
+
+\begin{problem}
+  Нека $\Sigma_1$ и $\Sigma_2$ са непресичащи се азбуки, а $L_1$ и $L_2$ са езици съответно над $\Sigma_1$ и $\Sigma_2$.
+  За една дума $\omega \in (\Sigma_1 \cup \Sigma_2)^\star$, нека с $\omega_i \in \Sigma^\star_i$ да означим редицата от букви от $\Sigma_i$
+  в реда, в който се срещат в $\omega$. Да разгледаме следния език
+  \[L_1 \oplus L_2 = \{\omega \in (\Sigma_1 \cup \Sigma_2)^\star \mid \omega_1 \in L_1\ \&\ \omega_2 \in L_2\}.\]
+  \marginpar{Да}
+  Вярно ли е, че ако $L_1$ и $L_2$ са регулярни езици, то $L_1 \oplus L_2$ е регулярен език?
+\end{problem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
