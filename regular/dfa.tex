@@ -8,7 +8,8 @@
   \item
     $\Sigma$ е азбука;
   \item
-    $\delta:Q\times\Sigma\to Q$ е {\em тотална} функция на преходите;
+    $\delta:Q\times\Sigma\to Q$ е тотална функция, която ще наричаме
+    \emph{функция на преходите};
   \item
     $\qstart\in Q$ е начално състояние;
   \item
@@ -204,108 +205,9 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{figure}    
 \end{example}
 
-\subsection{Затвореност относно сечиение, обединение, разлика}
+\input{regular/dfa-closure}
 
-\begin{framed}
-  \begin{proposition}
-    \index{автоматни езици!сечение}
-    \label{pr:automata-cap}
-    Класът на автоматните езици е затворен относно операцията {\em сечение}.
-    Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика над азбуката $\Sigma$, то $L_1\cap L_2$
-    също е автоматен език.
-  \end{proposition}  
-\end{framed}
-\begin{proof}
-  Да разгледаме два автомата \[\A' = (\Sigma,Q',\qstart',\delta',F'),\ \A'' = (\Sigma, Q'', \qstart'', \delta'', F'').\]
-  Определяме автомата $\A = \FA$, по следния начин:
-  \marginpar{Изчислението на автомата $\A$ върху думата $\alpha$ едновременно симулира изчислението на $\A'$ и $\A''$ върху $\alpha$.}
-  \begin{itemize}
-  \item
-    $Q \df Q'\times Q''$;
-  \item
-    За всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
-    \[\delta(\pair{r_1,r_2},a) \df \pair{\delta_1(r_1,a),\delta_2(r_2,a)};\]
-  \item
-    $\qstart \df \pair{\qstart',\qstart''}$;
-  \item
-    $F \df \{\pair{r_1,r_2}\mid r_1\in F''\ \&\ r_2 \in F''\} = F' \times F''$
-  \end{itemize}
-  Ще докажем с индукция по дължината на думата $\alpha$, че за всяка дума $\alpha$:
-  \begin{equation}
-    \label{eq:7}
-    (\forall p\in Q')(\forall q\in Q'')[\ \delta^\star(\pair{p,q},\alpha) = \pair{ \delta^\star_1(p,\alpha), \delta^\star_2(q,\alpha) }\ ].
-  \end{equation}
-  \begin{itemize}
-  \item
-    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава всичко е ясно, защото
-    \begin{align*}
-      \delta^\star( \pair{p,q}, \varepsilon) & =\pair{p,q} & \comment\text{от деф. на }\delta^\star\\
-                                             & = \pair{\delta^\star_1(p,\varepsilon), \delta^\star_2(q,\varepsilon) }.
-    \end{align*}
-  \item
-    Да приемем, че (\ref{eq:7}) е изпълнено за думи $\alpha$ с дължина $n$.
-  \item
-    Нека $|\alpha| = n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава:
-    \begin{align*}
-      \delta^\star(\pair{p, q},\beta a) & = \delta( \delta^\star( \pair{p, q}, \beta ), a) & \comment{\text{деф. на }\delta^\star}\\
-                                        & = \delta( \pair{ \delta^\star_1(p, \beta), \delta^\star_2(q, \beta)}, a ) & \comment{\text{ от И.П.}}\\
-                                        & = \pair{ \delta_1( \delta^\star_1(p, \beta), a), \delta_2(\delta^\star_2(q,\beta), a)} & \comment\text{деф. на }\delta\\
-                                        & = \pair{ \delta^\star_1(p, \beta a), \delta^\star_2(q, \beta a) } & \comment{\text{деф. на $\delta^\star_1$ и $\delta^\star_2$}}.
-    \end{align*}
-  \end{itemize}
-  Използвайки Свойство (\ref{eq:7}) лесно можем да докажем, че
-  \[\L(\A) = \L(\A') \cap \L(\A'').\]
-  Имаме следните еквивалентности:
-  \begin{align*}
-    \omega \in \L(\A) & \iff \delta^\star(\qstart, \omega) \in F & \comment\text{деф. на }\L(\A)\\
-                      & \iff \delta^\star(\pair{\qstart',\qstart''}, \omega) \in F' \times F'' & \comment\text{деф. на }\A\\
-                      & \iff \pair{\delta^\star_1(\qstart',\omega), \delta^\star_2(\qstart'',\omega)} \in F' \times F'' & \comment{\text{от (\ref{eq:7})}}\\
-                      & \iff \delta^\star_1(\qstart',\omega) \in F'\ \&\ \delta^\star_2(\qstart'',\omega) \in F''\\
-                      & \iff \omega \in \L(\A')\ \&\ \omega\in\L(\A'') \\
-                      & \iff \omega \in \L(\A') \cap \L(\A'').
-  \end{align*}
-  
-\end{proof}
-
-\begin{framed}
-  \begin{proposition}
-    \index{автоматни езици!допълнение}
-    \label{pr:automata-complement}
-    Класът на автоматните езици са затворени относно операцията допълнение, т.е.
-    ако $L$ е автоматен език, то $\Sigma^\star\setminus L$ също е автоматен език.
-  \end{proposition}  
-\end{framed}
-\begin{hint}
-  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$}
-  Нека $L = L(\A)$, където $\A = \FA$.
-  Да вземем автомата
-  \[\A' = \pair{Q,\Sigma,\qstart,\delta,Q\setminus F},\]
-  т.е. $\A'$ е същия като $\A$, с единствената разлика, че финалните състояния на $\A'$
-  са тези състояния, които {\bf не} са финални в $\A$.
-\end{hint}
-
-\begin{framed}
-  \begin{proposition}
-    \index{автоматни езици!обединение}
-    \label{pr:automata-union}
-    Класът на автоматните езици е затворен относно операцията {\bf обединение}.
-    Това означава, че ако $L_1$ и $L_2$ са два произволни автоматни езика, то $L_1\cup L_2$
-    също е автоматен език.
-  \end{proposition}  
-\end{framed}
-\begin{hint}
-  \marginpar{\ding{45} Докажете, че така построения автомат $\A$ разпознава $L_1\cup L_2$!}
-  Първият подход е да използвайте конструкцията на автомата $\A$ от \Prop{automata-cap},
-  с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
-  \begin{align*}
-    F & \df \{\pair{q',q''} \in Q' \times Q'' \mid q' \in F'\ \lor\ q'' \in F''\}\\
-      & = F'\times Q'' \cup Q'\times F''.
-  \end{align*}
-  Друг подход е да се използва правилото на Де Морган, а именно:
-  \[L_1 \cup L_2 = \ov{\ov{L_1} \cap \ov{L_2}}.\]
-\end{hint}
-
-В повечето от горните примери може сравнително лесно да се съобрази, че построения автомат разпознава желания език.
+В повечето от горните примери може сравнително лесно да се съобрази, че построеният автомат разпознава желания език.
 При по-сложни задачи обаче, ще се наложи да дадем доказателство, като обикновено се прилага 
 {\em метода на математическата индукция} върху дължината на думите.
 Ще разгледаме няколко такива примера.
@@ -613,89 +515,89 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{proof}
 
 
-% Можем да дадем и следната дефиниция на $\ov{\alpha}_{(2)}$:
-% \begin{itemize}
-% \item
-%   $\ov{\varepsilon}_{(2)} = 0$,
-% \item
-%   $\ov{0\alpha}_{(2)} = \ov{\alpha}_{(2)}$,
-% \item
-%   $\ov{1\alpha}_{(2)} = 2^{|\alpha|} + \ov{\alpha}_{(2)}$.
-% \end{itemize}
+Можем да дадем и следната дефиниция на $\ov{\alpha}_{(2)}$:
+\begin{itemize}
+\item
+  $\ov{\varepsilon}_{(2)} = 0$,
+\item
+  $\ov{0\alpha}_{(2)} = \ov{\alpha}_{(2)}$,
+\item
+  $\ov{1\alpha}_{(2)} = 2^{|\alpha|} + \ov{\alpha}_{(2)}$.
+\end{itemize}
 
-% Тогава:
-% \begin{align*}
-%   0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
-%             & = \{\alpha \in \{0,1\}^\star \mid \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%             & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%             & = L\\
-%   \\
-%   1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
-%             & = \{\alpha \in \{0,1\}^\star \mid \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%             & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%             & \df L_1.
-% \end{align*}
+Тогава:
+\begin{align*}
+  0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = L\\
+  \\
+  1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & \df L_1.
+\end{align*}
 
-% Лесно се съобразява, че $L \neq L_1$, защото например за думата $\alpha = 10$
-% имаме, че $\alpha \in L$, но $\alpha \not\in L_1$.
-% Продължаваме нататък:
-% \begin{align*}
-%   0^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_1\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & \df L_2\\
-%   \\
-%   1^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_1\}\\
-%             & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%             & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = L.
-% \end{align*}
-% Да проверим, че $L_2 \neq L$ и $L_2 \neq L_1$.
-% Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
-% Непосредствено се проверява, че $\alpha \in L_2$, $\alpha \not\in L$, $\alpha \not\in L_1$.
-% Продължаваме нататък:
-% \begin{align*}
-%   0^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_2\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = L_1
-%   \\
-%   1^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_2\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
-%               & = L_2.
-% \end{align*}
+Лесно се съобразява, че $L \neq L_1$, защото например за думата $\alpha = 10$
+имаме, че $\alpha \in L$, но $\alpha \not\in L_1$.
+Продължаваме нататък:
+\begin{align*}
+  0^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_1\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & \df L_2\\
+  \\
+  1^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_1\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L.
+\end{align*}
+Да проверим, че $L_2 \neq L$ и $L_2 \neq L_1$.
+Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
+Непосредствено се проверява, че $\alpha \in L_2$, $\alpha \not\in L$, $\alpha \not\in L_1$.
+Продължаваме нататък:
+\begin{align*}
+  0^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_2\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L_1
+  \\
+  1^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_2\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L_2.
+\end{align*}
 
-% Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
+Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
 
-% \begin{framed}
-%   \begin{figure}[H]
-%     \begin{center}
-%       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
-%         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+\begin{framed}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         
-%         \node[initial,state]      (0) {$L$};
-%         \node[state]              (1) [right of=0]{$L_1$};
-%         \node[accepting, state]   (2) [right of=1]{$L_2$};
+        \node[initial,state]      (0) {$L$};
+        \node[state]              (1) [right of=0]{$L_1$};
+        \node[accepting, state]   (2) [right of=1]{$L_2$};
         
-%         \path 
-%         (0) edge  [loop above]    node [above]  {$0$} (0)
-%         (0) edge  [bend left=15]  node [above]  {$1$} (1)
-%         (2) edge  [bend left=15]  node [below]  {$0$} (1)
-%         (1) edge  [bend left=15]  node [below]  {$1$} (0)
-%         (1) edge  [bend left=15]  node [above]  {$0$} (2)
-%         (2) edge  [loop above]    node [above]  {$1$} (2);
-%       \end{tikzpicture}
-%     \end{center}
-%     \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
-%   \end{figure}
-% \end{framed}
+        \path 
+        (0) edge  [loop above]    node [above]  {$0$} (0)
+        (0) edge  [bend left=15]  node [above]  {$1$} (1)
+        (2) edge  [bend left=15]  node [below]  {$0$} (1)
+        (1) edge  [bend left=15]  node [below]  {$1$} (0)
+        (1) edge  [bend left=15]  node [above]  {$0$} (2)
+        (2) edge  [loop above]    node [above]  {$1$} (2);
+      \end{tikzpicture}
+    \end{center}
+    \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
+  \end{figure}
+\end{framed}
 
 
 %%% Local Variables:

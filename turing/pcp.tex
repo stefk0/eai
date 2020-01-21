@@ -1,0 +1,127 @@
+\section{Проблемът за съответствието на Пост}\label{sect:turing:pcp}
+
+\marginpar{На англ. Post's correspondence problem}
+\marginpar{\cite[стр. 392]{hopcroft2}, но по-добре е обяснено в \cite[стр. 227]{sipser3}}
+
+\marginpar{Ако $|\alpha_i| = |\beta_i|$ за всяко $i$, то задачата е тривиална.}
+Пример за проблема за съответствието на Пост се нарича всяка крайна редица от елементи на $\Sigma^\star \times \Sigma^\star$.
+Ние ще означаваме примерите по следния начин:
+\[\begin{bmatrix} \alpha_1\\ \beta_1\end{bmatrix},\begin{bmatrix} \alpha_2\\ \beta_2\end{bmatrix},\dots,\begin{bmatrix} \alpha_n\\ \beta_n\end{bmatrix}.\]
+Казваме, че този пример има решение, ако съществува непразна редица от индекси $i_1,i_2,\dots,i_n$, такава че:
+\[\alpha_{i_1}\alpha_{i_2}\cdots\alpha_{i_n} = \beta_{i_1}\beta_{i_2}\cdots\beta_{i_n}.\]
+
+\begin{problem}
+  \marginpar{\cite[стр. 239]{sipser3}}
+  Намерете решение на следния пример за PCP:
+  \[\begin{bmatrix}ab\\ abab\end{bmatrix},\begin{bmatrix} b\\ a\end{bmatrix},\begin{bmatrix} aba\\ b\end{bmatrix},\begin{bmatrix} aa\\ a\end{bmatrix}.\]
+\end{problem}
+\begin{solution}
+  \[\begin{bmatrix}ab\cdot ab \cdot aba \cdot b \cdot b \cdot aa \cdot aa\\abab \cdot abab \cdot b \cdot a \cdot a \cdot a \cdot a\end{bmatrix}\]
+\end{solution}
+
+
+\subsection*{Модифициран проблем за съответствието }
+
+Казваме, че MPCP има решение, ако съществува произволна редица от индекси $i_1,i_2,\dots,i_n$ (може и празна), такава че:
+\[\alpha_1\alpha_{i_1}\cdots\alpha_{i_n} = \beta_1\beta_{i_1}\cdots\beta_{i_n}.\]
+
+\begin{lemma}
+  Съществува алгоритъм, който свежда MPCP към PCP.
+\end{lemma}
+\begin{proof}
+  Нека имаме пример за MPCP:
+  \[\begin{bmatrix} \alpha_1\\ \beta_1\end{bmatrix},\begin{bmatrix} \alpha_2\\ \beta_2\end{bmatrix},\dots,\begin{bmatrix} \alpha_k\\ \beta_k\end{bmatrix} .\]
+  Нека символите $*,\$$ не са от $\Sigma$.
+  Нека за думата $\alpha = a_1\cdots a_n$ да дефинираме следните операции:
+  \begin{align*}
+    & \star\alpha = *a_1*a_2\cdots *a_n\\
+    & \alpha\star = a_1*a_2*\cdots a_n*\\
+    & \star\alpha\star = * a_1*a_2*\cdots a_n*.
+  \end{align*}
+  Тогава на базата на горния пример за MPCP, строим пример за PCP:
+  \[\begin{bmatrix*}[l] \star\alpha_1\star\\ \star\beta_1\end{bmatrix*},\begin{bmatrix} \alpha_1\star\\ \star \beta_1\end{bmatrix},\dots,\begin{bmatrix} \gamma_k\star\\ \star\beta_k\end{bmatrix},\begin{bmatrix*}[r] \$\\ *\$\end{bmatrix*}.\]
+\end{proof}
+
+
+\begin{framed}
+  \begin{theorem}[Е. Пост \cite{pcp}]\index{Пост}
+    Проблемът за съответствието на Пост е неразрешим при азбука $\Sigma$ с поне два символа.
+  \end{theorem}
+\end{framed}
+\begin{proof}
+  \marginpar{Лесно се съобразява, че за азбука $\Sigma$ само с една буква проблемът е разрешим.}
+  Свеждаме $\Luniv$ към MPCP. Вече знаем, че MPCP се свежда към PCP.
+  Нека фиксираме символа $\sharp \not \in \Gamma$.
+  \begin{enumerate}[1)]
+  \item
+    Нека имаме като вход дума $\gamma = \code{\M}\sharp \alpha$.
+  \item
+    Започваме като добавяме за думата $\alpha = a_1\cdots a_n$ над азбуката $\Sigma$ следната двойка
+    $\begin{bmatrix*}[l] \sharp\\ \sharp qa_1\cdots a_n\sharp\end{bmatrix*}$.
+  \item
+    Ако $\delta(q,a) = (p,b,\goright)$, то добавяме двойката
+    $\begin{bmatrix*}[l] qa\\ bp\end{bmatrix*}$.
+    Тук трябва да внимаваме, защото имаме граничен случай при $a = \blank$. Тогава трябва да добавим и двойката $\begin{bmatrix*}[l] q\sharp\\ bp\sharp\end{bmatrix*}$.
+  \item
+    \marginpar{Тук е важно, че не позволяваме четящата глава да се мести по-наляво от първата клетка върху която е четящата глава при стартиране на изчислението.}
+    Ако $\delta(q,a) = (p,b,\goleft)$, то добавяме двойката
+    $\begin{bmatrix*}[l] xqa\\ pxb\end{bmatrix*}$.
+  \item
+    Ако $\delta(q,a) = (p,b,\stay)$, то добавяме двойката
+    $\begin{bmatrix*}[l] qa\\ pb\end{bmatrix*}$.
+  \item
+    за всеки $x \in \Gamma$, добавяме $\begin{bmatrix} x\\ x\end{bmatrix}$.
+    Освен това, добавяме и двойката $\begin{bmatrix} \sharp\\ \sharp\end{bmatrix}$.
+  \item
+    \marginpar{Тук идеята е, че когато достигнем до приемащо състояние, то започваме да трием съдържанието на лентата за да можем да изравним двете ленти.}
+    За всеки $x \in \Gamma$, добавяме двойката
+    $\begin{bmatrix*}[l] x\qaccept\\ \qaccept\end{bmatrix*}$ и $\begin{bmatrix*}[l] \qaccept x\\ \qaccept\end{bmatrix*}$.
+  \item
+    За да завършим, добавяме двойката
+    $\begin{bmatrix*}[r] \qaccept\sharp\sharp\\ \sharp\end{bmatrix*}$.
+  \end{enumerate}
+\end{proof}
+
+\begin{corollary}
+  Проблемът за еднозначност на безконтекстна граматика е неразрешим.
+\end{corollary}
+\begin{proof}
+  Нека да означим
+  \[\text{AMBIG} = \{\code{G} \mid G \text{ е нееднозначна безконтекстна граматика}\}.\]
+  Ще докажем, че $\text{PCP} \leq_m \text{AMBIG}$.
+  Да разгледаме един пример за $\text{PCP}$ над азбуката $\Sigma$:
+  \[\begin{bmatrix} \alpha_1\\ \beta_1\end{bmatrix},\begin{bmatrix} \alpha_2\\ \beta_2\end{bmatrix},\dots,\begin{bmatrix} \alpha_n\\ \beta_n\end{bmatrix}.\]
+  По него можем ефективно да построим следната безконтекстна граматика:
+  \begin{align*}
+    & S \to A\ |\ B\\
+    & A \to \alpha_1A c_1\ |\ \alpha_2 A c_2\ |\ \cdots\ |\ \alpha_n A c_n\ |\ \alpha_1c_2\ |\ \alpha_2c_2\ |\ \cdots\ |\ \alpha_nc_n\\
+    & B \to \beta_1B c_1\ |\ \beta_2 B c_2\ |\ \cdots\ |\ \beta_n B c_n\ |\ \beta_1c_2\ |\ \beta_2c_2\ |\ \cdots\ |\ \beta_nc_n,
+  \end{align*}
+  където $c_1,\dots,c_n \not \in \Sigma$.
+  Лесно се съобразява, че горния пример за $PCP$ има решение точно тогава, когато безконтекстната граматика е нееднозначна.
+\end{proof}
+
+\begin{corollary}
+  Проблемът за сечение на две безконтекстни граматики е неразрешим.
+\end{corollary}
+\begin{proof}
+  Нека да означим
+  \[\text{INTERSECT} = \{\code{G_1}\sharp\code{G_2} \mid \L(G_1) \cap \L(G_2) \neq \emptyset \}.\]
+  Ще докажем, че $\text{PCP} \leq_m \text{INTERSECT}$.
+  Да разгледаме един пример за $\text{PCP}$ над азбуката $\Sigma$:
+  \[\begin{bmatrix} \alpha_1\\ \beta_1\end{bmatrix},\begin{bmatrix} \alpha_2\\ \beta_2\end{bmatrix},\dots,\begin{bmatrix} \alpha_n\\ \beta_n\end{bmatrix}.\]
+  По него можем ефективно да построим следната безконтекстна граматика:
+  \begin{align*}
+    & S_1 \to \alpha_1S_1 c_1\ |\ \alpha_2 S_1 c_2\ |\ \cdots\ |\ \alpha_n S_1 c_n\ |\ \alpha_1c_2\ |\ \alpha_2c_2\ |\ \cdots\ |\ \alpha_nc_n\\
+    & S_2 \to \beta_1S_2 c_1\ |\ \beta_2 S_2 c_2\ |\ \cdots\ |\ \beta_n S_2 c_n\ |\ \beta_1c_2\ |\ \beta_2c_2\ |\ \cdots\ |\ \beta_nc_n,
+  \end{align*}
+  където $c_1,\dots,c_n \not \in \Sigma$.
+\end{proof}
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
