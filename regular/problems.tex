@@ -253,21 +253,21 @@
   \item
     $L_2 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid 3(\ov{\alpha}_{(2)}) = \ov{\beta}_{(2)}\right\}$;
   \item
-    $L_3 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid \alpha = \beta^{\texttt{rev}}\right\}$;
+    $L_3 = \left\{\begin{bmatrix} \alpha\\ \beta \end{bmatrix} \in \Sigma^\star_2 \mid \alpha = \beta^{\rev}\right\}$;
   \end{itemize}
   Докажете, че  $L_1$ и $L_2$ са автоматни, а $L_3$ не е автоматен.
 \end{problem}
 \ifhints
 \begin{hint}
-  Ще построим автомат $\A = \FA$ за езика $L^{\texttt{rev}}_1$.
+  Ще построим автомат $\A = \FA$ за езика $L^{\rev}_1$.
   За улеснение, в рамките на тази задача ще пишем:
   \begin{itemize}
   \item 
-    $\alpha \equiv \beta$, ако $\ov{\alpha^{\texttt{rev}}}_{(2)} = \ov{\beta^{\texttt{rev}}}_{(2)}$,
+    $\alpha \equiv \beta$, ако $\ov{\alpha^{\rev}}_{(2)} = \ov{\beta^{\rev}}_{(2)}$,
   \item
-    $\alpha \prec \beta$, ако $\ov{\alpha^{\texttt{rev}}}_{(2)} < \ov{\beta^{\texttt{rev}}}_{(2)}$,
+    $\alpha \prec \beta$, ако $\ov{\alpha^{\rev}}_{(2)} < \ov{\beta^{\rev}}_{(2)}$,
   \item
-    $\alpha \succ \beta$, ако $\ov{\alpha^{\texttt{rev}}}_{(2)} > \ov{\beta^{\texttt{rev}}}_{(2)}$.
+    $\alpha \succ \beta$, ако $\ov{\alpha^{\rev}}_{(2)} > \ov{\beta^{\rev}}_{(2)}$.
   \end{itemize}
   Нека състоянията на автомата са $Q = \{q_{\scriptscriptstyle{=}},q_{\scriptscriptstyle{<}},q_{\scriptscriptstyle{>}}\}$.
   Искаме да е изпълнено свойствата:

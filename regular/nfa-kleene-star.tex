@@ -1,0 +1,216 @@
+\subsection{Затвореност относно звезда}
+
+\begin{framed}
+  \begin{lemma}
+    \label{lem:kleene-star}
+    Класът от автоматните езици е затворен относно операцията {\em звезда на Клини}, т.е.
+    за всеки автоматен език $L$, езикът $L^\star$ също е автоматен.
+  \end{lemma}  
+\end{framed}
+\begin{proof}
+  Да разгледаме крайния детерминиран автомат
+  \[\A = \pair{\Sigma,Q,\qstart,\delta,F}.\]
+  Първо ще построим недетерминиран краен автомат
+  \[\N = \pair{\Sigma, Q, \qstart, \Delta, F},\] такъв че
+  \[\L(\N) = (\L(\A))^+.\]
+  После ще построим недетерминиран краен автомат $\N'$, за който
+  \[\L(\N') = \L(\N) \cup \{\varepsilon\} = (\L(\A))^\star.\]
+
+  Дефинираме функцията на преходите $\Delta$ на $\N$ като за $q \in Q$ и $a \in \Sigma$ определяме функцията на преходите $\Delta$ по следния начин:
+  \begin{align*}
+    \Delta(q,a) \df
+    \begin{cases}
+      \{\delta(q,a)\}, & \text{ако } q \not\in F\\
+      \{\delta(q,a), \delta(\qstart,a) \}, & \text{ако } q \in F.
+    \end{cases}
+  \end{align*}
+    
+  Нека $\alpha = a_0a_1\cdots a_{n-1} \in \L(\N)$.
+  Това означава, че $(\qstart,\alpha) \vdash^\star_\N (f,\varepsilon)$ за някое $f \in F$.
+  Нека редицата от състояния $(q_i)^n_{i=0}$ описва едно приемащо изчисление на $\N$ върху $\alpha$, т.е.
+  \begin{itemize}
+  \item
+    $q_0 = \qstart$;
+  \item
+    $q_{i+1} \in \Delta(q_i,a_i)$;
+  \item
+    $q_n \in F$.
+  \end{itemize}
+  Да разгледаме максималната подпоследователност от състояния $(q_{i_j})^{l+1}_{j = 0}$ на $(q_i)^{n}_{i=0}$ съставена от тези състояния, за които
+  \marginpar{Тук е малко по-сложно, защото правим разбиване на изчислението не на база всички финални състояния, а на тези финални състояния, от които изчислението продължава в насленик на $\qstart$,
+  защото това са местата, където можем да разцепим думата на части.}
+  \begin{itemize}
+  \item
+    $q_{i_0} = \qstart$;
+  \item
+    $q_{i_j} \in F\ \&\ \delta(\qstart,a_{i_j}) = q_{i_j+1}$, за $j = 1,\dots,l$;
+  \item
+    $q_{i_{l+1}} = q_n$.
+  \end{itemize}
+  Да разбием думата $\alpha$ като $\alpha = \alpha_0\alpha_1\cdots\alpha_l$, където:
+  \begin{align*}
+    & \alpha_0 \df a_{i_0} \alpha'_0\\
+    & \alpha_1 \df a_{i_1}\alpha'_1\\
+    & \cdots\\
+    & \alpha_l \df a_{i_l}\alpha'_l.
+  \end{align*}
+  Сега можем да разбием изчислението на $\N$ върху $\alpha$ по следния начин:
+  \begin{align*}
+    (q_{i_0},\alpha_{0}\alpha_{1}\cdots \alpha_{l}) & \vdash^\star_\N (q_{i_1}, \alpha_{1}\cdots \alpha_{l}) & \comment{ q_{i_0} = \qstart}\\
+                                                    & \vdash^\star_\N (q_{i_2},\alpha_{2}\cdots \alpha_{l})\\
+                                                    & \cdots\\
+                                                    & \vdash^\star_\N (q_{i_{l}}, \alpha_{l})\\
+                                                    & \vdash^\star_\N(q_{i_{l+1}},\varepsilon). & \comment{ q_{i_{l+1}} = q_n \in F}
+  \end{align*}
+  Да разгледаме само първата част на изчислението:
+  \[\underbrace{(q_{i_0},\alpha_0) \vdash^\star_\N (q_{i_1}, \varepsilon)}_{\text{само преходи от }\A}.\]
+  Понеже $q_{i_0} = \qstart$ и $q_{i_1} \in F$, то е ясно, че $\alpha_0 \in \L(\A)$.
+  
+  За $j = 0,\dots,l$, изчислението
+  \[(q_{i_j},\alpha_j) \vdash^\star_\N (q_{i_{j+1}},\varepsilon)\]
+  може по-подробно да се запише и така:
+  \[(q_{i_j}, a_{i_{j}}\alpha'_j) \vdash_\N \underbrace{(q_{i_j+1}, \alpha'_j)  \vdash^\star_\N (q_{i_{j+1}},\varepsilon)}_{\text{само преходи от }\A}.\]
+  Понеже имаме, че $\delta(\qstart,a_{i_j}) = q_{i_j+1}$, то оттук следва, че:
+  \[\underbrace{(\qstart,a_{i_j}\alpha'_{j}) \vdash_\N (q_{i_j+1}, \alpha'_{j})}_{\text{преход от }\A}  \vdash^\star_\A (q_{i_{j+1}},\varepsilon).\]
+  Заключаваме, че
+  \[(\qstart,\alpha_{j}) \vdash^\star_\A (q_{i_{j+1}},\varepsilon).\]
+  Понеже $q_{i_{j+1}} \in F$, веднага следва, че $\alpha_{j} \in \L(\A)$.
+  От всичко дотук заключваме, че $\alpha \in (\L(\A))^+$.
+
+  За другата посока, нека $\alpha \in (\L(\A))^+$.
+  Това означава, че думата $\alpha$ може да се представи като
+  $\alpha = \alpha_0 \cdot \alpha_1 \cdots \alpha_l$, където $\alpha_j \in \L(\A)$ и $\alpha_j \neq \varepsilon$, за $j = 0,\dots, l$.
+  Нека за $j=0,\dots,l$ да положим
+  \[\alpha_j \df a_j \cdot \alpha'_j\text{ и } q_{j} \df \delta(\qstart, a_j).\]
+  Оттук получаваме за $j = 0,\dots,l$ следните изчисления:
+  \[(\qstart, \alpha_{j}) \vdash_\A (q_{j}, \alpha'_j) \vdash^\star_\A (f_{j}, \varepsilon), \text{ за някои }f_j \in F.\]
+  Понеже функцията на преходите на $\N$ разширява функцията на преходите на $\A$, то е ясно е, че имаме също така и следното:
+  \[(\qstart, \alpha_{j}) \vdash_\N (q_{j}, \alpha'_j) \vdash^\star_\N (f_{j}, \varepsilon), \text{ за някои }f_j \in F.\]
+
+  За $1 \leq j < l$,
+  понеже $\delta(\qstart,a_{j}) = q_{j}$ и $f_{j-1} \in F$, то според конструкцията на недетерминирания краен автомат $\N$,
+  \[q_{j} \in \Delta(f_{j-1}, a_{j}).\]
+  Оттук следва, че имаме следното изчисление на $\N$ върху $\alpha$:
+  \begin{align*}
+    &(\qstart, \alpha_{0}) \vdash^\star_\N (f_{0}, \varepsilon) & \comment\text{за някое }f_0 \in F\\
+    &(f_0, \alpha_{1}) \vdash_\N (q_{1}, \alpha'_1) \vdash^\star_\N (f_{1}, \varepsilon) & \comment\text{за някое }f_1 \in F\\
+    &(f_1, \alpha_{2}) \vdash_\N (q_{2}, \alpha'_2) \vdash^\star_\N (f_{2}, \varepsilon) & \comment\text{за някое }f_2 \in F\\
+    &\dots\\
+    &(f_{l-1}, \alpha_{l}) \vdash_\N (q_{l}, \alpha'_l) \vdash^\star_\N (f_{l}, \varepsilon). & \comment\text{за някое }f_l \in F
+  \end{align*}
+  Обединявайки всичко това, заключаваме, че  $\alpha \in \L(\N)$.
+
+  Така доказахме, че $\L(\N) = (\L(\A))^+$.
+  Сега ще построим недетерминиран краен автомат
+  \[\N' = \pair{\Sigma,Q',\qstart',\Delta',F'},\]
+  такъв че
+  \[\L(\N') = \L(\N)\cup\{\varepsilon\} = (\L(\A))^+ \cup \{\varepsilon\} = (\L(\A))^\star.\]
+  \begin{itemize}
+  \item
+    $Q' = Q \cup \{\qstart'\}$;
+  \item
+    $F' = F \cup \{\qstart'\}$;
+  \item
+    $\Delta'(\qstart',a) = \Delta(\qstart,a)$, за всяко $a \in \Sigma$;
+  \item
+    $\Delta'(q,a) = \Delta(q,a)$, за всяко $a \in \Sigma$ и $q\in Q$.
+  \end{itemize}
+  Лесно се съобразява, че $\L(\N') = \L(\N)\cup\{\varepsilon\}$.
+\end{proof}
+
+\begin{example}
+  Нека да приложим конструкцията за да намерим автомат разпознаващ $\L(\A)^\star$.
+  
+  \begin{figure}[H]
+    % \center
+    \begin{subfigure}[b]{0.3\textwidth}
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        \node[initial below,state] (1) {$q_0$};
+        \node[state]               (2) [right of=1] {$q_1$};
+        \node[state,accepting]     (3) [right of=2] {$q_2$};
+        \node[state,accepting]     (4) [above of=2] {$q_3$};
+        \node[state]               (5) [above of=3] {$q_4$};
+        \path
+        (1) edge [bend right=15] node [below] {$a$} (2)
+        (1) edge [bend left=15]  node [above] {$b$} (4)
+        (2) edge [bend left=15]  node [left] {$a$} (4)
+        (2) edge [bend right=15] node [below] {$b$} (3)
+        (5) edge [loop above]    node [above] {$a,b$} (5)
+        (4) edge [bend left=15]  node [above] {$a,b$} (5)
+        (3) edge [bend right=15] node [right] {$b$} (5)
+        (3) edge [bend left=45]  node [below] {$a$} (1);
+      \end{tikzpicture}
+      \caption{автомат $\A$}
+    \end{subfigure}
+    \hspace{2cm}
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[initial below, state] (1) [below right of=0] {$q_0$};
+        \node[state]                (2) [right of=1] {$q_1$};
+        \node[state,accepting]      (3) [right of=2] {$q_2$};
+        \node[state,accepting]      (4) [above of=2] {$q_3$};
+        \node[state]                (5) [above of=3] {$q_4$};
+        \path
+        (1) edge [bend left=15] node [above] {$b$} (4)
+        (1) edge [bend right=15] node [below] {$a$} (2)
+        (2) edge [bend right=15] node [below] {$b$} (3)
+        (2) edge [bend left=15]  node [left] {$a$} (4)
+        (3) edge [bend left=45]  node [below] {$a$} (1)
+        (3) edge [dashed, bend right=20] node [above] {$b$} (4)
+        (4) edge [dashed,bend left=15] node [right] {$a$} (2)
+        (4) edge [dashed, loop above] node {$b$} (4)
+        (5) edge [loop above] node [above] {$a,b$} (5)
+        (4) edge [bend left=15] node [above] {$a,b$} (5)
+        (3) edge [bend right=15] node [right] {$b$} (5)
+        (3) edge [dashed, bend right=15] node [above] {$a$} (2);        
+      \end{tikzpicture}
+      \caption{$\L(\N) = \L(\A)^+$}
+    \end{subfigure}
+  \end{figure}
+    
+  \marginpar{Лесно се вижда, че $\L(\A) = \{b\} \cup \{ab\}\cdot\{aba\}^\star$}
+  След като построим автомат за езика $\L(\A)^+$, трябва да приложим
+  конструкцията за обединение на автомата за езика $\L(\A)^+$ с автомата за езика $\{\varepsilon\}$.
+  Защо трябва да добавим ново начално състояние $q_0'$?
+  Да допуснем, че вместо това сме направили $q_0$ финално.
+  Тогава има опасност да разпознаем повече думи. Например, думата $aba$ би се разпознала от този автомат,
+  но $aba \not\in\L(\A)^\star$.
+  
+  \begin{figure}[H]
+    \centering
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        \node[initial, state, accepting] (0) [above left of=1] {$q'_0$};
+        \node[state] (1) [below right of=0] {$q_0$};
+        \node[state]                (2) [right of=1] {$q_1$};
+        \node[state,accepting]      (3) [right of=2] {$q_2$};
+        \node[state,accepting]      (4) [above of=2] {$q_3$};
+        \node[state]                (5) [above of=3] {$q_4$};
+        \path
+        (0) edge [dashed, bend left=15] node [above] {$b$} (4)
+        (0) edge [dashed, bend left=15] node [above] {$a$} (2)
+        (1) edge [bend left=15] node [above] {$b$} (4)
+        (1) edge [bend right=15] node [below] {$a$} (2)
+        (2) edge [bend right=15] node [below] {$b$} (3)
+        (2) edge [bend left=15]  node [left] {$a$} (4)
+        (3) edge [bend left=45]  node [below] {$a$} (1)
+        (3) edge [dashed, bend right=20] node [above] {$b$} (4)
+        (4) edge [dashed,bend left=15] node [right] {$a$} (2)
+        (4) edge [dashed, loop above] node {$b$} (4)
+        (5) edge [loop above] node [above] {$a,b$} (5)
+        (4) edge [bend left=15] node [above] {$a,b$} (5)
+        (3) edge [bend right=15] node [right] {$b$} (5)
+        (3) edge [dashed, bend right=15] node [above] {$a$} (2);        
+      \end{tikzpicture}
+      \caption{$\L(\N') = \L(\N) \cup \{\varepsilon\} = \L(\A)^\star$}    
+  \end{figure}
+
+\end{example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

@@ -1,0 +1,266 @@
+\subsection{Примери}
+
+\begin{example}
+  Да разгледаме езика $L = \L(\mathbf{a\cdot(a+b)^\star\cdot b})$.
+  \begin{itemize}
+  \item 
+    $a^{-1}(L) = \{a,b\}^\star b \df M$.
+    Имаме, че $M \neq L$, защото $b \in M$, но $b \not\in L$.
+    Тогава $\delta(q_L, a) \df q_M$.
+    За по-нататък ще е удобно да представим $M$ по следния начин:
+    \[M = a\cdot \{a,b\}^\star \cdot b \cup b\cdot \{a,b\}^\star \cdot b \cup \{b\}.\]
+  \item
+    $b^{-1}(L) = \emptyset$. Тогава $\delta(q_L,b) \df q_\emptyset$;
+  \item
+    $a^{-1}(M) = \{a,b\}^\star b = M$.
+    Тогава $\delta(q_M,a) = q_M$.
+  \item
+    $b^{-1}(M) = \{\varepsilon\} \cup \{a,b\}^\star b \df N$.
+    Ясно е, че $N \neq L,M$, защото $\varepsilon \in N$, но $\varepsilon \not\in L,M$. Тогава
+    \[\delta(q_M,b) = q_N.\]
+    Също така, $q_N$ е финално състояние.
+    Нека за удобство да представим езика $N$ по следния начин:
+    \[N = \{\varepsilon\} \cup a\cdot\{a,b\}^\star\cdot b \cup b\cdot\{a,b\}^\star\cdot b \cup \{b\}.\]
+  \item
+    $a^{-1}(N) = \{a,b\}^\star b = M$, т.е. $\delta(q_N,a) = q_M$;
+  \item
+    $b^{-1}(N) = \{a,b\}^\star b = M$, т.е. $\delta(q_N,b) = q_N$;
+  \item
+    Ясно е, че $a^{-1}(\emptyset) = b^{-1}(\emptyset) = \emptyset$, т.е.
+    $\delta(\emptyset,a) = \delta(\emptyset,b) = \emptyset$.
+  \end{itemize}
+\begin{framed}
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      
+      \node[initial, state]                   (L) {$q_L$};
+      \node[state]                            (M) [above right of=L]{$q_M$};
+      \node[state]                            (E) [below right of=L]{$q_\emptyset$};
+      \node[state,accepting]                  (N) [right of=M]{$q_N$};
+      
+      \path 
+      (L) edge [bend left=15]  node [above] {$a$} (M)
+      (L) edge [bend right=15] node [above] {$b$} (E)
+      (E) edge [loop right]    node [right] {$a,b$} (E) 
+      (M) edge [bend right=15] node [below] {$b$} (N)
+      (M) edge [loop above]    node [above] {$a$} (M)
+      (N) edge [bend right=30] node [above] {$a$} (M)
+      (N) edge [loop above]    node [above] {$b$} (N);
+    \end{tikzpicture}
+    \caption{Минимален автомат за $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$}
+  \end{figure}
+\end{framed}
+\end{example}
+
+\begin{example}
+  Да разгледаме езика 
+  \[L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа четен брой $a$ и точно едно $b$}\}.\]
+  Нека да видим дали можем да построим автомат за този език.
+  \begin{itemize}
+  \item 
+    $a^{-1}(L) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и точно едно $b$}\} \df M$;
+  \item 
+    $b^{-1}(L) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа четен брой $a$ и нито едно $b$}\} \df N$;
+  \item
+    $a^{-1}(M) = L$;
+  \item
+    $b^{-1}(M) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и нито едно $b$}\} \df P$;
+  \item
+    $a^{-1}(N) = P$;
+  \item
+    $b^{-1}(N) = \emptyset$;
+  \item
+    $a^{-1}(P) = N$;
+  \item
+    $b^{-1}(P) = \emptyset$;
+  \end{itemize}
+
+\begin{framed}
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=65pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      
+      \node[initial, state]        (L) {$q_L$};
+      \node[state]                 (M) [above right of=L]{$q_M$};
+      \node[state, accepting]      (N) [below right of=M]{$q_N$};
+      \node[state]                 (P) [right of=M]{$q_P$};
+      \node[state]                 (E) [right of=N]{$q_\emptyset$};
+            
+      \path 
+      (L) edge [bend right=15]  node [below] {$a$} (M)
+      (M) edge [bend right=15]  node [above] {$a$} (L)
+      (L) edge [bend right=15]  node [above] {$b$} (N)
+      (M) edge [bend left=15]   node [above] {$b$} (P)
+      (N) edge [bend left=15]   node [left] {$a$} (P)
+      (P) edge [bend left=15]   node [right] {$a$} (N)
+      (P) edge [bend left=15]   node [right] {$b$} (E)
+      (N) edge [bend right=15]  node [below] {$b$} (E);
+    \end{tikzpicture}
+    \caption{Минимален автомат, който приема думи с четен брой $a$ и точно едно $b$}
+  \end{figure}  
+\end{framed}
+\end{example}
+
+
+Можем да дадем и следната дефиниция на $\ov{\alpha}_{(2)}$:
+\begin{itemize}
+\item
+  $\ov{\varepsilon}_{(2)} = 0$,
+\item
+  $\ov{0\alpha}_{(2)} = \ov{\alpha}_{(2)}$,
+\item
+  $\ov{1\alpha}_{(2)} = 2^{|\alpha|} + \ov{\alpha}_{(2)}$.
+\end{itemize}
+
+Тогава:
+\begin{align*}
+  0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = L\\
+  \\
+  1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & \df L_1.
+\end{align*}
+
+Лесно се съобразява, че $L \neq L_1$, защото например за думата $\alpha = 10$
+имаме, че $\alpha \in L$, но $\alpha \not\in L_1$.
+Продължаваме нататък:
+\begin{align*}
+  0^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_1\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & \df L_2\\
+  \\
+  1^{-1}(L_1) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_1\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L.
+\end{align*}
+Да проверим, че $L_2 \neq L$ и $L_2 \neq L_1$.
+Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
+Непосредствено се проверява, че $\alpha \in L_2$, $\alpha \not\in L$, $\alpha \not\in L_1$.
+Продължаваме нататък:
+\begin{align*}
+  0^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L_2\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \ov{0\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L_1
+  \\
+  1^{-1}(L_2) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L_2\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \ov{1\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \ov{\alpha}_{(2)} \equiv 2 \bmod 3\}\\
+              & = L_2.
+\end{align*}
+
+Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
+
+\begin{framed}
+  \begin{figure}[H]
+    \begin{center}
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+        \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+        
+        \node[initial,state]      (0) {$L$};
+        \node[state]              (1) [right of=0]{$L_1$};
+        \node[accepting, state]   (2) [right of=1]{$L_2$};
+        
+        \path 
+        (0) edge  [loop above]    node [above]  {$0$} (0)
+        (0) edge  [bend left=15]  node [above]  {$1$} (1)
+        (2) edge  [bend left=15]  node [below]  {$0$} (1)
+        (1) edge  [bend left=15]  node [below]  {$1$} (0)
+        (1) edge  [bend left=15]  node [above]  {$0$} (2)
+        (2) edge  [loop above]    node [above]  {$1$} (2);
+      \end{tikzpicture}
+    \end{center}
+    \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
+  \end{figure}
+\end{framed}
+
+
+
+
+\begin{example}
+  Да разгледаме езика $L = \{a^nb^n\mid n \in \Nat\}$. Да се опитаме да построим автомат, който го разпознава.
+  Нека
+  \[L_k \df \{a^nb^{n+k}\mid n \in \Nat\}.\]
+  Да видим какво се получава като приложим процедурата за строене 
+  на минимален автомат.
+  \begin{itemize}
+  \item 
+    $a^{-1}(L) = L_1$;
+  \item
+    $b^{-1}(L) = \emptyset$;
+  \item
+    $a^{-1}(L_1) = L_2$;
+  \item
+    $b^{-1}(L_1) = \{\varepsilon\}$;
+  \item
+    $a^{-1}(\{\varepsilon\}) = b^{-1}(\{\varepsilon\}) = \emptyset$;
+  \item
+    Вижда се, че $a^{-1}(L_k) = L_{k+1}$, за всяко $k$.
+  \item
+    Вижда се, че $b^{-1}(L_{k+1}) = \{b^k\}$, за всяко $k$.
+    Освен това е ясно, че $b^{-1}(\{b^{k}\}) = \{b^{k-1}\}$, за всяко $k \geq 1$.
+  \end{itemize}
+  Получаваме, че езикът $L$ се разпознава от автомат с {\em безкрайно много състояния}.
+
+\begin{framed}  
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=70pt]
+      \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+      
+      \node[state, initial above]             (0) {$L$};
+      \node[state]                            (1) [right of=0]{$L_1$};
+      \node[state]                            (2) [right of=1]{$L_2$};
+      \node[state]                            (3) [right of=2]{$L_3$};
+      \node[state,accepting]                  (A) [below of=1]{$\{\varepsilon\}$};
+      \node[state]                            (B) [below right of=1]{$\{b\}$};
+      \node[state]                            (BB) [below right of=2]{$\{bb\}$};
+      \node[state]                            (E) [below of=A]{$\emptyset$};
+      
+      \coordinate[right of=3] (4);
+      \coordinate[below right of=3] (BBB);
+      \coordinate[below of=4] (BBBA);
+
+      \path 
+      (0) edge [bend left=15]   node [above] {$a$} (1)
+      (1) edge [bend left=15]   node [above] {$a$} (2)
+      (2) edge [bend left=15]   node [above] {$a$} (3)
+      (0) edge [bend right=30]  node [left] {$b$} (E)
+      (E) edge [loop left]      node [left] {$a,b$} (E)
+      (1) edge [bend right=30]  node [left] {$b$} (A)
+      (2) edge [bend right=15]  node [left] {$b$} (B)
+      (3) edge [bend right=15]  node [left] {$b$} (BB)
+      (B) edge [bend right=15]  node [above] {$b$} (A)
+      (B) edge [bend left=15]  node [right] {$a$} (E)
+      (A) edge [bend right=15]   node [right] {$a,b$} (E)
+      (BB) edge [bend right=15] node [above] {$b$} (B)
+      (BB) edge [bend left=15]  node [below] {$a$} (E);
+      
+      \draw [dashed,->,shorten >=0pt] (3) to[bend left=15] node[auto] {$a$} (4);
+      \draw [dashed,->,shorten >=0pt] (BBB) to[bend right=15] node[above] {$b$} (BB);
+      \draw [dashed,->,shorten >=0pt] (BBBA) to[bend left=30] node[below] {$a$} (E);
+    \end{tikzpicture}
+    \caption{{\em Безкраен} автомат за $\{a^nb^n \mid n \in \Nat\}$}
+  \end{figure}
+\end{framed}
+\end{example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

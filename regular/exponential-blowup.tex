@@ -1,0 +1,64 @@
+\subsection{Експоненциална експлозия}\label{sect:regular:nfa:exponential-blowup}
+
+\begin{proposition}
+  Съществува НКА $\N$ с $n+1$ състояния, за който не съществува ДКА $\A$ с по-малко от $2^n$ състояния.
+\end{proposition}
+\begin{hint}
+  Да разгледаме следния недетерминиран автомат $\N$.
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+      \node[initial below,state]              (0) {$q_0$};
+      \node[state]                [right of=0] (1) {$q_1$};
+      \node[state]                [right of=1] (2) {$q_2$};
+      \node[state]                [right of=2] (3) {$q_3$};
+      \coordinate[right of=3] (4);
+      \coordinate[right of=4] (5);
+      \node[state,accepting]      [right of=5] (6) {$q_n$};
+      \path
+      (0) edge [loop above] node [above] {$a,b$} (0)
+      (0) edge [bend left=15] node  [above] {$a$} (1)
+      (1) edge [bend left=15] node  [above] {$a,b$} (2)
+      (2) edge [bend left=15] node  [above] {$a,b$} (3);
+
+      \draw [dashed,->,shorten >=0pt] (3) to[bend left=15] node[above] {$a,b$} (4);
+      \draw [dashed,->,shorten >=0pt] (5) to[bend left=15] node[above] {$a,b$} (6);
+    \end{tikzpicture}
+    \caption{недетерминиран автомат $\N$}
+    \label{fig:nfa:exp}
+  \end{figure}
+  
+  Лесно се съобразява, че за $n > 0$, недетерминирният краен автомат $\N$ на \Figure{nfa:exp} с $n+1$ на брой състояния разпознава езика
+  \[L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta \cdot a \cdot \gamma\ \&\ |\gamma| = n-1\}.\]
+  Нека да съобразим, че не е възможно да съществува краен детерминиран автомат $\A = \FA$ разпознаващ същия език $L$ с по-малко от $2^n$ състояния.
+
+  Да допуснем, че $|Q| < 2^n$. От принципа на Дирихле имаме, че съществуват две различни думи $\alpha$ и $\beta$ с дължина $n$,
+  за които съществува $q \in Q$ и
+  \marginpar{Да напомним, че броят на всички думи с дължина $n$ над азбука с $k$ букви е $k^n$. В нашия случай, $k = 2$.}
+  \[\delta^\star(\qstart,\alpha) = q = \delta^\star(\qstart,\beta).\]
+
+  Нека първата разлика в тези две думи е на позиция $i < n$.
+  \begin{itemize}
+  \item
+    Ако $i = 0$, то нека без ограничение на общността да имаме, че $\alpha[0] = a$ и $\beta[0] = b$.
+    Това означава, че $\alpha \in L$, но $\beta \not\in L$.
+    Следователно състоянието $q$ е едновременно финално и нефинално. Това е противоречие.
+  \item
+    Ако $i > 0$, то нека без ограничение на общността да имаме, че $\alpha[i] = a$ и $\beta[i] = b$.
+    Да разгледаме следните думи:
+    \begin{align*}
+      & \alpha_0 = \alpha \cdot a^{i}\\
+      & \beta_0 = \beta \cdot a^{i}.
+    \end{align*}
+    Така отново получаваме, че $\alpha_0 \in L$, но $\beta_0 \not\in L$.
+    И в този случай получаваме противоречие, защото
+    \[\delta^\star(\qstart,\alpha_0) = q = \delta^\star(\qstart,\beta_0)\]
+    и състоянието $q$ трябва да е едновременно финално и нефинално.
+  \end{itemize}  
+\end{hint}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
