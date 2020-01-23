@@ -186,60 +186,44 @@
 
 
 \begin{problem}
+  \marginpar{Да обърнем внимание, че езикът $L = \{a^nb^mc^k \mid n+m = k\}$ не е регулярен.}
   Да разгледаме азбуката:
   \[\Sigma_3 = \left\{\begin{bmatrix} 0\\0\\0\end{bmatrix},\begin{bmatrix} 0\\0\\1\end{bmatrix},\begin{bmatrix} 0\\1\\0\end{bmatrix},\begin{bmatrix} 0\\1\\1\end{bmatrix},\dots,\begin{bmatrix} 1\\1\\1\end{bmatrix}\right\}.\]
   Докажете, че 
-  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \ov{\alpha}_{(2)}+\ov{\beta}_{(2)} = \ov{\gamma}_{(2)}\right\}$
+  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \bin{\alpha}+\bin{\beta} = \bin{\gamma}\right\}$
   е автоматен език.
 \end{problem}
 \ifhints
 \begin{hint}
-  По-удобно е да построим автомат $\A$, $\L(\A) = L^{\texttt{rev}}$.
+  Доста по-удобно е да построим автомат $\A$, такъв че $\L(\A) = L^{\texttt{rev}}$.
   Да започнем с състоянието $q_{\scriptscriptstyle{=}}$, за което искаме да имаме свойството, че за произволно състояние $q$,
-  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \ov{\alpha^{\texttt{rev}}}_{(2)} + \ov{\beta^{\texttt{rev}}}_{(2)} = \ov{\gamma^{\texttt{rev}}}_{(2)}.\]
-  Понеже за $\ov{\varepsilon}_{(2)} + \ov{\varepsilon}_{(2)} = \ov{\varepsilon}_{(2)}$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
-  \begin{itemize}
-  \item 
-    Нека $\ov{\alpha}_{(2)}+\ov{\beta}_{(2)} = \ov{\gamma}_{(2)}$. Тогава:
-    \begin{itemize}
-    \item 
-      $\ov{0\alpha}_{(2)} + \ov{0\beta}_{(2)} = \ov{0\gamma}_{(2)}$. Следователно,
-      \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}.\]
-    \item
-      $\ov{0\alpha}_{(2)} + \ov{1\beta}_{(2)} = \ov{1\gamma}_{(2)}$. Следователно,
-      \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) = q_{\scriptscriptstyle{=}}.\]
-    \item
-      $\ov{1\alpha}_{(2)} + \ov{0\beta}_{(2)} = \ov{1\gamma}_{(2)}$. Следователно,
-      \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}.\]
-    \item
-      $\ov{1\alpha}_{(2)} + \ov{1\beta}_{(2)} = \ov{10\gamma}_{(2)}$. Този случай е по-специален и трябва да бъде разгледан отделно.
-      Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца. Затова имаме следния преход:
-      \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) = q_1.\]
-    \item
-      За останалите $x \in \Sigma_3$ имаме, че
-      \[\delta(q_{\scriptscriptstyle{=}},x) = q_{\texttt{err}},\]
-      където $q_{\texttt{err}}$ е състоянието, от което не можем да излезем.
-    \end{itemize}
-  \item
-    Горните разглеждания ни подсказват, че ще ни трябва и състояние $q_1$, за което искаме да е изпълнено свойството,
-    че за произволно $q$,
-    \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \alpha^{\texttt{rev}}_{(2)} + \beta^{\texttt{rev}}_{(2)} = 1\gamma^{\texttt{rev}}_{(2)}.\]
-    Да разгледаме сега случая $\alpha + \beta = 1\gamma$. Тогава:
-    \begin{itemize}
-    \item 
-      Очевидно е, че $0\alpha + 0\beta = 1\gamma$. Следователно,
-      \[\delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}}.\]
-    \item
-      $1\alpha + 1\beta = 11\gamma$. Следователно,
-      \[\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) = q_{1}.\]
-    \item
-      $1\alpha + 0\beta = 10\gamma$ и $0\alpha + 1\beta = 10\gamma$. Следователно,
-      \[\delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) = \delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) = q_{1}.\]
-    \item
-      За останалите $x \in \Sigma_3$ имаме, че
-      \[\delta(q_{1},x) = q_{\texttt{err}}.\]
-    \end{itemize}    
-  \end{itemize}
+  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{=}}  \iff \bin{\alpha^{\rev}} + \bin{\beta^{\rev}} = \bin{\gamma^{\rev}}.\]
+  Понеже за $\bin{\varepsilon} + \bin{\varepsilon} = \bin{\varepsilon}$, състоянието $q_{\scriptscriptstyle{=}}$ ще бъде начално и финално за $\A$.
+
+  Нека $\bin{\alpha}+\bin{\beta} = \bin{\gamma}$. Тогава:
+  \begin{align*}
+    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment\text{ защото }\bin{0\alpha} + \bin{0\beta} = \bin{0\gamma}\\
+    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 1\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment\text{ защото }\bin{0\alpha} + \bin{1\beta} = \bin{1\gamma}\\
+    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}} & \comment\text{ защото }\bin{1\alpha} + \bin{0\beta} = \bin{1\gamma}
+  \end{align*}
+  Остана случая $\bin{1\alpha} + \bin{1\beta} = \bin{10\gamma}$. Този случай е по-специален и трябва да бъде разгледан отделно.
+  Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца. Затова имаме следния преход:
+  \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) \df q_1.\]
+  
+  За останалите $\gamma \in \Sigma_3$ имаме, че
+  \[\delta(q_{\scriptscriptstyle{=}},\gamma) \df q_{\texttt{err}},\]
+  където $q_{\texttt{err}}$ е състоянието, от което не можем да излезем.
+  
+  Така трябва да дефинираме функцията на преходите, че за състоянието $q_1$ трябва да е изпълнено, че за произволно $q$,
+  \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \bin{\alpha^{\rev}} + \bin{\beta^{\rev}} = \bin{1\gamma^{\rev}}.\]
+  Да разгледаме сега случая $\bin{\alpha} + \bin{\beta} = \bin{1\gamma}$. Тогава:
+  \begin{align*}
+    & \delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment\text{ защото }\bin{0\alpha} + \bin{0\beta} = \bin{1\gamma}\\
+    & \delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) \df q_{1} & \comment\text{ защото }\bin{1\alpha} + \bin{1\beta} = \bin{11\gamma}\\
+    & \delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) \df q_{1} & \comment\text{ защото }\bin{1\alpha} + \bin{0\beta} = \bin{10\gamma}\\
+    & \delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) \df q_{1} & \comment\text{ защото }\bin{0\alpha} + \bin{1\beta} = \bin{10\gamma}\\
+    & \delta(q_1, \gamma) \df q_{\texttt{err}} & \comment\text{ за останалите }\gamma \in \Sigma_3
+  \end{align*}
 \end{hint}
 \fi
 

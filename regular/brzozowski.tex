@@ -1,125 +1,128 @@
 \section{Метод на Бжозовски}\label{sect:regular:brzozowski}
 \index{Бжозовски}
 
+Имаме следната операция за произволна буква $a$,
+\[a^{-1}(L) \df \{\omega \in \Sigma^\star \mid a\omega \in L\}.\]
+Аналогично, за произволна дума $\alpha$,
+\[\alpha^{-1}(L) \df \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
+
+\begin{problem}
+  Докажете, че:
+  \begin{enumerate}[(1)]
+  \item
+    $a^{-1}(L_1 \cup L_2) = a^{-1}(L_1) \cup a^{-1}(L_2)$;
+  \item
+    $a^{-1}(L_1 \cap L_2) = a^{-1}(L_1) \cap a^{-1}(L_2)$;
+  \item
+    $a^{-1}(L_1 \setminus L_2) = a^{-1}(L_1) \setminus a^{-1}(L_2)$;
+  \item
+    $a^{-1}(L_1 \cdot L_2) =
+    \begin{cases}
+      a^{-1}(L_1) \cdot L_2, & \text{ ако }\varepsilon\not\in L_1\\
+      a^{-1}(L_1) \cdot L_2 \cup L_2, & \text{ ако }\varepsilon\in L_1
+    \end{cases}$
+  \item
+    $a^{-1}(L^\star) = a^{-1}(L) \cdot L^\star$.
+  \end{enumerate}
+\end{problem}
+
+
 \marginpar{Бжозовски \cite{brzozowski-derivatives} описва алгоритъм за строене на автомат по регулярен израз.}
 
 Да видим как можем директно да построим минимален тотален краен детерминиран автомат $\A$
 разпознаващ регулярен език $L$, където \[\A = \pair{Q,\Sigma,\qstart,\delta,F}.\]
-%\marginpar{За момента няма как да знаем, че автоматът, който ще построим е минимален. Това ще докажем по-късно след като разгледаме теоремата на Майхил-Нероуд}
-Състоянията на автомата ще бъдат от вида $q_N$, където $N \subseteq \Sigma^\star$, така че накрая искаме да имаме свойството
-\[N = \{\omega \in \Sigma^\star \mid \delta^\star(q_N,\omega) \in F\}.\]
-Тогава е ясно, че трябва да имаме $\qstart = q_L$, защото 
-\[L = \L(\A) = \{\omega \in \Sigma^\star \mid \delta^\star(q_L,\omega) \in F\}.\]
-Нека да разгледаме езика $L = \L(\mathbf{((a+b)^+\cdot a)^\star})$.
-Сега едновременно ще строим състоянията на автомата $Q$ и функцията на преходите $\delta$.
-Преди да започнем, удобно е да имаме предвид следното представяне
-\begin{align*}
-  L & = \{\varepsilon\} \cup \{a,b\}^+ a L\\
-  & = \{\varepsilon\} \cup a\{a,b\}^\star aL \cup b\{a,b\}^\star aL
-\end{align*}
-
-\begin{itemize}
-\item 
-  $a^{-1}(L) = \{a,b\}^\star aL \df M$.
-  Имаме, че $M \neq L$, защото $\varepsilon \in L$, но $\varepsilon \not\in M$.
-  Понеже $M \neq L$, имаме ново състояние $M$ в автомата и 
-  $\delta_\A(L,a) = M$.
-  Удобно е да представим
-  \begin{align*}
-    M & \df \{a,b\}^\star aL\\
-    & = aL \cup \{a,b\}^+aL\\
-    & = aL \cup aM \cup bM
-  \end{align*}
-\item
-  $b^{-1}(L) = \{a,b\}^\star aL = M$;
-  Следователно, $\delta_\A(q_L,b) = q_M$.
-\item
-  $a^{-1}(M) = L \cup M \df N$. 
-  Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
-  Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
-  Понеже $N \neq L, M$, имаме ново състояние $q_N$ в автомата и 
-  $\delta_\A(q_M,a) = q_N$.
-  Освен това,
-  \begin{align*}
-    N & \df L \cup M \\
-    & = \{\varepsilon\} \cup aM \cup bM \cup M\\
-    & = \{\varepsilon\} \cup aM \cup bM \cup aL.
-  \end{align*}
-\item
-  $b^{-1}(M) = M$. Следователно, $\delta_\A(q_M,b) = q_M$.
-\item
-  $a^{-1}(N) = L \cup M = N$. Следователно, $\delta_\A(q_N,a) = q_N$.
-\item
-  $b^{-1}(N) = M$.
-  Следователно, $\delta_\A(q_M,b) = q_M$.
-\end{itemize}
-От горните сметки следва, че 
-\[(\forall \alpha \in \Sigma^\star)[\alpha^{-1}(L) \in \{L, N, M\}].\]
-Така получихме, че 
-\[Q = \{q_L, q_N, q_M\}.\]
-Нека сега да съобразим кои са финалните състояния.
-Понеже имаме свойството 
-\[L = \{\alpha \in \Sigma^\star \mid \varepsilon \in \alpha^{-1}(L)\},\]
-то следва, че финалните състояния на автомата $\A$ са $q_L$ и $q_N$,
-защото $\varepsilon \in L,N$. 
-Сега вече сме готови да нарисуваме картинка на автомата.
-
-\begin{framed}
-\begin{figure}[H]
-  \begin{subfigure}[b]{.4\textwidth}
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
-      \tikzstyle{every state}=[circle,minimum size=20pt,font=\small]
-      \node[initial above, state,accepting]   (L) {$q_L$};
-      \node[state]                            (M) [right of=L]{$q_M$};
-      \node[state,accepting]                  (N) [right of=M]{$q_N$};
-      
-      
-      \path 
-      (L) edge [bend left=15] node [above] {$a,b$}   (M)
-      (M) edge [loop above] node [above] {$b$} (M)
-      (M) edge [bend left=15] node [above] {$a$} (N)
-      (N) edge [bend left=15] node [below] {$b$} (M)
-      (N) edge [loop above] node [above] {$a$} (N);
-    \end{tikzpicture}
-    \caption{Автомат $\A$ за езика $\L(\mathbf{((a+b)^+a)^\star})$}
-  \end{subfigure}
-  \quad
-  ~
-  \quad
-  \begin{subfigure}[b]{.4\textwidth}
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
-      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-      
-      \node[initial above, state,accepting]   (L) {$[\varepsilon]_L$};
-      \node[state]                            (M) [right of=L]{$[a]_L$};
-      \node[state,accepting]                  (N) [right of=M]{$[aa]_L$};
-      
-      
-      \path 
-      (L) edge [bend left=15] node [above] {$a,b$}   (M)
-      (M) edge [loop above] node [above] {$b$} (M)
-      (M) edge [bend left=15] node [above] {$a$} (N)
-      (N) edge [bend left=15] node [below] {$b$} (M)
-      (N) edge [loop above] node [above] {$a$} (N);
-    \end{tikzpicture}
-    \caption{Минимален автомат $\M$ за езика $\L(\mathbf{((a+b)^+a)^\star})$}
-  \end{subfigure}
-\end{figure}
-\end{framed}
-
 Конструкцията на автомата $\A$ е следната:
 \begin{itemize}
-\item 
-  $Q^\A = \{q_M \mid M = \alpha^{-1}(L) \text{, за някоя }\alpha \in \Sigma^\star\}$;
 \item
-  $\qstart^\A = q_L$;
+  Състоянията $Q$ ще бъдат от вида $q_M$, за $M \subseteq \Sigma^\star$, където:
+  \[Q \df \{q_M \mid (\exists \alpha\in\Sigma^\star)[M = \alpha^{-1}(L)].\]
 \item
-  $F^\A = \{q_N \in Q^\A \mid \varepsilon \in N\}$;
+  $\qstart \df q_L$.
 \item
-  $\delta_\A(q_N,a) = q_M$, където $M = a^{-1}(N)$.
+  За произволни езици $M$ и $N$ и буква $x$,
+  \[\delta(q_M,x) = q_N \stackrel{\text{деф}}{\iff} N = x^{-1}(M).\]
+\item
+  \marginpar{Да напомним, че имаме свойството
+  \[\alpha \in L \iff \varepsilon \in \alpha^{-1}(L).\]}
+  Сега е ясно, че състоянията $Q$ са точно тези състояния $q_M$, които са достижими от началното състояние $q_L$, т.е.
+  \[Q = \{q_M \mid (\exists \alpha \in \Sigma^\star)[\delta(q_L,\alpha) = q_M].\]
+\item
+  $F \df \{ q_M \mid \varepsilon \in M\}$.
 \end{itemize}
 
+\begin{problem}
+  Докажете, че за всяка дума $\alpha$ и всяко $q_M \in Q$,
+  \[N = \alpha^{-1}(M) \iff \delta^\star(q_M,\alpha) = q_N.\]
+\end{problem}
+
+\begin{problem}
+  Докажете, че $L = \L(\A)$.
+\end{problem}
+\begin{hint}
+  Съобразете, че имаме следните еквивалентности:
+  \begin{align*}
+    \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L)\\
+                 & \iff \varepsilon\in M\ \&\ q_M = \delta^\star(q_L,\alpha)\\
+                 & \iff \delta^\star(\qstart,\alpha) \in F.
+  \end{align*}
+\end{hint}
+
+
 \input{regular/brzozowski-solved-examples}
+
+Нека имаме КДА $\A$.
+Дефинираме $\B = \rev(\A)$ да бъде КДА по следния начин:
+\begin{itemize}
+\item
+  Състоянията на $\B$ ще бъдат подмножества на състоянията на $\A$.
+
+\item
+  Да положим $Q_\alpha \df \{q \in Q^\A \mid \delta^\star_\A(q,\alpha) \in F\}$.
+  Тогава
+  $Q^\B \df \{Q_\alpha \mid \alpha \in \Sigma\}$.
+\item
+  $\qstart^\B \df F^\A = Q_\varepsilon$.
+\item
+  За произволно $R \in Q^\B$,
+  $\delta_\B(R,a) \df \{q \in Q^\A \mid \delta_\A(q,a) \in R\}$.
+  С други думи,
+  $\delta_\B(Q_\alpha,a) = Q_{a\alpha}$.
+\item
+  $F^\B = \{Q_\alpha \mid \qstart^\A \in Q_\alpha\}$.
+\item
+  Съобразете, че $\delta^\star_\B(Q_\alpha,\gamma) = Q_{\gamma^\rev\alpha}$.
+  Тогава
+  \begin{align*}
+    \L(\B) & = \{\alpha \mid \delta^\star_\B(Q_\varepsilon,\alpha) = Q_{\alpha^\rev} \in F^\B\}\\
+           & = \{\alpha \mid  \qstart^\A \in Q_{\alpha^\rev}\}\\
+           & = \{\alpha \mid  \delta^\star(\qstart^\A,\alpha^\rev) \in F^\A\}\\
+           & = \L(\A)^\rev.
+  \end{align*}
+\end{itemize}
+
+\begin{problem}
+  Докажете, че $\rev(\A)$ е минимален автомат за $\L(\A)^\rev$.
+\end{problem}
+\begin{hint}
+  Достатъчно е да се докаже, че
+  \[Q_\alpha = Q_\beta \iff \L_\B(Q_\alpha) = \L_\B(Q_\beta).\]
+  Нека $\L_\B(Q_\alpha) = \L_\B(Q_\beta)$. Ще докажем, че $Q_\alpha \subseteq Q_\beta$.
+  Нека $q \in Q_\alpha$. Това означава, че $\delta^\star_\A(q,\alpha) \in F^\A$.
+  Следователно, съществува $\gamma$, за която $\delta^\star_\A(\qstart^\A,\gamma\alpha) \in F^\A$.
+  От друга страна,
+  \begin{align*}
+    \gamma^\rev \in \L_\B(Q_\alpha) & \iff \delta^\star_\B(Q_\alpha,\gamma^\rev) \in F^\B\\
+                                    & \iff Q_{\gamma\alpha} \in F^\B\\
+                                    & \iff \delta^\star_\A(\qstart^\A,\gamma\alpha) \in F^\A.
+  \end{align*}
+\end{hint}
+
+
+\begin{framed}
+  \begin{theorem}[Бжозовски]
+    Нека $\A$ е КДА. Тогава $\rev(\rev(\A))$ е минимален автомат за $\L(\A)$.
+  \end{theorem}
+\end{framed}
 
 %%% Local Variables:
 %%% mode: latex
