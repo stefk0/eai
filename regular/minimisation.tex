@@ -1,4 +1,7 @@
 \section{Минимизация на автомат}
+\label{sect:regular:minimisation}
+\index{минимизация}
+
 \begin{itemize}
 \item
   Да фиксираме произволен детерминиран краен автомат
@@ -25,6 +28,7 @@
 \item
   Да означим
   \[Q/_{\equiv_\A} \df \{\ [q]_{\equiv_\A} \mid q \in Q\ \}.\]
+
 \end{itemize}
 
 \begin{problem}
@@ -41,16 +45,17 @@
   \end{proposition}  
 \end{framed}
 \begin{proof}
-  Нека $L = \L(\A)$ и да разгледаме $h:\Sigma^\star/_{\approx_L} \to Q/_{\equiv_\A}$, където
-  \[h({[\alpha]}_L) \df [\delta^\star(\qstart,\alpha)]_{\equiv_\A}.\]
+  Нека $L = \L(\A)$. Да положим $q_\alpha \df \delta^\star(\qstart,\alpha)$
+  и да разгледаме $h:\Sigma^\star/_{\approx_L} \to Q/_{\equiv_\A}$, където
+  \[h({[\alpha]}_L) \df [q_\alpha]_{\equiv_\A}.\]
   Ще докажем, че $h$ е биекция като използваме свойството, че
   \begin{equation}
     \label{eq:8}
-    \alpha^{-1}(L) = \L_\A(\delta^\star(\qstart,\alpha)),
+    \alpha^{-1}(L) = \L_\A(q_\alpha),
   \end{equation}
   защото за произволна дума $\gamma$,
   \begin{align*}
-    \gamma \in \L_\A(\delta^\star(\qstart,\alpha)) & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F\\
+    \gamma \in \L_\A(q_\alpha) & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F\\
                                                    & \iff \delta^\star(\qstart,\alpha\gamma) \in F & \comment\text{свойство на }\delta^\star\\
                                                    & \iff \alpha \gamma \in \L(\A) & \comment\text{деф. на }\L(\A)\\
                                                    & \iff \gamma \in \alpha^{-1}(\L(\A))\\
@@ -63,8 +68,8 @@
   \end{equation}
   защото
   \begin{align*}
-    h({[\alpha]}_L) = h({[\beta]}_L) & \iff {[\delta^\star(\qstart,\alpha)]}_{\equiv_\A} = {[\delta^\star(\qstart,\beta)]}_{\equiv_\A} & \comment\text{деф. на }h\\ 
-                                     & \iff \L_\A(\delta^\star(\qstart,\alpha)) = \L_\A(\delta^\star(\qstart,\beta)) & \comment\text{деф. на }\equiv_\A\\
+    h({[\alpha]}_L) = h({[\beta]}_L) & \iff {[q_\alpha]}_{\equiv_\A} = {[q_\beta]}_{\equiv_\A} & \comment\text{деф. на }h\\ 
+                                     & \iff \L_\A(q_\alpha) = \L_\A(q_\beta) & \comment\text{деф. на }\equiv_\A\\
                                      & \iff \alpha^{-1}(L) = \beta^{-1}(L) & \comment\text{от (\ref{eq:8})}\\
                                      & \iff {[\alpha]}_L = {[\beta]}_L. & \comment\text{деф. на }\approx_L
   \end{align*}
@@ -478,7 +483,6 @@
       
   \end{itemize}
 \end{example}
-
 
 %%% Local Variables:
 %%% mode: latex

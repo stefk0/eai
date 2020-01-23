@@ -1,7 +1,7 @@
 \section{Изоморфни автомати}
 \label{sect:isomorphic}
-
 \index{изоморфизъм}
+
 Нека са дадени автоматите
 $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \delta'', F'')$.
 Казваме, че $\A'$ и $\A''$ са {\bf изоморфни}, което означаваме с $\A' \cong \A''$, ако
@@ -16,7 +16,7 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
 \item
   $(\forall a\in\Sigma)(\forall q\in Q')[\ f(\delta'(q,a)) = \delta''(f(q),a)\ ]$.
 \end{enumerate}
-Ще казваме, че $f$ задава изоморфизъм на $\A'$ върху $\A''$.
+Ще казваме, че $f$ задава изоморфизъм на $\A'$ върху $\A''$ и ще означаваме $\A' \cong_f \A''$ или $f:\A' \cong \A''$.
 
 \begin{proposition}
   Нека $\A' \cong_f \A''$. Тогава за всяка дума $\alpha$ и произволно състояние $q \in Q'$ е изпъленено, че
@@ -67,143 +67,67 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
 \begin{framed}
   \begin{thm}
     \label{th:regular:isomorphic:minimal}
-    Нека регулярния език $L$ се разпознава от крайния детерминиран автомат 
-    \[\A = \FA,\] за който $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
+    Нека регулярния език $L$ се разпознава от детерминирания краен автомат 
+    $\A = \FA$, за който $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
     Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
   \end{thm}  
 \end{framed}
 \begin{proof}
   \marginpar{Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.}
+  Нека положим $q_\alpha \df \delta^\star_\A(\qstart, \alpha)$.
   Да дефинираме функцията $h:\Sigma^\star/_{\approx_L} \to Q$ по следния начин:
-  \[h([\alpha]_L) \df \delta^\star_\A(\qstart,\alpha).\]
+  \[h([\alpha]_L) \df q_\alpha.\]
   Ще докажем, че $h$ задава изоморфизъм на $\A$ върху $\M$. 
   \begin{enumerate}[(1)]
   \item
     Понеже $|\Sigma^\star/_{\approx_L}| = |Q|$, от \Prop{bijection-classes} знаем, че $h$ е биекция.
   \item
-    Понеже $\delta^\star_\A(\qstart,\varepsilon) = \qstart$,
+    Понеже $q_\varepsilon = \qstart$,
     то е ясно, че
-    \[h([\varepsilon]_L) \df \delta^\star_\A(\qstart,\varepsilon) = \qstart.\]
+    \[h([\varepsilon]_L) \df \qstart.\]
   \item
     Също лесно се съобразява, че
     \begin{align*}
       [\alpha]_L \in F^\M & \iff [\alpha]_L \subseteq L & \comment\text{деф. на }F^\M\\
                           & \iff \alpha \in L & \comment\text{свойство на }\approx_L\\
                           & \iff \alpha \in \L(\A) & \comment{L = \L(\A)}\\
-                          & \iff \delta^\star_\A(\qstart,\alpha) \in F^\A & \comment\text{деф. на }\L(\A)\\
+                          & \iff q_\alpha \in F^\A & \comment\text{деф. на }\L(\A)\\
                           & \iff h([\alpha]_L) \in F^\A. & \comment\text{деф. на }h
     \end{align*}
   \item
     За последно оставихме проверката, че $h$ наистина е {\bf изоморфизъм}:
     \begin{align*}
       h(\delta_\M([\alpha]_L,b)) & = h([\alpha b]_L) & \comment\text{деф. на }\delta_\M\\
-                                 & = \delta^\star_\A(\qstart, \alpha b) & \comment\text{деф. на }h\\
+                                 & = q_{\alpha b} & \comment\text{деф. на }h\\
                                  & = \delta_\A(\delta^\star_\A(\qstart,\alpha), b) & \comment\text{деф. на }\delta^\star_\A\\
                                  & = \delta_\A( h([\alpha]_L), b). & \comment\text{деф. на }h
     \end{align*}
   \end{enumerate}
 \end{proof}
 
-\index{Бжозовски}
-Нека е даден регулярен език $L$ над азбуката $\Sigma$.
-Конструкцията на автомата $\B$ по метода на Бжозовски е следната:
-\begin{itemize}
-\item 
-  $Q^\B \df \{\alpha^{-1}(L) \mid \alpha \in \Sigma^\star\}$;
-\item
-  $\qstart^\B \df L = \varepsilon^{-1}(L)$;
-\item
-  $F^\B \df \{\alpha^{-1}(L) \mid \alpha \in L\} = \{N \in Q^\B \mid \varepsilon \in N\}$;
-\item
-  $\delta_\B(N,x) \df x^{-1}(N)$, за произволни $x \in \Sigma$ и $N \in Q^\B$.
-  С други думи,
-  \begin{align*}
-    \delta_\B(\alpha^{-1}(L),x) = x^{-1}(\alpha^{-1}(L)) = (\alpha x)^{-1}(L).
-  \end{align*}
-\end{itemize}
-
-Да припомним конструкцията на минималния автомат $\M$ според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд}.
-\begin{itemize}
-\item 
-  $Q^\M \df \{[\alpha]_L \mid \alpha \in \Sigma^\star\}$;
-\item
-  $\qstart^\M \df [\varepsilon]_L$;
-\item
-  $F^\M \df \{[\alpha]_L \mid [\alpha]_L \subseteq L\}$;
-\item
-  $\delta_\M([\alpha]_L,x) \df [\alpha\cdot x]_L$, за произволни $x \in \Sigma$ и $\alpha \in \Sigma^\star$.
-\end{itemize}
-
 \begin{framed}
-  \begin{thm}
-    $\B \cong \M$.
-  \end{thm}  
+  \begin{corollary}\label{cor:regular:minimal-isomorphic}
+    За регулярния език $L$, нека имаме детерминираните крайни автомати $\A_1$ и $\A_2$, които разпознават $L$.
+    Ако $|Q_1| = |Q_2| = |\Sigma^\star/_{\approx_L}|$, то $\A_1 \cong \A_2$.
+  \end{corollary}
 \end{framed}
 \begin{hint}
-  Нека да дефинираме $f:Q^\M \to Q^\B$ по следния начин:
-  \[f([\alpha]_L) \df \alpha^{-1}(L).\] 
-  Ще докажем, че $f$ изпълнява свойствата за изоморфизъм.
-
-  \begin{enumerate}[(1)]
-  \item 
-    Трябва първо да проверим, че $f$ е биектвна, т.е. $f$
-    е инективна и сюрективна.
-    \begin{itemize}
-    \item
-      Дефиницията на $f$ е зададена спрямо представител $\alpha$ на класа на еквивалентност на релацията $\approx_L$.
-      \marginpar{Това е важно да се провери, защото дясната страна е дефинирана спрямо произволен представител на класа $[\alpha]_L$}
-      Първо да проверим, че $f$ е функция.
-      Нека $[\alpha]_L = [\beta]_L$, т.е. $\alpha^{-1}(L) = \beta^{-1}(L)$. Тогава 
-      \begin{align*}
-        f([\alpha]_L) & \df \alpha^{-1}(L)\\
-                      & = \beta^{-1}(L) & \comment{\text{от } [\alpha]_L = [\beta]_L}\\
-                      & \df f([\beta]_L).
-      \end{align*}
-    \item 
-      Нека $[\alpha]_L \neq [\beta]_L$.
-      Тогава:
-      \begin{align*}
-        f([\alpha]_L) & \df \alpha^{-1}(L)\\
-                      & \neq \beta^{-1}(L) & \comment{\text{от }[\alpha]_L \neq [\beta]_L}\\
-                      & \df f([\beta]_L).
-      \end{align*}
-      Оттук следва, че $f$ е {\em инективна}.
-    \item
-      Да разгледаме произволен елемент $N \in Q^\B$, т.е. $N$ е множество от думи и $N = \alpha^{-1}(L)$, за някоя дума $\alpha \in \Sigma^\star$.
-      Понеже $f([\alpha]_L) \df \alpha^{-1}(L)$, то това означава, че $f$ е {\em сюрективна}.      
-    \end{itemize}
-  \item
-    Лесно се съобразява, че
-    \begin{align*}
-      f(\qstart^\M) & = f([\varepsilon]_L) & \comment{\qstart^\M \df [\varepsilon]_L}\\
-                    & \df \varepsilon^{-1}(L)\\
-                    & = L \\
-                    & \df \qstart^\B. & \comment{\qstart^\B \df L}
-    \end{align*}
-  \item
-    Също не е трудно да се съобрази, че
-    \begin{align*}
-      [\alpha]_L \in F^\M & \dff [\alpha]_L \subseteq L\\
-                          & \iff \varepsilon \in \alpha^{-1}(L)\\
-                          & \iff f([\alpha]_L) \df \alpha^{-1}(L) \in F^\B.
-    \end{align*}
-  \item
-    Имаме и свойството за произволна дума $\alpha \in \Sigma^\star$ и произволна буква $x \in \Sigma$:
-    \begin{align*}
-      f(\delta_\M([\alpha]_L,x)) & = f([\alpha\cdot x]_L) & \comment{\text{деф. на }\delta_\M}\\
-                                 & = (\alpha\cdot x)^{-1}(L) & \comment{\text{деф. на }f}\\
-                                 & = x^{-1}(\alpha^{-1}(L)) & \comment{\text{от \Problem{pullback}}}\\
-                                 & = \delta_\B(\alpha^{-1}(L), x) & \comment{\text{деф. на }\delta_\B}\\
-                                 & = \delta_\B(f([\alpha]_L), x), & \comment{\text{деф. на }f}
-    \end{align*}
-    от което следва, че $f$ е {\em изоморфизъм}.
-  \end{enumerate}
+  $\A_1 \cong \M\ \&\ \A_2 \cong \M \implies \A_1 \cong \A_2$.
 \end{hint}
 
-\begin{cor}
-  Автоматът $\B$, построен по метода на Бжожовски, за регулярния език $L$ е минимален.
-\end{cor}
-
+\begin{corollary}\index{Бжозовски}
+  За регулярния език $L$, нека $\B$ е детерминираният краен автомат построен за $L$ според метода на Бжозовски.
+  Тогава $\B$ е минимален автомат и $\M \cong \B$.
+\end{corollary}
+\begin{hint}
+  Достатъчно е да се провери, че $|Q^\B| = |\Sigma^\star/_{\approx_L}|$.
+  За целта, нека
+  Нека да дефинираме $f:\Sigma/_{\approx_L}  \to Q^\B$ по следния начин:
+  \[f([\alpha]_L) \df \alpha^{-1}(L).\] 
+  Лесно се вижда, че $f$ е биекция.
+  \marginpar{Оттук следва и $\M \cong_f \B$.}
+  Понеже $L = \L(\B)$ и $|Q^\B| = |\Sigma^\star/_{\approx_L}|$, то според \Cor{regular:minimal-isomorphic} следва, че $\M \cong \B$.
+\end{hint}
 
 
 %%% Local Variables:

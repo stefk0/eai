@@ -30,8 +30,8 @@
 \marginpar{Бжозовски \cite{brzozowski-derivatives} описва алгоритъм за строене на автомат по регулярен израз.}
 
 Да видим как можем директно да построим минимален тотален краен детерминиран автомат $\A$
-разпознаващ регулярен език $L$, където \[\A = \pair{Q,\Sigma,\qstart,\delta,F}.\]
-Конструкцията на автомата $\A$ е следната:
+разпознаващ регулярен език $L$, където \[\B = \pair{Q,\Sigma,\qstart,\delta,F}.\]
+Конструкцията на автомата $\B$ е следната:
 \begin{itemize}
 \item
   Състоянията $Q$ ще бъдат от вида $q_M$, за $M \subseteq \Sigma^\star$, където:
@@ -39,8 +39,8 @@
 \item
   $\qstart \df q_L$.
 \item
-  За произволни езици $M$ и $N$ и буква $x$,
-  \[\delta(q_M,x) = q_N \stackrel{\text{деф}}{\iff} N = x^{-1}(M).\]
+  За произволни езици $M$ и $N$ и буква $a$,
+  \[\delta(q_M,a) \df q_N \stackrel{\text{деф}}{\iff} N = a^{-1}(M).\]
 \item
   \marginpar{Да напомним, че имаме свойството
   \[\alpha \in L \iff \varepsilon \in \alpha^{-1}(L).\]}
@@ -56,14 +56,14 @@
 \end{problem}
 
 \begin{problem}
-  Докажете, че $L = \L(\A)$.
+  Докажете, че $L = \L(\B)$.
 \end{problem}
 \begin{hint}
   Съобразете, че имаме следните еквивалентности:
   \begin{align*}
     \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L)\\
-                 & \iff \varepsilon\in M\ \&\ q_M = \delta^\star(q_L,\alpha)\\
-                 & \iff \delta^\star(\qstart,\alpha) \in F.
+                 & \iff \varepsilon\in M\ \&\ q_M = \delta^\star(q_L,\alpha) & \comment{M = \alpha^{-1}(L)}\\
+                 & \iff \delta^\star(\qstart,\alpha) \in F. & \comment{\qstart = q_L}
   \end{align*}
 \end{hint}
 
