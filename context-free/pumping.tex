@@ -403,65 +403,6 @@
   е безконтекстен.
 \end{problem}
 
-\begin{problem}
-  Докажете, че езикът
-  \[L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}\]
-  не е безконтекстен.
-\end{problem}
-\begin{proof}
-  \begin{description}
-  \item[$(\forall)$]
-     Разглеждаме произволна константа $p \geq 1$.
-   \item[$(\exists)$]
-     Избираме дума $\alpha \in L$, $\abs{\alpha} \geq p$.
-     В случая, нека $\alpha = a^pb^pc^p$.
-   \item[$(\forall)$]
-     Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{yuv} \leq p$ и $1 \leq \abs{yv}$.
-     Знаем, че поне една от $y$ и $v$ не е празната дума.
-   \item[$(\exists)$] Ще намерим $i \in \Nat$, за което $xy^iuv^iw \not\in L$.
-    \begin{itemize}
-    \item
-      $y$ и $v$ са съставени от една буква.
-      Имаме три случая.
-      \begin{enumerate}[i)]
-      \item
-        $a$ не се среща в $y$ и $v$.
-        Тогава $xy^0vu^0w$ съдържа повече $a$ от $b$ или $c$.
-      \item
-        $b$ не се среща в $y$ и $v$.
-        \begin{itemize}
-        \item 
-          Ако $a$ се среща в $y$ или $v$, тогава $xy^2uv^2w$ съдържа повече $a$ от $b$.
-        \item
-          Ако $c$ се среща в $y$ или $v$, тогава $xy^0uv^0w$ съдържа по-малко $c$ от $b$.
-        \end{itemize}
-      \item
-        $c$ не се среща в $y$ и $v$.
-        Тогава $xy^2uv^2w$ съдържа повече $a$ или $b$ от $c$.
-      \end{enumerate}      
-     \item
-       $y$ или $v$ е съставена от две букви.
-       Тук разглеждаме $xy^2uv^2w$ и съобразяваме, че редът на буквите е нарушен.
-     \end{itemize}    
-   \end{description}
-\end{proof}
-
-\begin{problem}
-  Докажете, че езикът 
-  \[L = \{\ \alpha\alpha\mid \alpha\in \{a,b\}^\star\ \}\]
-  не е безконтекстен.
-\end{problem}
-\begin{hint}
-  \begin{itemize}
-  \item 
-    Защо $\omega = a^pba^pb$ не става ?
-  \item
-    Защо $\omega = a^pb^{2p}a^p$ не става ?
-  \item
-    Разгледайте $\omega = a^pb^pa^pb^p$.
-  \end{itemize}
-\end{hint}
-
 \begin{framed}
   \begin{proposition}
     Безконтекстните езици {\bf не} са затворени относно сечение и допълнение.
@@ -496,39 +437,7 @@
   Това следва лесно като се използва \Problem{equal-but-different}.
 \end{hint}
 
-\begin{problem}
-  Докажете, че езикът 
-  \[L = \{\alpha\beta\alpha^{rev} \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}\]
-  не е безконтекстен.
-\end{problem}
-\begin{hint}
-  \begin{itemize}
-  \item
-    Защо не става ако разгледаме думата $\alpha = a^pb^pa^p$ ?
-  \item 
-    Защо не става ако разгледаме думата $\alpha = a^p b^p a^{2p} b^p a^p$ ?
-  \item
-    Разгледайте $\alpha = a^p b^p a^p b^p b^p a^p$.
-    Покачване с повече от $p$ би трябвало да свърши работа.
-  \end{itemize}
-\end{hint}
 
-
-\begin{problem}
-  Докажете, че езикът 
-  \[L = \{\alpha\beta\alpha \mid \alpha,\beta \in \{a,b\}^\star\}\]
-  не е безконтекстен.
-\end{problem}
-\begin{hint}
-  \begin{itemize}
-  \item 
-    Защо не става с $\omega = a^pba^pb$ ?
-  \item
-    Защо не става с $\omega = ab^pab^p$ ?
-  \item
-    Пробвайте с $\omega = a^pb^pa^pb^p$.
-  \end{itemize}
-\end{hint}
 
 % \begin{framed}
 %   \begin{prop}
@@ -560,32 +469,6 @@
 % \end{proof}
 
 
-\begin{problem}
-  Докажете, че езикът
-  \[L = \{\alpha\sharp\beta \mid \alpha\text{ е подниз на }\beta\}\]
-  не е безконтекстен.
-\end{problem}
-\begin{hint}
-  \begin{itemize}
-  \item 
-    Защо не става ако вземем $\omega = a^p \sharp a^p$ ?
-  \item 
-    Защо не става ако вземем $\omega = a^pb \sharp a^pb$ ?
-  \item
-    Разгледайте $\omega = a^pb^p\sharp a^pb^p$.
-  \end{itemize}
-\end{hint}
-
-
-\begin{problem}
-  Вярно ли е, че следните езици са безконтекстни:
-  \begin{enumerate}[a)]
-  \item 
-    $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{0,1\}^\star\ \&\ \ov{\alpha}_{(2)} + 1 = \ov{\beta}_{(2)} \}$;
-  \item
-    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in \{0,1\}^\star\ \&\ \ov{\alpha}_{(2)} + 1 = \ov{\beta}_{(2)} \}$ ?
-  \end{enumerate}
-\end{problem}
 
 
 %%% Local Variables: 

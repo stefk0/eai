@@ -1,0 +1,175 @@
+\subsection{Примери}
+
+
+\begin{example}
+  Езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
+\end{example}  
+\begin{proof}
+  Да разгледаме граматиката $G$ с правила
+  \begin{align*}
+    S& \rightarrow aSc\ |\ aS\ |\ B\\
+    B& \rightarrow bBc\ |\  bB\ |\ \varepsilon.
+  \end{align*}
+  
+  Лесно се вижда с индукция по $n$, че за всяко $n$ имаме свойствата:
+  \marginpar{\ding{45} Докажете!}
+  \begin{itemize}
+  \item 
+    $S \rightarrow^\star_G a^nSc^n$,
+  \item
+    $S \rightarrow^\star_G a^nS$,
+  \item
+    $B \rightarrow^\star_G b^nBc^n$,
+  \item
+    $B \rightarrow^\star_G b^nB$.
+  \end{itemize}
+  Комбинирайки горните свойства, можем да видим, че за всяко $n \geq k$,
+  \begin{itemize}
+  \item 
+    $S \rightarrow^\star_G a^nSc^k$,
+  \item
+    $B \rightarrow^\star_G b^nBc^k$.
+  \end{itemize}
+  За да докажем, че $L \subseteq \L(G)$, 
+  да разгледаме една дума $\omega \in L$, т.е. $\omega = a^mb^nc^k$, където $m+n \geq k$.
+  Имаме два случая:
+  \begin{itemize}
+  \item 
+    $k \leq m$, т.е. $m = k+\ell$ и $m+n = k+\ell+n$.
+    Тогава имаме изводите:
+    \[S \rightarrow^\star a^kSc^k,\ S \rightarrow^\star a^\ell S,\ S \rightarrow B,\ B \rightarrow^\star b^nB,\ B \rightarrow \varepsilon.\]
+    Обединявайки всичко това, получаваме:
+    \[S \rightarrow^\star a^mb^nc^k.\]
+  \item
+    $k > m$, т.е. $k = m+\ell$, за някое $\ell > 0$, и $m+n = k+r = m+\ell+r$, за някое $r$.
+    Тогава имаме изводите:
+    \[S \rightarrow^\star a^mSc^m,\ S\rightarrow B,\ B\rightarrow^\star b^\ell Bc^\ell,\ B\rightarrow b^rB,\ B\rightarrow\varepsilon,\]
+    и отново получаваме $S \rightarrow^\star a^mb^nc^k$.
+  \end{itemize}
+  Така доказахме, че $\omega \in \L(G)$.
+  
+  Сега ще докажем, че $\L(G) \subseteq L$.
+  С индукция по дължината на извода $l$,
+  ще докажем, че ако $S \stackrel{\ell}{\rightarrow}\omega$, то $\omega \in M$, където
+  \[M = \{a^nSc^k\mid n\geq k\}\cup\{a^nb^mBc^k\mid n+m\geq k\}\cup\{a^nb^mc^k\mid n+m\geq k\}.\]
+  
+  Ако $\ell = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$ и $S \in M$.
+
+  Нека $\ell > 0$ и $S \stackrel{\ell-1}{\rightarrow} \alpha \rightarrow \omega$.
+  От {\bf И.П.} имаме, че $\alpha \in M$. Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
+  Разглеждаме всички варианти за думата $\alpha \in M$ и за някое правило в граматиката $G$
+  за да докажем, че  $\omega \in M$.
+  Удобно е да представим всички случаи в таблица.
+  \begin{center}
+    \begin{tabular}{| c | c | c |}
+      \hline
+      $\alpha\in M$ & правило в граматиката & $\omega \in M?$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow aSc$ & $a^{n+1}Sc^{k+1}$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow aS$ & $a^{n+1}Sc^{k}$ \\ \hline
+      $a^nSc^k$ & $S \rightarrow B$ & $a^{n}Bc^{k}$ \\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow bBc$ & $a^nb^{m+1}Bc^{k+1}$\\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow bB$ & $a^nb^{m+1}Bc^{k}$\\ \hline
+      $a^nb^mBc^k$ & $B \rightarrow \varepsilon$ & $a^nb^{m}c^{k}$\\ \hline
+    \end{tabular}
+  \end{center}
+  Във всички случаи се установява, че $\omega \in M$.
+  Сега, за всяка дума $\omega \in L(G)$ следва, че
+  \[\omega \in \Sigma^\star \cap M = \{a^mb^nc^k\mid m+n \geq k\}.\]
+\end{proof}
+
+\begin{example}
+  Езикът 
+  \[L = \{a^nb^mc^kd^\ell \mid n+k = m + \ell\}\]
+  е безконтекстен.
+\end{example}
+\begin{hint}
+  Нека $G_1$ е безконтекстна граматика за езика
+  \[L_1 = \{a^nb^mc^k \mid m = n+k\},\]
+  където правилата на $G_1$ са
+  \[S_1 \to AC,\quad  A \to aAb\ |\ \varepsilon,\quad C \to bCc\ |\ \varepsilon.\]
+  Нека $G_2$ е безконтекстна граматика за езика 
+  \[L_2 = \{b^mc^kd^\ell \mid k = m+\ell\},\]
+  където правилата на $G_2$ са
+  \[S_2 \to BD,\quad B \to bBc\ |\ \varepsilon,\quad D \to cCd\ |\ \varepsilon.\]
+  Тогава граматиката $G$ за $L$ 
+  съдържа правилата на граматиките $G_1$ и $G_2$, а също и правилата
+  \[S \to aSd\ |\ S_1\ |\ S_2.\]
+\end{hint}
+
+\begin{problem}
+  \label{prob:equal-but-different}
+  \marginpar{Ние вече знаем, че този език не е регулярен}
+  Езикът
+  \[L = \{\alpha\beta \in \{a,b\}^\star \mid\ |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}\]
+  е безконтекстен.
+\end{problem}
+\begin{hint}
+  Разгледайте граматиката:
+  \begin{align*}
+    & S \to AB\ |\ BA\\
+    & A \to XAX\ |\ a\\
+    & B \to XBX\ |\ b\\
+    & X \to a\ |\ b.
+  \end{align*}
+\end{hint}
+
+\begin{problem}
+ Докажете, че езикът
+ \[L = \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha \neq \beta \}\]
+ е безконтекстен.
+\end{problem}
+\begin{hint}
+  Разгледайте граматиката:
+  \begin{align*}
+    & S \to AaR\ |\ BbR\ |\ E\\
+    & A \to XAX\ |\ bR\sharp\\
+    & B \to XBX\ |\ aR\sharp\\
+    & E \to XEX\ |\ XR\sharp\ |\ \sharp XR\\
+    & R \to XR\ |\ \varepsilon\\
+    & X \to a\ |\ b.
+  \end{align*}
+  Имаме, че за произволни думи $\alpha,\beta,\gamma,\delta \in \{a,b\}^\star$,
+  \begin{align*}
+    & S \to^\star \alpha b \gamma \sharp \beta a \delta\ \&\ |\alpha| = |\beta|,\\
+    & S \to^\star \alpha a \gamma \sharp \beta b \delta\ \&\ |\alpha| = |\beta|, \text{ или}\\
+    & S \to^\star \alpha \sharp \beta\ \&\ |\alpha| \neq |\beta|.
+  \end{align*}      
+\end{hint}
+
+
+
+
+
+
+\begin{problem}
+  Докажете, че езикът 
+  \[L = \{a^nb^mc^kd^\ell \mid n+k \geq m + \ell\}\]
+  е безконтекстен.
+\end{problem}
+
+\begin{problem}
+  \marginpar{
+    $S \to aS \mid aSc \mid aB \mid bB$\\
+    $B \to bB \mid bBc \mid \varepsilon$
+  }
+  Докажете, че езикът 
+  \[L = \{a^mb^nc^k\mid m+n \geq k + 1\}\]
+  е безконтекстен.  
+\end{problem}
+
+\begin{problem}
+  Докажете, че езикът
+  \[L = \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| \neq |\beta| \}\]
+  е безконтекстен.
+\end{problem}
+
+\begin{problem}
+  Да разгледаме граматиката $G$ с правила
+  \[S \to AA\ |\ B,\ A \to B\ |\ bb,\ B \to aa\ |\ aB.\]
+  Да се намери езика на тази граматика и да се докаже, че граматиката разпознава точно този език.
+\end{problem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
