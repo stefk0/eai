@@ -29,11 +29,16 @@
 
 \marginpar{Бжозовски \cite{brzozowski-derivatives} описва алгоритъм за строене на автомат по регулярен израз.}
 
-Да видим как можем директно да построим минимален тотален краен детерминиран автомат $\A$
-разпознаващ регулярен език $L$, където \[\B = \pair{Q,\Sigma,\qstart,\delta,F}.\]
+Нека е даден езикът $L$. Ще покажем конструкция на детерминиран автомат $\B = \FA$,
+който разпознава $L$. Ако $L$ е регулярен, то $\B$ ще бъде детерминиран краен автомат,
+но ако $L$ не е регулярен, то $\B$ ще бъде детерминиран \emph{безкраен} автомат.
 Конструкцията на автомата $\B$ е следната:
+\marginpar{Да напомним, че имаме свойството
+  \[\alpha \in L \iff \varepsilon \in \alpha^{-1}(L).\]}
 \begin{itemize}
 \item
+  \marginpar{Все още не ясно, че ако $L$ е регулярен, то $Q$ е крайно множество. Това ще видим след малко.
+    В \Example{regular:brzozowski:an-bn} ще видим един детерминиран безкраен автомат за език, който не е регулярен.}
   Състоянията $Q$ ще бъдат от вида $q_M$, за $M \subseteq \Sigma^\star$, където:
   \[Q \df \{q_M \mid (\exists \alpha\in\Sigma^\star)[M = \alpha^{-1}(L)].\]
 \item
@@ -42,33 +47,32 @@
   За произволни езици $M$ и $N$ и буква $a$,
   \[\delta(q_M,a) \df q_N \stackrel{\text{деф}}{\iff} N = a^{-1}(M).\]
 \item
-  \marginpar{Да напомним, че имаме свойството
-  \[\alpha \in L \iff \varepsilon \in \alpha^{-1}(L).\]}
-  Сега е ясно, че състоянията $Q$ са точно тези състояния $q_M$, които са достижими от началното състояние $q_L$, т.е.
-  \[Q = \{q_M \mid (\exists \alpha \in \Sigma^\star)[\delta(q_L,\alpha) = q_M].\]
-\item
-  $F \df \{ q_M \mid \varepsilon \in M\}$.
+  $F \df \{ q_M \in Q\mid \varepsilon \in M\}$.
 \end{itemize}
 
-\begin{problem}
-  Докажете, че за всяка дума $\alpha$ и всяко $q_M \in Q$,
-  \[N = \alpha^{-1}(M) \iff \delta^\star(q_M,\alpha) = q_N.\]
-\end{problem}
+\begin{proposition}\label{pr:regular:brzozowski:delta}
+  За всяка дума $\alpha$ е изпълнено, че:
+  \[N = \alpha^{-1}(L) \iff \delta^\star(q_L,\alpha) = q_N.\]
+\end{proposition}
+\begin{hint}
+  Индукция по дължината на думата $\alpha$, като използвате, че
+  \[(\alpha b)^{-1}(L) = b^{-1}(\alpha^{-1}(L)).\]
+\end{hint}
 
-\begin{problem}
-  Докажете, че $L = \L(\B)$.
-\end{problem}
+\begin{proposition}
+  За даден език $L$, нека $\B$ е детерменираният автомат построен по метода на Бжозовски.
+  Тогава $L = \L(\B)$.
+\end{proposition}
 \begin{hint}
   Съобразете, че имаме следните еквивалентности:
   \begin{align*}
-    \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L)\\
-                 & \iff \varepsilon\in M\ \&\ q_M = \delta^\star(q_L,\alpha) & \comment{M = \alpha^{-1}(L)}\\
+    \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L) & \comment\text{нека }M \df \alpha^{-1}(L)\\
+                 & \iff \varepsilon\in M\ \&\ q_M = \delta^\star(q_L,\alpha) & \comment\text{от \Prop{regular:brzozowski:delta}}\\
                  & \iff \delta^\star(\qstart,\alpha) \in F. & \comment{\qstart = q_L}
   \end{align*}
 \end{hint}
 
-
-\input{regular/brzozowski-solved-examples}
+{\bf Тази част да се премести}
 
 Нека имаме КДА $\A$.
 Дефинираме $\B = \rev(\A)$ да бъде КДА по следния начин:

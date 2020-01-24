@@ -226,22 +226,22 @@
 \end{example}
 
 
-Нека сега да решим отново \Problem{regular:dfa:binary} чрез метода на Бжозовски.
-
-
-За една дума $\alpha \in \{0,1\}^\star$, можем да дадем следната дефиниция на $\bin{\alpha}$:
-\begin{itemize}
-\item
-  $\bin\varepsilon = 0$,
-\item
-  $\bin{0\alpha} = \bin{\alpha}$,
-\item
-  $\bin{1\alpha} = 2^{|\alpha|} + \bin{\alpha}$.
-\end{itemize}
-
-Да разгледаме езика $L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}$.
-
-Тогава:
+\begin{example}
+  Да припомним, че в \Problem{regular:dfa:binary} се искаше да се докаже, че езикът 
+  $L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}$ е регулярен.
+  Ние направихме това като построихме автомат за $L$ и доказахме, че той разпознава $L$.
+  Нека сега пак да построим автомат за $L$, но този път чрез метода на Бжозовски.
+  За целта ще ни трябва алтернативна дефиниция на $\bin{\alpha}$.
+  За една дума $\alpha \in \{0,1\}^\star$, можем да дадем следната дефиниция на $\bin{\alpha}$:
+  \begin{itemize}
+  \item
+    $\bin\varepsilon = 0$,
+  \item
+    $\bin{0\alpha} = \bin{\alpha}$,
+  \item
+    $\bin{1\alpha} = 2^{|\alpha|} + \bin{\alpha}$.
+  \end{itemize}
+  Тогава:
 \begin{align*}
   0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
             & = \{\alpha \in \{0,1\}^\star \mid \bin{0\alpha} \equiv 2 \bmod 3\}\\
@@ -290,7 +290,7 @@
               & = N.
 \end{align*}
 
-Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
+% Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
 
 \begin{figure}[H]
   \begin{center}
@@ -312,9 +312,12 @@
   \end{center}
   \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
 \end{figure}
+\end{example}
 
-\begin{example}
-  Да разгледаме езика $L = \{a^nb^n\mid n \in \Nat\}$. Да се опитаме да построим автомат, който го разпознава.
+\begin{example}\label{ex:regular:brzozowski:an-bn}
+  Да разгледаме езика $L = \{a^nb^n\mid n \in \Nat\}$.
+  Ние вече знаем от \Problem{regular:pumping:an-bn}, че $L$ не е регулярен език.
+  Да се опитаме да построим автомат, който го разпознава.
   Нека
   \[L_k \df \{a^nb^{n+k}\mid n \in \Nat\}.\]
   Да видим какво се получава като приложим процедурата за строене 

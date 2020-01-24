@@ -3,26 +3,26 @@
 \index{изоморфизъм}
 
 Нека са дадени автоматите
-$\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \delta'', F'')$.
-Казваме, че $\A'$ и $\A''$ са {\bf изоморфни}, което означаваме с $\A' \cong \A''$, ако
-съществува функция $f: Q'\to Q''$, за която:
+$\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', \delta_2, F_2)$.
+Казваме, че $\A_1$ и $\A_2$ са {\bf изоморфни}, което означаваме с $\A_1 \cong \A_2$, ако
+съществува функция $f: Q_1\to Q_2$, за която:
 \begin{enumerate}[(1)]
 \item
   $f$ е биекция;
 \item
   $f(\qstart') = \qstart''$;
 \item
-  $q \in F' \iff f(q) \in F''$;
+  $q \in F_1 \iff f(q) \in F_2$;
 \item
-  $(\forall a\in\Sigma)(\forall q\in Q')[\ f(\delta'(q,a)) = \delta''(f(q),a)\ ]$.
+  $(\forall a\in\Sigma)(\forall q\in Q_1)[\ f(\delta_1(q,a)) = \delta_2(f(q),a)\ ]$.
 \end{enumerate}
-Ще казваме, че $f$ задава изоморфизъм на $\A'$ върху $\A''$ и ще означаваме $\A' \cong_f \A''$ или $f:\A' \cong \A''$.
+Ще казваме, че $f$ задава изоморфизъм на $\A_1$ върху $\A_2$ и ще означаваме $\A_1 \cong_f \A_2$ или $f:\A_1 \cong \A_2$.
 
 \begin{proposition}
-  Нека $\A' \cong_f \A''$. Тогава за всяка дума $\alpha$ и произволно състояние $q \in Q'$ е изпъленено, че
+  Нека $\A_1 \cong_f \A_2$. Тогава за всяка дума $\alpha$ и произволно състояние $q \in Q_1$ е изпъленено, че
   \begin{equation}
     \label{eq:3}
-    f(\delta^\star_{\A'}(q,\alpha)) = \delta^\star_{\A''}(f(q), \alpha).
+    f(\delta^\star_1(q,\alpha)) = \delta^\star_2(f(q), \alpha).
   \end{equation}
 \end{proposition}
 \begin{proof}
@@ -31,104 +31,38 @@ $\A' = (\Sigma,Q',\qstart',\delta',F')$ и $\A'' = (\Sigma, Q'', \qstart'', \del
   \item 
     Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава:
     \begin{align*}
-      f(\delta^\star_{\A'}(q,\varepsilon)) & = f(q) & \comment{\text{от деф. на }\delta^\star_{\A'}}\\
-                                           & = \delta^\star_{\A''}(f(q), \varepsilon). & \comment{\text{от деф. на }\delta^\star_{\A''}}\\
+      f(\delta^\star_1(q,\varepsilon)) & = f(q) & \comment{\text{от деф. на }\delta^\star_1}\\
+                                           & = \delta^\star_2(f(q), \varepsilon). & \comment{\text{от деф. на }\delta^\star_2}
     \end{align*}
   \item
     Да приемем, че (\ref{eq:3}) е изпълнено за думи с дължина $n$.
   \item
     Да разгледаме произволна дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta c$ и $|\beta| = n$. Тогава:
     \begin{align*}
-      f(\delta^\star_{\A'}(q,\beta c)) & = f(\delta_{\A'}(\delta^\star_{\A'}(q,\beta), c)) & \comment{\text{от деф. на }\delta^\star_{\A'}}\\
-                                       & = \delta_{\A''}( f(\delta^\star_{\A'}(q,\beta)), c) & \comment{f\text{ е изоморфизъм}}\\
-                                       & = \delta_{\A''}( \delta^\star_{\A''}(f(q),\beta), c) & \comment{\text{от И.П. за }\beta}\\
-                                       & = \delta^\star_{\A''}(f(q), \beta c) & \comment{\text{от деф. на }\delta^\star_{\A''}}.
+      f(\delta^\star_1(q,\beta c)) & = f(\delta_1(\delta^\star_1(q,\beta), c)) & \comment{\text{от деф. на }\delta^\star_1}\\
+                                   & = \delta_2( f(\delta^\star_1(q,\beta)), c) & \comment{f\text{ е изоморфизъм}}\\
+                                   & = \delta_2( \delta^\star_2(f(q),\beta), c) & \comment{\text{от И.П. за }\beta}\\
+                                   & = \delta^\star_2(f(q), \beta c) & \comment{\text{от деф. на }\delta^\star_2}.
     \end{align*}
   \end{itemize}
 \end{proof}
 
 \begin{framed}
   \begin{proposition}
-    Ако $\A' \cong \A''$, то $\L(\A') = \L(\A'')$.
+    Ако $\A_1 \cong \A_2$, то $\L(\A_1) = \L(\A_2)$.
   \end{proposition}  
 \end{framed}
 \begin{hint}
   \marginpar{Лесно можем да съобразим, че в общия случай нямаме обратната посока на това твърдение.}
-  Нека $\A' \cong_f \A''$. Тогава имаме следните еквивалентности:
+  Нека $\A_1 \cong_f \A_2$. Тогава имаме следните еквивалентности:
   \begin{align*}
-    \alpha \in \L(\A') & \iff \delta^\star_{\A'}(\qstart',\alpha) \in F' & \comment\text{деф. на }\L(\A')\\
-                       & \iff f(\delta^\star_{\A'}(\qstart',\alpha)) \in F'' & \comment{f\text{ е изоморфизъм}}\\
-                       & \iff \delta^\star_{\A''}(f(\qstart'),\alpha) \in F'' & \comment{\text{от (\ref{eq:3})}}\\
-                       & \iff \delta^\star_{\A''}(\qstart'',\alpha) \in F'' & \comment{f(\qstart') \df \qstart''}\\
-                       & \iff \alpha \in \L(\A''). & \comment\text{деф. на }\L(\A'')
+    \alpha \in \L(\A_1) & \iff \delta^\star_1(\qstart',\alpha) \in F_1 & \comment\text{деф. на }\L(\A_1)\\
+                       & \iff f(\delta^\star_1(\qstart',\alpha)) \in F_2 & \comment{f\text{ е изоморфизъм}}\\
+                       & \iff \delta^\star_2(f(\qstart'),\alpha) \in F_2 & \comment{\text{от (\ref{eq:3})}}\\
+                       & \iff \delta^\star_2(\qstart'',\alpha) \in F_2 & \comment{f(\qstart') \df \qstart''}\\
+                       & \iff \alpha \in \L(\A_2). & \comment\text{деф. на }\L(\A_2)
   \end{align*}
 \end{hint}
-
-\begin{framed}
-  \begin{thm}
-    \label{th:regular:isomorphic:minimal}
-    Нека регулярния език $L$ се разпознава от детерминирания краен автомат 
-    $\A = \FA$, за който $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
-    Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
-  \end{thm}  
-\end{framed}
-\begin{proof}
-  \marginpar{Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.}
-  Нека положим $q_\alpha \df \delta^\star_\A(\qstart, \alpha)$.
-  Да дефинираме функцията $h:\Sigma^\star/_{\approx_L} \to Q$ по следния начин:
-  \[h([\alpha]_L) \df q_\alpha.\]
-  Ще докажем, че $h$ задава изоморфизъм на $\A$ върху $\M$. 
-  \begin{enumerate}[(1)]
-  \item
-    Понеже $|\Sigma^\star/_{\approx_L}| = |Q|$, от \Prop{bijection-classes} знаем, че $h$ е биекция.
-  \item
-    Понеже $q_\varepsilon = \qstart$,
-    то е ясно, че
-    \[h([\varepsilon]_L) \df \qstart.\]
-  \item
-    Също лесно се съобразява, че
-    \begin{align*}
-      [\alpha]_L \in F^\M & \iff [\alpha]_L \subseteq L & \comment\text{деф. на }F^\M\\
-                          & \iff \alpha \in L & \comment\text{свойство на }\approx_L\\
-                          & \iff \alpha \in \L(\A) & \comment{L = \L(\A)}\\
-                          & \iff q_\alpha \in F^\A & \comment\text{деф. на }\L(\A)\\
-                          & \iff h([\alpha]_L) \in F^\A. & \comment\text{деф. на }h
-    \end{align*}
-  \item
-    За последно оставихме проверката, че $h$ наистина е {\bf изоморфизъм}:
-    \begin{align*}
-      h(\delta_\M([\alpha]_L,b)) & = h([\alpha b]_L) & \comment\text{деф. на }\delta_\M\\
-                                 & = q_{\alpha b} & \comment\text{деф. на }h\\
-                                 & = \delta_\A(\delta^\star_\A(\qstart,\alpha), b) & \comment\text{деф. на }\delta^\star_\A\\
-                                 & = \delta_\A( h([\alpha]_L), b). & \comment\text{деф. на }h
-    \end{align*}
-  \end{enumerate}
-\end{proof}
-
-\begin{framed}
-  \begin{corollary}\label{cor:regular:minimal-isomorphic}
-    За регулярния език $L$, нека имаме детерминираните крайни автомати $\A_1$ и $\A_2$, които разпознават $L$.
-    Ако $|Q_1| = |Q_2| = |\Sigma^\star/_{\approx_L}|$, то $\A_1 \cong \A_2$.
-  \end{corollary}
-\end{framed}
-\begin{hint}
-  $\A_1 \cong \M\ \&\ \A_2 \cong \M \implies \A_1 \cong \A_2$.
-\end{hint}
-
-\begin{corollary}\index{Бжозовски}
-  За регулярния език $L$, нека $\B$ е детерминираният краен автомат построен за $L$ според метода на Бжозовски.
-  Тогава $\B$ е минимален автомат и $\M \cong \B$.
-\end{corollary}
-\begin{hint}
-  Достатъчно е да се провери, че $|Q^\B| = |\Sigma^\star/_{\approx_L}|$.
-  За целта, нека
-  Нека да дефинираме $f:\Sigma/_{\approx_L}  \to Q^\B$ по следния начин:
-  \[f([\alpha]_L) \df \alpha^{-1}(L).\] 
-  Лесно се вижда, че $f$ е биекция.
-  \marginpar{Оттук следва и $\M \cong_f \B$.}
-  Понеже $L = \L(\B)$ и $|Q^\B| = |\Sigma^\star/_{\approx_L}|$, то според \Cor{regular:minimal-isomorphic} следва, че $\M \cong \B$.
-\end{hint}
-
 
 %%% Local Variables:
 %%% mode: latex
