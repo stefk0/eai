@@ -62,7 +62,7 @@
 
 \begin{problem}
   Докажете, че езикът 
-  \[L = \{\alpha\beta\alpha^{rev} \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}\]
+  \[L = \{\alpha\beta\alpha^{\rev} \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}\]
   не е безконтекстен.
 \end{problem}
 \begin{hint}
@@ -115,8 +115,13 @@
   Вярно ли е, че следните езици са безконтекстни:
   \begin{enumerate}[a)]
   \item 
-    $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{0,1\}^\star\ \&\ \ov{\alpha}_{(2)} + 1 = \ov{\beta}_{(2)} \}$;
+    $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{0,1\}^\star\ \&\ \bin{\alpha} + 1 = \bin{\beta} \}$;
   \item
-    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in \{0,1\}^\star\ \&\ \ov{\alpha}_{(2)} + 1 = \ov{\beta}_{(2)} \}$ ?
+    $L = \{\alpha\sharp\beta^{rev} \mid \alpha,\beta \in \{0,1\}^\star\ \&\ \bin{\alpha} + 1 = \bin{\beta} \}$ ?
   \end{enumerate}
 \end{problem}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
