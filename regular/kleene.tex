@@ -8,7 +8,7 @@
 \end{framed}
 \begin{proof}
   \marginpar{\cite[стр. 79]{papadimitriou}; \cite[стр. 33]{hopcroft1}}
-  Нека  $L = \L(\A)$, за някой краен детерминиран автомат $\A$.
+  Нека  $L = \L(\A)$, за някой детерминиран краен автомат $\A$.
   Да фиксираме едно изброяване на състоянията
   \[Q = \{q_0,\dots,q_{n-1}\},\]
   като $\qstart = q_0$.
@@ -16,8 +16,8 @@
   могат да се разпознаят от автомата по път, който започва от $q_i$,
   завършва в $q_j$, и междинните състояния имат индекси $< k$.
   Например, за думата $\alpha = a_1a_2\cdots a_s$ имаме, че $\alpha \in L(i,j,k)$
-  точно тогава, когато съществуват състояния $q_{l_1},\dots,q_{l_{s-1}}$, като $l_1,\dots,l_{s-1} < k$ и
-  \[q_i\stackrel{a_1}{\rightarrow} q_{l_1} \stackrel{a_2}{\rightarrow} q_{l_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{s-1}}{\rightarrow} q_{l_{s-1}}\stackrel{a_s}{\rightarrow} q_j.\]
+  точно тогава, когато съществуват състояния $q_{\ell_1},\dots,q_{\ell_{s-1}}$, като $\ell_1,\dots,\ell_{s-1} < k$ и
+  \[q_i\stackrel{a_1}{\rightarrow} q_{\ell_1} \stackrel{a_2}{\rightarrow} q_{\ell_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{s-1}}{\rightarrow} q_{\ell_{s-1}}\stackrel{a_s}{\rightarrow} q_j.\]
   Тогава за $n = \abs{Q}$, 
   \[L(i,j,n) = \{\alpha\in\Sigma^\star\mid \delta^\star(q_i,\alpha) = q_j\}.\]
   Така получаваме, че 
@@ -50,15 +50,15 @@
     \begin{itemize}
     \item
       Състоянието $q_k$ не е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху думата $\alpha$, т.е. имаме следната ситуация:
-      \[q_i\stackrel{a_1}{\rightarrow} q_{l_1} \stackrel{a_2}{\rightarrow} q_{l_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{s-1}}{\rightarrow} q_{l_{s-1}}\stackrel{a_s}{\rightarrow} q_j,\]
-      където $l_1,\dots,l_{s-1} < k$.
+      \[q_i\stackrel{a_1}{\rightarrow} q_{\ell_1} \stackrel{a_2}{\rightarrow} q_{\ell_2} \stackrel{a_3}{\rightarrow} \dots \stackrel{a_{s-1}}{\rightarrow} q_{\ell_{s-1}}\stackrel{a_s}{\rightarrow} q_j,\]
+      където $\ell_1,\dots,\ell_{s-1} < k$.
       Това означава, че $\alpha \in L(i,j,k)$.
     \item
       Състоянието $q_k$ е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху думата $\alpha$.
       Ако състоянието $q_k$ се среща да кажем $m$ пъти, то можем да представим думата $\alpha$ като $\alpha = \alpha_1\alpha_2\cdots\alpha_{m+1}$ и имаме следната ситуация:
       \[q_i\stackrel{\alpha_1}{\rightarrow\cdots\rightarrow} q_{k} \stackrel{\alpha_2}{\rightarrow\cdots\rightarrow} q_k \rightarrow\cdots\rightarrow q_{k} \stackrel{\alpha_{m+1}}{\rightarrow\cdots\rightarrow} q_j,\]
-      За всяко $l=1,\dots,m+1$, състоянието $q_k$ не е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху $\alpha_l$, т.е. индексите на всички вътрешни състояния са $<k$.
-      Това означава, че $\alpha_1 \in L(i,k,k)$, $\alpha_l \in L(k,k,k)$ за $l=2,\dots,m$, и $\alpha_{m+1} \in L(k,j,k)$, т.е.
+      За всяко $\ell=1,\dots,m+1$, състоянието $q_k$ не е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху $\alpha_\ell$, т.е. индексите на всички вътрешни състояния са $<k$.
+      Това означава, че $\alpha_1 \in L(i,k,k)$, $\alpha_\ell \in L(k,k,k)$ за $\ell=2,\dots,m$, и $\alpha_{m+1} \in L(k,j,k)$, т.е.
       \marginpar{Възможно е $m = 1$. Тогава $L(k,k,k)^{m-1} = \{\varepsilon\}$.}
       \[\alpha \in L(i,k,k) \cdot L(k,k,k)^{m-1} \cdot L(k,j,k).\]
       Понеже направихме това разсъждение за произволно $m$,

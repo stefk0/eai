@@ -232,6 +232,43 @@
   \[\equiv^n_\A\ =\ \equiv_\A.\]
 \end{problem}
 
+\marginpar{\cite[]{khoussainov-nerode}}
+
+\begin{algorithm}[H]
+  \caption{Минимизация}
+  \label{alg:minimisation}
+  \begin{algorithmic}[1]
+    \ForAll{$p < |Q|$}
+    \ForAll{$q < p$}
+    \If{$(p \in F \iff q \not\in F)$}
+    \State Eq[p][q] = false
+    \Else
+    \State Eq[p][q] = true
+    \EndIf
+    \EndFor
+    \EndFor
+    \Repeat
+    \State ready = true
+    \ForAll{$p < |Q|$}
+    \ForAll{$q < p$}
+    \If{Eq[p][q]}
+    \ForAll{$a \in \Sigma$}
+    \If{!Eq[$\delta(p,a)$][$\delta(q,a)$]}
+    \State{Eq[p][q] = false}
+    \State{ready = false}
+    \EndIf
+    \EndFor
+    \EndIf
+    \EndFor
+    \EndFor
+    \Until{ready}
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}
+  За всеки две състояния $q_i,q_j \in Q$, където $i > j$,
+  \[q_i \equiv_\A q_j \iff \texttt{Eq[i][j] == true}.\]
+\end{theorem}
 
 %%% Local Variables:
 %%% mode: latex
