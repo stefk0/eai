@@ -1,4 +1,5 @@
-\documentclass[a4paper, 12pt, oneside]{report}
+\documentclass[a4paper, 12pt, oneside]{book}
+% \usepackage[mathjax,lwarpmk]{lwarp}
 
 % \usepackage[left=0.0cm, right=0.5cm]{geometry}
 % \special{papersize=9cm,12cm}
@@ -69,14 +70,13 @@
 \usepackage[utf8]{inputenc}
 
 \usepackage[pdfencoding=unicode, colorlinks=true, linkcolor=blue, pdfstartview=FitV, citecolor=green, urlcolor=blue]{hyperref}
-\usepackage{pifont}
 \usepackage{amssymb, amsmath, amsthm, mathrsfs, latexsym, bm, mathtools}
 \hypersetup{pdfauthor={Стефан Вътев},pdftitle={Езици, Автомати и Изчислимост},pdftex,unicode}
 
 \usepackage{epigraph}
 \usepackage{makeidx}
 \usepackage{layout, framed}
-\usepackage{qtree, bussproofs, algorithm, minted}
+\usepackage{qtree, bussproofs, algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage{float}
 
@@ -88,6 +88,16 @@
 \usetikzlibrary{arrows, automata, positioning, backgrounds, decorations.pathmorphing, decorations.markings}
 
 
+\usepackage{multicol}
+\usepackage{color}
+ 
+% \usepackage{comment}
+
+\setlength{\columnsep}{2pc}
+\setlength{\columnseprule}{.5pt}
+\def\columnseprulecolor{\color{gray}}
+
+
 \usepackage[font=small,format=plain,labelfont=bf,textfont=normal,justification=justified]{caption}
 \usepackage[justification=justified]{subcaption}
 \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
@@ -96,7 +106,9 @@
 \usepackage{mysymbols}
 \usepackage{eai}
 
+\usepackage{pifont}
 \newcommand{\writedown}{\ding{45}\ }
+
 \newcommand{\qstart}{q_{\texttt{start}}}
 \newcommand{\qaccept}{q_{\texttt{accept}}}
 \newcommand{\qreject}{q_{\texttt{reject}}}
@@ -120,13 +132,17 @@
 \newcommand{\Property}[1]{{\em Свойство~(\ref{#1})}}
 
 \newif\ifhints
-\newif\ifcode
+\newif\ifcode                   % Използва се само за един пример на си++
 \hintstrue
-\codetrue
+% \codetrue
 
 \usepackage[scaled=0.89]{PTSerif}
 \usepackage[scaled=0.89]{PTSans}
 
+
+\ifcode
+\usepackage{minted}
+\fi
 
 % \setsecheadstyle{\large\usefont{T2A}{fag}{b}{r}} %\scshape
 % \setsubsecheadstyle{\bfseries\sffamily}
@@ -142,9 +158,9 @@
   }
 
 % \makeindex
-\begin{document}
+\begin{document} 
 \maketitle
-% \layout
+  % \layout
 
 \include{front}
 

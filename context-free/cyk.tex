@@ -12,23 +12,24 @@
   \caption{Проверка дали $\alpha \in \L(G)$}
   \label{alg:belongs-to-grammar}
   \begin{algorithmic}[1]
-    \State $n := \texttt{len}(\alpha)$ \Comment{Вход дума $\alpha = a_1\cdots a_n$}
-    \ForAll{$i\in [1,n]$}
-    \State $V[i][i] := \{A \in V \mid A\to_G a_i\}$
+    \State $n = \texttt{len}(\alpha)$ \Comment{Вход дума $\alpha = a_1\cdots a_n$}
+    \ForAll{$i,j \in [1,n]$}
+    \If{$i = j$}
+    \State $\texttt{V[i][i]} = \{A \in V \mid A\to_G a_i\}$ \label{alg:cyk:initial}
+    \Else
+    \State{$\texttt{V[i][j]} = \emptyset$}
+    \EndIf
     \EndFor
-    \ForAll{$i,j \in [1,n]\ \&\ i \neq j$}
-    \State $V[i][j] := \emptyset$
-    \EndFor      
-    \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала}
+    \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала} \label{alg:cyk:first-loop}
     \ForAll{$i \in [1, n-s]$}\Comment{Начало на интервала}
     \ForAll{$k \in [i, i + s)$}\Comment{Разделяне на интервала}
-    \If{$\exists A\to BC \in R\ \&\ B \in V[i][k]\ \&\ C\in V[k+1][i+s]$}
-    \State $V[i][i+s] := V[i][i+s] \cup \{A\}$
+    \If{$\exists A\to BC \in R\ \&\ B \in \texttt{V[i][k]}\ \&\ C\in \texttt{V[k+1][i+s]}$}
+    \State $\texttt{V[i][i+s]} = \texttt{V[i][i+s]} \cup \{A\}$ \label{alg:cyk:add-variable}
     \EndIf
     \EndFor
     \EndFor
     \EndFor
-    \If{$S \in V[1][n]$}
+    \If{$S \in \texttt{V[1][n]}$}
     \State \Return \texttt{True}\Comment{Има извод на думата от $S$}
     \Else
     \State \Return \texttt{False}
@@ -38,28 +39,28 @@
 
 \begin{lemma}
   Нека е дадена безконтекстната граматика $G$ в нормална форма на Чомски и думата $\alpha$.
-  Всеки път, точно преди да изпълни ред 6 от програмата описана в Алгоритъм \ref{alg:belongs-to-grammar},
+  Всеки път, точно преди да изпълни ред (\ref{alg:cyk:first-loop}) от програмата описана в Алгоритъм \ref{alg:belongs-to-grammar},
   е изпълнено, че за всяко $i = 1,2,\dots,n-s$,
-  \[V[i][i+s] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s}\}.\]
+  \[\texttt{V[i][i+s]} = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s}\}.\]
 \end{lemma}
 \begin{proof}
   Пълна индукция по $s$.
-  За $s = 0$ е ясно, защото от редове 2 и 3 и от факта, че граматиката е в нормална форма на Чомски следва, че за всяко $i = 1, \dots, n$,
-  \[V[i][i] = \{A \in V \mid A \to_G a_i\} = \{A \in V \mid A \to^\star_G a_i\}.\]
+  За $s = 0$ е ясно, защото от ред (\ref{alg:cyk:initial}) и от факта, че граматиката е в нормална форма на Чомски следва, че за всяко $i = 1, \dots, n$, 
+  \[\texttt{V[i][i]} = \{A \in V \mid A \to_G a_i\} = \{A \in V \mid A \to^\star_G a_i\}.\]
 
   Нека твърдението е вярно за $s < n$. Ще докажем твърдението за $s+1$, т.е. ще докажем, че за всяко $i = 1,\dots,n-s-1$
   е изпълнено, че:
-  \[V[i][i+s+1] = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s+1}\}.\]
+  \[\texttt{V[i][i+s+1]} = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s+1}\}.\]
   Да разгледаме двете посоки на това равенство.
   % Да разгледаме $A \in V[i,i+s+1]$.
   \begin{description}
   \item[($\subseteq$)]
-    Нека $A \in V[i][i+s+1]$.
-    Единствената стъпка на алгоритъма, при която може да сме добавили променливата $A$ към множеството $V[i][i+s+1]$ е ред 10.
+    Нека $A \in \texttt{V[i][i+s+1]}$.
+    Единствената стъпка на алгоритъма, при която може да сме добавили променливата $A$ към множеството $\texttt{V[i][i+s+1]}$ е ред (\ref{alg:cyk:add-variable}).
     Тогава имаме, че съществува $k$, $i \leq k < i+s+1$, за което
     \begin{align*}
-      & B \in V[i][k],\\
-      & C \in V[k+1][i+s+1],\\
+      & B \in \texttt{V[i][k]},\\
+      & C \in \texttt{V[k+1][i+s+1]},\\
       & A\to_G BC.
     \end{align*}
     Понеже $k-i < s+1$ и $i + s - k < s+1$, от {\bf И.П.} имаме, че
@@ -76,12 +77,16 @@
       & B \to^\star a_i\cdots a_{k}\\
       & C \to^\star a_{k+1}\cdots a_{i+s+1}.
     \end{align*}
-    От {\bf И.П.} получаваме, че $B \in V[i][k]$ и $C \in V[k+1][i+s+1]$.
-    Тогава от ред 10 на алгоритъма е ясно, че 
-    \[A \in V[i][i+s+1].\]
+    От {\bf И.П.} получаваме, че $B \in \texttt{V[i][k]}$ и $C \in \texttt{V[k+1][i+s+1]}$.
+    Тогава от ред (\ref{alg:cyk:add-variable}) на алгоритъма е ясно, че 
+    \[A \in \texttt{V[i][i+s+1]}.\]
   \end{description}
 \end{proof}
 
+{\scriptsize
+
+\begin{multicols}{2}
+  
 \begin{example}
   Нека е дадена граматиката $G$ в нормална форма на Чомски с правила 
   \begin{align*}
@@ -90,54 +95,57 @@
     & B\rightarrow b\\
     & C\rightarrow SB\ |\ AS.
   \end{align*}
-  Ще приложим CYK алгоритъма за да проверим дали думата $aaabb \in \L(G)$.
+  Ще приложим CYK алгоритъма за да проверим дали $aaabb \in \L(G)$.
+  
   \begin{itemize}
   \item 
     За $s = 0$ имаме, че:
     \begin{itemize}
     \item 
-      $V[1][1] = V[2][2] = V[3][3] = \{S,A\}$;
+      $\texttt{V[1][1]} = \texttt{V[2][2]} = \texttt{V[3][3]} = \{S,A\}$;
     \item
-      $V[4][4] = V[5][5] = \{B\}$.
+      $\texttt{V[4][4]} = \texttt{V[5][5]} = \{B\}$.
     \end{itemize}
   \item
     За $s = 1$ имаме, че:
     \begin{itemize}
     \item
-      $V[1][2] = V[2][3] = \{C\}$;
+      $\texttt{V[1][2]} = \texttt{V[2][3]} = \{C\}$;
     \item
-      $V[3][4] = \{S,C\}$;
+      $\texttt{V[3][4]} = \{S,C\}$;
     \item
-      $V[4][5] = \emptyset$.
+      $\texttt{V[4][5]} = \emptyset$.
     \end{itemize}
   \item
     За $s = 2$ имаме, че:
     \begin{itemize}
     \item
-      $V[1][3] = \{S\} \cup \emptyset$;
+      $\texttt{V[1][3]} = \{S\} \cup \emptyset$;
     \item
-      $V[2][4] = \{S,C\} \cup \emptyset$;
+      $\texttt{V[2][4]} = \{S,C\} \cup \emptyset$;
     \item
-      $V[3][5] = \emptyset \cup \{C\}$.
+      $\texttt{V[3][5]} = \emptyset \cup \{C\}$.
     \end{itemize}
   \item
     За $s = 3$ имаме, че:
     \begin{itemize}
     \item
-      $V[1][4] = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$;
+      $\texttt{V[1][4]} = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$;
     \item
-      $V[2][5] = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$.
+      $\texttt{V[2][5]} = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$.
     \end{itemize}
   \item
     За $s = 4$ имаме, че:
     \begin{itemize}
     \item 
-      $V[1][5] = \{S,C\} \cup \emptyset \cup \emptyset \cup \{C\}= \{S,C\}$.
+      $\texttt{V[1][5]} = \{S,C\} \cup \emptyset \cup \emptyset \cup \{C\}= \{S,C\}$.
     \end{itemize}
   \end{itemize}
-  Понеже $S \in V[1][5]$, то $aaabb \in \L(G)$.
+  Понеже $S \in \texttt{V[1][5]}$, то $aaabb \in \L(G)$.
 \end{example}
+\end{multicols}
 
+}
 
 %%% Local Variables:
 %%% mode: latex

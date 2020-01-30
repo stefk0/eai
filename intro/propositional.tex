@@ -1,6 +1,8 @@
-\section{Съждително смятане}
-\label{sect:propositional}
+\section{Съждително смятане}\label{sect:propositional}
 \marginpar{На англ. Propositional calculus}
+
+Както при езиците за програмиране, всяка логика има свой синтаксис и семантика.
+Тук ще разгледаме класическата съждителна логика, при която те са сравнително прости.
 
 Съждителното смятане наподобява аритметичното смятане, като вместо аритметичните операции $+,-,\cdot,/$, 
 имаме съждителни операции като $\neg, \wedge, \vee$.
@@ -57,10 +59,14 @@ $\neg$, $\vee$, $\wedge$, $\rightarrow$, $\leftrightarrow$ и скоби, опр
 Така например, от горната таблица се вижда, че 
 $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\wedge \neg q)$.
 
-\subsection*{Съждителни закони}
+\subsection{Съждителни закони}
 
 \begin{enumerate}[I)]
-  \item
+\item
+  {\bf Закон за идемпотентността}
+  \[p \land p \equiv p\]
+  \[p \lor p \equiv p\]
+\item
     {\bf Комутативен закон}
     \[p\vee q \equiv q\vee p\] 
     \[p \wedge q \equiv q \wedge p\]
@@ -92,6 +98,14 @@ $p\to q \equiv \neg p \vee q$ и $p \iff q \equiv (\neg{p}\wedge q)\ \vee\ (p\we
 
 Лесно се проверява с таблиците за истинност, че законите са валидни.
 
+\subsection{Нормални форми}
+
+\begin{itemize}
+\item
+  Конюнктивна нормална форма
+\item
+  Дизюнктивна нормална форма
+\end{itemize}
 
 
 %%% Local Variables:

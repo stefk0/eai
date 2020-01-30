@@ -72,62 +72,6 @@
   \end{align*}
 \end{hint}
 
-{\bf Тази част да се премести}
-
-Нека имаме КДА $\A$.
-Дефинираме $\B = \rev(\A)$ да бъде КДА по следния начин:
-\begin{itemize}
-\item
-  Състоянията на $\B$ ще бъдат подмножества на състоянията на $\A$.
-
-\item
-  Да положим $Q_\alpha \df \{q \in Q^\A \mid \delta^\star_\A(q,\alpha) \in F\}$.
-  Тогава
-  $Q^\B \df \{Q_\alpha \mid \alpha \in \Sigma\}$.
-\item
-  $\qstart^\B \df F^\A = Q_\varepsilon$.
-\item
-  За произволно $R \in Q^\B$,
-  $\delta_\B(R,a) \df \{q \in Q^\A \mid \delta_\A(q,a) \in R\}$.
-  С други думи,
-  $\delta_\B(Q_\alpha,a) = Q_{a\alpha}$.
-\item
-  $F^\B = \{Q_\alpha \mid \qstart^\A \in Q_\alpha\}$.
-\item
-  Съобразете, че $\delta^\star_\B(Q_\alpha,\gamma) = Q_{\gamma^\rev\alpha}$.
-  Тогава
-  \begin{align*}
-    \L(\B) & = \{\alpha \mid \delta^\star_\B(Q_\varepsilon,\alpha) = Q_{\alpha^\rev} \in F^\B\}\\
-           & = \{\alpha \mid  \qstart^\A \in Q_{\alpha^\rev}\}\\
-           & = \{\alpha \mid  \delta^\star(\qstart^\A,\alpha^\rev) \in F^\A\}\\
-           & = \L(\A)^\rev.
-  \end{align*}
-\end{itemize}
-
-\begin{problem}
-  Докажете, че $\rev(\A)$ е минимален автомат за $\L(\A)^\rev$.
-\end{problem}
-\begin{hint}
-  Достатъчно е да се докаже, че
-  \[Q_\alpha = Q_\beta \iff \L_\B(Q_\alpha) = \L_\B(Q_\beta).\]
-  Нека $\L_\B(Q_\alpha) = \L_\B(Q_\beta)$. Ще докажем, че $Q_\alpha \subseteq Q_\beta$.
-  Нека $q \in Q_\alpha$. Това означава, че $\delta^\star_\A(q,\alpha) \in F^\A$.
-  Следователно, съществува $\gamma$, за която $\delta^\star_\A(\qstart^\A,\gamma\alpha) \in F^\A$.
-  От друга страна,
-  \begin{align*}
-    \gamma^\rev \in \L_\B(Q_\alpha) & \iff \delta^\star_\B(Q_\alpha,\gamma^\rev) \in F^\B\\
-                                    & \iff Q_{\gamma\alpha} \in F^\B\\
-                                    & \iff \delta^\star_\A(\qstart^\A,\gamma\alpha) \in F^\A.
-  \end{align*}
-\end{hint}
-
-
-\begin{framed}
-  \begin{theorem}[Бжозовски]
-    Нека $\A$ е КДА. Тогава $\rev(\rev(\A))$ е минимален автомат за $\L(\A)$.
-  \end{theorem}
-\end{framed}
-
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"

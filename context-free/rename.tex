@@ -34,6 +34,8 @@
   \[R' \df R'_0 \cup \{\ (A,\alpha) \in V \times (V\cup\Sigma)^\star \mid (\exists B)[(A,B) \in \texttt{Ren}\ \&\ (B,\alpha) \in R'_0]\ \}.\]
 \end{hint}
 
+{\scriptsize
+  \begin{multicols}{2}
 \begin{example}
   Нека е дадена граматиката $G$ с правила  
   \begin{align*}
@@ -58,7 +60,8 @@
     Добавяме правилата $B \to AB\ |\ a\ |\ b$.
   \item
     Имаме $S \to^\star_G B,C$.
-    Добавяме правилата $S \to BC\ |\ AB\ |\ a\ |\ b$.
+    Добавяме правилата
+    \[S \to BC\ |\ AB\ |\ a\ |\ b.\]
   \end{itemize}
   Накрая получаваме, че граматиката $G'$ има правила
   \begin{align*}
@@ -68,6 +71,8 @@
     & C \to AB\ |\ a\ |\ b.
   \end{align*}
 \end{example}
+\end{multicols}
+}
 
 \begin{problem}
   Премахнете преименуващите правила от граматиката $G$, като запазите езика, ако $G$ има следните правила:
