@@ -54,7 +54,7 @@
   проверява дали $\L(\mathbf{r}) \subseteq \L(\mathbf{s})$.
 \end{problem}
 
-
+{\scriptsize
 \begin{problem}
   За всеки от следните езици $L$, постройте минимален краен детерминиран автомат $\A$, който разпознава езика $L$, където:
   \marginpar{$\card{\omega}{a} \df $ броят на срещанията на буквата $a$ в думата $\omega$.}
@@ -111,19 +111,6 @@
       за }i = 1,2,3\}$.
   \end{enumerate}
 \end{problem}
-
-\begin{problem}
-  Докажете, че следните езици са регулярни:
-  \begin{enumerate}[a)]
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } \leq 2 \text{ за всяка представка $\omega$ на $\alpha$}\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } > 2 \text{ за някоя представка $\omega$ на $\alpha$}\}$;
-  \item
-    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } > 2 \text{ за някоя наставка $\omega$ на $\alpha$}\}$.
-  \end{enumerate}
-\end{problem}
-
 
 \begin{problem}
   Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
@@ -187,6 +174,21 @@
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } \leq 3\}$.
   \end{enumerate}
 \end{problem}
+}
+
+\begin{problem}
+  Докажете, че следните езици са регулярни:
+  \begin{enumerate}[a)]
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } \leq 2 \text{ за всяка представка $\omega$ на $\alpha$}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } > 2 \text{ за някоя представка $\omega$ на $\alpha$}\}$;
+  \item
+    $L = \{\alpha \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } > 2 \text{ за някоя наставка $\omega$ на $\alpha$}\}$.
+  \end{enumerate}
+\end{problem}
+
+
 
 % \begin{problem}
 %   Нека $L$ е регулярен език над азбуката $\Sigma$. Докажете, че 

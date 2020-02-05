@@ -18,13 +18,13 @@
           (2) edge [loop above] node [above] {$0,1$} (2);
         \end{tikzpicture}
       \end{center}
-      \caption{Автомат разпознаващ $\L(\mathbf{1^\star 0 (0 + 1)^\star)}$}
+      \caption{$\L(\A) = \L(\mathbf{1^\star 0 (0 + 1)^\star)}$}
       \label{fig:a1}
     \end{figure}
 \end{framed}
 
 Лесно се съобразява, че езикът на автомата от \Figure{a1} се описва с регулярния израз $\mathbf{1^\star 0 (0 + 1)^\star}$.
-Следвайки означенията и конструкцията от доказателството на \Th{regular-kleene},
+Следвайки означенията и конструкцията от доказателството на \Theorem{regular-kleene},
 езикът на този автомат се описва с регулярния израз $\mathbf{r}^2_{0,1}$, защото началното състояние е $q_0$, финалното е $q_1$ и 
 броят на състоянията в автомата е $2$.
 \begin{align*}
@@ -50,14 +50,14 @@
 
 
 \begin{problem}
-  Приложете конструкцията от Теоремата на Клини за да получите регулярен израз, който описва езика на автомата $\A$.
-  
+  Приложете конструкцията от Теоремата на Клини за да получите регулярен израз, който описва езика на автомата $\A$ изобразен на Фигура~\ref{fig:a2}.
+  \begin{framed}
     \begin{figure}[H]
       \begin{center}
-        \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+        \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
           \tikzstyle{every state}=[circle,minimum size=15pt,auto]
           
-          \node[initial above,state]      (1) {$q_0$};
+          \node[initial,state]      (1) {$q_0$};
           \node[state]              (2) [right of=1]{$q_1$};
           \node[accepting, state]   (3) [right of=2]{$q_2$};
           
@@ -69,12 +69,14 @@
           (3) edge [loop above]    node [above] {$a,b$} (3);
         \end{tikzpicture}
       \end{center}
-      \caption{$\L(\A) = \L(\mathbf{a^\star b(a+b)^\star})$.}
+      \caption{$\L(\A) \stackrel{?}{=} \L(\mathbf{a^\star b(a+b)^\star})$.}
       \label{fig:a2}
     \end{figure}
+  \end{framed}
 \end{problem}
-\begin{solution}
-  $\L(\A) = \L(\mathbf{r}^3_{0,2})$, където:
+{\scriptsize
+  \begin{solution}
+    От теоремата на Клини знаем, че $\L(\A) = \L(\mathbf{r}^3_{0,2})$, където:
   \begin{align*}
     \mathbf{r}^3_{0,2} & = \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} + \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} \cdot \underbrace{(\mathbf{r}^2_{2,2})^\star}_{\bm{(\varepsilon+a+b)^\star}} \cdot \underbrace{\mathbf{r}^2_{2,2}}_{\bm{\varepsilon+a+b}}\\
                        & = \bm{a^\star b + a^\star b \cdot (a+b)^\star \cdot (\varepsilon+a+b)} \\
@@ -90,4 +92,10 @@
                        & = \bm{(\varepsilon + a^+)\cdot b} & \comment \mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star\\
                        & = \bm{a^\star b}. & \comment \mathbf{r}^\star = \bm{\varepsilon + r^+.г}
   \end{align*}
+  Заключаваме, че $\L(\A) = \L(\mathbf{a^\star b(a+b)^\star})$.
 \end{solution}
+}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

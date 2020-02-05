@@ -155,17 +155,17 @@
   \begin{align*}
     \alpha \in \L(\A) & \iff \delta^\star(\qstart,\alpha) \in F & \comment\text{деф. на }\L(\A)\\
                       & \iff [\delta^\star(\qstart,\alpha)]_{\equiv_\A} \in F' & \comment\text{деф. на }F'\\
-                      & \iff \delta^\star_1([\qstart]_{\equiv_\A},\alpha) \in F' & \comment\text{\Prop{minimisation-delta-1}}\\
+                      & \iff \delta^\star_1([\qstart]_{\equiv_\A},\alpha) \in F' & \comment\text{\Proposition{minimisation-delta-1}}\\
                       & \iff \alpha \in \L(\A'). & \comment\text{деф. на }\L(\A')
   \end{align*}
-  От \Prop{equal-number} знаем, че $|Q'| = |\Sigma^\star/_{\approx_{\L(\A)}}|$.
-  Тогава от \Prop{upper-bound} следва, че $\A'$ е минимален автомат.
+  От \Proposition{equal-number} знаем, че $|Q'| = |\Sigma^\star/_{\approx_{\L(\A)}}|$.
+  Тогава от \Proposition{upper-bound} следва, че $\A'$ е минимален автомат.
 \end{hint}
 
 При даден език $L$ и детерминиран краен автомат $\A = \FA$, който го разпознава, целта ни е да построим нов детерминиран краен автомат $\M$,
 който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_L$.
 Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
-Според \Prop{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
+Според \Proposition{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
 Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \omega \in \Sigma^\star$
 във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
 За да разрешим този проблем, ще разгледаме апроксимации на езиците $\L_\A(q)$.

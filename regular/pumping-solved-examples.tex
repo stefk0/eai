@@ -31,7 +31,7 @@
     Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
     Ясно е, че $xz \not\in L$, защото $p-k < p$.
   \end{description}  
-  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
+  Тогава от \Corollary{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
 \begin{remark}
@@ -74,7 +74,7 @@
     \[xy^2z = a^{p-k}a^{2k}b^{p+1} = a^{p+k}b^{p+1}.\]
     Ясно е, че $xy^2z \not\in L$, защото $p+k \geq p+1$.
   \end{description}
-  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
+  Тогава от \Corollary{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
 \begin{problem}
@@ -103,7 +103,7 @@
     \[\abs{xy^iz} = \abs{xz} + i.\abs{y} = \abs{xz} + \abs{xz}.\abs{y} = (1 + \abs{y})\abs{xz}\] е съставно число, следователно 
     $xy^iz \not\in L$.
   \end{description}
-  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.
+  Тогава от \Corollary{pumping-reg} следва, че $L$ не е регулярен език.
 \end{proof}
 
 \begin{problem}
@@ -131,7 +131,7 @@
     откъдето следва, че $\abs{xy^2z}$ не е точен квадрат.
     Следователно, $xy^2z \not\in L$.
   \end{description}
-  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.  
+  Тогава от \Corollary{pumping-reg} следва, че $L$ не е регулярен език.  
 \end{proof}
 
 \begin{problem}
@@ -168,7 +168,7 @@
     % \[\abs{y} = \abs{xyz} - \abs{xz} = (p+2)! - k! \geq (p+2)! - (p+1)! = (p+1).(p+1)! > p.\]
     % Достигнахме до противоречие с условието, че $\abs{y} \leq p$.
   \end{description}
-  Тогава от \Cor{pumping-reg} следва, че $L$ не е регулярен език.  
+  Тогава от \Corollary{pumping-reg} следва, че $L$ не е регулярен език.  
 \end{proof}
 
 
@@ -209,7 +209,7 @@
   е регулярен,
   но с лемата за разрастването лесно се вижда, че $L_1$ не е.
 
-  Сега да проверим, че условието за покачване от \Lem{pumping-reg} е изпълнено за $L$.
+  Сега да проверим, че условието за покачване от \Lemma{pumping-reg} е изпълнено за $L$.
   Да изберем константа $p = 2$.
   Сега трябва да разгледаме всички думи $\alpha \in L$, $\abs{\alpha} \geq 2$
   и за всяка $\alpha$ да посочим разбиване $xyz = \alpha$, за което са изпълнени трите свойства от лемата.

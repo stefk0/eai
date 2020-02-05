@@ -116,7 +116,7 @@
 \begin{hint}
   Да разгледаме функцията $f: \Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$, където
   \[f([\alpha]_\A) \df [\alpha]_L.\]
-  Директно от \Prop{rel-finer} се съобразява, че
+  Директно от \Proposition{rel-finer} се съобразява, че
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ [\alpha]_\A = [\beta]_\A\ \implies f([\alpha]_\A) = f([\beta]_\A)\ ],\]
   откъдето следва, че $f$ е добре дефинирана.
   Ясно е, че $f$ е сюрективна функция.
@@ -138,7 +138,7 @@
   Да изберем $\A$, който разпознава $L$. 
   Тъй като всяко достижимо състояние на $\A$ определя клас на еквивалентност относно $\sim_\A$,
   то получаваме, че $\abs{\Sigma^\star/_{\sim_\A}} \leq |Q|$.
-  Комбинирайки със \Prop{approx-less-sim},
+  Комбинирайки със \Proposition{approx-less-sim},
   \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{\Sigma^\star/_{\sim_\A}} \leq \abs{Q}.\]
 \end{proof}
 
@@ -162,7 +162,7 @@
 \end{proof}
 
 Това следствие ни дава още един начин за проверка дали даден език е регулярен.
-За разлика от \Lem{pumping-reg}, сега имаме {\bf необходимо и достатъчно условие}.
+За разлика от \Lemma{pumping-reg}, сега имаме {\bf необходимо и достатъчно условие}.
 При даден език $L$, ние разглеждаме неговата релация $\approx_L$.
 Ако тя има крайно много класове, то езикът $L$ е регулярен.
 В противен случай, езикът $L$ не е регулярен.
@@ -184,7 +184,7 @@
   Това означава, че функцията $g:\Sigma^\star/_{\sim_\A} \to Q$, където
   \[g([\alpha]_\A) \df \delta^\star(\qstart,\alpha)\] е биекция,
   защото $|\Sigma^\star/_{\sim_\A}| = |Q|$.
-  От \Prop{approx-less-sim} имаме, че функцията $f:\Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$, където
+  От \Proposition{approx-less-sim} имаме, че функцията $f:\Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$, където
   \[f([\alpha]_\A) \df [\alpha]_L\] е биекция,
   защото знаем, че $f$ е сюрекция и $|\Sigma^\star/_{\approx_L}| = |\Sigma^\star/_{\sim_\A}|$.
   Оттук заключаваме, че $h = g \circ f^{-1}$ е биекция, защото е композиция на две биекции.

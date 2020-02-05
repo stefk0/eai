@@ -228,7 +228,8 @@
 
 \begin{example}
   Да припомним, че в \Problem{regular:dfa:binary} се искаше да се докаже, че езикът 
-  $L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}$ е регулярен.
+  \[L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\]
+  е регулярен.
   Ние направихме това като построихме автомат за $L$ и доказахме, че той разпознава $L$.
   Нека сега пак да построим автомат за $L$, но този път чрез метода на Бжозовски.
   За целта ще ни трябва алтернативна дефиниция на $\bin{\alpha}$.
@@ -241,28 +242,36 @@
   \item
     $\bin{1\alpha} = 2^{|\alpha|} + \bin{\alpha}$.
   \end{itemize}
-  Тогава:
-\begin{align*}
-  0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid \bin{0\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = L\\
-  \\
-  1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid \bin{1\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & \df M.
-\end{align*}
+  Тогава имаме, че $0^{-1}(L) = L$ и $1^{-1}(L) \df M$, защото:
+  {\scriptsize
+  \begin{multicols}{2}
+    \begin{align*}
+      0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
+                & = \{\alpha \in \{0,1\}^\star \mid \bin{0\alpha} \equiv 2 \bmod 3\}\\
+                & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
+                & = L.
+    \end{align*}    
 
+    \begin{align*}
+      1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
+                & = \{\alpha \in \{0,1\}^\star \mid \bin{1\alpha} \equiv 2 \bmod 3\}\\
+                & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                & \df M.
+    \end{align*}
+  \end{multicols}
+}
 Лесно се съобразява, че $L \neq M$, защото например за думата $\alpha = 10$
 имаме, че $\alpha \in L$, но $\alpha \not\in M$.
 Продължаваме нататък:
+{\scriptsize
+\begin{multicols}{2}
 \begin{align*}
   0^{-1}(M) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in M\}\\
               & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-              & \df N\\
-  \\
+              & \df N.
+\end{align*}
+\begin{align*}
   1^{-1}(M) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in M\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
@@ -270,26 +279,32 @@
             & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
             & = L.
 \end{align*}
+\end{multicols}
+}
 Да проверим, че $N \neq L$ и $N \neq M$.
 Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
 Непосредствено се проверява, че $\alpha \in N$, $\alpha \not\in L$, $\alpha \not\in M$.
 Продължаваме нататък:
+{\scriptsize
+\begin{multicols}{2}
 \begin{align*}
   0^{-1}(N) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in N\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-              & = M
-  \\
-  1^{-1}(N) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in N\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-              & = N.
+            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+            & = M.
 \end{align*}
-
+\begin{align*}
+  1^{-1}(N) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in N\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+            & = N.
+\end{align*}
+\end{multicols}
+}
 % Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
 
 \begin{figure}[H]

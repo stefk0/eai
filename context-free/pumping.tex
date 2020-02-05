@@ -27,7 +27,7 @@
   
   Да разгледаме произволна дума $\alpha \in \L(G)$, за която $\abs{\alpha} \geq p$.
   Понеже $\L(G)$ е безкраен език, то такива думи съществуват.
-  Тогава от \Cor{tree:upper-bound} следва, че ако $P = (T,\lambda)$ е дърво на извод за $\alpha$ в $G$, за което $X_\varepsilon = S$, то
+  Тогава от \Corollary{tree:upper-bound} следва, че ако $P = (T,\lambda)$ е дърво на извод за $\alpha$ в $G$, за което $X_\varepsilon = S$, то
   \[b^{|V| + 1}\leq |\alpha| \leq b^{\texttt{height}(T)}.\]
   Оттук следва, че
   \[|V| + 1 \leq \texttt{height}(T).\]
@@ -73,7 +73,7 @@
   \item
     $\abs{yuv} \leq p$, защото $yuv = \texttt{yield}(T_\beta)$ и оттук следва, че:
     \begin{align*}
-      \abs{yuv} & \leq b^{\texttt{height}(T_\beta)} & \comment\text{от \Cor{tree:upper-bound}}\\
+      \abs{yuv} & \leq b^{\texttt{height}(T_\beta)} & \comment\text{от \Corollary{tree:upper-bound}}\\
                 & \leq b^{|V|+1} & \comment\text{от (\ref{eq:11})}\\
                 & = p
     \end{align*}
@@ -327,7 +327,7 @@
   \item[($\exists$)]
     можем да посочим $i \in \Nat$, за което е изпълнено, че $xy^iuv^iw \not\in L$.
   \end{description}  
-  \marginpar{\writedown Докажете! Аналогично е на \Cor{pumping-reg}}
+  \marginpar{\writedown Докажете! Аналогично е на \Corollary{pumping-reg}}
   Тогава $L$ {\bf не} е безконтекстен език.
 \end{cor}
 
@@ -394,7 +394,7 @@
     Оказа се, че във всички възможни случаи за $y$ и $v$, 
     $xy^2uv^2w \not\in L$.
   \end{description}
-  Така от \Cor{pumping-context-free} следва, че езикът $L$ не е безконтекстен.
+  Така от \Corollary{pumping-context-free} следва, че езикът $L$ не е безконтекстен.
 \end{proof}
 
 \begin{problem}

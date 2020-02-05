@@ -2,7 +2,7 @@
 
 \begin{example}
   Да разгледаме следния детерминиран краен автомат $\A$.
-  \marginpar{$\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
+  \marginpar{\writedown Съобразете сами, че $\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
   \begin{framed}
     \begin{figure}[H]
       \begin{subfigure}[b]{0.45\textwidth}
@@ -23,9 +23,9 @@
           (1) edge [bend left=15] node [below] {$b$}    (4)
           (2) edge [bend left=15] node [left] {$b$}    (3)
           (2) edge node [below] {$a$}   (4)
-          (4) edge  node [below] {$a,b$} (5)
-          (3) edge  node [left] {$a,b$}  (5)
-          (5) edge [loop above]   node [above] {$a,b$}  (5);
+          (4) edge [bend right=15] node [right] {$a,b$} (5)
+          (3) edge [bend left=15] node [right] {$a,b$}  (5)
+          (5) edge [loop right]   node [above] {$a,b$}  (5);
         \end{tikzpicture}
         \caption{Ще построим минимален автомат разпознаващ $\L(\A)$}
       \end{subfigure}
@@ -49,9 +49,10 @@
     \end{subfigure}
   \end{figure}
 \end{framed}
-
+\end{example}
 
 {\scriptsize
+  \begin{hint}
 Ще приложим алгоритъма за минимизация за да получим минималния автомат за езика $L$.
 За всяко $n = 0,1,2,\dots$, ще намерим класовете на еквивалентност на $\equiv^n_\A$,
 докато не намерим $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
@@ -114,8 +115,8 @@
     \hline
   \end{tabular}
 \end{itemize}
+\end{hint}
 }
-\end{example}
 
 \begin{example}
   Да разгледаме следния детерминиран краен автомат $\A$.
@@ -134,15 +135,15 @@
         \node[state,accepting]        (5) [below right of=3]{$5$};
         
         \path 
-        (0) edge node [below] {$a$}   (1)
-            edge node [below] {$b$}   (2)
+        (0) edge [bend left=15] node [below] {$a$}   (1)
+            edge [bend right=15] node [below] {$b$}   (2)
         (1) edge node [above] {$a$}    (3)
             edge [bend left=15] node [below] {$b$}    (4)
         (2) edge [bend left=15] node [left] {$b$}    (3)
             edge node [below] {$a$}   (4)
-        (4) edge node [below] {$a,b$} (5)
-        (3) edge node [left] {$a,b$}  (5)
-        (5) edge [loop above]   node [above] {$a,b$}  (5);
+        (4) edge [bend right=15] node [below] {$a,b$} (5)
+        (3) edge [bend left=15] node [right] {$a,b$}  (5)
+        (5) edge [loop right]   node [above] {$a,b$}  (5);
       \end{tikzpicture}
       \caption{Ще построим минимален автомат разпознаващ $\L(\A)$}
     \end{subfigure}
@@ -168,18 +169,20 @@
     \end{subfigure}
   \end{figure}
   \end{framed}
+\end{example}
 
-  \marginpar{Съобразете, че $\L(\A) = \{a,b\} \cup \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 3\}$.}
-  
-  Отново следваме същата процедура за минимизация.
-  Ще намерим класовете на еквивалентност на $\equiv^n_\A$,
-  докато не намерим $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
+  {\scriptsize
+  \begin{hint}
+    \marginpar{\writedown Съобразете сами, че $\L(\A) = \{a,b\} \cup \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 3\}$.}
+    Отново следваме същата процедура за минимизация.
+    Ще намерим класовете на еквивалентност на $\equiv^n_\A$,
+    докато не намерим $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
   \begin{itemize}
   \item
     Класовете на екиваленост на $\equiv^0_\A$ са 
     $A_0 = Q\setminus F = \{0,3,4\}$ и $A_1 = F = \{1,2,5\}$.
   \item
-    Разбиваме класовете на еквивалентност на $\equiv^0_\A$ като използваме \Prop{one-letter-test}.
+    Разбиваме класовете на еквивалентност на $\equiv^0_\A$ като използваме \Proposition{one-letter-test}.
     
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
@@ -250,4 +253,10 @@
       \end{tabular}
       
   \end{itemize}
-\end{example}
+\end{hint}
+}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

@@ -55,19 +55,21 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \begin{proposition}
   \label{pr:delta-star}
-  $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
+  Нека $\A$ е ДКА. Тогава за всяко състояние $q$ и произволни думи $\alpha$ и $\beta$ е изпълнено, че
+  % $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
+  \[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta).\]
 \end{proposition}
 \begin{hint}
   Индукция по дължината на $\beta$.
 
   \begin{itemize}
   \item
-    $|\beta| = 0$, т.е. $\beta = \varepsilon$. Тогава за произволна дума $\alpha$ имаме:
+    $|\beta| = 0$, т.е. $\beta = \varepsilon$. Тогава за всяко състояние $q$ и произволна дума $\alpha$ имаме:
     \[\delta^\star(q, \alpha\varepsilon) = \delta^\star( \underbrace{\delta^\star(q, \alpha)}_{q}, \varepsilon).\]
   \item
     Да приемем, че твърдението е изпълнено за думи $\beta$ с дължина $n$.
   \item
-    Нека $|\beta| = n+1$, т.е. $\beta = \gamma b$, където $|\gamma| = n$. Тогава за произволна дума $\alpha$ имаме:
+    Нека $|\beta| = n+1$, т.е. $\beta = \gamma b$, където $|\gamma| = n$. Тогава за всяко състояние $q$ и произволна дума $\alpha$ имаме:
     \begin{align*}
       \delta^\star(q, \alpha\beta) & = \delta^\star(q, \alpha \gamma b)\\
                                    & = \delta( \delta^\star(q, \alpha\gamma),b) & \comment\text{от деф. на }\delta^\star\\

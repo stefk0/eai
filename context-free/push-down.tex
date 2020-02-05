@@ -209,7 +209,7 @@
         & (r, \beta_1, B) \vdash^{\ell_1}_P (q', \varepsilon, \varepsilon) \implies [r, B, q'] \to^\star_G \beta_1\\
         & (q', \beta_2, C) \vdash^{\ell_2}_P (p, \varepsilon, \varepsilon) \implies [q', C, p] \to^\star_G \beta_2.
       \end{align*}
-      Като използваме \Prop{grammar:concat}, получваме, че
+      Като използваме \Proposition{grammar:concat}, получваме, че
       \[[r,B,q'][q',C,p] \to^\star_G \beta_1\beta_2.\]
       Понеже имаме, че $\Delta(q,a,A) \ni (r,BC)$, то в граматиката имаме правилото
       \[[q,A,p] \rightarrow_G a[r,B,q'][q',C,p].\]
@@ -231,7 +231,7 @@
     \[(q, a\beta, A) \vdash^\star_P (p, \varepsilon, \varepsilon).\]
     Сега да разгледаме втория случай:
     \[[q,A,p] \rightarrow_G a[r,B,q'][q',C,p] \stackrel{\ell-1}{\to}_G a\beta.\]
-    От \Prop{grammar:divide} следва, че имаме разбиване на думата $\beta$ като $\beta = \beta_1\beta_2$, където 
+    От \Proposition{grammar:divide} следва, че имаме разбиване на думата $\beta$ като $\beta = \beta_1\beta_2$, където 
     \begin{align*}
       & [r,B,q'] \stackrel{\ell_1}{\to}_G \beta_1\\
       & [q',C,p] \stackrel{\ell_2}{\to}_G \beta_2.
@@ -279,7 +279,7 @@
   \item
     $Q = \{\qstart,q,\qaccept\}$;
   \item
-    Дефинираме релацията на преходите, следвайки конструкцията от \Th{push-down-context-free}:
+    Дефинираме релацията на преходите, следвайки конструкцията от \Theorem{push-down-context-free}:
     \begin{itemize}
     \item
       $\Delta(\qstart, \varepsilon, \sharp) = \{(q, S\sharp)\}$;
@@ -312,7 +312,7 @@
   \[P = \pair{Q',\Sigma,\Gamma,\sharp, \Delta', \qstart', \qaccept'}, \text{ където } \L(P) = L,\]
   и краен тотален детерминиран автомат 
   \[\A = \pair{Q'', \Sigma, \qstart'', \delta'', F''}, \text{ където } \L(\A) = R.\]
-  \marginpar{Сравнете с конструкцията от \Prop{automata-cap}.}
+  \marginpar{Сравнете с конструкцията от \Proposition{automata-cap}.}
   Ще определим нов стеков автомат
   \[\M = \PDA,\]
   където
@@ -353,7 +353,7 @@
   
 \end{hint}
 
-\Th{intersection-context-reg} е удобна, когато искаме да докажем, че даден език не е безконтекстен.
+\Theorem{intersection-context-reg} е удобна, когато искаме да докажем, че даден език не е безконтекстен.
 С нейна помощ можем да сведем езика до друг, за който вече знаем, че не е безконтекстен.
 
 \begin{example}
