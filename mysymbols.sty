@@ -57,9 +57,7 @@
 
 \renewcommand{\iff}{\ \Leftrightarrow\ }
 \newcommand{\imply}{\ \Rightarrow\ }
-\newcommand{\todo}{\ding{45}\ }
 \newcommand{\comment}{\texttt{/}\!\texttt{/}\ }
-\newcommand*{\blank}{\sqcup}
 \newcommand{\val}[1]{\llbracket{#1}\rrbracket}
 
 
@@ -76,3 +74,11 @@
   }
 }
 
+
+% TURING
+
+\newcommand{\tape}[1]{\cdots\blank\blank\blank{#1}\blank\blank\blank\cdots}
+\newcommand*{\blank}{\sqcup}
+\newcommand{\goleft}{\lhd}
+\newcommand{\goright}{\rhd}
+\newcommand{\stay}{\Box}

@@ -1,8 +1,7 @@
 \section{Недетерминирани крайни автомати}
-\index{автомат!недетерминиран}
+\index{автомат!недетерминиран (НКА)}
 \begin{definition}
-  \marginpar{Въведени от Рабин и Скот \cite{rabin-scott}}
-  \marginpar{За по-голяма яснота, често ще означаваме с $\N$ недетерминирани автомати, като ще запазим $\A$ за детерминираните.}
+  \marginpar{Въведени от Рабин и Скот \cite{rabin-scott}. За по-голяма яснота, често ще означаваме с $\N$ недетерминирани автомати, като ще запазим $\A$ за детерминираните.}
   \index{Рабин}
   \index{Скот}
   Недетерминиран краен автомат представлява петорка
@@ -224,7 +223,7 @@
   \begin{figure}[H]
     \begin{subfigure}[b]{0.2\textwidth}
       \label{subf:a1}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=35pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial below,state]      (1) {$q_0$};
       \end{tikzpicture}
@@ -232,7 +231,7 @@
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.2\textwidth}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=35pt]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=35pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial below,state,accepting]      (1) {$q_0$};
       \end{tikzpicture}
@@ -240,7 +239,7 @@
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.2\textwidth}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial below,state]      (1)              {$q_0$};
         \node[accepting,state]    (2) [right of=1] {$q_1$};

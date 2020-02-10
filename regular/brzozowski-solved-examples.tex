@@ -34,7 +34,10 @@
       & = aL \cup aM \cup bM
   \end{align*}
   От това представяне на $M$ веднага се съобразява, че
-  \[a^{-1}(M) = L \cup M.\]
+  \begin{align*}
+    & a^{-1}(M) = L \cup M\\
+    & b^{-1}(M) = M.
+  \end{align*}
   Нека да положим $N \df L \cup M$.
   Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
   Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
@@ -51,6 +54,11 @@
       & = \{\varepsilon\} \cup aM \cup bM \cup aL\\
       & = \{\varepsilon\} \cup aN \cup bM.
   \end{align*}
+  Веднага можем да съобразим, че
+  \begin{align*}
+    & a^{-1}(N) = N\\
+    & b^{-1}(N) = M.
+  \end{align*}
   Сега полагаме:
   \begin{align*}
     & \delta(q_{N},a) \df q_{N} & \comment\text{ защото }a^{-1}(N) = N\\
@@ -61,7 +69,7 @@
   \[Q \df \{q_L, q_M,q_{N}\}.\]
 \item
   Понеже $\varepsilon \in L$ и $\varepsilon \in N$ е ясно, че
-  \[F \df \{q_L,q_N\}.\]
+  \[F = \{q_L,q_N\}.\]
 \end{itemize}
 
 Сега вече сме готови да нарисуваме картинка на автомата.
@@ -109,10 +117,13 @@
 \end{figure}
 \end{example}
 
-\begin{example}
-  Да разгледаме езика регулярния език
+\newpage
+\begin{problem}
+  Постройте автомат $\B$ по метода на Бжозовски, който рапознава регулярния език
   \[L = \L(\mathbf{a\cdot(a+b)^\star\cdot b}).\]
-  Ще построим автомат $\B$ по метода на Бжозовски, който рапознава езика $L$.
+\end{problem}
+\ExtraMaterial{
+\begin{solution}
   \begin{itemize}
   \item 
     $a^{-1}(L) = \{a,b\}^\star b \df M$.
@@ -174,30 +185,41 @@
     \end{tikzpicture}
     \caption{Автомат за езика $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$ по метода на Бжозовски.}
   \end{figure}
-\end{example}
+\end{solution}
+}
 
-\begin{example}
-  Да разгледаме езика 
-  \[L = \{\omega \in \{a,b\}^\star \mid \omega \text{ съдържа четен брой $a$ и точно едно $b$}\}.\]
-  Нека да видим дали можем да построим автомат за този език.
-  \begin{itemize}
-  \item 
-    $a^{-1}(L) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и точно едно $b$}\} \df M$;
-  \item 
-    $b^{-1}(L) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа четен брой $a$ и нито едно $b$}\} \df N$;
-  \item
-    $a^{-1}(M) = L$;
-  \item
-    $b^{-1}(M) = \{\alpha \in \{a,b\}^\star \mid \alpha \text{ съдържа нечетен брой $a$ и нито едно $b$}\} \df P$;
-  \item
-    $a^{-1}(N) = P$;
-  \item
-    $b^{-1}(N) = \emptyset$;
-  \item
-    $a^{-1}(P) = N$;
-  \item
-    $b^{-1}(P) = \emptyset$;
-  \end{itemize}
+\newpage
+\begin{problem}
+  Постройте автомат по метода на Бжозовски за регулярния език
+  \[L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно и }\card{\omega}{b} = 1\}.\]
+\end{problem}
+\ExtraMaterial{
+  \begin{solution}
+    \begin{multicols}{2}
+    \begin{align*}
+        a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечетно и }\card{\omega}{b} = 1\}\\
+                  & \df M.
+      \end{align*}
+      Ясно е, че $M \neq L$, защото например $aab \in L$, но $aab \not\in M$.
+      \begin{align*}
+        b^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е четно и } \card{\omega}{b} = 0\}\\
+                  & \df N.
+      \end{align*}
+      Ясно е, че $N \neq M$ и $N \neq L$, защото $aa \in N$, но $aa \notin M$ и $aa \notin L$.
+      \columnbreak
+      \begin{align*}
+        a^{-1}(M) & = L;\\
+        b^{-1}(M) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечетно и } \card{\omega}{b} = 0\}\\
+                  & \df P.
+      \end{align*}
+      Ясно е, че $P \neq M,L,N$, защото $a \in P$, но $a \notin M,L,N$.
+      \begin{align*}
+        a^{-1}(N) & = P\\
+        b^{-1}(N) & = \emptyset\\
+        a^{-1}(P) & = N\\
+        b^{-1}(P) & = \emptyset.
+      \end{align*}
+\end{multicols}
 
   \begin{figure}[H]
     \centering
@@ -221,16 +243,21 @@
       (N) edge [bend right=15]  node [below] {$b$} (E)
       (E) edge [loop right]    node [right] {$a,b$} (E);      
     \end{tikzpicture}
-    \caption{Минимален автомат, който приема думи с четен брой $a$ и точно едно $b$}
+    \caption{Автомат, който приема думи с четен брой $a$ и точно едно $b$, получен чрез метода на Бжозовски.}
   \end{figure}  
-\end{example}
+\end{solution}
+}
 
-
-\begin{example}
+\newpage
+\begin{problem}
   Да припомним, че в \Problem{regular:dfa:binary} се искаше да се докаже, че езикът 
   \[L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\]
   е регулярен.
   Ние направихме това като построихме автомат за $L$ и доказахме, че той разпознава $L$.
+  Сега пък постройте автомат за $L$ по метода на Бжозовски.
+\end{problem}
+\ExtraMaterial{
+\begin{solution}
   Нека сега пак да построим автомат за $L$, но този път чрез метода на Бжозовски.
   За целта ще ни трябва алтернативна дефиниция на $\bin{\alpha}$.
   За една дума $\alpha \in \{0,1\}^\star$, можем да дадем следната дефиниция на $\bin{\alpha}$:
@@ -242,8 +269,7 @@
   \item
     $\bin{1\alpha} = 2^{|\alpha|} + \bin{\alpha}$.
   \end{itemize}
-  Тогава имаме, че $0^{-1}(L) = L$ и $1^{-1}(L) \df M$, защото:
-  {\scriptsize
+  Тогава имаме, че:
   \begin{multicols}{2}
     \begin{align*}
       0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
@@ -251,7 +277,7 @@
                 & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
                 & = L.
     \end{align*}    
-
+    \columnbreak
     \begin{align*}
       1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
                 & = \{\alpha \in \{0,1\}^\star \mid \bin{1\alpha} \equiv 2 \bmod 3\}\\
@@ -259,11 +285,9 @@
                 & \df M.
     \end{align*}
   \end{multicols}
-}
 Лесно се съобразява, че $L \neq M$, защото например за думата $\alpha = 10$
 имаме, че $\alpha \in L$, но $\alpha \not\in M$.
 Продължаваме нататък:
-{\scriptsize
 \begin{multicols}{2}
 \begin{align*}
   0^{-1}(M) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in M\}\\
@@ -271,6 +295,8 @@
               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
               & \df N.
 \end{align*}
+\vfill
+\columnbreak
 \begin{align*}
   1^{-1}(M) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in M\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
@@ -280,12 +306,10 @@
             & = L.
 \end{align*}
 \end{multicols}
-}
 Да проверим, че $N \neq L$ и $N \neq M$.
 Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
 Непосредствено се проверява, че $\alpha \in N$, $\alpha \not\in L$, $\alpha \not\in M$.
 Продължаваме нататък:
-{\scriptsize
 \begin{multicols}{2}
 \begin{align*}
   0^{-1}(N) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in N\}\\
@@ -304,7 +328,6 @@
             & = N.
 \end{align*}
 \end{multicols}
-}
 % Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
 
 \begin{figure}[H]
@@ -327,7 +350,8 @@
   \end{center}
   \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
 \end{figure}
-\end{example}
+\end{solution}
+}
 
 \begin{example}\label{ex:regular:brzozowski:an-bn}
   Да разгледаме езика $L = \{a^nb^n\mid n \in \Nat\}$.
@@ -335,26 +359,31 @@
   Да се опитаме да построим автомат, който го разпознава.
   Нека
   \[L_k \df \{a^nb^{n+k}\mid n \in \Nat\}.\]
+  \ExtraMaterial{
   Да видим какво се получава като приложим процедурата за строене 
   на минимален автомат.
-  \begin{itemize}
-  \item 
-    $a^{-1}(L) = L_1$;
-  \item
-    $b^{-1}(L) = \emptyset$;
-  \item
-    $a^{-1}(L_1) = L_2$;
-  \item
-    $b^{-1}(L_1) = \{\varepsilon\}$;
-  \item
-    $a^{-1}(\{\varepsilon\}) = b^{-1}(\{\varepsilon\}) = \emptyset$;
-  \item
-    Вижда се, че $a^{-1}(L_k) = L_{k+1}$, за всяко $k$.
-  \item
-    Вижда се, че $b^{-1}(L_{k+1}) = \{b^k\}$, за всяко $k$.
-    Освен това е ясно, че $b^{-1}(\{b^{k}\}) = \{b^{k-1}\}$, за всяко $k \geq 1$.
-  \end{itemize}
+  \begin{multicols}{2}
+    \begin{itemize}
+    \item 
+      $a^{-1}(L) = L_1$;
+    \item
+      $b^{-1}(L) = \emptyset$;
+    \item
+      $a^{-1}(L_1) = L_2$;
+    \item
+      $b^{-1}(L_1) = \{\varepsilon\}$;
+    \item
+      $a^{-1}(\{\varepsilon\}) = b^{-1}(\{\varepsilon\}) = \emptyset$;
+    \item
+      Лесно можем да докажем, че за всяко $k$ е изпълнено, че $a^{-1}(L_k) = L_{k+1}$.
+    \item
+      Лесно се вижда, че $b^{-1}(L_{k+1}) = \{b^k\}$, за всяко $k$.
+    \item
+      Ясно е, че $b^{-1}(\{b^{k}\}) = \{b^{k-1}\}$, за всяко $k \geq 1$.
+    \end{itemize}    
+  \end{multicols}
   Получаваме, че езикът $L$ се разпознава от автомат с {\em безкрайно много състояния}.
+}
   
 % \begin{framed}  
   \begin{figure}[H]
@@ -394,7 +423,7 @@
       \draw [dashed,->,shorten >=0pt] (BBB) to[bend right=15] node[above] {$b$} (BB);
       \draw [dashed,->,shorten >=0pt] (BBBA) to[bend left=30] node[below] {$a$} (E);
     \end{tikzpicture}
-    \caption{{\em Безкраен} автомат за $\{a^nb^n \mid n \in \Nat\}$.}
+    \caption{{\em Безкраен} автомат за $\{a^nb^n \mid n \in \Nat\}$ построен по метода на Бжозовски.}
   \end{figure}
 % \end{framed}
 \end{example}

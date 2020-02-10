@@ -1,4 +1,4 @@
-\documentclass[a4paper, 12pt, oneside]{book}
+\documentclass[a4paper, 12pt, twoside]{book}
 % \usepackage[mathjax,lwarpmk]{lwarp}
 
 % \usepackage[left=0.0cm, right=0.5cm]{geometry}
@@ -6,7 +6,8 @@
 
 \usepackage{cmap}
 \usepackage{gitinfo2}
-
+% \usepackage{todonotes}
+\usepackage{marginnote}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ИНДЕКСИ
@@ -43,18 +44,21 @@
 
 % \reversemarginpar
 % \usepackage{marginnote}
-\setlength{\marginparsep}{1cm}
-\setlength{\oddsidemargin}{0.3cm}
-\setlength{\hoffset}{-0.75in}
-\setlength{\voffset}{-0.75in}
-\setlength{\marginparwidth}{110pt}
+
+\setlength{\marginparsep}{18pt}
+\setlength{\oddsidemargin}{5pt}
+\setlength{\evensidemargin}{100pt}
+\setlength{\hoffset}{-30pt}
+\setlength{\voffset}{-30pt}
+\setlength{\marginparwidth}{100pt}
 \setlength{\textwidth}{420pt}
-\setlength{\textheight}{670pt}
+\setlength{\textheight}{650pt}
 
 % \setlength{\leftmargin}{0.2cm}
 
-\let\oldmarginpar\marginpar
-\renewcommand\marginpar[1]{\leavevmode\oldmarginpar{\raggedright\scriptsize #1}}
+% \let\oldmarginpar\marginpar
+% \renewcommand\marginpar[1]{\leavevmode\marginnote{\raggedright\scriptsize #1}}
+\renewcommand\marginpar[1]{\leavevmode\marginnote{\scriptsize #1}}
 % \renewcommand\marginpar[1]{}
 
   
@@ -131,6 +135,8 @@
 \newcommand{\Figure}[1]{{\em Фигура~\ref{fig:#1}}}
 \newcommand{\Property}[1]{{\em Свойство~(\ref{#1})}}
 
+\newcommand{\ExtraMaterial}[1]{{\scriptsize #1}}
+
 \newif\ifhints
 \newif\ifcode                   % Използва се само за един пример на си++
 \hintstrue
@@ -160,7 +166,7 @@
 % \makeindex
 \begin{document} 
 \maketitle
-  % \layout
+\layout
 
 \include{front}
 

@@ -114,16 +114,17 @@
 
 \begin{problem}
   Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
+  \begin{multicols}{2}
   \begin{enumerate}[a)]
+  % \item
+  %   $L = \{\alpha^{\texttt{rev}} \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
   \item
-    $L = \{\alpha^{\texttt{rev}} \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
-  \item
-    \marginpar{$\alpha = a^pb^p$}
+    % \marginpar{$\alpha = a^pb^p$}
     $L = \{a^ib^i\ \mid\ i\in\Nat\}$;
   \item
     $L = \{a^ib^i\ \mid\ i,j\in\Nat\ \&\ i\neq j\}$;
   \item
-    \marginpar{$\alpha = a^{p+1}b^p$.}
+    % \marginpar{$\alpha = a^{p+1}b^p$.}
     $L = \{a^ib^j\ \mid\ i > j\}$;
   \item
     $L = \{a^nb^m \mid n\mbox{ дели }m\}$.
@@ -136,7 +137,7 @@
   \item
     $L = \{\omega\in\{a,b\}^\star \mid \card{\omega}{a} = \card{\omega}{b}\}$;
   \item
-    \marginpar{$\alpha = a^pba^pb$}
+    % \marginpar{$\alpha = a^pba^pb$}
     $L = \{\omega\omega\mid \omega\in\{a,b\}^\star\}$;
   \item
     $L = \{\omega\omega^\rev\mid \omega\in\{a,b\}^\star\}$;
@@ -172,7 +173,8 @@
     $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} = 2\card{\omega}{b}\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } \leq 3\}$.
-  \end{enumerate}
+  \end{enumerate}    
+  \end{multicols}
 \end{problem}
 }
 

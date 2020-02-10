@@ -34,11 +34,11 @@
 но ако $L$ не е регулярен, то $\B$ ще бъде детерминиран \emph{безкраен} автомат.
 Конструкцията на автомата $\B$ е следната:
 \marginpar{Да напомним, че имаме свойството
-  \[\alpha \in L \iff \varepsilon \in \alpha^{-1}(L).\]}
+  \[\alpha \in L \iff \varepsilon \in \alpha^{-1}(L).\]
+  Все още не ясно, че ако $L$ е регулярен, то $Q$ е крайно множество. Това ще видим след малко.
+  В \Example{regular:brzozowski:an-bn} ще видим един детерминиран безкраен автомат за език, който не е регулярен.}
 \begin{itemize}
 \item
-  \marginpar{Все още не ясно, че ако $L$ е регулярен, то $Q$ е крайно множество. Това ще видим след малко.
-    В \Example{regular:brzozowski:an-bn} ще видим един детерминиран безкраен автомат за език, който не е регулярен.}
   Състоянията $Q$ ще бъдат от вида $q_M$, за $M \subseteq \Sigma^\star$, където:
   \[Q \df \{q_M \mid (\exists \alpha\in\Sigma^\star)[M = \alpha^{-1}(L)].\]
 \item
@@ -68,7 +68,7 @@
   \begin{align*}
     \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L) & \comment\text{нека }M \df \alpha^{-1}(L)\\
                  & \iff \varepsilon\in M\ \&\ q_M = \delta^\star(q_L,\alpha) & \comment\text{от \Proposition{regular:brzozowski:delta}}\\
-                 & \iff \delta^\star(\qstart,\alpha) \in F. & \comment{\qstart = q_L}
+                 & \iff \delta^\star(\qstart,\alpha) \in F. & \comment \qstart \df q_L
   \end{align*}
 \end{hint}
 

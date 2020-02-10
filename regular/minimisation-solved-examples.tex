@@ -1,8 +1,8 @@
 \subsection{Примери}
 
-\begin{example}
-  Да разгледаме следния детерминиран краен автомат $\A$.
-  \marginpar{\writedown Съобразете сами, че $\L(\A) = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 2\}$.}
+\begin{problem}
+  Постройте минимален автомат $\M$ разпознаващ езика на следния детерминиран краен автомат $\A$.
+  \marginpar{\writedown Съобразете, че $\L(\A) = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \geq 2\}$.}
   \begin{framed}
     \begin{figure}[H]
       \begin{subfigure}[b]{0.45\textwidth}
@@ -27,7 +27,7 @@
           (3) edge [bend left=15] node [right] {$a,b$}  (5)
           (5) edge [loop right]   node [above] {$a,b$}  (5);
         \end{tikzpicture}
-        \caption{Ще построим минимален автомат разпознаващ $\L(\A)$}
+        \caption{Ще построим минимален автомат разпознаващ езика на $\A$.}
       \end{subfigure}
       \quad
       \quad
@@ -49,18 +49,19 @@
     \end{subfigure}
   \end{figure}
 \end{framed}
-\end{example}
+\end{problem}
 
-{\scriptsize
-  \begin{hint}
+\ExtraMaterial{
+  \begin{solution}
 Ще приложим алгоритъма за минимизация за да получим минималния автомат за езика $L$.
 За всяко $n = 0,1,2,\dots$, ще намерим класовете на еквивалентност на $\equiv^n_\A$,
 докато не намерим $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
 
+\begin{multicols}{2}
 \begin{itemize}
 \item 
-  Класовете на еквивалентност на $\equiv^0_\A$ са два.
-  Те са $A_0 = Q\setminus F = \{0,1,2\}$ и $A_1 = F = \{3,4,5\}$.
+  Класовете на еквивалентност на $\equiv^0_\A$ са два. Те са
+  \[A_0 = Q\setminus F = \{0,1,2\}\text{ и }A_1 = F = \{3,4,5\}.\]
 \item
   Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv^0_\A$.
   
@@ -96,16 +97,13 @@
     \hline
   \end{tabular}
 
-  Виждаме, че $\equiv^1_\A\ =\ \equiv^2_\A$.
-  \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv^1_\A$}
+  Виждаме, че $\equiv^1_\A\ =\ \equiv^2_\A$,
+  което означава, че $\equiv_\A\ =\ \equiv^1_\A$.
   Следователно, минималният автомат има три състояния.
   Той е изобразен на Фигура \ref{sub:min1}.  
   Минималният автомат може да се представи и таблично:
   
   \begin{tabular}{|c|c|c|c|c|c|c|}
-    % \hline
-    % $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
-    % \hline
     \hline
     $\delta$ & $B_0$ & $B_1$ & $B_2$ \\
     \hline
@@ -115,11 +113,13 @@
     \hline
   \end{tabular}
 \end{itemize}
-\end{hint}
+\end{multicols}
+
+\end{solution}
 }
 
-\begin{example}
-  Да разгледаме следния детерминиран краен автомат $\A$.
+\begin{problem}
+  Постройте минимален автомат $\M$ разпознаващ езика на следния детерминиран краен автомат $\A$.
   \begin{framed}
   \begin{figure}[H]
     % \begin{center}
@@ -169,21 +169,22 @@
     \end{subfigure}
   \end{figure}
   \end{framed}
-\end{example}
+\end{problem}
 
-  {\scriptsize
-  \begin{hint}
-    \marginpar{\writedown Съобразете сами, че $\L(\A) = \{a,b\} \cup \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} \geq 3\}$.}
+\ExtraMaterial{
+  \begin{solution}
+    \marginpar{\writedown Съобразете, че $\L(\A) = \{\omega \in \{a,b\}^\star \mid \abs{\omega} = 1 \lor \abs{\omega} \geq 3\}$.}
     Отново следваме същата процедура за минимизация.
     Ще намерим класовете на еквивалентност на $\equiv^n_\A$,
     докато не намерим $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
+    \begin{multicols}{2}
   \begin{itemize}
   \item
     Класовете на екиваленост на $\equiv^0_\A$ са 
-    $A_0 = Q\setminus F = \{0,3,4\}$ и $A_1 = F = \{1,2,5\}$.
+    \[A_0 = Q\setminus F = \{0,3,4\} \text{ и }A_1 = F = \{1,2,5\}.\]
   \item
     Разбиваме класовете на еквивалентност на $\equiv^0_\A$ като използваме \Proposition{one-letter-test}.
-    
+
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
@@ -203,7 +204,7 @@
     $B_0 = \{0,3,4\}$, $B_1 = \{1,2\}$, $B_2 = \{5\}$.
   \item
     Сега се опитваме да разбием класовете на еквивалентност на $\equiv^1_\A$.
-
+    
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
@@ -237,10 +238,10 @@
       \end{tabular}
       
       Виждаме, че не можем да разбием $C_1$ или $C_2$.
-      \marginpar{Получаваме, че $\equiv_\A\ =\ \equiv^2_\A$}
-      Следователно, $\equiv^2_\A\ =\ \equiv^3_\A$ и минималният автомат разпознаващ езика $L$
-      има четири състояния. Вижте Фигура \ref{sub:min2} за преходите на минималния автомат.
-      Минималният автомат може да се представи и таблично:
+      Следователно, $\equiv^2_\A\ =\ \equiv^3_\A$.
+      Оттук следва, че $\equiv^2_\A\ =\ \equiv_\A$ и минималният автомат разпознаващ езика $L$
+      има четири състояния. Вижте Фигура \ref{sub:min2} за преходите на минималния автомат,
+      които могат да се представят и таблично чрез функцията на преходите:
 
       \begin{tabular}{|c|c|c|c|c|}
         \hline
@@ -252,8 +253,9 @@
         \hline
       \end{tabular}
       
-  \end{itemize}
-\end{hint}
+  \end{itemize}      
+    \end{multicols}
+\end{solution}
 }
 
 %%% Local Variables:

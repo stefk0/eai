@@ -4,7 +4,7 @@
     \label{th:myhill-nerode}
     \index{Майхил-Нероуд!теорема}
     Нека $L\subseteq \Sigma^\star$ е регулярен език.
-    Тогава съществува детерминиран краен автомат $\M = \FA$, който разпознава $L$
+    Тогава съществува ДКА $\M = \FA$, който разпознава $L$
     с точно толкова състояния, колкото са класовете на еквивалентност на релацията $\approx_L$,
     т.е. $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
   \end{thm}  
@@ -12,7 +12,7 @@
 \begin{proof}
   % \marginpar{стр. 96 от \cite{papadimitriou}}
   \marginpar{на англ. Myhill-Nerode}
-  Ще дефинираме детерминиран краен автомат $\M = \FA$, разпознаващ $L$, като:
+  Ще дефинираме ДКА $\M = \FA$, разпознаващ $L$, като:
   \begin{itemize}
   \item
     $Q \df \{\ [\alpha]_L\mid \alpha\in \Sigma^\star\ \}$;

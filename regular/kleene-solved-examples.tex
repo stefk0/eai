@@ -1,8 +1,7 @@
 \subsection{Примери}
 
-\begin{example}
-  Да разгледаме следния автомат:
-
+\begin{problem}
+  Приложете конструкцията от \hyperref[th:regular:kleenef]{теоремата на Клини} за да получите регулярен израз, който описва езика на автомата $\A$ изобразен на Фигура~\ref{fig:a1}.
   \begin{framed}
     \begin{figure}[H]
       \begin{center}
@@ -18,39 +17,41 @@
           (2) edge [loop above] node [above] {$0,1$} (2);
         \end{tikzpicture}
       \end{center}
-      \caption{$\L(\A) = \L(\mathbf{1^\star 0 (0 + 1)^\star)}$}
+      \caption{$\L(\A) \stackrel{?}{=} \L(\mathbf{1^\star 0 (0 + 1)^\star)}$}
       \label{fig:a1}
     \end{figure}
 \end{framed}
-
+\end{problem}
+\ExtraMaterial{
+\begin{solution}
 Лесно се съобразява, че езикът на автомата от \Figure{a1} се описва с регулярния израз $\mathbf{1^\star 0 (0 + 1)^\star}$.
-Следвайки означенията и конструкцията от доказателството на \Theorem{regular-kleene},
+Следвайки означенията и конструкцията от доказателството на \hyperref[th:regular:kleene]{теоремата на Клини},
 езикът на този автомат се описва с регулярния израз $\mathbf{r}^2_{0,1}$, защото началното състояние е $q_0$, финалното е $q_1$ и 
-броят на състоянията в автомата е $2$.
+броят на състоянията в автомата е $2$. Подробните сметки са следните:
 \begin{align*}
   \bm{r}^2_{0,1} & = \underbrace{\bm{r}^{1}_{0,1}}_{\bm{1^\star 0}} + \underbrace{\bm{r}^{1}_{0,1}}_{\bm{1^\star 0}}\cdot \underbrace{\bm{(r^1_{1,1})^\star}}_{\mathbf{(\bm{\varepsilon}+0+1)^\star}} \cdot \underbrace{\mathbf{r}^1_{1,1}}_{\mathbf{\bm{\varepsilon}+0+1}} & \comment \text{според (\ref{eq:kleene}}) \\
                      &  = \mathbf{1^\star0 + 1^\star 0 (\bm{\varepsilon} + 0 + 1)^\star (\bm{\varepsilon} + 0 + 1)} & \comment{\text{просто заместваме}}\\
                      & = \mathbf{1^\star0 + 1^\star 0 (\bm{\varepsilon} + 0 + 1)^+} & \comment \mathbf{r^+ \df r^\star r}\\
                      & = \mathbf{1^\star0 + 1^\star 0 (0 + 1)^\star} & \comment \mathbf{r^\star = (\bm{\varepsilon} + r)^+}\\
                      & = \mathbf{1^\star 0 (\bm{\varepsilon} + (0 + 1)^\star)} & \comment \mathbf{r + rq = r(\bm{\varepsilon} + q)}\\
-                     & = \mathbf{1^\star 0 (0 + 1)^\star} & \comment \mathbf{r^\star = \bm{\varepsilon} + r^\star}
+                     & = \mathbf{1^\star 0 (0 + 1)^\star}. & \comment \mathbf{r^\star = \bm{\varepsilon} + r^\star}
 \end{align*}
-
 Тук използвахме, че:
 \begin{align*}
-  \mathbf{r^1_{0,1}} & = \underbrace{\mathbf{r}^0_{0,1}}_{\mathbf{0}} + \underbrace{\mathbf{r}^0_{0,0}}_{\bm{\varepsilon + 1}}\cdot\underbrace{\mathbf{(r^0_{0,0})^\star}}_{\bm{(\varepsilon+1)^\star}} \cdot \underbrace{\mathbf{r^0_{0,1}}}_{\mathbf{0}}\\
+  \mathbf{r^1_{0,1}} & = \underbrace{\mathbf{r}^0_{0,1}}_{\mathbf{0}} + \underbrace{\mathbf{r}^0_{0,0}}_{\bm{\varepsilon + 1}}\cdot\underbrace{\mathbf{(r^0_{0,0})^\star}}_{\bm{(\varepsilon+1)^\star}} \cdot \underbrace{\mathbf{r^0_{0,1}}}_{\mathbf{0}} & \comment \text{според (\ref{eq:kleene}})\\
                      & = \bm{0 + (\varepsilon + 1)(\varepsilon + 1)^\star0} & \comment{\text{просто заместваме}}\\
                      & = \mathbf{0 + 1^\star 0}  & \comment \mathbf{r}^\star = \bm{\varepsilon} + \mathbf{r}^\star \\
                      & = \mathbf{1^\star0} \\
-  \mathbf{r}^1_{1,1} & = \underbrace{\mathbf{r}^0_{1,1}}_{\bm{\varepsilon+0+1}} + \underbrace{\mathbf{r}^0_{1,0}}_{\bm{\emptyset}} \cdot \underbrace{(\mathbf{r}^0_{0,0})^\star}_{\bm{\varepsilon+1}} \cdot \underbrace{\mathbf{r}^0_{0,1}}_{\bm{0}}\\
+  \mathbf{r}^1_{1,1} & = \underbrace{\mathbf{r}^0_{1,1}}_{\bm{\varepsilon+0+1}} + \underbrace{\mathbf{r}^0_{1,0}}_{\bm{\emptyset}} \cdot
+                       \underbrace{(\mathbf{r}^0_{0,0})^\star}_{\bm{\varepsilon+1}} \cdot \underbrace{\mathbf{r}^0_{0,1}}_{\bm{0}}& \comment \text{отново според (\ref{eq:kleene}})\\
                      & = \bm{\varepsilon + 0 + 1 + \emptyset(\varepsilon + 1)^\star0} & \comment{\text{просто заместваме}}\\
-                     & = \bm{\varepsilon + 0 + 1} & \comment \text{защото }\bm{\emptyset \cdot r = \emptyset}
+                     & = \bm{\varepsilon + 0 + 1}. & \comment \text{защото }\bm{\emptyset \cdot r = \emptyset}
 \end{align*}
-\end{example}
-
+\end{solution}
+}
 
 \begin{problem}
-  Приложете конструкцията от Теоремата на Клини за да получите регулярен израз, който описва езика на автомата $\A$ изобразен на Фигура~\ref{fig:a2}.
+  Приложете конструкцията от \hyperref[th:regular:kleenef]{теоремата на Клини} за да получите регулярен израз, който описва езика на автомата $\A$ изобразен на Фигура~\ref{fig:a2}.
   \begin{framed}
     \begin{figure}[H]
       \begin{center}
@@ -74,27 +75,29 @@
     \end{figure}
   \end{framed}
 \end{problem}
-{\scriptsize
+\ExtraMaterial{
   \begin{solution}
-    От теоремата на Клини знаем, че $\L(\A) = \L(\mathbf{r}^3_{0,2})$, където:
+    От \hyperref[th:regular:kleene]{теоремата на Клини} знаем, че $\L(\A) = \L(\mathbf{r}^3_{0,2})$, където:
   \begin{align*}
-    \mathbf{r}^3_{0,2} & = \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} + \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} \cdot \underbrace{(\mathbf{r}^2_{2,2})^\star}_{\bm{(\varepsilon+a+b)^\star}} \cdot \underbrace{\mathbf{r}^2_{2,2}}_{\bm{\varepsilon+a+b}}\\
-                       & = \bm{a^\star b + a^\star b \cdot (a+b)^\star \cdot (\varepsilon+a+b)} \\
+    \mathbf{r}^3_{0,2} & = \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} + \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} \cdot \underbrace{(\mathbf{r}^2_{2,2})^\star}_{\bm{(\varepsilon+a+b)^\star}} \cdot \underbrace{\mathbf{r}^2_{2,2}}_{\bm{\varepsilon+a+b}} & \comment \text{според (\ref{eq:kleene}})\\
+                       & = \bm{a^\star b + a^\star b \cdot (a+b)^\star \cdot (\varepsilon+a+b)} & \comment{\text{просто заместваме}}\\
                        & = \bm{a^\star b + a^\star b \cdot (a+b)^\star} & \comment \bm{r^\star} = \bm{r^\star \cdot (\varepsilon + r)}\\
                        & = \bm{a^\star b (\varepsilon + (a+b)^\star)} & \comment\bm{r_1 + r_1\cdot r_2 = r_1 \cdot (\varepsilon+r_2)}\\
                        & = \bm{a^\star b (a+b)^\star}. & \comment \bm{r^\star} = \bm{\varepsilon + r^\star}
   \end{align*}
-  
   Тук използвахме, че:
   \begin{align*}
-    \mathbf{r}^2_{0,2} & = \mathbf{r}^1_{0,2} + \mathbf{r}^1_{0,1} \cdot (\mathbf{r}^1_{1,1})^\star \cdot \mathbf{r}^1_{1,2}\\
-                       & = \bm{b + a \cdot a^\star \cdot b}\\
+    \mathbf{r}^2_{0,2} & = \underbrace{\mathbf{r}^1_{0,2}}_{\bm{b}} + \underbrace{\mathbf{r}^1_{0,1}}_{\bm{a}} \cdot \underbrace{(\mathbf{r}^1_{1,1})^\star}_{\bm{a}} \cdot \underbrace{\mathbf{r}^1_{1,2}}_{\bm{b}} & \comment \text{според (\ref{eq:kleene}}) \\
+                       & = \bm{b + a \cdot a^\star \cdot b} & \comment{\text{просто заместваме}}\\
                        & = \bm{(\varepsilon + a^+)\cdot b} & \comment \mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star\\
                        & = \bm{a^\star b}. & \comment \mathbf{r}^\star = \bm{\varepsilon + r^+.г}
   \end{align*}
   Заключаваме, че $\L(\A) = \L(\mathbf{a^\star b(a+b)^\star})$.
 \end{solution}
 }
+
+% \todo{Може да се сложи още един пример, но без да има решение.}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"

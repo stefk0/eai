@@ -48,6 +48,7 @@
   \item
     $L = \{a,b\}^\star \setminus \{a^{2n}b^n \mid n\in\Nat\}$;
   \item
+    \marginpar{$S\to EaE$, $E \to aEbE\ |\ bEaE\ |\ \varepsilon$}
     $L = \{\alpha \in \{a,b\}^\star\mid \card{\alpha}{a} = \card{\alpha}{b} + 1\}$;
   \item
     $L = \{\alpha \in \{a,b\}^\star\mid \card{\alpha}{a} \geq \card{\alpha}{b}\}$;
@@ -65,42 +66,8 @@
     $L = \{\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n \mid n\geq 2\ \&\ (\forall i\in[1,n])[\ \omega_i \in \{a,b\}^\star\ \&\ \abs{\omega_i} = \abs{\omega_{n+1-i}}\ ]\}$.
   \end{enumerate}
 \end{problem}
-\begin{hint}
-  \begin{enumerate}
-  \item[р)]
-    $S\to EaE$, $E \to aEbE\ |\ bEaE\ |\ \varepsilon$.
-  \item[с)]
-    $S\to E\ |\ SaS$, $E \to aEbE\ |\ bEaE\ |\ \varepsilon$.
-  % \item[у)]
-  %   Разгледайте граматиката:
-  %   \begin{align*}
-  %     & S \to AaR\ |\ BbR\ |\ E\\
-  %     & A \to XAX\ |\ bR\sharp\\
-  %     & B \to XBX\ |\ aR\sharp\\
-  %     & E \to XEX\ |\ XR\sharp\ |\ \sharp XR\\
-  %     & R \to XR\ |\ \varepsilon\\
-  %     & X \to a\ |\ b.
-  %   \end{align*}
-  %   Имаме, че за произволни думи $\alpha,\beta,\gamma,\delta \in \{a,b\}^\star$,
-  %   \begin{align*}
-  %     & S \to^\star \alpha b \gamma \sharp \beta a \delta\ \&\ |\alpha| = |\beta|,\\
-  %     & S \to^\star \alpha a \gamma \sharp \beta b \delta\ \&\ |\alpha| = |\beta|, \text{ или}\\
-  %     & S \to^\star \alpha \sharp \beta\ \&\ |\alpha| \neq |\beta|\\
-  %   \end{align*}
-  % \item[ф)]
-  %   Разгледайте граматиката:
-  %   \begin{align*}
-  %     & S \to AB\ |\ BA\\
-  %     & A \to XAX\ |\ a\\
-  %     & B \to XBX\ |\ b\\
-  %     & X \to a\ |\ b.
-  %   \end{align*}
-    
-  \item[у)]
-    $S \to aSbS\ |\ aS$.
-  \end{enumerate}
-\end{hint}
 
+\ExtraMaterial{
 \begin{problem}
   Проверете дали следните езици са безконтекстни:
   \begin{enumerate}[a)]
@@ -166,7 +133,7 @@
     $\{\omega \in \{a,b,c\}^\star\mid \card{\omega}{a} \neq \card{\omega}{b} \vee \card{\omega}{a} \neq \card{\omega}{c} \vee \card{\omega}{b} \neq \card{\omega}{c}\}$.
   \end{enumerate}
 \end{problem}
-
+}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"
