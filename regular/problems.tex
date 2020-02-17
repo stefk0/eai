@@ -16,7 +16,7 @@
 
 
 \begin{problem}
-  \marginpar{\cite[стр. 84]{papadimitriou}}
+  \mynote{\cite[стр. 84]{papadimitriou}}
   При дадени езици $L$, $L'$ над азбуката $\Sigma$, да разгледаме:
   \begin{enumerate}[a)]
   \item
@@ -32,7 +32,7 @@
   \item 
     $\frac{1}{2}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$;
   \item
-    \marginpar{right quotient of $L$ by $L'$}
+    \mynote{right quotient of $L$ by $L'$}
     $L/L' = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L ] \}$;
   \item
     $L^{-1}(L') = \{ \beta \mid (\exists \alpha \in L)[ \alpha\beta \in L']\}$;
@@ -40,7 +40,7 @@
     $\mbox{Max}(L) = \{\alpha \in \Sigma^\star \mid (\forall \beta\in\Sigma^\star)[\beta \neq \varepsilon\implies \alpha\beta \not\in L]\}$.
   \end{enumerate}
   За всички тези езици, докажете, че са регулярни при условие, че $L$ и $L'$ са регулярни.
-  \marginpar{Тази конструкция няма да бъде ефективна}
+  \mynote{Тази конструкция няма да бъде ефективна}
   Освен това, докажете, че $L/L'$ е регулярен и при условието, че $L$ е регулярен, но $L'$ е произволен език над азбуката $\Sigma$.
 \end{problem}
 \begin{hint}
@@ -55,7 +55,7 @@
 \end{hint}
 
 \begin{problem}
-  \marginpar{\cite[стр. 75]{kozen}; \cite[стр. 89]{papadimitriou}}
+  \mynote{\cite[стр. 75]{kozen}; \cite[стр. 89]{papadimitriou}}
   Да фиксираме азбука само с един символ $\Sigma = \{a\}$.
   Да положим за всяко $p,q\in\Nat$, 
   \[L(p,q) = \{a^k \mid (\exists n\in\Nat)[k = p+q\cdot n]\}.\]
@@ -143,7 +143,7 @@
 
 
 % \begin{problem}
-%   \marginpar{(\cite{kozen}, стр. 75)}
+%   \mynote{(\cite{kozen}, стр. 75)}
 %   Да фиксираме азбука само с един символ $\Sigma = \{a\}$.
 %   Множеството $U$ е {\em породен от аритметична прогресия}, ако съществуват числа $q \geq 0$ и $p > 0$,
 %   такива че $(\forall n \geq q)[n \in U\ \iff\ n+p \in U]$.
@@ -168,7 +168,7 @@
 %     Съществената част от доказателството се състои в следното:
 %     \begin{itemize}
 %     \item 
-%       \marginpar{$L(p_1,q_1)\cdot L(p_2,q_2) = L(p_1+p_2,\mbox{НОД}(q_1,q_2))\setminus F$, където $F$ е крайно м-во, и ако $q_1 = q_2$, то $F = \emptyset$}
+%       \mynote{$L(p_1,q_1)\cdot L(p_2,q_2) = L(p_1+p_2,\mbox{НОД}(q_1,q_2))\setminus F$, където $F$ е крайно м-во, и ако $q_1 = q_2$, то $F = \emptyset$}
 %       езикът $L(p_1,q_1) \cdot L(p_2,q_2)$ може да се представи като крайно обединение 
 %       на езици породени от артиметични прогресии.
 %     \item
@@ -181,7 +181,7 @@
 
 
 \begin{problem}
-  \marginpar{Да обърнем внимание, че езикът $\{\alpha\sharp \beta \sharp \gamma \mid \bin{\alpha}+\bin{\beta} = \bin{\gamma}\}$ не е регулярен.}
+  \mynote{Да обърнем внимание, че езикът $\{\alpha\sharp \beta \sharp \gamma \mid \bin{\alpha}+\bin{\beta} = \bin{\gamma}\}$ не е регулярен.}
   Да разгледаме азбуката:
   \[\Sigma_3 = \left\{\begin{bmatrix} 0\\0\\0\end{bmatrix},\begin{bmatrix} 0\\0\\1\end{bmatrix},\begin{bmatrix} 0\\1\\0\end{bmatrix},\begin{bmatrix} 0\\1\\1\end{bmatrix},\dots,\begin{bmatrix} 1\\1\\1\end{bmatrix}\right\}.\]
   Докажете, че 

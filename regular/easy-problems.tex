@@ -4,7 +4,7 @@
 
 \ifcode
 \begin{problem}
-  \marginpar{Библиотеката {\bf regex} е част от си++11 стандарта на езика.}
+  \marginnote{Библиотеката {\bf regex} е част от си++11 стандарта на езика.}
   Да разгледаме следната програма на езика си++
   \begin{minted}[]{cpp}
     #include <iostream>
@@ -42,23 +42,22 @@
 \end{problem}
 \fi
 
-\begin{problem}
-  Да фиксираме една дума $\alpha$ над дадена азбука $\Sigma$.
-  Опишете алгоритъм, който за вход произволен текстов файл, чието съдържание означаваме с $\beta$,
-  отговаря дали думата $\alpha$ се среща в $\beta$.
-  Каква е сложността на този алгоритъм относно дължините на $\alpha$ и $\beta$ ?
-\end{problem}
+% \begin{problem}
+%   Да фиксираме една дума $\alpha$ над дадена азбука $\Sigma$.
+%   Опишете алгоритъм, който за вход произволен текстов файл, чието съдържание означаваме с $\beta$,
+%   отговаря дали думата $\alpha$ се среща в $\beta$.
+%   Каква е сложността на този алгоритъм относно дължините на $\alpha$ и $\beta$ ?
+% \end{problem}
 
-\begin{problem}
-  Опишете алгоритъм, който при вход два регулярни израза $\mathbf{r}$ и $\mathbf{s}$,
-  проверява дали $\L(\mathbf{r}) \subseteq \L(\mathbf{s})$.
-\end{problem}
+% \begin{problem}
+%   Опишете алгоритъм, който при вход два регулярни израза $\mathbf{r}$ и $\mathbf{s}$,
+%   проверява дали $\L(\mathbf{r}) \subseteq \L(\mathbf{s})$.
+% \end{problem}
 
-{\scriptsize
+\ExtraMaterial{
 \begin{problem}
   За всеки от следните езици $L$, постройте минимален краен детерминиран автомат $\A$, който разпознава езика $L$, където:
-  \marginpar{$\card{\omega}{a} \df $ броят на срещанията на буквата $a$ в думата $\omega$.}
-  \marginpar{$\abs{\omega} \df $ дължината на думата $\omega$.}
+  \marginnote{$\card{\omega}{a} \df $ броят на срещанията на буквата $a$ в думата $\omega$, $\abs{\omega} \df $ дължината на $\omega$.}
   \begin{enumerate}[a)]
   \item 
     $L = \{a^nb\mid n \geq 0\}$;
@@ -79,23 +78,23 @@
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \geq 2\ \&\ \card{\omega}{b} \geq 1\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid \mbox{на всяка нечетна позиция на }\omega\mbox{ е буквата }a\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \text{на всяка нечетна позиция на }\omega\text{ е буквата }a\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно }\&\ \card{\omega}{b} \leq 1\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \leq 3\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid \omega \mbox{ не започва с }ab\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ не започва с }ab\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid \omega \mbox{ завършва с }ab\mbox{ или ba}\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega \text{ завършва с }ab\text{ или ba}\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid \omega\mbox{ започва или завършва с } a\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \omega\text{ започва или завършва с } a\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \omega\text{ започва с }a \iff \omega\text{ завършва с }b\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ \card{\omega}{a} = 1\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid \text{ всяко }a\mbox{ в }\omega\text{ се следва от поне едно }b\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \text{ всяко }a\text{ в }\omega\text{ се следва от поне едно }b\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0 \bmod 3\}$;
   \item
@@ -119,25 +118,25 @@
   % \item
   %   $L = \{\alpha^{\texttt{rev}} \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
   \item
-    % \marginpar{$\alpha = a^pb^p$}
+    % \marginnote{$\alpha = a^pb^p$}
     $L = \{a^ib^i\ \mid\ i\in\Nat\}$;
   \item
     $L = \{a^ib^i\ \mid\ i,j\in\Nat\ \&\ i\neq j\}$;
   \item
-    % \marginpar{$\alpha = a^{p+1}b^p$.}
+    % \marginnote{$\alpha = a^{p+1}b^p$.}
     $L = \{a^ib^j\ \mid\ i > j\}$;
   \item
-    $L = \{a^nb^m \mid n\mbox{ дели }m\}$.
+    $L = \{a^nb^m \mid n\text{ дели }m\}$.
   \item
     $L = \{a^{2n}\ \mid\ n\geq 1\}$;
   \item
     $L = \{a^mb^na^{m+n}\ \mid\ m\geq 1\ \&\ n\geq 1\}$;
   \item
-    $L = \{a^{n.m}\mid n,m\mbox{ са прости числа}\}$;
+    $L = \{a^{n.m}\mid n,m\text{ са прости числа}\}$;
   \item
     $L = \{\omega\in\{a,b\}^\star \mid \card{\omega}{a} = \card{\omega}{b}\}$;
   \item
-    % \marginpar{$\alpha = a^pba^pb$}
+    % \marginnote{$\alpha = a^pba^pb$}
     $L = \{\omega\omega\mid \omega\in\{a,b\}^\star\}$;
   \item
     $L = \{\omega\omega^\rev\mid \omega\in\{a,b\}^\star\}$;
@@ -299,10 +298,10 @@
   \[L_1 \oplus L_2 = \{\omega \in (\Sigma_1 \cup \Sigma_2)^\star \mid \omega_1 \in L_1\ \&\ \omega_2 \in L_2\ \&\ |\omega_1| = |\omega_2|\}.\]
   \begin{enumerate}[a)]
   \item
-    \marginpar{Да}
+    \marginnote{Да}
     Вярно ли е, че ако $L_1$ е краен, то $L_1 \oplus L_2$ е регулярен език?
   \item
-    \marginpar{Не}
+    \marginnote{Не}
     Вярно ли е, че ако $L_1$ и $L_2$ са регулярни езици, то $L_1 \oplus L_2$ е регулярен език?
   \end{enumerate}
 \end{problem}
@@ -312,7 +311,7 @@
   За една дума $\omega \in (\Sigma_1 \cup \Sigma_2)^\star$, нека с $\omega_i \in \Sigma^\star_i$ да означим редицата от букви от $\Sigma_i$
   в реда, в който се срещат в $\omega$. Да разгледаме следния език
   \[L_1 \oplus L_2 = \{\omega \in (\Sigma_1 \cup \Sigma_2)^\star \mid \omega_1 \in L_1\ \&\ \omega_2 \in L_2\}.\]
-  \marginpar{Да}
+  \marginnote{Да}
   Вярно ли е, че ако $L_1$ и $L_2$ са регулярни езици, то $L_1 \oplus L_2$ е регулярен език?
 \end{problem}
 

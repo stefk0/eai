@@ -12,12 +12,12 @@
 \begin{proof}
   Да разгледаме два автомата \[\A' = \langle{\Sigma,Q',\qstart',\delta',F'}\rangle\text{ и } \A'' = \langle{\Sigma, Q'', \qstart'', \delta'', F''}\rangle.\]
   Определяме автомата $\A = \FA$, по следния начин:
-  \marginpar{Изчислението на автомата $\A$ върху думата $\alpha$ едновременно симулира изчислението на $\A'$ и $\A''$ върху $\alpha$.}
+  \mynote{Изчислението на автомата $\A$ върху думата $\alpha$ едновременно симулира изчислението на $\A'$ и $\A''$ върху $\alpha$.}
   \begin{itemize}
   \item
     $Q \df Q'\times Q''$;
   \item
-    \marginpar{Съобразете, че $\delta$ е тотална функция.}
+    \mynote{Съобразете, че $\delta$ е тотална функция.}
     За всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
     \[\delta(\pair{r_1,r_2},a) \df \pair{\delta_1(r_1,a),\delta_2(r_2,a)};\]
   \item
@@ -72,7 +72,7 @@
   \end{proposition}  
 \end{framed}
 \begin{hint}
-  \marginpar{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$. Съобразете, че тук е важно, че $\delta$ е тотална функция на преходите.}
+  \mynote{\writedown Проверете, че $\Sigma^\star\setminus L = \L(\A')$. Съобразете, че тук е важно, че $\delta$ е тотална функция на преходите.}
   Нека $L = L(\A)$, където $\A = \FA$.
   Да вземем автомата
   \[\A' = \pair{Q,\Sigma,\qstart,\delta,Q\setminus F},\]
@@ -90,7 +90,7 @@
   \end{proposition}  
 \end{framed}
 \begin{hint}
-  \marginpar{\writedown Докажете, че така построения автомат $\A$ разпознава $L_1\cup L_2$. Тук отново е важно, че $\delta_1$ и $\delta_2$ са тотални функции на преходите.}
+  \mynote{\writedown Докажете, че така построения автомат $\A$ разпознава $L_1\cup L_2$. Тук отново е важно, че $\delta_1$ и $\delta_2$ са тотални функции на преходите.}
   Първият подход е да използвайте конструкцията на автомата $\A$ от \Proposition{automata-cap},
   с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
   \begin{align*}

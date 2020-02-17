@@ -4,7 +4,7 @@
 \item
   \index{Майхил-Нероуд!релация}
   \index{$\approx_L$}
-  \marginpar{$\approx_L$ е известна като релация на Майхил-Нероуд}
+  \mynote{$\approx_L$ е известна като релация на Майхил-Нероуд}
   Нека $L \subseteq \Sigma^\star$ е език и нека $\alpha,\beta \in \Sigma^\star$.
   Казваме, че $\alpha$ и $\beta$ са {\bf еквивалентни относно} $L$, което записваме 
   като $\alpha \approx_L \beta$, когато:
@@ -12,7 +12,7 @@
   С други думи, 
   \[\alpha \approx_L \beta \iff (\forall \omega \in \Sigma^\star)[\ \alpha\omega \in L \iff \beta\omega \in L\ ].\]
 \item
-  \marginpar{Трябва ли $\A$ да е тотален?}
+  \mynote{Трябва ли $\A$ да е тотален?}
   Нека $\A = \FA$ е краен детерминиран автомат.
   \index{$\sim_\A$}
   Казваме, че две думи $\alpha,\beta \in \Sigma^\star$ са {\bf еквивалентни относно $\A$},
@@ -44,7 +44,7 @@
 \item
   Релациите $\approx_\L$ и $\sim_\A$ са дясно-инвариантни, т.е. за всеки две думи $\alpha$ и $\beta$
   е изпълнено:
-  \marginpar{\writedown Проверете!}
+  \mynote{\writedown Проверете!}
   \begin{align*}
     \alpha \sim_\A \beta  &\implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \sim_\A \beta\gamma],\\
     \alpha \approx_\L \beta & \implies (\forall \gamma\in\Sigma^\star)[\alpha\gamma \approx_\L \beta\gamma].
@@ -58,7 +58,7 @@
 
 \begin{proposition}
   \label{pr:rel-finer}
-  \marginpar{С други думи,\\ $[\alpha]_\A \subseteq [\alpha]_L$.}
+  \mynote{С други думи,\\ $[\alpha]_\A \subseteq [\alpha]_L$.}
   Нека $\A = \FA$ е краен детерминиран автомат и $L = \L(\A)$. Тогава е изпълнено, че:
   \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
 \end{proposition}
@@ -96,7 +96,7 @@
 % \end{hint}
 
 \begin{problem}
-  \marginpar{Тук говорим за тотални функции.}
+  \mynote{Тук говорим за тотални функции.}
   Нека $A$ и $B$ са крайни множества, за които съществува сюрективна функция $f: A \to B$.
   Тогава $|B| \leq |A|$.
 \end{problem}

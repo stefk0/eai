@@ -21,7 +21,7 @@
 \begin{itemize}
 \item
   \index{множества!сечение}
-  \marginpar{На англ. \emph{intersection}}
+  \mynote{На англ. \emph{intersection}}
   {\bf Сечение}
   \[A\cap B = \{x\ \mid\ x\in A\ \wedge\ x\in B\}.\]
   Казано по-формално, $A\cap B$ е множеството, за което е изпълнено, че:
@@ -33,14 +33,14 @@
   \item
     $A \cap \emptyset = \emptyset$, за всяко множество $A$.
   \item
-    \marginpar{Макар и $\emptyset$, $\{\emptyset\}$ и $\{1,2\}$ да са множества, те може да са елементи на други множества.}
+    \mynote{Макар и $\emptyset$, $\{\emptyset\}$ и $\{1,2\}$ да са множества, те може да са елементи на други множества.}
     $\{1,\emptyset,\{\emptyset\}\} \cap \{\emptyset\} = \{\emptyset\}$.
   \item
     $\{1,2,\{1,2\}\} \cap \{1,\{1\}\} = \{1\}$.
   \end{itemize}
 \item
   \index{множества!обединение}
-  \marginpar{На англ. \emph{union}}
+  \mynote{На англ. \emph{union}}
   {\bf Обединение}
   \[A\cup B = \{x\ \mid x\in A\ \vee\ x\in B\}.\]
   $A\cup B$ е множеството, за което е изпълнено, че:
@@ -98,10 +98,10 @@
   \index{множества!степенно множество}
   {\bf Степенно множество}
   \[\Ps(A) = \{x\mid x\subseteq A\}.\]
-  \marginpar{На англ. \emph{power set} }
+  \mynote{На англ. \emph{power set} }
   $\Ps(A)$ е множеството, за което е изпълнено, че:
   \[(\forall x)[x \in \Ps(A) \iff (\forall y)[y\in x\rightarrow y \in A]].\]
-  \marginpar{В литературата се среща също така и означението $2^A$ за степенното множество на $A$.}
+  \mynote{В литературата се среща също така и означението $2^A$ за степенното множество на $A$.}
   Примери:
   \begin{itemize}
   \item 
@@ -166,10 +166,10 @@
   \item
     $(A\cup B)\setminus C = (A\setminus C) \cup (B\setminus C)$;
   % \item
-  %   \marginpar{Не е вярно!}
+  %   \mynote{Не е вярно!}
   %   $A\setminus (B\setminus C) = (A\setminus B)\setminus C$;
   \item
-    \marginpar{Закони на Де Морган}
+    \mynote{Закони на Де Морган}
     $C\setminus (A\cup B) = (C\backslash A)\cap(C\backslash B)$ и $C \backslash (A\cap B) = (C\backslash A)\cup(C\backslash B)$
   \item
     $C\backslash(\bigcup^{n}_{i=1} A_i) = \bigcap^{n}_{i=1} (C\backslash A_i)$ и $C \backslash(\bigcap^{n}_{i=1} A_i) = \bigcup^{n}_{i=1} (C\backslash A_i)$;
@@ -178,7 +178,7 @@
   \item
     $A\subseteq B \Rightarrow \Ps(A) \subseteq \Ps(B)$;
   \item
-    \marginpar{$X \subseteq A\cup B \stackrel{?}{\Rightarrow} X\subseteq A \vee X \subseteq B$}
+    \mynote{$X \subseteq A\cup B \stackrel{?}{\Rightarrow} X\subseteq A \vee X \subseteq B$}
     $\Ps(A\cap B) = \Ps(A) \cap \Ps(B)$ и $\Ps(A\cup B) = \Ps(A) \cup \Ps(B)$;
   \end{enumerate}
 \end{problem}
@@ -196,12 +196,12 @@
 Ето примери как това може да стане:
 \begin{enumerate}[1)]
 \item
-  \marginpar{Norbert Wiener (1914)}
+  \mynote{Norbert Wiener (1914)}
   Първото теоретико-множествено определение на понятието наредена двойка е
   дадено от Норберт Винер:
   \[\pair{a,b} \df \{\{\{a\},\emptyset\},\{\{b\}\}\}.\]
 \item
-  \marginpar{Kazimierz Kuratowski (1921)}
+  \mynote{Kazimierz Kuratowski (1921)}
   Определението на Куратовски се приема за ,,стандартно'' в наши дни:
   \[\pair{a,b} \df \{\{a\},\{a,b\}\}.\]
 \end{enumerate}
@@ -211,7 +211,7 @@
 \end{problem}
 
 \begin{definition}
-  \marginpar{Пример за индуктивна (рекурсивна) дефиниция}
+  \mynote{Пример за индуктивна (рекурсивна) дефиниция}
   Сега можем, за всяко естествено число $n \geq 1$,
   да въведем понятието наредена $n$-орка $\pair{a_1,\dots,a_n}$:
   \begin{align*}
@@ -223,9 +223,9 @@
 Оттук нататък ще считаме, че имаме дадено понятието наредена $n$-орка, без да се интересуваме от нейната формална дефиниция.
  
 \subsection*{Декартово произведение}
-\marginpar{На англ. cartesian product}
+\mynote{На англ. cartesian product}
 \index{декартово произведение}
-\marginpar{Считаме, че $(A\times B)\times C = A\times (B\times C) = A\times B \times C$}
+\mynote{Считаме, че $(A\times B)\times C = A\times (B\times C) = A\times B \times C$}
 
 За две множества $A$ и $B$, определяме тяхното декартово произведение като
 \[A\times B = \{\pair{a,b}\mid a\in A\ \&\ b\in B\}.\]
@@ -256,13 +256,13 @@
 Функцията $f:A \to B$ е:
 \begin{itemize}
 \item
-  \marginpar{\comment{или $f$ е {\bf обратима}}}
+  \mynote{\comment{или $f$ е {\bf обратима}}}
   {\bf инекция}\index{функция!инекция}, ако 
   \[(\forall a_1,a_2\in A)[\ a_1\neq a_2\ \to\ f(a_1)\neq f(a_2)\ ],\]
   или еквивалентно,
   \[(\forall a_1,a_2\in A)[\ f(a_1) = f(a_2)\ \to\ a_1 = a_2\ ].\]
 \item
-  \marginpar{\comment{или $f$ е {\bf върху} $B$ }}
+  \mynote{\comment{или $f$ е {\bf върху} $B$ }}
   {\bf сюрекция}\index{функция!сюрекция}, ако 
   \[(\forall b\in B)(\exists a\in A)[\ f(a) = b\ ].\]
 \item
@@ -270,7 +270,7 @@
 \end{itemize}
 
 \begin{problem}
-  \marginpar{Канторово кодиране. Най-добре се вижда като се нарисува таблица}
+  \mynote{Канторово кодиране. Най-добре се вижда като се нарисува таблица}
   Докажете, че $f: \Nat \times \Nat\rightarrow \Nat$ е биекция, където
   \[f(x, y) = \frac{(x+y)(x+y+1)}{2} + x.\]
 \end{problem}

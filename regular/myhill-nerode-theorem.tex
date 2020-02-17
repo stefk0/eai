@@ -10,8 +10,8 @@
   \end{thm}  
 \end{framed}
 \begin{proof}
-  % \marginpar{стр. 96 от \cite{papadimitriou}}
-  \marginpar{на англ. Myhill-Nerode}
+  % \mynote{стр. 96 от \cite{papadimitriou}}
+  \mynote{на англ. Myhill-Nerode}
   Ще дефинираме ДКА $\M = \FA$, разпознаващ $L$, като:
   \begin{itemize}
   \item
@@ -37,28 +37,33 @@
   да проверим, че за всеки две думи $\alpha$, $\beta$ и всяка буква $x$,
   \[[\alpha]_L = [\beta]_L \implies \delta([\alpha]_L,x) = \delta([\beta]_L,x).\]
   Но това се вижда веднага,  защото
-  \marginpar{Функцията на преходите $\delta$ е дефинирана чрез произволен представител на всеки клас на еквивалентност относно $\approx_L$. Трябва да съобразим,
+  \mynote{Функцията на преходите $\delta$ е дефинирана чрез произволен представител на всеки клас на еквивалентност относно $\approx_L$. Трябва да съобразим,
     че няма значение кой представител сме избрали.}
   \begin{align*}
     [\alpha]_L = [\beta]_L & \implies \underbrace{[\alpha x]_L}_{\delta([\alpha]_L,x)} = \underbrace{[\beta x]_L}_{\delta([\beta]_L,x)}. & \comment{\text{свойство на }\approx_L}
   \end{align*}
   
   Така вече сме показали, че $\M$ е коректно зададен детерминиран краен автомат.
-  \marginpar{Вече знаем, че $L = \L(\B)$.}
+  \mynote{Вече знаем, че $L = \L(\B)$.}
   Остава да покажем, че $\M$ разпознава езика $L$, т.е. $\L(\M) = L$.
   За целта е достатъчно да докажем, че $\M \cong \B$, където $\B$ е автоматът построен по метода на Бжозовски за $L$.
   За целта, нека дефинираме $f:Q^\M \to Q^\B$ по следния начин:
-  \[f([\alpha]_L) \df \alpha^{-1}(L).\] 
+  \[f([\omega]_L) \df \omega^{-1}(L).\] 
   \begin{itemize}
   \item
     Лесно се вижда, че $f$ е биекция.
   \item
     $\qstart^\M = \qstart^\B$;
   \item
-    $[\alpha]_L \in F^\M \iff \alpha \in L \iff \varepsilon \in \alpha^{-1}(L) \iff f([\alpha]_L) \in F^\B$;
+    $[\omega]_L \in F^\M \iff \omega \in L \iff \varepsilon \in \omega^{-1}(L) \iff f([\omega]_L) \in F^\B$;
   \item
-    Понеже $(\alpha a)^{-1}(L) = a^{-1}(\alpha^{-1}(L))$, то
-    \[f(\delta_\M([\alpha]_L,a)) = f([\alpha a]_L) = a^{-1}(\alpha^{-1}(L)) = \delta_\B(f([\alpha]),a).\]
+    Понеже $(\omega a)^{-1}(L) = a^{-1}(\omega^{-1}(L))$, то
+    \begin{align*}
+      f(\delta_\M([\omega]_L,a)) & = f([\omega a]_L)\\
+                                 & = (\omega a)^{-1}(L)\\
+                                 & = a^{-1}(\omega^{-1}(L))\\
+                                 & = \delta_\B(f([\omega]_L),a).
+    \end{align*}
   \end{itemize}
   Заключваме, че $\M \cong_f \B$ и следователно $\L(\M) = \L(\B) = L$.
   
@@ -117,7 +122,7 @@
   \end{thm}  
 \end{framed}
 \begin{proof}
-  \marginpar{Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.}
+  \mynote{Съобразете, че $\A$ е {\em свързан}, т.е. всяко състояние на $\A$ е достижимо от началното.}
   Нека положим $q_\alpha \df \delta^\star_\A(\qstart, \alpha)$.
   Да дефинираме функцията $h:\Sigma^\star/_{\approx_L} \to Q$ по следния начин:
   \[h([\alpha]_L) \df q_\alpha.\]
@@ -158,8 +163,7 @@
   $\A_1 \cong \M\ \&\ \A_2 \cong \M \implies \A_1 \cong \A_2$.
 \end{hint}
 
-
-\subsection*{Експоненциален алгоритъм за минимизация}
+\subsection{Експоненциален алгоритъм за минимизация}
 
 Нека имаме ДКА $\A$.
 Дефинираме $\B = \rev(\A)$ да бъде ДКА по следния начин:
@@ -177,7 +181,7 @@
   За произволно $R \in Q^\B$,
   $\delta_\B(R,a) \df \{q \in Q^\A \mid \delta_\A(q,a) \in R\}$.
   С други думи,
-  $\delta_\B(Q_\alpha,a) = Q_{a\alpha}$.
+  $\delta_\B(Q_\beta,a) = Q_{a\beta}$.
 \item
   $F^\B = \{Q_\alpha \mid \qstart^\A \in Q_\alpha\}$.
 \item
@@ -211,7 +215,7 @@
 
 \begin{framed}
   \begin{theorem}[Бжозовски]
-    Нека $\A$ е КДА. Тогава $\rev(\rev(\A))$ е минимален автомат за $\L(\A)$.
+    Нека $\A$ е ДКА. Тогава $\rev(\rev(\A))$ е минимален автомат за $\L(\A)$.
   \end{theorem}
 \end{framed}
 

@@ -1,4 +1,4 @@
-\section{Алгоритъм за минимизация}
+\section{Минимизация}
 \label{sect:regular:minimisation}
 \index{минимизация}
 
@@ -13,7 +13,7 @@
   В частност, $\L(\A) = \L_\A(\qstart)$.
 \item
   \index{$\equiv_\A$}
-  \marginpar{Може да е малко объркващо, но релацията $\equiv_\A$ е различна от релацията $\sim_\A$.
+  \mynote{Може да е малко объркващо, но релацията $\equiv_\A$ е различна от релацията $\sim_\A$.
   Релацията $\sim_\A$ е върху думи, докато $\equiv_\A$ е върху състояния.}
   Сега дефинираме следната релация между състояния на автомата $\A$:
   \[p \equiv_\A q\ \dff\ \L_\A(p) = \L_\A(q).\]
@@ -23,7 +23,7 @@
     (\forall \omega\in \Sigma^\star)[\ \delta^\star(p,\omega) \in F\ \iff\ \delta^\star(q,\omega) \in F\ ].
   \end{equation}
 \item
-  \marginpar{\writedown Защо?}
+  \mynote{\writedown Защо?}
   Релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност. 
 \item
   Да означим
@@ -80,7 +80,7 @@
     Това е така, защото от (\ref{eq:9}) имаме, че
     \[{[\alpha]}_L = {[\beta]}_L \implies h({[\alpha]}_L) = h({[\beta]}_L).\]
   \item
-    \marginpar{Ако в $\A$ има недостижими от $\qstart$ състояния, то ще получим, че $|\Sigma^\star/_{\approx_L}| \leq |Q/_{\equiv_\A}|$.}
+    \mynote{Ако в $\A$ има недостижими от $\qstart$ състояния, то ще получим, че $|\Sigma^\star/_{\approx_L}| \leq |Q/_{\equiv_\A}|$.}
     В $\A$ няма недостижими състояния, откъдето следва, че за всеки клас на еквивалентност ${[q]}_{\equiv_\A}$,
     съществува дума $\alpha$, за която $\delta^\star(\qstart,\alpha) = q$.
     Това означава, че $h([\alpha]_L) = {[q]}_{\equiv_\A}$ и следователно $h$ е сюрекция.
@@ -162,6 +162,8 @@
   Тогава от \Proposition{upper-bound} следва, че $\A'$ е минимален автомат.
 \end{hint}
 
+\subsection{Кубичен алгоритъм за минимизация}
+
 При даден език $L$ и детерминиран краен автомат $\A = \FA$, който го разпознава, целта ни е да построим нов детерминиран краен автомат $\M$,
 който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_L$.
 Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
@@ -172,7 +174,7 @@
 За ествено число $n$, да означим 
 \[\L^n_\A(p) \df \{\omega \in \Sigma^\star \mid \abs{\omega} \leq n\ \&\ \delta^\star(p,\omega) \in F\}.\]
 Лесно се съобразява, че
-\marginpar{Можем ли да дадем горна граница на $n$?}
+\mynote{Можем ли да дадем горна граница на $n$?}
 \[L(\A) = \bigcup_{n\geq 0} \L^n_\A(\qstart).\]
 
 \index{$\equiv^n_\A$}
@@ -189,7 +191,7 @@
 Тогава заключаваме, че за това $n$ имаме, че
 \[\equiv_\A\ =\ \equiv^n_\A.\]
 
-\marginpar{Ако $q \in F$, то $\L^0_\A(q) = F$ и ако $q \not\in F$, то $\L^0_\A(q) = Q\setminus F$.}
+\mynote{Ако $q \in F$, то $\L^0_\A(q) = F$ и ако $q \not\in F$, то $\L^0_\A(q) = Q\setminus F$.}
 Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
 лесно се съобразява, че $\equiv^0_\A$ има два класа на еквивалентност.
 Единият е $F$, а другият е $Q\setminus F$.
@@ -209,7 +211,7 @@
   \end{proposition}  
 \end{framed}
 \begin{hint}
-  \marginpar{\cite[стр. 99]{papadimitriou}}
+  \mynote{\cite[стр. 99]{papadimitriou}}
   \begin{align*}
     p \equiv^{n+1}_\A q & \iff \L^{n+1}_\A(p) = \L^{n+1}_\A(q)\\
                      & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\ \L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))\ ]\\
@@ -232,7 +234,9 @@
   \[\equiv^n_\A\ =\ \equiv_\A.\]
 \end{problem}
 
-% \marginpar{\cite{khoussainov-nerode}}
+% \mynote{\cite{khoussainov-nerode}}
+
+
 
 \begin{algorithm}[H]
   \caption{Кубичен алгоритъм за минимизация}
@@ -274,6 +278,8 @@
   Съобразете, че алгоритъм \ref{alg:minimisation-cube} има времева сложност $\mathcal{O}(|G|^3)$.
 \end{problem}
 
+
+\subsection{Квадратичен алгоритъм за минимизация}
 
 Горният алгоритъм може да се модифицира до квадратичен.
 

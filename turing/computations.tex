@@ -1,7 +1,7 @@
 \subsection{Безконтекстен език за преходите в машина на Тюринг}
 
 % \subsection*{Валидни и невалидни изчисления на машини на Тюринг}
-\marginpar{\cite[стр. 201]{hopcroft1}}
+\mynote{\cite[стр. 201]{hopcroft1}}
 Да разгледаме машината на Тюринг $\M$.
 Една дума $\omega$ описва конфигурация на машина на Тюринг,
 ако $\omega \in \Gamma^\star Q \Gamma^\star$.
@@ -51,14 +51,14 @@
     Правим това докато не срещнем някое $q \in Q^\M$. Тогава трябва да направим преход на $\M$.
     Тук трябва да внимаваме, защото за да направим преход, трябва да знаем състоянието $q$ и да прочетем следващия символ.
     Един начин да разрешим този проблем е като запомним кое състояние сме прочели на машината на Тюринг в състоянията на стековия автомат:
-    \marginpar{$Q^\M$ са букви от азбуката на стековия автомат $P$.}
+    \mynote{$Q^\M$ са букви от азбуката на стековия автомат $P$.}
     \[(\forall q \in Q^\M)(\forall z \in \Gamma)[\ \Delta_{P}(r,q,z) = \{(r_q,z)\}\ ].\]
     \begin{itemize}
     \item 
-      \marginpar{Стекът представлява $z\alpha^{\rev}_1$}
+      \mynote{Стекът представлява $z\alpha^{\rev}_1$}
       ако $\delta_\M(q,x) = (p,y,\goright)$, то слагаме $yp$ на върха на стека, т.е.
       \[\Delta_{P}(r_q,x,z) = \{(\hat{r}, pyz)\}.\]
-      \marginpar{Трябва да внимаваме, когато имаме $q\sharp$, защото това се интерпретира като четящата глава е върху $\blank$.}
+      \mynote{Трябва да внимаваме, когато имаме $q\sharp$, защото това се интерпретира като четящата глава е върху $\blank$.}
     \item
       ако $\delta_\M(q,x) =(p,y,\goleft)$, то ако $z$ е върха на стека, заменяме $z$ с $pzy$, т.е.
       \[\Delta_{P}(r_q,x,z) = \{(\hat{r}, yzp)\}.\]
@@ -70,7 +70,7 @@
     Сега вече сме в състояние $\hat{r}$ и остава да прочетем $\alpha_2$ и да я запишем в стека като $\alpha^{\rev}_2$:
     \[\Delta_{P}(\hat{r},x,z) = \{(\hat{r}, xz)\}.\]
   \item
-    \marginpar{За да разпознаем $\texttt{Invalid}(\M)$ трябва само да разменим условията за приемане и отхвърляне на думата.}
+    \mynote{За да разпознаем $\texttt{Invalid}(\M)$ трябва само да разменим условията за приемане и отхвърляне на думата.}
     Разбираме кога сме свършили с $\alpha_2$ когато стигнем до $\sharp$.
     Сега започваме да четем думата след $\sharp$ и сравняваме с това, което имаме в стека.
     \begin{itemize}
@@ -112,7 +112,7 @@
 Езикът съставен от всички такива думи ще означаваме с $\texttt{Accept}(\M)$.
 
 \begin{lemma}
-  \marginpar{\cite[стр. 201]{hopcroft1}}
+  \mynote{\cite[стр. 201]{hopcroft1}}
   За всяка машина на Тюринг $\M$,
   \[\texttt{Accept}(\M) = L_1 \cap L_2,\]
   където $L_1$ и $L_2$ са безконтекстни езици.
@@ -153,7 +153,7 @@
   Една дума $\alpha$ не е история на приемащо изчисление, ако е изпълнено някое от следните условия:
   \begin{itemize}
   \item 
-    \marginpar{Можем да опишем това свойство с регулярен език}
+    \mynote{Можем да опишем това свойство с регулярен език}
     $\alpha$ не е от вида $\omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_n\sharp$,
     където $\omega_i \in \Gamma^\star Q \Gamma^\star$, или
   \item
@@ -165,10 +165,10 @@
     \item
       $\omega_n \not\in \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star$, или
     \item
-      \marginpar{т.е. $\omega_i \sharp \omega^{\rev}_{i+1} \in \texttt{Invalid}(\M)$}
+      \mynote{т.е. $\omega_i \sharp \omega^{\rev}_{i+1} \in \texttt{Invalid}(\M)$}
       $\omega_i \not\vdash_\M \omega^{\rev}_{i+1}$, за някое нечетно $i < n$, или
     \item
-      \marginpar{и $\omega^{\rev}_i \sharp \omega_{i+1} \in \texttt{Invalid'}(\M)$}
+      \mynote{и $\omega^{\rev}_i \sharp \omega_{i+1} \in \texttt{Invalid'}(\M)$}
       $\omega^{\rev}_i \not\vdash_\M \omega_{i+1}$, за някое четно $i < n$.
     \end{itemize}
   \end{itemize}

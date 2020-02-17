@@ -7,7 +7,7 @@
 \end{thm}
 \end{framed}
 \begin{proof}
-  \marginpar{\cite[стр. 79]{papadimitriou}; \cite[стр. 33]{hopcroft1}}
+  \mynote{\cite[стр. 79]{papadimitriou}; \cite[стр. 33]{hopcroft1}}
   Нека  $L = \L(\A)$, за някой детерминиран краен автомат $\A$.
   Да фиксираме едно изброяване на състоянията
   \[Q = \{q_0,\dots,q_{n-1}\},\]
@@ -59,7 +59,7 @@
       \[q_i\stackrel{\alpha_1}{\rightarrow\cdots\rightarrow} q_{k} \stackrel{\alpha_2}{\rightarrow\cdots\rightarrow} q_k \rightarrow\cdots\rightarrow q_{k} \stackrel{\alpha_{m+1}}{\rightarrow\cdots\rightarrow} q_j,\]
       За всяко $\ell=1,\dots,m+1$, състоянието $q_k$ не е измежду вътрешните състояния, които участват в изчислението на автомата $\A$ върху $\alpha_\ell$, т.е. индексите на всички вътрешни състояния са $<k$.
       Това означава, че $\alpha_1 \in L(i,k,k)$, $\alpha_\ell \in L(k,k,k)$ за $\ell=2,\dots,m$, и $\alpha_{m+1} \in L(k,j,k)$, т.е.
-      \marginpar{Възможно е $m = 1$. Тогава $L(k,k,k)^{m-1} = \{\varepsilon\}$.}
+      \mynote{Възможно е $m = 1$. Тогава $L(k,k,k)^{m-1} = \{\varepsilon\}$.}
       \[\alpha \in L(i,k,k) \cdot L(k,k,k)^{m-1} \cdot L(k,j,k).\]
       Понеже направихме това разсъждение за произволно $m$,
       можем да заключим, че ако $q_k$ се среща измежду вътрешните състояния, които участва в изчислението на автомата $\A$ върху думата $\alpha$,
@@ -67,7 +67,7 @@
     \end{itemize}
     Така доказахме, че 
     \[L(i,j,k+1) \subseteq L(i,j,k) \cup L(i,k,k) \cdot L(k,k,k)^\star \cdot L(k,j,k).\]
-    \marginpar{\writedown Защо?}
+    \mynote{\writedown Защо?}
     Включването в другата посока следва директно от дефиницията на езиците $L(i,j,k)$.
     
     От направените по-горе разсъждения следва, че можем да изразим езика $L(i,j,k+1)$ по следния начин:
@@ -84,7 +84,7 @@
 \end{proof}
 
 \begin{proposition}
-  \marginpar{Естествено, можем да формулираме това твърдение и за краен недетерминиран автомат.}
+  \mynote{Естествено, можем да формулираме това твърдение и за краен недетерминиран автомат.}
   Съществува алгоритъм, за който при вход краен детерминиран автомат $\A$,
   извежда като изход регулярен израз $\mathbf{r}$, такъв че $\L(\A) = \L(\mathbf{r})$.
 \end{proposition}

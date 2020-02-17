@@ -5,7 +5,7 @@
 % \special{papersize=9cm,12cm}
 
 \usepackage{cmap}
-\usepackage{gitinfo2}
+% \usepackage{gitinfo2}
 % \usepackage{todonotes}
 \usepackage{marginnote}
 
@@ -58,9 +58,11 @@
 
 % \let\oldmarginpar\marginpar
 % \renewcommand\marginpar[1]{\leavevmode\marginnote{\raggedright\scriptsize #1}}
-\renewcommand\marginpar[1]{\leavevmode\marginnote{\scriptsize #1}}
+% \renewcommand\marginpar[1]{\leavevmode\marginnote{\scriptsize #1}}
+\newcommand\mynote[1]{\marginnote{\scriptsize #1}}
 % \renewcommand\marginpar[1]{}
 
+\newcommand\debug[1]{\marginnote{{\bf #1}}}
   
 % \renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\scriptsize #1]%
 % {\raggedright\scriptsize #1}}
@@ -107,8 +109,9 @@
 \usepackage[activate={true,nocompatibility},final,tracking=true,kerning=true,spacing=true,factor=1100,stretch=10,shrink=10]{microtype}
 
 \usepackage{mybgdef}
-\usepackage{mysymbols}
 \usepackage{eai}
+\usepackage{mysymbols}
+
 
 \usepackage{pifont}
 \newcommand{\writedown}{\ding{45}\ }
@@ -156,12 +159,12 @@
 % \renewcommand\familydefault{\sfdefault}
 
 \title{Записки по ,,Езици, автомати, изчислимост''}
-\author{Стефан Вътев\thanks{Това е чернова. Възможни са неточности и грешки, а също и несъответсвия с терминологията въведена на лекции. За забележки и коментари: \href{mailto:stefanv@fmi.uni-sofia.bg}{stefanv@fmi.uni-sofia.bg}.
-    Конкретната версия на \LaTeX файловете, от които е компилиран този файл, може да бъде намерена
-    \href{https://github.com/stefk0/eai/commit/\gitHash}{тук} от \gitAuthorDate.}
+\author{Стефан Вътев\thanks{Това е чернова. Възможни са неточности и грешки, а също и несъответсвия с терминологията въведена на лекции. За забележки и коментари: \href{mailto:stefanv@fmi.uni-sofia.bg}{stefanv@fmi.uni-sofia.bg}}}
+    % Конкретната версия на \LaTeX файловете, от които е компилиран този файл, може да бъде намерена
+    % \href{https://github.com/stefk0/eai/commit/\gitHash}{тук} от \gitAuthorDate.}
 % Revision\gitRel: \gitAbbrevHash{} (\gitBranch)\\
 % \gitAuthorDate}
-  }
+  % }
 
 % \makeindex
 \begin{document} 

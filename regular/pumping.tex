@@ -3,7 +3,7 @@
 \begin{lemma}[Лема за покачването]
   \index{лема за покачването!регулярни езици}
   \label{lem:pumping-reg}
-  \marginpar{На англ. се нарича \emph{Pumping Lemma}. Има подобна лема и за безконтекстни езици, която ще разгледаме по-нататък.}
+  \mynote{На англ. се нарича \emph{Pumping Lemma}. Има подобна лема и за безконтекстни езици, която ще разгледаме по-нататък.}
   Нека $L$ да бъде {\em безкраен} регулярен език.
   Съществува число $p\geq 1$, зависещо само от $L$, 
   за което за всяка дума $\alpha\in L, \abs{\alpha}\geq p$ може да 
@@ -13,13 +13,13 @@
     $|y|\geq 1$;
   \item
     $|xy|\leq p$;
-    \marginpar{Обърнете внимание, че $0 \in \Nat$ и $xy^0z =  xz$}
+    \mynote{Обърнете внимание, че $0 \in \Nat$ и $xy^0z =  xz$}
   \item
     $(\forall i\in\Nat)[xy^iz \in L]$.
   \end{enumerate}
 \end{lemma}
 \begin{hint}
-  \marginpar{Тази лема я има във всеки учебник по този предмет. Например, \cite[стр. 88]{papadimitriou}, \cite[стр. 77]{sipser3}.}
+  \mynote{Тази лема я има във всеки учебник по този предмет. Например, \cite[стр. 88]{papadimitriou}, \cite[стр. 77]{sipser3}.}
   Понеже $L$ е регулярен, то $L$ е и автоматен език. Нека
   \[\A = \FA\]
   е краен детерминиран автомат, за който $L = \L(\A)$.
@@ -37,16 +37,15 @@
   защото $q_i = q_j$.
   Да разгледаме и случая $i = 2$. Тогава думата $xy^2z \in L$, защото имаме следното изчисление:
   \[\qstart\underbrace{\stackrel{a_1}{\rightarrow}q_1 \cdots \stackrel{a_i}{\rightarrow}}_{x} q_i\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{i+1}}{\rightarrow}q_{i+1}\cdots\stackrel{a_{j}}{\rightarrow}}_{y}q_j\underbrace{\stackrel{a_{j+1}}{\rightarrow}\cdots\stackrel{a_{k}}{\rightarrow}}_{z}q_k\in F.\]
-  \marginpar{\writedown Докажете!}
+  \mynote{\writedown Докажете!}
   Вече лесно можем да съобразим, че за всяко естествено число $i$, е изпълнено $xy^iz \in \L(\A)$.
 \end{hint}
 
 Практически е по-полезно да разглеждаме следната еквивалентна формулировка на лемата за покачването.
-
+\mynote{Подобно е изложението и в \cite[стр. 70]{kozen}.}
 \begin{cor}[Контрапозиция на лемата за покачването]
   \label{cor:pumping-reg}
-  \marginpar{Ясно е, че всеки краен език е регулярен. Нали?}
-  Нека $L$ е произволен {\bf безкраен} език. Нека също така е изпълнено, че:
+  Нека $L$ е произволен език. Нека също така е изпълнено, че:
   \begin{description}
   \item[($\forall$)]
     за {\em всяко} естествено число $p \geq 1$,
@@ -71,14 +70,14 @@
   \begin{center}
     {\em ,,Aко $L$ е регулярен език, то е изпълнено $P_{\text{reg}}(L)$.''}
   \end{center}
-  \marginpar{Контрапозиция на твърдението $P \to Q$ е твърдението $\neg Q \to \neg P$}
+  \mynote{Контрапозиция на твърдението $P \to Q$ е твърдението $\neg Q \to \neg P$}
   \noindent
   Лемата може да се запише по следния еквивалентен начин:
   
   \begin{center}
     {\em ,,Ако $P_{\text{reg}}(L)$ не е изпълнено, то $L$ не е регулярен език.''}
   \end{center}
-  \marginpar{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
+  \mynote{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
   Отрицанието на $P_{\text{reg}}(L)$ преставлява формулата
   \begin{align*}
     (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \&\ (\forall x,y,z\in\Sigma^\star)[\ & \alpha \neq xyz\ \vee\\
@@ -87,7 +86,7 @@
                                                                                                          & (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
   \end{align*}
   Горната формула е еквивалентна на:
-  \marginpar{Използваме, че
+  \mynote{Използваме, че
     \begin{align*}
       \neg P \vee \neg Q \vee R & \equiv \neg(P\ \&\ Q) \vee R\\
                                 & \equiv (P \wedge Q) \to R

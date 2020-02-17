@@ -1,11 +1,13 @@
-\subsection{Примери}
+\subsection{Примерни задачи}
 
-\begin{example}
-  Нека да разгледаме регулярния език
+\begin{problem}
+  Постройте автомат $\B$ по метода на Бжозовски за регулярния език
   \[L = \L(\mathbf{((a+b)^+\cdot a)^\star}).\]
-  Да видим как ще построим автомата $\B$ за $L$.
-  Едновременно ще строим състоянията на автомата $Q$ и функцията на преходите $\delta$.
-\begin{itemize}
+\end{problem}
+\ExtraMaterial{
+\begin{solution}
+  \begin{multicols}{2}
+  \begin{itemize}
 \item
   Ясно е, че ще започнем от началното състояние $q_L$.
   Удобно е да имаме предвид следното представяне
@@ -25,7 +27,7 @@
     & \delta(q_L,b) \df q_M. & \comment\text{ защото }b^{-1}(L) = M
   \end{align*}
 \item
-  Удобно е да представим езика $M$ по следния начин:
+  За следващата стъпка е удобно да представим езика $M$ по следния начин:
   \begin{align*}
     M & = \{a,b\}^\star aL\\
       & = aL \cup \{a,b\}^+aL\\
@@ -47,7 +49,7 @@
     & \delta(q_M,b) \df q_N & \comment\text{ защото }b^{-1}(M) = M.
   \end{align*}
 \item
-  Да разгледаме следното разлагане
+  Да разгледаме следното представяне:
   \begin{align*}
     N & = L \cup M \\
       & = \{\varepsilon\} \cup aM \cup bM \cup M\\
@@ -70,16 +72,16 @@
 \item
   Понеже $\varepsilon \in L$ и $\varepsilon \in N$ е ясно, че
   \[F = \{q_L,q_N\}.\]
+  Сега вече сме готови да нарисуваме картинка на автомата.
 \end{itemize}
 
-Сега вече сме готови да нарисуваме картинка на автомата.
 
 % \begin{framed}
 \begin{figure}[H]
-  \begin{subfigure}[b]{.45\textwidth}
-    \centering
+  % \begin{subfigure}[b]{.45\textwidth}
+  %   \centering
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
-      \tikzstyle{every state}=[circle,minimum size=20pt,font=\small]
+      \tikzstyle{every state}=[circle,font=\small]
       \node[initial above, state,accepting]   (L) {$q_L$};
       \node[state]                            (M) [right of=L]{$q_M$};
       \node[state,accepting]                  (N) [right of=M]{$q_{N}$};
@@ -91,31 +93,34 @@
       (N) edge [bend left=15] node [below] {$b$}   (M)
       (N) edge [loop above] node [above]   {$a$}   (N);
     \end{tikzpicture}
-    \caption{Автомата $\B$ за езика $L$ по метода на Бжозовски.}
-  \end{subfigure}
-  \quad
-  ~
-  \quad
-  \begin{subfigure}[b]{.45\textwidth}
-    \centering
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
-      \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+    \caption{\scriptsize{Автомат за езика $L$ по метода на Бжозовски.}}
+    % \end{subfigure}
+    \end{figure}
+  % \quad
+%   ~
+%   \quad
+%   \begin{subfigure}[b]{.45\textwidth}
+%     \centering
+%     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+%       \tikzstyle{every state}=[circle,minimum size=20pt,auto]
       
-      \node[initial above, state,accepting]   (L) {$[\varepsilon]_L$};
-      \node[state]                            (M) [right of=L]{$[a]_L$};
-      \node[state,accepting]                  (N) [right of=M]{$[aa]_L$};
+%       \node[initial above, state,accepting]   (L) {$[\varepsilon]_L$};
+%       \node[state]                            (M) [right of=L]{$[a]_L$};
+%       \node[state,accepting]                  (N) [right of=M]{$[aa]_L$};
       
-      \path 
-      (L) edge [bend left=15] node [above] {$a,b$} (M)
-      (M) edge [loop above] node [above]   {$b$}   (M)
-      (M) edge [bend left=15] node [above] {$a$}   (N)
-      (N) edge [bend left=15] node [below] {$b$}   (M)
-      (N) edge [loop above] node [above]   {$a$}   (N);
-    \end{tikzpicture}
-    \caption{Минимален автомат $\M$ за езика $L$ по метода на Майхил-Нероуд.}
-  \end{subfigure}
-\end{figure}
-\end{example}
+%       \path 
+%       (L) edge [bend left=15] node [above] {$a,b$} (M)
+%       (M) edge [loop above] node [above]   {$b$}   (M)
+%       (M) edge [bend left=15] node [above] {$a$}   (N)
+%       (N) edge [bend left=15] node [below] {$b$}   (M)
+%       (N) edge [loop above] node [above]   {$a$}   (N);
+%     \end{tikzpicture}
+%     \caption{Минимален автомат $\M$ за езика $L$ по метода на Майхил-Нероуд.}
+%   \end{subfigure}
+% \end{figure}
+\end{multicols}
+  \end{solution}
+}
 
 \newpage
 \begin{problem}
@@ -124,6 +129,7 @@
 \end{problem}
 \ExtraMaterial{
 \begin{solution}
+  \begin{multicols}{2}
   \begin{itemize}
   \item 
     $a^{-1}(L) = \{a,b\}^\star b \df M$.
@@ -163,7 +169,7 @@
     \end{align*}
   \item
     Съобразете сами, че $F = \{q_N\}$.
-  \end{itemize}
+  \end{itemize}    
   \begin{figure}[H]
     \centering
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
@@ -183,8 +189,9 @@
       (N) edge [bend right=30] node [above] {$a$} (M)
       (N) edge [loop above]    node [above] {$b$} (N);
     \end{tikzpicture}
-    \caption{Автомат за езика $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$ по метода на Бжозовски.}
+    \caption{\scriptsize{Автомат за езика $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$ по метода на Бжозовски.}}
   \end{figure}
+  \end{multicols}
 \end{solution}
 }
 
@@ -206,7 +213,6 @@
                   & \df N.
       \end{align*}
       Ясно е, че $N \neq M$ и $N \neq L$, защото $aa \in N$, но $aa \notin M$ и $aa \notin L$.
-      \columnbreak
       \begin{align*}
         a^{-1}(M) & = L;\\
         b^{-1}(M) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечетно и } \card{\omega}{b} = 0\}\\
@@ -219,14 +225,13 @@
         a^{-1}(P) & = N\\
         b^{-1}(P) & = \emptyset.
       \end{align*}
-\end{multicols}
 
-  \begin{figure}[H]
+      \begin{figure}[H]
     \centering
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=65pt]
       \tikzstyle{every state}=[circle]
       
-      \node[initial, state]        (L) {$q_L$};
+      \node[initial below, state]  (L) {$q_L$};
       \node[state]                 (M) [above of=L]{$q_M$};
       \node[state]                 (P) [right of=M]{$q_P$};
       \node[state, accepting]      (N) [below of=P]{$q_N$};
@@ -234,17 +239,18 @@
             
       \path 
       (L) edge [bend right=15]  node [right] {$a$} (M)
-      (M) edge [bend right=15]  node [left] {$a$} (L)
+      (M) edge [bend right=15]  node [left]  {$a$} (L)
       (L) edge [bend right=15]  node [below] {$b$} (N)
       (M) edge [bend left=15]   node [above] {$b$} (P)
-      (N) edge [bend left=15]   node [left] {$a$} (P)
+      (N) edge [bend left=15]   node [left]  {$a$} (P)
       (P) edge [bend left=15]   node [right] {$a$} (N)
       (P) edge [bend left=15]   node [above] {$b$} (E)
       (N) edge [bend right=15]  node [below] {$b$} (E)
-      (E) edge [loop right]    node [right] {$a,b$} (E);      
+      (E) edge [loop above]     node [above] {$a,b$} (E);      
     \end{tikzpicture}
-    \caption{Автомат, който приема думи с четен брой $a$ и точно едно $b$, получен чрез метода на Бжозовски.}
-  \end{figure}  
+    \caption{\scriptsize{Автомат, който приема думи с четен брой $a$ и точно едно $b$, получен чрез метода на Бжозовски.}}
+  \end{figure}
+  \end{multicols}
 \end{solution}
 }
 
@@ -257,9 +263,9 @@
   Сега пък постройте автомат за $L$ по метода на Бжозовски.
 \end{problem}
 \ExtraMaterial{
-\begin{solution}
-  Нека сега пак да построим автомат за $L$, но този път чрез метода на Бжозовски.
-  За целта ще ни трябва алтернативна дефиниция на $\bin{\alpha}$.
+  \begin{solution}
+    \begin{multicols}{2}
+      За целта ще ни трябва алтернативна дефиниция на $\bin{\alpha}$.
   За една дума $\alpha \in \{0,1\}^\star$, можем да дадем следната дефиниция на $\bin{\alpha}$:
   \begin{itemize}
   \item
@@ -270,33 +276,32 @@
     $\bin{1\alpha} = 2^{|\alpha|} + \bin{\alpha}$.
   \end{itemize}
   Тогава имаме, че:
-  \begin{multicols}{2}
     \begin{align*}
       0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
                 & = \{\alpha \in \{0,1\}^\star \mid \bin{0\alpha} \equiv 2 \bmod 3\}\\
                 & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
                 & = L.
     \end{align*}    
-    \columnbreak
+    % % \columnbreak
     \begin{align*}
       1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
                 & = \{\alpha \in \{0,1\}^\star \mid \bin{1\alpha} \equiv 2 \bmod 3\}\\
                 & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
                 & \df M.
     \end{align*}
-  \end{multicols}
+  % \end{multicols}
 Лесно се съобразява, че $L \neq M$, защото например за думата $\alpha = 10$
 имаме, че $\alpha \in L$, но $\alpha \not\in M$.
 Продължаваме нататък:
-\begin{multicols}{2}
+% \begin{multicols}{2}
 \begin{align*}
   0^{-1}(M) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in M\}\\
               & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
               & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
               & \df N.
 \end{align*}
-\vfill
-\columnbreak
+% \vfill
+% \columnbreak
 \begin{align*}
   1^{-1}(M) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in M\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
@@ -305,21 +310,21 @@
             & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
             & = L.
 \end{align*}
-\end{multicols}
+% \end{multicols}
 Да проверим, че $N \neq L$ и $N \neq M$.
 Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
 Непосредствено се проверява, че $\alpha \in N$, $\alpha \not\in L$, $\alpha \not\in M$.
 Продължаваме нататък:
-\begin{multicols}{2}
+% \begin{multicols}{2}
 \begin{align*}
   0^{-1}(N) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in N\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = M.
-\end{align*}
-\begin{align*}
+            & = M\\
+% \end{align*}
+% \begin{align*}
   1^{-1}(N) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in N\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
             & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
@@ -327,7 +332,6 @@
             & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
             & = N.
 \end{align*}
-\end{multicols}
 % Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
 
 \begin{figure}[H]
@@ -335,9 +339,9 @@
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
       \tikzstyle{every state}=[circle]
       
-      \node[initial,state]      (0) {$q_L$};
-      \node[state]              (1) [right of=0]{$q_M$};
-      \node[accepting, state]   (2) [right of=1]{$q_N$};
+      \node[initial below,state] (0) {$q_L$};
+      \node[state]               (1) [right of=0]{$q_M$};
+      \node[accepting, state]    (2) [right of=1]{$q_N$};
       
       \path 
       (0) edge  [loop above]    node [above]  {$0$} (0)
@@ -350,6 +354,7 @@
   \end{center}
   \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
 \end{figure}
+\end{multicols}
 \end{solution}
 }
 

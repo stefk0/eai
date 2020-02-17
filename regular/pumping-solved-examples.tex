@@ -1,31 +1,30 @@
-\subsection{Примери}
+\subsection{Примерни задачи}
 
 \begin{problem}\label{prob:regular:pumping:an-bn}
   Докажете, че езикът $L = \{a^nb^n \mid n\in \Nat\}$ не е регулярен.
 \end{problem}
 \begin{proof}
-  \marginpar{Това е важен пример. По-късно ще видим, че този език е безконтекстен}
+  \mynote{Това е важен пример. По-късно ще видим, че този език е безконтекстен}
   Формално трябва докажем, че
   {\scriptsize
     \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
   Както обяснихме по-горе, доказателството следва стъпките:
   \begin{description}
   \item[$(\forall)$]
-    \marginpar{Нямаме власт над избора на числото $p$.}
+    \mynote{Нямаме власт над избора на числото $p$.}
     Разглеждаме произволно число $p \geq 1$.
   \item[$(\exists)$]
-    \marginpar{Няма общо правило, което да ни казва как избираме думата $\alpha$. Трябва сами да се досетим.}
+    \mynote{Няма общо правило, което да ни казва как избираме думата $\alpha$. Трябва сами да се досетим. Обърнете внимание, че думата $\alpha$ зависи от константата $p$.}
     Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
     си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
-    \marginpar{Обърнете внимание, че думата $\alpha$ зависи от константата $p$.}
     Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$.
     Очевидно е, че $\abs{\alpha} \geq p$.
   \item[$(\forall)$]
-    \marginpar{Не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства.}
+    \mynote{Не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства.}
     Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
     за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
   \item[$(\exists)$]
-    \marginpar{Изборът на $i$ може да зависи разбиването $x$, $y$, $z$. В конкретния пример, не зависи.}
+    \mynote{Изборът на $i$ може да зависи разбиването $x$, $y$, $z$. В конкретния пример, не зависи.}
     Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
     Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
     Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
@@ -35,7 +34,7 @@
 \end{proof}
 
 \begin{remark}
-  \marginpar{\writedown Съобразете сами!}
+  \mynote{\writedown Съобразете сами!}
   Много често студентите правят следното разсъждение:
   \[(\forall L,L' \subseteq \Sigma^\star)[L \text{ е регулярен}\ \&\ L' \subseteq L \implies L'\text{ е регулярен}].\]
   Съобразете, че в общия случай това твърдение е {\em невярно}.
@@ -99,7 +98,7 @@
     $\abs{xy^iz} = \abs{xz} + i\cdot\abs{y}$ е {\em съставно число}.
     Понеже $\abs{xy} \leq p$ и $\abs{xyz} > p+1$, то $\abs{z} > 1$.
     Да изберем $i = \abs{xz} > 1$. Тогава:
-    \marginpar{Изискваме $|w| > p+1$, защото искаме да гарантираме, че $|xz| > 1$.}
+    \mynote{Изискваме $|w| > p+1$, защото искаме да гарантираме, че $|xz| > 1$.}
     \[\abs{xy^iz} = \abs{xz} + i.\abs{y} = \abs{xz} + \abs{xz}.\abs{y} = (1 + \abs{y})\abs{xz}\] е съставно число, следователно 
     $xy^iz \not\in L$.
   \end{description}
@@ -194,7 +193,7 @@
 \subsection*{Примери, за които лемата не е  приложима}
 
 \begin{problem}
-  \marginpar{Например, $\{c\}^+\cdot\{a^nb^n\mid n\in\Nat\}\cup \{a,b\}^\star$}
+  \mynote{Например, $\{c\}^+\cdot\{a^nb^n\mid n\in\Nat\}\cup \{a,b\}^\star$}
   Да се даде пример за език $L$, който {\bf не} е регулярен, но $P_{\text{reg}}(L)$.
 \end{problem}
 
@@ -213,7 +212,7 @@
   Да изберем константа $p = 2$.
   Сега трябва да разгледаме всички думи $\alpha \in L$, $\abs{\alpha} \geq 2$
   и за всяка $\alpha$ да посочим разбиване $xyz = \alpha$, за което са изпълнени трите свойства от лемата.
-  \marginpar{Условията за $x,y,z$ са:
+  \mynote{Условията за $x,y,z$ са:
     \begin{align*}
       & \abs{xy} \leq 2\\
       & \abs{y} \geq 1\\
@@ -238,3 +237,8 @@
     Избираме $x = \varepsilon$, $y = c$, $z = c^{k-1}a^nb^m$.
   \end{itemize}
 \end{hint}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

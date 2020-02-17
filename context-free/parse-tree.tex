@@ -4,7 +4,7 @@
   photon/.style={decorate, decoration={snake}, draw=black}
 }
 
-\marginpar{Понятието дърво е едно от най-основните в информатиката и може да се дефинира по много различни начини, в зависимост от това за какви цели се използва. Тук на практика следваме \cite{nerode-shore}, защото е важно да имаме наредба между възлите на дървото.}
+\mynote{Понятието дърво е едно от най-основните в информатиката и може да се дефинира по много различни начини, в зависимост от това за какви цели се използва. Тук на практика следваме \cite{nerode-shore}, защото е важно да имаме наредба между възлите на дървото.}
 \begin{itemize}
 \item
   За всеки две думи $\alpha$ и $\beta$ над $\{0,1,\dots,b-1\}$, с $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$.
@@ -14,12 +14,12 @@
   \[(\exists i < \min\{|\alpha|,|\beta|\})[\ (\forall j < i)[\ \alpha[j] = \beta[j]\ ]\ \&\ \alpha[i] < \beta[i]\ ].\]
 \item
   \index{дърво}
-  \marginpar{Всеки възел в дървото еднозначно се определя от пътя от възела до корена.}
+  \mynote{Всеки възел в дървото еднозначно се определя от пътя от възела до корена.}
   Непразното множество $T \subseteq \{0,1,\dots,b-1\}^\star$ се нарича {\bf дърво},
   ако $T$ е затворено относно префикси, т.е. $\texttt{Pref}(T) = T$.
   С други думи,
   \[(\forall \alpha, \beta)[\ \alpha \in T\ \&\ \beta \preceq \alpha\ \implies\ \beta \in T\ ].\]
-  \marginpar{При нас всички дървета са крайно разклонени.}
+  \mynote{При нас всички дървета са крайно разклонени.}
 \item
   Нека да въведем следните означения:
   \begin{align*}
@@ -47,7 +47,7 @@
   Нека положим $X_\alpha \df \lambda(\alpha)$.
 \item
   \index{дърво на извод}
-  \marginpar{Също се нарича синтактично дърво. На англ. \emph{parse tree}.}
+  \mynote{Също се нарича синтактично дърво. На англ. \emph{parse tree}.}
   Двойката $P = (T,\lambda)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
@@ -59,7 +59,7 @@
     като имаме също така и 
     % Освен това, ако $\alpha_0,\dots,\alpha_k$ са всички думи от множеството $\texttt{ext}_T(\alpha)$
     % подредени във възходящ ред относно лексикографската наредба, то имаме, че:
-    \marginpar{С други думи,
+    \mynote{С други думи,
       \[\lambda(\alpha)\to_G\lambda(\alpha 0)\cdots\lambda(\alpha k).\]}
     \[X_\alpha \to_G X_{\alpha 0} X_{\alpha 1} \cdots X_{\alpha k}.\] 
   \end{itemize}
@@ -71,7 +71,7 @@
   подредени във възходящ ред относно лексикографската наредба. Тогава 
   \[\texttt{yield}(P) \df X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}.\]
 \item
-  \marginpar{В \cite[стр. 123]{papadimitriou} дават рекурсивна дефиниция на дърво на извод.}
+  \mynote{В \cite[стр. 123]{papadimitriou} дават рекурсивна дефиниция на дърво на извод.}
   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$.
   За всяко $\alpha \in T$, дефинираме $\lambda_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
   \[\lambda_\alpha(\beta) \df \lambda(\alpha \cdot \beta).\]
@@ -156,7 +156,7 @@
   \item
     Нека $\texttt{height}(T) > 0$.
     За всяко $i \in T$ е ясно, че $\texttt{height}(T_i) < \texttt{height}(T)$. Тогава:
-    \marginpar{$\texttt{front}(T) = \bigcup_{i\in T} i\cdot \texttt{front}(T_i)$.}
+    \mynote{$\texttt{front}(T) = \bigcup_{i\in T} i\cdot \texttt{front}(T_i)$.}
     \begin{align*}
       |\texttt{front}(T)| & = \sum_{i \in T}|\texttt{front}(T_i)| \\
                           & \leq \sum_{i\in T}b^{\texttt{height}(T_i)} & \comment\text{от И.П.}\\
@@ -193,7 +193,7 @@
     Тогава $T = \{\varepsilon\}$ и $\lambda(\varepsilon) = X$.
     Ясно е, че $\texttt{ext}_T(\varepsilon) = \emptyset$ и следователно $\texttt{yield}(P) = X$.
   \item
-    \marginpar{Знаем, че $k < b$.}
+    \mynote{Знаем, че $k < b$.}
     Нека $\ell > 0$ и $X \stackrel{\ell}{\to}_G \beta$.
     Да разгледаме извода
     \[X \to_G X_0X_1\cdots X_k \stackrel{\ell-1}{\to}_G \beta.\]
@@ -257,7 +257,7 @@
 
 \begin{problem}
   Нека $P = (T,\lambda)$ е дърво на извод за думата $\alpha$ в $G$. Докажете, че съществува извод
-  \marginpar{Ясно е, че $\ell < b^{\texttt{height}(T)}$.}
+  \mynote{Ясно е, че $\ell < b^{\texttt{height}(T)}$.}
   $X_\varepsilon \stackrel{\ell}{\to}_G \alpha$, където
   \[\ell \leq \sum_{i < \texttt{height}(T)}b^i.\]
 \end{problem}
@@ -305,7 +305,7 @@
   Дефинираме $P'' = (T'',\lambda'')$ по следния начин:
   \begin{itemize}
   \item
-    \marginpar{Ясно е, че $\alpha \in T$ и $\alpha \in \alpha\cdot T'$, но понеже $X_\alpha = X'_\varepsilon$, то нямаме проблем.}
+    \mynote{Ясно е, че $\alpha \in T$ и $\alpha \in \alpha\cdot T'$, но понеже $X_\alpha = X'_\varepsilon$, то нямаме проблем.}
     $T'' \df T \cup \alpha \cdot T'$;
   \item
     $\lambda''(\gamma) \df
@@ -428,7 +428,7 @@
   Дефинираме $P \setminus P_\alpha = (T',\lambda')$ по следния начин:
   \begin{itemize}
   \item
-    \marginpar{Съобразете, че $\alpha \in \texttt{front}(T')$.}
+    \mynote{Съобразете, че $\alpha \in \texttt{front}(T')$.}
     $T' = T \setminus \{ \gamma \in T\mid \alpha \prec \gamma\}$;
   \item
     $\lambda'(\gamma) = \lambda(\gamma)$ за $\gamma \in T'$.

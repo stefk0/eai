@@ -8,14 +8,14 @@
   \index{буква}
   {\bf Азбука} ще наричаме всяко крайно множество,
   като обикновено ще я означаваме със $\Sigma$.
-  \marginpar{Често ще използваме буквите $a$, $b$, $c$ за да означаваме букви.}
+  \mynote{Често ще използваме буквите $a$, $b$, $c$ за да означаваме букви.}
   Елементите на азбуката $\Sigma$ ще наричаме {\bf букви}.
 \item
   \index{дума}
   {\bf Дума} над азбуката $\Sigma$ е произволна крайна редица от елементи на $\Sigma$.
   Например, за $\Sigma = \{a,b\}$, $aababba$ е дума над $\Sigma$ с дължина $7$.
   С $\abs{\alpha}$ ще означаваме дължината на думата $\alpha$.
-  \marginpar{Обикновено ще означаваме думите с $\alpha$, $\beta$, $\gamma$, $\omega$.}
+  \mynote{Обикновено ще означаваме думите с $\alpha$, $\beta$, $\gamma$, $\omega$.}
 \item
   \index{празна дума}
   Обърнете внимание, че имаме единствена дума с дължина $0$.
@@ -53,7 +53,7 @@
   Например $aba\cdot bb = ababb$.
   Обърнете внимание, че в общия 
   случай $\alpha\cdot\beta \neq \beta\cdot\alpha$. 
-  \marginpar{Често ще пишем $\alpha\beta$ вместо $\alpha\cdot\beta$}
+  \mynote{Често ще пишем $\alpha\beta$ вместо $\alpha\cdot\beta$}
   Можем да дадем формална индуктивна дефиниция на операцията конкатенация по
   дължината на думата $\beta$.
   \begin{itemize}
@@ -68,7 +68,7 @@
   \index{дума!обръщане}
   Друга често срещана операция върху думи е {\bf обръщането} на дума.
   Дефинираме думата $\alpha^{rev}$ като обръщането на $\alpha$ по следния начин.
-  \marginpar{Например, $reverse^{rev} = esrever$}
+  \mynote{Например, $reverse^{rev} = esrever$}
   \begin{itemize}
   \item 
     Ако $\abs{\alpha} = 0$, то $\alpha = \varepsilon$ и $\alpha^{rev} \df \varepsilon$.
@@ -86,8 +86,8 @@
   \index{дума!суфикс}
   $\alpha$ е {\bf суфикс} на $\beta$, ако $\beta = \gamma\cdot\alpha$, за някоя дума $\gamma$.
 \item
-  \marginpar{Обърнете внимание, че $\emptyset\cdot A = A\cdot\emptyset = \emptyset$}
-  \marginpar{Също така, $\{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A$}
+  \mynote{Обърнете внимание, че $\emptyset\cdot A = A\cdot\emptyset = \emptyset$}
+  \mynote{Също така, $\{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A$}
   Нека $A$ и $B$ са множества от думи.
   Дефинираме конкатенацията на $A$ и $B$ като
   \[A\cdot B \df \{\alpha\cdot\beta \mid \alpha\in A\ \&\ \beta \in B\}.\]
@@ -103,7 +103,7 @@
   \[A^n = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} = n\}.\]
 \item
   За едно множеството от думи $A$, дефинираме:
-  \marginpar{Операцията $\star$ е известна като звезда на Клини.}
+  \mynote{Операцията $\star$ е известна като звезда на Клини.}
   \index{звезда на Клини}
   \begin{align*}
     A^{\star} & \df \bigcup_{n\geq 0} A^{n}\\
@@ -147,10 +147,10 @@
 % \subsection*{Премахване на префикс}
 
 Нека $\alpha$ е дума над азбуката $\Sigma$  и $L$ е език. Означаваме 
-\marginpar{Тази операция ще бъде важна за нас по-нататък}
+\mynote{Тази операция ще бъде важна за нас по-нататък}
 \[\alpha^{-1}(L) = \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
 Освен това, да означим 
-\marginpar{$\alpha(L) = \{\alpha\} \cdot L$}
+\mynote{$\alpha(L) = \{\alpha\} \cdot L$}
 \[\alpha(L) = \{\alpha\omega \in \Sigma^\star \mid \omega \in L\}.\]
 Имаме свойството, че
 \[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}(L)\}.\]
@@ -200,7 +200,7 @@
 \end{problem}
 
 % \begin{problem}
-%   \marginpar{С други думи, ако $\varepsilon \not\in X$, то $X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$, където неизвестната променлива е $Z$.}
+%   \mynote{С други думи, ако $\varepsilon \not\in X$, то $X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$, където неизвестната променлива е $Z$.}
 %   За фиксирани езици $X,Y \subseteq \Sigma^\star$,
 %   да разгледаме езиците $Z$, които удовлетворяват свойството, че $Z = XZ \cup Y$.
 %   \begin{enumerate}[a)]

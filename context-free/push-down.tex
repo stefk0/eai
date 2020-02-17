@@ -1,7 +1,7 @@
 \section{Недетерминирани стекови автомати}
 
 \index{автомат!недетерминиран стеков}
-\marginpar{На англ. {\em Push-down automaton}. В този курс няма да разглеждаме детерминирани стекови автомати. Когато кажем стеков автомат, ще имаме предвид недетерминиран стеков автомат.
+\mynote{На англ. {\em Push-down automaton}. В този курс няма да разглеждаме детерминирани стекови автомати. Когато кажем стеков автомат, ще имаме предвид недетерминиран стеков автомат.
   Означаваме $\Sigma_\varepsilon \df \Sigma \cup \{\varepsilon\}$ и $\Gamma^{\leq 2} \df \{\varepsilon\} \cup \Gamma \cup \Gamma^2$.}
 {\bf Недетерминиран стеков автомат} е седморка от вида
 \[P = \PDA,\] където:
@@ -15,7 +15,7 @@
 \item
   $\sharp \in \Gamma$ е символ за дъно на стека;
 \item
-  \marginpar{Дефиницията на стеков автомат има много вариации, всички еквивалентни помежду си}
+  \mynote{Дефиницията на стеков автомат има много вариации, всички еквивалентни помежду си}
   $\Delta:Q\times\Sigma_\varepsilon\times \Gamma \rightarrow \Ps(Q\times\Gamma^{\leq 2})$ 
   е функция на преходите;    
 \item
@@ -24,7 +24,7 @@
   $\qaccept \in Q$ е заключителното състояние.
 \end{itemize}
 
-\marginpar{На англ. Instanteneous description}
+\mynote{На англ. Instanteneous description}
 {\em Моментно описание} (или конфигурация) на изчислението със стеков автомат представлява тройка от вида $(q,\alpha,\gamma) \in Q\times\Sigma^\star\times\Gamma^\star$,
 т.е. автоматът се намира в състояние $q$, думата, която остава да се прочете е $\alpha$,
 а съдържанието на стека е думата $\gamma$.
@@ -36,7 +36,7 @@
 \end{align*}
 Рефлексивното и транзитивно затваряне на $\vdash_P$ ще означаваме с $\vdash^\star_P$.
 Сега вече можем да дадем дефиниция на език, разпознаван от стеков автомат $P$.
-\marginpar{Възможно е да се даде и друга еквивалентна дефиниция - разпознаване с празен стек.}
+\mynote{Възможно е да се даде и друга еквивалентна дефиниция - разпознаване с празен стек.}
 Езикът $\L(P)$, който се разпознава от $P$, има следната дефиниция:
 \[\L(P) = \{\ \omega \in \Sigma^\star \mid (\qstart,\omega,\sharp) \vdash^\star_P (\qaccept,\varepsilon,\varepsilon)\ \}.\]
 
@@ -49,9 +49,9 @@
   \end{lemma}
 \end{framed}
 \begin{proof}
-  \marginpar{\cite[стр. 136]{papadimitriou}}
-  % \marginpar{Доказателството в \cite[стр. 117]{sipser3} не ми харесва}
-  \marginpar{Тук приемаме, че винаги правим най-ляв извод в граматиката}
+  \mynote{\cite[стр. 136]{papadimitriou}}
+  % \mynote{Доказателството в \cite[стр. 117]{sipser3} не ми харесва}
+  \mynote{Тук приемаме, че винаги правим най-ляв извод в граматиката}
   Нека е дадена безконтекстната граматика $G = \CFG$ в нормална форма на Чомски.
   Нашата цел е да построим стеков автомат
   \[P = \PDA,\] който разпознава $\L(G)$.
@@ -62,7 +62,7 @@
     $\Gamma = \Sigma \cup V \cup \{\sharp\}$;
   \item
     Релацията на преходите $\Delta$ дефинираме по следния начин:
-    \marginpar{Понеже граматиката е в нормална форма на Чомски, то $|\alpha| \leq 2$ и удовлетворяваме дефиницията на $\Delta$.}
+    \mynote{Понеже граматиката е в нормална форма на Чомски, то $|\alpha| \leq 2$ и удовлетворяваме дефиницията на $\Delta$.}
     \begin{enumerate}[(1)]
     \item 
       $\Delta(\qstart, \varepsilon, \sharp ) = \{(p,S\sharp)\}$;
@@ -76,7 +76,7 @@
   \end{itemize}
   
   Ще докажем, че за всяка променлива $A \in V$, за всяка дума $\alpha \in \Sigma^\star$ и $\gamma \in (\Sigma \cup V)^\star$, то е изпълнено, че:
-  \marginpar{Трябва да се каже, че $S \to^\star_G \alpha \gamma$ го правим като заместваме най-лявата променлива.}
+  \mynote{Трябва да се каже, че $S \to^\star_G \alpha \gamma$ го правим като заместваме най-лявата променлива.}
   \begin{enumerate}[(a)]
   \item
     ако $S \to^\star_G \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
@@ -196,7 +196,7 @@
       За $\ell-1$ стъпки трябва да стигнем от стек с големина $2$ до празен стек.
       Това означава, че можем да разбием думата $\beta$ на две части, $\beta = \beta_1\beta_2$, със свойството, че след като прочетем $\beta_1$,
       то стекът има големина $1$ и след като прочетем $\beta_2$, то стекът е празен.
-      \marginpar{Да обърнем внимание, че в междинните стъпки от двете изчисления, стекът може да расте.}
+      \mynote{Да обърнем внимание, че в междинните стъпки от двете изчисления, стекът може да расте.}
       Това означава, че съществува състояние $q'$, за което можем да разбием изчислението по следния начин:
       \begin{align*}
         & (r, \beta_1, B) \vdash^{\ell_1}_P (q',\varepsilon,\varepsilon)\\
@@ -222,7 +222,7 @@
     Този случай е ясен от дефиницията на граматиката $G$, т.е. $\Delta(q,a,A) \ni (p,\varepsilon)$.
 
     Ако $\ell > 1$, то имаме, че $\alpha = a\beta$ и според правилата на граматиката $G$ имаме два случая.
-    \marginpar{Тук отново е възможно $a = \varepsilon$. Това не е проблем, защото правим индукция по дължината на извода, а не по дължината на думата $\alpha$.}
+    \mynote{Тук отново е възможно $a = \varepsilon$. Това не е проблем, защото правим индукция по дължината на извода, а не по дължината на думата $\alpha$.}
     Ако
     \[[q,A,p] \rightarrow_G a[r,B,p] \stackrel{\ell-1}{\to}_G a\beta,\]
     то директно прилагаме И.П. и получаваме, че
@@ -306,12 +306,12 @@
   \end{thm}  
 \end{framed}
 \begin{hint}
-  \marginpar{\cite[стр. 144]{papadimitriou}}
+  \mynote{\cite[стр. 144]{papadimitriou}}
   Нека имаме стеков автомат
   \[P = \pair{Q',\Sigma,\Gamma,\sharp, \Delta', \qstart', \qaccept'}, \text{ където } \L(P) = L,\]
   и краен тотален детерминиран автомат 
   \[\A = \pair{Q'', \Sigma, \qstart'', \delta'', F''}, \text{ където } \L(\A) = R.\]
-  \marginpar{Сравнете с конструкцията от \Proposition{automata-cap}.}
+  \mynote{Сравнете с конструкцията от \Proposition{automata-cap}.}
   Ще определим нов стеков автомат
   \[\M = \PDA,\]
   където
@@ -326,26 +326,26 @@
     Функцията на преходите $\Delta$ е дефинирана както следва:
     \begin{itemize}
     \item 
-      \marginpar{Симулираме едновременно изчислението и на двата автомата.}
+      \mynote{Симулираме едновременно изчислението и на двата автомата.}
       Ако $(r_1,Z) \in \Delta'(q_1, a, Y)$, то
       \[(\pair{r_1,\delta''(q_2,a)}, Z) \in \Delta(\pair{q_1,q_2},a,Y).\]
     \item
-      \marginpar{Нищо не четем от входната дума, следователно правим празен ход на $\A$}
+      \mynote{Нищо не четем от входната дума, следователно правим празен ход на $\A$}
       Ако $(r_1,Z) \in \Delta'(q_1,\varepsilon,Y)$ и всяко $q_2 \in Q''$, то
       \[(\pair{r_1,q_2}, Z) \in \Delta(\pair{q_1,q_2},\varepsilon,Y).\]
     \item
-      \marginpar{\writedown Докажете, че $\L(\M) = \L(P) \cap \L(\A)$ !}
+      \mynote{\writedown Докажете, че $\L(\M) = \L(P) \cap \L(\A)$ !}
       $\Delta$ не съдържа други преходи;
     \end{itemize}
   \end{itemize}
 
   \begin{itemize}
   \item
-    \marginpar{Индукция по броя стъпки в изчислението на $\M$.}
+    \mynote{Индукция по броя стъпки в изчислението на $\M$.}
     Докажете, че ако $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$, то
     $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$.
   \item
-    \marginpar{Индукция по броя стъпки в изчислението на $P$.}
+    \mynote{Индукция по броя стъпки в изчислението на $P$.}
     Докажете, че ако $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$, то
     $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$.
   \end{itemize}
