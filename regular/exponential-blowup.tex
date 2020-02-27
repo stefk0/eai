@@ -25,10 +25,9 @@
       \draw [dashed,->,shorten >=0pt] (3) to[bend left=15] node[above] {$a,b$} (4);
       \draw [dashed,->,shorten >=0pt] (5) to[bend left=15] node[above] {$a,b$} (6);
     \end{tikzpicture}
-    \caption{недетерминиран автомат $\N$}
+    \caption{Недетерминиран автомат $\N$ за езика $\{a,b\}^\star \cdot a\cdot \{a,b\}^{n-1}$.}
     \label{fig:nfa:exp}
   \end{figure}
-  \mynote{С други думи, $L = \{a,b\}^\star \cdot a\cdot \{a,b\}^{n-1}$.}
   Лесно се съобразява, че за $n > 0$, недетерминирният краен автомат $\N$ на \Figure{nfa:exp} с $n+1$ на брой състояния разпознава езика
   \[L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta \cdot a \cdot \gamma\ \&\ |\gamma| = n-1\}.\]
   Нека да съобразим, че не е възможно да съществува краен детерминиран автомат $\A = \FA$ разпознаващ същия език $L$ с по-малко от $2^n$ състояния.

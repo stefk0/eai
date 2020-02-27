@@ -122,7 +122,6 @@
   \end{solution}
 }
 
-\newpage
 \begin{problem}
   Постройте автомат $\B$ по метода на Бжозовски, който рапознава регулярния език
   \[L = \L(\mathbf{a\cdot(a+b)^\star\cdot b}).\]
@@ -195,7 +194,6 @@
 \end{solution}
 }
 
-\newpage
 \begin{problem}
   Постройте автомат по метода на Бжозовски за регулярния език
   \[L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно и }\card{\omega}{b} = 1\}.\]
@@ -254,7 +252,6 @@
 \end{solution}
 }
 
-\newpage
 \begin{problem}
   Да припомним, че в \Problem{regular:dfa:binary} се искаше да се докаже, че езикът 
   \[L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\]
@@ -365,10 +362,10 @@
   Нека
   \[L_k \df \{a^nb^{n+k}\mid n \in \Nat\}.\]
   \ExtraMaterial{
-  Да видим какво се получава като приложим процедурата за строене 
-  на минимален автомат.
-  \begin{multicols}{2}
-    \begin{itemize}
+    \begin{multicols}{2}
+      Да видим какво се получава като приложим процедурата за строене 
+      на минимален автомат.
+      \begin{itemize}
     \item 
       $a^{-1}(L) = L_1$;
     \item
@@ -386,8 +383,8 @@
     \item
       Ясно е, че $b^{-1}(\{b^{k}\}) = \{b^{k-1}\}$, за всяко $k \geq 1$.
     \end{itemize}    
-  \end{multicols}
-  Получаваме, че езикът $L$ се разпознава от автомат с {\em безкрайно много състояния}.
+    Получаваме, че езикът $L$ се разпознава от автомат с {\em безкрайно много състояния}.
+  \end{multicols}  
 }
   
 % \begin{framed}  

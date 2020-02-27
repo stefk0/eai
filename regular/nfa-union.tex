@@ -16,20 +16,22 @@
   Ще дефинираме автомата $\N=\NFA$, така че
   \[L(\N) = L(\A_1) \cup L(\A_2).\]
   \begin{itemize}
-  \item 
-    $Q \df Q_1 \cup Q_2 \cup \{\qstart\}$, където $\qstart\not\in Q_1\cup Q_2$;
   \item
-    $F \df 
-    \begin{cases}
-      F_1 \cup F_2 \cup \{\qstart\}, & \text{ ако } \qstart' \in F_1 \vee \qstart'' \in F_2\\
-      F_1 \cup F_2,            & \text{ иначе } 
-    \end{cases}$
+    $Q_{\texttt{start}} = \{\qstart',\qstart''\}$;
+  \item 
+    $Q \df Q_1 \cup Q_2$;
+  \item
+    $F \df F_1 \cup F_2$;
+    % $F \df 
+    % \begin{cases}
+    %   F_1 \cup F_2 \cup \{\qstart\}, & \text{ ако } \qstart' \in F_1 \vee \qstart'' \in F_2\\
+    %   F_1 \cup F_2,            & \text{ иначе } 
+    % \end{cases}$
   \item
     $\Delta(q,a) \df
     \begin{cases}
-      \{\delta_1(q,a)\},                       & \text{ ако } q\in Q_1\ \&\ a\in\Sigma\\
-      \{\delta_2(q,a)\},                       & \text{ ако } q\in Q_2\ \&\  a\in\Sigma\\
-      \{\delta_1(\qstart',a), \delta_2(\qstart'',a)\}, & \text{ ако } q = \qstart\ \&\ a \in\Sigma.
+      \{\delta_1(q,a)\},                       & \text{ ако } q\in Q_1\text{ и }a\in\Sigma\\
+      \{\delta_2(q,a)\},                       & \text{ ако } q\in Q_2\text{ и }a\in\Sigma.
     \end{cases}$
   \end{itemize}
 \end{hint}
@@ -43,12 +45,12 @@
       % \begin{subfigure}[b]{0.3\textwidth}
       \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=2cm]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        \node[initial,state,accepting]      (0) {$q_0$};
-        \node[state,accepting] [above right of=0]        (1) {$q'_0$};
+        % \node[initial,state,accepting]      (0) {$q_0$};
+        \node[initial,state,accepting] [above right of=0]        (1) {$q'_0$};
         \node[state]    [right of=1]        (2) {$q_1$};
         \node[state]                        (3) [above right of=2] {$q_2$};
         \node[state,accepting]                        (4) [below right of=2] {$q_3$};
-        \node[state]    [below right=2cm of 0] (5) {$q''_0$};
+        \node[initial,state]    [below right=2cm of 0] (5) {$q''_0$};
         \node[state]     [above right of=5] (6) {$q_4$};
         \node[state,accepting]     [below right of=5] (7) {$q_5$};
         \path
@@ -62,13 +64,13 @@
         (5) edge [bend left=15] node [below]   {$a$} (6)
         (6) edge [bend left=15] node  [right] {$a,b$} (7)
         (5) edge [bend right=15] node [above]  {$b$} (7)
-        (7) edge [loop right] node [right] {$a,b$} (7)
-        (0) edge [dashed, bend right=15] node [below]  {$a$} (2)
-        (0) edge [dashed, bend left=15] node [above]  {$b$} (1)
-        (0) edge [dashed, bend right=15] node [below]  {$a$} (6)
-        (0) edge [dashed, bend right=45] node [below]  {$b$} (7);
+        (7) edge [loop right] node [right] {$a,b$} (7);
+        % (0) edge [dashed, bend right=15] node [below]  {$a$} (2)
+        % (0) edge [dashed, bend left=15] node [above]  {$b$} (1)
+        % (0) edge [dashed, bend right=15] node [below]  {$a$} (6)
+        % (0) edge [dashed, bend right=45] node [below]  {$b$} (7);
       \end{tikzpicture}
-      \caption{$\L(\N) = \L(\A_1)\cup\L(\A_2)$}
+      \caption{$\L(\N) = \L(\A_1)\cup\L(\A_2)$.}
   \end{figure}  
   Обърнете внимание, че $\A_1$ и $\A_2$ са детерминирани автомати, но $\N$ е недетерминиран.
   Освен това, новото състояние $q_0$ трябва да бъде маркирано като финално, защото $q'_0$ е финално.

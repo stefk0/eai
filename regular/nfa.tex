@@ -17,7 +17,7 @@
     Да обърнем внимание, че е възможно за някоя двойка $(q,a)$ да няма нито един преход в автомата.
     Това е възможно, когато $\Delta(q,a) = \emptyset$;
   \item
-    $\qstart \in Q$ е началното състояние;
+    $Q_{\texttt{start}} \subseteq Q$ е множество от начални състояния;
   \item
     $F\subseteq Q$ е множеството от финални състояния.
   \end{itemize}
@@ -25,25 +25,29 @@
 
 Удобно е да разширим функцията на преходите $\Delta: Q\times\Sigma \to \Ps(Q)$ 
 до функцията $\Delta^\star: \Ps(Q)\times\Sigma^\star \to \Ps(Q)$,
-която дефинираме по следния начин:
-\mynote{Обърнете внимание, че $\Delta^\star(R,a) = \bigcup_{r\in R}\Delta(r,a)$.}
+която дефинираме за произволно $R \subseteq Q$ и $\alpha \in \Sigma^\star$ по следния начин:
+\mynote{Обърнете внимание, че според нашата дефиниция е изпълнено, че: \[\Delta^\star(R,a) = \bigcup_{r\in R}\Delta(r,a).\]}
 \begin{itemize}
-\item 
-  $\Delta^\star(R, \varepsilon) = R$, за произволно $R \subseteq Q$;
 \item
-  $\Delta^\star(R, \alpha b) = \bigcup_{p \in \Delta^\star(R,\alpha)} \Delta(p, b)$, за произволни $b \in \Sigma$, $\alpha \in \Sigma^\star$, $q\in Q$.
+  Ако $\alpha = \varepsilon$, то $\Delta^\star(R, \varepsilon) \df R$;
+\item
+  Ако $\alpha = \beta a$, то
+  $\Delta^\star(R, \alpha b) \df \bigcup\{\Delta(p, b) \mid p \in \Delta^\star(R,\alpha)\}$.
 \end{itemize}
 
+\mynote{Да напомним, че $\bigcup\{\{0,1\}, \{1,2,3\}\} = \{0,1\} \cup \{1,2,3\}$.}
+
 \begin{framed}
-  \[\L(\N) \df \{\omega \in \Sigma^\star \mid \Delta^\star(\{\qstart\},\omega) \cap F \neq \emptyset \}.\]
+  \[\L(\N) \df \{\omega \in \Sigma^\star \mid \Delta^\star(Q_{\texttt{start}},\omega) \cap F \neq \emptyset \}.\]
 \end{framed}
 
 \begin{proposition}
+  \label{pr:nfa:delta-star}
   За всеки две думи $\alpha,\beta \in \Sigma^\star$ и всяко $R \subseteq Q$,
   \[ \Delta^\star(R, \alpha\beta) = \Delta^\star( \Delta^\star(R,\alpha),\beta).\]
 \end{proposition}
 \begin{proof}
-  \mynote{Да напомним, че $\bigcup\{\{0,1\}, \{1,2,3\}\} = \{0,1\} \cup \{1,2,3\}$.}
+  \mynote{Сравенете с \Proposition{dfa:delta-star}.}
   Отново индукция по дължината на $\beta$.
   \begin{itemize}
   \item
@@ -79,20 +83,33 @@
 Рефлексивното и транзитивно затваряне на $\vdash_\N$ ще означаваме с $\vdash^\star_\N$.
 За да дадем по-ясна дефиниция на $\vdash^\star_\N$, първо ще дефинираме релацията $\vdash^n_\N$, която
 определя работата на автомата $\N$ за $n$ на брой стъпки.
-\begin{itemize}
-\item 
-  $(q,\alpha) \vdash^0_\N (q,\alpha)$, защото за $0$ стъпки се случва нищо.
-\item
-  Нека $\Delta(q,x) \ni q'$ и $(q',\alpha) \vdash^n_\N (p, \beta)$. Тогава
-  $(q,x\alpha) \vdash^{n+1}_\N (p,\beta)$, защото за $n+1$ на брой стъпки първо правим една стъпка 
-  и отиваме в моментното описание $(q',\alpha)$ и след това правим още $n$ на брой стъпки.
-\end{itemize}
+
+\begin{prooftree}
+  \AxiomC{}
+  \UnaryInfC{$(q,\alpha) \vdash^0_\N (q,\alpha)$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$(q,\alpha) \vdash^n_\N (r, b \beta)$}
+  \AxiomC{$p \in \Delta(r,b)$}
+  \BinaryInfC{$(q,\alpha) \vdash^{n+1}_\N (p,\beta)$}
+\end{prooftree}
+
+
+% \begin{itemize}
+% \item 
+%   $(q,\alpha) \vdash^0_\N (q,\alpha)$, защото за $0$ стъпки се случва нищо.
+% \item
+%   Нека $\Delta(q,x) \ni q'$ и $(q',\alpha) \vdash^n_\N (p, \beta)$. Тогава
+%   $(q,x\alpha) \vdash^{n+1}_\N (p,\beta)$, защото за $n+1$ на брой стъпки първо правим една стъпка 
+%   и отиваме в моментното описание $(q',\alpha)$ и след това правим още $n$ на брой стъпки.
+% \end{itemize}
 Сега можем да дефинираме $\vdash^\star_\N$ като:
 \[(q,\alpha) \vdash^\star_\N (p,\beta) \dff (\exists n\in\Nat)[(q,\alpha) \vdash^n_\N (p,\beta)].\]
 Друг начин да дефинираме релацията $\vdash^\star_\N$ е следния:
 \[(q,\alpha\beta) \vdash^\star_\N (p, \beta) \iff p \in \Delta^\star(\{q\},\alpha).\]
 Получаваме, че 
-\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\exists q \in F)[(\qstart,\alpha) \vdash^\star_\N (q,\varepsilon)]\}.\]
+\[\L(\N) = \{\alpha\in\Sigma^\star \mid (\exists q\in Q_{\texttt{start}})(\exists f \in F)[(q,\alpha) \vdash^\star_\N (f,\varepsilon)]\}.\]
 
 \begin{framed}
 \begin{thm}[Рабин-Скот \cite{rabin-scott}]
@@ -102,102 +119,105 @@
 \end{framed}
 \begin{hint}
   Нека $\N = \NFA$. Ще построим детерминиран автомат
-  \[\D = (Q',\Sigma,\delta,\qstart',F'),\]
+  \[\D = (\hat{Q},\Sigma,\delta,\qstart,\hat{F}),\]
   за който $\L(\N) = \L(\D)$.
   Конструкцията е следната:
-  \mynote{Да отбележим, че детерминираният автомат $\D$ има не повече от $2^{\abs{Q}}$ на брой състояния $Q'$}
   \begin{itemize}
   \item
-    $Q' \df \Ps(Q)$. Някои от тези състояния може да са недостижими и следователно да са излишни, но в общия случай трябва да имаме
-    всички подмножества на $Q$.
+    % \mynote{Можем да дефинираме и $Q' \df \Ps(Q)$, но тогава е възможно много тези състояния да са недостижими и следователно да са излишни.
+    \mynote{Да отбележим, че детерминираният автомат $\D$ има не повече от $2^{\abs{Q}}$ на брой състояния $Q'$.}
+    % $\hat{Q} \df \{ \hat{R} \mid (\exists \alpha \in \Sigma^\star)[ R = \Delta^\star(Q_{\texttt{start}},\alpha)]\}$;
+    $\hat{Q} = \{\hat{R} \mid R \subseteq Q\}$;
   \item
     За произволна буква $a\in\Sigma$ и произволно $R \subseteq Q$,
     \begin{align*}
-      \delta(R,a) & \df \{q\in Q\mid (\exists r\in R)[q\in\Delta(r,a)]\}\\
-                  & = \bigcup_{r\in R}\Delta(r,a).
+      \delta(\hat{R},a) & \df \Delta^\star(R,a).
     \end{align*}
   \item
-    $\qstart' \df \{\qstart\}$;
+    $\qstart = \hat{Q}_{\texttt{start}}$;
   \item
-    $F' \df \{R \subseteq Q \mid R\cap F \neq \emptyset\}$.
+    $\hat{F} \df \{\hat{R} \in \hat{Q} \mid R\cap F \neq \emptyset\}$.
   \end{itemize}
   Ще докажем с индукция по дължината на думата $\alpha$, че
   \begin{equation}
     \label{eq:6}
-    (\forall \alpha\in\Sigma^\star)(\forall R \subseteq Q)[\ \Delta^\star(R,\alpha) = \delta^\star(R,\alpha)\ ].
+    (\forall \alpha\in\Sigma^\star)(\forall R \in Q)[\ \Delta^\star(R,\alpha) = \delta^\star(\hat{R},\alpha)\ ].
   \end{equation}
 
   \begin{itemize}
   \item
-    Ако $|\alpha| = 0$, т.е. $\alpha = \varepsilon$, то е ясно от дефиницията на $\Delta^\star$ и $\delta^\star$.
+    Ако $|\alpha| = 0$, т.е. $\alpha = \varepsilon$, то е ясно от дефиницията на $\Delta^\star$ и $\delta^\star$, т.е.
+    \[(\forall R \subseteq Q)[\ \Delta^\star(R,\varepsilon) = \delta^\star(\hat{R},\varepsilon)\ ].\]
   \item
-    Да приемем, че (\ref{eq:6}) е изпълнено за думи $\alpha$ с дължина $n$.
+    Да приемем, че (\ref{eq:6}) е изпълнено за думи $\alpha$ с дължина $n$, т.е.
+    \[(\forall \alpha\in\Sigma^{n})(\forall R \subseteq Q)[\ \Delta^\star(R,\alpha) = \delta^\star(\hat{R},\alpha)\ ].\]
   \item
     Нека сега $\alpha$ има дължина $n+1$, т.е. $\alpha = \beta a$, където $|\beta| =n$ и $a \in \Sigma$.
     Тогава:
     \begin{align*}
-      \Delta^\star(R, \beta a) & = \bigcup_{q\in\Delta^\star(R,\beta)}\Delta(q, a) & \comment\text{деф. на }\Delta^\star\\
-                               & = \bigcup_{q\in\delta^\star(R,\beta)}\Delta(q, a) & \comment\text{от И.П.}\\
-                               & = \delta( \delta^\star(R, \beta), a) & \comment\text{деф. на }\delta\\
-                               & = \delta^\star( R, \beta a) & \comment\text{деф. на }\delta^\star
+      \Delta^\star(R, \beta a) & = \Delta^\star(\Delta^\star(R,\beta),a) & \comment\text{от \Proposition{nfa:delta-star}}\\
+                               & = \Delta^\star(\delta^\star(\hat{R}, \beta),a) & \text{от И.П. за }\beta\\
+                               & = \delta( \delta^\star( \hat{R}, \beta), a) & \comment\text{деф. на }\delta\\
+                               & = \delta^\star( \hat{R}, \beta a) & \comment\text{деф. на }\delta^\star
     \end{align*}
+    Така доказахме, че
+    \[(\forall \alpha\in\Sigma^{n+1})(\forall R \subseteq Q)[\ \Delta^\star(R,\alpha) = \delta^\star(\hat{R},\alpha)\ ].\]
   \end{itemize}
   Сега вече е лесно да съобразим, че
   \begin{align*}
-    \omega \in \L(\D) & \iff \delta^\star(\{\qstart\},\omega) \in F' & \comment\text{деф. на }\L(\D)\\
-                      & \iff \delta^\star(\{\qstart\},\omega) \cap F \neq \emptyset & \comment\text{деф. на }F'\\
-                      & \iff \Delta^\star(\{\qstart\},\omega) \cap F \neq \emptyset & \comment\text{от (\ref{eq:6})}\\
+    \omega \in \L(\D) & \iff \delta^\star(\qstart, \omega) \in \hat{F} & \comment\text{деф. на }\L(\D)\\
+                      & \iff \Delta^\star( Q_{\texttt{start}},\omega) \cap F \neq \emptyset & \comment\text{от (\ref{eq:6})}\\
                       & \iff \omega \in \L(\N) & \comment\text{деф. на }\L(\N).
   \end{align*}
 \end{hint}
 
-\begin{problem}
-  За всеки недетерминиран краен автомат $\N$ съществува недетерминиран краен автомат $\N'$ с едно финално състояние, 
-  за който $\L(\N) = \L(\N')$.
-\end{problem}
-\begin{hint}
-  Вместо формална конструкция, да разгледаме един пример, който илюстрира идеята.
-  \begin{figure}[H]
-    \begin{subfigure}[b]{0.2\textwidth}
-      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        \node[initial below,state]      (1) {$q_0$};
-        \node[state,accepting]     [above right of=1] (2) {$q_1$};
-        \node[state,accepting]     [below right of=1] (3) {$q_2$};
-        \path
-        (1) edge [bend left=15] node  [above] {$a$} (2)
-        (2) edge [bend left=15] node  [right] {$b$} (1)
-        (2) edge [bend left=15] node  [right] {$a$} (3)
-        (3) edge [bend left=15] node  [below] {$a$} (1)
-        (3) edge [loop below] node  [right] {$b$} (3);
-      \end{tikzpicture}
-      \caption{автомат $\N$}
-    \end{subfigure}
-    \hspace*{1.4cm}
-    \begin{subfigure}[b]{0.5\textwidth}
-      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        \node[initial below,state]                    (1) {$q_0$};
-        \node[state]               [above right of=1] (2) {$q_1$};
-        \node[state]               [below right of=1] (3) {$q_2$};
-        \node[state,accepting]     [right=5cm of 1]   (4) {$f$};
+% \begin{problem}
+%   За всеки недетерминиран краен автомат $\N$ съществува недетерминиран краен автомат $\N'$ с едно финално състояние, 
+%   за който $\L(\N) = \L(\N')$.
+% \end{problem}
+% \begin{hint}
+%   Вместо формална конструкция, да разгледаме един пример, който илюстрира идеята.
+%   \begin{figure}[H]
+%     \begin{subfigure}[b]{0.2\textwidth}
+%       \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+%         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+%         \node[initial below,state]      (1) {$q_0$};
+%         \node[state,accepting]     [above right of=1] (2) {$q_1$};
+%         \node[state,accepting]     [below right of=1] (3) {$q_2$};
+%         \path
+%         (1) edge [bend left=15] node  [above] {$a$} (2)
+%         (2) edge [bend left=15] node  [right] {$b$} (1)
+%         (2) edge [bend left=15] node  [right] {$a$} (3)
+%         (3) edge [bend left=15] node  [below] {$a$} (1)
+%         (3) edge [loop below] node  [right] {$b$} (3);
+%       \end{tikzpicture}
+%       \caption{автомат $\N$}
+%     \end{subfigure}
+%     \hspace*{1.4cm}
+%     \begin{subfigure}[b]{0.5\textwidth}
+%       \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+%         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+%         \node[initial below,state]                    (1) {$q_0$};
+%         \node[state]               [above right of=1] (2) {$q_1$};
+%         \node[state]               [below right of=1] (3) {$q_2$};
+%         \node[state,accepting]     [right=5cm of 1]   (4) {$f$};
 
-        \path
-        (1) edge [bend left=15] node  [above] {$a$} (2)
-        (2) edge [bend left=15] node  [right] {$b$} (1)
-        (2) edge [bend left=15] node  [right] {$a$} (3)
-        (3) edge [loop below]   node  [right] {$b$} (3)
-        (3) edge [bend left=15] node  [below] {$a$} (1)
-        (1) edge [dashed,bend left=15] node  [above] {$a$} (4)
-        (2) edge [dashed,bend left=15] node  [above] {$a$} (4)
-        (3) edge [dashed,bend right=15] node  [below] {$b$} (4);
-      \end{tikzpicture}
-    \caption{автомат $\N'$, за който $\L(\N') = \L(\N)$}
-  \end{subfigure}
-\end{figure}  
-За произволен автомат $\N$, формулирайте точно конструкцията на $\N'$ с едно финално състояние и докажете, че наистина $\L(\N) = \L(\N')$.
-Обърнете внимание, че примерът показва, че е възможно $\N$ да е детерминиран автомат, но полученият $\N'$ да бъде недетерминиран.
-\end{hint}
+%         \path
+%         (1) edge [bend left=15] node  [above] {$a$} (2)
+%         (2) edge [bend left=15] node  [right] {$b$} (1)
+%         (2) edge [bend left=15] node  [right] {$a$} (3)
+%         (3) edge [loop below]   node  [right] {$b$} (3)
+%         (3) edge [bend left=15] node  [below] {$a$} (1)
+%         (1) edge [dashed,bend left=15] node  [above] {$a$} (4)
+%         (2) edge [dashed,bend left=15] node  [above] {$a$} (4)
+%         (3) edge [dashed,bend right=15] node  [below] {$b$} (4);
+%       \end{tikzpicture}
+%     \caption{автомат $\N'$, за който $\L(\N') = \L(\N)$}
+%   \end{subfigure}
+% \end{figure}  
+% За произволен автомат $\N$, формулирайте точно конструкцията на $\N'$ с едно финално състояние и докажете, че наистина $\L(\N) = \L(\N')$.
+% Обърнете внимание, че примерът показва, че е възможно $\N$ да е детерминиран автомат, но полученият $\N'$ да бъде недетерминиран.
+% \end{hint}
 
 \begin{problem}
   \mynote{По-късно ще видим, че можем да дадем и друго доказателство на това твърдение, като направим индукция по построението на регулярните езици.}

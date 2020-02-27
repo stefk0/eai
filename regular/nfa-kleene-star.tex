@@ -8,10 +8,10 @@
   \end{lemma}  
 \end{framed}
 \begin{proof}
-  Да разгледаме крайния детерминиран автомат
-  \[\A = \pair{\Sigma,Q,\qstart,\delta,F}.\]
+  Да разгледаме детерминирния краен автомат
+  \[\A = \FA.\]% pair{\Sigma,Q,\qstart,\delta,F}.\]
   Първо ще построим недетерминиран краен автомат
-  \[\N = \pair{\Sigma, Q, \qstart, \Delta, F},\] такъв че
+  \[\N = \NFA,\] такъв че
   \[\L(\N) = (\L(\A))^+.\]
   После ще построим недетерминиран краен автомат $\N'$, за който
   \[\L(\N') = \L(\N) \cup \{\varepsilon\} = (\L(\A))^\star.\]
@@ -183,15 +183,15 @@
     \centering
       \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        \node[initial, state, accepting] (0) [above left of=1] {$q'_0$};
-        \node[state] (1) [below right of=0] {$q_0$};
+        \node[initial, state, accepting] (0) [above of=1] {$q'_0$};
+        \node[initial,state] (1) [below of=0] {$q_0$};
         \node[state]                (2) [right of=1] {$q_1$};
         \node[state,accepting]      (3) [right of=2] {$q_2$};
         \node[state,accepting]      (4) [above of=2] {$q_3$};
         \node[state]                (5) [above of=3] {$q_4$};
         \path
-        (0) edge [dashed, bend left=15] node [above] {$b$} (4)
-        (0) edge [dashed, bend left=15] node [above] {$a$} (2)
+        % (0) edge [dashed, bend left=15] node [above] {$b$} (4)
+        % (0) edge [dashed, bend left=15] node [above] {$a$} (2)
         (1) edge [bend left=15] node [above] {$b$} (4)
         (1) edge [bend right=15] node [below] {$a$} (2)
         (2) edge [bend right=15] node [below] {$b$} (3)

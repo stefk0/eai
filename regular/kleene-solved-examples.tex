@@ -22,17 +22,17 @@
 \end{problem}
 \ExtraMaterial{
 \begin{solution}
-Лесно се съобразява, че езикът на автомата от \Figure{a1} се описва с регулярния израз $\mathbf{b^\star a (a + b)^\star}$.
-Следвайки означенията и конструкцията от доказателството на \hyperref[th:regular:kleene]{теоремата на Клини},
-езикът на този автомат се описва с регулярния израз $\mathbf{r}^2_{0,1}$, защото началното състояние е $q_0$, финалното е $q_1$ и 
-броят на състоянията в автомата е $2$. Подробните сметки са следните:
-\begin{align*}
-  \bm{r}^2_{0,1} & = \underbrace{\bm{r}^{1}_{0,1}}_{\bm{b^\star a}} + \underbrace{\bm{r}^{1}_{0,1}}_{\bm{b^\star a}}\cdot \underbrace{\bm{(r^1_{1,1})^\star}}_{\mathbf{(\bm{\varepsilon}+a+b)^\star}} \cdot \underbrace{\mathbf{r}^1_{1,1}}_{\mathbf{\bm{\varepsilon}+a+b}} & \comment \text{според (\ref{eq:kleene}}) \\
-                     &  = \mathbf{b^\star a + b^\star a (\bm{\varepsilon} + a + b)^\star (\bm{\varepsilon} + a + b)} & \comment{\text{просто заместваме}}\\
-                     & = \mathbf{b^\star a + b^\star a (\bm{\varepsilon} + a + b)^+} & \comment \mathbf{r^+ \df r^\star r}\\
-                     & = \mathbf{b^\star a + b^\star a (a + b)^\star} & \comment \mathbf{r^\star = (\bm{\varepsilon} + r)^+}\\
-                     & = \mathbf{b^\star a (\bm{\varepsilon} + (a + b)^\star)} & \comment \mathbf{r + rq = r(\bm{\varepsilon} + q)}\\
-                     & = \mathbf{b^\star a (a + b)^\star}. & \comment \mathbf{r^\star = \bm{\varepsilon} + r^\star}
+  Лесно се съобразява, че езикът на автомата от \Figure{a1} се описва с регулярния израз $\mathbf{b^\star a (a + b)^\star}$.
+  Следвайки означенията и конструкцията от доказателството на \hyperref[th:regular:kleene]{теоремата на Клини},
+  езикът на този автомат се описва с регулярния израз $\mathbf{r}^2_{0,1}$, защото началното състояние е $q_0$, финалното е $q_1$ и 
+  броят на състоянията в автомата е $2$. Подробните сметки са следните:
+  \begin{align*}
+    \bm{r}^2_{0,1} & = \underbrace{\bm{r}^{1}_{0,1}}_{\bm{b^\star a}} + \underbrace{\bm{r}^{1}_{0,1}}_{\bm{b^\star a}}\cdot \underbrace{\bm{(r^1_{1,1})^\star}}_{\mathbf{(\bm{\varepsilon}+a+b)^\star}} \cdot \underbrace{\mathbf{r}^1_{1,1}}_{\mathbf{\bm{\varepsilon}+a+b}} & \comment \text{според (\ref{eq:kleene}}) \\
+                   &  = \mathbf{b^\star a + b^\star a (\bm{\varepsilon} + a + b)^\star (\bm{\varepsilon} + a + b)} & \comment{\text{просто заместваме}}\\
+                   & = \mathbf{b^\star a + b^\star a (\bm{\varepsilon} + a + b)^+} & \comment \mathbf{r^+ \df r^\star r}\\
+                   & = \mathbf{b^\star a + b^\star a (a + b)^\star} & \comment \mathbf{r^\star = (\bm{\varepsilon} + r)^+}\\
+                   & = \mathbf{b^\star a (\bm{\varepsilon} + (a + b)^\star)} & \comment \mathbf{r + rq = r(\bm{\varepsilon} + q)}\\
+                   & = \mathbf{b^\star a (a + b)^\star}. & \comment \mathbf{r^\star = \bm{\varepsilon} + r^\star}
 \end{align*}
 Тук използвахме, че:
 \begin{align*}
@@ -44,7 +44,7 @@
                        \underbrace{(\mathbf{r}^a_{a,a})^\star}_{\bm{\varepsilon+b}} \cdot \underbrace{\mathbf{r}^a_{a,b}}_{\bm{a}}& \comment \text{отново според (\ref{eq:kleene}})\\
                      & = \bm{\varepsilon + a + b + \emptyset(\varepsilon + b)^\star a} & \comment{\text{просто заместваме}}\\
                      & = \bm{\varepsilon + a + b}. & \comment \text{защото }\bm{\emptyset \cdot r = \emptyset}
-\end{align*}
+\end{align*}  
 \end{solution}
 }
 

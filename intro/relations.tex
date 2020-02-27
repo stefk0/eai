@@ -1,5 +1,5 @@
 \subsection*{Основни видове бинарни релации}
-% \marginpar{Бинарни релации}
+% \mynote{Бинарни релации}
 
 Подмножествата $R$ от вида $R \subseteq A\times A\times\cdots\times A$ се наричат релации.
 Релациите от вида $R\ \subseteq\ A\times A$ са важен клас, който ще срещаме често.
@@ -84,7 +84,7 @@
 
 \begin{enumerate}[I)]
 \item
-  \marginpar{Това е малко объркващо}
+  \mynote{Това е малко объркващо}
   {\bf Композиция} на две релации $R \subseteq B\times C$ и $P \subseteq A\times B$ е релацията $R\circ P \subseteq A\times C$,
   определена като:
   \[R\circ P \df \{\pair{a,c} \in A\times C \mid (\exists b \in B)[\pair{a,b}\in P\ \&\ \pair{b,c} \in R]\}.\]
@@ -93,19 +93,19 @@
   определена като:
   \[R^{-1} \df \{\pair{x,y} \in B\times A \mid \pair{y,x} \in R\}.\]
 \item
-  \marginpar{Очевидно е, че $P$ е рефлексивна релация, дори ако $R$ не е.}
+  \mynote{Очевидно е, че $P$ е рефлексивна релация, дори ако $R$ не е.}
   {\bf Рефлексивно затваряне} на релацията $R \subseteq A\times A$ е релацията
   \[P \df R \cup \{\pair{a,a}\mid a \in A\}.\]
 \item
   {\bf Итерация} на релацията $R \subseteq A\times A$ дефинираме като за всяко естествено число $n$,
   дефинираме релацията $R^n$ по следния начин:
-  \marginpar{Лесно се вижда, че  $R^1 = R$}
+  \mynote{Лесно се вижда, че  $R^1 = R$}
   \begin{align*}
     R^0 & \df \{\pair{a,a} \mid a \in A\}\\
     R^{n+1} & \df R^n \circ R.
   \end{align*}
 \item
-  \marginpar{\writedown Проверете, че $R^+$ е транзитивна релация!}
+  \mynote{\writedown Проверете, че $R^+$ е транзитивна релация!}
   {\bf Транзитивно затваряне} на $R \subseteq A\times A$ е релацията
   \[R^+ \df \bigcup_{n\geq 1} R^n.\]
 \end{enumerate}

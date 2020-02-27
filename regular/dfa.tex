@@ -1,7 +1,8 @@
 \section{Автоматни езици}
 
 \begin{definition}
-  Детерниниран краен автомат е петорка $\A = \FA$, където
+  \mynote{Често ще пишем съкратено ДКА вместо детерминиран краен автомат.}
+  Детерминиран краен автомат е петорка $\A = \FA$, където
   \begin{itemize}
   \item
     $\Sigma$ е азбука;
@@ -37,13 +38,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 В такъв случай ще казваме, че езикът $L$ е {\bf автоматен}.
 
 При дадена функция на преходите $\delta$,
-често е удобно да разглеждаме функция $\delta^\star:Q\times\Sigma^\star \to Q$, която е дефинирана по следния начин:
+често е удобно да разглеждаме функция $\delta^\star:Q\times\Sigma^\star \to Q$, която е дефинирана за всяко $q\in Q$ и $\alpha \in \Sigma^\star$ по следния начин:
 % \mynote{Това е пример за индуктивна (рекурсивна) дефиниция по дължината на думата $\alpha$}
 \begin{itemize}
-\item 
-  $\delta^\star(q,\varepsilon) = q$, за всяко $q\in Q$;
 \item
-  $\delta^\star(q,\beta a) = \delta(\delta^\star(q,\beta), a)$, за всяко $q\in Q$, всяко $a\in\Sigma$ и $\beta\in\Sigma^\star$.
+  Ако $\alpha = \varepsilon$, то $\delta^\star(q,\varepsilon) \df q$;
+\item
+  Ако $\alpha = \beta $, то $\delta^\star(q,\beta a) \df \delta(\delta^\star(q,\beta), a)$.
 \end{itemize}
 Лесно се съобразява, че една дума $\alpha$ се {\em разпознава} от автомата $\A$ точно тогава, когато $\delta^\star(\qstart,\alpha) \in F$.
 Оттук следва, че
@@ -54,9 +55,8 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \mynote{Обърнете внимание, че $\delta(q,a) = \delta^\star(q,a)$ за $a\in\Sigma$}
 
 \begin{proposition}
-  \label{pr:delta-star}
+  \label{pr:dfa:delta-star}
   Нека $\A$ е ДКА. Тогава за всяко състояние $q$ и произволни думи $\alpha$ и $\beta$ е изпълнено, че
-  % $(\forall q\in Q)(\forall\alpha,\beta\in\Sigma^\star)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)]$.
   \[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta).\]
 \end{proposition}
 \begin{hint}
@@ -81,16 +81,28 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
   \end{itemize}
 \end{hint}
 
+\begin{remark}
+Формално погледнато, доказателството на \Proposition{dfa:delta-star} протича по следния начин:
+  \begin{prooftree}
+    \AxiomC{$P(0)$}
+    \AxiomC{$(\forall n\in\Nat)[P(n) \implies P(n+1)]$}
+    \BinaryInfC{$(\forall n \in \Nat)[P(n)]$,}
+  \end{prooftree}
+  където
+  \[P(n) \df (\forall \beta\in\Sigma^n)(\forall \alpha\in\Sigma^\star)(\forall q\in Q)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)].\]
+\end{remark}
+
+
 \index{моментно описание}
 \mynote{(На англ. {\em instantaneous description}). В случая въвеждането на това понятие не е напълно необходимо, но по-късно, когато въведем стекови автомати и машини на Тюринг, ще работим с такива моментни описания на изчисления и затова е добре още отначало да свикнем с него.}
 {\bf Моментното описание} на изчисление с краен автомат представлява двойка от вида $(q,\alpha) \in Q\times\Sigma^\star$,
 т.е. автоматът се намира в състояние $q$, а думата, която остава да се прочете е $\alpha$.
 Удобно е да въведем бинарната релация $\vdash_\A$ над $Q\times\Sigma^\star$,
 която ще ни казва как моментното описание на автомата $\A$ се променя след изпълнение на една стъпка:
-\[(q,x\alpha) \vdash_\A (p,\alpha), \text{ ако } \delta(q,x) = p.\]
+\[(q,b\alpha) \vdash_\A (p,\alpha) \stackrel{\text{деф}}{\iff} \delta(q,b) = p.\]
 Рефлексивното и транзитивно затваряне на $\vdash_\A$ ще означаваме с $\vdash^\star_\A$.
-За да дадем точна дефиниция на $\vdash^\star_\A$, първо ще дефинираме релацията $\vdash^n_\A$, която
-определя работата на автомата $\A$ за $n$ стъпки.
+За да дадем по-удобна дефиниция на $\vdash^\star_\A$, първо ще дефинираме релацията $\vdash^n_\A$, която
+определя работата на автомата $\A$ върху моментни описания за $n$ стъпки.
 \mynote{Рефл. и транз. затваряне на една релация е разгледано в Глава \ref{ch:intro}.}
 
 \begin{prooftree}
@@ -99,25 +111,23 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$\delta(q,x) = q'$}
-  \AxiomC{$(q',\alpha) \vdash^n_\A (p, \beta)$}
-  \BinaryInfC{$(q,x\alpha) \vdash^{n+1}_\A (p,\beta)$}
+  \AxiomC{$(q,\alpha) \vdash^n_\A (r, b\beta)$}
+  \AxiomC{$\delta(r,b) = p$}
+  \BinaryInfC{$(q,\alpha) \vdash^{n+1}_\A (p,\beta)$}
 \end{prooftree}
-
-
-\begin{itemize}
-\item 
-  $(q,\alpha) \vdash^0_\A (q,\alpha)$, защото за $0$ стъпки се случва нищо.
-\item
-  Нека $\delta(q,x) = q'$ и $(q',\alpha) \vdash^n_\A (p, \beta)$. Тогава
-  $(q,x\alpha) \vdash^{n+1}_\A (p,\beta)$, защото за $n+1$ стъпки първо правим една стъпка 
-  и отиваме в моментното описание $(q',\alpha)$ и след това правим още $n$ стъпки.
-\end{itemize}
+% \begin{itemize}
+% \item 
+%   $(q,\alpha) \vdash^0_\A (q,\alpha)$, защото за $0$ стъпки се случва нищо.
+% \item
+%   Нека $\delta(q,x) = q'$ и $(q',\alpha) \vdash^n_\A (p, \beta)$. Тогава
+%   $(q,x\alpha) \vdash^{n+1}_\A (p,\beta)$, защото за $n+1$ стъпки първо правим една стъпка 
+%   и отиваме в моментното описание $(q',\alpha)$ и след това правим още $n$ стъпки.
+% \end{itemize}
 Сега можем да дефинираме $\vdash^\star_\A$ като:
 \[(q,\alpha) \vdash^\star_\A (p,\beta) \dff (\exists n\in\Nat)[(q,\alpha) \vdash^n_\A (p,\beta)].\]
 
 \begin{problem}
-  Докажете, че 
+  Докажете, че за произволно $\beta \in \Sigma^\star$,
   \[(q,\alpha\beta) \vdash^\star_\A (p, \beta) \iff \delta^\star(q,\alpha) = p.\]  
 \end{problem}
 
