@@ -9,7 +9,7 @@
   \begin{multicols}{2}
   \begin{itemize}
 \item
-  Ясно е, че ще започнем от началното състояние $q_L$.
+  Ясно е, че ще започнем от началното състояние $\hat{L}$.
   Удобно е да имаме предвид следното представяне
   \begin{align*}
     L & = \{\varepsilon\} \cup \{a,b\}^+ a L\\
@@ -21,10 +21,10 @@
   \[a^{-1}(L) = b^{-1}(L) = \{a,b\}^\star aL.\]
   Нека положим $M \df \{a,b\}^\star aL$.
   Лесно се съобразява, че $M \neq L$, защото $\varepsilon \in L$, но $\varepsilon \not\in M$.
-  Това означава, че имаме ново състояние $q_M$ и
+  Това означава, че имаме ново състояние $\hat{M}$ и
   \begin{align*}
-    & \delta(q_L,a) \df q_M & \comment\text{ защото }a^{-1}(L) = M\\
-    & \delta(q_L,b) \df q_M. & \comment\text{ защото }b^{-1}(L) = M
+    & \delta(\hat{L},a) \df \hat{M} & \comment\text{ защото }a^{-1}(L) = M\\
+    & \delta(\hat{L},b) \df \hat{M}. & \comment\text{ защото }b^{-1}(L) = M
   \end{align*}
 \item
   За следващата стъпка е удобно да представим езика $M$ по следния начин:
@@ -43,10 +43,10 @@
   Нека да положим $N \df L \cup M$.
   Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
   Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
-  Това означава, че имаме ново състояние $q_N$ и тогава
+  Това означава, че имаме ново състояние $\hat{N}$ и тогава
   \begin{align*}
-    & \delta(q_M,a) \df q_N & \comment\text{ защото }a^{-1}(M) = N\\
-    & \delta(q_M,b) \df q_N & \comment\text{ защото }b^{-1}(M) = M.
+    & \delta(\hat{M},a) \df \hat{N} & \comment\text{ защото }a^{-1}(M) = N\\
+    & \delta(\hat{M},b) \df \hat{N} & \comment\text{ защото }b^{-1}(M) = M.
   \end{align*}
 \item
   Да разгледаме следното представяне:
@@ -63,15 +63,15 @@
   \end{align*}
   Сега полагаме:
   \begin{align*}
-    & \delta(q_{N},a) \df q_{N} & \comment\text{ защото }a^{-1}(N) = N\\
-    & \delta(q_{N},b) \df q_{M} & \comment\text{ защото }b^{-1}(N) = M.
+    & \delta(\hat{N},a) \df \hat{N} & \comment\text{ защото }a^{-1}(N) = N\\
+    & \delta(\hat{N},b) \df \hat{M} & \comment\text{ защото }b^{-1}(N) = M.
   \end{align*}
 \item
   Нямаме повече нови състояния. Следователно,
-  \[Q \df \{q_L, q_M,q_{N}\}.\]
+  \[Q \df \{\hat{L}, \hat{M}, \hat{N}\}.\]
 \item
   Понеже $\varepsilon \in L$ и $\varepsilon \in N$ е ясно, че
-  \[F = \{q_L,q_N\}.\]
+  \[F = \{\hat{L},\hat{N}\}.\]
   Сега вече сме готови да нарисуваме картинка на автомата.
 \end{itemize}
 
@@ -80,11 +80,11 @@
 \begin{figure}[H]
   % \begin{subfigure}[b]{.45\textwidth}
   %   \centering
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=70pt,scale=0.8, every node/.style={scale=0.8}]
       \tikzstyle{every state}=[circle,font=\small]
-      \node[initial above, state,accepting]   (L) {$q_L$};
-      \node[state]                            (M) [right of=L]{$q_M$};
-      \node[state,accepting]                  (N) [right of=M]{$q_{N}$};
+      \node[initial above, state,accepting]   (L) {$\hat{L}$};
+      \node[state]                            (M) [right of=L]{$\hat{M}$};
+      \node[state,accepting]                  (N) [right of=M]{$\hat{N}$};
       
       \path 
       (L) edge [bend left=15] node [above] {$a,b$} (M)
@@ -135,8 +135,8 @@
     Имаме, че $M \neq L$, защото $b \in M$, но $b \not\in L$.
     Тогава
     \begin{align*}
-      & \delta(q_L, a) \df q_M & \comment\text{ защото }a^{-1}(L) = M\\
-      & \delta(q_L,b) \df q_\emptyset & \comment\text{ защото }b^{-1}(L) = \emptyset\\
+      & \delta(\hat{L}, a) \df \hat{M} & \comment\text{ защото }a^{-1}(L) = M\\
+      & \delta(\hat{L},b) \df \hat{\emptyset} & \comment\text{ защото }b^{-1}(L) = \emptyset\\
     \end{align*}
   \item    
     За по-нататък ще е удобно да представим $M$ по следния начин:
@@ -149,35 +149,35 @@
     Имаме, че $N \neq L$ и $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in L$ и $\varepsilon \not\in M$.
     Тогава
     \begin{align*}
-      & \delta(q_M,a) \df q_M & \comment\text{ защото }a^{-1}(M) = M\\
-      & \delta(q_M,b) \df q_N & \comment\text{ защото }b^{-1}(M) = N
+      & \delta(\hat{M},a) \df \hat{M} & \comment\text{ защото }a^{-1}(M) = M\\
+      & \delta(\hat{M},b) \df \hat{N} & \comment\text{ защото }b^{-1}(M) = N
     \end{align*}
   \item
     Можем да представим езика $N$ по следния начин:
     \[N = \{\varepsilon\} \cup aM \cup bM \cup \{b\}.\]
     Тогава имаме, че:
     \begin{align*}
-      & \delta(q_N,a) \df q_M & \comment\text{ защото } a^{-1}(N) = M\\
-      & \delta(q_N,b) \df q_N & \comment\text{ защото } b^{-1}(N) = M.
+      & \delta(\hat{N},a) \df \hat{M} & \comment\text{ защото } a^{-1}(N) = M\\
+      & \delta(\hat{N},b) \df \hat{N} & \comment\text{ защото } b^{-1}(N) = M.
     \end{align*}
   \item
     Завършваме с дефиницията на функцията на преходите като:
     \begin{align*}
-      & \delta(q_\emptyset,a) \df q_\emptyset & \comment\text{ защото }a^{-1}(\emptyset) = \emptyset\\
-      & \delta(q_\emptyset,b) \df q_\emptyset & \comment\text{ защото }b^{-1}(\emptyset) = \emptyset.
+      & \delta(\hat{\emptyset},a) \df \hat{\emptyset} & \comment\text{ защото }a^{-1}(\emptyset) = \emptyset\\
+      & \delta(\hat{\emptyset},b) \df \hat{\emptyset} & \comment\text{ защото }b^{-1}(\emptyset) = \emptyset.
     \end{align*}
   \item
-    Съобразете сами, че $F = \{q_N\}$.
+    Съобразете сами, че $F = \{\hat{N}\}$.
   \end{itemize}    
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt,scale=0.8, every node/.style={scale=0.8}]
       \tikzstyle{every state}=[circle]
       
-      \node[initial, state]                   (L) {$q_L$};
-      \node[state]                            (M) [above right of=L]{$q_M$};
-      \node[state]                            (E) [below right of=L]{$q_\emptyset$};
-      \node[state,accepting]                  (N) [right of=M]{$q_N$};
+      \node[initial, state]                   (L) {$\hat{L}$};
+      \node[state]                            (M) [above right of=L]{$\hat{M}$};
+      \node[state]                            (E) [below right of=L]{$\hat{\emptyset}$};
+      \node[state,accepting]                  (N) [right of=M]{$\hat{N}$};
       
       \path 
       (L) edge [bend left=15]  node [left] {$a$} (M)
@@ -226,14 +226,14 @@
 
       \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=65pt]
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=65pt,scale=0.8, every node/.style={scale=0.8}]
       \tikzstyle{every state}=[circle]
       
-      \node[initial below, state]  (L) {$q_L$};
-      \node[state]                 (M) [above of=L]{$q_M$};
-      \node[state]                 (P) [right of=M]{$q_P$};
-      \node[state, accepting]      (N) [below of=P]{$q_N$};
-      \node[state]                 (E) [above right of=N]{$q_\emptyset$};
+      \node[initial below, state]  (L) {$\hat{L}$};
+      \node[state]                 (M) [above of=L]{$\hat{M}$};
+      \node[state]                 (P) [right of=M]{$\hat{P}$};
+      \node[state, accepting]      (N) [below of=P]{$\hat{N}$};
+      \node[state]                 (E) [above right of=N]{$\hat{\emptyset}$};
             
       \path 
       (L) edge [bend right=15]  node [right] {$a$} (M)
@@ -333,12 +333,12 @@
 
 \begin{figure}[H]
   \begin{center}
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt,scale=0.8, every node/.style={scale=0.8}]
       \tikzstyle{every state}=[circle]
       
-      \node[initial below,state] (0) {$q_L$};
-      \node[state]               (1) [right of=0]{$q_M$};
-      \node[accepting, state]    (2) [right of=1]{$q_N$};
+      \node[initial below,state] (0) {$\hat{L}$};
+      \node[state]               (1) [right of=0]{$\hat{M}$};
+      \node[accepting, state]    (2) [right of=1]{$\hat{N}$};
       
       \path 
       (0) edge  [loop above]    node [above]  {$0$} (0)
@@ -349,12 +349,13 @@
       (2) edge  [loop above]    node [above]  {$1$} (2);
     \end{tikzpicture}
   \end{center}
-  \caption{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$}
+  \caption{\scriptsize{$\L(\A) = \{\alpha\in\{0,1\}^\star \mid \ov{\alpha}_{(2)} \equiv 2\ (\bmod\ 3)\}$.}}
 \end{figure}
 \end{multicols}
 \end{solution}
 }
 
+\newpage
 \begin{example}\label{ex:regular:brzozowski:an-bn}
   Да разгледаме езика $L = \{a^nb^n\mid n \in \Nat\}$.
   Ние вече знаем от \Problem{regular:pumping:an-bn}, че $L$ не е регулярен език.
@@ -384,13 +385,12 @@
       Ясно е, че $b^{-1}(\{b^{k}\}) = \{b^{k-1}\}$, за всяко $k \geq 1$.
     \end{itemize}    
     Получаваме, че езикът $L$ се разпознава от автомат с {\em безкрайно много състояния}.
-  \end{multicols}  
-}
   
 % \begin{framed}  
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=70pt]
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=60pt,scale=0.8, every node/.style={scale=0.8}]
+      % \pgftransformscale{.4}
       \tikzstyle{every state}=[circle]% ,minimum size=15pt,auto]
       
       \node[state, initial above]             (0) {$L$};
@@ -425,8 +425,11 @@
       \draw [dashed,->,shorten >=0pt] (BBB) to[bend right=15] node[above] {$b$} (BB);
       \draw [dashed,->,shorten >=0pt] (BBBA) to[bend left=30] node[below] {$a$} (E);
     \end{tikzpicture}
-    \caption{{\em Безкраен} автомат за $\{a^nb^n \mid n \in \Nat\}$ построен по метода на Бжозовски.}
+    \caption{\scriptsize{{\em Безкраен} автомат за $\{a^nb^n \mid n \in \Nat\}$ построен по метода на Бжозовски.}}
   \end{figure}
+    \end{multicols}  
+}
+
 % \end{framed}
 \end{example}
 

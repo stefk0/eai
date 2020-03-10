@@ -36,37 +36,37 @@
   \item
     $q_n \in F$.
   \end{itemize}
-  Да разгледаме максималната подпоследователност от състояния $(q_{i_j})^{l+1}_{j = 0}$ на $(q_i)^{n}_{i=0}$ съставена от тези състояния, за които
+  Да разгледаме максималната подпоследователност от състояния $(q_{i_j})^{\ell+1}_{j = 0}$ на $(q_i)^{n}_{i=0}$ съставена от тези състояния, за които
   \mynote{Тук е малко по-сложно, защото правим разбиване на изчислението не на база всички финални състояния, а на тези финални състояния, от които изчислението продължава в насленик на $\qstart$,
   защото това са местата, където можем да разцепим думата на части.}
   \begin{itemize}
   \item
     $q_{i_0} = \qstart$;
   \item
-    $q_{i_j} \in F\ \&\ \delta(\qstart,a_{i_j}) = q_{i_j+1}$, за $j = 1,\dots,l$;
+    $q_{i_j} \in F\ \&\ \delta(\qstart,a_{i_j}) = q_{i_j+1}$, за $j = 1,\dots,\ell$;
   \item
-    $q_{i_{l+1}} = q_n$.
+    $q_{i_{\ell+1}} = q_n$.
   \end{itemize}
   Да разбием думата $\alpha$ като $\alpha = \alpha_0\alpha_1\cdots\alpha_l$, където:
   \begin{align*}
     & \alpha_0 \df a_{i_0} \alpha'_0\\
     & \alpha_1 \df a_{i_1}\alpha'_1\\
     & \cdots\\
-    & \alpha_l \df a_{i_l}\alpha'_l.
+    & \alpha_\ell \df a_{i_\ell}\alpha'_\ell.
   \end{align*}
   Сега можем да разбием изчислението на $\N$ върху $\alpha$ по следния начин:
   \begin{align*}
-    (q_{i_0},\alpha_{0}\alpha_{1}\cdots \alpha_{l}) & \vdash^\star_\N (q_{i_1}, \alpha_{1}\cdots \alpha_{l}) & \comment{ q_{i_0} = \qstart}\\
-                                                    & \vdash^\star_\N (q_{i_2},\alpha_{2}\cdots \alpha_{l})\\
+    (q_{i_0},\alpha_{0}\alpha_{1}\cdots \alpha_{\ell}) & \vdash^\star_\N (q_{i_1}, \alpha_{1}\cdots \alpha_{\ell}) & \comment{ q_{i_0} = \qstart}\\
+                                                    & \vdash^\star_\N (q_{i_2},\alpha_{2}\cdots \alpha_{\ell})\\
                                                     & \cdots\\
-                                                    & \vdash^\star_\N (q_{i_{l}}, \alpha_{l})\\
-                                                    & \vdash^\star_\N(q_{i_{l+1}},\varepsilon). & \comment{ q_{i_{l+1}} = q_n \in F}
+                                                    & \vdash^\star_\N (q_{i_{\ell}}, \alpha_{\ell})\\
+                                                    & \vdash^\star_\N(q_{i_{\ell+1}},\varepsilon). & \comment{ q_{i_{\ell+1}} = q_n \in F}
   \end{align*}
   Да разгледаме само първата част на изчислението:
   \[\underbrace{(q_{i_0},\alpha_0) \vdash^\star_\N (q_{i_1}, \varepsilon)}_{\text{само преходи от }\A}.\]
   Понеже $q_{i_0} = \qstart$ и $q_{i_1} \in F$, то е ясно, че $\alpha_0 \in \L(\A)$.
   
-  За $j = 0,\dots,l$, изчислението
+  За $j = 0,\dots,\ell$, изчислението
   \[(q_{i_j},\alpha_j) \vdash^\star_\N (q_{i_{j+1}},\varepsilon)\]
   може по-подробно да се запише и така:
   \[(q_{i_j}, a_{i_{j}}\alpha'_j) \vdash_\N \underbrace{(q_{i_j+1}, \alpha'_j)  \vdash^\star_\N (q_{i_{j+1}},\varepsilon)}_{\text{само преходи от }\A}.\]
@@ -79,15 +79,15 @@
 
   За другата посока, нека $\alpha \in (\L(\A))^+$.
   Това означава, че думата $\alpha$ може да се представи като
-  $\alpha = \alpha_0 \cdot \alpha_1 \cdots \alpha_l$, където $\alpha_j \in \L(\A)$ и $\alpha_j \neq \varepsilon$, за $j = 0,\dots, l$.
-  Нека за $j=0,\dots,l$ да положим
+  $\alpha = \alpha_0 \cdot \alpha_1 \cdots \alpha_\ell$, където $\alpha_j \in \L(\A)$ и $\alpha_j \neq \varepsilon$, за $j = 0,\dots, \ell$.
+  Нека за $j=0,\dots,\ell$ да положим
   \[\alpha_j \df a_j \cdot \alpha'_j\text{ и } q_{j} \df \delta(\qstart, a_j).\]
-  Оттук получаваме за $j = 0,\dots,l$ следните изчисления:
+  Оттук получаваме за $j = 0,\dots, \ell$ следните изчисления:
   \[(\qstart, \alpha_{j}) \vdash_\A (q_{j}, \alpha'_j) \vdash^\star_\A (f_{j}, \varepsilon), \text{ за някои }f_j \in F.\]
   Понеже функцията на преходите на $\N$ разширява функцията на преходите на $\A$, то е ясно е, че имаме също така и следното:
   \[(\qstart, \alpha_{j}) \vdash_\N (q_{j}, \alpha'_j) \vdash^\star_\N (f_{j}, \varepsilon), \text{ за някои }f_j \in F.\]
 
-  За $1 \leq j < l$,
+  За $1 \leq j < \ell$,
   понеже $\delta(\qstart,a_{j}) = q_{j}$ и $f_{j-1} \in F$, то според конструкцията на недетерминирания краен автомат $\N$,
   \[q_{j} \in \Delta(f_{j-1}, a_{j}).\]
   Оттук следва, че имаме следното изчисление на $\N$ върху $\alpha$:
@@ -96,7 +96,7 @@
     &(f_0, \alpha_{1}) \vdash_\N (q_{1}, \alpha'_1) \vdash^\star_\N (f_{1}, \varepsilon) & \comment\text{за някое }f_1 \in F\\
     &(f_1, \alpha_{2}) \vdash_\N (q_{2}, \alpha'_2) \vdash^\star_\N (f_{2}, \varepsilon) & \comment\text{за някое }f_2 \in F\\
     &\dots\\
-    &(f_{l-1}, \alpha_{l}) \vdash_\N (q_{l}, \alpha'_l) \vdash^\star_\N (f_{l}, \varepsilon). & \comment\text{за някое }f_l \in F
+    &(f_{\ell-1}, \alpha_{\ell}) \vdash_\N (q_{\ell}, \alpha'_{\ell}) \vdash^\star_\N (f_{\ell}, \varepsilon). & \comment\text{за някое }f_{\ell} \in F
   \end{align*}
   Обединявайки всичко това, заключаваме, че  $\alpha \in \L(\N)$.
 

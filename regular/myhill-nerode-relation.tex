@@ -39,7 +39,7 @@
   \[g([\alpha]_\A) \df \delta^\star(\qstart,\alpha)\]
   е инекция. Следователно,
   \[|\Sigma^\star/_{\sim_\A}| \leq |Q|.\]
-  Ако в автомата $\A$ няма недостижими от $\qstart$ състояния, то $g$ е биекция и съответно
+  Ако в автоматът $\A$ няма недостижими от $\qstart$ състояния, то $g$ е биекция и съответно
   \[|\Sigma^\star/_{\sim_\A}| = |Q|.\]
 \item
   Релациите $\approx_\L$ и $\sim_\A$ са дясно-инвариантни, т.е. за всеки две думи $\alpha$ и $\beta$
@@ -58,9 +58,9 @@
 
 \begin{proposition}
   \label{pr:rel-finer}
-  \mynote{С други думи,\\ $[\alpha]_\A \subseteq [\alpha]_L$.}
-  Нека $\A = \FA$ е краен детерминиран автомат и $L = \L(\A)$. Тогава е изпълнено, че:
-  \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
+  Нека $\A = \FA$ е ДКА и $L = \L(\A)$. Тогава за произволни думи $\alpha$ и $\beta$ е изпълнено, че 
+  \[\alpha\sim_\A\beta \implies \alpha\approx_{L}\beta.\]
+  С други думи, за всяка дума $\alpha$ е изпълнено, че $[\alpha]_\A \subseteq [\alpha]_L$.
 \end{proposition}
 \begin{proof}
   Да вземем две произволни думи $\alpha$ и $\beta$, за които $\alpha \sim_\A \beta$, т.е. $\delta^\star(\qstart, \alpha) = \delta^\star(\qstart,\beta)$.
@@ -70,19 +70,19 @@
     \gamma \in \alpha^{-1}(L) & \iff \alpha\gamma \in L\\
                               % & \iff \alpha\gamma \in \L(\A) & \comment{L = \L(\A)}\\
                               & \iff \delta^\star(\qstart,\alpha\gamma)\in F & \comment{L = \L(\A)}\\
-                              & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment{\text{деф. на }\delta^\star}\\
+                              & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment\text{\Proposition{dfa:delta-star}}\\
                               & \iff \delta^\star(\delta^\star(\qstart,\beta),\gamma) \in F & \comment{\text{защото }\alpha \sim_\A \beta}\\
-                              & \iff \delta^\star(\qstart,\beta\gamma) \in F & \comment{\text{свойство на }\delta^\star}\\
+                              & \iff \delta^\star(\qstart,\beta\gamma) \in F & \comment\text{\Proposition{dfa:delta-star}}\\
                               & \iff \beta\gamma \in \L(\A) & \comment\text{деф. на }\L(\A)\\
                               % & \iff \beta\gamma \in L & \comment{L = \L(\A)} \\
                               & \iff \gamma \in \beta^{-1}(L).
   \end{align*}
   Заключаваме, че 
-  \[(\forall \alpha,\beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
+  \[(\forall \alpha \in \Sigma^\star)(\forall \beta \in \Sigma^\star)[\ \alpha\sim_\A\beta \implies \alpha\approx_{L}\beta\ ].\]
 \end{proof}
 
 \begin{problem}
-  Докажете, че за ДКА $\A$ и $L = \L(\A)$,
+  Докажете, че за произволен ДКА $\A$ и $L = \L(\A)$,
   за всяка дума $\alpha$,
   \[[\alpha]_{L} = \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A.\]
 \end{problem}

@@ -26,11 +26,19 @@
   \end{enumerate}
 \end{problem}
 
-\begin{problem}
-  Докажете, че
-  \[(\alpha\beta)^{-1}(L) = \beta^{-1}(\alpha^{-1}(L)).\]
+\begin{problem}\label{prob:pullback}
+  За всеки две думи $\alpha, \beta \in \Sigma^\star$, докажете, че
+  \[(\alpha\cdot\beta)^{-1}(L) = \beta^{-1}(\alpha^{-1}(L)).\]
 \end{problem}
 
+\begin{problem}
+  Докажете, че ако $L$ е регулярен език, то $\alpha^{-1}(L)$ е регулярен език.
+\end{problem}
+
+\begin{problem}\label{prob:language-pullback}
+  Докажете, че 
+  \[L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}(L)\}.\]
+\end{problem}
 
 \mynote{Бжозовски \cite{brzozowski-derivatives} описва алгоритъм за строене на автомат по регулярен израз.}
 
@@ -44,26 +52,48 @@
   В \Example{regular:brzozowski:an-bn} ще видим един детерминиран безкраен автомат за език, който не е регулярен.}
 \begin{itemize}
 \item
-  Състоянията $Q$ ще бъдат от вида $q_M$, за $M \subseteq \Sigma^\star$, където:
-  \[Q \df \{q_M \mid (\exists \alpha\in\Sigma^\star)[M = \alpha^{-1}(L)].\]
+  Състоянията $Q$ ще бъдат от вида $\hat{M}$, за $M \subseteq \Sigma^\star$, където:
+  \[Q \df \{\hat{M} \mid (\exists \alpha\in\Sigma^\star)[M = \alpha^{-1}(L)].\]
 \item
-  $\qstart \df q_L$.
+  $\qstart \df \hat{L}$.
 \item
-  За произволни езици $M$ и $N$ и буква $a$,
-  \[\delta(q_M,a) \df q_N \stackrel{\text{деф}}{\iff} N = a^{-1}(M).\]
+  За произволни състояния $\hat{M}$ и $\hat{N}$ и буква $a$,
+  \[\delta(\hat{M},a) = \hat{N} \stackrel{\text{деф}}{\iff} N = a^{-1}(M).\]
 \item
-  $F \df \{ q_M \in Q\mid \varepsilon \in M\}$.
+  $F \df \{ \hat{M} \in Q\mid \varepsilon \in M\}$.
 \end{itemize}
 
 \begin{proposition}\label{pr:regular:brzozowski:delta}
   За всяка дума $\alpha$ е изпълнено, че:
-  \[N = \alpha^{-1}(L) \iff \delta^\star(q_L,\alpha) = q_N.\]
+  \[N = \alpha^{-1}(L) \iff \delta^\star(\hat{L},\alpha) = \hat{N}.\]
 \end{proposition}
 \begin{hint}
   Индукция по дължината на думата $\alpha$, като използвате, че
   \[(\alpha b)^{-1}(L) = b^{-1}(\alpha^{-1}(L)).\]
+  Твърдението очевидно е изпълнено за $\alpha = \varepsilon$.
+  Да примем, че за думи $\alpha$ с дължина $n$ е изпълено, че
+  \begin{equation}
+    \label{eq:13}
+    N = \alpha^{-1}(L) \iff \delta^\star(\hat{L},\alpha) = \hat{N}.
+  \end{equation}
+  Да разгледаме дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
+  \begin{align*}
+    \delta^\star(\hat{L},\beta a) & = \delta(\delta^\star(\hat{L},\beta),a) & \comment{\text{от деф.}}\\
+                                  & =\delta(\hat{M},a) & \comment{\text{нека }\hat{M} = \delta^\star(\hat{L},\beta)}\\
+                                  & = \hat{N}.
+  \end{align*}
+  Свойство (\ref{eq:13}) приложено за $\beta$ ни казва, че
+  \[\delta^\star(\hat{L},\beta) = \hat{M} \iff \beta^{-1}(L) = N.\]
+  От дефиницията на $\delta$ имаме, че
+  \[\delta(\hat{M},a) = \hat{N} \iff N = a^{-1}(M).\]
+  Накрая заключаваме, че
+  \begin{align*}
+    \delta^\star(\hat{L},\beta a) = \hat{N} \iff N = a^{-1}(\beta^{-1}(L)) = \alpha^{-1}(L).
+  \end{align*}
+  
 \end{hint}
 
+\mynote{Тук е важно да отбележим, че все още не знаем, че $\B$ е краен.}
 \begin{proposition}
   За даден език $L$, нека $\B$ е детерменираният автомат построен по метода на Бжозовски.
   Тогава $L = \L(\B)$.
@@ -71,9 +101,9 @@
 \begin{hint}
   Съобразете, че имаме следните еквивалентности:
   \begin{align*}
-    \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L) & \comment\text{нека }M \df \alpha^{-1}(L)\\
-                 & \iff \varepsilon\in M\ \&\ q_M = \delta^\star(q_L,\alpha) & \comment\text{от \Proposition{regular:brzozowski:delta}}\\
-                 & \iff \delta^\star(\qstart,\alpha) \in F. & \comment \qstart \df q_L \text{ и }\varepsilon \in \alpha^{-1}(L)
+    \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L) & \comment\text{от \Problem{language-pullback}}\\
+    & \iff \varepsilon\in M\ \&\ \hat{M} = \delta^\star(\hat{L},\alpha) & \comment{M \df \alpha^{-1}(L)\text{ от \Proposition{regular:brzozowski:delta}}}\\
+                 & \iff \delta^\star(\qstart,\alpha) \in F. & \comment \qstart \df \hat{L} \text{ и }\varepsilon \in \alpha^{-1}(L)
   \end{align*}
 \end{hint}
 
