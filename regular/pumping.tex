@@ -80,20 +80,20 @@
   \mynote{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
   Отрицанието на $P_{\text{reg}}(L)$ преставлява формулата
   \begin{align*}
-    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \&\ (\forall x,y,z\in\Sigma^\star)[\ & \alpha \neq xyz\ \vee\\
-                                                                                                         & \abs{y} \not\geq 1\ \vee\\
-                                                                                                         & \abs{xy} \not\leq p\ \vee\\
-                                                                                                         & (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
+    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[\ & \alpha \neq xyz\ \lor\\
+                                                                                                            & \abs{y} \not\geq 1\ \lor\\
+                                                                                                            & \abs{xy} \not\leq p\ \lor\\
+                                                                                                            & (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
   \end{align*}
   Горната формула е еквивалентна на:
   \mynote{Използваме, че
     \begin{align*}
-      \neg P \vee \neg Q \vee R & \equiv \neg(P\ \&\ Q) \vee R\\
-                                & \equiv (P \wedge Q) \to R
+      \neg P \lor \neg Q \lor R & \equiv \neg(P\ \land\ Q) \lor R\\
+                                & \equiv (P \land Q) \implies R
     \end{align*}}
   \begin{align*}
-    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \&\ (\forall x,y,z\in\Sigma^\star)[\ & (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p)\\
-                                                                                                         & \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
+    (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[\ & (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p)\\
+                                                                                                            & \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
   \end{align*}
 
   Това означава, че ако

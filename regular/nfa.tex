@@ -160,7 +160,7 @@
   \item
     За произволна буква $a\in\Sigma$ и произволно $R \subseteq Q$,
     \begin{align*}
-      \delta(\code{R},a) & \df \Delta^\star(R,a).
+      \delta(\code{R},a) & \df \code{\Delta^\star(R,a)}.
     \end{align*}
   \item
     $\qstart = \code{Q_{\texttt{start}}}$;
@@ -259,10 +259,26 @@
   \[L^{\rev} = \{\omega^{\rev} \mid \omega \in L\}\]
   също е автоматен.
 \end{problem}
+\begin{hint}
+  Идеята е съвсем проста - просто обръщаме стрелките и правим финалните състояния да са начални, а началното става финално.
+  Нека $L = \L(\A)$. Ще построим НКА $\N$, за който $\L(\N) = L^\rev$.
+  \begin{itemize}
+  \item
+    $Q^\N = Q^\A$;
+  \item
+    $Q_{\texttt{start}} = F^\A$;
+  \item
+    $\Delta_\N(q,a) = \{p \in Q^\A \mid \delta_\A(p,a) = q\}$;
+  \item
+    $F^\N = \{\qstart\}$.
+  \end{itemize}
+  Достатъчно е да се докаже, че:
+  \[\Delta^\star_\N(Q_{\texttt{start}},\alpha) = \{ q \in Q^\A \mid \delta^\star_\A(q,\alpha^\rev) \in F^\A\}.\]
+\end{hint}
 
 \begin{lemma}
   \label{lem:automata-basic}
-  Съществува краен детерминиран автомат $\A = \FA$, който разпознава езика $L$, където
+  Езикът $L$ е автоматен, където:
   \begin{itemize}
   \item
     $L = \emptyset$,
@@ -273,6 +289,8 @@
   \end{itemize}
 \end{lemma}
 \begin{hint}
+  Достатъчно е да покажем, че съществуват недетерминирани крайни автомати $\N$.
+  \mynote{Според нашата дефиниция, тук описваме недетерминирани автомати, защото за да бъдат детерминирани, трябва функцията на преходите да бъде тотална.}
   \begin{figure}[H]
     \begin{subfigure}[b]{0.2\textwidth}
       \label{subf:a1}
@@ -280,7 +298,7 @@
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial below,state]      (1) {$q_0$};
       \end{tikzpicture}
-      \caption{$L(\A) = \emptyset$}
+      \caption{$L(\N) = \emptyset$}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.2\textwidth}
@@ -288,7 +306,7 @@
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         \node[initial below,state,accepting]      (1) {$q_0$};
       \end{tikzpicture}
-      \caption{$\L(\A) = \{\varepsilon\}$}
+      \caption{$\L(\N) = \{\varepsilon\}$}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.2\textwidth}
@@ -299,7 +317,7 @@
         \path 
         (1) edge  node [above] {$a$} (2);
       \end{tikzpicture}
-      \caption{$\L(\A) = \{a\}$}
+      \caption{$\L(\N) = \{a\}$}
     \end{subfigure}
   \end{figure}
 \end{hint}
