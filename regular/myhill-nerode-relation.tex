@@ -56,8 +56,7 @@
   \[\alpha \in L \iff [\alpha]_L \subseteq L.\]
 \end{problem}
 
-\begin{proposition}
-  \label{pr:rel-finer}
+\begin{proposition}\label{pr:rel-finer}
   Нека $\A = \FA$ е ДКА и $L = \L(\A)$. Тогава за произволни думи $\alpha$ и $\beta$ е изпълнено, че 
   \[\alpha\sim_\A\beta \implies \alpha\approx_{L}\beta.\]
   С други думи, за всяка дума $\alpha$ е изпълнено, че $[\alpha]_\A \subseteq [\alpha]_L$.
@@ -95,20 +94,17 @@
 %   $[\alpha]_L \subseteq \bigcup_{\beta \in [\alpha]_{L}}[\beta]_\A$.
 % \end{hint}
 
-\begin{problem}
-  \mynote{Тук говорим за тотални функции.}
-  Нека $A$ и $B$ са крайни множества, за които съществува сюрективна функция $f: A \to B$.
+\begin{problem}\label{prob:surjective-cardinality}
+  Нека $A$ и $B$ са множества, като $A$ е крайно, за които съществува \emph{сюрективна} функция $f: A \to B$.
   Тогава $|B| \leq |A|$.
 \end{problem}
+\begin{hint}
+  Нека $A = \{a_0,a_1, \dots, a_{n-1}\}$. Разгледайте $g:B \to A$, където
+  \[g(b) = a_m\text{ за }m = \min\{i < n \mid f(a_i) = b\}.\]
+  Докажете, че $g$ е инективна.
+\end{hint}
 
-\begin{problem}
-  Нека $A$ и $B$ са крайни множества, за които $|A| = |B|$.
-  Ако $g:A \to B$ е сюрекция, то $g$ е биекция.
-\end{problem}
-
-
-\begin{proposition}
-  \label{pr:approx-less-sim}
+\begin{proposition}\label{pr:approx-less-sim}
   Нека $\A$ е детерминиран краен автомат и $L = \L(\A)$.
   Тогава 
   \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
@@ -116,19 +112,35 @@
 \begin{hint}
   Да разгледаме функцията $f: \Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$, където
   \[f([\alpha]_\A) \df [\alpha]_L.\]
-  Директно от \Proposition{rel-finer} се съобразява, че
-  \[(\forall \alpha,\beta \in \Sigma^\star)[\ [\alpha]_\A = [\beta]_\A\ \implies f([\alpha]_\A) = f([\beta]_\A)\ ],\]
+  \mynote{$f$ да бъде добре дефинирана означава, че правилото, с което сме дефинирали $f$ задава функция.}
+  Директно от \Proposition{rel-finer} се съобразява, че за произволни думи $\alpha$ и $\beta$,
+  \[[\alpha]_\A = [\beta]_\A\ \implies f([\alpha]_\A) = f([\beta]_\A),\]
   откъдето следва, че $f$ е добре дефинирана.
   Ясно е, че $f$ е сюрективна функция.
-  Оттук следва, че
+  От \Problem{surjective-cardinality} следва, че
   \[\abs{\Sigma^\star/_{\approx_{L}}} \leq \abs{\Sigma^\star/_{\sim_\A}}.\]
 \end{hint}
+
+\begin{problem}\label{prob:surjection-bijection}
+  Нека $A$ и $B$ са крайни равномощни множества.
+  Докажете, че ако $g:A \to B$ е сюрекция, то $g$ е биекция.
+\end{problem}
+\begin{proof}
+  Нека $A = \{a_0,\dots,a_{n-1}\}$ и $B = \{b_0,\dots,b_{n-1}\}$. Нека, за всяко $i < n$,
+  \[A_i \df \{a_j \in A \mid g(a_j) = b_i\}.\]
+  Щом $g$ е сюрекция, то $A_i \neq \emptyset$ за всеки индекс $i < n$.
+  Понеже $g$ е функция, то $A_i \cap A_j = \emptyset$ за всеки два различни индекса $i$ и $j$.
+  Това означава, че
+  \[n = |A| = |\bigcup_{i<n} A_i| = \sum_{i<n}|A_i|.\]
+  Оттук следва, че щом за всяко $i$ имаме, че $|A_i| \neq 0$, то $|A_i| = 1$.
+  Заключаваме, че $g$ е инекция, защото в противен случай щяхме да имаме някое $i$, за което $|A_i| > 1$.
+\end{proof}
 
 \begin{framed}
   \begin{proposition}
     \label{pr:upper-bound}
     Нека $L$ е произволен регулярен език.
-    Всеки краен детерминиран автомат $\A$, за който $L = \L(\A)$ има свойството
+    Всеки ДКА $\A$, за който $L = \L(\A)$ има свойството
     \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{Q},\]
     т.е. броят на класовете на еквивалентност на релацията $\approx_L$
     не надвишава броя на състоянията на автомата $\A$.
@@ -142,7 +154,7 @@
   \[\abs{\Sigma^\star/_{\approx_L}} \leq \abs{\Sigma^\star/_{\sim_\A}} \leq \abs{Q}.\]
 \end{proof}
 
-Така получаваме {\em долна граница} за броя на състоянията в краен детерминистичен автомат разпознаващ езика $L$.
+Така получаваме {\em долна граница} за броя на състоянията в един ДКА разпознаващ езика $L$.
 Този брой е не по-малък от броя на класовете на еквивалентност на $\approx_L$.
 В следващия раздел ще видим, че тази долна граница може да бъде достигната.
 
@@ -171,7 +183,7 @@
 единствен минимален краен детерминистичен автомат.
 \begin{proposition}
   \label{pr:bijection-classes}
-  Нека $L$ е произволен регулярен език и $\A$ е краен детерминиран автомат, за който $L = \L(\A)$.
+  Нека $L$ е произволен регулярен език и $\A$ е ДКА, за който $L = \L(\A)$.
   Ако $|Q| = |\Sigma^\star/_{\approx_L}|$, то функцията $h:\Sigma^\star/_{\approx_L} \to Q$, където
   \[h([\alpha]_L) \df \delta^\star(\qstart,\alpha),\]
   е биекция.
@@ -181,13 +193,21 @@
   \[|Q| = |\Sigma^\star/_{\approx_L}| \leq |\Sigma^\star/_{\sim_\A}| \leq |Q|,\]
   откъдето следва, че
   \[|\Sigma^\star/_{\approx_L}| = |\Sigma^\star/_{\sim_\A}| = |Q|.\]
-  Това означава, че функцията $g:\Sigma^\star/_{\sim_\A} \to Q$, където
-  \[g([\alpha]_\A) \df \delta^\star(\qstart,\alpha)\] е биекция,
-  защото $|\Sigma^\star/_{\sim_\A}| = |Q|$.
-  От \Proposition{approx-less-sim} имаме, че функцията $f:\Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$, където
-  \[f([\alpha]_\A) \df [\alpha]_L\] е биекция,
-  защото знаем, че $f$ е сюрекция и $|\Sigma^\star/_{\approx_L}| = |\Sigma^\star/_{\sim_\A}|$.
-  Оттук заключаваме, че $h = g \circ f^{-1}$ е биекция, защото е композиция на две биекции.
+
+  Според \Proposition{approx-less-sim} и \Problem{surjection-bijection} следва, че функцията
+  $f:\Sigma^\star/_{\sim_\A} \to \Sigma^\star/_{\approx_L}$ дефинирана като $f([\alpha]_\A) \df [\alpha]_L$ е биекция.
+  Сега да проверим, че $h$ е наистина функция.
+  \mynote{Понеже работим с класове на еквивалентност и $h$ е дефинирана посредством произволни представители на тези класове на еквивалентност, то е важно да
+    проверяваме, че нашата дефиниция задава наистина функция.}
+  Да разгледаме две произволни думи $\alpha$ и $\beta$, за които $\delta^\star(\qstart,\alpha) \neq \delta^\star(\qstart,\beta)$, 
+  което означава, по дефиниция на $\approx_\A$, че $[\alpha]_\A \neq [\beta]_\A$.
+  Понеже $f$ е биекция, веднага заключаваме, че $[\alpha]_L \neq [\beta]_L$.
+  
+  Да отбележим, че щом $|\Sigma^\star/_{\sim_\A}| = |Q|$, то автоматът $\A$
+  е свързан, т.е. всяко негово състояние е достижимо от началното. Това означава, че $h$ е сюрекция, защото
+  за произволно състояние $q$, съществува дума $\alpha$, за която $\delta^\star(\qstart, \alpha) = q$ и тогава $h([\alpha]_L) = q$.
+  
+  От \Problem{surjection-bijection} заключаваме, че $h$ е биекция.
 \end{proof}
 
 %%% Local Variables:

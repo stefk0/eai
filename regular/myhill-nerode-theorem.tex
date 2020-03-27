@@ -19,11 +19,11 @@
   \item
     $\qstart \df [\varepsilon]_L$;
   \item
-    $F \df \{\ [\alpha]_L\mid \alpha\in L\ \} = \{\ [\alpha]_L \mid [\alpha]_L \subseteq L\ \}$;
+    $F \df \{\ [\alpha]_L\mid \alpha\in L\ \}$;
   \item
     Определяме изображението $\delta$ като 
-    за всяка буква $x \in \Sigma$ и всяко състояние $[\alpha]_L\in Q$, 
-    \[\delta([\alpha]_L,x) \df [\alpha x]_L.\]
+    за всяка буква $b \in \Sigma$ и всяка дума $\alpha$,
+    \[\delta([\alpha]_L,b) \df [\alpha b]_L.\]
   \end{itemize}
   
   Първо, трябва да се уверим, че множеството от състояния $Q$ е крайно, т.е.
@@ -48,22 +48,28 @@
   Остава да покажем, че $\M$ разпознава езика $L$, т.е. $\L(\M) = L$.
   За целта е достатъчно да докажем, че $\M \cong \B$, където $\B$ е автоматът построен по метода на Бжозовски за $L$.
   За целта, нека дефинираме $f:Q^\M \to Q^\B$ по следния начин:
-  \[f([\omega]_L) \df \omega^{-1}(L).\] 
+  \[f([\omega]_L) = \hat{M} \dff M = \omega^{-1}(L).\] 
   \begin{itemize}
   \item
     Лесно се вижда, че $f$ е биекция.
   \item
-    $\qstart^\M = \qstart^\B$;
+    $f(\qstart^\M) = \qstart^\B$;
   \item
     $[\omega]_L \in F^\M \iff \omega \in L \iff \varepsilon \in \omega^{-1}(L) \iff f([\omega]_L) \in F^\B$;
   \item
-    Понеже $(\omega a)^{-1}(L) = a^{-1}(\omega^{-1}(L))$, то
+    Нека положим
     \begin{align*}
-      f(\delta_\M([\omega]_L,a)) & = f([\omega a]_L)\\
-                                 & = (\omega a)^{-1}(L)\\
-                                 & = a^{-1}(\omega^{-1}(L))\\
-                                 & = \delta_\B(f([\omega]_L),a).
+      & f([\omega a]_L) = \hat{K}, \text{ където }K = (\omega a)^{-1}(L)\\
+      & f([\omega]_L) = \hat{N}, \text{ където }N = \omega^{-1}(L).
     \end{align*}
+    От дефиницията на автомата $\M$ имаме, че:
+    \[f(\delta_\M([\omega]_L,a)) = f([\omega a]_L) = \hat{K}.\]
+    Понеже
+    \[K = (\omega a)^{-1}(L) = a^{-1}(\omega^{-1}(L)) = a^{-1}(N),\]
+    то
+    \[\delta_\B(\hat{N},a) = \hat{K}\]
+    и следователно,
+    \[\delta_\B(f([\omega]_L),a) = \delta_\B(\hat{N},a) = \hat{K} = f(\delta_\M([\omega]_L,a)).\]
   \end{itemize}
   Заключваме, че $\M \cong_f \B$ и следователно $\L(\M) = \L(\B) = L$.
   
@@ -116,7 +122,7 @@
 \begin{framed}
   \begin{thm}
     \label{th:regular:isomorphic:minimal}
-    Нека регулярният език $L$ се разпознава от детерминирания краен автомат 
+    Нека регулярният език $L$ се разпознава от крайния детерминиран автомат 
     $\A = \FA$, за който $\abs{Q} = \abs{\Sigma^\star/_{\approx_L}}$.
     Тогава $\A \cong \M$, където $\M$ е автоматът построен според \hyperref[th:myhill-nerode]{Теоремата на Майхил-Нероуд} за езика $L$.
   \end{thm}  
@@ -155,8 +161,8 @@
 
 \begin{framed}
   \begin{corollary}\label{cor:regular:minimal-isomorphic}
-    За регулярния език $L$, нека имаме детерминираните крайни автомати $\A_1$ и $\A_2$, които разпознават $L$.
-    Ако $|Q_1| = |Q_2| = |\Sigma^\star/_{\approx_L}|$, то $\A_1 \cong \A_2$.
+    За регулярния език $L$, нека имаме детерминираните крайни автомати $\A_1$ и $\A_2$, които разпознават $L$. Тогава
+    \[|Q_1| = |Q_2| = |\Sigma^\star/_{\approx_L}| \implies \A_1 \cong \A_2.\]
   \end{corollary}
 \end{framed}
 \begin{hint}
