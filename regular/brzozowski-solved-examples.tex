@@ -1,5 +1,6 @@
 \subsection{Примерни задачи}
 
+\mynote{Тук $\mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star$.}
 \begin{problem}
   Постройте автомат $\B$ по метода на Бжозовски за регулярния език
   \[L = \L(\mathbf{((a+b)^+\cdot a)^\star}).\]
@@ -79,7 +80,7 @@
 % \begin{framed}
 \begin{figure}[H]
   % \begin{subfigure}[b]{.45\textwidth}
-  %   \centering
+  \centering
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=70pt,scale=0.8, every node/.style={scale=0.8}]
       \tikzstyle{every state}=[circle,font=\small]
       \node[initial above, state,accepting]   (L) {$\hat{L}$};
@@ -95,7 +96,7 @@
     \end{tikzpicture}
     \caption{\scriptsize{Автомат за езика $L$ по метода на Бжозовски.}}
     % \end{subfigure}
-    \end{figure}
+  \end{figure}
   % \quad
 %   ~
 %   \quad
@@ -393,14 +394,14 @@
       % \pgftransformscale{.4}
       \tikzstyle{every state}=[circle]% ,minimum size=15pt,auto]
       
-      \node[state, initial above, accepting]  (0) {$L$};
-      \node[state]                            (1) [right of=0]{$L_1$};
-      \node[state]                            (2) [right of=1]{$L_2$};
-      \node[state]                            (3) [right of=2]{$L_3$};
-      \node[state,accepting]                  (A) [below of=1]{$\{\varepsilon\}$};
-      \node[state]                            (B) [below right of=1]{$\{b\}$};
-      \node[state]                            (BB) [below right of=2]{$\{bb\}$};
-      \node[state]                            (E) [below of=A]{$\emptyset$};
+      \node[state, initial above, accepting]  (0) {$\hat{L}$};
+      \node[state]                            (1) [right of=0]{$\hat{L}_1$};
+      \node[state]                            (2) [right of=1]{$\hat{L}_2$};
+      \node[state]                            (3) [right of=2]{$\hat{L}_3$};
+      \node[state,accepting]                  (A) [below of=1]{$\hat{\{\varepsilon\}}$};
+      \node[state]                            (B) [below right of=1]{$\hat{\{b\}}$};
+      \node[state]                            (BB) [below right of=2]{$\hat{\{bb\}}$};
+      \node[state]                            (E) [below of=A]{$\hat{\emptyset}$};
       
       \coordinate[right of=3] (4);
       \coordinate[below right of=3] (BBB);

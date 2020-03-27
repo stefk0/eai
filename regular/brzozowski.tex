@@ -2,19 +2,25 @@
 \index{Бжозовски}
 
 Имаме следната операция за произволна буква $a$,
-\[a^{-1}(L) \df \{\omega \in \Sigma^\star \mid a\omega \in L\}.\]
-Аналогично, за произволна дума $\alpha$,
-\[\alpha^{-1}(L) \df \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
+\[a^{-1}(L) \df \{\omega \in \Sigma^\star \mid a\cdot\omega \in L\}.\]
 
+Да видим как се държи тази операция върху регулярните езици.
+За целта следваме дефиницията на регулярните езици.
 \begin{problem}
-  Докажете, че:
+  Докажете, че за произволна буква $a$ и език $L$ са изпълнени равенствата:
   \begin{enumerate}[(1)]
   \item
+    $a^{-1}(\emptyset) = \emptyset$;
+  \item
+    $a^{-1}(\{\varepsilon\}) = \{\varepsilon\}$;
+  \item
+    $a^{-1}(\{b\}) =
+    \begin{cases}
+      \{\varepsilon\}, & \text{ ако }a = b\\
+      \emptyset, & \text{ ако }a \neq b
+    \end{cases}$
+  \item
     $a^{-1}(L_1 \cup L_2) = a^{-1}(L_1) \cup a^{-1}(L_2)$;
-  \item
-    $a^{-1}(L_1 \cap L_2) = a^{-1}(L_1) \cap a^{-1}(L_2)$;
-  \item
-    $a^{-1}(L_1 \setminus L_2) = a^{-1}(L_1) \setminus a^{-1}(L_2)$;
   \item
     $a^{-1}(L_1 \cdot L_2) =
     \begin{cases}
@@ -25,6 +31,8 @@
     $a^{-1}(L^\star) = a^{-1}(L) \cdot L^\star$.
   \end{enumerate}
 \end{problem}
+Аналогично, за произволна дума $\alpha$,
+\[\alpha^{-1}(L) \df \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
 
 \begin{problem}\label{prob:pullback}
   За всеки две думи $\alpha, \beta \in \Sigma^\star$, докажете, че
