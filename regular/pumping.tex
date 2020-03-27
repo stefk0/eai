@@ -19,7 +19,7 @@
   \end{enumerate}
 \end{lemma}
 \begin{hint}
-  \mynote{Тази лема я има във всеки учебник по този предмет. Например, \cite[стр. 88]{papadimitriou}, \cite[стр. 77]{sipser3}.}
+  \mynote{Тази лема я има във всеки учебник по този предмет. Например, \cite[стр. 88]{papadimitriou}, \cite[стр. 77]{sipser3}, \cite[стр. 55]{hopcroft1}.}
   Понеже $L$ е регулярен, то $L$ е и автоматен език. Нека
   \[\A = \FA\]
   е краен детерминиран автомат, за който $L = \L(\A)$.
@@ -61,11 +61,19 @@
 \begin{proof}
   Да означим с $P_{\text{reg}}(L)$ следната формула:
   \begin{align*}
-    (\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \Rightarrow (\exists x,y,z\in\Sigma^\star)[\ & \alpha = xyz\ \& \\
-                                                                                                              & \abs{y} \geq 1\ \&\\
-                                                                                                              & \abs{xy} \leq p\ \&\\
+    (\exists p \geq 1)(\forall \alpha \in L)[\abs{\alpha} \geq p \to (\exists x,y,z\in\Sigma^\star)[\ & \alpha = xyz\ \land \\
+                                                                                                              & \abs{y} \geq 1\ \land\\
+                                                                                                              & \abs{xy} \leq p\ \land\\
                                                                                                               & (\forall i\in\Nat)[xy^iz \in L]]].
   \end{align*}
+  Понеже имаме, че $p \to q \equiv \neg p \lor q$, то горната формула може да се запише и така:
+  \begin{align*}
+    (\exists p \geq 1)(\forall \alpha \in L)[ \abs{\alpha} \not\geq p \lor (\exists x,y,z\in\Sigma^\star)[\ & \alpha = xyz\ \land \\
+                                                                                                            & \abs{y} \geq 1\ \land\\
+                                                                                                            & \abs{xy} \leq p\ \land\\
+                                                                                                            & (\forall i\in\Nat)[xy^iz \in L]]].
+  \end{align*}
+  
   Така условието на \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
   \begin{center}
     {\em ,,Aко $L$ е регулярен език, то е изпълнено $P_{\text{reg}}(L)$.''}
@@ -87,13 +95,14 @@
   \end{align*}
   Горната формула е еквивалентна на:
   \mynote{Използваме, че
-    \begin{align*}
-      \neg P \lor \neg Q \lor R & \equiv \neg(P\ \land\ Q) \lor R\\
-                                & \equiv (P \land Q) \implies R
-    \end{align*}}
+    \begin{prooftree}
+      \AxiomC{$\neg P \lor \neg Q \lor R$}
+      \UnaryInfC{$\neg(P\ \land\ Q) \lor R$}
+      \UnaryInfC{$(P \land Q) \to R$}
+    \end{prooftree}}
   \begin{align*}
     (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[\ & (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p)\\
-                                                                                                            & \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
+                                                                                                            & \to (\exists i\in\Nat)[xy^iz \not\in L]\ ]\ ].
   \end{align*}
 
   Това означава, че ако

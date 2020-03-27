@@ -7,7 +7,7 @@
   \mynote{Това е важен пример. По-късно ще видим, че този език е безконтекстен}
   Формално трябва докажем, че
   {\scriptsize
-    \[(\forall p \geq 1)(\exists \alpha \in L)[\abs{\alpha} \geq p\ \wedge\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p) \Rightarrow (\exists i\in\Nat)[xy^iz \not\in L]].\]}
+    \[(\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \land \abs{y} \geq 1 \land \abs{xy} \leq p) \to (\exists i\in\Nat)[xy^iz \not\in L]\ ].\]}
   Както обяснихме по-горе, доказателството следва стъпките:
 \mynote{    
 \begin{description}
@@ -159,7 +159,7 @@
   \item[$(\forall)$]
     Разглеждаме произволно разбиване на $\omega$ на три части, $\omega = xyz$, 
     като $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
-    Да обърнем внимание, че $1 \leq \abs{y} \leq p$
+    Да обърнем внимание, че $1 \leq \abs{y} \leq p$.
   \item[$(\exists)$]
     Ще намерим $i$, за което $xy^iz \not\in L$.
     Това означава да съществува $n$, за което $n! < |xy^iz| < (n+1)!$
