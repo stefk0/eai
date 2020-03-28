@@ -1,0 +1,130 @@
+\section{Минимален автомат}
+
+Нека $\A$ е ДКА. За всяко състояние $q$ на $\A$ да разгледаме езика
+\[\L_\A(p) \df \{\omega \in \Sigma^\star \mid \delta^\star_\A(p,\alpha) \in F^\A\}.\]
+В частност имаме, че:
+\[\L(\A) = \L_\A(\qstart).\]
+Без ограничение на общността, нека приемем, че винаги разглеждаме само свързани ДКА $\A$, т.е.
+всяко състояние е достижимо от началното.
+\mynote{Тук използваме, че $\delta_\A$ е тотална функция.}
+Нека за всяка дума $\alpha$ да положим $q_\alpha \df \delta^\star_\A(\qstart,\alpha)$.
+Понеже $\A$ е свързан, то всяко състояние на $\A$ може да се разглежда като $q_\alpha$ за някоя дума $\alpha$.
+\mynote{Ясно е, че някои състояния $p$ съществуват безкрайно много думи $\alpha$, за които $q_\alpha = p$.}
+\begin{proposition}\label{pr:well-defined-pullback}
+  Нека $L = \L(\A)$. Тогава за всяка дума $\alpha$ е изпълнено, че:
+  \[\L_\A(q_\alpha) = \alpha^{-1}(L).\]
+\end{proposition}
+\begin{proof}
+  За произволна дума $\gamma$ имаме следните еквивалентности:
+  \begin{align*}
+    \gamma \in \L_\A(q_\alpha) & \iff \delta^\star(q_\alpha,\gamma) \in F\\
+                               & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F\\
+                               & \iff \delta^\star(\qstart,\alpha\gamma) \in F & \comment\text{свойство на }\delta^\star\\
+                               & \iff \alpha\gamma \in \L(\A)\\
+                               & \iff \gamma \in \alpha^{-1}(L). & \comment{L = \L(\A)}
+  \end{align*}
+\end{proof}
+
+\begin{proposition}\label{pr:surjective-cardinality}
+  Нека $A$ и $B$ са множества, като $A$ е крайно, за които съществува \emph{сюрективна} функция $f: A \to B$.
+  Тогава $|B| \leq |A|$.
+\end{proposition}
+\begin{hint}
+  Нека $A = \{a_0,a_1, \dots, a_{n-1}\}$. Разгледайте $g:B \to A$, където
+  \[g(b) = a_m\text{ за }m = \min\{i < n \mid f(a_i) = b\}.\]
+  Докажете, че $g$ е инективна.
+\end{hint}
+
+\begin{lemma}\label{lem:brzozowski:surjective}
+  Нека $L$ е регулярен език и $\A$ е ДКА, който разпознава $L$,
+  а $\B$ е автоматът за $L$ построен по метода на Бжозовски. Тогава $|Q^\B| \leq |Q^\A|$.
+\end{lemma}
+\begin{proof}
+  Да разгледаме функцията $f:Q^\A \to Q^\B$ по следния начин:
+  \[f(q) \df \L_\A(q).\]
+  Понеже приехме, че $\A$ е свързан автомат, то $f$ е добре дефинирана, защото за произволно състояние $p$,
+  нека $\alpha$ е една дума, за която $p = \delta^\star(\qstart,\alpha)$, т.е. $p = q_\alpha$.  
+  Тогава от \Proposition{well-defined-pullback} следва, че $f(q_\alpha) = \hat{M}$, където $M = \alpha^{-1}(L)$.
+  
+  Също така, $f$ е сюрективна, защото за произволно $\hat{M} \in Q^\B$ има дума $\alpha$,
+  за която $M = \alpha^{-1}(L)$. Тогава $f(q_\alpha) = \hat{M}$.
+  Сега от \Proposition{surjective-cardinality} можем да заключим, че
+  \[|Q^\B| \leq |Q^\A|.\]
+\end{proof}
+
+Така получаваме следния критерий за проверка дали даден език е регулярен.
+\begin{framed}
+  \begin{corollary}\label{cor:brzozowski:finite}
+    Един език $L$ е регулярен точно тогава, когато автоматът $\B$, построен по метода на Бжозовски за $L$, има крайно много състояния.
+  \end{corollary}
+\end{framed}
+
+\begin{corollary}
+  Нека $L$ е регулярен език. Тогава автоматът $\B$, построен по метода на Бжозовски за $L$, има минималния възможен брой състояния
+  измежду всеки детерминирани крайни автомати разпознаващи $L$.
+\end{corollary}  
+
+\begin{proposition}\label{pr:surjection-bijection}
+  Нека $A$ и $B$ са крайни равномощни множества.
+  Докажете, че ако $g:A \to B$ е сюрекция, то $g$ е биекция.
+\end{proposition}
+\begin{proof}
+  Нека $A = \{a_0,\dots,a_{n-1}\}$ и $B = \{b_0,\dots,b_{n-1}\}$. Нека, за всяко $i < n$,
+  \[A_i \df \{a_j \in A \mid g(a_j) = b_i\}.\]
+  Щом $g$ е сюрекция, то $A_i \neq \emptyset$ за всеки индекс $i < n$.
+  Понеже $g$ е функция, то $A_i \cap A_j = \emptyset$ за всеки два различни индекса $i$ и $j$.
+  Това означава, че
+  \[n = |A| = |\bigcup_{i<n} A_i| = \sum_{i<n}|A_i|.\]
+  Оттук следва, че щом за всяко $i$ имаме, че $|A_i| \neq 0$, то $|A_i| = 1$.
+  Заключаваме, че $g$ е инекция, защото в противен случай щяхме да имаме някое $i$, за което $|A_i| > 1$.
+\end{proof}
+
+\begin{framed}
+  \begin{theorem}
+    За всеки регулярен език $L$ съществува единствен минимален ДКА с точност до изоморфизъм.
+  \end{theorem}  
+\end{framed}
+\begin{proof}
+  Вече знаем, че автоматът $\B$, построен по метода на Бжозовски за $L$, има минималния възможен брой състояния.
+  Нека $\A$ е друг ДКА разпознаващ $L$ и $|Q^\A| = |Q^\B|$. Трябва да докажем, че $\A \cong \B$.
+  
+  Ясно е, $\A$ е свързан.
+  Понеже функцията $f:Q^\A \to Q^\B$, дефинирана като $f(q) = \L_\A(q)$ е сюрективна и $|Q^\A| = |Q^\B|$, то от \Proposition{surjection-bijection}
+  имаме, че $f$ е всъщност биекция.
+  Остава да видим защо $\A \cong_f \B$.
+  Да напомним, че състоянията на $Q^\A$ можем да ги разглеждаме като $q_\alpha$ и тогава $\L_\A(q_\alpha) = \alpha^{-1}(L)$ от \Proposition{well-defined-pullback}.
+  \begin{itemize}
+  \item
+    За началното състояние имаме, че:
+    \begin{align*}
+      f(\qstart) & = f(q_\varepsilon) & \comment{\qstart = q_\varepsilon}\\
+                 & = \hat{L}. & \comment{\varepsilon^{-1}(L) = L}
+    \end{align*}    
+  \item
+    За финалните състояние имаме, че:
+    \begin{align*}
+      q_\alpha \in F^\A & \iff \delta^\star_\A(\qstart,\alpha) \in F^\A & \comment q_\alpha = \delta^\star_\A(\qstart,\alpha)\\
+                        & \iff \alpha \in \L(\A) & \comment\text{деф. на }\L(\A)\\
+                        & \iff \varepsilon \in \alpha^{-1}(L) & \comment{L = \L(\A)}\\
+                        & \iff \hat{M} \in F^\B. & \comment\text{ за }M = \alpha^{-1}(L)
+    \end{align*}
+  \item
+    Остава да докажем, че за произволна буква $b$ е изпълнено, че:
+    \[f(\delta_\A(q_\alpha,b)) = \delta_\B(f(q_\alpha),b).\]
+    Нека положим $N \df \alpha^{-1}(L)$ и $M \df b^{-1}(N) = (\alpha b)^{-1}(L)$.
+    Да напомним, че от конструкцията на автомата $\B$ знаем, че:
+    \[\delta_\B(\hat{N},b) = \hat{M}.\]
+    От \Proposition{well-defined-pullback} имаме, че $f(q_\alpha) = \hat{N}$. Също така имаме равенствата:
+    \begin{align*}
+      f(\delta_\A(q_\alpha,b)) & = f(q_{\alpha b}) & \comment{q_{\alpha b} = \delta_\A(q_\alpha,b)}\\
+                               & = \hat{M}. & \comment{M = (\alpha b)^{-1}(L)}
+    \end{align*}
+    Заключаваме, че
+    \[f(\delta_\A(q_\alpha,b)) = \delta_\B(f(q_\alpha),b).\]
+  \end{itemize}
+\end{proof}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

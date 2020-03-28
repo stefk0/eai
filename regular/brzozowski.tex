@@ -31,13 +31,22 @@
     $a^{-1}(L^\star) = a^{-1}(L) \cdot L^\star$.
   \end{enumerate}
 \end{problem}
+
 Аналогично, за произволна дума $\alpha$,
 \[\alpha^{-1}(L) \df \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
 
-\begin{problem}\label{prob:pullback}
-  За всеки две думи $\alpha, \beta \in \Sigma^\star$, докажете, че
+\begin{proposition}\label{pr:pullback}
+  За всеки две думи $\alpha$ и $\beta$ е изпълнено, че:
   \[(\alpha\cdot\beta)^{-1}(L) = \beta^{-1}(\alpha^{-1}(L)).\]
-\end{problem}
+\end{proposition}
+\begin{proof}
+  За прозиволна дума $\gamma$ имаме следните еквивалентности:
+  \begin{align*}
+    \gamma \in \beta^{-1}(\alpha^{-1}(L)) & \iff \beta\gamma \in \alpha^{-1}(L)\\
+                                          & \iff \alpha\beta\gamma \in L\\
+                                          & \iff \gamma \in (\alpha\beta)^{-1}(L).
+  \end{align*}
+\end{proof}
 
 \begin{problem}
   Докажете, че ако $L$ е регулярен език, то $\alpha^{-1}(L)$ е регулярен език.
@@ -61,7 +70,7 @@
 \begin{itemize}
 \item
   Състоянията $Q$ ще бъдат от вида $\hat{M}$, за $M \subseteq \Sigma^\star$, където:
-  \[Q \df \{\hat{M} \mid (\exists \alpha\in\Sigma^\star)[M = \alpha^{-1}(L)].\]
+  \[Q \df \{\hat{M} \mid (\exists \alpha\in\Sigma^\star)[M = \alpha^{-1}(L)]\}.\]
 \item
   $\qstart \df \hat{L}$.
 \item
@@ -114,6 +123,7 @@
                  & \iff \delta^\star(\qstart,\alpha) \in F. & \comment \qstart \df \hat{L} \text{ и }\varepsilon \in \alpha^{-1}(L)
   \end{align*}
 \end{hint}
+
 
 %%% Local Variables:
 %%% mode: latex
