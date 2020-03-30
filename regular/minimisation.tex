@@ -4,17 +4,13 @@
 
 \begin{itemize}
 \item
-  Да фиксираме произволен детерминиран краен автомат
-  \[\A = \FA.\]
-\item
-  За състояние $p$ в автомата $\A$, да означим с $\L_\A(p)$ езикът, който се разпознава от автомата $\A$,
-  ако приемем, че $p$ е началното състояние на автомата, т.е.
+  Нека отново да приемем, че сме фиксирали един ДКА $\A = \FA$ като всяко състояние е достижимо от началното.
+  Да напомним, че с $\L_\A(p)$ означаваме езикът, който се разпознава от автомата $\A$,
+  ако приемем, че $p$ е началното състояние, т.е.
   \[\L_\A(p) \df \{\omega \in \Sigma^\star \mid \delta^\star(p,\omega) \in F\}.\]
   В частност, $\L(\A) = \L_\A(\qstart)$.
 \item
   \index{$\equiv_\A$}
-  \mynote{Може да е малко объркващо, но релацията $\equiv_\A$ е различна от релацията $\sim_\A$.
-  Релацията $\sim_\A$ е върху думи, докато $\equiv_\A$ е върху състояния.}
   Сега дефинираме следната релация между състояния на автомата $\A$:
   \[p \equiv_\A q\ \dff\ \L_\A(p) = \L_\A(q).\]
   Това означава, че $p \equiv_\A q$ точно тогава, когато
@@ -28,261 +24,130 @@
 \item
   Да означим
   \[Q/_{\equiv_\A} \df \{\ [q]_{\equiv_\A} \mid q \in Q\ \}.\]
-
 \end{itemize}
 
-\begin{problem}
-  Докажете, че
+\begin{proposition}
+  За произволно състояние $q$ е изпълнено, че:
   \[{[q]}_{\equiv_\A} \cap F \neq \emptyset \iff {[q]}_{\equiv_\A} \subseteq F.\]
-\end{problem}
-
-\begin{framed}
-  \begin{proposition}
-    \label{pr:equal-number}
-    Нека $\A = \FA$ е детерминиран краен автомат {\em без недостижими от} $\qstart$ състояния.
-    Тогава
-    \[\abs{Q/_{\equiv_\A}} = \abs{\Sigma^\star/_{\approx_{\L(\A)}}}.\]  
-  \end{proposition}  
-\end{framed}
+\end{proposition}
 \begin{proof}
-  Нека $L = \L(\A)$. Да положим $q_\alpha \df \delta^\star(\qstart,\alpha)$
-  и да разгледаме $h:\Sigma^\star/_{\approx_L} \to Q/_{\equiv_\A}$, където
-  \[h({[\alpha]}_L) \df [q_\alpha]_{\equiv_\A}.\]
-  Ще докажем, че $h$ е биекция като използваме свойството, че
-  \begin{equation}
-    \label{eq:8}
-    \alpha^{-1}(L) = \L_\A(q_\alpha),
-  \end{equation}
-  защото за произволна дума $\gamma$,
-  \begin{align*}
-    \gamma \in \L_\A(q_\alpha) & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F\\
-                                                   & \iff \delta^\star(\qstart,\alpha\gamma) \in F & \comment\text{свойство на }\delta^\star\\
-                                                   & \iff \alpha \gamma \in \L(\A) & \comment\text{деф. на }\L(\A)\\
-                                                   & \iff \gamma \in \alpha^{-1}(\L(\A))\\
-                                                   & \iff \gamma \in \alpha^{-1}(L). & \comment\L(\A) = L
-  \end{align*}
-  Сега веднага получаваме, че
-  \begin{equation}
-    \label{eq:9}
-    {[\alpha]}_L = {[\beta]}_L \iff h({[\alpha]}_L) = h({[\beta]}_L),
-  \end{equation}
-  защото
-  \begin{align*}
-    h({[\alpha]}_L) = h({[\beta]}_L) & \iff {[q_\alpha]}_{\equiv_\A} = {[q_\beta]}_{\equiv_\A} & \comment\text{деф. на }h\\ 
-                                     & \iff \L_\A(q_\alpha) = \L_\A(q_\beta) & \comment\text{деф. на }\equiv_\A\\
-                                     & \iff \alpha^{-1}(L) = \beta^{-1}(L) & \comment\text{от (\ref{eq:8})}\\
-                                     & \iff {[\alpha]}_L = {[\beta]}_L. & \comment\text{деф. на }\approx_L
-  \end{align*}
-  
-  \begin{itemize}
-  \item
-    \mynote{Важно е това да се проверява. Например, нека $g([\alpha]_L) \df \alpha$. Защо $g$ не е добре дефинирана, т.е. защо $g$ не е функция ?}
-    Ясно е, че $h$ е добре дефинирана, т.е. $h$ наистина е функция.
-    Това е така, защото от (\ref{eq:9}) имаме, че
-    \[{[\alpha]}_L = {[\beta]}_L \implies h({[\alpha]}_L) = h({[\beta]}_L).\]
-  \item
-    \mynote{Ако в $\A$ има недостижими от $\qstart$ състояния, то ще получим, че $|\Sigma^\star/_{\approx_L}| \leq |Q/_{\equiv_\A}|$.}
-    В $\A$ няма недостижими състояния, откъдето следва, че за всеки клас на еквивалентност ${[q]}_{\equiv_\A}$,
-    съществува дума $\alpha$, за която $\delta^\star(\qstart,\alpha) = q$.
-    Това означава, че $h([\alpha]_L) = {[q]}_{\equiv_\A}$ и следователно $h$ е сюрекция.
-  \item
-    Остава да проверим, че $h$ е инективна, т.е.
-    \[h({[\alpha]}_L) = h({[\beta]}_L) \implies {[\alpha]}_L = {[\beta]}_L.\]
-    Но това следва веднага от (\ref{eq:9}).
-  \end{itemize}
+  Посоката $(\Leftarrow)$ е очевидна. За $(\Rightarrow)$, нека $p \in [q]_{\equiv_\A} \cap F$. Достатъчно е да докажем, че $q \in F$.
+  Щом $p \in F$, то $\varepsilon \in \L_\A(p)$.
+  Щом $p \equiv_\A q$, то $\L_\A(p) = \L_\A(q)$ и следователно $\varepsilon \in \L_\A(q)$.
+  С други думи, $\delta^\star_\A(q,\varepsilon) \in F$, откъдето получаваме, че $q \in F$.
 \end{proof}
 
-\begin{problem}\label{prob:equiv-delta}
-  Докажете, че за произволни състояние $p$ и $q$ и произволна буква $a$, е изпълнено, че:
+\begin{proposition}\label{pr:equiv-delta}
+  За произволни състояния $p$ и $q$ и произволна буква $a$ е изпълнено:
   \[p \equiv_\A q \implies \delta(p,a) \equiv_\A \delta(q,a).\]
-\end{problem}
+\end{proposition}
+\begin{proof}
+  Да разгледаме произволни състояния $p$, $q$ и буква $a$. Тогава:
+  \begin{align*}
+    p \equiv_\A q & \iff \L_\A(p) = \L_\A(q) \\
+                  & \iff (\forall \beta\in\Sigma^\star)[ \delta^\star(p,\beta) \in F \iff \delta^\star(q,\beta) \in F]\\
+                  & \Rightarrow (\forall \beta\in\Sigma^\star)[\delta^\star(p, a\beta) \in F \iff \delta^\star(q,a\beta) \in F]\\
+                  & \iff (\forall \beta\in\Sigma^\star)[\delta^\star(\delta(p, a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F]\\
+                  & \iff \L_\A(\delta(p,a)) = \L_\A(\delta(q,a))\\
+                  & \iff \delta(p,a) \equiv_\A \delta(q,a).
+  \end{align*}
+\end{proof}
 
-
-Нека е даден автомата $A = \FA$.
-След като сме намерили релацията $\equiv_\A$ за $\A$, 
-строим автомата $\A' = (\Sigma,Q',\qstart',\delta_1,F')$, където:
+За автомата $\A = \FA$, дефинираме автомата $\A' = (\Sigma,Q',\qstart',\delta',F')$ по следния начин:
 \begin{itemize}
 \item
   $Q' \df \{[q]_{\equiv_\A} \mid q\in Q\}$;
 \item
   $\qstart' \df [\qstart]_{\equiv_\A}$;
 \item
-  $\delta_1([q]_{\equiv_\A}, a) \df [\delta(q,a)]_{\equiv_\A}$;
+  $\delta'([q]_{\equiv_\A}, a) \df [\delta(q,a)]_{\equiv_\A}$;
 \item
   $F' \df \{[q]_{\equiv_\A}\mid [q]_{\equiv_\A} \cap F \neq \emptyset\}$;
 \end{itemize}
 
-\begin{problem}
-  Докажете, че $\delta_1$ е добре дефинирана, т.е. $\delta_1$ е функция.
-\end{problem}
-\begin{hint}
-  Използвайте Задача \ref{prob:equiv-delta}.
-\end{hint}
-
+Да отбележим, че от \Proposition{equiv-delta} имаме, че
+\[[p]_{\equiv_\A} = [q]_{\equiv_\A} \implies \delta'([p]_{\equiv_\A},a) = \delta'([q]_{\equiv_\A},a).\]
+С други думи, $\delta'$ наистина е функция.
 
 \begin{proposition}
   \label{pr:minimisation-delta-1}
-  За всяко състояние $q \in Q$ и дума $\alpha$ е изпълнено, че
-  \[\delta^\star_1([q]_{\equiv_\A}, \alpha) = [\delta^\star(q,\alpha)]_{\equiv_\A}.\]
+  За всяко състояние $q$ и дума $\alpha$ е изпълнено, че
+  \begin{equation}
+    \label{eq:15}
+    \delta^\star_1([q]_{\equiv_\A}, \alpha) = [\delta^\star(q,\alpha)]_{\equiv_\A}.
+  \end{equation}
 \end{proposition}
 \begin{proof}
-  Индукция по дължината на думата $\alpha$.
+  Ще докажем Свойство~(\ref{eq:15}) с индукция по дължината на думата $\alpha$.
   \begin{itemize}
   \item
     Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава
-    \[\delta^\star_1([q]_{\equiv_\A},\varepsilon) = [q]_{\equiv_\A} = [\delta^\star(q,\varepsilon)]_{\equiv_\A}.\]
+    \[\delta'^\star([q]_{\equiv_\A},\varepsilon) = [q]_{\equiv_\A} = [\delta^\star(q,\varepsilon)]_{\equiv_\A}.\]
   \item
-    Да приемем, че твърдението е вярно за думи с дължина $n$.
+    Да приемем, че Свойство~(\ref{eq:15}) е вярно за думи с дължина $n$.
   \item
     Нека $|\alpha| = n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
     \begin{align*}
-      \delta^\star_1([q]_{\equiv_\A},\beta a) & = \delta_1(\delta^\star_1([q]_{\equiv_\A},\beta),a) & \comment\text{деф. на }\delta^\star_1\\
-                                              & = \delta_1([\underbrace{\delta^\star(q,\beta)}_{p}]_{\equiv_\A},a) & \comment\text{И.П. за }\beta\\
-                                              & = \delta_1([p]_{\equiv_\A},a) \\
-                                              & = [\delta(p,a)]_{\equiv_\A} & \comment\text{деф. на }\delta_1\\
-                                             & = [\delta(\delta^\star(q,\beta),a)]_{\equiv_\A} & \comment{p = \delta^\star_1(q,\beta)}\\
+      \delta'^\star([q]_{\equiv_\A},\beta a) & = \delta'(\delta'^\star([q]_{\equiv_\A},\beta),a) & \comment\text{деф. на }\delta'^\star\\
+                                              & = \delta'([\underbrace{\delta^\star(q,\beta)}_{p}]_{\equiv_\A},a) & \comment\text{И.П. за }\beta\\
+                                              & = \delta'([p]_{\equiv_\A},a) \\
+                                              & = [\delta(p,a)]_{\equiv_\A} & \comment\text{деф. на }\delta'\\
+                                             & = [\delta(\delta^\star(q,\beta),a)]_{\equiv_\A} & \comment{p = \delta'^\star(q,\beta)}\\
                                              & = [\delta^\star(q,\beta a)]_{\equiv_\A}. & \comment\text{деф. на }\delta^\star
     \end{align*}
   \end{itemize}
 \end{proof}
 
+\begin{proposition}\label{pr:quotient-bijection}
+  Нека $A$ и $B$ са множества и $f: A \to B$ е сюрекция.
+  Дефинираме релация на еквивалентност $\equiv$ между елементи на $A$ по следния начин:
+  \[a_0 \equiv a_1 \dff f(a_0) = f(a_1).\]
+  Дефинираме $[a]_\equiv$ да бъде класът на еквивалентност на $a$, т.е.
+  \[[a]_\equiv \df \{a_0 \in A \mid f(a) = f(a_0)\}.\]
+  Нека $A' \df \{[a]_\equiv \mid a \in A\}$.
+  Тогава $f' : A' \to B$, където $f'([a]_\equiv) \df f(a)$ е биекция.
+\end{proposition}
+\begin{proof}
+  Достатъчно е да направим следните проверки:
+  \begin{itemize}
+  \item 
+    Ако $[a_0]_\equiv = [a_1]_\equiv$, то $f(a_0) = f(a_1)$ и следователно
+    $f'([a_0]_\equiv) = f'([a_1]_\equiv)$. Това означава, че $f'$ е функция.
+  \item 
+    За произволен елемент $b \in B$, съществува $a \in A$, за който $f(a) = b$.
+    По дефиниция, $f'([a]_\equiv) = b$. Това означава, че $f'$ е сюрекция.
+  \item 
+    Нека сега $[a_0]_\equiv \neq [a_1]_\equiv$, т.е. $f(a_0) \neq f(a_1)$.
+    Тогава $f'([a_0]_\equiv) \neq f'([a_1]_\equiv)$. Това означава, че $f'$ е инкеция.
+  \end{itemize}
+  От всичко това заключаваме, че $f'$ е биекция.
+\end{proof}
+
 \begin{framed}
-  \begin{thm}
-    $\A'$ е минимален автомат разпознаващ езика $\L(\A)$.
-  \end{thm}
+\begin{theorem}
+  Автоматът $\A'$ е минимален ДКА за езика $\L(\A)$.
+\end{theorem}  
 \end{framed}
-\begin{hint}
-  Лесно се съобразява, че $\L(\A) = \L(\A')$, защото
+\begin{proof}
+  Първо да проверим, че $\L(\A') = \L(\A)$. 
+  Достатъчно е да проследим следните еквивалентности за произволна дума $\alpha$:
   \begin{align*}
     \alpha \in \L(\A) & \iff \delta^\star(\qstart,\alpha) \in F & \comment\text{деф. на }\L(\A)\\
                       & \iff [\delta^\star(\qstart,\alpha)]_{\equiv_\A} \in F' & \comment\text{деф. на }F'\\
-                      & \iff \delta^\star_1([\qstart]_{\equiv_\A},\alpha) \in F' & \comment\text{\Proposition{minimisation-delta-1}}\\
+                      & \iff \delta'^\star([\qstart]_{\equiv_\A},\alpha) \in F' & \comment\text{\Proposition{minimisation-delta-1}}\\
+                      & \iff \delta'^\star(\qstart',\alpha) \in F' & \comment{\qstart' \df [\qstart]_{\equiv_\A}}\\
                       & \iff \alpha \in \L(\A'). & \comment\text{деф. на }\L(\A')
   \end{align*}
-  От \Proposition{equal-number} знаем, че $|Q'| = |\Sigma^\star/_{\approx_{\L(\A)}}|$.
-  Тогава от \Proposition{upper-bound} следва, че $\A'$ е минимален автомат.
-\end{hint}
+  
+  За да докажем, че $\A'$ е минимален ДКА, според \Theorem{brzozowski-minimal:unique}, достатъчно е да докажем, че $|Q'| = |Q^\B|$.
+  От доказателството на \Lemma{brzozowski:surjective} знаем, че функцията $f:Q^\A \to Q^\B$ е сюрекция, където
+  \[f(q) = \hat{M} \dff M = \L_\A(q).\]
+  Нека дефинираме $f':Q' \to Q^\B$ като
+  \[f'([q]_{\equiv_\A}) \df f(q).\]
+  От \Proposition{quotient-bijection} имаме, че $f'$ е биекция.
+  Заключаваме, че $|Q'| = |Q^\B|$.
+\end{proof}
 
-\subsection{Кубичен алгоритъм за минимизация}
-
-При даден език $L$ и детерминиран краен автомат $\A = \FA$, който го разпознава, целта ни е да построим нов детерминиран краен автомат $\M$,
-който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_L$.
-Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
-Според \Proposition{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
-Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \omega \in \Sigma^\star$
-във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
-За да разрешим този проблем, ще разгледаме апроксимации на езиците $\L_\A(q)$.
-За ествено число $n$, да означим 
-\[\L^n_\A(p) \df \{\omega \in \Sigma^\star \mid \abs{\omega} \leq n\ \&\ \delta^\star(p,\omega) \in F\}.\]
-Лесно се съобразява, че
-\mynote{Можем ли да дадем горна граница на $n$?}
-\[L(\A) = \bigcup_{n\geq 0} \L^n_\A(\qstart).\]
-
-\index{$\equiv^n_\A$}
-За всяко естествено число $n$, дефинираме бинарните релации $\equiv^n_\A$ върху $Q$ по следния начин:
-\[p \equiv^n_\A q \dff \L^n_\A(p) = \L^n_\A(q).\]
-
-Релациите $\equiv^n_\A$ представляват апроксимации на релацията $\equiv_\A$.
-Обърнете внимание, че за всяко $n$, $\equiv^n_\A$ е {\em по-груба} релация от $\equiv^{n+1}_\A$, 
-която на свой ред е по-груба от $\equiv_\A$.
-Алгоритъмът строи $\equiv^n_\A$ докато не срещнем $n$, за което
-\[\equiv^n_\A\ =\ \equiv^{n+1}_\A.\]
-Тъй като броят на класовете на еквивалентност на $\equiv_\A$ е краен (той е $\leq \abs{Q}$), то 
-със сигурност ще намерим такова $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
-Тогава заключаваме, че за това $n$ имаме, че
-\[\equiv_\A\ =\ \equiv^n_\A.\]
-
-\mynote{Ако $q \in F$, то $\L^0_\A(q) = F$ и ако $q \not\in F$, то $\L^0_\A(q) = Q\setminus F$.}
-Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
-лесно се съобразява, че $\equiv^0_\A$ има два класа на еквивалентност.
-Единият е $F$, а другият е $Q\setminus F$.
-
-Вече имаме базовия случай за $n=0$.
-Да видим сега как можем да намерим $\equiv^{n+1}_\A$ при положение, че вече сме намерили $\equiv^n_\A$.
-\begin{framed}
-  \begin{proposition}
-    \label{pr:one-letter-test}
-    За всеки две състояния $p,q \in Q$, и всяко естествено число $n$, $p \equiv^{n+1}_\A q$ точно тогава, когато
-    \begin{enumerate}[a)]
-    \item
-      $p \equiv^n_\A q$ и
-    \item
-      $(\forall a \in \Sigma)[\delta(q,a) \equiv^n_\A \delta(p,a)]$.
-    \end{enumerate}
-  \end{proposition}  
-\end{framed}
-\begin{hint}
-  \mynote{\cite[стр. 99]{papadimitriou}}
-  \begin{align*}
-    p \equiv^{n+1}_\A q & \iff \L^{n+1}_\A(p) = \L^{n+1}_\A(q)\\
-                     & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\ \L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))\ ]\\
-                     & \iff p \equiv^n_\A q\ \&\ (\forall a \in \Sigma)[\ \delta(p,a) \equiv^n_\A \delta(q,a)\ ].
-  \end{align*}
-\end{hint}
-
-\begin{problem}
-  Докажете, че ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то
-  \[(\forall m \geq n)[\ \equiv^n_\A\ =\ \equiv^m_\A\ ].\]
-\end{problem}
-
-\begin{problem}
-  Докажете, че ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то
-  \[\equiv^n_\A\ =\ \equiv_\A.\]
-\end{problem}
-
-\begin{problem}
-  Докажете, че ако $n \geq |Q|$, то
-  \[\equiv^n_\A\ =\ \equiv_\A.\]
-\end{problem}
-
-% \mynote{\cite{khoussainov-nerode}}
-
-
-
-\begin{algorithm}[H]
-  \caption{Кубичен алгоритъм за минимизация}
-  \label{alg:minimisation-cube}
-  \begin{algorithmic}[1]
-    \ForAll{$p < |Q|$}\Comment{състоянията са индексирани от $0$ до $|Q|-1$}
-    \ForAll{$q < p$} 
-    \If{$(p \in F \iff q \not\in F)$}
-    \State E[p][q] = false \Comment{Имаме, че $p \not\equiv q$}
-    \Else
-    \State E[p][q] = true \Comment{Имаме, че $p \equiv q$}
-    \EndIf
-    \EndFor
-    \EndFor
-    \Repeat
-    \State ready = true
-    \ForAll{$p < |Q|$}
-    \ForAll{$q < p$}
-    \If{E[p][q]}
-    \ForAll{$a \in \Sigma$}
-    \If{! E[$\delta(p,a)$][$\delta(q,a)$]}  \Comment{$p \equiv q$, но $\delta(p,a) \not\equiv \delta(q,a)$}
-    \State{E[p][q] = false}
-    \State{ready = false}
-    \EndIf
-    \EndFor
-    \EndIf
-    \EndFor
-    \EndFor
-    \Until{ready}
-  \end{algorithmic}
-\end{algorithm}
-
-\begin{theorem}
-  За всеки две състояния $q_i,q_j \in Q$, където $i > j$,
-  \[q_i \equiv_\A q_j \iff \texttt{E[i][j] == true}.\]
-\end{theorem}
-
-\begin{problem}
-  Съобразете, че алгоритъм \ref{alg:minimisation-cube} има времева сложност $\mathcal{O}(|\A|^2)$.
-\end{problem}
-
-
-\subsection{Квадратичен алгоритъм за минимизация}
-
-Горният алгоритъм може да се модифицира до квадратичен.
 
 %%% Local Variables:
 %%% mode: latex
