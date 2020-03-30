@@ -1,0 +1,125 @@
+
+
+
+
+\subsection{Кубичен алгоритъм за минимизация}
+
+При даден език $L$ и детерминиран краен автомат $\A = \FA$, който го разпознава, целта ни е да построим нов детерминиран краен автомат $\M$,
+който има толкова състояния колкото са класовете на еквивалентност на релацията $\approx_L$.
+Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
+Според \Proposition{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
+Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $\forall \omega \in \Sigma^\star$
+във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
+За да разрешим този проблем, ще разгледаме апроксимации на езиците $\L_\A(q)$.
+За ествено число $n$, да означим 
+\[\L^n_\A(p) \df \{\omega \in \Sigma^\star \mid \abs{\omega} \leq n\ \&\ \delta^\star(p,\omega) \in F\}.\]
+Лесно се съобразява, че
+\mynote{Можем ли да дадем горна граница на $n$?}
+\[L(\A) = \bigcup_{n\geq 0} \L^n_\A(\qstart).\]
+
+\index{$\equiv^n_\A$}
+За всяко естествено число $n$, дефинираме бинарните релации $\equiv^n_\A$ върху $Q$ по следния начин:
+\[p \equiv^n_\A q \dff \L^n_\A(p) = \L^n_\A(q).\]
+
+Релациите $\equiv^n_\A$ представляват апроксимации на релацията $\equiv_\A$.
+Обърнете внимание, че за всяко $n$, $\equiv^n_\A$ е {\em по-груба} релация от $\equiv^{n+1}_\A$, 
+която на свой ред е по-груба от $\equiv_\A$.
+Алгоритъмът строи $\equiv^n_\A$ докато не срещнем $n$, за което
+\[\equiv^n_\A\ =\ \equiv^{n+1}_\A.\]
+Тъй като броят на класовете на еквивалентност на $\equiv_\A$ е краен (той е $\leq \abs{Q}$), то 
+със сигурност ще намерим такова $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
+Тогава заключаваме, че за това $n$ имаме, че
+\[\equiv_\A\ =\ \equiv^n_\A.\]
+
+\mynote{Ако $q \in F$, то $\L^0_\A(q) = F$ и ако $q \not\in F$, то $\L^0_\A(q) = Q\setminus F$.}
+Понеже единствената дума с дължина $0$ e $\varepsilon$ и по определение $\delta^\star(p,\varepsilon) = p$, 
+лесно се съобразява, че $\equiv^0_\A$ има два класа на еквивалентност.
+Единият е $F$, а другият е $Q\setminus F$.
+
+Вече имаме базовия случай за $n=0$.
+Да видим сега как можем да намерим $\equiv^{n+1}_\A$ при положение, че вече сме намерили $\equiv^n_\A$.
+\begin{framed}
+  \begin{proposition}
+    \label{pr:one-letter-test}
+    За всеки две състояния $p,q \in Q$, и всяко естествено число $n$, $p \equiv^{n+1}_\A q$ точно тогава, когато
+    \begin{enumerate}[a)]
+    \item
+      $p \equiv^n_\A q$ и
+    \item
+      $(\forall a \in \Sigma)[\delta(q,a) \equiv^n_\A \delta(p,a)]$.
+    \end{enumerate}
+  \end{proposition}  
+\end{framed}
+\begin{hint}
+  \mynote{\cite[стр. 99]{papadimitriou}}
+  \begin{align*}
+    p \equiv^{n+1}_\A q & \iff \L^{n+1}_\A(p) = \L^{n+1}_\A(q)\\
+                     & \iff \L^n_\A(p) = \L^n_\A(q)\ \&\ (\forall a \in \Sigma)[\ \L^n_\A(\delta(p,a)) = \L^n_\A(\delta(q,a))\ ]\\
+                     & \iff p \equiv^n_\A q\ \&\ (\forall a \in \Sigma)[\ \delta(p,a) \equiv^n_\A \delta(q,a)\ ].
+  \end{align*}
+\end{hint}
+
+\begin{problem}
+  Докажете, че ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то
+  \[(\forall m \geq n)[\ \equiv^n_\A\ =\ \equiv^m_\A\ ].\]
+\end{problem}
+
+\begin{problem}
+  Докажете, че ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то
+  \[\equiv^n_\A\ =\ \equiv_\A.\]
+\end{problem}
+
+\begin{problem}
+  Докажете, че ако $n \geq |Q|$, то
+  \[\equiv^n_\A\ =\ \equiv_\A.\]
+\end{problem}
+
+% \mynote{\cite{khoussainov-nerode}}
+
+
+
+\begin{algorithm}[H]
+  \caption{Кубичен алгоритъм за минимизация}
+  \label{alg:minimisation-cube}
+  \begin{algorithmic}[1]
+    \ForAll{$p < |Q|$}\Comment{състоянията са индексирани от $0$ до $|Q|-1$}
+    \ForAll{$q < p$} 
+    \If{$(p \in F \iff q \not\in F)$}
+    \State E[p][q] = false \Comment{Имаме, че $p \not\equiv q$}
+    \Else
+    \State E[p][q] = true \Comment{Имаме, че $p \equiv q$}
+    \EndIf
+    \EndFor
+    \EndFor
+    \Repeat
+    \State ready = true
+    \ForAll{$p < |Q|$}
+    \ForAll{$q < p$}
+    \If{E[p][q]}
+    \ForAll{$a \in \Sigma$}
+    \If{! E[$\delta(p,a)$][$\delta(q,a)$]}  \Comment{$p \equiv q$, но $\delta(p,a) \not\equiv \delta(q,a)$}
+    \State{E[p][q] = false}
+    \State{ready = false}
+    \EndIf
+    \EndFor
+    \EndIf
+    \EndFor
+    \EndFor
+    \Until{ready}
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}
+  За всеки две състояния $q_i,q_j \in Q$, където $i > j$,
+  \[q_i \equiv_\A q_j \iff \texttt{E[i][j] == true}.\]
+\end{theorem}
+
+\begin{problem}
+  Съобразете, че алгоритъм \ref{alg:minimisation-cube} има времева сложност $\mathcal{O}(|\A|^c)$.
+\end{problem}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
