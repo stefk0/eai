@@ -21,9 +21,9 @@
 \item
   \mynote{\writedown Защо?}
   Релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност. 
-\item
-  Да означим
-  \[Q/_{\equiv_\A} \df \{\ [q]_{\equiv_\A} \mid q \in Q\ \}.\]
+% \item
+%   Да означим
+%   \[Q/_{\equiv_\A} \df \{\ [q]_{\equiv_\A} \mid q \in Q\ \}.\]
 \end{itemize}
 
 \begin{proposition}
@@ -74,11 +74,11 @@
   За всяко състояние $q$ и дума $\alpha$ е изпълнено, че
   \begin{equation}
     \label{eq:15}
-    \delta^\star_1([q]_{\equiv_\A}, \alpha) = [\delta^\star(q,\alpha)]_{\equiv_\A}.
+    \delta'^\star([q]_{\equiv_\A}, \alpha) = [\delta^\star(q,\alpha)]_{\equiv_\A}.
   \end{equation}
 \end{proposition}
 \begin{proof}
-  Ще докажем Свойство~(\ref{eq:15}) с индукция по дължината на думата $\alpha$.
+  Ще докажем Свойство~(\ref{eq:15}) с индукция по дължината на $\alpha$.
   \begin{itemize}
   \item
     Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава
@@ -97,6 +97,25 @@
     \end{align*}
   \end{itemize}
 \end{proof}
+
+\begin{lemma}\label{lem:minimisation:quotient-automaton}
+  $\L(\A') = \L(\A)$.   
+\end{lemma}
+\begin{proof}
+  Достатъчно е да проследим следните еквивалентности за произволна дума $\alpha$:
+  \begin{align*}
+    \alpha \in \L(\A) & \iff \delta^\star(\qstart,\alpha) \in F & \comment\text{деф. на }\L(\A)\\
+                      & \iff [\delta^\star(\qstart,\alpha)]_{\equiv_\A} \in F' & \comment\text{деф. на }F'\\
+                      & \iff \delta'^\star([\qstart]_{\equiv_\A},\alpha) \in F' & \comment\text{\Proposition{minimisation-delta-1}}\\
+                      & \iff \delta'^\star(\qstart',\alpha) \in F' & \comment{\qstart' \df [\qstart]_{\equiv_\A}}\\
+                      & \iff \alpha \in \L(\A'). & \comment\text{деф. на }\L(\A')
+  \end{align*}
+\end{proof}
+
+
+Остава да докажем, че автоматът $\A'$ е минимален за езика $\L(\A)$.
+За да направим това ни трябва едно помощно твърдение.
+\mynote{Това твърдение го формулираме в общия случай, но ние ще го използваме, когато $\equiv$ е релацията $\equiv_\A$.}
 
 \begin{proposition}\label{pr:quotient-bijection}
   Нека $A$ и $B$ са множества и $f: A \to B$ е сюрекция.
@@ -128,18 +147,10 @@
   Автоматът $\A'$ е минимален ДКА за езика $\L(\A)$.
 \end{theorem}  
 \end{framed}
+\mynote{Възможно е в доказателството да подходим и по друг начин. Ако докажем, че $\A' \cong_{f'} \B$, то оттук директно следва, че $\A'$ е минимален автомат разпознаващ $L$.}
 \begin{proof}
-  Първо да проверим, че $\L(\A') = \L(\A)$. 
-  Достатъчно е да проследим следните еквивалентности за произволна дума $\alpha$:
-  \begin{align*}
-    \alpha \in \L(\A) & \iff \delta^\star(\qstart,\alpha) \in F & \comment\text{деф. на }\L(\A)\\
-                      & \iff [\delta^\star(\qstart,\alpha)]_{\equiv_\A} \in F' & \comment\text{деф. на }F'\\
-                      & \iff \delta'^\star([\qstart]_{\equiv_\A},\alpha) \in F' & \comment\text{\Proposition{minimisation-delta-1}}\\
-                      & \iff \delta'^\star(\qstart',\alpha) \in F' & \comment{\qstart' \df [\qstart]_{\equiv_\A}}\\
-                      & \iff \alpha \in \L(\A'). & \comment\text{деф. на }\L(\A')
-  \end{align*}
-  
-  За да докажем, че $\A'$ е минимален ДКА, според \Theorem{brzozowski-minimal:unique}, достатъчно е да докажем, че $|Q'| = |Q^\B|$.
+  Нека $\B$ е автоматът на Бжозовски за езика $\L(\A)$.
+  За да докажем, че $\A'$ е минимален ДКА за $\L(\A)$, според \Lemma{minimisation:quotient-automaton} и \Theorem{brzozowski-minimal:unique}, достатъчно е да докажем, че $|Q'| = |Q^\B|$.
   От доказателството на \Lemma{brzozowski:surjective} знаем, че функцията $f:Q^\A \to Q^\B$ е сюрекция, където
   \[f(q) = \hat{M} \dff M = \L_\A(q).\]
   Нека дефинираме $f':Q' \to Q^\B$ като

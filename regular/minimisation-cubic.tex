@@ -1,13 +1,8 @@
-
-
-
-
 \subsection{Кубичен алгоритъм за минимизация}
 
 При даден език $L$ и детерминиран краен автомат $\A = \FA$, който го разпознава, целта ни е да построим нов детерминиран краен автомат $\A'$,
 който има толкова състояния колкото са класовете на еквивалентност на релацията $\equiv_\A$.
 Това ще направим като ,,слеем'' състоянията на $\A$, които са еквивалентни относно релацията $\equiv_\A$.
-% Според \Proposition{equal-number}, това означава, че всяко състояние на $\M$ ще отговаря на един клас на еквивалентност на релацията $\equiv_\A$.
 Проблемът с намирането на класовете на еквивалентност на релацията $\equiv_\A$ е кванторът $(\forall \omega \in \Sigma^\star)$
 във нейната дефиниция (чрез Формула \ref{eq:1}), защото $\Sigma^\star$ е безкрайно множество от думи.
 За да разрешим този проблем, ще разгледаме апроксимации на езиците $\L_\A(q)$.
@@ -39,9 +34,8 @@
 Вече имаме базовия случай за $n=0$.
 Да видим сега как можем да намерим $\equiv^{n+1}_\A$ при положение, че вече сме намерили $\equiv^n_\A$.
 \begin{framed}
-  \begin{proposition}
-    \label{pr:one-letter-test}
-    За всеки две състояния $p,q \in Q$, и всяко естествено число $n$, $p \equiv^{n+1}_\A q$ точно тогава, когато
+  \begin{proposition}\label{pr:one-letter-test}
+    За всеки две състояния $p$ и $q$, и всяко естествено число $n$, $p \equiv^{n+1}_\A q$ точно тогава, когато
     \begin{enumerate}[a)]
     \item
       $p \equiv^n_\A q$ и
@@ -59,20 +53,72 @@
   \end{align*}
 \end{hint}
 
-\begin{problem}
-  Докажете, че ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то
-  \[(\forall m \geq n)[\ \equiv^n_\A\ =\ \equiv^m_\A\ ].\]
-\end{problem}
+\begin{proposition}\label{pr:minimisation-cubic:equiv-all}
+  Ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то за всяко $m > n$ е изпълнено, че:
+  \begin{equation}
+    \label{eq:8}
+    \equiv^n_\A\ =\ \equiv^m_\A.
+  \end{equation}
+\end{proposition}
+\begin{proof}
+  Ще докажем Свойство~(\ref{eq:8}) с индукция по $m > n$, като базата на индукцията е случаят $m = n + 1$, за който Свойство~(\ref{eq:8})
+  е изпълнено по условие.
+  Индукционното ни предположение е, че $\equiv^n_\A\ =\ \equiv^{m}_\A$ за някое $m > n+1$.
+  Индукционната ни стъпка е да докажем, че $\equiv^n_\A\ =\ \equiv^{m+1}_\A$. За произволни състояния $p$ и $q$ имаме следните еквивалентности:
+  \begin{align*}
+    p \equiv^{m+1}_\A q & \iff p \equiv^m_\A q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv^m_\A \delta(q,a)] & \comment\text{от \Proposition{one-letter-test}}\\
+                        & \iff p \equiv^n_\A q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv^n_\A \delta(q,a)] & \comment\text{от И.П.}\\
+                        & \iff p \equiv^{n+1}_\A q & \comment\text{от \Proposition{one-letter-test}}\\
+                        & \iff p \equiv^n_\A q. & \comment\text{от условието}
+  \end{align*}
+\end{proof}
 
-\begin{problem}
-  Докажете, че ако $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то
-  \[\equiv^n_\A\ =\ \equiv_\A.\]
-\end{problem}
+\begin{proposition}\label{pr:minimisation-cubic:equiv-approx}
+  Докажете, че за произволно естествено число $n$,
+  \[\equiv^n_\A\ =\ \equiv^{n+1}_\A\ \implies\ \equiv^n_\A\ =\ \equiv_\A.\]
+\end{proposition}
+\begin{proof}
+  Нека $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
+  Ще докажем, че за произволни състояния $p$ и $q$ е изпълено, че:
+  \[p \equiv_\A q \iff p \equiv^n_\A q.\]
+  Ясно е, че $p \equiv_\A q \implies p \equiv^n_\A q$. 
+  Да видим защо имаме и обратната посока, т.е. защо $p \equiv^n_\A q \implies p \equiv_\A q$.
+  Ние ще докажем контрапозицията на импликацията, т.е. ще докажем следното:
+  \[p \not\equiv_\A q \implies p \not\equiv^n_\A q.\]
+  И така, нека $p \not\equiv_\A q$. Това означава, че същестува дума $\alpha$, за която:
+  \[\neg(\delta^\star(p,\alpha) \in F \iff \delta^\star(q,\alpha) \in F).\]
+  Това означава, че $p \not\equiv^{|\alpha|}_\A q$. Имаме два случая.
+  \begin{itemize}
+  \item
+    Нека $|\alpha| \leq n$.
+    Тогава $p \not\equiv^n_\A q$, защото от дефиницията следва, че
+    \[p \not\equiv^{|\alpha|}_\A q \implies p \not\equiv^n_\A q.\]
+  \item
+    Ако $|\alpha| > n$, от \Proposition{minimisation-cubic:equiv-all} следва, че
+    \[p \equiv^n_\A q \implies p \equiv^{|\alpha|}_\A q,\]
+    чиято контрапозиция е:
+    \[p \not\equiv^{|\alpha|}_\A q \implies p \not\equiv^{n}_\A q.\]
+    Заключаваме, че $p \not\equiv^{n}_\A q$.
+  \end{itemize}
+\end{proof}
 
-\begin{problem}
-  Докажете, че ако $n \geq |Q|$, то
-  \[\equiv^n_\A\ =\ \equiv_\A.\]
-\end{problem}
+\begin{proposition}
+  За всеки ДКА $\A$ е изпълнено, че 
+  $\equiv^{|Q|}_\A\ =\ \equiv_\A$.
+\end{proposition}
+\begin{proof}
+  Ако съществува $n < |Q|$, такова че $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то според предишните две твърдения,
+  то $\equiv^n_\A\ =\ \equiv^{|Q|}_\A\ =\ \equiv_\A$.
+
+  Нека сега приемем, че за всяко $n < |Q|$ е изпълнено, че $\equiv^n_\A\ \neq\ \equiv^{n+1}_\A$.
+  Това означава, че всеки клас на еквивалентност на $\equiv^{|Q|}_\A$ съдържа точно едно състояние, защото
+  всеки клас на еквивалентност съдържа поне едно състояние, а ние имаме точно $|Q|$ на брой състояния.
+  Тогава със сигурност имаме, че $\equiv^{|Q|}_\A\ =\ \equiv^{|Q|+1}_\A$,
+  защото
+  \[p \equiv^{|Q|+1}_\A q \implies p \equiv^{|Q|}_\A q\]
+  и няма как $\equiv^{|Q|+1}_\A$ да ,,раздроби'' някой клас на $\equiv^{|Q|}_\A$.
+  Тогава от \Proposition{minimisation-cubic:equiv-approx} следва, че $\equiv^n_\A\ =\ \equiv_\A$.
+\end{proof}
 
 % \mynote{\cite{khoussainov-nerode}}
 
@@ -109,13 +155,13 @@
   \end{algorithmic}
 \end{algorithm}
 
-\begin{theorem}
+\begin{proposition}
   За всеки две състояния $q_i,q_j \in Q$, където $i > j$,
   \[q_i \equiv_\A q_j \iff \texttt{E[i][j] == true}.\]
-\end{theorem}
+\end{proposition}
 
 \begin{problem}
-  Съобразете, че алгоритъм \ref{alg:minimisation-cube} има времева сложност $\mathcal{O}(|\A|^3)$.
+  Съобразете, че \Algorithm{minimisation-cube} има времева сложност $\mathcal{O}(|\A|^3)$.
 \end{problem}
 
 
