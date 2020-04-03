@@ -47,24 +47,6 @@
 \end{framed}
 \begin{proof}
   \mynote{\cite[стр. 99]{papadimitriou}}
-  % \begin{itemize}
-  % \item
-  %   Нека $n = 0$. Тогава:
-  %   \mynote{Да напомним, че: \[p \equiv^0_\A q \iff (p \in F \iff q \in F).\]}
-  %   \begin{align*}
-  %     p \equiv^1_\A q \iff & (\delta^\star(p,\varepsilon) \in F \iff \delta^\star(q,\varepsilon) \in F)\ \& \\
-  %                          & (\forall a\in\Sigma)[\delta^\star(p,a) \in F \iff \delta^\star(q,a) \in F]\\
-  %                     \iff & (p \in F \iff q \in F)\ \& \\
-  %                          & (\forall a\in\Sigma)[\delta(p,a) \in F \iff \delta(q,a) \in F]\\
-  %                     \iff & p \equiv^0_\A q\ \&\ (\forall a\in\Sigma)[\delta(p,a) \equiv^0_\A \delta(q,a)]).
-  %   \end{align*}
-  % \item
-  %   Нека $n > 0$, като ще използваме, че твърдението е изпълнено за $n-1$. По-точно, ще използваме, че
-  %   \mynote{Да напомним, че: \[p \equiv^n_\A q \implies p \equiv^{n-1}_\A q.\]}
-  %   \begin{align*}
-  %     p \equiv^n_\A q & \iff p \equiv^{n-1}_\A q\ \&\ (\forall a\in\Sigma)[\delta(p,a) \equiv^{n-1}_\A \delta(q,a)] & \comment\text{от И.П.}\\
-  %                     & \iff p \equiv^{n}_\A q\ \&\ (\forall a\in\Sigma)[\delta(p,a) \equiv^{n-1}_\A \delta(q,a)].
-  %   \end{align*}
   Да положим $\Sigma^{\leq n} \df \{\alpha \in \Sigma^\star \mid |\alpha| \leq n\}$.
   Получаваме еквивалентностите:
   \begin{align*}
@@ -78,8 +60,6 @@
                              & (\forall a\in\Sigma)(\forall \beta\in\Sigma^{\leq n})[\delta^\star(\delta(p,a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F]\ \&\\
     \iff & p \equiv^n_\A q\ \&\ (\forall a \in \Sigma)[ \delta(p,a) \equiv^n_\A \delta(q,a)].
   \end{align*}
-  % \end{itemize}
-  
 \end{proof}
 
 \begin{proposition}\label{pr:minimisation-cubic:equiv-all}
@@ -90,18 +70,22 @@
   \end{equation}
 \end{proposition}
 \begin{proof}
-  Ще докажем Свойство~(\ref{eq:8}) с индукция по $m > n$, като базата на индукцията е случаят $m = n + 1$, за който Свойство~(\ref{eq:8})
-  е изпълнено по условие.
-  
-  Индукционното ни предположение е, че $\equiv^n_\A\ =\ \equiv^{m}_\A$ за някое $m > n+1$.
-
-  Индукционната ни стъпка е да докажем, че $\equiv^n_\A\ =\ \equiv^{m+1}_\A$. За произволни състояния $p$ и $q$ имаме следните еквивалентности:
-  \begin{align*}
-    p \equiv^{m+1}_\A q & \iff p \equiv^m_\A q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv^m_\A \delta(q,a)] & \comment\text{от \Proposition{one-letter-test}}\\
-                        & \iff p \equiv^n_\A q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv^n_\A \delta(q,a)] & \comment\text{от И.П.}\\
-                        & \iff p \equiv^{n+1}_\A q & \comment\text{от \Proposition{one-letter-test}}\\
-                        & \iff p \equiv^n_\A q. & \comment\text{от условието}
-  \end{align*}
+  Ще докажем Свойство~(\ref{eq:8}) с индукция по $m$ за $m > n$.
+  \begin{itemize}
+  \item 
+    Базата на индукцията е случаят $m = n + 1$, за който Свойство~(\ref{eq:8})
+    е изпълнено по условие.
+  \item
+    Индукционното ни предположение е, че $\equiv^n_\A\ =\ \equiv^{m}_\A$ за някое $m > n+1$.  
+  \item
+    Индукционната ни стъпка е да докажем, че $\equiv^n_\A\ =\ \equiv^{m+1}_\A$. За произволни състояния $p$ и $q$ имаме следните еквивалентности:
+    \begin{align*}
+      p \equiv^{m+1}_\A q & \iff p \equiv^m_\A q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv^m_\A \delta(q,a)] & \comment\text{от \Proposition{one-letter-test}}\\
+                          & \iff p \equiv^n_\A q\ \&\ (\forall a \in \Sigma)[\delta(p,a) \equiv^n_\A \delta(q,a)] & \comment\text{от И.П.}\\
+                          & \iff p \equiv^{n+1}_\A q & \comment\text{от \Proposition{one-letter-test}}\\
+                          & \iff p \equiv^n_\A q. & \comment\text{от условието}
+    \end{align*}    
+  \end{itemize}
 \end{proof}
 
 \begin{proposition}\label{pr:minimisation-cubic:equiv-approx}
@@ -138,17 +122,21 @@
   $\equiv^{|Q|-1}_\A\ =\ \equiv_\A$.
 \end{proposition}
 \begin{proof}
-  Ако съществува $n < |Q| - 2$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то според \Proposition{minimisation-cubic:equiv-all} и \Proposition{minimisation-cubic:equiv-approx}
-  получаваме, че $\equiv^n_\A\ =\ \equiv^{|Q|-1}_\A\ =\ \equiv_\A$.
-
-  Нека сега приемем, че за всяко $n < |Q|-2$ е изпълнено, че $\equiv^n_\A\ \neq\ \equiv^{n+1}_\A$.
-  Това означава, че всеки клас на еквивалентност на $\equiv^{|Q|-2}_\A$ съдържа точно едно състояние, защото
-  всеки клас на еквивалентност съдържа поне едно състояние, а ние имаме точно $|Q|$ на брой състояния и поне $|Q|$ на брой класове на еквивалентност.
-  Тогава със сигурност имаме, че $\equiv^{|Q|-2}_\A\ =\ \equiv^{|Q|-1}_\A$,
-  защото
-  \[p \equiv^{|Q|-1}_\A q \implies p \equiv^{|Q|-2}_\A q\]
-  и няма как $\equiv^{|Q|-1}_\A$ да ,,раздроби'' някой клас на $\equiv^{|Q|-2}_\A$.
-  Тогава от \Proposition{minimisation-cubic:equiv-approx} следва, че $\equiv^{|Q|-1}_\A\ =\ \equiv_\A$.
+  Имаме два случая, които трябва да разгледаме.
+  \begin{itemize}
+  \item
+    Ако съществува $n < |Q| - 2$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$, то според \Proposition{minimisation-cubic:equiv-all} и \Proposition{minimisation-cubic:equiv-approx}
+    получаваме, че $\equiv^n_\A\ =\ \equiv^{|Q|-1}_\A\ =\ \equiv_\A$.
+  \item
+    Нека сега приемем, че за всяко $n < |Q|-2$ е изпълнено, че $\equiv^n_\A\ \neq\ \equiv^{n+1}_\A$.
+    Това означава, че всеки клас на еквивалентност на $\equiv^{|Q|-2}_\A$ съдържа точно едно състояние, защото
+    всеки клас на еквивалентност съдържа поне едно състояние, а ние имаме точно $|Q|$ на брой състояния и поне $|Q|$ на брой класове на еквивалентност.
+    Тогава със сигурност имаме, че $\equiv^{|Q|-2}_\A\ =\ \equiv^{|Q|-1}_\A$,
+    защото
+    \[p \equiv^{|Q|-1}_\A q \implies p \equiv^{|Q|-2}_\A q\]
+    и няма как $\equiv^{|Q|-1}_\A$ да ,,раздроби'' някой клас на $\equiv^{|Q|-2}_\A$.
+    Тогава от \Proposition{minimisation-cubic:equiv-approx} следва, че $\equiv^{|Q|-1}_\A\ =\ \equiv_\A$.
+  \end{itemize}
 \end{proof}
 
 \mynote{\cite[стр. 83]{shallit}}
@@ -171,26 +159,26 @@
     \ForAll{$p < |Q|$}
     \ForAll{$q < p$}
     \If{E[p][q]}
-    \ForAll{$a \in \Sigma$}
+    \ForAll{$a \in \Sigma$} \Comment{Прилагаме \Proposition{one-letter-test}}
     \If{! E[$\delta(p,a)$][$\delta(q,a)$]}  \Comment{$p \equiv^n_\A q$, но $\delta(p,a) \not\equiv^n_\A \delta(q,a)$}
-    \State{E[p][q] = false}
-    \State{ready = false}
+    \State{E[p][q] = false} \Comment{Тогава $p \not\equiv^{n+1}_\A q$}
+    \State{ready = false} \Comment{Имаме разцепване на клас}
     \EndIf
     \EndFor
     \EndIf
     \EndFor
     \EndFor
-    \Until{ready}
+    \Until{ready} \Comment{Ясно е, че няма да зациклим}
   \end{algorithmic}
 \end{algorithm}
 
-\begin{proposition}
-  За всеки две състояния $q_i$ и $q_j$, където $i > j$,
+\begin{problem}
+  Докажете, че за всеки две състояния $q_i$ и $q_j$, където $i > j$,
   \[q_i \equiv_\A q_j \iff \texttt{E[i][j] == true}.\]
-\end{proposition}
+\end{problem}
 
 \begin{problem}
-  Съобразете, че \Algorithm{minimisation-cube} има времева сложност $\mathcal{O}(|\A|^3)$.
+  Съобразете, че \Algorithm{minimisation-cube} има времева сложност $\mathcal{O}(|\Sigma| \cdot |Q|^3)$.
 \end{problem}
 
 
