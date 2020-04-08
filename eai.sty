@@ -1,23 +1,30 @@
 
-\newcommand{\FA}{\langle{\Sigma,Q,\qstart,\delta,F}\rangle}
-\newcommand{\FAn}[1]{\langle{\Sigma,Q_#1,s_#1,\delta_#1,F_#1}\rangle}
-\newcommand{\NFA}{\langle{\Sigma,Q,Q_{\texttt{start}},\Delta,F}\rangle}
-\newcommand{\NFAn}[1]{\langle{\Sigma,Q_#1,S_#1,\Delta_#1,F_#1}\rangle}
-\newcommand{\PDA}{\langle{Q,\Sigma,\Gamma,\sharp,\Delta,\qstart,\qaccept}\rangle}
-\newcommand{\PDAn}[1]{\langle{Q_#1,\Sigma,\Gamma,\#,\s_#1,\Delta_#1,F_#1}\rangle}
-\newcommand{\CFG}{\langle{V,\Sigma,R,S}\rangle}
-\newcommand{\TM}{\langle{Q,\Sigma,\Gamma,\delta,\blank,\qstart,\qaccept, \qreject}\rangle}
+\newcommand*{\FA}{\langle{\Sigma,Q,\qstart,\delta,F}\rangle}
+\newcommand*{\FAn}[1]{\langle{\Sigma,Q_#1,s_#1,\delta_#1,F_#1}\rangle}
+\newcommand*{\NFA}{\langle{\Sigma,Q,Q_{\texttt{start}},\Delta,F}\rangle}
+\newcommand*{\NFAn}[1]{\langle{\Sigma,Q_#1,S_#1,\Delta_#1,F_#1}\rangle}
+\newcommand*{\PDA}{\langle{Q,\Sigma,\Gamma,\sharp,\Delta,\qstart,\qaccept}\rangle}
+\newcommand*{\PDAn}[1]{\langle{Q_#1,\Sigma,\Gamma,\#,\s_#1,\Delta_#1,F_#1}\rangle}
+\newcommand*{\CFG}{\langle{V,\Sigma,R,S}\rangle}
+\newcommand*{\TM}{\langle{Q,\Sigma,\Gamma,\delta,\blank,\qstart,\qaccept, \qreject}\rangle}
 
 
-\newcommand{\card}[2]{\vert{#1}\vert_{#2}}
-\newcommand{\bin}[1]{\overline{#1}_{(2)}}
+\newcommand*{\card}[2]{\vert{#1}\vert_{#2}}
+\newcommand*{\bin}[1]{\overline{#1}_{(2)}}
 
+
+% Grammars
+
+\newcommand*{\derive}[1]{\stackrel{{#1}}{\Rightarrow}}
+\newcommand*{\lderive}[1]{\stackrel{{#1}}{\Rightarrow}_{\texttt{left}}}
+\newcommand*{\uppercut}[2]{{#1}\upharpoonright_{#2}}
+\newcommand*{\lowercut}[2]{{#1}\downharpoonright_{#2}}
 
 
 % Turing Machines
 
 \newcommand*{\blank}{\sqcup}
-\newcommand{\tape}[1]{\cdots\blank\blank\blank{#1}\blank\blank\blank\cdots}
-\newcommand{\goleft}{\lhd}
-\newcommand{\goright}{\rhd}
-\newcommand{\stay}{\Box}
+\newcommand*{\tape}[1]{\cdots\blank\blank\blank{#1}\blank\blank\blank\cdots}
+\newcommand*{\goleft}{\lhd}
+\newcommand*{\goright}{\rhd}
+\newcommand*{\stay}{\Box}

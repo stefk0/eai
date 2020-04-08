@@ -14,7 +14,7 @@
 \item
   \index{език!безконтекстен}
   $L$ се нарича {\bf безконтекстен език}, ако съществува безконтекстна граматика $G$, за която 
-  $L = \L(G) = \{\omega \in \Sigma^\star \mid S \to^\star_G \omega\}$.
+  $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{itemize}
 
 \begin{remark}
@@ -121,12 +121,17 @@
 
 \begin{proposition}
   \label{pr:grammar:add}
-  Ако $\alpha \stackrel{n}{\to}_G \beta$ и $\gamma \in (V \cup \Sigma)^\star$, то $\alpha\gamma \stackrel{n}{\to}_G \beta \gamma$ и $\gamma\alpha \stackrel{n}{\to}_G \gamma \beta$.
+  Нека $\alpha \derive{n} \beta$. Тогава за произволна дума $\gamma \in (V \cup \Sigma)^\star$ е изпълнено, че:
+  \begin{align*}
+    & \alpha\gamma \derive{n} \beta \gamma,\\
+    & \gamma\alpha \derive{n} \gamma \beta.
+  \end{align*}
 \end{proposition}
 
 \begin{proposition}
   \label{pr:grammar:concat}
-  Ако $\alpha_1 \stackrel{n_1}{\to}_G \beta_1, \dots, \alpha_k \stackrel{n_k}{\to}_G \beta_k$, тогава $\alpha_1\cdots\alpha_k \stackrel{n}{\to}_G \beta_1\cdots\beta_k$,
+  Ако $\alpha_1 \derive{n_1} \beta_1, \dots, \alpha_k \derive{n_k} \beta_k$, тогава
+  \[\alpha_1\cdots\alpha_k \derive{n} \beta_1\cdots\beta_k,\]
   където $n = \sum^k_{i=1} n_i$.
 \end{proposition}
 \begin{proof}
@@ -136,13 +141,13 @@
     За $k = 1$ е очевидно. В този случай $n_1 = n$.
   \item
    Нека $k > 1$. Тогава от И.П. за $k-1$ имаме, че
-   $\alpha_1\cdots\alpha_{k-1} \stackrel{n'}{\to} \beta_1\cdots\beta_{k-1}$ и $n' = \sum^{k-1}_{i=1} n_i$.
+   $\alpha_1\cdots\alpha_{k-1} \derive{n'} \beta_1\cdots\beta_{k-1}$ и $n' = \sum^{k-1}_{i=1} n_i$.
    От \Proposition{grammar:add} имаме, че
-   \[\alpha_1\cdots\alpha_{k-1}\alpha_{k} \stackrel{n'}{\to} \beta_1\cdots\beta_{k-1}\alpha_k.\]
-   Понеже $\alpha_k \stackrel{n_k}{\to}_G \beta_k$, отново от \Proposition{grammar:add} получаваме, че
-   \[\beta_1\cdots\beta_{k-1}\alpha_k \stackrel{n_k}{\to}_G \beta_1 \cdots \beta_{k-1}\beta_k.\]
+   \[\alpha_1\cdots\alpha_{k-1}\alpha_{k} \derive{n'} \beta_1\cdots\beta_{k-1}\alpha_k.\]
+   Понеже $\alpha_k \derive{n_k} \beta_k$, отново от \Proposition{grammar:add} получаваме, че
+   \[\beta_1\cdots\beta_{k-1}\alpha_k \derive{n_k} \beta_1 \cdots \beta_{k-1}\beta_k.\]
    Сега обединяваме двата извода и получаваме, че
-   \[\alpha_1\cdots\alpha_{k} \stackrel{n}{\to} \beta_1\cdots\beta_k,\]
+   \[\alpha_1\cdots\alpha_{k} \derive{n} \beta_1\cdots\beta_k,\]
    където $n = \sum^k_{i=1} n_i$.
   \end{itemize}
 \end{proof}
@@ -150,9 +155,9 @@
 \begin{framed}
   \begin{proposition}
     \label{pr:grammar:divide}
-    Нека $\alpha_1\cdots \alpha_k \stackrel{n}{\to}_G \beta$.
+    Нека $\alpha_1\cdots \alpha_k \derive{n}_G \beta$.
     Тогава съществуват думи $\beta_1,\dots,\beta_k$, такива че за $i = 1,\dots, k$ е изпълнено, че
-    $\alpha_i \stackrel{n_i}{\to}_G \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $n = \sum^k_{i = 1}n_i$.
+    $\alpha_i \derive{n_i} \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $n = \sum^k_{i = 1}n_i$.
   \end{proposition}
 \end{framed}
 \begin{proof}
@@ -161,16 +166,16 @@
   \item
     Нека $n = 0$. Тогава $\beta = \alpha_1 \cdots \alpha_k$ и е ясно, че в този случай $\beta_i = \alpha_i$ и $n_i = 0$.
   \item
-    Нека $n > 0$ и $\alpha_1\cdots \alpha_k \stackrel{n}{\to}_G \beta$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
+    Нека $n > 0$ и $\alpha_1\cdots \alpha_k \derive{n} \beta$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
     като приложим \Proposition{grammar:add} получаваме, че
     \[\alpha_1\cdots\alpha_i\cdots\alpha_k \to_G \alpha_1\cdots\alpha'_i\cdots\alpha_k.\]
-    Според дефиницията на релацията $\stackrel{n}{\to}_G$ имаме, че
+    Според дефиницията на релацията $\derive{n}$ имаме, че
     \[\alpha_1\cdots\alpha'_i\cdots\alpha_k \stackrel{n-1}{\to}_G \beta.\]
     От И.П. получаваме, че съществуват думи $\beta_1,\dots,\beta_k$, такива че $\beta = \beta_1 \cdots \beta_k$
-    и $\alpha_j \stackrel{n_j}{\to}_G \beta_j$ за $j \neq i$ и $\alpha'_i \stackrel{n'_i}{\to}_G \beta_i$, като
+    и $\alpha_j \derive{n_j} \beta_j$ за $j \neq i$ и $\alpha'_i \derive{n'_i} \beta_i$, като
     \[n-1 = n'_i + \sum_{j\neq i} n_j.\]
-    Понеже имаме, че $\alpha_i \to_G \alpha'_i \stackrel{n'_i}{\to}_G \beta_i$,
-    то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \stackrel{n_i}{\to}_G \beta_i$ и
+    Понеже имаме, че $\alpha_i \to_G \alpha'_i \derive{n'_i}\beta_i$,
+    то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \derive{n_i} \beta_i$ и
     \[n = \sum^{k}_{i=1} n_i.\]
   \end{itemize}
 \end{proof}

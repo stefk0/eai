@@ -1,5 +1,9 @@
 \section{Дървета на извод}
 
+\newcommand{\high}{\texttt{height}}
+\newcommand{\leaves}{\texttt{leaves}}
+\newcommand{\successor}{\texttt{succ}}
+
 \tikzset{
   photon/.style={decorate, decoration={snake}, draw=black}
 }
@@ -7,10 +11,12 @@
 \mynote{Понятието дърво е едно от най-основните в информатиката и може да се дефинира по много различни начини, в зависимост от това за какви цели се използва. Тук на практика следваме \cite{nerode-shore}, защото е важно да имаме наредба между възлите на дървото.}
 \begin{itemize}
 \item
-  За всеки две думи $\alpha$ и $\beta$ над $\{0,1,\dots,b-1\}$, с $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$.
+  За фиксирано $b \in \Nat$, ще разглеждаме думи $\alpha$ и $\beta$ над азбуката $\{0,1,\dots,b-1\}$.
+\item
+  С $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$.
 \item
   \index{наредба!лексикографска}
-  За две думи $\alpha$ и $\beta$ над $\{0,1,\dots,b-1\}$ ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
+  Ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
   \[(\exists i < \min\{|\alpha|,|\beta|\})[\ (\forall j < i)[\ \alpha[j] = \beta[j]\ ]\ \&\ \alpha[i] < \beta[i]\ ].\]
 \item
   \index{дърво}
@@ -23,24 +29,28 @@
 \item
   Нека да въведем следните означения:
   \begin{align*}
-    & \texttt{height}(T) \df \max\{\ \abs{\alpha}\ \mid\ \alpha \in T\ \} & \comment\text{височина}\\
-    & \texttt{ext}_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\ \&\ i < b\} & \comment\text{наследниците на }\alpha\\
+    & \high(T) \df \max\{\ \abs{\alpha}\ \mid\ \alpha \in T\ \} & \comment\text{височина}\\
+    & \successor_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\ \&\ i < b\} & \comment\text{наследниците на }\alpha\\
     & T_\alpha \df \alpha^{-1}(T) & \comment\text{поддървото на }\alpha\\
-    & \texttt{front}(T) \df \{ \alpha \in T \mid \texttt{ext}_T(\alpha) = \emptyset \}. & \comment\text{листата на }T
+    & \leaves(T) \df \{ \alpha \in T \mid \successor_T(\alpha) = \emptyset \}. & \comment\text{листата на }T
   \end{align*}
 
-  \begin{tikzpicture}
-    \coordinate (A) at (0,0);
-    \coordinate (B) at (-2,-3);
-    \coordinate (C) at (2,-3);
-    \coordinate (D) at (0,-1.5);
-    \coordinate (E) at (-1,-3);
-    \coordinate (F) at (1,-3);
-    \draw (A) -- node[above left]{$T$} (B) -- node[below]{$T_\alpha$}(C) -- (A);
-    \draw (D) -- (E);
-    \draw (D) -- (F);
-    \draw [photon] (A) -- node[left]{$\alpha$} (D);
-  \end{tikzpicture}
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \coordinate (A) at (0,0);
+      \coordinate (B) at (-2,-3);
+      \coordinate (C) at (2,-3);
+      \coordinate (D) at (0,-1.5);
+      \coordinate (E) at (-1,-3);
+      \coordinate (F) at (1,-3);
+      \draw (A) -- node[above left]{$T$} (B) -- node[below]{$T_\alpha$}(C) -- (A);
+      \draw (D) -- (E);
+      \draw (D) -- (F);
+      \draw [photon] (A) -- node[left]{$\alpha$} (D);
+    \end{tikzpicture}
+    \caption{Поддърво $T_\alpha$ на $T$.}
+  \end{figure}  
 \item
   Нека фиксираме граматиката $G = (\Sigma,V,S,R)$.
   С всяко дърво $T$ ще асоциираме функцията $\lambda: T \to V \cup \Sigma \cup \{\varepsilon\}$.
@@ -67,12 +77,12 @@
   За дървото на извод $P$, нека
   \[\texttt{root}(P) \df X_\varepsilon.\]
 \item
-  Нека $\alpha_0, \alpha_1,\dots,\alpha_k$ са всички думи от множеството $\texttt{front}(T)$
+  Нека $\alpha_0, \alpha_1,\dots,\alpha_k$ са всички думи от множеството $\leaves(T)$
   подредени във възходящ ред относно лексикографската наредба. Тогава 
   \[\texttt{yield}(P) \df X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}.\]
 \item
   \mynote{В \cite[стр. 123]{papadimitriou} дават рекурсивна дефиниция на дърво на извод.}
-  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$.
+  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$.
   За всяко $\alpha \in T$, дефинираме $\lambda_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
   \[\lambda_\alpha(\beta) \df \lambda(\alpha \cdot \beta).\]
 \item
@@ -90,24 +100,27 @@
   Да разгледаме дървото на извод $P = (T, \lambda)$, където:
 
   \begin{framed}
+    \begin{figure}[H]
     \qtreecenterfalse
     \Tree [.$\varepsilon$ $0$ [.$1$ $10$ [.$11$ [.$110$ $1100$ [.$1101$ $11010$ ] $1102$ ] ] $12$ ] ]
     \hskip 0.4in
     $\stackrel{\lambda}{\Rightarrow}$
     \hskip 0.4in
-    \Tree [.S a [.S a [.S [.B b [.B $\varepsilon$ ] c ] ] c ] ]      
+    \Tree [.S a [.S a [.S [.B b [.B $\varepsilon$ ] c ] ] c ] ]
+    \caption{Дърво на извод за думата $aabcc$.}      
+    \end{figure}
   \end{framed}
 
   Имаме, че:
   \begin{itemize}
   \item
-    $\texttt{height}(T) = 5$;
+    $\high(T) = 5$;
   \item
-    $\texttt{front}(T) = \{0, 10, 1100, 11010, 1102, 12\}$;
+    $\leaves(T) = \{0, 10, 1100, 11010, 1102, 12\}$;
   \item
     $\texttt{yield}(P) = aab\varepsilon cc = aabcc$.
   \item
-    $\texttt{ext}_T(110) = \{1100, 1101, 1102\}$;
+    $\successor_T(110) = \{1100, 1101, 1102\}$;
   \item
     $\lambda(\varepsilon) = S$;
   \item
@@ -138,75 +151,76 @@
   Докажете, че:
   \begin{itemize}
   \item
-    $T = \texttt{Pref}(\texttt{front}(T))$;
+    $T = \texttt{Pref}(\leaves(T))$;
   \item
-    $T = T' \iff \texttt{front}(T) = \texttt{front}(T')$.
+    $T = T' \iff \leaves(T) = \leaves(T')$.
   \end{itemize}
 \end{problem}
 
 \begin{lemma}
   Нека $T \subseteq \{0,\dots,b-1\}^\star$ е крайно дърво. Тогава
-  \[ |\texttt{front}(T)| \leq b^{\texttt{height}(T)}.\]
+  \[ |\leaves(T)| \leq b^{\high(T)}.\]
 \end{lemma}
 \begin{proof}
-  Индукция по $\texttt{height}(T)$.
+  Индукция по $\high(T)$.
   \begin{itemize}
   \item
-    Нека $\texttt{height}(T) = 0$. Тогава е ясно, че $|\texttt{front}(T)| = |\{\varepsilon\}| = 1 \leq b^0$.
+    Нека $\high(T) = 0$. Тогава е ясно, че $|\leaves(T)| = |\{\varepsilon\}| = 1 \leq b^0$.
   \item
-    Нека $\texttt{height}(T) > 0$.
-    За всяко $i \in T$ е ясно, че $\texttt{height}(T_i) < \texttt{height}(T)$. Тогава:
-    \mynote{$\texttt{front}(T) = \bigcup_{i\in T} i\cdot \texttt{front}(T_i)$.}
+    Нека $\high(T) > 0$.
+    За всяко $a \in T$ е ясно, че $\high(T_a) < \high(T)$. Тогава:
+    \mynote{В този случай имаме, че $\leaves(T) = \bigcup_{a\in T} (\{a\}\cdot \leaves(T_a))$. Тук гледаме на $a$ и $b$ от една страна като букви в азбука, но и като числа.}
     \begin{align*}
-      |\texttt{front}(T)| & = \sum_{i \in T}|\texttt{front}(T_i)| \\
-                          & \leq \sum_{i\in T}b^{\texttt{height}(T_i)} & \comment\text{от И.П.}\\
-                          & \leq \sum_{i < b}b^{\texttt{height}(T_i)} \\
-                          & \leq \sum_{i < b}b^{\texttt{height}(T)-1} & \comment \texttt{height}(T_i) \leq \texttt{height}(T)-1 \\
-                          & = b^{\texttt{height}(T)}.
+      |\texttt{leaves}(T)| & = \sum_{a \in T}|\texttt{leaves}(T_a)|\\
+                           & \leq \sum_{a \in T} b^{\high(T_a)} & \comment\text{от И.П.}\\
+                           & \leq \sum_{a < b} b^{\high(T_a)}\\
+                           & \leq \sum_{a < b} b^{\high(T) -1} & \comment \high(T_a) \leq \high(T)-1 \\
+                           & = b^{\high(T)}.
     \end{align*}
   \end{itemize}
 \end{proof}
 
 \begin{framed}
-  \begin{cor}
+  \begin{corollary}
     \label{cor:tree:upper-bound}
     Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$. Тогава
-    \[|\texttt{yield}(T)| \leq b^{\texttt{height}(T)}.\]
-  \end{cor}  
+    \[|\texttt{yield}(T)| \leq b^{{\high}(T)}.\]
+  \end{corollary}
 \end{framed}
 \begin{proof}
   Следва директно от горното твърдение след като съобразим, че
-  \[|\texttt{yield}(P)| \leq |\texttt{front}(T)|.\]
+  \[|\texttt{yield}(P)| \leq |\leaves(T)|.\]
 \end{proof}
 
 \begin{framed}
   \begin{lemma}
     Нека $X \to^\star_G \beta$.
-    Тогава съществува дърво на извод $P = (T,\lambda)$ с корен $X$ за думата $\beta$ в $G$.
+    Тогава съществува дърво на извод $P = (T,\lambda)$ с корен $X$ за думата $\beta \in (V\cup\Sigma)^\star$ в граматиката $G$,
+    т.е. $\beta = \texttt{yield}(P)$.
   \end{lemma}  
 \end{framed}
 \begin{proof}
-  Индукция по дължината на извода $X \stackrel{\ell}{\to}_G \beta$.
+  Индукция по дължината на извода $X \derive{\ell} \beta$.
   \begin{itemize}
   \item
-    $\ell = 0$, т.е. $X \stackrel{0}{\to}_G X$.
-    Тогава $T = \{\varepsilon\}$ и $\lambda(\varepsilon) = X$.
-    Ясно е, че $\texttt{ext}_T(\varepsilon) = \emptyset$ и следователно $\texttt{yield}(P) = X$.
+    $\ell = 0$, т.е. $X \derive{0} X$.
+    Тогава можем да дефинираме дърво на извод $P = (T,\lambda)$, където $T = \{\varepsilon\}$ и $\lambda(\varepsilon) = X$.
+    Ясно е, че $\successor_T(\varepsilon) = \emptyset$ и следователно $\texttt{yield}(P) = X$.
   \item
     \mynote{Знаем, че $k < b$.}
-    Нека $\ell > 0$ и $X \stackrel{\ell}{\to}_G \beta$.
+    Нека $\ell > 0$ и $X \derive{\ell} \beta$.
     Да разгледаме извода
-    \[X \to_G X_0X_1\cdots X_k \stackrel{\ell-1}{\to}_G \beta.\]
+    \[X \derive{1} X_0X_1\cdots X_k \derive{\ell-1} \beta.\]
     От \Proposition{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
     \begin{itemize}
     \item
       $\beta = \beta_0 \cdots \beta_{k}$;
     \item
-      $X_i \stackrel{l_i}{\to}_G \beta_i$, за $i = 0,\dots,k$;
+      $X_i \derive{\ell_i} \beta_i$, за всяко $i = 0,\dots,k$;
     \item
       $\ell-1 = \sum^k_{i=1} \ell_i$.
     \end{itemize}
-    От И.П. имаме, че същствуват дървета на извод $P^{i} = (T^i,\lambda^i)$ съвместими с $G$, такива че:
+    От И.П. имаме, че същствуват дървета на извод $P^{i} = (T^i,\lambda^i)$ съвместими с граматиката $G$, такива че:
     \begin{itemize}
     \item
       $\lambda^i(\varepsilon) = X_i$;
@@ -228,38 +242,48 @@
 
 \begin{framed}
   \begin{lemma}
-    Нека $P = (T,\lambda)$ е дърво на извод за думата $\beta$ в $G$.
-    Тогава $X_\varepsilon \to^\star_G \beta$.
+    Нека $P = (T,\lambda)$ е дърво на извод за думата $\beta \in (V\cup\Sigma)^\star$ в граматиката $G$.
+    Тогава $X_\varepsilon \derive{\star} \beta$.
   \end{lemma}
 \end{framed}
 \begin{proof}
-  Индукция по $\texttt{height}(T)$.
+  Индукция по $\high(P)$.
   \begin{itemize}
   \item
-    Нека $\texttt{height}(T) = 0$. Това означава, че $T = \{\varepsilon\}$ и $\texttt{yield}(P) = X_\varepsilon$.
+    Нека $\high(P) = 0$. Това означава, че $T = \{\varepsilon\}$ и $\texttt{yield}(P) = X_\varepsilon$.
     Ясно е, че $X_\varepsilon \to^\star_G X_\varepsilon$.
   \item
-    Нека $\texttt{height}(T) > 0$ и $\beta = \texttt{yield}(T)$.
-    Нека $|\texttt{ext}_P(\varepsilon)| = k+1$.
-    Понеже $P$ е съвместимо с $G$, то
-    \[X_\varepsilon \to_G X_{0}\cdots X_{k}.\]
-    Лесно се съобразява, че $P_i \df (T_i,f_i)$ са дървета на извод съвместими с $G$ и
-    $\texttt{height}(T_i) < \texttt{height}(T)$. Нека $\beta_i = \texttt{yield}(T_i)$.
-    Също така е ясно, че $\beta = \beta_0 \cdots \beta_{k}$.
-    Тогава от И.П. получаваме, че за $i \leq k$,
-    \[X_i \stackrel{\ell_i}{\to}_G \beta_i.\]
+    Нека $\high(P) > 0$ и $\beta = \texttt{yield}(P)$ и приемаме, че твърдението е изпълнено за дървета на извод $\hat{P}$ с $\high(\hat{P}) < \high(P)$.    
+    Нека $|\successor_P(\varepsilon)| = k$.
+    Понеже $P$ е дърво на извод съвместимо с граматиката $G$, то
+    \[X_\varepsilon \to_G X_{0}\cdots X_{k-1}.\]
+    Лесно се съобразява, че за $i < k$, дърветата на извод $P_i \df (T_i,f_i)$ са съвместими с $G$ и
+    $\high(P_i) < \high(P)$. Нека $\beta_i = \texttt{yield}(P_i)$.
+    Също така е ясно, че $\beta = \beta_0 \cdots \beta_{k-1}$.
+    Тогава от И.П. получаваме, че за $i < k$,
+    \[X_i \derive{\ell_i} \beta_i.\]
     Сега прилагаме \Proposition{grammar:concat} и получаваме, че
-    \[X_\varepsilon \to_G X_0\cdots X_k \to^\star_G \beta_0 \cdots \beta_k.\]
+    \[X_\varepsilon \to_G X_0\cdots X_{k-1} \derive{\star} \beta_0 \cdots \beta_{k-1}.\]
     Заключаваме, че
-    \[X_\varepsilon \to^\star_G \beta.\]
+    \[X_\varepsilon \derive{\star} \beta.\]
   \end{itemize}
 \end{proof}
 
+\begin{framed}
+\begin{theorem}
+  Нека $G$ е произволна безконтекстна граматика.
+  Тогава $\alpha \in \L(G)$ точно тогава, когато съществува дърво на извод $P$, съвместимо с $G$, с корен $S$ за думата $\beta$.
+\end{theorem}  
+\end{framed}
+
+
+
 \begin{problem}
-  Нека $P = (T,\lambda)$ е дърво на извод за думата $\alpha$ в $G$. Докажете, че съществува извод
-  \mynote{Ясно е, че $\ell < b^{\texttt{height}(T)}$.}
+  Нека $P = (T,\lambda)$ е дърво на извод за думата $\alpha \in (V\cup\Sigma)^\star$ в граматиката $G$.
+  Докажете, че съществува извод
+  \mynote{Ясно е, че $\ell < b^{\high(T)}$.}
   $X_\varepsilon \stackrel{\ell}{\to}_G \alpha$, където
-  \[\ell \leq \sum_{i < \texttt{height}(T)}b^i.\]
+  \[\ell \leq \sum_{i < \high(T)}b^i.\]
 \end{problem}
 
 \begin{problem}
@@ -269,7 +293,7 @@
 \begin{hint}
   Нека $\beta = \alpha \cdot \gamma$. Тогава имаме следното дърво:
   
-  \begin{figure}[htp]
+  \begin{figure}[H]
     \centering
     \begin{tikzpicture}
       \coordinate (A) at (0,0);
@@ -298,29 +322,33 @@
 \end{hint}
 
 \begin{problem}
-  Нека $P = (T,\lambda)$ и $P' = (T',\lambda')$ са дървета на извод съвместими с $G$ и нека
+  Нека $P = (T,\lambda)$ и $P' = (T',\lambda')$ са дървета на извод съвместими с граматиката $G$ и нека
+  имаме думи $\omega_1, \omega_2 \in \Sigma^\star$, за които
+  \mynote{Това означава, че съществува $\alpha \in T$, за което $\lambda(\alpha) = \texttt{root}(P') = \lambda'(\varepsilon)$.}
   \[\texttt{yield}(P) = \omega_1 \cdot \texttt{root}(P') \cdot \omega_2.\]
-  Това означава, че съществува $\alpha$, за което $\lambda(\alpha) = \texttt{root}(P')$.
-
   Дефинираме $P'' = (T'',\lambda'')$ по следния начин:
   \begin{itemize}
   \item
     \mynote{Ясно е, че $\alpha \in T$ и $\alpha \in \alpha\cdot T'$, но понеже $X_\alpha = X'_\varepsilon$, то нямаме проблем.}
-    $T'' \df T \cup \alpha \cdot T'$;
+    $T'' \df T \cup \{\alpha\} \cdot T'$;
   \item
+    Сега трябва да дефинираме функцията $\lambda'' : T'' \to V \cup \Sigma \cup \{\varepsilon\}$.
+    
     $\lambda''(\gamma) \df
     \begin{cases}
       \lambda(\gamma), & \text{ако }\gamma \in T\\
-      \lambda'(\beta), & \text{ако }\beta \in \alpha \cdot T'\ \&\ \gamma = \alpha \cdot \beta.
+      \lambda'(\beta), & \text{ако }\gamma = \alpha \cdot \beta\ \&\ \beta \in T'
     \end{cases}$
-    
-    Понеже $\alpha \in \texttt{front}(T)$ и $\lambda(\alpha) = \lambda'(\varepsilon)$, то функцията $\lambda''$ е коректно дефинирана.
+
+    \mynote{Тук трябва да сме внимателни, защото двата случая на дефиницията на $\lambda''$  се засичат за $\gamma = \alpha$.
+      Понеже $\alpha \in \texttt{leaves}(T)$ и $\lambda(\alpha) = \lambda'(\varepsilon)$, то функцията $\lambda''$ е коректно дефинирана.}
   \end{itemize}
-  Тогава $P''$ е дърво на извод съвместимо с $G$ и
+  \index{дърво на извод!конкатенация}
+  Тогава $P''$ е дърво на извод съвместимо с граматиката $G$ и
   \[\texttt{yield}(P'') = \omega_1 \cdot \texttt{yield}(P') \cdot \omega_2.\]
-  Нека в такъв случай да означаваме $P'' = P \odot P'$.
+  Нека в такъв случай да означаваме $P'' = P \odot P'$ и ще казваме, че $P''$ е конкатенацията на $P$ и $P'$.
   
-  \begin{figure}[htp]
+  \begin{figure}[H]
     \begin{subfigure}[t]{0.5\textwidth}
       \centering
       \begin{tikzpicture}
@@ -356,17 +384,23 @@
         \end{tikzpicture}
         \caption{$P'' = P \odot P'$}
       \end{subfigure}
+      \caption{Конкатенация на дървета}
     \end{figure}
   \end{problem}
   
-  Сега да разгледаме частния случай, когато $P = P'$. Тогава имаме, че $X_\varepsilon = X_\alpha$.
+  Сега да разгледаме частния случай, когато разгледаме $P$ вместо $P'$ в горните условия. Тогава имаме, че $X_\varepsilon = X_\alpha$.
   Дефинираме $n$-тата степен на дървото $P$ по следния начин:
   \begin{itemize}
 \item
-  $P^{(0)} = (T_0,\lambda_0)$, където $T_0 = \{\varepsilon\}$ и $\lambda_0(\varepsilon) = \texttt{root}(P)$;
+  $P^{(0)} \df (T_0,\lambda_0)$, където $T_0 = \{\varepsilon\}$ и $\lambda_0(\varepsilon) = \texttt{root}(P)$;
 \item
-  $P^{(n+1)} = P^{(n)} \odot P$.
+  $P^{(n+1)} \df P^{(n)} \odot P$.
 \end{itemize}
+
+\begin{problem}
+  Докажете, че $P \odot (P \odot P) = (P \odot P) \odot P$.
+\end{problem}
+
 
 \begin{problem}
   Докажете, че $P^{(n+k)} = P^{(n)} \odot P^{(k)}$.
@@ -375,8 +409,8 @@
 \begin{framed}
   \begin{problem}
     \label{prob:tree:iteration}
-    Нека $\texttt{yield}(P) = \omega_1 \cdot \texttt{root}(P) \cdot \omega_2$.
-    Докажете, че за всяко естествено число $i$,
+    Нека $\texttt{yield}(P) = \omega_1 \cdot \texttt{root}(P) \cdot \omega_2$, за някои думи $\omega_1, \omega_2 \in \Sigma^\star$.
+    Докажете, че за всяко естествено число $i$ е изпълнено, че:
     \[\texttt{yield}(P^{(i)}) = \omega^i_1 \cdot \texttt{root}(P) \cdot \omega^i_2.\]
   \end{problem}
 \end{framed}
@@ -420,21 +454,23 @@
       \end{tikzpicture}
       \caption{$\texttt{yield}(P^{(2)}) = \omega^2_1 \cdot \texttt{root}(P) \cdot \omega^2_2$}
     \end{subfigure}
+    \caption{Степенуване на $P$.}
   \end{figure}
 \end{hint}
 
 \begin{problem}
-  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$ и $\alpha \in T$.
-  Дефинираме $P \setminus P_\alpha = (T',\lambda')$ по следния начин:
+  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$ и нека разгледаме думата $\alpha \in T$.
+  % Дефинираме $P \setminus P_\alpha = (T',\lambda')$ по следния начин:
+  Дефинираме $\uppercut{P}{\alpha} = (T',\lambda')$ по следния начин:
   \begin{itemize}
   \item
     \mynote{Съобразете, че $\alpha \in \texttt{front}(T')$.}
-    $T' = T \setminus \{ \gamma \in T\mid \alpha \prec \gamma\}$;
+    $T' = T \setminus \{ \gamma \in T\mid \alpha \prec \gamma\}$, т.е. взимаме същинските разширения на $\alpha$
   \item
     $\lambda'(\gamma) = \lambda(\gamma)$ за $\gamma \in T'$.
   \end{itemize}
-  Докажете, че $P\setminus P_\alpha$ е дърво на извод съвместимо с $G$ и 
-  \[P = (P\setminus P_\alpha) \odot P_\alpha.\]
+  Докажете, че $\uppercut{P}{\alpha}$ е дърво на извод съвместимо с граматиката $G$ и 
+  \[P = (\uppercut{P}{\alpha}) \odot (\lowercut{P}{\alpha}).\]
 \end{problem}
 \begin{hint}
   Имаме следната картинка:
@@ -476,38 +512,48 @@
         \coordinate (H) at (-0.9,-3.3);
         \coordinate (I) at (0.9,-3.3);
         
-        \draw (A) -- node[above left]{${\scriptstyle P\setminus P_\alpha}\ =\ $}(B) -- (D) -- (F) -- (E) -- (C) -- (A);
-        \draw (G) -- node[left]{${\scriptstyle P_\alpha}\ =\ $} (H) -- (I) -- (G);
+        \draw (A) -- node[above left]{${\scriptstyle \uppercut{P}{\alpha}}\ =\ $}(B) -- (D) -- (F) -- (E) -- (C) -- (A);
+        \draw (G) -- node[left]{${\scriptstyle \lowercut{P}{\alpha}}\ =\ $} (H) -- (I) -- (G);
       \end{tikzpicture}
-      \caption{$\texttt{yield}(P\setminus P_\alpha) = \omega_1 \cdot \texttt{root}(P_\alpha) \cdot \omega_2$}
+      \caption{$\texttt{yield}(\uppercut{P}{\alpha}) = \omega_1 \cdot \texttt{root}(\lowercut{P}{\alpha}) \cdot \omega_2$}
     \end{subfigure}
   \end{figure}
 \end{hint}
 
 
-\subsection*{Ляв извод в граматика}
-
+\subsection*{Най-ляв извод в граматика}
+\index{граматика!най-ляв извод}
 В нашата дефиниция на извод, изборът върху коя променлива да приложим правило от граматиката е недетерминистичен.
 В някои случаи, за нас ще бъде важно винаги да правим детерминистичен избор на това върху коя променлива прилагаме правило.
 
-За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf ляв извод} в граматиката $G$, $\alpha \to_{G,\texttt{L}} \beta$,  по следния начин:
-ако $\alpha = \alpha_1A\alpha_2$ и $\alpha_1 \in \Sigma^\star$, $A \to_G \gamma$ е правило в граматиката $G$, то
-$\beta = \alpha_1\gamma \alpha_2$.
+За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-ляв извод} в граматиката $G$, $\alpha \lderive{\ell} \beta$, по следния начин:
+\begin{prooftree}
+  \AxiomC{}
+  \UnaryInfC{$\alpha \lderive{0} \alpha$}
+\end{prooftree}
 
-Както преди, с $\to^\star_{G,\texttt{L}}$ ще означаваме рефлексивното и транзитивно затваряне на релацията $\to_{G,\texttt{L}}$.
+\begin{prooftree}
+  \AxiomC{$(A,\gamma) \in R$}
+  \AxiomC{$\alpha \in \Sigma^\star$}
+  \BinaryInfC{$\alpha A \beta \lderive{1} \alpha \gamma \beta$}
+\end{prooftree}
 
-Ясно е, че ако $\alpha \to^\star_{G,\texttt{L}} \beta$, то $\alpha \to^\star_G \beta$.
-Да видим защо имаме и обратната посока.
-
-Очевидно е, че ако $\alpha \to^\star_{G,\texttt{L}} \beta$, то $\alpha \to^\star_G \beta$.
-Това означава, че ако $X \to^\star_{G,\texttt{L}} \beta$, то същестува дърво на извод с корен $X$ за думата $\beta$.
+\begin{prooftree}
+  \AxiomC{$\alpha \lderive{1} \gamma$}
+  \AxiomC{$\gamma \lderive{\ell} \beta$}
+  \BinaryInfC{$\alpha \lderive{\ell+1} \beta$}
+\end{prooftree}
 
 \begin{lemma}
-  Нека $P = (T,\lambda)$ е дърво на извод за думата $\beta \in (V\cup\Sigma)^\star$ в $G$.
-  Тогава $X_\varepsilon \to^\star_{G,\texttt{L}} \beta$.
-\end{lemma}  
+  За всяка безконтекстна граматика $G$, променлива $A \in V$  и дума $\alpha \in (V\cup\Sigma)^\star$,
+  \[A \lderive{\star} \alpha\text{ точно тогава, когато } A \derive{\star} \alpha.\]
+\end{lemma}
 \begin{hint}
-  Индукция по $\texttt{height}(T)$.
+  Очевидно е, че ако $A \lderive{\star} \alpha$, то $A \derive{\star} \alpha$.
+  За другата посока, достатъчно е да се докаже, че ако $P$ е дърво на извод с корен $A$ и $\texttt{yield}(P) = \alpha$,
+  то $A \lderive{\star} \alpha$.
+
+  Индукция по $\texttt{high}(P)$.
 \end{hint}
 
 
