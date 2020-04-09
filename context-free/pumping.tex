@@ -18,38 +18,42 @@
 \end{enumerate}
 \end{lemma}
 \begin{proof}
-  \mynote{$b$ е максималната разклоненост на всяко дърво на извод за дума от граматиката $G$.}
+  \mynote{Числото $b$ е максималната разклоненост на всяко дърво на извод за дума изводима от граматиката $G$.}
   Нека $G$ е граматиката за езика $L$. Да положим
   \[b \df \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
   Нека
   \[p \df b^{\abs{V} + 1}.\]
-  Ще покажем, че $p$ е константа на покачването за граматиката $G$.
+  Ще покажем, че този избор на $p$ е удачен за удовлетворяването на условията на лемата. Ще наричаме $p$ константа на покачването за граматиката $G$.
   
   Да разгледаме произволна дума $\alpha \in \L(G)$, за която $\abs{\alpha} \geq p$.
-  Понеже $\L(G)$ е безкраен език, то такива думи съществуват.
-  Тогава от \Corollary{tree:upper-bound} следва, че ако $P = (T,\lambda)$ е дърво на извод за $\alpha$ в $G$, за което $X_\varepsilon = S$, то
-  \[b^{|V| + 1}\leq |\alpha| \leq b^{\texttt{height}(T)}.\]
+  Понеже $\L(G)$ е безкраен език, то със сигурност можем да намерим такава дума.
+  Нека $P = (T,\lambda)$ е дърво на извод за $\alpha$ в граматиката $G$ с корен $S$.
+  \mynote{Според нашите означения, $\alpha = \texttt{yield}(P)$.}
+  Тогава от \Corollary{tree:upper-bound} следва, че 
+  \[p = b^{|V| + 1}\leq |\alpha| \leq b^{\texttt{height}(T)}.\]
   Оттук следва, че
   \[|V| + 1 \leq \texttt{height}(T).\]
-  Нека измежду всички дървета на извод $P = (T,\lambda)$ за $\alpha$ в граматиката $G$ сме избрали такова с минимален брой елементи на $T$.
-  Да фиксираме максимален път $\pi$ в $T$, т.е. дума $\pi \in T$ и $|\pi| = \texttt{height}(T)$.
+  Нека измежду всички дървета на извод $P = (T,\lambda)$ за думата $\alpha$ в граматиката $G$ сме избрали такова с \emph{минимален} брой върхове в дървото $T$.
+  Да фиксираме \emph{максимален} път $\pi$ в $T$, т.е. дума $\pi \in T$ и $|\pi| = \texttt{height}(T)$.
   Ясно е, че
   \mynote{Броят на върховете по пътя $\pi$ е 1 + броя на ребрата.}
   \[|V| + 1 \leq |\{ X_\gamma \mid \gamma \prec \pi\}| = \texttt{height}(T).\]
+  Да напомним, че $X_\gamma$ за $\gamma \prec \pi$ са променливите, които съответстват на всички върхове по пътя $\pi$.
   Тук нарочно не броим $X_\pi$, защото $X_\pi \in \Sigma$, а ние се интересуваме само от променливите.
-  От принципа на Дирихле следва, че съществува $\beta \prec \pi$, за което
+  От принципа на Дирихле следва, че в множеството $\{ X_\gamma \mid \gamma \prec \pi\}$ има повторения на променливи.
+  Това означава, че съществува $\beta \prec \pi$, за която
   \begin{equation}
     \label{eq:10}
     X_\beta \in \{X_\gamma \mid \beta \prec \gamma \prec \pi\}.
   \end{equation}
   Нека $\beta$ е най-дългата дума, за която е изпълнено свойството (\ref{eq:10}).
   Да означим с $\gamma$ една от думите, за която $\beta \prec \gamma \prec \pi$ и $X_\gamma = X_\beta$.
-  От избора на $\beta$ следва, че
+  От избора на $\beta$ следва, че:
   \begin{equation}
     \label{eq:11}
-    \texttt{height}(T_\beta) = |\{ X_\gamma \mid \beta \preceq \gamma \prec \pi\}| \leq |V| + 1,
+    \texttt{height}(\lowercut{P}{\beta}) = |\{ X_\gamma \mid \beta \preceq \gamma \prec \pi\}| \leq |V| + 1,
   \end{equation}
-  защото ако допуснем противното, то ще имаме, че $|\{ X_\gamma \mid \beta \prec \gamma \prec \pi\}| \geq |V| + 1$ и от принципа на Дирихле ще следва, че
+  защото ако допуснем противното, то ще имаме, че $|\{ X_\gamma \mid \beta \prec \gamma \prec \pi\}| > |V| + 1$ и от принципа на Дирихле ще следва, че
   съществува по-дълга от $\beta$ дума, за която е изпълнено свойството (\ref{eq:10}).
   
   Нека $u = \texttt{yield}(\lowercut{P}{\gamma})$. Тогава $yuv = \texttt{yield}(\lowercut{P}{\beta})$, за някои думи $y,v \in \Sigma^\star$.
@@ -58,9 +62,8 @@
   Освен това имаме свойствата:
   \begin{enumerate}[1)]
   \item
-    Да видим първо защо $\abs{yv}\geq 1$.
-    Ако допуснем, че $|yv| = 0$, то това означава, че $\alpha = xuw$ и тази дума
-    би имала дърво на извод $(\uppercut{P}{\beta}) \odot (\lowercut{P}{\gamma})$, защото:
+    $\abs{yv}\geq 1$, защото ако допуснем, че $|yv| = 0$, то това означава, че $\alpha = xuw$ и тази дума
+    би имала дърво на извод $P' \df (\uppercut{P}{\beta}) \odot (\lowercut{P}{\gamma})$ понеже:
     \begin{itemize}
     \item 
       $\texttt{yield}(\lowercut{P}{\gamma}) = u$;
@@ -69,16 +72,17 @@
     \item
       $X_\alpha = X_\beta$.
     \end{itemize}
-    Но това противоречи на избора на $P$ като дървото на извод за думата $\alpha$ с минимален брой елементи в $T$.
+    \mynote{$\alpha = \texttt{yield}(P) = \texttt{yield}(P')$, но $P'$ има по-малко възли от $P$.}
+    Но това противоречи на избора на $P$ като дървото на извод за думата $\alpha$ с минимален брой възли в дървото $T$.
   \item
-    $\abs{yuv} \leq p$, защото $yuv = \texttt{yield}(T_\beta)$ и оттук следва, че:
+    $\abs{yuv} \leq p$, защото $yuv = \texttt{yield}(\lowercut{P}{\beta})$ и оттук следва, че:
     \begin{align*}
-      \abs{yuv} & \leq b^{\texttt{height}(T_\beta)} & \comment\text{от \Corollary{tree:upper-bound}}\\
+      \abs{yuv} & \leq b^{\texttt{height}(\lowercut{P}{\beta})} & \comment\text{от \Corollary{tree:upper-bound}}\\
                 & \leq b^{|V|+1} & \comment\text{от (\ref{eq:11})}\\
                 & = p
     \end{align*}
   \item
-    Остана само да видим защо за всяко естествено число $i$ е изпълнено, че $xy^iuv^iw \in L$.
+    За всяко естествено число $i$ е изпълнено, че $xy^iuv^iw \in L$.
     Това е най-сложното разсъждение в лемата, затова нека да го разгледаме внимателно.
     Понеже $\beta \prec \gamma$, нека $\rho$ е тази дума, за която $\gamma = \beta \cdot \rho$.
     Ясно е, че:
@@ -86,7 +90,7 @@
       & \lowercut{P}{\gamma} = \lowercut{(\lowercut{P}{\beta})}{\rho};\\
       & \uppercut{(\lowercut{P}{\beta})}{\rho} = \lowercut{(\uppercut{P}{\gamma})}{\beta}.
     \end{align*}
-    
+    Да разгледаме няколко случая за $i$.
     \begin{itemize}
     \item
       \mynote{Да напомним, че $X_\beta \df \lambda(\beta)$.}
@@ -94,56 +98,17 @@
       защото от избора на $\gamma$ и $\beta$ имаме, че:
       \begin{itemize}
       \item 
-        $\texttt{yield}(P_\gamma) = u$;
+        $\texttt{yield}(\lowercut{P}{\gamma}) = u$;
       \item
-        $\texttt{yield}(P \setminus P_\beta) = x X_\beta w$;
+        $\texttt{yield}(\uppercut{P}{\beta}) = x X_\beta w$;
       \item
         $X_\alpha = X_\beta$.
       \end{itemize}
-    \item
-      Нека $i = 1$.
-      Ясно е от условието, че $xyuvw \in L$, но нека да направим наблюдението, че дървото на извод $P$ за думата $\alpha$ в $G$
-      може да се запише и така:
-      \[P = (P \setminus P_\beta) \odot (P \setminus P_\gamma)_\beta \odot P_\gamma, \]
-      защото:
-      \begin{itemize}
-      \item
-        $\texttt{yield}(P\setminus P_\beta) = x X_\beta w$;
-      \item
-        $\texttt{yield}((P \setminus P_\gamma)_\beta) = y X_\gamma v$, защото $X_\gamma = \lambda(\gamma) = \lambda_\beta(\rho)$;
-      \item
-        $\texttt{yield}(P_\gamma) = u$;
-      \item
-        $X_\beta = X_\gamma$.
-      \end{itemize}
-
-      % Можем да разбием синтактичното дърво $P$ по следния начин:
-
-      \begin{figure}[htp]
-        \begin{subfigure}[t]{0.5\textwidth}
+      Добре е да преставим тази ситуация и визуално.
+      \begin{figure}[H]
+        \begin{subfigure}[t]{0.3\textwidth}
           \centering
-          \begin{tikzpicture}
-            \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-            \coordinate (B) at (-2,-2.5);
-            \coordinate (C) at (2,-2.5);
-            \coordinate (D) at (-1.4,-2.5);
-            \coordinate (E) at (-0.7,-2.5);
-            \coordinate (F) at (0.7,-2.5);
-            \coordinate (G) at (1.4,-2.5);
-            
-            \node (H) at (0,-0.8) {${\scriptstyle X_\beta}$};
-            \node (I) at (0,-1.5) {${\scriptstyle X_\gamma}$};
-            
-            \draw (A) -- node[left]{$\scriptstyle{P\ =\ }$}(B) -- node[below]{$x$} (D) -- node[below]{$y$}(E) -- node[below]{$u$}(F) -- node[below]{$v$}(G) -- node[below]{$w$}(C) -- (A);
-            \draw (H) -- (D) -- (G) -- (H);
-            \draw (I) -- (E) -- (F) -- (I);
-          \end{tikzpicture}
-          \caption{$\texttt{yield}((P\setminus P_\beta) \odot (P\setminus P_\gamma)_\beta \odot P_\gamma) = xyuvw$}
-        \end{subfigure}
-        ~
-        \begin{subfigure}[t]{0.5\textwidth}
-          \centering
-          \begin{tikzpicture}
+          \begin{tikzpicture}[scale=0.9]
             \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
             \coordinate (B) at (-2,-2.2);
             \coordinate (C) at (2,-2.2);
@@ -166,15 +131,15 @@
             \coordinate (U) at (-0.7,-5.2);
             \coordinate (V) at (0.7,-5.2);
             
-            \draw (A) -- node[left]{${\scriptstyle P \setminus P_\beta\ =\ } $}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
-            \draw (H) -- node[left]{${\scriptstyle (P\setminus P_\gamma)_\beta\ =\ }$}(D) -- node[below]{$y$}(E) -- (X) -- (F) -- node[below]{$v$}(G) -- (H);
-            \draw (I) -- node[left]{${\scriptstyle P_\gamma\ =\ }$}(U) -- node[below]{$u$}(V) -- (I);
+            \draw (A) -- node[left]{${\scriptstyle \uppercut{P}{\beta} \ =\ } $}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
+            \draw (H) -- node[left]{${\scriptstyle \lowercut{(\uppercut{P}{\gamma})}{\beta}\ =\ }$}(D) -- node[below]{$y$}(E) -- (X) -- (F) -- node[below]{$v$}(G) -- (H);
+            \draw (I) -- node[left]{${\scriptstyle \lowercut{P}{\gamma}\ =\ }$}(U) -- node[below]{$u$}(V) -- (I);
           \end{tikzpicture}
-          \caption{Можем да разделим $P$ на три части}
+          \caption{\scriptsize{Разделяме $P$ на три части}}
         \end{subfigure}
-        \begin{subfigure}[t]{0.5\textwidth}
-          \centering
-          \begin{tikzpicture}
+        \hspace{10pt}
+        \begin{subfigure}[t]{0.3\textwidth}
+          \begin{tikzpicture}[scale=0.9]
             \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
             \coordinate (B) at (-2,-2.2);
             \coordinate (C) at (2,-2.2);
@@ -194,15 +159,15 @@
             \coordinate (U) at (-0.9,-3.2);
             \coordinate (V) at (0.9,-3.2);
             
-            \draw (A) -- node[left]{${\scriptstyle P \setminus P_\beta\ =\ } $}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
-            \draw (I) -- node[left]{${\scriptstyle P_\gamma\ =\ }$}(U) -- node[below]{$u$}(V) -- (I);
+            \draw (A) -- node[left]{${\scriptstyle \uppercut{P}{\beta}\ =\ } $}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
+            \draw (I) -- node[left]{${\scriptstyle \lowercut{P}{\gamma}\ =\ }$}(U) -- node[below]{$u$}(V) -- (I);
           \end{tikzpicture}
-          \caption{Понеже $X_\beta = X_\gamma$, можем да махнем средната част пак да получим дърво на извод.}
+          \caption{\scriptsize{Понеже $X_\beta = X_\gamma$, можем да махнем средната част и пак да получим дърво на извод.}}
         \end{subfigure}
-        $\stackrel{\scriptstyle{X_\beta = X_\gamma}}{\implies}$
-        \begin{subfigure}[t]{0.5\textwidth}
+        \hspace{10pt}
+        \begin{subfigure}[t]{0.3\textwidth}
           \centering
-          \begin{tikzpicture}
+          \begin{tikzpicture}[scale=0.9]
             \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
             \coordinate (B) at (-2,-2.2);
             \coordinate (C) at (2,-2.2);
@@ -216,11 +181,64 @@
             \draw (A) -- (B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
             \draw (U) -- node[below]{$u$}(V);
           \end{tikzpicture}
-          \caption{$\texttt{yield}((P\setminus P_\beta) \odot P_\gamma) = xuw$}
+          \caption{\scriptsize{$(\uppercut{P}{\beta}) \odot (\lowercut{P}{\gamma})$ е дърво на извод за думата $xuw$}}
         \end{subfigure}
-        \begin{subfigure}[t]{0.5\textwidth}
+      \end{figure}
+    \item
+      Нека $i = 1$.
+      Ясно е от условието, че $xyuvw \in L$, но нека да направим наблюдението, че дървото на извод $P$ за думата $\alpha$ в граматиката $G$
+      може да се запише и така:
+      \[P = (\uppercut{P}{\beta}) \odot (\lowercut{(\uppercut{P}{\gamma})}{\beta}) \odot (\lowercut{P}{\gamma}), \]
+      защото:
+      \begin{itemize}
+      \item
+        $\texttt{yield}(\uppercut{P}{\beta}) = x X_\beta w$;
+      \item
+        $\texttt{yield}(\lowercut{(\uppercut{P}{\gamma})}{\beta}) = y X_\gamma v$, защото $X_\gamma = \lambda(\gamma) = \lambda_\beta(\rho)$;
+      \item
+        $\texttt{yield}(\lowercut{P}{\gamma}) = u$;
+      \item
+        $X_\beta = X_\gamma$.
+      \end{itemize}
+
+      Сега вече имаме идея как да обобщим горната конструкция за $i > 1$.
+      Да разгледаме случая $i = 2$.
+      \begin{figure}[H]
+        \begin{subfigure}[t]{0.3\textwidth}
           \centering
-          \begin{tikzpicture}
+          \begin{tikzpicture}[scale=0.9]
+            \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
+            \coordinate (B) at (-2,-2.2);
+            \coordinate (C) at (2,-2.2);
+            \coordinate (S) at (-1,-2.2);
+            \coordinate (T) at (1,-2.2);
+            \node (L) at (0,-1) {${\scriptstyle X_\beta}$};
+            
+            \coordinate (E) at (-0.7,-2.5);
+            \coordinate (F) at (0.7,-2.5);
+            
+            
+            \node (H) at (0,-2) {${\scriptstyle X_\beta}$};
+            \node (X) at (0,-3) {${\scriptstyle X_\gamma}$};
+            \coordinate (D) at (-1.5,-4);
+            \coordinate (G) at (1.5,-4);
+            \coordinate (E) at (-0.7,-4);
+            \coordinate (F) at (0.7,-4);
+            
+            \node (I) at (0,-4.2) {${\scriptstyle X_\gamma}$};
+            \coordinate (U) at (-0.7,-5.2);
+            \coordinate (V) at (0.7,-5.2);
+            
+            \draw (A) -- node[left]{${\scriptstyle \uppercut{P}{\beta} \ =\ } $}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
+            \draw (H) -- node[left]{${\scriptstyle \lowercut{(\uppercut{P}{\gamma})}{\beta}\ =\ }$}(D) -- node[below]{$y$}(E) -- (X) -- (F) -- node[below]{$v$}(G) -- (H);
+            \draw (I) -- node[left]{${\scriptstyle \lowercut{P}{\gamma}\ =\ }$}(U) -- node[below]{$u$}(V) -- (I);
+          \end{tikzpicture}
+          \caption{\scriptsize{Разделяме $P$ на три части}}
+        \end{subfigure}
+        \hspace{10pt}
+        \begin{subfigure}[t]{0.3\textwidth}
+          \centering
+          \begin{tikzpicture}[scale=0.9]
             \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
             \coordinate (B) at (-2,-2.2);
             \coordinate (C) at (2,-2.2);
@@ -249,17 +267,17 @@
             \coordinate (U) at (-1,-7.2);
             \coordinate (V) at (1,-7.2);
             
-            \draw (A) -- node[left]{${\scriptstyle P \setminus P_\beta\ =\ } $}(B) -- node[below]{$\scriptstyle{x}$}(S) -- (L) -- (T) -- node[below]{$\scriptstyle{w}$}(C) -- (A);
-            \draw (H) -- node[left]{${\scriptstyle (P\setminus P_\gamma)_\beta\ =\ }$}(D) -- node[below]{$\scriptstyle{y}$}(E) -- (X) -- (F) -- node[below]{$\scriptstyle{v}$}(G) -- (H);
-            \draw (H1) -- node[left]{${\scriptstyle (P\setminus P_\gamma)_\beta\ =\ }$}(D1) -- node[below]{$\scriptstyle{y}$}(E1) -- (X1) -- (F1) -- node[below]{$\scriptstyle{v}$}(G1) -- (H1);
-            \draw (I) -- node[left]{${\scriptstyle P_\gamma\ =\ }$}(U) -- node[below]{$\scriptstyle{u}$}(V) -- (I);
+            \draw (A) -- node[left]{${\scriptstyle \uppercut{P}{\beta}\ =\ } $}(B) -- node[below]{$\scriptstyle{x}$}(S) -- (L) -- (T) -- node[below]{$\scriptstyle{w}$}(C) -- (A);
+            \draw (H) -- node[left]{${\scriptstyle \lowercut{(\uppercut{P}{\gamma})}{\beta}\ =\ }$}(D) -- node[below]{$\scriptstyle{y}$}(E) -- (X) -- (F) -- node[below]{$\scriptstyle{v}$}(G) -- (H);
+            \draw (H1) -- node[left]{${\scriptstyle \lowercut{(\uppercut{P}{\gamma})}{\beta}\ =\ }$}(D1) -- node[below]{$\scriptstyle{y}$}(E1) -- (X1) -- (F1) -- node[below]{$\scriptstyle{v}$}(G1) -- (H1);
+            \draw (I) -- node[left]{${\scriptstyle \lowercut{P}{\gamma}\ =\ }$}(U) -- node[below]{$\scriptstyle{u}$}(V) -- (I);
           \end{tikzpicture}
-          \caption{Понеже $X_\beta = X_\gamma$, можем да добавим средната част втори път и пак да получим дърво на извод.}
+          \caption{\scriptsize{Понеже $X_\beta = X_\gamma$, можем да добавим средната част втори път и пак да получим дърво на извод.}}
         \end{subfigure}
-        $\stackrel{\scriptstyle{X_\beta = X_\gamma}}{\implies}$
-        \begin{subfigure}[t]{0.5\textwidth}
+        \hspace{10pt}
+        \begin{subfigure}[t]{0.3\textwidth}
           \centering
-          \begin{tikzpicture}
+          \begin{tikzpicture}[scale=0.9]
             \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
             \coordinate (B) at (-2.5,-3.2);
             \coordinate (C) at (2.5,-3.2);
@@ -292,31 +310,31 @@
             \draw (X) --  (D1) -- node[below]{$\scriptstyle{y}$}(E1) -- (X1) -- (F1) -- node[below]{$\scriptstyle{v}$}(G1) -- (X);
             \draw (U)  -- node[below]{$\scriptstyle{u}$}(V);
           \end{tikzpicture}
-          \caption{$\texttt{yield}((P\setminus P_\beta) \odot (P\setminus P_\gamma)^{(2)}_\beta\odot P_\gamma)$}
+          \caption{\scriptsize{$(\uppercut{P}{\beta}) \odot (\lowercut{(\uppercut{P}{\gamma})}{\beta})^{(2)} \odot (\lowercut{P}{\gamma})$ е дърво на извод за
+              думата $xy^2uv^2w$}}
         \end{subfigure}
-        \caption{Разбиване на синтактичното дърво $P$ на части}
-      \end{figure}
-      
-      Сега вече имаме идея как да обобщим горната конструкция за $i > 1$.
+        \end{figure}
     \item
       Нека $i > 1$. Тогава $xy^iuv^iw$ има дърво на извод
-      \[(P \setminus P_\beta) \odot ( (P \setminus P_\gamma)_\beta)^{(i)} \odot P_\gamma,\]
+      \[(\uppercut{P}{\beta}) \odot ( \lowercut{(\uppercut{P}{\gamma})}{\beta})^{(i)} \odot \lowercut{P}{\gamma},\]
       защото:
       \begin{itemize}
       \item
-        $\texttt{yield}(P\setminus P_\beta) = x X_\beta w$;
+        $\texttt{yield}(\uppercut{P}{\beta}) = x X_\beta w$;
       \item
-        $\texttt{yield}((P \setminus P_\gamma)_\beta)^{(i)}) = y^i X_\gamma v^i$ от \Problem{tree:iteration},
+        $\texttt{yield}(\lowercut{(\uppercut{P}{\gamma})}{\beta})^{(i)}) = y^i X_\gamma v^i$ от \Problem{tree:iteration},
         защото $X_\gamma = \lambda(\gamma) = \lambda_\beta(\rho)$;
       \item
-        $\texttt{yield}(P_\gamma) = u$;
+        $\texttt{yield}(\lowercut{P}{\gamma}) = u$;
       \item
         $X_\beta = X_\gamma$.
       \end{itemize}
     \end{itemize}
-
   \end{enumerate}
 \end{proof}
+
+Както и при \Lemma{pumping-reg}, ние ще използваме \emph{контрапозицията} на условието на \Lemma{pumping-context}
+при проверка, че даден език не е безконтекстен.
 
 \begin{cor}
   \label{cor:pumping-context-free}
@@ -330,7 +348,7 @@
   \item[($\forall$)]
     за {\em всяко} разбиване на думата на пет части, $\alpha = xyuvw$, със свойствата $\abs{yv} \geq 1$ и $\abs{yuv} \leq p$,
   \item[($\exists$)]
-    можем да посочим $i \in \Nat$, за което е изпълнено, че $xy^iuv^iw \not\in L$.
+    можем да намерим $i \in \Nat$, за което е изпълнено, че $xy^iuv^iw \not\in L$.
   \end{description}  
   \mynote{\writedown Докажете! Аналогично е на \Corollary{pumping-reg}}
   Тогава $L$ {\bf не} е безконтекстен език.
@@ -366,13 +384,9 @@
   имал експоненциална сложност относно $|G|$.
 \end{remark}
 
-\begin{problem}
-  \label{prob:anbncn}
-  Докажете, че езикът 
-  \[L = \{a^nb^nc^n\ \mid\ n\in\Nat\}\]
-  не е безконтекстен.
-\end{problem}
-\begin{proof}
+\begin{example}
+  \label{ex:anbncn}
+  Да видим защо езикът $L = \{a^nb^nc^n\ \mid\ n\in\Nat\}$ не е безконтекстен.
   \begin{description}
   \item[$(\forall)$]
     Разглеждаме произволна константа $p \geq 1$.
@@ -400,13 +414,7 @@
     $xy^2uv^2w \not\in L$.
   \end{description}
   Така от \Corollary{pumping-context-free} следва, че езикът $L$ не е безконтекстен.
-\end{proof}
-
-\begin{problem}
-  Докажете, че езикът
-  \[\L(a^\star b^\star c^\star) \setminus \{a^nb^nc^n \mid n \in \Nat\}\]
-  е безконтекстен.
-\end{problem}
+\end{example}
 
 \begin{framed}
   \begin{proposition}
@@ -414,17 +422,21 @@
   \end{proposition}
 \end{framed}
 \begin{hint}
-  Да разгледаме езика
-  \[L_0 = \{a^nb^nc^n\mid n\in\Nat\},\] за който вече знаем от \Problem{anbncn}, че не е безконтекстен.
+  Да разгледаме езика $L_0 = \{a^nb^nc^n\mid n\in\Nat\}$, за който вече знаем от \Example{anbncn}, че не е безконтекстен.
   Да вземем също така и безконтекстните езици 
-  \mynote{\writedown Защо са безконтекстни?}
+  \mynote{\writedown Защо $L_1$ и $L_2$ са безконтекстни?}
   \[L_1 = \{a^nb^nc^m\mid n,m\in\Nat\},\ L_2 = \{a^mb^nc^n\mid n,m\in\Nat\},\]
+  \mynote{Озн. $\ov{L} \df \Sigma^\star \setminus L$}
   \begin{itemize}
   \item 
     Понеже $L_0 = L_1\cap L_2$, то заключаваме, че безконтекстните езици не са затворени 
     относно операцията сечение.
   \item
-    \mynote{Озн. $\ov{L} = \Sigma^\star \setminus L$}
+    \mynote{Друг пример, с който може да се види, че безконтекстните езици не са затворени относно допълнение е 
+      като се докаже, че езикът
+      \[\{a,b\}^\star \setminus \{\alpha\alpha\mid \alpha\in \{a,b\}^\star\}\]
+      е безконтекстен.
+      Това следва лесно като се използва \Problem{equal-but-different}.}
     Да допуснем, че безконтекстните езици са затворени относно операцията допълнение.
     Тогава  $\ov{L}_1$ и $\ov{L}_2$ са безконтекстни.
     Знаем, че безконтекстните езици са затворени относно обединение. 
@@ -434,46 +446,7 @@
     \[L_0 = L_1 \cap L_2 = \ov{\ov{L}_1 \cup \ov{L}_2} = \ov{L}_3\]
     е безконтекстен, което е противоречие.
   \end{itemize}
-
-  Друг пример, с който може да се види, че безконтекстните езици не са затворени относно допълнение е 
-  като се докаже, че езикът
-  \[\{a,b\}^\star \setminus \{\alpha\alpha\mid \alpha\in \{a,b\}^\star\}\]
-  е безконтекстен.
-  Това следва лесно като се използва \Problem{equal-but-different}.
 \end{hint}
-
-
-
-% \begin{framed}
-%   \begin{prop}
-%     Безконтекстните езици {\bf не} са затворени относно сечение и допълнение.
-%   \end{prop}
-% \end{framed}
-% \begin{proof}
-%   Да разгледаме езика
-%   \[L_0 = \{a^nb^nc^n\mid n\in\Nat\},\] за който вече знаем от \Prob{anbncn}, че не е безконтекстен.
-%   Да вземем също така и безконтекстните езици 
-%   \mynote{\writedown Защо са безконтекстни?}
-%   \[L_1 = \{a^nb^nc^m\mid n,m\in\Nat\},\ L_2 = \{a^mb^nc^n\mid n,m\in\Nat\},\]
-%   \begin{itemize}
-%   \item 
-%     Понеже $L_0 = L_1\cap L_2$, то заключаваме, че безконтекстните езици не са затворени 
-%     относно операцията сечение.
-%   \item
-%     \mynote{Озн. $\ov{L} = \Sigma^\star \setminus L$}
-%     Да допуснем, че безконтекстните езици са затворени относно операцията допълнение.
-%     Тогава  $\ov{L}_1$ и $\ov{L}_2$ са безконтекстни.
-%     Знаем, че безконтекстните езици са затворени относно обединение. 
-%     Следователно, езикът $L_3 = \ov{L}_1 \cup \ov{L}_2$ също е безконтекстен.
-%     Ние допуснахме, че безконтекстните са затворени относно допълнение, следователно $\ov{L}_3$
-%     също е безконтекстен.
-%     Но тогава получаваме, че езикът
-%     \[L_0 = L_1 \cap L_2 = \ov{\ov{L}_1 \cup \ov{L}_2} = \ov{L}_3\]
-%     е безконтекстен, което е противоречие.
-%   \end{itemize}
-% \end{proof}
-
-
 
 
 %%% Local Variables: 

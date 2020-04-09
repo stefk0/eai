@@ -9,7 +9,7 @@
   За да премахнем правилата от вида $A \to \varepsilon$ от граматиката, следваме процедурата:
   \begin{enumerate}[1)]
   \item 
-    \marginpar{На всяка стъпка трябва да обходим цялата граматика, следователно всяка итерация отнема $\mathcal{O}(|G|)$ време.}
+    \mynote{На всяка стъпка трябва да обходим цялата граматика, следователно всяка итерация отнема $\mathcal{O}(|G|)$ време.}
     Първо трябва да намерим множеството
     \[\texttt{E} = \{A \in V \mid A \to^\star_G \varepsilon\}.\]
     Това правим като строим множествата $\texttt{E[n]}$ по следния начин:
@@ -18,16 +18,16 @@
       $\texttt{E[0]} \df \emptyset$;
     \item
       Нека имаме $\texttt{E[n]}$. Тогава 
-      \marginpar{Обърнете внимание, че имаме $\texttt{E[n]}^\star$, а
+      \mynote{Обърнете внимание, че имаме $\texttt{E[n]}^\star$, а
         не просто $\texttt{E[n]}$.}
-      \marginpar{Също така да напомним, че $\emptyset^\star = \{\varepsilon\}$.}
+      \mynote{Също така да напомним, че $\emptyset^\star = \{\varepsilon\}$.}
       \[\texttt{E[n+1]} \df \texttt{E[n]} \cup \{ B \in V \mid (\exists \alpha \in \texttt{E[n]}^\star)[B \to_G \alpha ]\}.\]
     \item
       Докажете, че за всяко $n$ е изпълнено, че
       $A \in \texttt{E[n]}$ точно тогава, когато съществува дърво на извод $P$, за което
     $A = \texttt{root}(P)$, $\texttt{yield}(P) = \varepsilon$ и $\texttt{height}(P) \leq n$.
     \item
-      \marginpar{Намираме $\texttt{E}$ за време $\mathcal{O}(|G|^2)$.}
+      \mynote{Намираме $\texttt{E}$ за време $\mathcal{O}(|G|^2)$.}
       Спираме на първото $n$, за което $\texttt{E[n]} = \texttt{E[n+1]}$.
       Лесно се съобразява, че за това $n$ е изпълнено, че
       \[\texttt{E[n]} = \{A \in V \mid A \to^\star_G \varepsilon\}.\]
@@ -36,7 +36,7 @@
     Строим множеството от правила $R'$, в което няма $\varepsilon$-правила по следния начин.
     За всяко правило $A \to X_1\cdots X_k$,
     добавяме към $R'$ всички правила от вида $A \to Y_1\cdots Y_k$, където:
-    \marginpar{Броят на правилата може да се увеличи експоненциално, защото в най-лошия случай извеждаме всички подмножества на дадено множество от променливи}
+    \mynote{Броят на правилата може да се увеличи експоненциално, защото в най-лошия случай извеждаме всички подмножества на дадено множество от променливи}
     \begin{itemize}[-]
     \item 
       ако $X_i \not\in \texttt{E}$, то $Y_i = X_i$;
@@ -45,7 +45,7 @@
     \item
       не всички $Y_i$ са $\varepsilon$.
     \end{itemize}
-    \marginpar{\writedown Докажете сами!}
+    \mynote{\writedown Докажете сами!}
     Лесно се съобразява, че $\L(G') = \L(G) \setminus \{\varepsilon\}$.
     % \begin{itemize}
     % \item

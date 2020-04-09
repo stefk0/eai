@@ -23,10 +23,10 @@
     Ясно е, че $\texttt{Ren[0]} \df \{(A,A) \mid A \in V\}$.
   \item
     Нека имаме $\texttt{Ren[n]}$. Тогава дефинираме
-    \marginpar{Всяка итерация отнема $\mathcal{O}(|G|)$ време.}
+    \mynote{Всяка итерация отнема $\mathcal{O}(|G|)$ време.}
     \[\texttt{Ren[n+1]} \df \{(A,B) \in V\times V \mid (\exists C\in V)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren[n]}]\}.\]
   \item
-    \marginpar{$|\texttt{Ren}|$ има големина $\mathcal{O}(|G|^2)$.}
+    \mynote{$|\texttt{Ren}|$ има големина $\mathcal{O}(|G|^2)$.}
     Спираме на първото $n$, за което $\texttt{Ren[n]} = \texttt{Ren[n+1]}$. Тогава $\texttt{Ren} = \texttt{Ren[n]}$.
   \end{itemize}
   
