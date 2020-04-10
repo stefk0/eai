@@ -119,66 +119,58 @@
   \end{itemize}
 \end{proof}
 
-\begin{proposition}
-  \label{pr:grammar:add}
-  Нека $\alpha \derive{n}_G \beta$. Тогава за произволна дума $\gamma \in (V \cup \Sigma)^\star$ е изпълнено, че:
-  \begin{align*}
-    & \alpha\gamma \derive{n} \beta \gamma,\\
-    & \gamma\alpha \derive{n} \gamma \beta.
-  \end{align*}
-\end{proposition}
 
-\begin{proposition}
-  \label{pr:grammar:concat}
-  Ако $\alpha_1 \derive{n_1} \beta_1, \dots, \alpha_k \derive{n_k} \beta_k$, тогава
-  \[\alpha_1\cdots\alpha_k \derive{n} \beta_1\cdots\beta_k,\]
-  където $n = \sum^k_{i=1} n_i$.
-\end{proposition}
-\begin{proof}
-  Индукция по $k \geq 1$.
-  \begin{itemize}
-  \item
-    За $k = 1$ е очевидно. В този случай $n_1 = n$.
-  \item
-   Нека $k > 1$. Тогава от И.П. за $k-1$ имаме, че
-   $\alpha_1\cdots\alpha_{k-1} \derive{n'} \beta_1\cdots\beta_{k-1}$ и $n' = \sum^{k-1}_{i=1} n_i$.
-   От \Proposition{grammar:add} имаме, че
-   \[\alpha_1\cdots\alpha_{k-1}\alpha_{k} \derive{n'} \beta_1\cdots\beta_{k-1}\alpha_k.\]
-   Понеже $\alpha_k \derive{n_k} \beta_k$, отново от \Proposition{grammar:add} получаваме, че
-   \[\beta_1\cdots\beta_{k-1}\alpha_k \derive{n_k} \beta_1 \cdots \beta_{k-1}\beta_k.\]
-   Сега обединяваме двата извода и получаваме, че
-   \[\alpha_1\cdots\alpha_{k} \derive{n} \beta_1\cdots\beta_k,\]
-   където $n = \sum^k_{i=1} n_i$.
-  \end{itemize}
-\end{proof}
+% \begin{proposition}
+%   \label{pr:grammar:concat}
+%   Ако $\alpha_1 \derive{n_1} \beta_1, \dots, \alpha_k \derive{n_k} \beta_k$, тогава
+%   \[\alpha_1\cdots\alpha_k \derive{n} \beta_1\cdots\beta_k,\]
+%   където $n = \sum^k_{i=1} n_i$.
+% \end{proposition}
+% \begin{proof}
+%   Индукция по $k \geq 1$.
+%   \begin{itemize}
+%   \item
+%     За $k = 1$ е очевидно. В този случай $n_1 = n$.
+%   \item
+%    Нека $k > 1$. Тогава от И.П. за $k-1$ имаме, че
+%    $\alpha_1\cdots\alpha_{k-1} \derive{n'} \beta_1\cdots\beta_{k-1}$ и $n' = \sum^{k-1}_{i=1} n_i$.
+%    От \Proposition{grammar:add} имаме, че
+%    \[\alpha_1\cdots\alpha_{k-1}\alpha_{k} \derive{n'} \beta_1\cdots\beta_{k-1}\alpha_k.\]
+%    Понеже $\alpha_k \derive{n_k} \beta_k$, отново от \Proposition{grammar:add} получаваме, че
+%    \[\beta_1\cdots\beta_{k-1}\alpha_k \derive{n_k} \beta_1 \cdots \beta_{k-1}\beta_k.\]
+%    Сега обединяваме двата извода и получаваме, че
+%    \[\alpha_1\cdots\alpha_{k} \derive{n} \beta_1\cdots\beta_k,\]
+%    където $n = \sum^k_{i=1} n_i$.
+%   \end{itemize}
+% \end{proof}
 
-\begin{framed}
+% \begin{framed}
   \begin{proposition}
     \label{pr:grammar:divide}
-    Нека $\alpha_1\cdots \alpha_k \derive{n}_G \beta$.
+    Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \derive{n}_G \beta$, където $X_i \in V \cup \Sigma$.
     Тогава съществуват думи $\beta_1,\dots,\beta_k$, такива че за $i = 1,\dots, k$ е изпълнено, че
-    $\alpha_i \derive{n_i} \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $n = \sum^k_{i = 1}n_i$.
+    $X_i \derive{n_i} \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $n = \sum^k_{i = 1}n_i$.
   \end{proposition}
-\end{framed}
-\begin{proof}
-  Индукция по $n$.
-  \begin{itemize}
-  \item
-    Нека $n = 0$. Тогава $\beta = \alpha_1 \cdots \alpha_k$ и е ясно, че в този случай $\beta_i = \alpha_i$ и $n_i = 0$.
-  \item
-    Нека $n > 0$ и $\alpha_1\cdots \alpha_k \derive{n} \beta$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
-    като приложим \Proposition{grammar:add} получаваме, че
-    \[\alpha_1\cdots\alpha_i\cdots\alpha_k \to_G \alpha_1\cdots\alpha'_i\cdots\alpha_k.\]
-    Според дефиницията на релацията $\derive{n}$ имаме, че
-    \[\alpha_1\cdots\alpha'_i\cdots\alpha_k \stackrel{n-1}{\to}_G \beta.\]
-    От И.П. получаваме, че съществуват думи $\beta_1,\dots,\beta_k$, такива че $\beta = \beta_1 \cdots \beta_k$
-    и $\alpha_j \derive{n_j} \beta_j$ за $j \neq i$ и $\alpha'_i \derive{n'_i} \beta_i$, като
-    \[n-1 = n'_i + \sum_{j\neq i} n_j.\]
-    Понеже имаме, че $\alpha_i \to_G \alpha'_i \derive{n'_i}\beta_i$,
-    то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \derive{n_i} \beta_i$ и
-    \[n = \sum^{k}_{i=1} n_i.\]
-  \end{itemize}
-\end{proof}
+% \end{framed}
+% \begin{proof}
+%   Индукция по $n$.
+%   \begin{itemize}
+%   \item
+%     Нека $n = 0$. Тогава $\beta = \alpha_1 \cdots \alpha_k$ и е ясно, че в този случай $\beta_i = \alpha_i$ и $n_i = 0$.
+%   \item
+%     Нека $n > 0$ и $\alpha_1\cdots \alpha_k \derive{n} \beta$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
+%     като приложим \Proposition{grammar:add} получаваме, че
+%     \[\alpha_1\cdots\alpha_i\cdots\alpha_k \to_G \alpha_1\cdots\alpha'_i\cdots\alpha_k.\]
+%     Според дефиницията на релацията $\derive{n}$ имаме, че
+%     \[\alpha_1\cdots\alpha'_i\cdots\alpha_k \stackrel{n-1}{\to}_G \beta.\]
+%     От И.П. получаваме, че съществуват думи $\beta_1,\dots,\beta_k$, такива че $\beta = \beta_1 \cdots \beta_k$
+%     и $\alpha_j \derive{n_j} \beta_j$ за $j \neq i$ и $\alpha'_i \derive{n'_i} \beta_i$, като
+%     \[n-1 = n'_i + \sum_{j\neq i} n_j.\]
+%     Понеже имаме, че $\alpha_i \to_G \alpha'_i \derive{n'_i}\beta_i$,
+%     то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \derive{n_i} \beta_i$ и
+%     \[n = \sum^{k}_{i=1} n_i.\]
+%   \end{itemize}
+% \end{proof}
 
 
 

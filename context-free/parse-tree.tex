@@ -194,7 +194,7 @@
 
 \begin{framed}
   \begin{lemma}
-    Нека $X \to^\star_G \beta$.
+    Нека $X \derive{\star}_G \beta$.
     Тогава съществува дърво на извод $P = (T,\lambda)$ с корен $X$ за думата $\beta \in (V\cup\Sigma)^\star$ в граматиката $G$,
     т.е. $\beta = \texttt{yield}(P)$.
   \end{lemma}  
@@ -209,7 +209,7 @@
   \item
     \mynote{Знаем, че $k < b$.}
     Нека $\ell > 0$ и $X \derive{\ell} \beta$.
-    Да разгледаме извода
+    Според правилата на извод в граматика имаме извода
     \[X \derive{1} X_0X_1\cdots X_k \derive{\ell-1} \beta.\]
     От \Proposition{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
     \begin{itemize}
@@ -243,15 +243,15 @@
 \begin{framed}
   \begin{lemma}
     Нека $P = (T,\lambda)$ е дърво на извод за думата $\beta \in (V\cup\Sigma)^\star$ в граматиката $G$.
-    Тогава $X_\varepsilon \derive{\star} \beta$.
+    Тогава $X_\varepsilon \derive{\star}_G \beta$.
   \end{lemma}
 \end{framed}
 \begin{proof}
   Индукция по $\high(P)$.
   \begin{itemize}
   \item
-    Нека $\high(P) = 0$. Това означава, че $T = \{\varepsilon\}$ и $\texttt{yield}(P) = X_\varepsilon$.
-    Ясно е, че $X_\varepsilon \to^\star_G X_\varepsilon$.
+    Нека $\high(P) = 0$. Това означава, че $P = (T,\lambda$), където $T = \{\varepsilon\}$ и $\texttt{yield}(P) = X_\varepsilon = \lambda(\varepsilon)$.
+    Ясно е, че $X_\varepsilon \derive{\star}_G X_\varepsilon$.
   \item
     Нека $\high(P) > 0$ и $\beta = \texttt{yield}(P)$ и приемаме, че твърдението е изпълнено за дървета на извод $\hat{P}$ с $\high(\hat{P}) < \high(P)$.    
     Нека $|\successor_P(\varepsilon)| = k$.
@@ -260,11 +260,10 @@
     Лесно се съобразява, че за $i < k$, дърветата на извод $P_i \df (T_i,f_i)$ са съвместими с $G$ и
     $\high(P_i) < \high(P)$. Нека $\beta_i = \texttt{yield}(P_i)$.
     Също така е ясно, че $\beta = \beta_0 \cdots \beta_{k-1}$.
-    Тогава от И.П. получаваме, че за $i < k$,
-    \[X_i \derive{\ell_i} \beta_i.\]
-    Сега прилагаме \Proposition{grammar:concat} и получаваме, че
-    \[X_\varepsilon \to_G X_0\cdots X_{k-1} \derive{\star} \beta_0 \cdots \beta_{k-1}.\]
-    Заключаваме, че
+    Тогава от И.П. получаваме, че за всяко $i < k$ е изпълнено $X_i \derive{\star} \beta_i$.
+    Получаваме, че:
+    \[X_\varepsilon \derive{1} X_0\cdots X_{k-1} \derive{\star} \beta_0 \cdots \beta_{k-1}.\]
+    Според правилата за извод в граматика получаваме, че:
     \[X_\varepsilon \derive{\star} \beta.\]
   \end{itemize}
 \end{proof}

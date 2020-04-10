@@ -20,28 +20,43 @@
 \end{itemize}
 
 \index{граматика!извод}
-Удобно е да дефинираме извод на думата $\beta$ от думата $\alpha$ в граматиката $G$ за $\ell$ стъпки, което ще означаваме като $\alpha \derive{\ell} \beta$,
+Удобно е да дефинираме извод на думата $\beta$ от думата $\alpha$ в граматиката $G$ за $\ell$ стъпки, което ще означаваме като $\alpha \derive{\ell}_G \beta$,
 с индукция по броя на стъпките $\ell$ по следния начин:
+\mynote{Обърнете внимание, че имаме недетерминизъм в тази дефиниция на извод. Също така, понякога ,за удобство, ще пишем просто $\derive{\ell}$ вместо $\derive{\ell}_G$,
+  когато се знае за коя граматика говорим.}
 \begin{prooftree}
   \AxiomC{}
   \UnaryInfC{$\alpha \derive{0} \alpha$}
 \end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$(\beta,\beta') \in R$}
-  \UnaryInfC{$\alpha\beta\gamma \derive{1} \alpha\beta'\gamma$}
+  \AxiomC{$(\alpha,\beta) \in R$}
+  \UnaryInfC{$\alpha \derive{1} \beta$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\alpha \derive{1} \gamma$}
+  \AxiomC{$\gamma \derive{\ell} \beta$}
+  \BinaryInfC{$\alpha \derive{\ell+1} \beta$}
 \end{prooftree}
 
 \begin{prooftree}
   \AxiomC{$\alpha_1 \derive{\ell_1} \beta_1$}
-  \AxiomC{$\gamma_2 \derive{\ell_2} \beta_2$}
-  \BinaryInfC{$\alpha_1\alpha_2 \derive{\ell_1 + \ell_2} \beta_1\beta_2$}
+  \AxiomC{$\cdots$}
+  \AxiomC{$\alpha_k \derive{\ell_k} \beta_k$}
+  \RightLabel{\scriptsize{($\ell = \sum^k_{i=1}\ell_i$)}}
+  \TrinaryInfC{$\alpha_1\cdots\alpha_k \derive{\ell} \beta_1\cdots \beta_k$}
 \end{prooftree}
 
-Нека $\derive{\star}$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}$. С други думи,
-\[ \alpha \derive{\star} \beta\ \iff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell} \beta\ ].\]
+\begin{proposition}\label{pr:grammar:add}
+  Нека $\alpha \derive{n}_G \beta$. Тогава за произволни думи $\gamma,\rho \in (V \cup \Sigma)^\star$ е изпълнено, че:
+  \[\gamma\alpha\rho \derive{n} \gamma \beta \rho.\]
+\end{proposition}
+
+Нека $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\to_G$. С други думи,
+\[ \alpha \derive{\star}_G \beta\ \iff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
 Езикът, който се поражда от граматиката $G$ е
-\[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}.\]
+\[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star}_G \omega\}.\]
 
 Граматиките се разделят на няколко вида в зависимост от това какви {\em ограничения} налагаме върху правилата $R$.
 В следващите няколко глави ще разгледаме различни ограничения. Сега ще разгледаме граматики с такъв вид правила,

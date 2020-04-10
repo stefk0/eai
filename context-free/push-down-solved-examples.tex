@@ -43,7 +43,7 @@
                         & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(4)}\\
                         & \vdash_P (f, \varepsilon, \varepsilon) & \comment{\text{правило }(5)}
   \end{align*}
-  \marginpar{\writedown Докажете, че $L = \L(P)$!}
+  \mynote{\writedown Докажете, че $L = \L(P)$!}
   Получихме, че
   \[(\qstart, a^2b^2, \sharp) \vdash^\star_P (\qaccept, \varepsilon, \varepsilon),\]
   откъдето следва, че $a^2b^2 \in \L(P)$.
@@ -57,7 +57,7 @@
     \end{align*}
     Заключете, че $L \subseteq \L(P)$.
   \item
-    \marginpar{Индукция по броя на стъпките в изчислението на стековия автомат}
+    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат}
     Докажете, че за всеки три думи $\alpha,\beta, \gamma \in \{a,b\}^\star$ е изпълнено, че:
     \begin{align*}
       (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \gamma\sharp)  & \implies \alpha = \gamma = a^n\\
@@ -80,7 +80,7 @@
     $\Sigma = \{a,b\}$, $\Gamma = \{a, b, \sharp\}$;
   \item
     Функцията на преходите $\Delta$ има следната дефиниция:
-    \marginpar{За всички липсващи редове в дефиницията на $\Delta$ приемаме, че $\Delta$ връща $\emptyset$}
+    \mynote{За всички липсващи редове в дефиницията на $\Delta$ приемаме, че $\Delta$ връща $\emptyset$}
     \begin{enumerate}[(1)]
     \item 
       $\Delta(q, a, \sharp) = \{(q, a\sharp)\}$;
@@ -129,10 +129,10 @@
   \end{align*}
   От последното моментно описание на автомата нямаме нито един преход, следователно
   думата $aba$ не се разпознава от $P$.
-  \marginpar{\writedown Докажете, че $L = \L(P)$!}
+  \mynote{\writedown Докажете, че $L = \L(P)$!}
   \begin{enumerate}[a)]
   \item
-    \marginpar{Индукция по дължината на думата $\alpha$}
+    \mynote{Индукция по дължината на думата $\alpha$}
     Докажете, че за всеки две думи $\alpha, \beta \in \{a,b\}^\star$ е изпълнено, че:
     \begin{align*}
       & |\alpha| = n\ \implies\ (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \alpha^{\texttt{rev}}\sharp)\\
@@ -140,7 +140,7 @@
     \end{align*}
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
-    \marginpar{Индукция по броя на стъпките в изчислението на стековия автомат}
+    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат}
     Докажете, че за всеки три думи $\alpha,\beta, \gamma \in \{a,b\}^\star$ е изпълнено, че:
     \begin{align*}
       (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \gamma\sharp) & \implies \gamma = \alpha^{\rev}\ \&\ |\alpha| = n\\
@@ -198,7 +198,7 @@
 
   \begin{enumerate}[a)]
   \item
-    \marginpar{Индукция по дължината на думата $\alpha$}
+    \mynote{Индукция по дължината на думата $\alpha$}
     Докажете, че за произволно естествено число $n$ и произволна дума $\alpha \in \{\texttt{[}, \texttt{]}\}^\star$, е изпълнено, че:
     \begin{align*}
       \texttt{[}^n\alpha \in L & \implies (q, \alpha, \texttt{[}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)\\
@@ -206,7 +206,7 @@
     \end{align*}
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
-    \marginpar{Индукция по броя на стъпките в изчислението на стековия автомат }
+    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат }
     Докажете, че за произволно естествено число $n$ и произволна дума $\alpha \in \{\texttt{[}, \texttt{]}\}^\star$, е изпълнено, че:
     \begin{align*}
       (q, \alpha, \texttt{[}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies \texttt{[}^n\alpha \in L\\
@@ -233,7 +233,7 @@
     $\Gamma = \{\texttt{[}, \sharp\}$;
   \item
     Можем да дефинираме релацията на преходите $\Delta$ по следния начин:
-    \marginpar{\writedown Докажете, че $L = \L(P)$!}
+    \mynote{\writedown Докажете, че $L = \L(P)$!}
     \begin{enumerate}[(1)]
     \item 
       $\Delta(q, \varepsilon, \sharp) = \{(f, \varepsilon)\}$;
@@ -247,15 +247,20 @@
   \end{itemize}  
   \begin{enumerate}[(a)]
   \item
-    \marginpar{Индукция по дължината на думата $\alpha$}
+    \mynote{Индукция по дължината на думата $\alpha$}
     Докажете, че за произволно естествено число $n$ и произволна дума $\alpha \in \{\texttt{[}, \texttt{]}\}^\star$, 
     е изпълнено, че:
     \[\texttt{[}^n\alpha \in L\ \implies (q, \alpha, \texttt{[}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp).\]
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
-    \marginpar{Индукция по броя на стъпките в изчислението на стековия автомат.}
+    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат.}
     Докажете, че за произволно естествено число $n$ и произволна дума $\alpha \in \{\texttt{[}, \texttt{]}\}^\star$, е изпълнено, че:
     \[(q,\alpha,\texttt{[}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)\ \implies\ \texttt{[}^n\alpha \in L.\]
     Оттук заключете, че $\L(P) \subseteq L$.
   \end{enumerate}
 \end{example}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

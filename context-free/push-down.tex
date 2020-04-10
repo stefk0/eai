@@ -79,9 +79,9 @@
   \mynote{Трябва да се каже, че $S \to^\star_G \alpha \gamma$ го правим като заместваме най-лявата променлива.}
   \begin{enumerate}[(a)]
   \item
-    ако $S \to^\star_G \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
+    ако $S \derive{\star}_G \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
   \item
-    ако $(p, \alpha, \gamma\sharp) \vdash^\star_P (p, \varepsilon, \sharp)$, то $\gamma \to^\star_G \alpha$.
+    ако $(p, \alpha, \gamma\sharp) \vdash^\star_P (p, \varepsilon, \sharp)$, то $\gamma \derive{\star}_G \alpha$.
   \end{enumerate}
   Тогава, ако вземем $\gamma = \varepsilon$, то ще получим, че
   \begin{align*}
@@ -116,7 +116,7 @@
   \item
     Индукция по броя на стъпките $\ell$ в изчислението на стековия автомат.
     Нека $\ell = 0$. Тогава е ясно, че единствената възможност $\alpha = \varepsilon$ и $\gamma = \varepsilon$.
-    Тогава $\varepsilon \to^\star_G \varepsilon$.
+    Тогава $\varepsilon \derive{\star}_G \varepsilon$.
     
     Нека $\ell > 0$ и $(p, \alpha, \gamma \sharp) \vdash^{\ell}_P (p, \varepsilon, \sharp)$.
     Имаме три избора за първата стъпка в това изчисление.
@@ -125,19 +125,19 @@
       $\Delta(p,a,a) \ni (p,\varepsilon)$.
       Това означава, че $\alpha = a\beta$, $\gamma = a\gamma_1$ и
       \[(p, \alpha, \gamma \sharp) \vdash_P (p,\beta,\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
-      Тогава от И.П. получаваме, че $\gamma_1 \to^\star_G \beta$ и оттук
-      \[\underbrace{a \gamma_1}_{\gamma} \to^\star_G \underbrace{a\beta}_{\alpha}.\]
+      Тогава от И.П. получаваме, че $\gamma_1 \derive{\star}_G \beta$ и оттук
+      \[\underbrace{a \gamma_1}_{\gamma} \derive{\star}_G \underbrace{a\beta}_{\alpha}.\]
     \item
       $\Delta(p,\varepsilon,A) \ni (p,a)$. Това означава, че $A \to_G a$, $\gamma = A\gamma_1$ и
       \[(p, \alpha, \gamma \sharp) \vdash_P (p,\alpha,a\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
-      Тогава от И.П. получаваме, че $a\gamma_1 \to^\star_G \alpha$ и оттук
-      \[\underbrace{A\gamma_1}_{\gamma} \to^\star_G \alpha.\]
+      Тогава от И.П. получаваме, че $a\gamma_1 \derive{\star}_G \alpha$ и оттук
+      \[\underbrace{A\gamma_1}_{\gamma} \derive{\star}_G \alpha.\]
     \item
       Нека $\Delta(p,\varepsilon,A) \ni (p,BC)$. Това означава, че $A \to_G BC$, $\gamma = A\gamma_1$ и
       \[(p, \alpha, \gamma \sharp) \vdash_P (p,\alpha, BC\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
       Тогава от И.П. получаваме, че
-      $BC\gamma_1 \to^\star_G \alpha$. Заключаваме, че
-      \[ \underbrace{A\gamma_1}_{\gamma}\to^\star_G \alpha.\]
+      $BC\gamma_1 \derive{\star}_G \alpha$. Заключаваме, че
+      \[ \underbrace{A\gamma_1}_{\gamma}\derive{\star}_G \alpha.\]
     \end{itemize}
   \end{enumerate}
 \end{proof}
@@ -174,11 +174,11 @@
   \end{itemize}
   Трябва да докажем, че за произволна дума $\alpha \in \Sigma^\star$, произволни състояния $q,p \in Q$,
   и произволен символ $A \in \Gamma$, е изпълнено, че:
-  \[[q,A,p] \rightarrow^\star_G \alpha\ \Leftrightarrow\ (q,\alpha,A) \vdash^\star_{P} (p,\varepsilon,\varepsilon).\]
+  \[[q,A,p] \derive{\star}_G \alpha\ \Leftrightarrow\ (q,\alpha,A) \vdash^\star_{P} (p,\varepsilon,\varepsilon).\]
   \begin{description}
   \item[$(\Rightarrow)$]
     С пълна индукция по броят на стъпките $\ell$ в изчислението на стековия автомат $P$ ще докажем, че:
-    \[(q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon)\ \implies\ [q,A,p] \to^\star_G \alpha.\]
+    \[(q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon)\ \implies\ [q,A,p] \derive{\star}_G \alpha.\]
     Ако $\ell = 1$, то е лесно, защото $\alpha = a \in \Sigma_\varepsilon$.
     Тогава $(p,\varepsilon) \in \Delta(q,a,A)$ и според конструкцията на граматиката $G$ имаме правилото $[q,A,p] \to_G a$.
     
@@ -189,7 +189,7 @@
       Ако $\Delta(q,a,A) \ni (r,B)$, то имаме, че:
       \[(q,a\beta,A) \vdash_P (r,\beta,B) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
       Тогава от И.П. получаваме, че
-      \[[r,B,p] \to^\star_G \beta.\]
+      \[[r,B,p] \derive{\star}_G \beta.\]
     \item
       Ако $\Delta(q, a, A) \ni (r, BC)$, то имаме, че:
       \[(q, a\beta, A) \vdash_P (r, \beta, BC) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]      
@@ -205,41 +205,41 @@
       където $\ell_1 + \ell_2 = \ell - 1$.    
       Сега от {\bf И.П.} получаваме:
       \begin{align*}
-        & (r, \beta_1, B) \vdash^{\ell_1}_P (q', \varepsilon, \varepsilon) \implies [r, B, q'] \to^\star_G \beta_1\\
-        & (q', \beta_2, C) \vdash^{\ell_2}_P (p, \varepsilon, \varepsilon) \implies [q', C, p] \to^\star_G \beta_2.
+        & (r, \beta_1, B) \vdash^{\ell_1}_P (q', \varepsilon, \varepsilon) \implies [r, B, q'] \derive{\star}_G \beta_1\\
+        & (q', \beta_2, C) \vdash^{\ell_2}_P (p, \varepsilon, \varepsilon) \implies [q', C, p] \derive{\star}_G \beta_2.
       \end{align*}
-      Като използваме \Proposition{grammar:concat}, получваме, че
-      \[[r,B,q'][q',C,p] \to^\star_G \beta_1\beta_2.\]
+      Тогава от правилата за извод в граматика получваме, че
+      \[[r,B,q'][q',C,p] \derive{\star}_G \beta_1\beta_2.\]
       Понеже имаме, че $\Delta(q,a,A) \ni (r,BC)$, то в граматиката имаме правилото
-      \[[q,A,p] \rightarrow_G a[r,B,q'][q',C,p].\]
+      \[[q,A,p] \to_G a[r,B,q'][q',C,p].\]
       Обединявайки всичко, получаваме извода
-      \[[q,A,p] \rightarrow^\star_G \underbrace{a\beta_1\beta_2}_{\alpha}.\]
+      \[[q,A,p] \derive{\star}_G \underbrace{a\beta_1\beta_2}_{\alpha}.\]
     \end{itemize}
   \item[$(\Leftarrow)$]
     Този път с пълна индукция по дължината на извода $\ell$ в граматиката $G$ ще докажем, че
-    \[[q,A,p] \rightarrow^\star_G \alpha \implies (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
+    \[[q,A,p] \derive{\star}_G \alpha \implies (q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
     Ако $\ell = 1$, то имаме $[q,A,p] \rightarrow \alpha$, където $\alpha \in \Sigma_\varepsilon$.
     Този случай е ясен от дефиницията на граматиката $G$, т.е. $\Delta(q,a,A) \ni (p,\varepsilon)$.
 
     Ако $\ell > 1$, то имаме, че $\alpha = a\beta$ и според правилата на граматиката $G$ имаме два случая.
     \mynote{Тук отново е възможно $a = \varepsilon$. Това не е проблем, защото правим индукция по дължината на извода, а не по дължината на думата $\alpha$.}
     Ако
-    \[[q,A,p] \rightarrow_G a[r,B,p] \stackrel{\ell-1}{\to}_G a\beta,\]
+    \[[q,A,p] \derive{1}_G a[r,B,p] \derive{\ell-1}_G a\beta,\]
     то директно прилагаме И.П. и получаваме, че
     $(r, \beta, B) \vdash^\star_P (p, \varepsilon, \varepsilon)$ и накрая получаваме, че
     \[(q, a\beta, A) \vdash^\star_P (p, \varepsilon, \varepsilon).\]
     Сега да разгледаме втория случай:
-    \[[q,A,p] \rightarrow_G a[r,B,q'][q',C,p] \stackrel{\ell-1}{\to}_G a\beta.\]
+    \[[q,A,p] \derive{1}_G a[r,B,q'][q',C,p] \derive{\ell-1}_G a\beta.\]
     От \Proposition{grammar:divide} следва, че имаме разбиване на думата $\beta$ като $\beta = \beta_1\beta_2$, където 
     \begin{align*}
-      & [r,B,q'] \stackrel{\ell_1}{\to}_G \beta_1\\
-      & [q',C,p] \stackrel{\ell_2}{\to}_G \beta_2.
+      & [r,B,q'] \derive{\ell_1}_G \beta_1\\
+      & [q',C,p] \derive{\ell_2}_G \beta_2.
     \end{align*}
     където $\ell_1 + \ell_2 = \ell - 1$.
     От {\bf И.П.} получаваме, че 
     \begin{align*}
-      & [r,B,q'] \stackrel{\ell_1}{\to}_G \beta_1 \implies (r,\beta_1,B) \vdash^\star_P (q',\varepsilon,\varepsilon) \\
-      & [q',C,p] \stackrel{\ell_2}{\to}_G \beta_2 \implies (q',\beta_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon).
+      & [r,B,q'] \derive{\ell_1}_G \beta_1 \implies (r,\beta_1,B) \vdash^\star_P (q',\varepsilon,\varepsilon) \\
+      & [q',C,p] \derive{\ell_2}_G \beta_2 \implies (q',\beta_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon).
     \end{align*}
     Правилото
     \[[q,A,p] \rightarrow_G a[r,B,q'][q',C,p]\]

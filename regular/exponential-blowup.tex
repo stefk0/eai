@@ -25,11 +25,11 @@
       \draw [dashed,->,shorten >=0pt] (3) to[bend left=15] node[above] {$a,b$} (4);
       \draw [dashed,->,shorten >=0pt] (5) to[bend left=15] node[above] {$a,b$} (6);
     \end{tikzpicture}
-    \caption{Недетерминиран автомат $\N$ за езика $\{a,b\}^\star \cdot a\cdot \{a,b\}^{n-1}$.}
+    \caption{Недетерминиран автомат $\N$ за езика $\{a,b\}^\star \cdot \{a\}\cdot \{a,b\}^{n-1}$.}
     \label{fig:nfa:exp}
   \end{figure}
   Лесно се съобразява, че за $n > 0$, недетерминирният краен автомат $\N$ на \Figure{nfa:exp} с $n+1$ на брой състояния разпознава езика
-  \[L = \{\alpha \in \{a,b\}^\star \mid \alpha = \beta \cdot a \cdot \gamma\ \&\ |\gamma| = n-1\}.\]
+  \[L = \{\beta a \gamma \in \{a,b\}^\star \mid |\gamma| = n-1\}.\]
   Нека да съобразим, че не е възможно да съществува краен детерминиран автомат $\A = \FA$ разпознаващ същия език $L$ с по-малко от $2^n$ състояния.
 
   Да допуснем, че $|Q| < 2^n$. От принципа на Дирихле имаме, че съществуват две различни думи $\alpha$ и $\beta$ с дължина $n$,
@@ -38,18 +38,20 @@
   \[\delta^\star(\qstart,\alpha) = q = \delta^\star(\qstart,\beta).\]
 
   Нека първата разлика в тези две думи е на позиция $i < n$.
+  Без ограничение на общността, нека $\alpha[i] = a$ и $\beta[i] = b$.
   \begin{itemize}
   \item
-    Ако $i = 0$, то нека без ограничение на общността да имаме, че $\alpha[0] = a$ и $\beta[0] = b$.
+    Ако $i = 0$.
     Това означава, че $\alpha \in L$, но $\beta \not\in L$.
     Следователно състоянието $q$ е едновременно финално и нефинално. Това е противоречие.
   \item
-    Ако $i > 0$, то нека без ограничение на общността да имаме, че $\alpha[i] = a$ и $\beta[i] = b$.
-    Да разгледаме следните думи:
+    Ако $i > 0$. Да разгледаме следните думи:
     \begin{align*}
       & \alpha_0 = \alpha \cdot a^{i}\\
       & \beta_0 = \beta \cdot a^{i}.
     \end{align*}
+    Тогава $\alpha_0 = \omega \cdot a \cdot \gamma$, където $|\gamma| = n-1$. Аналогично,
+    $\beta_0 = \rho \cdot b \cdot \delta$, където $|\delta| = n-1$.
     Така отново получаваме, че $\alpha_0 \in L$, но $\beta_0 \not\in L$.
     И в този случай получаваме противоречие, защото
     \[\delta^\star(\qstart,\alpha_0) = q = \delta^\star(\qstart,\beta_0)\]
