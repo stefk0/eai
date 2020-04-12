@@ -10,72 +10,199 @@
     B& \rightarrow bBc\ |\  bB\ |\ \varepsilon.
   \end{align*}
 
-  \mynote{$\L_G(B) = \{b^nc^k \mid n \geq k\}$}
-  
-  Лесно се вижда с индукция по $n$, че за всяко $n$ имаме свойствата:
-  % \mynote{\writedown Докажете!}
-  \begin{itemize}
-  \item 
-    $S \rightarrow^\star_G a^nSc^n$,
-  \item
-    $S \rightarrow^\star_G a^nS$,
-  \item
-    $B \rightarrow^\star_G b^nBc^n$,
-  \item
-    $B \rightarrow^\star_G b^nB$.
-  \end{itemize}
-  Комбинирайки горните свойства, можем да видим, че за всяко $n \geq k$,
-  \begin{itemize}
-  \item 
-    $S \rightarrow^\star_G a^nSc^k$,
-  \item
-    $B \rightarrow^\star_G b^nBc^k$.
-  \end{itemize}
-  За да докажем, че $L \subseteq \L(G)$, 
-  да разгледаме една дума $\omega \in L$, т.е. $\omega = a^mb^nc^k$, където $m+n \geq k$.
-  Имаме два случая:
-  \begin{itemize}
-  \item 
-    $k \leq m$, т.е. $m = k+\ell$ и $m+n = k+\ell+n$.
-    Тогава имаме изводите:
-    \[S \rightarrow^\star a^kSc^k,\ S \rightarrow^\star a^\ell S,\ S \rightarrow B,\ B \rightarrow^\star b^nB,\ B \rightarrow \varepsilon.\]
-    Обединявайки всичко това, получаваме:
-    \[S \rightarrow^\star a^mb^nc^k.\]
-  \item
-    $k > m$, т.е. $k = m+\ell$, за някое $\ell > 0$, и $m+n = k+r = m+\ell+r$, за някое $r$.
-    Тогава имаме изводите:
-    \[S \rightarrow^\star a^mSc^m,\ S\rightarrow B,\ B\rightarrow^\star b^\ell Bc^\ell,\ B\rightarrow b^rB,\ B\rightarrow\varepsilon,\]
-    и отново получаваме $S \rightarrow^\star a^mb^nc^k$.
-  \end{itemize}
-  Така доказахме, че $\omega \in \L(G)$.
-  
-  Сега ще докажем, че $\L(G) \subseteq L$.
-  С индукция по дължината на извода $l$,
-  ще докажем, че ако $S \stackrel{\ell}{\rightarrow}\omega$, то $\omega \in M$, където
-  \[M = \{a^nSc^k\mid n\geq k\}\cup\{a^nb^mBc^k\mid n+m\geq k\}\cup\{a^nb^mc^k\mid n+m\geq k\}.\]
-  
-  Ако $\ell = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$ и $S \in M$.
+  От \Proposition{grammar:yield-approximation} имаме, че:
+  \begin{align*}
+    \L^{\ell+1}_G(S) & = \L^\ell_G(S) \cup \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \cup \{a\}\cdot \L^\ell_G(S) \cup \L^\ell_G(B)\\
+    \L^{\ell+1}_G(B) & = \L^\ell_G(B) \cup \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{b\} \cdot \{\varepsilon\}.
+  \end{align*}
 
-  Нека $\ell > 0$ и $S \stackrel{\ell-1}{\rightarrow} \alpha \rightarrow \omega$.
-  От {\bf И.П.} имаме, че $\alpha \in M$. Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
-  Разглеждаме всички варианти за думата $\alpha \in M$ и за някое правило в граматиката $G$
-  за да докажем, че  $\omega \in M$.
-  Удобно е да представим всички случаи в таблица.
-  \begin{center}
-    \begin{tabular}{| c | c | c |}
-      \hline
-      $\alpha\in M$ & правило в граматиката & $\omega \in M?$ \\ \hline
-      $a^nSc^k$ & $S \rightarrow aSc$ & $a^{n+1}Sc^{k+1}$ \\ \hline
-      $a^nSc^k$ & $S \rightarrow aS$ & $a^{n+1}Sc^{k}$ \\ \hline
-      $a^nSc^k$ & $S \rightarrow B$ & $a^{n}Bc^{k}$ \\ \hline
-      $a^nb^mBc^k$ & $B \rightarrow bBc$ & $a^nb^{m+1}Bc^{k+1}$\\ \hline
-      $a^nb^mBc^k$ & $B \rightarrow bB$ & $a^nb^{m+1}Bc^{k}$\\ \hline
-      $a^nb^mBc^k$ & $B \rightarrow \varepsilon$ & $a^nb^{m}c^{k}$\\ \hline
-    \end{tabular}
-  \end{center}
-  Във всички случаи се установява, че $\omega \in M$.
-  Сега, за всяка дума $\omega \in L(G)$ следва, че
-  \[\omega \in \Sigma^\star \cap M = \{a^mb^nc^k\mid m+n \geq k\}.\]
+  Да сметнем първите няколко члена на редицата от апроксимации:
+  \begin{align*}
+    \L^0_G(S) & = \emptyset\\
+    \L^0_G(B) & = \emptyset\\
+    \L^1_G(S) & = \{a\} \cdot \emptyset \cdot \{c\} \cup \{a\}\cdot\emptyset \cup \emptyset \\
+              & = \emptyset\\
+    \L^1_G(B) & = \{b\} \cdot \emptyset \cdot \{c\} \cup \{b\} \cdot \emptyset \cup \{\varepsilon\} \cup \emptyset \\
+              & = \{\varepsilon\}\\
+    \L^2_G(S) & = \{a\} \cdot \emptyset \cdot \{c\} \cup \{a\}\cdot\emptyset \cup \{\varepsilon\} \\
+              & = \{\varepsilon\}\\
+    \L^2_G(B) & = \{b\} \cdot \{\varepsilon\} \cdot \{c\} \cup \{b\}\cdot \{\varepsilon\} \cup \{\varepsilon\} \\
+              & = \{\varepsilon,b,bc\}\\
+    \L^3_G(S) & = \{a\} \cdot \{\varepsilon\} \cdot \{c\} \cup \{a\}\cdot\{\varepsilon\} \cup \{\varepsilon,bc,b\} \\
+              & = \{\varepsilon, a, b, ac, bc\}\\
+              & = \{a^nb^mc^k \mid 2 > n+m \geq k\}\\
+    \L^3_G(B) & = \{b\} \cdot \{\varepsilon,b,bc\} \cdot \{c\} \cup \{b\}\cdot \{\varepsilon,b,bc\} \cup \{\varepsilon,b,bc\} \\
+              & = \{\varepsilon,b,bc,bc,bbc,bbcc,bb\}\\
+              & = \{ b^mc^k \mid 2 \geq m \geq k\}
+  \end{align*}
+
+  Да предположим, че за произволно естествено число $\ell$ е изпълнено следното:
+  \begin{align*}
+    \L^\ell_G(S) & = \{a^nb^mc^k \mid \ell - 1 > n+m \geq k\}\\
+    \L^\ell_G(B)  & = \{ b^mc^k \mid \ell -1 \geq m \geq k\}.
+  \end{align*}
+  Ще докажем, че
+  \begin{align*}
+    \L^{\ell+1}_G(S) & = \{a^nb^mc^k \mid \ell > n+m \geq k\}\\
+    \L^{\ell+1}_G(B)  & = \{ b^mc^k \mid \ell \geq m \geq k\}.
+  \end{align*}
+
+  \begin{itemize}
+  \item
+    Първо ще докажем, че
+    \[\{a^nb^mc^k \mid \ell > n+m \geq k\} \subseteq \L^{\ell+1}_G(S).\]
+    Да разгледаме думата $\alpha = a^nb^mc^k$ и $\ell > n+m \geq k$.
+    \begin{itemize}
+    \item
+      Ако $\ell - 1 > n+m$, то от И.П. имаме, че
+      \[\alpha \in \L^{\ell}_G(S) \subseteq \alpha \in \L^{\ell+1}_G(S).\]
+    \item
+      Нека сега $\ell-1 = n+m \geq k$.
+      \begin{itemize}
+      \item
+        Ако $n = 0$, то $\alpha = b^mc^k$ и $\ell-1 = m \geq k$. Тогава от И.П. имаме, че
+        \[\alpha \in \L^{\ell}_G(B) \subseteq \L^{\ell+1}_G(S).\]
+      \item
+        Нека сега $n > 0$. Тогава имаме следните два случая:
+        \begin{itemize}
+        \item 
+          Ако $n + m > k$, то е ясно, че $(n-1) + m \geq k$. От И.П. имаме, че
+          \[\alpha \in \{a\} \cdot \L^\ell_G(S) \subseteq \L^{\ell+1}_G(S).\]
+        \item
+          \mynote{Понеже $n > 0$, то и $k > 0$.}
+          Ако $n + m = k$, то е ясно, че $(n-1) + m = k-1$. От И.П. имаме, че
+          \[\alpha \in \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \subseteq \L^{\ell+1}_G(S).\]
+        \end{itemize}
+      \end{itemize}
+    \end{itemize}
+  \item
+    Сега да разгледаме включването
+    \[\L^{\ell+1}_G(S) \subseteq \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
+    Да разгледаме произволна дума $\alpha \in \L^{\ell+1}_G(S)$. Имаме четири случая:
+    \begin{itemize}
+    \item
+      Ако $\alpha \in \L^\ell_G(S)$, то от И.П. е ясно, че
+      \[\alpha \in \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
+    \item
+      Ако $\alpha \in \L^\ell_G(B)$, то от И.П. имаме, че
+      \[\alpha \in \{b^mc^k \mid \ell > m \geq k\} \subseteq \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
+    \item
+      Ако $\alpha \in \{a\} \cdot \L^{\ell}_G(S)$, то от И.П. имаме, че
+      \[\alpha \in \{a^{n+1}b^mc^k \mid \ell - 1 > n+m \geq k\} \subseteq \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
+    \item
+      Ако $\alpha \in \{a\} \cdot \L^{\ell}_G(S) \cdot \{c\}$, то от И.П. имаме, че
+      \[\alpha \in \{a^{n+1}b^mc^{k+1} \mid \ell - 1 > n+m \geq k\} \subseteq \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
+    \end{itemize}
+  \end{itemize}
+
+  Сега преминаваме към второто равенство.
+  \[\L^{\ell+1}_G(B) = \L^\ell_G(B) \cup \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{b\} \cdot \L^\ell_G(B).\]  
+  \begin{itemize}
+  \item
+    Първо ще докажем, че
+    \[\{b^mc^k \mid \ell \geq m \geq k\} \subseteq \L^{\ell+1}_G(B).\]
+    Да разгледаме думата $\alpha = b^mc^k$ и $\ell \geq m \geq k$.
+    \begin{itemize}
+    \item
+      Ако $m = 0$, то $\alpha = \varepsilon$ и е ясно, че:
+      \[\alpha \in \L^{1}_G(B) \subseteq \L^{\ell+1}_G(B).\]
+    \item
+      Ако $\ell > m$, то от И.П. имаме, че:
+      \[\alpha \in \L^{\ell}_G(B) \subseteq \L^{\ell+1}_G(B).\]
+    \item
+      Нека сега $\ell = m \geq k$.
+      \begin{itemize}
+      \item
+        Ако $\ell = m = k$, то от И.П. имаме, че:
+        \[\alpha \in \{a\} \cdot \L^\ell_G(B) \cdot \{c\} \subseteq \L^{\ell+1}_G(B).\]
+      \item
+        Ако $\ell = m > k$, то от И.П. имаме, че:
+        \[\alpha \in \{a\} \cdot \L^\ell_G(B) \subseteq \L^{\ell+1}_G(B).\]
+      \end{itemize}
+    \end{itemize}
+  \item
+    Сега да разгледаме включването
+    \[\L^{\ell+1}_G(B) \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
+    Нека $\alpha \in \L^{\ell+1}_G(B)$. Имаме три случая за $\alpha$.
+    \begin{itemize}
+    \item
+      Нека $\alpha = \L^\ell_G(B)$. Тогава от И.П. е ясно, че:
+      \[\alpha \in \{b^mc^k \mid \ell-1 \geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
+    \item
+      Нека $\alpha \in \{b\} \cdot \L^\ell_G(B) \cdot \{c\}$. Тогава от И.П. имаме, че:
+      \[\alpha \in \{b^{m+1}c^{k+1} \mid \ell-1\geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
+    \item
+      Нека $\alpha \in \{b\} \cdot \L^\ell_G(B)$. Тогава от И.П. имаме, че:
+      \[\alpha \in \{b^{m+1}c^{k} \mid \ell-1\geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\] 
+    \end{itemize}
+  \end{itemize}
+  
+  
+  
+  % Лесно се вижда с индукция по $n$, че за всяко $n$ имаме свойствата:
+  % % \mynote{\writedown Докажете!}
+  % \begin{itemize}
+  % \item 
+  %   $S \rightarrow^\star_G a^nSc^n$,
+  % \item
+  %   $S \rightarrow^\star_G a^nS$,
+  % \item
+  %   $B \rightarrow^\star_G b^nBc^n$,
+  % \item
+  %   $B \rightarrow^\star_G b^nB$.
+  % \end{itemize}
+  % Комбинирайки горните свойства, можем да видим, че за всяко $n \geq k$,
+  % \begin{itemize}
+  % \item 
+  %   $S \rightarrow^\star_G a^nSc^k$,
+  % \item
+  %   $B \rightarrow^\star_G b^nBc^k$.
+  % \end{itemize}
+  % За да докажем, че $L \subseteq \L(G)$, 
+  % да разгледаме една дума $\omega \in L$, т.е. $\omega = a^mb^nc^k$, където $m+n \geq k$.
+  % Имаме два случая:
+  % \begin{itemize}
+  % \item 
+  %   $k \leq m$, т.е. $m = k+\ell$ и $m+n = k+\ell+n$.
+  %   Тогава имаме изводите:
+  %   \[S \rightarrow^\star a^kSc^k,\ S \rightarrow^\star a^\ell S,\ S \rightarrow B,\ B \rightarrow^\star b^nB,\ B \rightarrow \varepsilon.\]
+  %   Обединявайки всичко това, получаваме:
+  %   \[S \rightarrow^\star a^mb^nc^k.\]
+  % \item
+  %   $k > m$, т.е. $k = m+\ell$, за някое $\ell > 0$, и $m+n = k+r = m+\ell+r$, за някое $r$.
+  %   Тогава имаме изводите:
+  %   \[S \rightarrow^\star a^mSc^m,\ S\rightarrow B,\ B\rightarrow^\star b^\ell Bc^\ell,\ B\rightarrow b^rB,\ B\rightarrow\varepsilon,\]
+  %   и отново получаваме $S \rightarrow^\star a^mb^nc^k$.
+  % \end{itemize}
+  % Така доказахме, че $\omega \in \L(G)$.
+  
+  % Сега ще докажем, че $\L(G) \subseteq L$.
+  % С индукция по дължината на извода $l$,
+  % ще докажем, че ако $S \stackrel{\ell}{\rightarrow}\omega$, то $\omega \in M$, където
+  % \[M = \{a^nSc^k\mid n\geq k\}\cup\{a^nb^mBc^k\mid n+m\geq k\}\cup\{a^nb^mc^k\mid n+m\geq k\}.\]
+  
+  % Ако $\ell = 0$, то е ясно, че $S \stackrel{0}{\rightarrow} S$ и $S \in M$.
+
+  % Нека $\ell > 0$ и $S \stackrel{\ell-1}{\rightarrow} \alpha \rightarrow \omega$.
+  % От {\bf И.П.} имаме, че $\alpha \in M$. Нека $\omega$ се получава от $\alpha$ с прилагане на правилото $C \rightarrow \gamma$.
+  % Разглеждаме всички варианти за думата $\alpha \in M$ и за някое правило в граматиката $G$
+  % за да докажем, че  $\omega \in M$.
+  % Удобно е да представим всички случаи в таблица.
+  % \begin{center}
+  %   \begin{tabular}{| c | c | c |}
+  %     \hline
+  %     $\alpha\in M$ & правило в граматиката & $\omega \in M?$ \\ \hline
+  %     $a^nSc^k$ & $S \rightarrow aSc$ & $a^{n+1}Sc^{k+1}$ \\ \hline
+  %     $a^nSc^k$ & $S \rightarrow aS$ & $a^{n+1}Sc^{k}$ \\ \hline
+  %     $a^nSc^k$ & $S \rightarrow B$ & $a^{n}Bc^{k}$ \\ \hline
+  %     $a^nb^mBc^k$ & $B \rightarrow bBc$ & $a^nb^{m+1}Bc^{k+1}$\\ \hline
+  %     $a^nb^mBc^k$ & $B \rightarrow bB$ & $a^nb^{m+1}Bc^{k}$\\ \hline
+  %     $a^nb^mBc^k$ & $B \rightarrow \varepsilon$ & $a^nb^{m}c^{k}$\\ \hline
+  %   \end{tabular}
+  % \end{center}
+  % Във всички случаи се установява, че $\omega \in M$.
+  % Сега, за всяка дума $\omega \in L(G)$ следва, че
+  % \[\omega \in \Sigma^\star \cap M = \{a^mb^nc^k\mid m+n \geq k\}.\]
 \end{proof}
 
 \begin{example}

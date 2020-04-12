@@ -26,32 +26,37 @@
   когато се знае за коя граматика говорим.}
 \begin{prooftree}
   \AxiomC{}
-  \UnaryInfC{$\alpha \derive{0} \alpha$}
+  \UnaryInfC{$\alpha \derive{0}_G \alpha$}
 \end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$(\alpha,\beta) \in R$}
-  \UnaryInfC{$\alpha \derive{1} \beta$}
+  \AxiomC{$\alpha \to_G \beta$}
+  \UnaryInfC{$\alpha \derive{1}_G \beta$}
 \end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$\alpha \derive{1} \gamma$}
-  \AxiomC{$\gamma \derive{\ell} \beta$}
-  \BinaryInfC{$\alpha \derive{\ell+1} \beta$}
+  \AxiomC{$\alpha \derive{1}_G \gamma$}
+  \AxiomC{$\gamma \derive{\ell}_G \beta$}
+  \BinaryInfC{$\alpha \derive{\ell+1}_G \beta$}
 \end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$\alpha_1 \derive{\ell_1} \beta_1$}
-  \AxiomC{$\cdots$}
-  \AxiomC{$\alpha_k \derive{\ell_k} \beta_k$}
-  \RightLabel{\scriptsize{($\ell = \sum^k_{i=1}\ell_i$)}}
-  \TrinaryInfC{$\alpha_1\cdots\alpha_k \derive{\ell} \beta_1\cdots \beta_k$}
+  \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
+  \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
+  \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
 \end{prooftree}
 
 \begin{proposition}\label{pr:grammar:add}
   Нека $\alpha \derive{n}_G \beta$. Тогава за произволни думи $\gamma,\rho \in (V \cup \Sigma)^\star$ е изпълнено, че:
   \[\gamma\alpha\rho \derive{n} \gamma \beta \rho.\]
 \end{proposition}
+
+\begin{proposition}\label{pr:grammar:concat}
+  Ако $\alpha_1 \derive{\ell_1} \beta_1, \dots, \alpha_k \derive{\ell_k} \beta_k$, тогава
+  \[\alpha_1\cdots\alpha_k \derive{\ell} \beta_1\cdots\beta_k,\]
+  където $\ell = \sum^k_{i=1} \ell_i$.
+\end{proposition}
+
 
 Нека $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\to_G$. С други думи,
 \[ \alpha \derive{\star}_G \beta\ \iff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
