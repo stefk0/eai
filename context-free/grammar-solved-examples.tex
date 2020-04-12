@@ -12,8 +12,8 @@
 
   От \Proposition{grammar:yield-approximation} имаме, че:
   \begin{align*}
-    \L^{\ell+1}_G(S) & = \L^\ell_G(S) \cup \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \cup \{a\}\cdot \L^\ell_G(S) \cup \L^\ell_G(B)\\
-    \L^{\ell+1}_G(B) & = \L^\ell_G(B) \cup \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{b\} \cdot \{\varepsilon\}.
+    \L^{\ell+1}_G(S) & = \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \cup \{a\}\cdot \L^\ell_G(S) \cup \L^\ell_G(B)\\
+    \L^{\ell+1}_G(B) & = \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{b\} \cdot \L^\ell_G(B) \cup \{\varepsilon\}.
   \end{align*}
 
   Да сметнем първите няколко члена на редицата от апроксимации:
@@ -22,7 +22,7 @@
     \L^0_G(B) & = \emptyset\\
     \L^1_G(S) & = \{a\} \cdot \emptyset \cdot \{c\} \cup \{a\}\cdot\emptyset \cup \emptyset \\
               & = \emptyset\\
-    \L^1_G(B) & = \{b\} \cdot \emptyset \cdot \{c\} \cup \{b\} \cdot \emptyset \cup \{\varepsilon\} \cup \emptyset \\
+    \L^1_G(B) & = \{b\} \cdot \emptyset \cdot \{c\} \cup \{b\} \cdot \emptyset \cup \{\varepsilon\} \\
               & = \{\varepsilon\}\\
     \L^2_G(S) & = \{a\} \cdot \emptyset \cdot \{c\} \cup \{a\}\cdot\emptyset \cup \{\varepsilon\} \\
               & = \{\varepsilon\}\\
@@ -55,7 +55,7 @@
     \begin{itemize}
     \item
       Ако $\ell - 1 > n+m$, то от И.П. имаме, че
-      \[\alpha \in \L^{\ell}_G(S) \subseteq \alpha \in \L^{\ell+1}_G(S).\]
+      \[\alpha \in \L^{\ell}_G(S) \subseteq \L^{\ell+1}_G(S).\]
     \item
       Нека сега $\ell-1 = n+m \geq k$.
       \begin{itemize}
@@ -80,9 +80,9 @@
     \[\L^{\ell+1}_G(S) \subseteq \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
     Да разгледаме произволна дума $\alpha \in \L^{\ell+1}_G(S)$. Имаме четири случая:
     \begin{itemize}
-    \item
-      Ако $\alpha \in \L^\ell_G(S)$, то от И.П. е ясно, че
-      \[\alpha \in \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
+    % \item
+    %   Ако $\alpha \in \L^\ell_G(S)$, то от И.П. е ясно, че
+    %   \[\alpha \in \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
     \item
       Ако $\alpha \in \L^\ell_G(B)$, то от И.П. имаме, че
       \[\alpha \in \{b^mc^k \mid \ell > m \geq k\} \subseteq \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
@@ -96,7 +96,7 @@
   \end{itemize}
 
   Сега преминаваме към второто равенство.
-  \[\L^{\ell+1}_G(B) = \L^\ell_G(B) \cup \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{b\} \cdot \L^\ell_G(B).\]  
+  % \[\L^{\ell+1}_G(B) = \L^\ell_G(B) \cup \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{b\} \cdot \L^\ell_G(B).\]  
   \begin{itemize}
   \item
     Първо ще докажем, че
@@ -125,15 +125,18 @@
     \[\L^{\ell+1}_G(B) \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
     Нека $\alpha \in \L^{\ell+1}_G(B)$. Имаме три случая за $\alpha$.
     \begin{itemize}
-    \item
-      Нека $\alpha = \L^\ell_G(B)$. Тогава от И.П. е ясно, че:
-      \[\alpha \in \{b^mc^k \mid \ell-1 \geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
+    % \item
+    %   Нека $\alpha = \L^\ell_G(B)$. Тогава от И.П. е ясно, че:
+    %   \[\alpha \in \{b^mc^k \mid \ell-1 \geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
     \item
       Нека $\alpha \in \{b\} \cdot \L^\ell_G(B) \cdot \{c\}$. Тогава от И.П. имаме, че:
       \[\alpha \in \{b^{m+1}c^{k+1} \mid \ell-1\geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
     \item
       Нека $\alpha \in \{b\} \cdot \L^\ell_G(B)$. Тогава от И.П. имаме, че:
-      \[\alpha \in \{b^{m+1}c^{k} \mid \ell-1\geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\] 
+      \[\alpha \in \{b^{m+1}c^{k} \mid \ell-1\geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
+    \item
+      Нека $\alpha \in \{\varepsilon\}$. Тогава е ясно, че имаме:
+      \[\alpha \in \{b^mc^l \mid \ell \geq m \geq k\}.\]
     \end{itemize}
   \end{itemize}
   

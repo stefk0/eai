@@ -34,10 +34,13 @@
 
   Трябва да докажем, че $\texttt{Gen} = \texttt{Gen[n]}$.
   Това ще направим като докажем, че
-  \begin{align*}
-    A \in \texttt{Gen[n]} \iff & \text{ съществува дърво на извод } P\text{, за което}\\
-                               & \texttt{root}(P) = A\ \&\ \texttt{yield}(P) \in \Sigma^\star\ \&\ \texttt{height}(P) \leq n.
-  \end{align*}
+  \[A \in \texttt{Gen[n]} \iff (\exists \alpha\in\Sigma^\star)[A \yield{\leq n} \alpha]\]
+  % \begin{align*}
+  %   A \in \texttt{Gen[n]} \iff &
+
+  %                                \text{ съществува дърво на извод } P\text{, за което}\\
+  %                              & \texttt{root}(P) = A\ \&\ \texttt{yield}(P) \in \Sigma^\star\ \&\ \texttt{height}(P) \leq n.
+  % \end{align*}
   Дефинираме $G'$ като $V' = V_n$ и правилата на $G'$ са само тези правила на $G$, в които участват променливи от $V_n$ и букви от $\Sigma$.
 \end{hint}
 
@@ -117,13 +120,13 @@
     \[\texttt{Reach[i+1]} \df \{ X \in V \cup \Sigma \mid (\exists A \in V_i)[ A \to_G \alpha X \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}.\]
   \item
     Докажете, че за всяко $i$,
-    \[\texttt{Reach[i]} = \{X \in \Sigma \cup V \mid S \derive{\leq i}{G} \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+    \[\texttt{Reach[i]} = \{X \in \Sigma \cup V \mid S \derive{\leq i}_{G} \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
   \item
     \mynote{Защо сме сигурни, че ще достигнем такава стъпка?}
     Спираме да строим тези множества, когато достигнем до стъпка $n$, за която
     \[\texttt{Reach[n]} = \texttt{Reach[n+1]}.\]
     Съобразете, че за това $n$ е изпълнено, че
-    \[\texttt{Reach[n]} = \{X \in \Sigma \cup V \mid S \to^\star_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+    \[\texttt{Reach[n]} = \{X \in \Sigma \cup V \mid S \derive{\star}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
   % \item
   %   Новата граматика $G'$ ще има букви $\Sigma' = \Sigma \cap \texttt{Reach[n]}$ и променливи $V' = V \cap \texttt{Reach[n]}$,
   %   като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$ и $\Sigma'$.

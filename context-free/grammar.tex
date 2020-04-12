@@ -22,7 +22,6 @@
   {\em всеки регулярен език е безконтекстен.}
 \end{remark}
 
-
 За произволна безконтекстна граматика $G$, дефинираме релацията $X \yield{\ell} \alpha$, където $X \in V \cup \Sigma$ и $\alpha \in (V\cup\Sigma)^\star$, по следния начин:
 \mynote{Тук е добре да се нарисува картинка. Да се обясни, че $\yield{\star}$ е аналог на BFS, докато $\derive{\star}$ е аналог на DFS.}
 \begin{prooftree}
@@ -63,7 +62,7 @@
   Тогава имаме следното:
   \begin{align*}
     \L^0_G(A) & = \emptyset\\
-    \L^{\ell+1}_G(A) & = \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}
+    \L^{\ell+1}_G(A) & = \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.
   \end{align*}
   % \[\L^0_G(X) =
   %   \begin{cases}
@@ -89,7 +88,7 @@
     & \L^0_G(S) = \emptyset\\
     & \L^1_G(S) = \{a\} \cdot \emptyset \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon\}\\
     & \L^{2}_G(S) = \{a\} \cdot \{\varepsilon\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon, ab\}\\
-    & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon, ab\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < \ell\}\\
+    & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < \ell\}\\
     & \vdots
   \end{align*}
   Лесно се съобразява, че
