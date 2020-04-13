@@ -13,7 +13,8 @@
 \item
   За фиксирано $b \in \Nat$, ще разглеждаме думи $\alpha$ и $\beta$ над азбуката $\{0,1,\dots,b-1\}$.
 \item
-  С $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$.
+  С $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$, а с $\alpha \prec \beta$,
+  че $\alpha$ е \emph{същински} префикс на $\beta$, т.е. $\alpha \preceq \beta\ \&\ \alpha \neq \beta$.
 \item
   \index{наредба!лексикографска}
   Ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
@@ -24,7 +25,7 @@
   Непразното множество $T \subseteq \{0,1,\dots,b-1\}^\star$ се нарича {\bf дърво},
   ако $T$ е затворено относно префикси, т.е. $\texttt{Pref}(T) = T$.
   С други думи,
-  \[(\forall \alpha, \beta)[\ \alpha \in T\ \&\ \beta \preceq \alpha\ \implies\ \beta \in T\ ].\]
+  \[(\forall \alpha)(\forall \beta)[\ \alpha \in T\ \&\ \beta \preceq \alpha\ \implies\ \beta \in T\ ].\]
   \mynote{При нас всички дървета са крайно разклонени.}
 \item
   Нека да въведем следните означения:
@@ -172,7 +173,7 @@
     \mynote{В този случай имаме, че $\leaves(T) = \bigcup_{a\in T} (\{a\}\cdot \leaves(T_a))$. Тук гледаме на $a$ и $b$ от една страна като букви в азбука, но и като числа.}
     \begin{align*}
       |\texttt{leaves}(T)| & = \sum_{a \in T}|\texttt{leaves}(T_a)|\\
-                           & \leq \sum_{a \in T} b^{\high(T_a)} & \comment\text{от И.П.}\\
+                           & \leq \sum_{a \in T} b^{\high(T_a)} & \comment\text{от \IndHyp}\\
                            & \leq \sum_{a < b} b^{\high(T_a)}\\
                            & \leq \sum_{a < b} b^{\high(T) -1} & \comment \high(T_a) \leq \high(T)-1 \\
                            & = b^{\high(T)}.
@@ -194,9 +195,7 @@
 
 \begin{framed}
   \begin{lemma}
-    Нека $X \derive{\star}_G \beta$.
-    Тогава съществува дърво на извод $P = (T,\lambda)$ с корен $X$ за думата $\beta \in (V\cup\Sigma)^\star$ в граматиката $G$,
-    т.е. $\beta = \texttt{yield}(P)$.
+    Ако $X \derive{\star}_G \beta$, то $X \yield{\star}_G \beta$.
   \end{lemma}  
 \end{framed}
 \begin{proof}
@@ -204,13 +203,12 @@
   \begin{itemize}
   \item
     $\ell = 0$, т.е. $X \derive{0} X$.
-    Тогава можем да дефинираме дърво на извод $P = (T,\lambda)$, където $T = \{\varepsilon\}$ и $\lambda(\varepsilon) = X$.
-    Ясно е, че $\successor_T(\varepsilon) = \emptyset$ и следователно $\texttt{yield}(P) = X$.
+    Тогава е ясно, че $X \yield{\star} X$.
   \item
     \mynote{Знаем, че $k < b$.}
     Нека $\ell > 0$ и $X \derive{\ell} \beta$.
     Според правилата на извод в граматика имаме извода
-    \[X \derive{1} X_0X_1\cdots X_k \derive{\ell-1} \beta.\]
+    \[X \to_G X_0X_1\cdots X_k \derive{\ell-1} \beta.\]
     От \Proposition{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
     \begin{itemize}
     \item
@@ -220,51 +218,46 @@
     \item
       $\ell-1 = \sum^k_{i=1} \ell_i$.
     \end{itemize}
-    От И.П. имаме, че същствуват дървета на извод $P^{i} = (T^i,\lambda^i)$ съвместими с граматиката $G$, такива че:
-    \begin{itemize}
-    \item
-      $\lambda^i(\varepsilon) = X_i$;
-    \item
-      $\texttt{yield}(P^i) = \beta_i$.
-    \end{itemize}
-    Тогава дефинираме $P = (T,\lambda)$ по следния начин:
-    \begin{itemize}
-    \item
-      $T \df \{ i\alpha \mid \alpha \in T^i\ \&\ i \leq k\}$;
-    \item
-      $\lambda(\varepsilon) \df X$;
-    \item
-      $\lambda(i\alpha) \df \lambda^i(\alpha)$.
-    \end{itemize}
+    От \IndHyp имаме, че $X_i \yield{\star} \beta_i$ за $i \leq k$.
+    Получаваме следното:
+    \begin{prooftree}
+      \AxiomC{$\vdots$}
+      \LeftLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$X_i \yield{\star} \beta_i \text{ за }i \leq k$}
+      \AxiomC{$X \to_G X_0\cdots X_k$}
+      \BinaryInfC{$X \yield{\star} \underbrace{\beta_0\cdots\beta_k}_{\beta}$}
+    \end{prooftree}
   \end{itemize}
-  Сега лесно се съобразява, че $P$ е дърво на извод с корен $X$ за думата $\beta$ в граматиката $G$.
 \end{proof}
 
 \begin{framed}
   \begin{lemma}
-    Нека $P = (T,\lambda)$ е дърво на извод за думата $\beta \in (V\cup\Sigma)^\star$ в граматиката $G$.
-    Тогава $X_\varepsilon \derive{\star}_G \beta$.
+    Ако $X \yield{\star}_G \gamma$, то $X \derive{\star}_G \gamma$.
   \end{lemma}
 \end{framed}
 \begin{proof}
-  Индукция по $\high(P)$.
+  Индукция по височината $\ell$ на дървото на извод за $X \yield{\ell} \gamma$.
   \begin{itemize}
   \item
-    Нека $\high(P) = 0$. Това означава, че $P = (T,\lambda$), където $T = \{\varepsilon\}$ и $\texttt{yield}(P) = X_\varepsilon = \lambda(\varepsilon)$.
-    Ясно е, че $X_\varepsilon \derive{\star}_G X_\varepsilon$.
+    Нека $\ell = 0$. Това означава, че $X \yield{0} X$. Ясно е, че $X \derive{\star} X$.
   \item
-    Нека $\high(P) > 0$ и $\beta = \texttt{yield}(P)$ и приемаме, че твърдението е изпълнено за дървета на извод $\hat{P}$ с $\high(\hat{P}) < \high(P)$.    
-    Нека $|\successor_P(\varepsilon)| = k$.
-    Понеже $P$ е дърво на извод съвместимо с граматиката $G$, то
-    \[X_\varepsilon \to_G X_{0}\cdots X_{k-1}.\]
-    Лесно се съобразява, че за $i < k$, дърветата на извод $P_i \df (T_i,f_i)$ са съвместими с $G$ и
-    $\high(P_i) < \high(P)$. Нека $\beta_i = \texttt{yield}(P_i)$.
-    Също така е ясно, че $\beta = \beta_0 \cdots \beta_{k-1}$.
-    Тогава от И.П. получаваме, че за всяко $i < k$ е изпълнено $X_i \derive{\star} \beta_i$.
+    Нека $\ell > 0$. Тогава имаме следното:
+    \begin{prooftree}
+      \AxiomC{$X \to_G X_1\cdots X_n$}
+      \AxiomC{$X_i \yield{\ell_i} \gamma_i\text{ за }i=1,\dots,n$}
+      \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_1,\dots,\ell_n\})$}}
+      \BinaryInfC{$X \yield{\ell} \gamma_1\cdots\gamma_n$}
+    \end{prooftree}
+    Тогава от И.П. получаваме, че за всяко $i < k$ е изпълнено $X_i \derive{\star} \gamma_i$.
     Получаваме, че:
-    \[X_\varepsilon \derive{1} X_0\cdots X_{k-1} \derive{\star} \beta_0 \cdots \beta_{k-1}.\]
-    Според правилата за извод в граматика получаваме, че:
-    \[X_\varepsilon \derive{\star} \beta.\]
+    \begin{prooftree}
+      \AxiomC{$X \to_G X_0 \cdots X_{k-1}$}
+      \AxiomC{$\vdots$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$X_i \derive{\star} \gamma_i\text{ за }i<k$}
+      \UnaryInfC{$X_0 \cdots X_{k-1} \derive{\star} \gamma_0\cdots\gamma_{k-1}$}
+      \BinaryInfC{$X \derive{\star} \underbrace{\gamma_0\cdots\gamma_{k-1}}_{\gamma}$}
+    \end{prooftree}
   \end{itemize}
 \end{proof}
 
@@ -416,7 +409,7 @@
 \begin{hint}
   Картинката за $i = 2$ изглежда така:
 
-  \begin{figure}[htp]
+  \begin{figure}[H]
     \begin{subfigure}[t]{0.5\textwidth}
       \centering
       \begin{tikzpicture}
@@ -474,7 +467,7 @@
 \begin{hint}
   Имаме следната картинка:
 
-  \begin{figure}[htp]
+  \begin{figure}[H]
     \begin{subfigure}[t]{0.5\textwidth}
       \centering
       \begin{tikzpicture}
@@ -532,7 +525,7 @@
 \end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$(A,\gamma) \in R$}
+  \AxiomC{$A \to_G \gamma$}
   \AxiomC{$\alpha \in \Sigma^\star$}
   \BinaryInfC{$\alpha A \beta \lderive{1} \alpha \gamma \beta$}
 \end{prooftree}

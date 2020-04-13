@@ -30,12 +30,7 @@
 \end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$\alpha \to_G \beta$}
-  \UnaryInfC{$\alpha \derive{1}_G \beta$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\alpha \derive{1}_G \gamma$}
+  \AxiomC{$\alpha \to_G \gamma$}
   \AxiomC{$\gamma \derive{\ell}_G \beta$}
   \BinaryInfC{$\alpha \derive{\ell+1}_G \beta$}
 \end{prooftree}
@@ -45,6 +40,13 @@
   \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
   \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
 \end{prooftree}
+
+\mynote{Съобразете, че имаме също и следното:
+\begin{prooftree}
+  \AxiomC{$\alpha \to_G \beta$}
+  \UnaryInfC{$\alpha \derive{1}_G \beta$}
+\end{prooftree}
+}
 
 \begin{proposition}\label{pr:grammar:add}
   Нека $\alpha \derive{n}_G \beta$. Тогава за произволни думи $\gamma,\rho \in (V \cup \Sigma)^\star$ е изпълнено, че:

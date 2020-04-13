@@ -29,22 +29,24 @@
   \UnaryInfC{$X \yield{0} X$}
 \end{prooftree}
 
-\begin{prooftree}
-  \AxiomC{$X \to_G \gamma$}
-  \UnaryInfC{$X \yield{1} \gamma$}
-\end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$X \yield{1} X_1\cdots X_n$}
+  \AxiomC{$X \to_G X_1\cdots X_n$}
   \AxiomC{$X_i \yield{\ell_i} \gamma_i\text{ за }i=1,\dots,n$}
   \RightLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
   \BinaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
 \end{prooftree}
 
+\mynote{ Съобразете, че имаме:
+\begin{prooftree}
+  \AxiomC{$X \to_G \gamma$}
+  \UnaryInfC{$X \yield{1} \gamma$.}
+\end{prooftree}}
+
 Нека $\yield{\star}$ е рефлексивното и транзитивно затваряне на релацията $\yield{\ell}$, т.е.
 \[X \yield{\star} \gamma \dff (\exists \ell\in\Nat)[X \yield{\ell} \gamma].\]
 
-Ясно е, че $X \yield{\star} \gamma \iff X \derive{\ell} \gamma$.
+\mynote{Ще докажем, че $X \yield{\star}_G \gamma \iff X \derive{\star}_G \gamma$.}
 
 Да напомним, че дефинирахме език $\L_\A(q)$.
 Сега ще дефинираме език $\L_G(A)$, за произволна променлива.
