@@ -1,76 +1,12 @@
 \section{Регулярни граматики}
-\index{граматика!неограничена}
-\label{sect:regular-grammar}
-\mynote{На англ. {\em unrestricted grammar}. Това е тип 0 граматики в йерархията на Чомски \cite[стр. 220]{hopcroft1}.}
-{\bf Неограничена граматика} e наредена четворка от вида
-\[G = (V, \Sigma, R, S),\]
-където:
-\begin{itemize}
-\item
-  $V$ е крайно множество от {\em променливи} (нетерминали);
-\item
-  $\Sigma$ е крайно множество от {\em букви} (терминали), $\Sigma \cap V = \emptyset$;
-\item
-  \mynote{В \cite{hopcroft1} правилата се наричат {\em productions} или {\em production rules}.}
-  $R \subseteq (V\cup\Sigma)^+ \times (V \cup \Sigma)^\star$ е крайно множество от {\em правила}.
-  За по-добра яснота, обикновено правилата $(\alpha, \beta) \in R$ ще означаваме като 
-  $\alpha \to_G \beta$.
-\item
-  $S \in V$ е началната променлива (нетерминал). 
-\end{itemize}
-
-\index{граматика!извод}
-Удобно е да дефинираме извод на думата $\beta$ от думата $\alpha$ в граматиката $G$ за $\ell$ стъпки, което ще означаваме като $\alpha \derive{\ell}_G \beta$,
-с индукция по броя на стъпките $\ell$ по следния начин:
-\mynote{Обърнете внимание, че имаме недетерминизъм в тази дефиниция на извод. Също така, понякога ,за удобство, ще пишем просто $\derive{\ell}$ вместо $\derive{\ell}_G$,
-  когато се знае за коя граматика говорим.}
-\begin{prooftree}
-  \AxiomC{}
-  \UnaryInfC{$\alpha \derive{0}_G \alpha$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\alpha \to_G \gamma$}
-  \AxiomC{$\gamma \derive{\ell}_G \beta$}
-  \BinaryInfC{$\alpha \derive{\ell+1}_G \beta$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
-  \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
-  \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
-\end{prooftree}
-
-\mynote{Съобразете, че имаме също и следното:
-\begin{prooftree}
-  \AxiomC{$\alpha \to_G \beta$}
-  \UnaryInfC{$\alpha \derive{1}_G \beta$}
-\end{prooftree}
-}
-
-\begin{proposition}\label{pr:grammar:add}
-  Нека $\alpha \derive{n}_G \beta$. Тогава за произволни думи $\gamma,\rho \in (V \cup \Sigma)^\star$ е изпълнено, че:
-  \[\gamma\alpha\rho \derive{n} \gamma \beta \rho.\]
-\end{proposition}
-
-\begin{proposition}\label{pr:grammar:concat}
-  Ако $\alpha_1 \derive{\ell_1} \beta_1, \dots, \alpha_k \derive{\ell_k} \beta_k$, тогава
-  \[\alpha_1\cdots\alpha_k \derive{\ell} \beta_1\cdots\beta_k,\]
-  където $\ell = \sum^k_{i=1} \ell_i$.
-\end{proposition}
-
-
-Нека $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\to_G$. С други думи,
-\[ \alpha \derive{\star}_G \beta\ \iff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
-Езикът, който се поражда от граматиката $G$ е
-\[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star}_G \omega\}.\]
+\index{граматика!регулярна}
+\index{граматика!тип 3}
 
 Граматиките се разделят на няколко вида в зависимост от това какви {\em ограничения} налагаме върху правилата $R$.
 В следващите няколко глави ще разгледаме различни ограничения. Сега ще разгледаме граматики с такъв вид правила,
 които пораждат точно регулярните (или еквивалентно автоматни) езици.
 
-\index{граматика!регулярна}
-\index{граматика!тип 3}
+
 \mynote{Също така се наричат граматики от тип 3 в йерархията на Чомски \cite[стр. 217]{hopcroft1}.}
 Граматиката $G = (V, \Sigma, R, S)$ се нарича {\bf регулярна граматика},
 ако всички правила са от вида 
@@ -80,8 +16,13 @@
   & A \to \varepsilon,
 \end{align*}
 за произволни $A, B \in V$ и $a \in \Sigma$.
-% Ако началната променлива $S$ не се среща в дясна част на правило, то позволяваме и правилото $S \to \varepsilon$,
-% ако искаме $\varepsilon \in \L(G)$.
+
+\begin{proposition}
+  Нека $A$ е произволна променлива в регулярната граматика $G$.
+  Тогава за всяко естествено число $\ell$, съществува $\alpha \in \Sigma$, за която
+  $A \derive{\ell}_G \alpha$ или $A \derive{\ell}_G \alpha B$, за някоя променлива $B$.
+\end{proposition}
+
 
 \begin{lemma}
   За всяка регулярна граматика $G$ съществува НКА $\N$, такъв че $\L(G) = \L(\N)$.
