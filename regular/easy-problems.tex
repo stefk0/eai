@@ -54,6 +54,17 @@
 %   проверява дали $\L(\mathbf{r}) \subseteq \L(\mathbf{s})$.
 % \end{problem}
 
+% \setlength{\marginparsep}{18pt}
+% \setlength{\oddsidemargin}{5pt}
+% \setlength{\evensidemargin}{100pt}
+% \setlength{\hoffset}{-30pt}
+% \setlength{\voffset}{-30pt}
+
+% \newgeometry{marginparwidth=20pt, evensidemargin=20pt}
+% \newgeometry{textwidth=600pt}
+
+% \layout
+
 \ExtraMaterial{
 \begin{problem}
   За всеки от следните езици $L$, постройте минимален краен детерминиран автомат $\A$, който разпознава езика $L$, където:
@@ -94,7 +105,7 @@
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0\ (\bmod\ 2)\ \&\ \card{\omega}{a} = 1\}$;
   \item
-    $L = \{\omega \in \{a,b\}^\star \mid \text{ всяко }a\text{ в }\omega\text{ се следва от поне едно }b\}$;
+    $L = \{\omega \in \{a,b\}^\star \mid \text{ всяко }a\text{ в }\omega\text{ се следва веднага от поне едно }b\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\omega} \equiv 0 \bmod 3\}$;
   \item
@@ -110,10 +121,12 @@
       за }i = 1,2,3\}$.
   \end{enumerate}
 \end{problem}
+}
 
+\begin{extra}
 \begin{problem}
   Нека $\Sigma = \{a,b\}$.  Проверете дали $L$ е регулярен, където
-  \begin{multicols}{2}
+  % \begin{multicols}{2}
   \begin{enumerate}[a)]
   % \item
   %   $L = \{\alpha^{\texttt{rev}} \mid \alpha \in L_0\}$, където $L_0$ е регулярен;
@@ -173,9 +186,10 @@
   \item
     $L = \{\omega \in \{a,b\}^\star \mid \abs{\ \card{\omega}{a} - \card{\omega}{b}\ } \leq 3\}$.
   \end{enumerate}    
-  \end{multicols}
 \end{problem}
-}
+\end{extra}
+
+% \restoregeometry
 
 \begin{problem}
   Докажете, че следните езици са регулярни:

@@ -31,3 +31,26 @@
 \newcommand*{\goleft}{\lhd}
 \newcommand*{\goright}{\rhd}
 \newcommand*{\stay}{\Box}
+
+
+% \newenvironment{boxedd}
+% {\begin{center}
+%     \begin{tabular}{|p{0.9\textwidth}|}
+%       \hline\\
+%       }
+%       { 
+%       \\\\\hline
+%     \end{tabular} 
+%   \end{center}
+% }
+
+
+\newenvironment{extra}
+{% This is the begin code
+  \begin{multicols}{2}
+  \scriptsize
+}
+{% This is the end code
+\end{multicols}
+\hrulefill
+}

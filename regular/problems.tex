@@ -141,7 +141,6 @@
   Не е ли по-лесно с индукция по построението на регулярните езици ?
 \end{hint}
 
-
 % \begin{problem}
 %   \mynote{(\cite{kozen}, стр. 75)}
 %   Да фиксираме азбука само с един символ $\Sigma = \{a\}$.
@@ -179,7 +178,9 @@
 % \end{hint}
 
 
-
+% \ExtraMaterial{
+% \begin{multicols}{2}
+\begin{extra}
 \begin{problem}
   \mynote{Да обърнем внимание, че езикът $\{\alpha\sharp \beta \sharp \gamma \mid \bin{\alpha}+\bin{\beta} = \bin{\gamma}\}$ не е регулярен.}
   Да разгледаме азбуката:
@@ -204,7 +205,6 @@
   Остана случая $\bin{1\alpha} + \bin{1\beta} = \bin{10\gamma}$. Този случай е по-специален и трябва да бъде разгледан отделно.
   Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца. Затова имаме следния преход:
   \[\delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 1 \\ 0\end{bmatrix} }) \df q_1.\]
-  
   За останалите $\gamma \in \Sigma_3$ имаме, че
   \[\delta(q_{\scriptscriptstyle{=}},\gamma) \df q_{\texttt{err}},\]
   където $q_{\texttt{err}}$ е състоянието, от което не можем да излезем.
@@ -221,8 +221,19 @@
   \end{align*}
 \end{hint}
 \fi
+% \end{multicols}
+% }
+\end{extra}
 
-\begin{problem}
+
+% Stefan Vatev
+
+% \ExtraMaterial{
+% \begin{multicols}{2}
+
+\begin{extra}
+
+    \begin{problem}
   Да разгледаме азбуката:
   \[\Sigma_2 = \left\{\begin{bmatrix} 0\\0\end{bmatrix},\begin{bmatrix} 0\\1\end{bmatrix},\begin{bmatrix} 1\\0\end{bmatrix},\begin{bmatrix} 1\\1\end{bmatrix}\right\}.\]
   Една дума над азбуката $\Sigma_2$ ни дава два реда от $0$-ли и $1$-ци, които ще разглеждаме като числа в двоична бройна система.
@@ -299,6 +310,9 @@
   Докажете, че за така дефинирания автомат $\A$, $\L(\A) = L^{\texttt{rev}}_1$.
 \end{hint}
 \fi
+% \end{multicols}
+% }
+\end{extra}
 
 
 %%% Local Variables:
