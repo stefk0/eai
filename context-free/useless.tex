@@ -19,14 +19,14 @@
 \end{lemma}
 \begin{hint}
   Целта ни е да намерим множеството $\texttt{Gen}$ от променливи, които генерират думи, т.е. търсим
-  \[\texttt{Gen} \df \{A \in V \mid A \to^\star_G \alpha\ \&\ \alpha \in \Sigma^\star \}.\]
+  \[\texttt{Gen} \df \{A \in V \mid A \yield{\star} \alpha\ \&\ \alpha \in \Sigma^\star \}.\]
   За целта ще построим редица от множества $\texttt{Gen[n]}$ по следния начин:
   \mynote{Всяка итерация на алгоритъма отнема $\mathcal{O}(|G|)$ време. Следователно, изпълнението на целия алгоритъм отнема $\mathcal{O}(|G|^2)$ време.}
   \begin{itemize}
   \item 
     $\texttt{Gen[0]} \df \emptyset$;
   \item
-    $\texttt{G[n+1]} \df \texttt{Gen[n]} \cup \{A\in V \mid A \to_G \alpha\ \&\ \alpha \in (\Sigma \cup \texttt{Gen[n]})^\star \}$.
+    $\texttt{G[n+1]} \df \{A\in V \mid A \to_G \alpha\ \&\ \alpha \in (\Sigma \cup \texttt{Gen[n]})^\star \}$.
   \item
     Спираме, когато стигнем до такова $n$, за което $\texttt{Gen[n]} = \texttt{G[n+1]}$. Лесно се съобразява, че
     $(\forall k \geq n)[\texttt{Gen[n]} = \texttt{Gen[k]}]$.

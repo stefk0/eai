@@ -19,18 +19,18 @@
     \item
       Нека имаме $\texttt{E[n]}$. Тогава 
       \mynote{Обърнете внимание, че имаме $\texttt{E[n]}^\star$, а
-        не просто $\texttt{E[n]}$.}
-      \mynote{Също така да напомним, че $\emptyset^\star = \{\varepsilon\}$.}
-      \[\texttt{E[n+1]} \df \texttt{E[n]} \cup \{ B \in V \mid (\exists \alpha \in \texttt{E[n]}^\star)[B \to_G \alpha ]\}.\]
+        не просто $\texttt{E[n]}$. Също така да напомним, че $\emptyset^\star = \{\varepsilon\}$.}
+      \[\texttt{E[n+1]} \df \{ B \in V \mid (\exists \alpha \in \texttt{E[n]}^\star)[B \to_G \alpha ]\}.\]
     \item
       Докажете, че за всяко $n$ е изпълнено, че
-      $A \in \texttt{E[n]}$ точно тогава, когато съществува дърво на извод $P$, за което
-    $A = \texttt{root}(P)$, $\texttt{yield}(P) = \varepsilon$ и $\texttt{height}(P) \leq n$.
+      \[\texttt{E[n]} = \{A \in V \mid A \yield{\leq n} \varepsilon\}.\]
+    %   $A \in \texttt{E[n]}$ точно тогава, когато съществува дърво на извод $P$, за което
+    % $A = \texttt{root}(P)$, $\texttt{yield}(P) = \varepsilon$ и $\texttt{height}(P) \leq n$.
     \item
       \mynote{Намираме $\texttt{E}$ за време $\mathcal{O}(|G|^2)$.}
       Спираме на първото $n$, за което $\texttt{E[n]} = \texttt{E[n+1]}$.
       Лесно се съобразява, че за това $n$ е изпълнено, че
-      \[\texttt{E[n]} = \{A \in V \mid A \to^\star_G \varepsilon\}.\]
+      \[\texttt{E[n]} = \{A \in V \mid A \yield{\star} \varepsilon\}.\]
     \end{itemize}
   \item
     Строим множеството от правила $R'$, в което няма $\varepsilon$-правила по следния начин.

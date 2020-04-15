@@ -1,26 +1,182 @@
 \section{Безконтекстни граматики}
 
 \index{граматика!безконтекстна}
-\mynote{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$. На англ. {\em context-free grammar}. Други срещани наименования на български са {\em контекстно-свободна}, {\em контекстно-независима}.}
+\mynote{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$. На англ. {\em context-free grammar}. Други срещани наименования на български са
+  {\em контекстно-свободна}, {\em контекстно-независима}. Тук всички правила са от вида $A \to \alpha$, където $\alpha \in (V\cup\Sigma)^\star$.}
 
-В Раздел \ref{sect:regular-grammar} въведохме понятието граматика. След това видяхме как можем да опишем регулярните езици
+В Раздел \ref{sect:regular-grammar} въведохме понятието неограничена граматика. След това видяхме как можем да опишем регулярните езици
 със специален вид граматики, които нарекохме регулярни граматики.
 Сега ще разгледаме още един вид граматики, които описват по-широк клас от езици.
 
-\begin{itemize}
-\item 
-  Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
-  имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
-\item
-  \index{език!безконтекстен}
-  $L$ се нарича {\bf безконтекстен език}, ако съществува безконтекстна граматика $G$, за която 
-  $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
-\end{itemize}
+Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
+имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
+
+Да напомним дефиницията на релацията $\alpha \derive{\ell}_G \beta$ за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$.
+
+\begin{prooftree}
+  \AxiomC{}
+  \UnaryInfC{$\alpha \derive{0}_G \alpha$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$A \to_G \gamma$}
+  \AxiomC{$\gamma \derive{\ell}_G \beta$}
+  \BinaryInfC{$A \derive{\ell+1}_G \beta$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
+  \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
+  \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
+\end{prooftree}
+
+\mynote{В частност имаме, че:
+\begin{prooftree}
+  \AxiomC{$A \to_G \beta$}
+  \UnaryInfC{$A \derive{1}_G \beta$}
+\end{prooftree}
+}
+
+Нека $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
+\[ \alpha \derive{\star}_G \beta\ \iff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
+
+\index{език!безконтекстен}
+Един език $L$ се нарича {\bf безконтекстен}, ако съществува безконтекстна граматика $G$, за която 
+$L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
 \begin{remark}
   Очевидно е, че всяка регулярна граматика е безконтекстна. Следователно, 
   {\em всеки регулярен език е безконтекстен.}
 \end{remark}
+
+\ExtraMaterial{
+  % \begin{multicols}{2}
+\begin{example}
+  Да разгледаме безконтекстната граматика $G$, която има следните правила:
+  \begin{align*}
+    S \to AS\ |\ \varepsilon\\
+    A \to aAb\ |\ ab.
+  \end{align*}
+  Да видим защо думата $aabbab \in \L(G)$. Ако следваме формално правилата за извод, получаваме следното:
+
+  \begin{prooftree}
+    \AxiomC{$S \to_G AS$}
+    \AxiomC{$A \derive{0}_G A$}
+    \AxiomC{$S \to_G AS$}
+    \AxiomC{$S \to_G \varepsilon$}
+    \AxiomC{$\varepsilon \derive{0}_G \varepsilon$}
+    \BinaryInfC{$S \derive{1}_G \varepsilon$}
+    \BinaryInfC{$S \derive{2}_G A$}
+    \BinaryInfC{$AS \derive{2}_G AA$}
+    \BinaryInfC{$S \derive{3}_G AA$}
+  \end{prooftree}
+
+  Освен това имаме и следния формален извод:
+  \begin{prooftree}
+    \AxiomC{$A \to_G aAb$}
+    \AxiomC{$a \derive{0}_G a$}
+    \AxiomC{$A \to_G ab$}
+    \AxiomC{$b \derive{0}_G b$}
+    \BinaryInfC{$Ab \derive{1}_G abb$}
+    \BinaryInfC{$aAb \derive{1}_G aabb$}
+    \BinaryInfC{$A \derive{2}_G aabb$}
+  \end{prooftree}
+
+  Аналогично,
+  \begin{prooftree}
+    \AxiomC{$A \to_G ab$}
+    \AxiomC{$ab \derive{0}_G ab$}
+    \BinaryInfC{$A \derive{1}_G ab$}
+  \end{prooftree}
+
+  Обединявайки всичко, получаваме:
+
+  \begin{prooftree}
+    \AxiomC{$S \derive{3}_G AA$}
+    \AxiomC{$A \derive{2}_G aabb$}
+    \BinaryInfC{$S \derive{5}_G aabbA$}
+    \AxiomC{$A \derive{1}_G ab$}
+    \BinaryInfC{$S \derive{6}_G aabbab$}
+  \end{prooftree}
+
+  Обърнете внимание, че можем да приложим правилата за извод в различен ред и пак да получим същия краен резултат.
+  Например:
+
+  \begin{prooftree}
+    \AxiomC{$S \to_G AS$}
+    \AxiomC{$A \derive{2} aabb$}
+    \BinaryInfC{$S \derive{3}_G aabbS$}
+    \AxiomC{$S \derive{2}_G A$}
+    \BinaryInfC{$S \derive{5}_G aabbA$}
+    \AxiomC{$A \derive{1}_G ab$}
+    \BinaryInfC{$S \derive{6}_G aabbab$}
+  \end{prooftree}
+\end{example}
+% \end{multicols}
+}
+
+
+\begin{proposition}\label{pr:grammar:derive-one-step}
+  Нека $G$ е безконтекстна граматика.
+  Тогава за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ е изпълнено, че 
+  $\alpha \derive{1}_G \beta$ точно тогава, когато $\alpha = \delta A \rho$, $A \to_G \gamma$ и $\beta = \delta\gamma\rho$.
+\end{proposition}
+
+% \begin{framed}
+\begin{proposition}\label{pr:grammar:divide}
+  Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \derive{\ell}_G \beta$, където $X_i \in V \cup \Sigma$.
+  Тогава съществуват думи $\beta_1,\dots,\beta_k$, такива че за $i = 1,\dots, k$ е изпълнено, че
+  $X_i \derive{\ell_i} \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $\ell = \sum^k_{i = 1}\ell_i$.
+\end{proposition}
+\begin{hint}
+  Индукция по $k$.
+\end{hint}
+% \end{framed}
+% \begin{proof}
+%   Индукция по $n$.
+%   \begin{itemize}
+%   \item
+%     Нека $n = 0$. Тогава $\beta = \alpha_1 \cdots \alpha_k$ и е ясно, че в този случай $\beta_i = \alpha_i$ и $n_i = 0$.
+%   \item
+%     Нека $n > 0$ и $\alpha_1\cdots \alpha_k \derive{n} \beta$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
+%     като приложим \Proposition{grammar:add} получаваме, че
+%     \[\alpha_1\cdots\alpha_i\cdots\alpha_k \to_G \alpha_1\cdots\alpha'_i\cdots\alpha_k.\]
+%     Според дефиницията на релацията $\derive{n}$ имаме, че
+%     \[\alpha_1\cdots\alpha'_i\cdots\alpha_k \stackrel{n-1}{\to}_G \beta.\]
+%     От И.П. получаваме, че съществуват думи $\beta_1,\dots,\beta_k$, такива че $\beta = \beta_1 \cdots \beta_k$
+%     и $\alpha_j \derive{n_j} \beta_j$ за $j \neq i$ и $\alpha'_i \derive{n'_i} \beta_i$, като
+%     \[n-1 = n'_i + \sum_{j\neq i} n_j.\]
+%     Понеже имаме, че $\alpha_i \to_G \alpha'_i \derive{n'_i}\beta_i$,
+%     то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \derive{n_i} \beta_i$ и
+%     \[n = \sum^{k}_{i=1} n_i.\]
+%   \end{itemize}
+% \end{proof}
+
+
+
+\begin{framed}
+  \begin{thm}
+    Всеки регулярен език е безконтекстен.
+  \end{thm}
+\end{framed}
+\begin{hint}
+  Ще направим индукция по построението на регулярните езици.
+  \begin{itemize}
+  \item
+    Всеки от езиците $\emptyset$, $\{\varepsilon\}$ и $\{a\}$, за всяка буква $a \in \Sigma$ е безконтекстен.
+  \item
+    Нека $L_1$ и $L_2$ са безконтекстни езици. Тогава:
+    \begin{itemize}
+    \item
+      $L_1 \cup L_2$ е безконтекстен език.
+    \item
+      $L_1 \cdot L_2$ е безконтекстен език.
+    \item
+      $L^\star_1$ е безконтекстен език.
+    \end{itemize}
+  \end{itemize}
+\end{hint}
+
 
 За произволна безконтекстна граматика $G$, дефинираме релацията $X \yield{\ell} \alpha$, където $X \in V \cup \Sigma$ и $\alpha \in (V\cup\Sigma)^\star$, по следния начин:
 \mynote{Тук е добре да се нарисува картинка. Да се обясни, че $\yield{\star}$ е аналог на BFS, докато $\derive{\star}$ е аналог на DFS.}
@@ -105,7 +261,11 @@
     & S \to aSc\ |\  B\\
     & B \to bBc\ |\ \varepsilon.
   \end{align*}
-  Лесно се съобразява, че $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
+  Лесно се съобразява, че $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$, защото
+  \begin{align*}
+    \L^\ell_G(S) & = \{a^nb^kc^{n+k} \mid n,k < \ell-1\}\\
+    \L^\ell_G(B) & = \{b^kc^k \mid k < \ell\}.
+  \end{align*}
 \end{example}
 
 \begin{example}
@@ -162,29 +322,6 @@
   \end{align*}
 \end{example}
 
-\begin{framed}
-  \begin{thm}
-    Всеки регулярен език е безконтекстен.
-  \end{thm}
-\end{framed}
-\begin{proof}
-  Ще направим индукция по построението на регулярните езици.
-  \begin{itemize}
-  \item
-    Всеки от езиците $\emptyset$, $\{\varepsilon\}$ и $\{a\}$, за всяка буква $a \in \Sigma$ е безконтекстен.
-  \item
-    Нека $L_1$ и $L_2$ са безконтекстни езици. Тогава:
-    \begin{itemize}
-    \item
-      $L_1 \cup L_2$ е безконтекстен език.
-    \item
-      $L_1 \cdot L_2$ е безконтекстен език.
-    \item
-      $L^\star_1$ е безконтекстен език.
-    \end{itemize}
-  \end{itemize}
-\end{proof}
-
 
 % \begin{proposition}
 %   \label{pr:grammar:concat}
@@ -207,34 +344,6 @@
 %    Сега обединяваме двата извода и получаваме, че
 %    \[\alpha_1\cdots\alpha_{k} \derive{n} \beta_1\cdots\beta_k,\]
 %    където $n = \sum^k_{i=1} n_i$.
-%   \end{itemize}
-% \end{proof}
-
-% \begin{framed}
-  \begin{proposition}
-    \label{pr:grammar:divide}
-    Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \derive{n}_G \beta$, където $X_i \in V \cup \Sigma$.
-    Тогава съществуват думи $\beta_1,\dots,\beta_k$, такива че за $i = 1,\dots, k$ е изпълнено, че
-    $X_i \derive{n_i} \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $n = \sum^k_{i = 1}n_i$.
-  \end{proposition}
-% \end{framed}
-% \begin{proof}
-%   Индукция по $n$.
-%   \begin{itemize}
-%   \item
-%     Нека $n = 0$. Тогава $\beta = \alpha_1 \cdots \alpha_k$ и е ясно, че в този случай $\beta_i = \alpha_i$ и $n_i = 0$.
-%   \item
-%     Нека $n > 0$ и $\alpha_1\cdots \alpha_k \derive{n} \beta$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
-%     като приложим \Proposition{grammar:add} получаваме, че
-%     \[\alpha_1\cdots\alpha_i\cdots\alpha_k \to_G \alpha_1\cdots\alpha'_i\cdots\alpha_k.\]
-%     Според дефиницията на релацията $\derive{n}$ имаме, че
-%     \[\alpha_1\cdots\alpha'_i\cdots\alpha_k \stackrel{n-1}{\to}_G \beta.\]
-%     От И.П. получаваме, че съществуват думи $\beta_1,\dots,\beta_k$, такива че $\beta = \beta_1 \cdots \beta_k$
-%     и $\alpha_j \derive{n_j} \beta_j$ за $j \neq i$ и $\alpha'_i \derive{n'_i} \beta_i$, като
-%     \[n-1 = n'_i + \sum_{j\neq i} n_j.\]
-%     Понеже имаме, че $\alpha_i \to_G \alpha'_i \derive{n'_i}\beta_i$,
-%     то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \derive{n_i} \beta_i$ и
-%     \[n = \sum^{k}_{i=1} n_i.\]
 %   \end{itemize}
 % \end{proof}
 

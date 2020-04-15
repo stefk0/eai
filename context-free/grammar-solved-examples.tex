@@ -1,9 +1,8 @@
 \subsection{Примерни задачи}
 
-\begin{example}
-  Езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
-\end{example}  
-\begin{proof}
+\ExtraMaterial{
+  \begin{example}
+  Нека да видим защо езикът $L = \{a^mb^nc^k\mid m+n \geq k\}$ е безконтекстен.
   Да разгледаме граматиката $G$ с правила
   \begin{align*}
     S& \rightarrow aSc\ |\ aS\ |\ B\\
@@ -12,14 +11,14 @@
 
   От \Proposition{grammar:yield-approximation} имаме, че:
   \begin{align*}
+    \L^0_G(S) & = \emptyset\\
     \L^{\ell+1}_G(S) & = \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \cup \{a\}\cdot \L^\ell_G(S) \cup \L^\ell_G(B)\\
+    \L^0_G(B) & = \emptyset\\
     \L^{\ell+1}_G(B) & = \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{b\} \cdot \L^\ell_G(B) \cup \{\varepsilon\}.
   \end{align*}
 
   Да сметнем първите няколко члена на редицата от апроксимации:
-  \begin{align*}
-    \L^0_G(S) & = \emptyset\\
-    \L^0_G(B) & = \emptyset\\
+  \begin{align*}    
     \L^1_G(S) & = \{a\} \cdot \emptyset \cdot \{c\} \cup \{a\}\cdot\emptyset \cup \emptyset \\
               & = \emptyset\\
     \L^1_G(B) & = \{b\} \cdot \emptyset \cdot \{c\} \cup \{b\} \cdot \emptyset \cup \{\varepsilon\} \\
@@ -36,7 +35,7 @@
               & = \{ b^mc^k \mid 2 \geq m \geq k\}
   \end{align*}
   Да предположим, че за произволно естествено число $\ell$ е изпълнено следното:
-  \mynote{Това ще бъде нашето \IndHyp.}
+  \mynote{Тези две свойства ще бъдат нашето \IndHyp. Очевидно е, че те са изпълнени за $\ell = 0$.}
   \begin{align*}
     \L^\ell_G(S) & = \{a^nb^mc^k \mid \ell - 1 > n+m \geq k\}\\
     \L^\ell_G(B)  & = \{ b^mc^k \mid \ell -1 \geq m \geq k\}.
@@ -49,35 +48,29 @@
 
   \begin{itemize}
   \item
-    Първо ще докажем, че
-    \[\{a^nb^mc^k \mid \ell > n+m \geq k\} \subseteq \L^{\ell+1}_G(S).\]
+    Първо ще докажем, че $\{a^nb^mc^k \mid \ell > n+m \geq k\} \subseteq \L^{\ell+1}_G(S)$.
     Да разгледаме думата $\alpha = a^nb^mc^k$ и $\ell > n+m \geq k$.
     \begin{itemize}
     \item
-      Ако $\ell - 1 > n+m$, то от \IndHyp имаме, че
-      \[\alpha \in \L^{\ell}_G(S) \subseteq \L^{\ell+1}_G(S).\]
+      Ако $\ell - 1 > n+m$, то от \IndHyp имаме, че $\alpha \in \L^{\ell}_G(S) \subseteq \L^{\ell+1}_G(S)$.
     \item
-      Нека сега $\ell-1 = n+m \geq k$.
+      Нека сега $\ell-1 = n+m \geq k$. Имаме два случая.
       \begin{itemize}
       \item
-        Ако $n = 0$, то $\alpha = b^mc^k$ и $\ell-1 = m \geq k$. Тогава от \IndHyp имаме, че
-        \[\alpha \in \L^{\ell}_G(B) \subseteq \L^{\ell+1}_G(S).\]
+        Ако $n = 0$, то $\alpha = b^mc^k$ и $\ell-1 = m \geq k$. Тогава от \IndHyp имаме, че $\alpha \in \L^{\ell}_G(B) \subseteq \L^{\ell+1}_G(S)$.
       \item
         Нека сега $n > 0$. Тогава имаме следните два случая:
         \begin{itemize}
         \item 
-          Ако $n + m > k$, то е ясно, че $(n-1) + m \geq k$. От \IndHyp имаме, че
-          \[\alpha \in \{a\} \cdot \L^\ell_G(S) \subseteq \L^{\ell+1}_G(S).\]
+          Ако $n + m > k$, то е ясно, че $(n-1) + m \geq k$. От \IndHyp имаме, че $\alpha \in \{a\} \cdot \L^\ell_G(S) \subseteq \L^{\ell+1}_G(S)$.
         \item
           \mynote{Понеже $n > 0$, то и $k > 0$.}
-          Ако $n + m = k$, то е ясно, че $(n-1) + m = k-1$. От \IndHyp имаме, че
-          \[\alpha \in \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \subseteq \L^{\ell+1}_G(S).\]
+          Ако $n + m = k$, то е ясно, че $(n-1) + m = k-1$. От \IndHyp имаме, че $\alpha \in \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \subseteq \L^{\ell+1}_G(S)$.
         \end{itemize}
       \end{itemize}
     \end{itemize}
   \item
-    Сега да разгледаме включването
-    \[\L^{\ell+1}_G(S) \subseteq \{a^nb^mc^k \mid \ell > n+m \geq k\}.\]
+    Сега да разгледаме включването $\L^{\ell+1}_G(S) \subseteq \{a^nb^mc^k \mid \ell > n+m \geq k\}$.
     Да разгледаме произволна дума $\alpha \in \L^{\ell+1}_G(S)$. Имаме три случая:
     \begin{itemize}
     \item
@@ -93,33 +86,26 @@
   \end{itemize}
 
   Сега преминаваме към второто равенство.
-  % \[\L^{\ell+1}_G(B) = \L^\ell_G(B) \cup \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{b\} \cdot \L^\ell_G(B).\]  
   \begin{itemize}
   \item
-    Първо ще докажем, че
-    \[\{b^mc^k \mid \ell \geq m \geq k\} \subseteq \L^{\ell+1}_G(B).\]
-    Да разгледаме думата $\alpha = b^mc^k$ и $\ell \geq m \geq k$.
+    Първо ще докажем включването $\{b^mc^k \mid \ell \geq m \geq k\} \subseteq \L^{\ell+1}_G(B)$.
+    Да разгледаме произволна дума $\alpha = b^mc^k$, за която $\ell \geq m \geq k$.
     \begin{itemize}
     \item
-      Ако $m = 0$, то $\alpha = \varepsilon$ и е ясно, че:
-      \[\alpha \in \L^{1}_G(B) \subseteq \L^{\ell+1}_G(B).\]
+      Ако $m = 0$, то $\alpha = \varepsilon$ и е ясно, че $\alpha \in \L^{1}_G(B) \subseteq \L^{\ell+1}_G(B)$.
     \item
-      Ако $\ell > m$, то от \IndHyp имаме, че:
-      \[\alpha \in \L^{\ell}_G(B) \subseteq \L^{\ell+1}_G(B).\]
+      Ако $\ell > m$, то от \IndHyp имаме, че $\alpha \in \L^{\ell}_G(B) \subseteq \L^{\ell+1}_G(B)$.
     \item
       Нека сега $\ell = m \geq k$.
       \begin{itemize}
       \item
-        Ако $\ell = m = k$, то от \IndHyp имаме, че:
-        \[\alpha \in \{a\} \cdot \L^\ell_G(B) \cdot \{c\} \subseteq \L^{\ell+1}_G(B).\]
+        Ако $\ell = m = k$, то от \IndHyp имаме, че $\alpha \in \{a\} \cdot \L^\ell_G(B) \cdot \{c\} \subseteq \L^{\ell+1}_G(B)$.
       \item
-        Ако $\ell = m > k$, то от \IndHyp имаме, че:
-        \[\alpha \in \{a\} \cdot \L^\ell_G(B) \subseteq \L^{\ell+1}_G(B).\]
+        Ако $\ell = m > k$, то от \IndHyp имаме, че $\alpha \in \{a\} \cdot \L^\ell_G(B) \subseteq \L^{\ell+1}_G(B)$.
       \end{itemize}
     \end{itemize}
   \item
-    Сега да разгледаме включването
-    \[\L^{\ell+1}_G(B) \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
+    Сега да разгледаме обратното включване $\L^{\ell+1}_G(B) \subseteq \{b^mc^k \mid \ell \geq m \geq k\}$.
     Нека $\alpha \in \L^{\ell+1}_G(B)$. Имаме три случая за думата $\alpha$.
     \begin{itemize}
     \item
@@ -129,12 +115,13 @@
       Нека $\alpha \in \{b\} \cdot \L^\ell_G(B)$. Тогава от \IndHyp имаме, че:
       \[\alpha \in \{b^{m+1}c^{k} \mid \ell-1\geq m \geq k\} \subseteq \{b^mc^k \mid \ell \geq m \geq k\}.\]
     \item
-      Нека $\alpha \in \{\varepsilon\}$. Тогава е ясно, че имаме:
-      \[\alpha \in \{b^mc^l \mid \ell \geq m \geq k\}.\]
+      Нека $\alpha \in \{\varepsilon\}$. Тогава е ясно, че имаме $\alpha \in \{b^mc^l \mid \ell \geq m \geq k\}$.
     \end{itemize}
   \end{itemize}
-\end{proof}
+\end{example}
+}
 
+\newpage
 \begin{example}
   Езикът 
   \[L = \{a^nb^mc^kd^\ell \mid n+k = m + \ell\}\]

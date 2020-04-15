@@ -221,10 +221,10 @@
     От \IndHyp имаме, че $X_i \yield{\star} \beta_i$ за $i \leq k$.
     Получаваме следното:
     \begin{prooftree}
-      \AxiomC{$\vdots$}
-      \LeftLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_i \yield{\star} \beta_i \text{ за }i \leq k$}
       \AxiomC{$X \to_G X_0\cdots X_k$}
+      \AxiomC{$\vdots$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$X_i \yield{\star} \beta_i \text{ за }i \leq k$}
       \BinaryInfC{$X \yield{\star} \underbrace{\beta_0\cdots\beta_k}_{\beta}$}
     \end{prooftree}
   \end{itemize}
@@ -271,11 +271,9 @@
 
 
 \begin{problem}
-  Нека $P = (T,\lambda)$ е дърво на извод за думата $\alpha \in (V\cup\Sigma)^\star$ в граматиката $G$.
-  Докажете, че съществува извод
-  \mynote{Ясно е, че $\ell < b^{\high(T)}$.}
-  $X_\varepsilon \stackrel{\ell}{\to}_G \alpha$, където
-  \[\ell \leq \sum_{i < \high(T)}b^i.\]
+  \mynote{Ясно е, че $\ell < b^{k}$.}
+  Докажете, че ако $X \yield{k} \alpha$, то $X \stackrel{\ell}{\to}_G \alpha$, където
+  \[\ell \leq \sum_{i < k}b^{i}.\]
 \end{problem}
 
 \begin{problem}
@@ -513,8 +511,9 @@
 \end{hint}
 
 
-\subsection*{Най-ляв извод в граматика}
+\section{Най-ляв извод в граматика}
 \index{граматика!най-ляв извод}
+\mynote{Най-левият извод ще бъде важен за нас, когато разгледаме стековите автомати.}
 В нашата дефиниция на извод, изборът върху коя променлива да приложим правило от граматиката е недетерминистичен.
 В някои случаи, за нас ще бъде важно винаги да правим детерминистичен избор на това върху коя променлива прилагаме правило.
 
@@ -524,28 +523,51 @@
   \UnaryInfC{$\alpha \lderive{0} \alpha$}
 \end{prooftree}
 
-\begin{prooftree}
-  \AxiomC{$A \to_G \gamma$}
-  \AxiomC{$\alpha \in \Sigma^\star$}
-  \BinaryInfC{$\alpha A \beta \lderive{1} \alpha \gamma \beta$}
-\end{prooftree}
+% \begin{prooftree}
+%   \AxiomC{$A \to_G \gamma$}
+%   \AxiomC{$\alpha \in \Sigma^\star$}
+%   \BinaryInfC{$\alpha A \beta \lderive{1} \alpha \gamma \beta$}
+% \end{prooftree}
 
 \begin{prooftree}
-  \AxiomC{$\alpha \lderive{1} \gamma$}
-  \AxiomC{$\gamma \lderive{\ell} \beta$}
-  \BinaryInfC{$\alpha \lderive{\ell+1} \beta$}
+  \AxiomC{$A \to_G \alpha$}
+  \AxiomC{$\alpha \lderive{\ell} \beta$}
+  \BinaryInfC{$A \lderive{\ell+1} \beta$}
 \end{prooftree}
 
-\begin{lemma}
-  За всяка безконтекстна граматика $G$, променлива $A \in V$  и дума $\alpha \in (V\cup\Sigma)^\star$,
-  \[A \lderive{\star} \alpha\text{ точно тогава, когато } A \derive{\star} \alpha.\]
-\end{lemma}
+\mynote{Единствената разлика между дефиницията на $\lderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_1 \in \Sigma^\star$.}
+\begin{prooftree}
+  \AxiomC{$\alpha_1 \lderive{\ell_1} \beta_1$}
+  \AxiomC{$\beta_1 \in \Sigma^\star$}
+  \AxiomC{$\alpha_2 \lderive{\ell_2} \beta_2$}
+  \TrinaryInfC{$\alpha_1\alpha_2 \lderive{\ell_1+\ell_2}\beta_1\beta_2$}
+\end{prooftree}
+
+\mynote{Сравнете с \Proposition{grammar:derive-one-step}. Тук новото е, че имаме изискване $\delta \in \Sigma^\star$.}
+\begin{proposition}\label{pr:grammar:left-derive-one-step}
+  Нека $G$ е безконтекстна граматика. 
+  Тогава за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ е изпълнено, че 
+  $\alpha \lderive{1} \beta$ точно тогава, когато $\alpha = \delta A \rho$ и $\delta \in \Sigma^\star$, $A \to_G \gamma$ и $\beta = \delta\gamma\rho$.
+\end{proposition}
+
+
+% \begin{proposition}\label{pr:grammar:left-divide}
+%   Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \lderive{\ell} \beta$, където $X_i \in V \cup \Sigma$ и $\beta \in \Sigma^\star$.
+%   Тогава съществуват думи $\beta_1,\dots,\beta_k$, за които $\beta = \beta_1\cdots\beta_k$ и за $i = 1,\dots, k$ е изпълнено, че
+%   $X_i \lderive{\ell_i} \beta_i$ и $\ell = \sum^k_{i = 1}\ell_i$.
+% \end{proposition}
+
+\begin{framed}
+  \begin{lemma}
+    За всяка безконтекстна граматика $G$, променлива $A$ и дума $\alpha \in \Sigma^\star$,
+    \[A \lderive{\star} \alpha\text{ точно тогава, когато } A \derive{\star} \alpha.\]
+  \end{lemma}  
+\end{framed}
 \begin{hint}
   Очевидно е, че ако $A \lderive{\star} \alpha$, то $A \derive{\star} \alpha$.
-  За другата посока, достатъчно е да се докаже, че ако $P$ е дърво на извод с корен $A$ и $\texttt{yield}(P) = \alpha$,
-  то $A \lderive{\star} \alpha$.
+  За другата посока, достатъчно е да се докаже, че ако $A \yield{\star} \alpha$ то $A \lderive{\star} \alpha$.
 
-  Индукция по $\texttt{high}(P)$.
+  Индукция по $\ell$, където $A \yield{\ell}\alpha$.
 \end{hint}
 
 

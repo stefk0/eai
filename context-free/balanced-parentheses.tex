@@ -12,14 +12,14 @@
 
 \begin{framed}
   \begin{problem}
+    \mynote{\cite[стр. 135]{kozen}.}
     Докажете, че езикът 
     \[L = \{\ \alpha \in \{\texttt{[},\texttt{]}\}^\star \mid \alpha\text{ е балансирана дума}\ \}\]
     е безконтекстен.
   \end{problem}  
 \end{framed}
 \begin{hint}
-  \marginpar{\cite[стр. 135]{kozen}}
-  \marginpar{\writedown Докажете, че езикът $L$ не е регулярен! }
+\mynote{\writedown Докажете, че езикът $L$ не е регулярен! }
   Да разгледаме граматиката $G$ с правила
   \[S \to \texttt{[}S\texttt{]}\ |\ SS\ |\ \varepsilon.\]
   Ще докажем, че $L = \L(G)$.

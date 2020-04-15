@@ -14,64 +14,91 @@
 \end{lemma}
 \begin{hint}
   Първо намираме множеството от двойки
-  \[\texttt{Ren} = \{(A,B) \in V\times V \mid A \to^\star_G B\}\]
-  като строим множествата
-  \[\texttt{Ren[n]} = \{(A,B) \in V\times V \mid A \stackrel{\leq n}{\to}_G B\}\]
+  \[\texttt{Ren} = \{(A,B) \in V\times V \mid A \derive{\star} B\}\]
+  като строим множествата по такъв начин, че:
+  \[\texttt{Ren[n]} = \{(A,B) \in V\times V \mid A \derive{< n} B\}\]
+
+  \begin{align*}
+    & \texttt{Ren[0]} \df \emptyset\\
+    & \texttt{Ren[n+1]} \df \texttt{Ren[n]} \cup \{(A,B) \mid (\exists C)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren[n]}]\}.
+  \end{align*}
   
-  \begin{itemize}
-  \item
-    Ясно е, че $\texttt{Ren[0]} \df \{(A,A) \mid A \in V\}$.
-  \item
-    Нека имаме $\texttt{Ren[n]}$. Тогава дефинираме
-    \mynote{Всяка итерация отнема $\mathcal{O}(|G|)$ време.}
-    \[\texttt{Ren[n+1]} \df \{(A,B) \in V\times V \mid (\exists C\in V)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren[n]}]\}.\]
-  \item
-    \mynote{$|\texttt{Ren}|$ има големина $\mathcal{O}(|G|^2)$.}
-    Спираме на първото $n$, за което $\texttt{Ren[n]} = \texttt{Ren[n+1]}$. Тогава $\texttt{Ren} = \texttt{Ren[n]}$.
-  \end{itemize}
+  % \begin{itemize}
+  % \item
+  %   % Ясно е, че $\texttt{Ren[0]} \df \{(A,A) \mid A \in V\}$.
+  %   $
+  % \item
+  %   Нека имаме $\texttt{Ren[n]}$. Тогава дефинираме
+  %   \mynote{Всяка итерация отнема $\mathcal{O}(|G|)$ време.}
+  %   \[\texttt{Ren[n+1]} \df \texttt{Ren[n]} \cup \{(A,B) \mid (\exists C)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren[n]}]\}.\]
+  % \item
+  \mynote{$|\texttt{Ren}|$ има големина $\mathcal{O}(|G|^2)$.}
+  Спираме на първото $n$, за което $\texttt{Ren[n]} = \texttt{Ren[n+1]}$. Тогава $\texttt{Ren} = \texttt{Ren[n]}$.
+  % \end{itemize}
   
   Нека $R'_0 \df R \setminus \texttt{Ren}$ са правилата на $R$, които не са преименуващи. Тогава
   \[R' \df R'_0 \cup \{\ (A,\alpha) \in V \times (V\cup\Sigma)^\star \mid (\exists B)[(A,B) \in \texttt{Ren}\ \&\ (B,\alpha) \in R'_0]\ \}.\]
 \end{hint}
 
-{\scriptsize
+\ExtraMaterial{
   \begin{multicols}{2}
-\begin{example}
-  Нека е дадена граматиката $G$ с правила  
-  \begin{align*}
-    & S \to B\ |\ CC\ |\ b\\
-    & A \to B\ |\ S\\
-    & B \to C\ |\ BC\\
-    & C \to AB\ |\ a\ |\ b.
-  \end{align*}
-  Първо добавяме към $R'$ правилата, които не са преименуващи, а именно:
-  \begin{align*}
-    & B \to BC\\
-    & C \to AB\ |\ a\ |\ b\\
-    & S \to CC\ |\ b.
-  \end{align*}
-  \begin{itemize}
-  \item 
-    Лесно се съобразява, че $A \to^\star_G B,S,C$.
-    Добавяме правилата 
-    \[A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC.\]
-  \item
-    Имаме $B \to^\star_G C$.
-    Добавяме правилата $B \to AB\ |\ a\ |\ b$.
-  \item
-    Имаме $S \to^\star_G B,C$.
-    Добавяме правилата
-    \[S \to BC\ |\ AB\ |\ a\ |\ b.\]
-  \end{itemize}
-  Накрая получаваме, че граматиката $G'$ има правила
-  \begin{align*}
-    & S \to BC\ |\ AB\ |\ CC\ |\ a\ |\ b\\
-    & A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC\\
-    & B \to AB\ |\ a\ |\ b\ |\ BC\\
-    & C \to AB\ |\ a\ |\ b.
-  \end{align*}
-\end{example}
-\end{multicols}
+    \begin{example}
+      Нека е дадена граматиката $G$ с правила  
+      \begin{align*}
+        & S \to B\ |\ CC\ |\ b\\
+        & A \to S\ |\ SB\\
+        & B \to C\ |\ BC\\
+        & C \to AB\ |\ a\ |\ b.
+      \end{align*}
+      Да намерим първо $\texttt{Ren}$.
+      \begin{itemize}
+      \item
+        $\texttt{Ren[0]} = \emptyset$
+      \item
+        $\texttt{Ren[1]} = \{(S,B),(A,S),(B,C)\}$;
+      \item
+        $\texttt{Ren[2]} = \{(S,B),(A,S),(A,B),(B,C),(S,C)\}$;
+      \item
+        $\texttt{Ren[3]} = \{(S,B),(A,S),(A,B),(A,C),(B,C),(S,C)\}$;
+      \item
+        $\texttt{Ren[4]} = \{(S,B),(A,S),(A,B),(A,C),(B,C),(S,C)\}$;
+      \item
+        Получихме, че $\texttt{Ren[3]} = \texttt{Ren[4]}$.
+        Оттук можем да заключим следното:
+        \begin{align*}
+          & A \derive{\star} B,S,C\\
+          & B \derive{\star} C\\
+          & S \derive{\star} B,C.
+        \end{align*}
+      \end{itemize}
+      
+      Първо добавяме към $R'$ правилата, които не са преименуващи, а именно:
+      \begin{align*}
+        & A \to BS\\
+        & B \to BC\\
+        & C \to AB\ |\ a\ |\ b\\
+        & S \to CC\ |\ b.
+      \end{align*}
+      \begin{itemize}
+      \item 
+        Понеже имаме,че $A \derive{\star} B,S,C$, то добавяме към $R'$ правилата:
+        \[A \to BC\ |\ AB\ |\ a\ |\ b\ |\ CC.\]
+      \item
+        Понеже имаме,че $B \derive{\star}_G C$, то добавяме към $R'$ правилата:
+        \[B \to AB\ |\ a\ |\ b.\]
+      \item
+        Понеже имаме, че $S \derive{\star}_G B,C$, то добавяме към $R'$ правилата:
+        \[S \to BC\ |\ AB\ |\ a\ |\ b.\]
+      \end{itemize}
+      Накрая получаваме, че граматиката $G'$ има правила
+      \begin{align*}
+        & S \to BC\ |\ AB\ |\ CC\ |\ a\ |\ b\\
+        & A \to BS\ |\ BC\ |\ AB\ |\ a\ |\ b\ |\ CC\\
+        & B \to AB\ |\ a\ |\ b\ |\ BC\\
+        & C \to AB\ |\ a\ |\ b.
+      \end{align*}
+    \end{example}
+  \end{multicols}
 }
 
 \begin{problem}
