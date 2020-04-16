@@ -132,52 +132,62 @@
                 & \{b\} \cdot \L^\ell_G(S) \cdot \{a\} \cdot \L^\ell_G(S)\ \cup\\
                 & \{\varepsilon\}.
   \end{align*}
-  Да приемем, че:
-  \[\L^\ell_G(S) = \{\omega \in \{a,b\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega) < \ell \}.\]
-  Ще докажем, че:
-  \[\L^{\ell+1}_G(S) = \{\omega \in \{a,b\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega) < \ell+1 \}.\]
-  % Първо ще докажем, че:
-  % \[\{\omega \in \{a,b\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega) < \ell+1 \} \subseteq \L^{\ell+1}_G(S).\]
-  Първо, нека вземем произволна дума $\omega \in \{a,b\}^\star$ и $\texttt{left}(\omega) = \texttt{right}(\omega) < \ell+1$.
-  Да видим защо $\omega \in \L^{\ell+1}_G(S)$.
+  За коректност на граматиката трябва да докажем, че за всяко $\ell$ е изпълнено следното:
+  \begin{equation}
+    \label{eq:equal-correctness}
+    \L^\ell_G(S) \subseteq \{\omega \in \{a,b\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\}.
+  \end{equation}
+  Очевидно е, че \Property{eq:equal-correctness} е изпълнено за $\ell = 0$.
+  Да приемем, че \Property{eq:equal-correctness} е изпълнено за някое $\ell$.
+  Ще докажем \Property{eq:equal-correctness} за $\ell+1$.
+  Да вземем произволна дума $\omega \in \L^{\ell+1}_G(S)$. Имаме три случая.
+  \begin{itemize}
+  \item
+    Ако $\omega = \varepsilon$. Тогава е ясно, че $\texttt{left}(\omega) = \texttt{right}(\omega)$.
+  \item
+    Ако $\omega \in \{a\} \cdot \L^\ell_G(S) \cdot \{b\} \cdot \L^\ell_G(S)$.
+    Тогава $\omega = a \omega_1 b \omega_2$ и $\omega_1, \omega_2 \in \L^\ell_G(S)$.
+    От \IndHyp получаваме, че
+    \begin{align*}
+      & \texttt{left}(\omega_1) = \texttt{right}(\omega_1)\\
+      & \texttt{left}(\omega_2) = \texttt{right}(\omega_2).
+    \end{align*}
+    Заключаваме, че $\texttt{left}(\omega) = \texttt{right}(\omega)$
+  \item
+    Случаят, когато $\omega = b \omega_1 a \omega_2$, е аналогичен.
+  \end{itemize}
+  Така доказахме коректност на граматиката, т.е. имаме следното свойство:
+  \[\L_G(S) = \bigcup_\ell \L^\ell_G(S) \subseteq \{\omega \in \{a,b\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\}.\]
+  Сега за пълнота на граматиката трябва да докажем, че
+  \begin{equation}
+    \label{eq:equal-completeness}
+    \{\omega \in \{a,b\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\} \subseteq \L_G(S).
+  \end{equation}
+  Това ще направим с индукция по дължината на думите.
+  Да вземем произволна дума $\omega \in \{a,b\}^\star$ и $\texttt{left}(\omega) = \texttt{right}(\omega)$.
+  Да видим защо $\omega \in \L_G(S)$.
   \begin{itemize}
   \item 
     Ако $\omega = \varepsilon$, то е ясно, че
-    \[\omega \in \L^1_G(S) \subseteq \L^{\ell+1}_G(S).\]
+    \[\omega \in \L_G(S).\]
   \item
     Нека $\omega \neq \varepsilon$. Според \Problem{nanb} имаме два случая.
     \begin{itemize}
     \item
       Нека $\omega = a \omega_1 b \omega_2$ и
       \begin{align*}
-        & \texttt{left}(\omega_1) = \texttt{right}(\omega_1) < \ell\\
-        & \texttt{left}(\omega_2) = \texttt{right}(\omega_2) < \ell.
+        & \texttt{left}(\omega_1) = \texttt{right}(\omega_1)\\
+        & \texttt{left}(\omega_2) = \texttt{right}(\omega_2).
       \end{align*}
-      Тогава от И.П. имаме, че $\omega_1 \in \L^\ell_G(S)$ и $\omega_2 \in \L^\ell_G(S)$. Заключаваме, че
-      \[\omega \in \{a\} \cdot \L^\ell_G(S) \cdot \{b\} \cdot \L^\ell_G(S) \subseteq \L^{\ell+1}_G(S).\]
+      Тогава от \IndHyp имаме, че $\omega_1 \in \L_G(S)$ и $\omega_2 \in \L_G(S)$. Заключаваме, че
+      \[\omega \in \{a\} \cdot \L_G(S) \cdot \{b\} \cdot \L_G(S) \subseteq \L_G(S).\]
     \item
       Ако $\omega = b \omega_1 a \omega_2$, то с аналогични разсъждения получаваме, че
-      \[\omega \in \{b\} \cdot \L^\ell_G(S) \cdot \{a\} \cdot \L^\ell_G(S) \subseteq \L^{\ell+1}_G(S).\]
+      \[\omega \in \{b\} \cdot \L_G(S) \cdot \{a\} \cdot \L_G(S) \subseteq \L_G(S).\]
     \end{itemize}
   \end{itemize}
-  Сега ще докажем, че 
-  \[\L^{\ell+1}_G(S) \subseteq \{\omega \in \{a,b\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega) < \ell+1 \}.\]
-  Нека $\omega \in \L^{\ell+1}_G(S)$. Имаме три случая.
-  \begin{itemize}
-  \item
-    Ако $\omega = \varepsilon$. Тогава е ясно, че $\texttt{left}(\omega) = \texttt{right}(\omega) < \ell+1$.
-  \item
-    Ако $\omega \in \{a\} \cdot \L^\ell_G(S) \cdot \{b\} \cdot \L^\ell_G(S)$.
-    Тогава $\omega = a \omega_1 b \omega_2$ и $\omega_1, \omega_2 \in \L^\ell_G(S)$.
-    От И.П. получаваме, че
-    \begin{align*}
-      & \texttt{left}(\omega_1) = \texttt{right}(\omega_1) < \ell\\
-      & \texttt{left}(\omega_2) = \texttt{right}(\omega_2) < \ell.
-    \end{align*}
-    Заключаваме, че $\texttt{left}(\omega) = \texttt{right}(\omega) < \ell+1$
-  \item
-    Случаят, когато $\omega = b \omega_1 a \omega_2$, е аналогичен.
-  \end{itemize}
+  Така доказахме пълнота на граматиката, т.е. имаме следното свойство:
+  \[\{\omega \in \{a,b\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\} \subseteq \L_G(S).\]
 \end{proof}
 
 %%% Local Variables:

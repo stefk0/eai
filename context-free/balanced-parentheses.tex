@@ -1,6 +1,8 @@
 \subsection{Балансирани скоби}
 
-Нека $\alpha$ е дума над азбука, която включва буквите $\texttt{[}$ и $\texttt{]}$. 
+\mynote{Например, думата $aabaabbb$ е балансирана, докато $abbaaab$ не е балансирана. Практическият смисъл на тази задача е, че можем да напишем граматика,
+  която да разпознава, че за всяка отваряща скоба $\texttt{\{}$, която прочете, по-късно ще прочетем и съответната затваряща скоба $\texttt{\}}$.}
+Нека $\alpha$ е дума над азбука, която включва буквите $a$ и $b$. 
 Ще казваме, че $\alpha$ е {\bf балансирана}, ако са изпълнени свойствата:
 \begin{itemize}
 \item 
@@ -12,71 +14,87 @@
 
 \begin{framed}
   \begin{problem}
-    \mynote{\cite[стр. 135]{kozen}.}
+    \mynote{\writedown Докажете, че езикът $L$ не е регулярен! }
     Докажете, че езикът 
-    \[L = \{\ \alpha \in \{\texttt{[},\texttt{]}\}^\star \mid \alpha\text{ е балансирана дума}\ \}\]
+    \[L = \{\ \alpha \in \{a,b\}^\star \mid \alpha\text{ е балансирана дума}\ \}\]
     е безконтекстен.
   \end{problem}  
 \end{framed}
 \begin{hint}
-\mynote{\writedown Докажете, че езикът $L$ не е регулярен! }
+  \mynote{\cite[стр. 135]{kozen}}
   Да разгледаме граматиката $G$ с правила
-  \[S \to \texttt{[}S\texttt{]}\ |\ SS\ |\ \varepsilon.\]
+  \[S \to aSb\ |\ SS\ |\ \varepsilon.\]
   Ще докажем, че $L = \L(G)$.
-  
-  Първо ще докажем включването $\L(G) \subseteq L$.
-  Да разгледаме \[M \df \{\ \alpha \in \{\texttt{[},\texttt{]}, S\}^\star \mid \alpha\text{ е балансирана}\ \}.\]
-  
-  Нека $S \to^\star_G \alpha$. Ще докажем с индукция по дължината $\ell$ на извода на $\alpha$ от $S$,
-  че $\alpha \in M$. Случаят, когато $\ell = 0$ е очевиден.
-  Нека $S \to^{\ell}_G \beta \to^1_G \alpha$.
-  От {\bf И.П.} имаме, че $\beta \in M$, т.е. $\beta$ е балансирана.
-
-  Лесно се съобразява, че във всички случаи за думите $\beta$ и $\alpha$ имаме следното:
-  \begin{center}
-    \begin{tabular}{| c | c | c |}
-      \hline
-      $\text{от И.П. }$ & $\text{правило на }G$ & $\text{извод}$ \\ \hline
-      $\beta \in M$ & $S \rightarrow \texttt{[}S\texttt{]}$ & $\alpha \in M$ \\ \hline
-      $\beta \in M$ & $S \rightarrow SS$ & $\alpha \in M$ \\ \hline
-      $\beta \in M$ & $S \rightarrow \varepsilon$ & $\alpha \in M$ \\ \hline
-    \end{tabular}
-  \end{center}
-
-  За включването $L \subseteq \L(G)$, нека $\alpha \in L$.
-  Ще докажем с индукция по дължината на думата, че $\alpha \in \L(G)$.
-  Ясно е, че във всички нетривиални случаи можем да запишем думата $\alpha$ като $\alpha = \texttt{[}\beta\texttt{]}$.
-  Проблемът е, че в общия случай не е ясно дали можем да приложим индукционното предположение за $\beta$,
-  защото е възможно $\beta \not\in L$. Например, $\alpha = \texttt{[][]}$.
-  Тогава $\beta = \texttt{][} \not \in L$.
-  Поради тази причина, трябва да сме по-внимателни и да разгледаме два случая.
+  Имаме, че
+  \begin{align*}
+    \L^0_G(S) = & \emptyset\\
+    \L^{\ell+1}_G(S) = & \{a\} \cdot \L^\ell_G(S) \cdot \{b\}\ \cup\\
+                & \L^\ell_G(S) \cdot \L^\ell_G(S)\ \cup \\
+                & \{\varepsilon\}.
+  \end{align*}
+  Първо да разгледаме коректност на граматиката, т.е. трябва да докажем, че за всяко $\ell$ е изпълнено следното:
+  \begin{equation}
+    \label{eq:balanced-correctness}
+    \L^\ell_G(S) \subseteq \{\ \alpha \in \{a,b\}^\star \mid \alpha\text{ е балансирана дума}\ \}.
+  \end{equation}
+  Твърдението е очевидно за $\ell = 0$. Да приемем, че \Property{eq:balanced-correctness} е изпълнено за някое $\ell$.
+  Ще докажем \Property{eq:balanced-correctness} за $\ell+1$.
+  Да разгледаме произволна дума $\omega \in \L^{\ell+1}_G(S)$. Имаме три случая.
   \begin{itemize}
-  \item 
-    \marginpar{\comment т.е. $\beta \neq \varepsilon$ и $\beta \neq \alpha$}
-    Нека $\alpha$ има {\em същински} префикс $\beta \in L$.
-    Понеже $\alpha \in L$, лесно се съобразява, че $\alpha = \beta\gamma$ и $\gamma \in L$.
-    Сега можем да приложим {\bf И.П.} за $\beta$ и $\gamma$ и да получим, че 
-    $\beta \in \L(G)$ и $\gamma \in \L(G)$, т.е.
-    $S \to^\star_G \beta$ и $S \to^\star_G \gamma$.
-    Понеже имаме правило $S \to_G SS$, то е ясно, че $\alpha \in \L(G)$.
   \item
-    Нека $\alpha$ да няма същински префикс $\gamma \in L$.
-    Ясно е, че тогава $\alpha = \texttt{[}\beta\texttt{]}$, за някое $\beta$
-    и $\texttt{left}(\beta) = \texttt{right}(\beta)$.
-    Да видим защо $\beta \in L$.
-    
-    Ако $\beta \in L$, то ще можем да приложим {\bf И.П.} за $\beta$ и ще сме готови.
-    За всеки префикс $\gamma$ на $\beta$ имаме, че $\texttt{[}\gamma$ е префикс на $\alpha$,
-    и понеже $\alpha \in L$, то $\texttt{left}(\texttt{[}\gamma) \geq \texttt{right}(\texttt{[}\gamma)$.
-    Възможно ли е $\texttt{left}(\gamma) < \texttt{right}(\gamma)$ ?
-    Това може да се случи единствено ако $\texttt{left}(\texttt{[}\gamma) = \texttt{right}(\texttt{[}\gamma)$.
-    Но тогава $\texttt{[}\gamma$ е същински префикс на $\alpha$, за който $\texttt{[}\gamma \in L$,
-    което противоречи на случая, който разглеждаме.
-    Това означава, че за произволен префикс $\gamma$ на $\beta$,
-    $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$ и оттук $\beta \in L$ и можем да приложим {\bf И.П.}
-    Тогава $S \to^\star_G \beta$ и чрез правилото $S \to_G \texttt{[}S\texttt{]}$
-    получаваме, че $\alpha \in \L(G)$.    
+    Нека $\omega = \varepsilon$. Тогава е ясно, че $\omega$ е балансирана дума.
+  \item
+    Нека $\omega \in \{a\} \cdot \L^\ell_G(S) \cdot \{b\}$. Тогава $\omega = a \omega_1 b$ и от \IndHyp имаме, че
+    $\omega_1$ е балансирана.
+    Лесно се съобразява, че $\omega$ също е балансирана.
+  \item
+    Нека $\omega \in \L^\ell_G(S) \cdot \L^\ell_G(S)$. Тогава $\omega = \omega_1 \omega_2$, такива че $\omega_1,\omega_2 \in \L^\ell_G(S)$.
+    От \IndHyp имаме, че $\omega_1$ и $\omega_2$ са балансирани.
+    Лесно се съобразява, че $\omega$ също е балансирана.
   \end{itemize}
+  Така доказахме, че
+  \[\L_G(S)  = \bigcup_\ell \L^\ell_G(S) \subseteq \{\ \alpha \in \{a,b\}^\star \mid \alpha\text{ е балансирана дума}\ \}.\]
+
+  Сега ще докажем пълнота на граматиката, т.е. следното свойство:
+  \begin{equation}
+    \label{eq:balanced-completeness}
+    \{\ \alpha \in \{a,b\}^\star \mid \alpha\text{ е балансирана дума}\ \} \subseteq \L_G(S).
+  \end{equation}
+  Това ще направим с индукция по дължината на думите.
+  Да разгледаме произволна балансирана дума $\omega$. Имаме няколко случая, които трябва да разгледаме.
+  \begin{itemize}
+  \item
+    Ако $\omega = \varepsilon$, то е ясно, че $\omega \in \L_G(S)$.
+  \item
+    Нека сега $\omega \neq \varepsilon$. Ясно е, че със сигурност $\omega = a \omega_1 b$.
+    Проблемът е, че в общия случай не е ясно дали можем да приложим \IndHyp за $\omega_1$,
+    защото е възможно $\omega_1$ да не е балансирана. Например, ако $\omega = abab$, то $\omega_1 = ba$ не е балансирана.
+    Поради тази причина, трябва да сме по-внимателни и да разгледаме два допълнителни случая.
+    \begin{itemize}
+    \item 
+      \mynote{Тук $\omega_1 \neq \varepsilon$ и $\omega_1 \neq \alpha$.}
+      Нека $\omega$ има {\em същински} префикс $\omega_1$, който да е балансирана дума.
+      Понеже $\omega$ е балансирана дума, лесно се съобразява, че $\omega = \omega_1\omega_2$, $\omega_2$ също е балансирана дума.
+      Сега можем да приложим \IndHyp за $\omega_1$ и $\omega_2$ и да получим, че 
+      $\omega_1 \in \L_G(S)$ и $\omega_2 \in \L_G(S)$.
+      Ясно е, че $\omega \in \L_G(S)$.
+    \item
+      Нека $\omega$ да няма същински префикс $\omega_1$, който е балансирана дума.
+      Ясно е, че тогава $\omega = a\beta b$, за някое $\beta$. Да видим защо $\beta$ е балансирана дума.
+      Ако $\beta$ е балансирана, то ще можем да приложим \IndHyp за $\beta$ и ще сме готови.
+      
+      За всеки префикс $\gamma$ на $\beta$ имаме, че $a\gamma$ е префикс на $\alpha$,
+      и понеже $\alpha$ е балансирана, то $\texttt{left}(a\gamma) \geq \texttt{right}(a\gamma)$.
+      Възможно ли е $\texttt{left}(\gamma) < \texttt{right}(\gamma)$ ?
+      Това може да се случи единствено ако $\texttt{left}(a\gamma) = \texttt{right}(a\gamma)$.
+      Но тогава $a\gamma$ е същински префикс на $\alpha$, за който $a\gamma$ е балансирана дума,
+      което противоречи на случая, който разглеждаме.
+      Това означава, че за произволен префикс $\gamma$ на $\beta$,
+      $\texttt{left}(\gamma) \geq \texttt{right}(\gamma)$ и оттук $\beta$ е балансирана дума и можем да приложим \IndHyp.
+      Тогава $\beta \in \L_G(S)$ и следователно $\alpha \in \{a\} \cdot \L_G(S) \cdot \{b\} \subseteq \L_G(S)$.
+    \end{itemize}
+  \end{itemize}
+  Така доказахме \Property{eq:balanced-completeness}, което ни дава пълнота на граматиката спрямо езика.
 \end{hint}
 
 %%% Local Variables:
