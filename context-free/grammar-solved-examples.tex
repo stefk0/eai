@@ -52,14 +52,14 @@
     Нека $\alpha \in \{\varepsilon\}$. Тогава е ясно, че имаме $\alpha \in \{b^mc^k \mid m \geq k\}$.
   \end{itemize}  
 
-  \mynote{Така доказахме \emph{коректност} на граматиката.}
+  \mynote{Така доказахме \emph{коректност} на граматиката спрямо езика $L$.}
   Заключаваме, че
   \begin{align*}
     \L_G(S) & = \bigcup_\ell\L^\ell_G(S) \subseteq \{a^nb^mc^k \mid n+m \geq k\}\\
     \L_G(B) & = \bigcup_\ell\L^\ell_G(B) \subseteq \{a^nb^mc^k \mid n+m \geq k\}.
   \end{align*}
 
-  \mynote{Така ще докажем \emph{пълнота} на граматиката.}
+  \mynote{Сега ще докажем \emph{пълнота} на граматиката спрямо езика $L$.}
   Сега трябва да докажем обратните включвания, а именно:
   \begin{align}
     & \{a^nb^mc^k \mid n+m \geq k\} \subseteq \L_G(S) \label{eq:anbmck:S}\\
@@ -190,35 +190,74 @@
   е безконтекстен.
 \end{example}
 \begin{hint}
-  Нека $G_1$ е безконтекстна граматика за езика
-  \[L_1 = \{a^nb^mc^k \mid m = n+k\},\]
-  където правилата на $G_1$ са
+  Да разгледаме произволна дума от вида $\omega = a^n b^m c^k d^\ell$.
+  Имаме два случая.
+  \begin{itemize}
+  \item
+    Ако $n \leq \ell$, то
+    \[\omega \in L \iff k = m + (\ell- n).\]
+  \item
+    Ако $n > \ell$, то 
+    \[\omega \in L \iff (n-\ell) + k = m.\]
+  \end{itemize}
+  Това наблюдение ни подсказва, че трябва да разгледаме следните езици:
+  \begin{align*}
+    & L_1 = \{a^nb^mc^k \mid m = n+k\},\\
+    & L_2 = \{b^mc^kd^\ell \mid k = m+\ell\}.
+  \end{align*}
+  Така получаваме, че
+  \[L = \{a^n \cdot \omega \cdot d^n \mid n\in\Nat\ \&\ \omega \in L_1 \cup L_2\}.\]
+  $L_1$ е безконтекстен език, защото може да се опише с безконтекстната граматика $G_1$ със следните правила:
   \[S_1 \to AC,\quad  A \to aAb\ |\ \varepsilon,\quad C \to bCc\ |\ \varepsilon.\]
-  Нека $G_2$ е безконтекстна граматика за езика 
-  \[L_2 = \{b^mc^kd^\ell \mid k = m+\ell\},\]
-  където правилата на $G_2$ са
+  $L_1$ също е безконтекстен език, защото може да се опише с безконтекстната граматика $G_2$ със следните правила:
   \[S_2 \to BD,\quad B \to bBc\ |\ \varepsilon,\quad D \to cCd\ |\ \varepsilon.\]
-  Тогава граматиката $G$ за $L$ 
+  Тогава безконтекстната граматика $G$ за $L$ 
   съдържа правилата на граматиките $G_1$ и $G_2$, а също и правилата
   \[S \to aSd\ |\ S_1\ |\ S_2.\]
 \end{hint}
 
-\begin{problem}
+\begin{example}
   \label{prob:equal-but-different}
   \mynote{Ние вече знаем, че този език не е регулярен}
-  Езикът
+  Нека да видим защото езикът
   \[L = \{\alpha\beta \in \{a,b\}^\star \mid\ |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}\]
   е безконтекстен.
-\end{problem}
-\begin{hint}
-  Разгледайте граматиката:
+
+  Да разгледаме една произволна дума $\omega$, където $\omega = \alpha\beta$, $|\alpha| = |\beta|$ и $\alpha \neq \beta$.
+  Знаем, че същестува индекс $i < |\alpha|$, такъв че думата $\omega$ може да се представи така:
+  \[\omega = \alpha\texttt{[:i]} \cdot \alpha\texttt{[i]} \cdot \alpha\texttt{[i+1:]} \cdot \beta\texttt{[:i]} \cdot \beta\texttt{[i]} \cdot \beta\texttt{[i+1:]},\]
+  където $\alpha\texttt{[i]} \neq \beta\texttt{[i]}$.
+
+  Нека $n = |\alpha| = |\beta|$ и да представим $n$ като $n = i+1+k$. Имаме два случая.
+  \begin{itemize}
+  \item
+    Ако $k \geq i$, то можем да преставим $\omega$ по следния начин:
+    \[\omega = \underbrace{\alpha\texttt{[:i]}}_{\text{дълж. }i} \cdot \alpha\texttt{[i]} \cdot \underbrace{\alpha\texttt{[i+1:2i+1]}}_{\text{дълж. }i} \cdot \underbrace{\alpha\texttt{[2i+1:]} \cdot \beta\texttt{[:i]}}_{\text{дълж. }k} \cdot \beta\texttt{[i]} \cdot \underbrace{\beta\texttt{[i+1:]}}_{\text{дълж. }k}.\]
+  \item
+    Нека $k < i$, то можем да преставим $\omega$ по следния начин:
+    \[\omega = \underbrace{\alpha\texttt{[:i]}}_{\text{дълж. }i} \cdot \alpha\texttt{[i]} \cdot \underbrace{\alpha\texttt{[i+1:]} \cdot \beta\texttt{[:i-k]}}_{\text{дълж. }i} \cdot \underbrace{\beta\texttt{[i-k:i]}}_{\text{дълж. }k} \cdot \beta\texttt{[i]} \cdot \underbrace{\beta\texttt{[i+1:]}}_{\text{дълж. }k}.\]
+  \end{itemize}
+  От тези представяния на $\omega$ е ясно, че можем да изразим езика $L$ по следния начин:
+  \[L = L_a \cdot L_b \cup L_b \cdot L_a,\]
+  където:
+  \begin{align*}
+    & L_a = \{\alpha a \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}\\
+    & L_b = \{\alpha b \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}.
+  \end{align*}
+  Сега разгледайте безконтекстната граматика $G$ със следните правила:ю
   \begin{align*}
     & S \to AB\ |\ BA\\
     & A \to XAX\ |\ a\\
     & B \to XBX\ |\ b\\
     & X \to a\ |\ b.
   \end{align*}
-\end{hint}
+  Лесно се съобразява, че:
+  \begin{align*}
+    & L_a = \L_G(A)\\
+    & L_b = \L_G(B)\\
+    & L = \L_G(S).
+  \end{align*}
+\end{example}
 
 \begin{problem}
  Докажете, че езикът

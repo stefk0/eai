@@ -54,7 +54,7 @@
 \[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star}_G \omega\}.\]
 
 \begin{proposition}\label{pr:grammar:add}
-  За произволни думи $\alpha$ и $\beta$ е изпълнено, че:
+  За произволно естествено число $\ell$ е изпълнено, че:
   \begin{prooftree}
     \AxiomC{$\alpha \derive{\ell}_G \beta$}
     \AxiomC{$\gamma,\rho \in (V \cup \Sigma)^\star$}
@@ -72,6 +72,23 @@
     \TrinaryInfC{$\alpha_1\cdots\alpha_k \derive{\ell} \beta_1\cdots\beta_k$}
   \end{prooftree}
 \end{proposition}
+\begin{hint}
+  Индукция по $k$.
+\end{hint}
+
+\begin{proposition}
+  За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$\alpha \derive{\ell_1} \beta$}
+    \AxiomC{$\beta \derive{\ell_2} \gamma$}
+    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \gamma$}
+  \end{prooftree}  
+\end{proposition}
+\begin{hint}
+  Индукция по $\ell_1$.
+\end{hint}
+
+
 
 %%% Local Variables:
 %%% mode: latex

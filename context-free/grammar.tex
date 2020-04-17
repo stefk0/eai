@@ -202,12 +202,39 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 Нека $\yield{\star}$ е рефлексивното и транзитивно затваряне на релацията $\yield{\ell}$, т.е.
 \[X \yield{\star} \gamma \dff (\exists \ell\in\Nat)[X \yield{\ell} \gamma].\]
 
+
+\begin{proposition}
+  За произволни променливи $A$, $B$ и думи $\alpha_1,\alpha_2, \alpha_3$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$A \yield{\ell_1}\alpha_1B\alpha_3$}
+    \AxiomC{$B \yield{\ell_2} \alpha_2$}
+    \BinaryInfC{$A \yield{\ell_1+\ell_2} \alpha_1\alpha_2\alpha_3$}
+  \end{prooftree}
+\end{proposition}
+\begin{hint}
+  Индукция по $\ell_1$.
+\end{hint}
+
+\begin{proposition}
+  За произволна променлива $A$ и произволни думи $\beta$ и $\gamma$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$A \yield{\ell} \beta A \gamma$}
+    \AxiomC{$i \in \Nat$}
+    \BinaryInfC{$A \yield{\ell \cdot i} \beta^i A \gamma^i$}
+  \end{prooftree}
+  
+\end{proposition}
+\begin{hint}
+  Индукция по $i$.
+\end{hint}
+
+
+
 \mynote{Ще докажем, че $X \yield{\star}_G \gamma \iff X \derive{\star}_G \gamma$.}
 
-Да напомним, че дефинирахме език $\L_\A(q)$.
-Сега ще дефинираме език $\L_G(A)$, за произволна променлива.
-\[\L_G(A) = \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
-\mynote{Това е аналогично на $\L(\A) = \L_\A(\qstart)$.}
+Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
+Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$.
+\[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
 Ясно е, че $\L(G) = \L_G(S)$.
 Също така, да дефинираме следните апроксимации на $\L_G(A)$.
 \[\L^n_G(A) = \{\alpha \in \Sigma^\star \mid A \yield{\leq n} \alpha\}.\]
