@@ -1,18 +1,18 @@
 \subsection{Не толкова лесни задачи}
 
-{\bf Това вече е добре да се махне}
-\begin{problem}
-  Докажете, че няма полиномиален алгоритъм за детерминизация на краен недетерминиран автомат.
-\end{problem}
-\begin{hint}
-  За произволно $n$, разгледайте недетерминирания автомат $\A_n$, за който
-  \[(\forall \alpha,\beta \in \{0,1\}^\star)[|\alpha| = |\beta| = n \implies (\alpha\beta \in \L(\A_n) \iff \alpha \neq \beta)].\]
-  Този автомат ще има $2n+2$ състояния.
+% {\bf Това вече е добре да се махне}
+% \begin{problem}
+%   Докажете, че няма полиномиален алгоритъм за детерминизация на краен недетерминиран автомат.
+% \end{problem}
+% \begin{hint}
+%   За произволно $n$, разгледайте недетерминирания автомат $\A_n$, за който
+%   \[(\forall \alpha,\beta \in \{0,1\}^\star)[|\alpha| = |\beta| = n \implies (\alpha\beta \in \L(\A_n) \iff \alpha \neq \beta)].\]
+%   Този автомат ще има $2n+2$ състояния.
 
-  Допуснете, че за него съществува детерминиран автомат $\D_n$ с $< 2^n$ на брой състояния.
-  Разгледайте всички думи с дължина $n$, $\omega_1,\omega_2,\dots,\omega_{2^n}$.
-  Приложете принципа на Дирихле и достигнете до противоречие.
-\end{hint}
+%   Допуснете, че за него съществува детерминиран автомат $\D_n$ с $< 2^n$ на брой състояния.
+%   Разгледайте всички думи с дължина $n$, $\omega_1,\omega_2,\dots,\omega_{2^n}$.
+%   Приложете принципа на Дирихле и достигнете до противоречие.
+% \end{hint}
 
 
 \begin{problem}
@@ -32,9 +32,12 @@
   \item 
     $\frac{1}{2}(L) = \{\omega \in \Sigma^\star \mid (\exists \alpha \in \Sigma^\star)[\omega\alpha \in L\ \&\ \abs{\omega} = \abs{\alpha}]\}$;
   \item
-    \mynote{right quotient of $L$ by $L'$}
-    $L/L' = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L ] \}$;
+    \mynote{right quotient of $L$ by $\omega$}
+    $L/_\omega = \{\alpha \in \Sigma^\star \mid \alpha\omega \in L\}$;
   \item
+    $L/_{L'} = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L ] \}$;
+  \item
+    \mynote{right quotient of $L$ by $L'$}
     $L^{-1}(L') = \{ \beta \mid (\exists \alpha \in L)[ \alpha\beta \in L']\}$;
   \item
     $\mbox{Max}(L) = \{\alpha \in \Sigma^\star \mid (\forall \beta\in\Sigma^\star)[\beta \neq \varepsilon\implies \alpha\beta \not\in L]\}$.

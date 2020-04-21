@@ -18,7 +18,7 @@
 \item
   \index{наредба!лексикографска}
   Ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
-  \[(\exists i < \min\{|\alpha|,|\beta|\})[\ (\forall j < i)[\ \alpha[j] = \beta[j]\ ]\ \&\ \alpha[i] < \beta[i]\ ].\]
+  \[(\exists i < \min\{|\alpha|,|\beta|\})[\ \alpha\slice{:i} = \beta\slice{:i}\ \&\ \alpha\slice{i} < \beta\slice{i}\ ].\]
 \item
   \index{дърво}
   \mynote{Всеки възел в дървото еднозначно се определя от пътя от възела до корена.}
@@ -192,81 +192,6 @@
   Следва директно от горното твърдение след като съобразим, че
   \[|\texttt{yield}(P)| \leq |\leaves(P)|.\]
 \end{proof}
-
-\begin{framed}
-  \begin{lemma}
-    Ако $X \derive{\star}_G \beta$, то $X \yield{\star}_G \beta$.
-  \end{lemma}  
-\end{framed}
-\begin{proof}
-  Индукция по дължината на извода $X \derive{\ell} \beta$.
-  \begin{itemize}
-  \item
-    $\ell = 0$, т.е. $X \derive{0} X$.
-    Тогава е ясно, че $X \yield{\star} X$.
-  \item
-    \mynote{Знаем, че $k < b$.}
-    Нека $\ell > 0$ и $X \derive{\ell} \beta$.
-    Според правилата на извод в граматика имаме извода
-    \[X \to_G X_0X_1\cdots X_k \derive{\ell-1} \beta.\]
-    От \Proposition{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
-    \begin{itemize}
-    \item
-      $\beta = \beta_0 \cdots \beta_{k}$;
-    \item
-      $X_i \derive{\ell_i} \beta_i$, за всяко $i = 0,\dots,k$;
-    \item
-      $\ell-1 = \sum^k_{i=1} \ell_i$.
-    \end{itemize}
-    От \IndHyp имаме, че $X_i \yield{\star} \beta_i$ за $i \leq k$.
-    Получаваме следното:
-    \begin{prooftree}
-      \AxiomC{$X \to_G X_0\cdots X_k$}
-      \AxiomC{$\vdots$}
-      \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_i \yield{\star} \beta_i \text{ за }i \leq k$}
-      \BinaryInfC{$X \yield{\star} \underbrace{\beta_0\cdots\beta_k}_{\beta}$}
-    \end{prooftree}
-  \end{itemize}
-\end{proof}
-
-\begin{framed}
-  \begin{lemma}
-    Ако $X \yield{\star}_G \gamma$, то $X \derive{\star}_G \gamma$.
-  \end{lemma}
-\end{framed}
-\begin{proof}
-  Индукция по височината $\ell$ на дървото на извод за $X \yield{\ell} \gamma$.
-  \begin{itemize}
-  \item
-    Нека $\ell = 0$. Това означава, че $X \yield{0} X$. Ясно е, че $X \derive{\star} X$.
-  \item
-    Нека $\ell > 0$. Тогава имаме следното:
-    \begin{prooftree}
-      \AxiomC{$X \to_G X_1\cdots X_n$}
-      \AxiomC{$X_i \yield{\ell_i} \gamma_i\text{ за }i=1,\dots,n$}
-      \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_1,\dots,\ell_n\})$}}
-      \BinaryInfC{$X \yield{\ell} \gamma_1\cdots\gamma_n$}
-    \end{prooftree}
-    Тогава от И.П. получаваме, че за всяко $i < k$ е изпълнено $X_i \derive{\star} \gamma_i$.
-    Получаваме, че:
-    \begin{prooftree}
-      \AxiomC{$X \to_G X_0 \cdots X_{k-1}$}
-      \AxiomC{$\vdots$}
-      \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_i \derive{\star} \gamma_i\text{ за }i<k$}
-      \UnaryInfC{$X_0 \cdots X_{k-1} \derive{\star} \gamma_0\cdots\gamma_{k-1}$}
-      \BinaryInfC{$X \derive{\star} \underbrace{\gamma_0\cdots\gamma_{k-1}}_{\gamma}$}
-    \end{prooftree}
-  \end{itemize}
-\end{proof}
-
-\begin{framed}
-\begin{theorem}
-  Нека $G$ е произволна безконтекстна граматика.
-  Тогава $\alpha \in \L(G)$ точно тогава, когато съществува дърво на извод $P$, съвместимо с $G$, с корен $S$ за думата $\beta$.
-\end{theorem}  
-\end{framed}
 
 
 
@@ -569,7 +494,6 @@
 
   Индукция по $\ell$, където $A \yield{\ell}\alpha$.
 \end{hint}
-
 
 
 %%% Local Variables:

@@ -1,4 +1,4 @@
-\section{Безконтекстни граматики}
+\section{Извод в безконтекстна граматика}
 
 \index{граматика!безконтекстна}
 \mynote{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$. На англ. {\em context-free grammar}. Други срещани наименования на български са
@@ -11,22 +11,25 @@
 Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
 имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
 
-Да напомним дефиницията на релацията $\alpha \derive{\ell}_G \beta$ за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$.
+Дефинираме релацията $\alpha \derive{\ell}_G \beta$ за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ по следния начин:
 
 \begin{prooftree}
   \AxiomC{}
+  \RightLabel{\scriptsize{(0)}}
   \UnaryInfC{$\alpha \derive{0}_G \alpha$}
 \end{prooftree}
 
 \begin{prooftree}
   \AxiomC{$A \to_G \gamma$}
   \AxiomC{$\gamma \derive{\ell}_G \beta$}
+  \RightLabel{\scriptsize{(1)}}
   \BinaryInfC{$A \derive{\ell+1}_G \beta$}
 \end{prooftree}
 
 \begin{prooftree}
   \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
   \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
+  \RightLabel{\scriptsize{(2)}}
   \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
 \end{prooftree}
 
@@ -49,8 +52,45 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   {\em всеки регулярен език е безконтекстен.}
 \end{remark}
 
-\ExtraMaterial{
-  % \begin{multicols}{2}
+\begin{proposition}\label{pr:grammar:derive:general}
+  За произволни $\ell_1$ и $\ell_2$,
+  \begin{prooftree}
+    \AxiomC{$A \derive{\ell_1} \alpha B \gamma$}
+    \AxiomC{$B \derive{\ell_2} \beta$}
+    \BinaryInfC{$A \derive{\ell_1+\ell_2} \alpha\beta\gamma$}
+  \end{prooftree}
+\end{proposition}
+\begin{proof}
+  Имаме следния извод:
+  \begin{prooftree}
+    \AxiomC{$A \derive{\ell_1} \alpha B \gamma$}
+    \AxiomC{}
+    \LeftLabel{\scriptsize{(0)}}
+    \UnaryInfC{$\alpha \derive{0} \alpha$}
+    \AxiomC{$B \derive{\ell_2} \beta$}
+    \LeftLabel{\scriptsize{(2)}}
+    \BinaryInfC{$\alpha B \derive{\ell_2} \alpha\beta$}
+    \AxiomC{}
+    \RightLabel{\scriptsize{(0)}}
+    \UnaryInfC{$\gamma \derive{0} \gamma$}
+    \RightLabel{\scriptsize{(2)}}
+    \BinaryInfC{$\alpha B \gamma \derive{\ell_2} \alpha \beta \gamma$}
+    \RightLabel{\scriptsize{(1)}}
+    \BinaryInfC{$A \derive{\ell_1+\ell_2} \alpha\beta\gamma$}
+  \end{prooftree}
+\end{proof}
+
+\begin{remark}
+  Понеже \Proposition{grammar:derive:general} се използва често, нека да го означим като правило (3). С други думи,
+  \begin{prooftree}
+    \AxiomC{$A \derive{\ell_1} \alpha B \gamma$}
+    \AxiomC{$B \derive{\ell_2} \beta$}
+    \RightLabel{\scriptsize{(3)}}
+    \BinaryInfC{$A \derive{\ell_1+\ell_2} \alpha\beta\gamma$}
+  \end{prooftree}
+\end{remark}
+
+\begin{extra}
 \begin{example}
   Да разгледаме безконтекстната граматика $G$, която има следните правила:
   \begin{align*}
@@ -65,9 +105,13 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \AxiomC{$S \to_G AS$}
     \AxiomC{$S \to_G \varepsilon$}
     \AxiomC{$\varepsilon \derive{0}_G \varepsilon$}
+    \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$S \derive{1}_G \varepsilon$}
+    \RightLabel{\scriptsize{(3)}}
     \BinaryInfC{$S \derive{2}_G A$}
+    \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$AS \derive{2}_G AA$}
+    \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{3}_G AA$}
   \end{prooftree}
 
@@ -77,15 +121,21 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \AxiomC{$a \derive{0}_G a$}
     \AxiomC{$A \to_G ab$}
     \AxiomC{$b \derive{0}_G b$}
+    \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$Ab \derive{1}_G abb$}
+    \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$aAb \derive{1}_G aabb$}
+    \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{2}_G aabb$}
   \end{prooftree}
 
   Аналогично,
   \begin{prooftree}
     \AxiomC{$A \to_G ab$}
-    \AxiomC{$ab \derive{0}_G ab$}
+    \AxiomC{}
+    \RightLabel{\scriptsize{(0)}}
+    \UnaryInfC{$ab \derive{0}_G ab$}
+    \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{1}_G ab$}
   \end{prooftree}
 
@@ -94,8 +144,10 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$S \derive{3}_G AA$}
     \AxiomC{$A \derive{2}_G aabb$}
+    \RightLabel{\scriptsize{(3)}}
     \BinaryInfC{$S \derive{5}_G aabbA$}
     \AxiomC{$A \derive{1}_G ab$}
+    \RightLabel{\scriptsize{(3)}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
 
@@ -105,15 +157,17 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$S \to_G AS$}
     \AxiomC{$A \derive{2} aabb$}
+    \RightLabel{\scriptsize{(3)}}
     \BinaryInfC{$S \derive{3}_G aabbS$}
+    \RightLabel{\scriptsize{(3)}}
     \AxiomC{$S \derive{2}_G A$}
     \BinaryInfC{$S \derive{5}_G aabbA$}
     \AxiomC{$A \derive{1}_G ab$}
+    \RightLabel{\scriptsize{(3)}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
 \end{example}
-% \end{multicols}
-}
+\end{extra}
 
 
 \begin{proposition}\label{pr:grammar:derive-one-step}
@@ -122,6 +176,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   $\alpha \derive{1}_G \beta$ точно тогава, когато $\alpha = \delta A \rho$, $A \to_G \gamma$ и $\beta = \delta\gamma\rho$.
 \end{proposition}
 
+
 % \begin{framed}
 \begin{proposition}\label{pr:grammar:divide}
   Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \derive{\ell}_G \beta$, където $X_i \in V \cup \Sigma$.
@@ -129,7 +184,29 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   $X_i \derive{\ell_i} \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $\ell = \sum^k_{i = 1}\ell_i$.
 \end{proposition}
 \begin{hint}
-  Индукция по $k$.
+  \mynote{Тук е възможно $X_i = a \in \Sigma$. Тогава $a \derive{0} a$ и $\beta_i = a$.}
+  Ще докажем твърдението с индукция по $k \geq 2$.
+  \begin{itemize}
+  \item
+    За $k = 2$, то твърдението е точно правило $(2)$.
+  \item
+    Нека $k > 2$.
+    Тогава имаме следното:
+    \begin{prooftree}
+      \AxiomC{$X_1 \derive{\ell_1} \beta_1$}
+      \AxiomC{$X_2 \derive{\ell_2} \beta_2$}
+      \AxiomC{$\dots$}
+      \AxiomC{$X_k \derive{\ell_k} \beta_k$}
+      \RightLabel{\scriptsize{($\ell'' = \sum^k_{i=2}\ell_i$)}}
+      \LeftLabel{\scriptsize{\IndHyp}}
+      \TrinaryInfC{$X_2\cdots X_k \derive{\ell''} \beta_2\cdots\beta_k$}
+      \LeftLabel{\scriptsize{правило (2)}}
+      \RightLabel{\scriptsize{$(\ell = \ell_1+\ell'')$}}
+      \BinaryInfC{$X_1X_2\cdots X_k \derive{\ell}_G \beta_1\beta_2\cdots\beta_k$}
+    \end{prooftree}
+    
+  \end{itemize}
+  
 \end{hint}
 % \end{framed}
 % \begin{proof}
@@ -182,6 +259,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \mynote{Тук е добре да се нарисува картинка. Да се обясни, че $\yield{\star}$ е аналог на BFS, докато $\derive{\star}$ е аналог на DFS.}
 \begin{prooftree}
   \AxiomC{}
+  \RightLabel{\scriptsize{правило (0)}}
   \UnaryInfC{$X \yield{0} X$}
 \end{prooftree}
 
@@ -189,7 +267,8 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \begin{prooftree}
   \AxiomC{$X \to_G X_1\cdots X_n$}
   \AxiomC{$X_i \yield{\ell_i} \gamma_i\text{ за }i=1,\dots,n$}
-  \RightLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
+  \LeftLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
+  \RightLabel{\scriptsize{правило (1)}}
   \BinaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
 \end{prooftree}
 
@@ -228,19 +307,108 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   Индукция по $i$.
 \end{hint}
 
+\begin{lemma}
+  Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
+  Тогава ако $X \derive{\star}_G \beta$, то $X \yield{\star}_G \beta$.
+\end{lemma}  
+\begin{proof}
+  С пълна индукция по $\ell$ ще докажем, че ако $X \derive{\ell} \beta$, то $X \yield{\star} \beta$.
+  \begin{itemize}
+  \item
+    $\ell = 0$, т.е. $X \derive{0} X$.
+    Тогава е ясно, че $X \yield{\star} X$.
+  \item
+    Нека $\ell > 0$ и $X \derive{\ell} \beta$.
+    Според правилата на извод в граматика имаме извода
 
+    \begin{prooftree}
+      \AxiomC{$X \to_G X_0X_1\cdots X_k$}
+      \AxiomC{$X_0X_1\cdots X_k \derive{\ell-1} \beta$}
+      \RightLabel{\scriptsize{правило (1)}}
+      \BinaryInfC{$X \derive{\ell} \beta$}
+    \end{prooftree}
 
-\mynote{Ще докажем, че $X \yield{\star}_G \gamma \iff X \derive{\star}_G \gamma$.}
+    От \Proposition{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
+    \begin{itemize}
+    \item
+      $\beta = \beta_0 \cdots \beta_{k}$;
+    \item
+      $X_i \derive{\ell_i} \beta_i$, за всяко $i = 0,\dots,k$;
+    \item
+      $\ell-1 = \sum^k_{i=1} \ell_i$.
+    \end{itemize}
+    От \IndHyp имаме, че $X_i \yield{\star} \beta_i$ за всяко $i = 0,1, \dots, k$.
+    Получаваме следното:
+    \begin{prooftree}
+      \AxiomC{$X \to_G X_0\cdots X_k$}
+      \AxiomC{$\vdots$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$X_i \yield{\star} \beta_i \text{ за }i \leq k$}
+      \BinaryInfC{$X \yield{\star} \underbrace{\beta_0\cdots\beta_k}_{\beta}$}
+    \end{prooftree}
+  \end{itemize}
+\end{proof}
+
+\begin{lemma}
+  Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\gamma \in (V \cup \Sigma)^\star$.
+  Тогава ако $X \yield{\star}_G \gamma$, то $X \derive{\star}_G \gamma$.
+\end{lemma}
+\begin{proof}
+  С пълна индукция по $\ell$ ще докажем, че ако $X \yield{\ell} \gamma$, то $X \derive{\star} \gamma$.
+  \begin{itemize}
+  \item
+    Нека $\ell = 0$. Това означава, че $X \yield{0} X$. Ясно е, че $X \derive{\star} X$.
+  \item
+    Нека $\ell > 0$. Тогава имаме следното:
+    \begin{prooftree}
+      \AxiomC{$X \to_G X_0\cdots X_n$}
+      \AxiomC{$X_i \yield{\ell_i} \gamma_i\text{ за }i=0,\dots,n$}
+      \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_0,\dots,\ell_n\})$}}
+      \BinaryInfC{$X \yield{\ell} \gamma_0\cdots\gamma_n$}
+    \end{prooftree}
+    Тогава от \IndHyp получаваме, че за всяко $i \leq n$ е изпълнено $X_i \derive{\star} \gamma_i$.
+    Получаваме, че:
+    \begin{prooftree}
+      \AxiomC{$X \to_G X_0 \cdots X_{n}$}
+      \AxiomC{$\vdots$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$X_i \derive{\star} \gamma_i\text{ за }i \leq n$}
+      \UnaryInfC{$X_0 \cdots X_{n} \derive{\star} \gamma_0\cdots\gamma_{n}$}
+      \BinaryInfC{$X \derive{\star} \underbrace{\gamma_0\cdots\gamma_{n}}_{\gamma}$}
+    \end{prooftree}
+  \end{itemize}
+\end{proof}
+
+\begin{framed}
+  \begin{theorem}
+    Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
+    Тогава $X \yield{\star}_G \gamma$ точно тогава, когато $X \derive{\star}_G \gamma$.
+  \end{theorem}  
+\end{framed}
+
+\begin{corollary}
+  $\L(G) = \{\alpha \in \Sigma^\star \mid S \yield{\star}\alpha\}$.
+\end{corollary}
+
 
 Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
 Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$.
 \[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
 Ясно е, че $\L(G) = \L_G(S)$.
-Също така, да дефинираме следните апроксимации на $\L_G(A)$.
-\[\L^n_G(A) = \{\alpha \in \Sigma^\star \mid A \yield{\leq n} \alpha\}.\]
-Ясно е, че $\L_G(A) = \bigcup_{n\geq 0}\L^n_G(A)$.
+Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$.
+\[\L^\ell_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\leq \ell} \alpha\}.\]
+Следните свойства са ясни:
+\begin{itemize}
+\item
+  $\L^0_G(A) = \emptyset$;
+\item
+  $\L^n_G(A) \subseteq \L^{n+1}_G(A)$ за всяко $n$;
+\item
+  $\L_G(A) = \bigcup_{n\geq 0}\L^n_G(A)$.  
+\end{itemize}
 
-Следващото твърдение е ключово за решаването на задачи.
+Следната характеризация на $\L^\ell_G(A)$ ще е важна за нас, когато искаме да докажем,
+че една безконтекстна граматика разпознава даден език.
 
 \begin{proposition}\label{pr:grammar:yield-approximation}
   Нека $G$ е произволна безконтекстна граматика и $A$ е променлива в $G$.
@@ -264,7 +432,8 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
 
 
-\begin{example}
+\begin{extra}
+\begin{example}\label{ex:grammar:anbn}
   Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
   \begin{align*}
     & S \to aSb \mid \varepsilon.
@@ -274,7 +443,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     & \L^0_G(S) = \emptyset\\
     & \L^1_G(S) = \{a\} \cdot \emptyset \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon\}\\
     & \L^{2}_G(S) = \{a\} \cdot \{\varepsilon\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon, ab\}\\
-    & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < \ell\}\\
+    & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < 3\}\\
     & \vdots
   \end{align*}
   Лесно се съобразява, че
@@ -282,19 +451,8 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   Заключаваме, че:
   \[\L(G) = \L_G(S) = \bigcup_{\ell}\L^\ell_G(S) = \{a^nb^n \mid n\in\Nat\}.\]
 \end{example}
+\end{extra}
 
-\begin{example}
-  Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
-  \begin{align*}
-    & S \to aSc\ |\  B\\
-    & B \to bBc\ |\ \varepsilon.
-  \end{align*}
-  Лесно се съобразява, че $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$, защото
-  \begin{align*}
-    \L^\ell_G(S) & = \{a^nb^kc^{n+k} \mid n,k < \ell-1\}\\
-    \L^\ell_G(B) & = \{b^kc^k \mid k < \ell\}.
-  \end{align*}
-\end{example}
 
 \begin{example}
   Да разгледаме граматика с правила

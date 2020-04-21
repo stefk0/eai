@@ -1,14 +1,16 @@
+
+
 \begin{extra}
   Нека да вземем назаем от \texttt{python} нотацията за \texttt{slices} на масив и
   ако $\alpha = a_0 \cdot a_1 \cdots a_{n-1}$, то нека 
   \begin{align*}
-    \alpha[i:j] & \df
+    \alpha\slice{i:j} & \df
                   \begin{cases}
                     a_i \cdots a_{m-1}, & \text{ ако }i < j\ \&\ m = \min\{j,|\alpha|\}\\
                     \varepsilon, & \text{ иначе}
                   \end{cases}\\
-    \alpha[i:] & \df \alpha[i:|\alpha|]\\
-    \alpha[:i] & \df \alpha[0:i].
+    \alpha\slice{i:} & \df \alpha\slice{i:|\alpha|}\\
+    \alpha\slice{:i} & \df \alpha\slice{0:i}.
   \end{align*}
 Нека също така $\Sigma^{\geq k} \df \{ \alpha \in \Sigma^\star \mid |\alpha| \geq k\}$.
 
@@ -16,13 +18,13 @@
   Нека $L$ е регулярен език. Тогава езиците
   \begin{itemize}
   \item
-    $L_1 = \{ \alpha \in \Sigma^\star \mid (\exists i)(\exists j)[\ \alpha[i:j] \in L\ ]\}$;
+    $L_1 = \{ \alpha \in \Sigma^\star \mid (\exists i)(\exists j)[\ \alpha\slice{i:j} \in L\ ]\}$;
   \item
-    $L_2 = \{ \alpha \in \Sigma^\star \mid (\forall i)(\forall j)[\ i < j \implies \alpha[i:j] \in L\ ]\}$;
+    $L_2 = \{ \alpha \in \Sigma^\star \mid (\forall i)(\forall j)[\ i < j \implies \alpha\slice{i:j} \in L\ ]\}$;
   \item 
-    $L_3 = \{ \alpha \in \Sigma^\star \mid (\forall i)(\exists j)[\ i < j\ \&\ \alpha[i:j] \in L\ ]\}$;
+    $L_3 = \{ \alpha \in \Sigma^\star \mid (\forall i)(\exists j)[\ i < j\ \&\ \alpha\slice{i:j} \in L\ ]\}$;
   \item
-    $L_4 = \{ \alpha \in \Sigma^\star \mid (\exists i)(\forall j)[\ i < j \implies \alpha[i:j] \in L\ ]\}$.
+    $L_4 = \{ \alpha \in \Sigma^\star \mid (\exists i)(\forall j)[\ i < j \implies \alpha\slice{i:j} \in L\ ]\}$.
   \end{itemize}
   също са регулярни.
 \end{problem}
@@ -34,23 +36,23 @@
   Да обърнем внимание, че
   \begin{align*}
     \alpha \in \Sigma^\star \cdot L & \iff (\exists \beta \in \Sigma^\star)(\exists \gamma \in L)[ \alpha = \beta \cdot \gamma]\\
-                                    & \iff (\exists j)[\ \alpha[j:] \in L\ ].
+                                    & \iff (\exists j)[\ \alpha\slice{j:} \in L\ ].
   \end{align*}
   Аналогично получаваме, че
     \begin{align*}
       \alpha \in L\cdot \Sigma^\star & \iff (\exists \gamma \in L)(\exists \beta \in \Sigma^\star)[ \alpha = \gamma \cdot \beta ]\\
-                                     & \iff (\exists j)[\ \alpha[:j] \in L\ ].
+                                     & \iff (\exists j)[\ \alpha\slice{:j} \in L\ ].
   \end{align*}
   Нека да разгледаме по-подробно следния език:
   \begin{align*}
-    \ov{L}_3 & = \{\alpha \in \Sigma^\star \mid (\exists i)(\forall j)[\ i < j \implies \alpha[i:j] \not\in L\ ]\}\\
-             & = \{\alpha \in \Sigma^\star \mid (\exists i)(\forall j)[\ i < j \implies \alpha[i:j] \in \ov{L}\ ]\}\\
-             & = \{\alpha \in \Sigma^\star \mid (\forall j)[\ \alpha[:j] \in \Sigma^\star \cdot \ov{L}\ ]\}
+    \ov{L}_3 & = \{\alpha \in \Sigma^\star \mid (\exists i)(\forall j)[\ i < j \implies \alpha\slice{i:j} \not\in L\ ]\}\\
+             & = \{\alpha \in \Sigma^\star \mid (\exists i)(\forall j)[\ i < j \implies \alpha\slice{i:j} \in \ov{L}\ ]\}\\
+             & = \{\alpha \in \Sigma^\star \mid (\forall j)[\ \alpha\slice{:j} \in \Sigma^\star \cdot \ov{L}\ ]\}
   \end{align*}
   Така получаваме, че:
   \begin{align*}
-    L_3 & = \{\alpha \in \Sigma^\star \mid (\exists j)[\ \alpha[:j] \not\in \Sigma^\star \cdot \ov{L}\ ]\}\\
-        & = \{\alpha \in \Sigma^\star \mid (\exists j)[\ \alpha[:j] \in \ov{\Sigma^\star \cdot \ov{L}}\ ]\}\\
+    L_3 & = \{\alpha \in \Sigma^\star \mid (\exists j)[\ \alpha\slice{:j} \not\in \Sigma^\star \cdot \ov{L}\ ]\}\\
+        & = \{\alpha \in \Sigma^\star \mid (\exists j)[\ \alpha\slice{:j} \in \ov{\Sigma^\star \cdot \ov{L}}\ ]\}\\
         & = \{\alpha \in \Sigma^\star \mid \alpha \in (\ov{\Sigma^\star \cdot \ov{L}}) \cdot \Sigma^\star \ ]\}.
   \end{align*}
   Оттук заключваме, че
@@ -62,24 +64,24 @@
 \begin{problem}
   Нека $L$ е регулярен език над азбуката $\Sigma$.
   За произволно естествено число $k$, докажете, че езикът
-  \[L_k = \{ \alpha \in \Sigma^\star \mid (\forall i)(\exists j)[\ |\alpha[i:]| \geq k \implies \alpha[i:j] \in L\ ]\}\]
+  \[L_k = \{ \alpha \in \Sigma^\star \mid (\forall i)(\exists j)[\ |\alpha\slice{i:}| \geq k \implies \alpha\slice{i:j} \in L\ ]\}\]
   е регулярен.
   С други думи, $L_k$ съдържа тези думи, за които от всяка позиция, с изключение на последните $k$, започва дума в езика $L$.
 \end{problem}
 \begin{hint}
   Да разпишем по-подробно дефиницията на езика $L_k$.
   \begin{align*}
-    L_k & = \{ \alpha \in \Sigma^\star \mid (\forall i)(\exists j)[\ |\alpha[i:]| \geq k \implies \alpha[i:j] \in L\ ]\}\\
-        & = \{ \alpha \in \Sigma^\star \mid (\forall i)[\ |\alpha[i:]| \geq k \implies (\exists j)[\alpha[i:j] \in L]\ ]\}\\
-        & = \{ \alpha \in \Sigma^\star \mid (\forall i)[\ \alpha[i:] \in \Sigma^{\geq k} \implies \alpha[i:] \in L \cdot \Sigma^\star\ ]\}\\
-        & = \{ \alpha \in \Sigma^\star \mid (\forall i)[\ \alpha[i:] \not\in \Sigma^{\geq k}\ \lor\ \alpha[i:] \in L \cdot \Sigma^\star\ ]\}\\
-        & = \{ \alpha \in \Sigma^\star \mid \neg (\exists i)[\ \alpha[i:] \in \Sigma^{\geq k}\ \&\ \alpha[i:] \not\in L \cdot \Sigma^\star\ ]\}.
+    L_k & = \{ \alpha \in \Sigma^\star \mid (\forall i)(\exists j)[\ |\alpha\slice{i:}| \geq k \implies \alpha\slice{i:j} \in L\ ]\}\\
+        & = \{ \alpha \in \Sigma^\star \mid (\forall i)[\ |\alpha\slice{i:}| \geq k \implies (\exists j)[\alpha\slice{i:j} \in L]\ ]\}\\
+        & = \{ \alpha \in \Sigma^\star \mid (\forall i)[\ \alpha\slice{i:} \in \Sigma^{\geq k} \implies \alpha\slice{i:} \in L \cdot \Sigma^\star\ ]\}\\
+        & = \{ \alpha \in \Sigma^\star \mid (\forall i)[\ \alpha\slice{i:} \not\in \Sigma^{\geq k}\ \lor\ \alpha\slice{i:} \in L \cdot \Sigma^\star\ ]\}\\
+        & = \{ \alpha \in \Sigma^\star \mid \neg (\exists i)[\ \alpha\slice{i:} \in \Sigma^{\geq k}\ \&\ \alpha\slice{i:} \not\in L \cdot \Sigma^\star\ ]\}.
   \end{align*}
   Сега е ясно, че:
   \begin{align*}
-    \ov{L}_k & = \{ \alpha \in \Sigma^\star \mid (\exists i)[\ \alpha[i:] \in \Sigma^{\geq k}\ \&\ \alpha[i..] \not\in L \cdot \Sigma^\star\ ]\}\\
-             & = \{ \alpha \in \Sigma^\star \mid (\exists i)[\ \alpha[i:] \in \Sigma^{\geq k}\ \&\ \alpha[i..] \in \ov{L \cdot \Sigma^\star}\ ]\}\\
-             & = \{ \alpha \in \Sigma^\star \mid (\exists i)[\ \alpha[i:] \in \Sigma^{\geq k} \cap \ov{L \cdot \Sigma^\star}\ ]\}\\
+    \ov{L}_k & = \{ \alpha \in \Sigma^\star \mid (\exists i)[\ \alpha\slice{i:} \in \Sigma^{\geq k}\ \&\ \alpha\slice{i:} \not\in L \cdot \Sigma^\star\ ]\}\\
+             & = \{ \alpha \in \Sigma^\star \mid (\exists i)[\ \alpha\slice{i:} \in \Sigma^{\geq k}\ \&\ \alpha\slice{i:} \in \ov{L \cdot \Sigma^\star}\ ]\}\\
+             & = \{ \alpha \in \Sigma^\star \mid (\exists i)[\ \alpha\slice{i:} \in \Sigma^{\geq k} \cap \ov{L \cdot \Sigma^\star}\ ]\}\\
              & = \{ \alpha \in \Sigma^\star \mid \alpha \in \Sigma^\star \cdot (\Sigma^{\geq k} \cap \ov{L \cdot \Sigma^\star}) \}\\
              & = \Sigma^\star \cdot (\Sigma^{\geq k} \cap \ov{L \cdot \Sigma^\star}).
   \end{align*}
