@@ -11,6 +11,8 @@
 \newcommand*{\TM}{\langle{Q,\Sigma,\Gamma,\delta,\blank,\qstart,\qaccept, \qreject}\rangle}
 
 
+% Words
+\newcommand*{\slice}[1]{\texttt{[}{#1}\texttt{]}}
 \newcommand*{\card}[2]{\vert{#1}\vert_{#2}}
 \newcommand*{\bin}[1]{\overline{#1}_{(2)}}
 
@@ -47,6 +49,7 @@
 
 \newenvironment{extra}
 {% This is the begin code
+  \hrulefill
   \scriptsize
 }
 {% This is the end code

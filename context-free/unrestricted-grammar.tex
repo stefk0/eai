@@ -14,7 +14,7 @@
   \mynote{В \cite{hopcroft1} правилата се наричат {\em productions} или {\em production rules}.}
   $R \subseteq (V\cup\Sigma)^+ \times (V \cup \Sigma)^\star$ е крайно множество от {\em правила}.
   За по-добра яснота, обикновено правилата $(\alpha, \beta) \in R$ ще означаваме като 
-  $\alpha \to_G \beta$.
+  $\alpha \to_G \beta$. Когато е ясно за коя граматика говорим, ще пишем просто $\alpha \to \beta$.
 \item
   $S \in V$ е началната променлива (нетерминал). 
 \end{itemize}
@@ -26,18 +26,21 @@
   когато се знае за коя граматика говорим.}
 \begin{prooftree}
   \AxiomC{}
+  \RightLabel{\scriptsize{правило (0)}}
   \UnaryInfC{$\alpha \derive{0}_G \alpha$}
 \end{prooftree}
 
 \begin{prooftree}
   \AxiomC{$\alpha \to_G \gamma$}
   \AxiomC{$\gamma \derive{\ell}_G \beta$}
+  \RightLabel{\scriptsize{правило (1)}}
   \BinaryInfC{$\alpha \derive{\ell+1}_G \beta$}
 \end{prooftree}
 
 \begin{prooftree}
   \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
   \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
+  \RightLabel{\scriptsize{правило (2)}}
   \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
 \end{prooftree}
 
@@ -53,16 +56,16 @@
 Езикът, който се поражда от граматиката $G$ е следния:
 \[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star}_G \omega\}.\]
 
-\begin{proposition}\label{pr:grammar:add}
-  За произволно естествено число $\ell$ е изпълнено, че:
-  \begin{prooftree}
-    \AxiomC{$\alpha \derive{\ell}_G \beta$}
-    \AxiomC{$\gamma,\rho \in (V \cup \Sigma)^\star$}
-    \BinaryInfC{$\gamma\alpha\rho \derive{\ell} \gamma \beta \rho$}
-  \end{prooftree}
-\end{proposition}
+% \begin{proposition}\label{pr:unrestricted-grammar:add}
+%   За произволно естествено число $\ell$ е изпълнено, че:
+%   \begin{prooftree}
+%     \AxiomC{$\alpha \derive{\ell}_G \beta$}
+%     \AxiomC{$\gamma,\rho \in (V \cup \Sigma)^\star$}
+%     \BinaryInfC{$\gamma\alpha\rho \derive{\ell} \gamma \beta \rho$}
+%   \end{prooftree}
+% \end{proposition}
 
-\begin{proposition}\label{pr:grammar:concat}
+\begin{proposition}\label{pr:unrestricted-grammar:concat}
   За всяко $k$ е изпълнено, че:
   \begin{prooftree}
     \AxiomC{$\alpha_1 \derive{\ell_1} \beta_1$}
@@ -76,7 +79,7 @@
   Индукция по $k$.
 \end{hint}
 
-\begin{proposition}
+\begin{proposition}\label{pr:unrestricted-grammar:general-step}
   За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
   \begin{prooftree}
     \AxiomC{$\alpha \derive{\ell_1} \beta$}
@@ -87,6 +90,34 @@
 \begin{hint}
   Индукция по $\ell_1$.
 \end{hint}
+
+\begin{proposition}\label{pr:unrestricted-grammar:context-general-step}
+  За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$\alpha \derive{\ell_1} \rho\beta\delta$}
+    \AxiomC{$\beta \derive{\ell_2} \gamma$}
+    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\gamma\delta$}
+  \end{prooftree}  
+\end{proposition}
+\begin{proof}
+  Имаме следния извод:
+  \begin{prooftree}
+    \AxiomC{$\alpha \derive{\ell_1} \rho\beta\delta$}
+    \AxiomC{}
+    \LeftLabel{\scriptsize{(0)}}
+    \UnaryInfC{$\rho \derive{0} \rho$}
+    \AxiomC{$\beta \derive{\ell_2} \gamma$}
+    \LeftLabel{\scriptsize{(2)}}
+    \BinaryInfC{$\rho \beta \derive{\ell_2} \rho\gamma$}
+    \AxiomC{}
+    \RightLabel{\scriptsize{(0)}}
+    \UnaryInfC{$\delta \derive{0} \delta$}
+    \RightLabel{\scriptsize{(2)}}
+    \BinaryInfC{$\rho \beta \delta \derive{\ell_2} \rho \gamma \delta$}
+    \RightLabel{\scriptsize{\Proposition{unrestricted-grammar:general-step}}}
+    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\gamma\delta$}
+  \end{prooftree}
+\end{proof}
 
 
 

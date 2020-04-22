@@ -1,9 +1,12 @@
 \subsection{Примерни задачи}
 
+\begin{extra2}
 \begin{problem}
-  Докажете, че езикът $L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}$ не е безконтекстен.
+  Докажете, че езикът
+  \[L = \{a^ib^jc^k\ \mid\ 0 \leq i \leq j \leq k\}\] не е безконтекстен.
 \end{problem}
 \begin{proof}
+  Прилагаме \Corollary{pumping-context-free}.
   \begin{description}
   \item[$(\forall)$]
      Разглеждаме произволна константа $p \geq 1$.
@@ -118,6 +121,9 @@
     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in \{0,1\}^\star\ \&\ \bin{\alpha} + 1 = \bin{\beta} \}$ ?
   \end{enumerate}
 \end{problem}
+
+\end{extra2}
+
 
 %%% Local Variables:
 %%% mode: latex

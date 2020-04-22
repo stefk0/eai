@@ -1,6 +1,29 @@
 \subsection{Примерни задачи}
 
+
 \begin{extra}
+
+  Като първи пример, нека да видим, че съществува безконтекстен език, който не е регулярен.
+  Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
+  \begin{example}\label{ex:grammar:anbn}
+    Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
+    \begin{align*}
+      & S \to aSb \mid \varepsilon.
+    \end{align*}
+    Тогава
+    \begin{align*}
+      & \L^0_G(S) = \emptyset\\
+      & \L^1_G(S) = \{a\} \cdot \emptyset \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon\}\\
+      & \L^{2}_G(S) = \{a\} \cdot \{\varepsilon\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon, ab\}\\
+      & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < 3\}\\
+      & \vdots
+    \end{align*}
+    Лесно се съобразява, че
+    \[\L^\ell_G(S) = \{a^nb^n \mid n < \ell\}.\]
+    Заключаваме, че:
+    \[\L(G) = \L_G(S) = \bigcup_{\ell}\L^\ell_G(S) = \{a^nb^n \mid n\in\Nat\}.\]
+  \end{example}
+  
   \begin{example}
     Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
     \begin{align*}
@@ -199,9 +222,7 @@
       \end{itemize}
     \end{itemize}
   \end{example}
-\end{extra}
 
-\newpage
 \begin{problem}
   Докажете, че езикът 
   \[L = \{a^nb^mc^kd^\ell \mid n+k = m + \ell\}\]
@@ -212,11 +233,9 @@
   Имаме два случая.
   \begin{itemize}
   \item
-    Ако $n \leq \ell$, тогава имаме еквивалентността:
-    \[\omega \in L \iff k = m + (\ell- n).\]
+    Ако $n \leq \ell$, тогава имаме еквивалентността: $\omega \in L \iff k = m + (\ell- n)$.
   \item
-    Ако $n > \ell$, тогава имаме еквивалентността:
-    \[\omega \in L \iff (n-\ell) + k = m.\]
+    Ако $n > \ell$, тогава имаме еквивалентността: $\omega \in L \iff (n-\ell) + k = m$.
   \end{itemize}
   Това наблюдение ни подсказва, че трябва да разгледаме следните езици:
   \begin{align*}
@@ -263,7 +282,7 @@
     & L_a = \{\alpha a \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}\\
     & L_b = \{\alpha b \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}.
   \end{align*}
-  Сега разгледайте безконтекстната граматика $G$ със следните правила:ю
+  Сега разгледайте безконтекстната граматика $G$ със следните правила:
   \begin{align*}
     & S \to AB\ |\ BA\\
     & A \to XAX\ |\ a\\
@@ -277,6 +296,7 @@
     & L = \L_G(S).
   \end{align*}
 \end{hint}
+\end{extra}
 
 \begin{problem}
  Докажете, че езикът

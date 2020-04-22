@@ -5,23 +5,25 @@
 \end{theorem}
 % \begin{proof}[стр. 154 от \cite{papadimitriou}]
 Можем да приемем, че $G = \CFG$ е граматика в нормална форма на Чомски.
-Нека $\alpha = a_1a_2\dots a_n$ е дума, за която искаме да проверим дали $\alpha \in \L(G)$.
+Нека $\alpha = a_0a_1\dots a_{n-1}$ е дума, за която искаме да проверим дали $\alpha \in \L(G)$.
 \mynote{Това е алгоритъм на Cocke, Younger и Kasami (CYK), които откриват идеята за този алгоритъм независимо един от друг. Той е пример за динамично
   програмиране \cite[стр. 192]{kozen}, \cite[стр. 141]{shallit}. При вход дума $\alpha$, алгоритъмът работи за време $\mathcal{O}(\abs{\alpha}^3)$.}
 \begin{algorithm}[H]
   \caption{Проверка дали $\alpha \in \L(G)$}
   \label{alg:belongs-to-grammar}
   \begin{algorithmic}[1]
-    \State $n = \texttt{len}(\alpha)$ \Comment{Вход дума $\alpha = a_1\cdots a_n$}
-    \ForAll{$i,j \in [1,n]$}
+    \State $n = \texttt{len}(\alpha)$ \Comment{Вход дума $\alpha = a_0a_1\cdots a_{n-1}$}
+    \ForAll{$i < n$}
+    \ForAll{$j < n$}
     \If{$i = j$}
-    \State $\texttt{V[i][i]} = \{A \in V \mid A\to_G a_i\}$ \label{alg:cyk:initial}
+    \State $\texttt{V[i][i]} = \{A \in V \mid A\to_G \alpha\slice{i}\}$ \label{alg:cyk:initial}
     \Else
     \State{$\texttt{V[i][j]} = \emptyset$}
     \EndIf
     \EndFor
+    \EndFor
     \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала} \label{alg:cyk:first-loop}
-    \ForAll{$i \in [1, n-s]$}\Comment{Начало на интервала}
+    \ForAll{$i < n-s$}\Comment{Начало на интервала}
     \ForAll{$k \in [i, i + s)$}\Comment{Разделяне на интервала}
     \If{$\exists A\to BC \in R\ \&\ B \in \texttt{V[i][k]}\ \&\ C\in \texttt{V[k+1][i+s]}$}
     \State $\texttt{V[i][i+s]} = \texttt{V[i][i+s]} \cup \{A\}$ \label{alg:cyk:add-variable}
@@ -29,7 +31,7 @@
     \EndFor
     \EndFor
     \EndFor
-    \If{$S \in \texttt{V[1][n]}$}
+    \If{$S \in \texttt{V[0][n-1]}$}
     \State \Return \texttt{True}\Comment{Има извод на думата от $S$}
     \Else
     \State \Return \texttt{False}
@@ -40,46 +42,47 @@
 \begin{lemma}
   Нека е дадена безконтекстната граматика $G$ в нормална форма на Чомски и думата $\alpha$.
   Всеки път, точно преди да изпълни ред (\ref{alg:cyk:first-loop}) от програмата описана в Алгоритъм \ref{alg:belongs-to-grammar},
-  е изпълнено, че за всяко $i = 1,2,\dots,n-s$,
-  \[\texttt{V[i][i+s]} = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s}\}.\]
+  е изпълнено, че за всяко $i < n-s$,
+  \[\texttt{V[i][i+s]} = \{A \in V \mid A \rightarrow^\star_G \alpha\slice{i:i+s+1}\}.\]
 \end{lemma}
 \begin{proof}
   Пълна индукция по $s$.
-  За $s = 0$ е ясно, защото от ред (\ref{alg:cyk:initial}) и от факта, че граматиката е в нормална форма на Чомски следва, че за всяко $i = 1, \dots, n$, 
-  \[\texttt{V[i][i]} = \{A \in V \mid A \to_G a_i\} = \{A \in V \mid A \to^\star_G a_i\}.\]
-
-  Нека твърдението е вярно за $s < n$. Ще докажем твърдението за $s+1$, т.е. ще докажем, че за всяко $i = 1,\dots,n-s-1$
+  За $s = 0$ е ясно, защото от ред (\ref{alg:cyk:initial}) и от факта, че граматиката е в нормална форма на Чомски следва, че за всяко $i < n$, 
+  \[\texttt{V[i][i]} = \{A \in V \mid A \to_G \alpha\slice{i}\} = \{A \in V \mid A \derive{\star}_G \alpha\slice{i:i+1}\}.\]
+  
+  Сега ще докажем твърдението за $s > 0$, т.е. ще докажем, че за всяко $i = 1,\dots,n-s$
+  % Нека твърдението е вярно за $s < n$. Ще докажем твърдението за $s+1$, т.е. ще докажем, че за всяко $i = 1,\dots,n-s-1$
   е изпълнено, че:
-  \[\texttt{V[i][i+s+1]} = \{A \in V \mid A \rightarrow^\star_G a_i\dots a_{i+s+1}\}.\]
+  \[\texttt{V[i][i+s]} = \{A \in V \mid A \rightarrow^\star_G \alpha\slice{i:i+s+1}\}.\]
   Да разгледаме двете посоки на това равенство.
   % Да разгледаме $A \in V[i,i+s+1]$.
   \begin{description}
   \item[($\subseteq$)]
-    Нека $A \in \texttt{V[i][i+s+1]}$.
-    Единствената стъпка на алгоритъма, при която може да сме добавили променливата $A$ към множеството $\texttt{V[i][i+s+1]}$ е ред (\ref{alg:cyk:add-variable}).
-    Тогава имаме, че съществува $k$, $i \leq k < i+s+1$, за което
+    Нека $A \in \texttt{V[i][i+s]}$.
+    Единствената стъпка на алгоритъма, при която може да сме добавили променливата $A$ към множеството $\texttt{V[i][i+s]}$ е ред (\ref{alg:cyk:add-variable}).
+    Тогава имаме, че съществува $k$, $i \leq k < i+s$, за което
     \begin{align*}
       & B \in \texttt{V[i][k]},\\
-      & C \in \texttt{V[k+1][i+s+1]},\\
+      & C \in \texttt{V[k+1][i+s]},\\
       & A\to_G BC.
     \end{align*}
-    Понеже $k-i < s+1$ и $i + s - k < s+1$, от {\bf И.П.} имаме, че
+    Понеже $k-i < s$ и $i + s - k < s$, от \IndHyp имаме, че
     \begin{align*}
-      & B \to^\star_G a_i\cdots a_k\\
-      & C \to^\star_G a_{k+1}\cdots a_{i+s+1}.
+      & B \derive{\star}_G \alpha\slice{i:k+1}\\
+      & C \derive{\star}_G \alpha\slice{k+1:i+s+1}.
     \end{align*}
     Заключаваме веднага, че 
-    \[A \to^\star_G a_i\cdots a_{i+s+1}.\]
+    \[A \derive{\star}_G \alpha\slice{i:i+s+1}.\]
   \item[($\supseteq$)]
-    Нека $A \to^\star_G a_i\cdots a_{i+s+1}$ и да разгледаме първото правило, което сме приложили в този извод.
-    Понеже $G$ е в нормална форма на Чомски, правилото е от вида $A \to_G BC$ и тогава съществува някое $k$, $i \leq k < i+s+1$, за което
+    Нека $A \derive{\star}_G \alpha\slice{i:i+s+1}$ и да разгледаме първото правило, което сме приложили в този извод.
+    Понеже $G$ е в нормална форма на Чомски, правилото е от вида $A \to_G BC$ и тогава съществува някое $k$, $i \leq k < i+s$, за което
     \begin{align*}
-      & B \to^\star a_i\cdots a_{k}\\
-      & C \to^\star a_{k+1}\cdots a_{i+s+1}.
+      & B \derive{\star} \alpha\slice{i:k+1}\\
+      & C \derive{\star} \alpha\slice{k+1:i+s+1}.
     \end{align*}
-    От {\bf И.П.} получаваме, че $B \in \texttt{V[i][k]}$ и $C \in \texttt{V[k+1][i+s+1]}$.
+    От {\bf И.П.} получаваме, че $B \in \texttt{V[i][k]}$ и $C \in \texttt{V[k+1][i+s]}$.
     Тогава от ред (\ref{alg:cyk:add-variable}) на алгоритъма е ясно, че 
-    \[A \in \texttt{V[i][i+s+1]}.\]
+    \[A \in \texttt{V[i][i+s]}.\]
   \end{description}
 \end{proof}
 
@@ -146,6 +149,7 @@
 \end{multicols}
 
 }
+
 
 %%% Local Variables:
 %%% mode: latex

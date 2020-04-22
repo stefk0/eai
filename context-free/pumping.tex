@@ -19,7 +19,7 @@
 \end{lemma}
 \begin{proof}
   \mynote{Числото $b$ е максималната разклоненост на всяко дърво на извод за дума изводима от граматиката $G$.}
-  Нека $G$ е граматиката за езика $L$. Да положим
+  Нека $G$ е безконтекстна граматика за езика $L$. Да положим
   \[b \df \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
   Нека
   \[p \df b^{\abs{V} + 1}.\]
@@ -336,7 +336,7 @@
 Както и при \Lemma{pumping-reg}, ние ще използваме \emph{контрапозицията} на условието на \Lemma{pumping-context}
 при проверка, че даден език не е безконтекстен.
 
-\begin{cor}
+\begin{corollary}
   \label{cor:pumping-context-free}
   \mynote{Ако $L$ е краен език, то е ясно, че $L$ е безконтекстен.}
   Нека $L$ е произволен {\bf безкраен} език. Нека също така е изпълнено, че:
@@ -352,13 +352,13 @@
   \end{description}  
   \mynote{\writedown Докажете! Аналогично е на \Corollary{pumping-reg}}
   Тогава $L$ {\bf не} е безконтекстен език.
-\end{cor}
+\end{corollary}
 
-\begin{cor}
+\begin{corollary}
   \mynote{\writedown Докажете!}
   Нека $G$ е безконтекстна граматика и $p$ е константата на покачването за $G$.
   Тогава $\abs{\L(G)} = \infty$ точно тогава, когато съществува $\alpha \in \L(G)$, за която $p \leq \abs{\alpha} < 2p$.
-\end{cor}
+\end{corollary}
 % \begin{proof}
 %   Ако съществува дума $\alpha \in L$, за която $\abs{\alpha} \geq p$, то от \Lem{pumping-context} следва,
 %   че $\abs{L} = \infty$, защото $\alpha = xyuvw$ и $xy^iuv^iw \in L$, за всяко $i\in\Nat$.
@@ -448,8 +448,7 @@
   \end{itemize}
 \end{hint}
 
-
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"
-%%% End: 
+%%% End:

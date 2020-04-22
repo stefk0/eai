@@ -15,21 +15,21 @@
 
 \begin{prooftree}
   \AxiomC{}
-  \RightLabel{\scriptsize{(0)}}
+  \RightLabel{\scriptsize{правило (0)}}
   \UnaryInfC{$\alpha \derive{0}_G \alpha$}
 \end{prooftree}
 
 \begin{prooftree}
   \AxiomC{$A \to_G \gamma$}
   \AxiomC{$\gamma \derive{\ell}_G \beta$}
-  \RightLabel{\scriptsize{(1)}}
+  \RightLabel{\scriptsize{правило (1)}}
   \BinaryInfC{$A \derive{\ell+1}_G \beta$}
 \end{prooftree}
 
 \begin{prooftree}
   \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
   \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
-  \RightLabel{\scriptsize{(2)}}
+  \RightLabel{\scriptsize{правило (2)}}
   \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
 \end{prooftree}
 
@@ -52,59 +52,33 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   {\em всеки регулярен език е безконтекстен.}
 \end{remark}
 
-\begin{proposition}\label{pr:grammar:derive:general}
-  За произволни $\ell_1$ и $\ell_2$,
-  \begin{prooftree}
-    \AxiomC{$A \derive{\ell_1} \alpha B \gamma$}
-    \AxiomC{$B \derive{\ell_2} \beta$}
-    \BinaryInfC{$A \derive{\ell_1+\ell_2} \alpha\beta\gamma$}
-  \end{prooftree}
-\end{proposition}
-\begin{proof}
-  Имаме следния извод:
-  \begin{prooftree}
-    \AxiomC{$A \derive{\ell_1} \alpha B \gamma$}
-    \AxiomC{}
-    \LeftLabel{\scriptsize{(0)}}
-    \UnaryInfC{$\alpha \derive{0} \alpha$}
-    \AxiomC{$B \derive{\ell_2} \beta$}
-    \LeftLabel{\scriptsize{(2)}}
-    \BinaryInfC{$\alpha B \derive{\ell_2} \alpha\beta$}
-    \AxiomC{}
-    \RightLabel{\scriptsize{(0)}}
-    \UnaryInfC{$\gamma \derive{0} \gamma$}
-    \RightLabel{\scriptsize{(2)}}
-    \BinaryInfC{$\alpha B \gamma \derive{\ell_2} \alpha \beta \gamma$}
-    \RightLabel{\scriptsize{(1)}}
-    \BinaryInfC{$A \derive{\ell_1+\ell_2} \alpha\beta\gamma$}
-  \end{prooftree}
-\end{proof}
-
 \begin{remark}
-  Понеже \Proposition{grammar:derive:general} се използва често, нека да го означим като правило (3). С други думи,
+  Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме следното твърдение:
   \begin{prooftree}
-    \AxiomC{$A \derive{\ell_1} \alpha B \gamma$}
+    \AxiomC{$A \derive{\ell_1} \rho B \delta$}
     \AxiomC{$B \derive{\ell_2} \beta$}
-    \RightLabel{\scriptsize{(3)}}
-    \BinaryInfC{$A \derive{\ell_1+\ell_2} \alpha\beta\gamma$}
+    \RightLabel{\scriptsize{правило (3)}}
+    \BinaryInfC{$A \derive{\ell_1+\ell_2} \rho\beta\delta$,}
   \end{prooftree}
+  което ще означим като правило (3), защото ще го използваме често.
 \end{remark}
 
 \begin{extra}
 \begin{example}
   Да разгледаме безконтекстната граматика $G$, която има следните правила:
   \begin{align*}
-    S \to AS\ |\ \varepsilon\\
-    A \to aAb\ |\ ab.
+    & S \to AS\ |\ \varepsilon\\
+    & A \to aAb\ |\ ab.
   \end{align*}
   Да видим защо думата $aabbab \in \L(G)$. Ако следваме формално правилата за извод, получаваме следното:
-
   \begin{prooftree}
     \AxiomC{$S \to_G AS$}
     \AxiomC{$A \derive{0}_G A$}
     \AxiomC{$S \to_G AS$}
     \AxiomC{$S \to_G \varepsilon$}
-    \AxiomC{$\varepsilon \derive{0}_G \varepsilon$}
+    \AxiomC{}
+    \RightLabel{\scriptsize{(0)}}
+    \UnaryInfC{$\varepsilon \derive{0}_G \varepsilon$}
     \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$S \derive{1}_G \varepsilon$}
     \RightLabel{\scriptsize{(3)}}
@@ -114,13 +88,16 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{3}_G AA$}
   \end{prooftree}
-
   Освен това имаме и следния формален извод:
   \begin{prooftree}
     \AxiomC{$A \to_G aAb$}
-    \AxiomC{$a \derive{0}_G a$}
+    \AxiomC{}
+    \LeftLabel{\scriptsize{(0)}}
+    \UnaryInfC{$a \derive{0}_G a$}
     \AxiomC{$A \to_G ab$}
-    \AxiomC{$b \derive{0}_G b$}
+    \AxiomC{}
+    \RightLabel{\scriptsize{(0)}}
+    \UnaryInfC{$b \derive{0}_G b$}
     \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$Ab \derive{1}_G abb$}
     \RightLabel{\scriptsize{(2)}}
@@ -128,7 +105,6 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{2}_G aabb$}
   \end{prooftree}
-
   Аналогично,
   \begin{prooftree}
     \AxiomC{$A \to_G ab$}
@@ -138,9 +114,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{1}_G ab$}
   \end{prooftree}
-
   Обединявайки всичко, получаваме:
-
   \begin{prooftree}
     \AxiomC{$S \derive{3}_G AA$}
     \AxiomC{$A \derive{2}_G aabb$}
@@ -150,10 +124,8 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \RightLabel{\scriptsize{(3)}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
-
-  Обърнете внимание, че можем да приложим правилата за извод в различен ред и пак да получим същия краен резултат.
+  Можем да приложим правилата за извод в различен ред и пак да получим същия краен резултат.
   Например:
-
   \begin{prooftree}
     \AxiomC{$S \to_G AS$}
     \AxiomC{$A \derive{2} aabb$}
@@ -170,14 +142,14 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{extra}
 
 
-\begin{proposition}\label{pr:grammar:derive-one-step}
-  Нека $G$ е безконтекстна граматика.
-  Тогава за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ е изпълнено, че 
-  $\alpha \derive{1}_G \beta$ точно тогава, когато $\alpha = \delta A \rho$, $A \to_G \gamma$ и $\beta = \delta\gamma\rho$.
-\end{proposition}
+% \begin{proposition}\label{pr:grammar:derive-one-step}
+%   Нека $G$ е безконтекстна граматика.
+%   Тогава за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ е изпълнено, че 
+%   $\alpha \derive{1}_G \beta$ точно тогава, когато $\alpha = \delta A \rho$, $A \to_G \gamma$ и $\beta = \delta\gamma\rho$.
+% \end{proposition}
 
 
-% \begin{framed}
+Следващото твърдение ни дава едно свойство, което е вярно за безконтекстни граматики, но не и за неограничени граматики.
 \begin{proposition}\label{pr:grammar:divide}
   Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \derive{\ell}_G \beta$, където $X_i \in V \cup \Sigma$.
   Тогава съществуват думи $\beta_1,\dots,\beta_k$, такива че за $i = 1,\dots, k$ е изпълнено, че
@@ -208,28 +180,6 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \end{itemize}
   
 \end{hint}
-% \end{framed}
-% \begin{proof}
-%   Индукция по $n$.
-%   \begin{itemize}
-%   \item
-%     Нека $n = 0$. Тогава $\beta = \alpha_1 \cdots \alpha_k$ и е ясно, че в този случай $\beta_i = \alpha_i$ и $n_i = 0$.
-%   \item
-%     Нека $n > 0$ и $\alpha_1\cdots \alpha_k \derive{n} \beta$. Тогава за някое $i$, $\alpha_i \to_G \alpha'_i$ и
-%     като приложим \Proposition{grammar:add} получаваме, че
-%     \[\alpha_1\cdots\alpha_i\cdots\alpha_k \to_G \alpha_1\cdots\alpha'_i\cdots\alpha_k.\]
-%     Според дефиницията на релацията $\derive{n}$ имаме, че
-%     \[\alpha_1\cdots\alpha'_i\cdots\alpha_k \stackrel{n-1}{\to}_G \beta.\]
-%     От И.П. получаваме, че съществуват думи $\beta_1,\dots,\beta_k$, такива че $\beta = \beta_1 \cdots \beta_k$
-%     и $\alpha_j \derive{n_j} \beta_j$ за $j \neq i$ и $\alpha'_i \derive{n'_i} \beta_i$, като
-%     \[n-1 = n'_i + \sum_{j\neq i} n_j.\]
-%     Понеже имаме, че $\alpha_i \to_G \alpha'_i \derive{n'_i}\beta_i$,
-%     то е ясно, че за $n_i = n'_i + 1$ имаме $\alpha_i \derive{n_i} \beta_i$ и
-%     \[n = \sum^{k}_{i=1} n_i.\]
-%   \end{itemize}
-% \end{proof}
-
-
 
 \begin{framed}
   \begin{thm}
@@ -256,20 +206,21 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
 
 За произволна безконтекстна граматика $G$, дефинираме релацията $X \yield{\ell} \alpha$, където $X \in V \cup \Sigma$ и $\alpha \in (V\cup\Sigma)^\star$, по следния начин:
-\mynote{Тук е добре да се нарисува картинка. Да се обясни, че $\yield{\star}$ е аналог на BFS, докато $\derive{\star}$ е аналог на DFS.}
+\mynote{Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\derive{\star}$ е аналог на DFS.}
 \begin{prooftree}
   \AxiomC{}
   \RightLabel{\scriptsize{правило (0)}}
   \UnaryInfC{$X \yield{0} X$}
 \end{prooftree}
 
-
 \begin{prooftree}
   \AxiomC{$X \to_G X_1\cdots X_n$}
-  \AxiomC{$X_i \yield{\ell_i} \gamma_i\text{ за }i=1,\dots,n$}
+  \AxiomC{$X_1 \yield{\ell_1} \gamma_1$}
+  \AxiomC{$\cdots$}
+  \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
   \LeftLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
   \RightLabel{\scriptsize{правило (1)}}
-  \BinaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
+  \QuaternaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
 \end{prooftree}
 
 \mynote{ Съобразете, че имаме:
@@ -337,14 +288,18 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \item
       $\ell-1 = \sum^k_{i=1} \ell_i$.
     \end{itemize}
-    От \IndHyp имаме, че $X_i \yield{\star} \beta_i$ за всяко $i = 0,1, \dots, k$.
+    % От \IndHyp имаме, че $X_i \yield{\star} \beta_i$ за всяко $i = 0,1, \dots, k$.
     Получаваме следното:
     \begin{prooftree}
       \AxiomC{$X \to_G X_0\cdots X_k$}
-      \AxiomC{$\vdots$}
+      \AxiomC{$X_0 \derive{\ell_0} \beta_0$}
       \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_i \yield{\star} \beta_i \text{ за }i \leq k$}
-      \BinaryInfC{$X \yield{\star} \underbrace{\beta_0\cdots\beta_k}_{\beta}$}
+      \UnaryInfC{$X_0 \yield{\star} \beta_0$}
+      \AxiomC{$\cdots$}
+      \AxiomC{$X_k \derive{\ell_k} \beta_k$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$X_k \yield{\star} \beta_k$}
+      \QuaternaryInfC{$X \yield{\star} \underbrace{\beta_0\cdots\beta_k}_{\beta}$}
     \end{prooftree}
   \end{itemize}
 \end{proof}
@@ -362,23 +317,29 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     Нека $\ell > 0$. Тогава имаме следното:
     \begin{prooftree}
       \AxiomC{$X \to_G X_0\cdots X_n$}
-      \AxiomC{$X_i \yield{\ell_i} \gamma_i\text{ за }i=0,\dots,n$}
+      \AxiomC{$X_0 \yield{\ell_0} \gamma_0$}
+      \AxiomC{$\cdots$}
+      \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
       \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_0,\dots,\ell_n\})$}}
-      \BinaryInfC{$X \yield{\ell} \gamma_0\cdots\gamma_n$}
+      \QuaternaryInfC{$X \yield{\ell} \gamma_0\cdots\gamma_n$}
     \end{prooftree}
-    Тогава от \IndHyp получаваме, че за всяко $i \leq n$ е изпълнено $X_i \derive{\star} \gamma_i$.
     Получаваме, че:
     \begin{prooftree}
       \AxiomC{$X \to_G X_0 \cdots X_{n}$}
-      \AxiomC{$\vdots$}
+      \AxiomC{$X_0 \yield{\ell_0} \gamma_0$}
       \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_i \derive{\star} \gamma_i\text{ за }i \leq n$}
-      \UnaryInfC{$X_0 \cdots X_{n} \derive{\star} \gamma_0\cdots\gamma_{n}$}
+      \UnaryInfC{$X_0 \derive{\star} \gamma_0$}
+      \AxiomC{$\cdots$}
+      \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$X_n \derive{\star} \gamma_n$}
+      \TrinaryInfC{$X_0 \cdots X_{n} \derive{\star} \gamma_0\cdots\gamma_{n}$}
       \BinaryInfC{$X \derive{\star} \underbrace{\gamma_0\cdots\gamma_{n}}_{\gamma}$}
     \end{prooftree}
   \end{itemize}
 \end{proof}
 
+Комбинирайки предишните две леми получаваме следната теорема.
 \begin{framed}
   \begin{theorem}
     Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
@@ -390,12 +351,11 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   $\L(G) = \{\alpha \in \Sigma^\star \mid S \yield{\star}\alpha\}$.
 \end{corollary}
 
-
 Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
 Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$.
 \[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
 Ясно е, че $\L(G) = \L_G(S)$.
-Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$.
+Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$ по следния начин:
 \[\L^\ell_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\leq \ell} \alpha\}.\]
 Следните свойства са ясни:
 \begin{itemize}
@@ -425,33 +385,51 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   % \]
   % \[\L^{\ell+1}_G(X) = \L^\ell_G(X) \cup \bigcup\{\L^\ell_G(X_1)\cdots\L^\ell_G(X_n) \mid X \to_G X_1\cdots X_n\text{ е правило в }G\}.\]
 \end{proposition}
-
-
-
-Като първи пример нека да видим, че това включване е {\em строго}, т.е. съществува безконтекстен език, който не е регулярен.
-Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
-
-
-\begin{extra}
-\begin{example}\label{ex:grammar:anbn}
-  Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
-  \begin{align*}
-    & S \to aSb \mid \varepsilon.
-  \end{align*}
-  Тогава
-  \begin{align*}
-    & \L^0_G(S) = \emptyset\\
-    & \L^1_G(S) = \{a\} \cdot \emptyset \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon\}\\
-    & \L^{2}_G(S) = \{a\} \cdot \{\varepsilon\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon, ab\}\\
-    & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < 3\}\\
-    & \vdots
-  \end{align*}
-  Лесно се съобразява, че
-  \[\L^\ell_G(S) = \{a^nb^n \mid n < \ell\}.\]
-  Заключаваме, че:
-  \[\L(G) = \L_G(S) = \bigcup_{\ell}\L^\ell_G(S) = \{a^nb^n \mid n\in\Nat\}.\]
-\end{example}
-\end{extra}
+\begin{proof}
+  Нека $A \yield{\leq \ell+1} \alpha$.
+  Имаме два случая.
+  \begin{itemize}
+  \item
+    $A \yield{\leq \ell} \alpha$. Щом $A \in V$, а $\alpha \in \Sigma^\star$, то е ясно, че $\ell > 0$.
+    Тогава имаме, че:
+    \begin{prooftree}
+      \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
+      \AxiomC{$B_1 \yield{< \ell} \beta_1$}
+      \AxiomC{$\cdots$}
+      \AxiomC{$B_n \yield{< \ell} \beta_n$}
+      \QuaternaryInfC{$A \yield{\leq\ell} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+    \end{prooftree}
+    Понеже $B_i \yield{\leq\ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^{\ell}_G(B_i)$.
+    Тогава $\alpha \in \L^{\ell+1}_G(A)$.
+  \item
+    Ако $A \yield{\ell+1} \alpha$, то имаме, че:
+    \begin{prooftree}
+      \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
+      \AxiomC{$B_1 \yield{\ell_1} \beta_1$}
+      \AxiomC{$\cdots$}
+      \AxiomC{$B_n \yield{\ell_n} \beta_n$}
+      \LeftLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
+      \RightLabel{\scriptsize{(1)}}
+      \QuaternaryInfC{$A \yield{\ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+    \end{prooftree}
+    Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$.
+    Тогава $\alpha \in \L^{\ell+1}_G(A)$.
+  \end{itemize}
+  Нека $\alpha \in \L^{\ell+1}_G(A)$. Тогава имаме, че $A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$
+  и $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$.
+  Получаваме следния извод:
+  \begin{prooftree}
+    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$}
+    \AxiomC{$\beta_1 \in \L^\ell_G(B_1)$}
+    \RightLabel{\scriptsize{\IndHyp}}
+    \UnaryInfC{$B_1 \yield{\leq \ell }\beta_1 $}
+    \AxiomC{$\cdots$}
+    \AxiomC{$\beta_n \in \L^\ell_G(B_n)$}
+    \RightLabel{\scriptsize{\IndHyp}}
+    \UnaryInfC{$B_n \yield{\leq \ell }\beta_n$}
+    \QuaternaryInfC{$A \yield{\leq \ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+  \end{prooftree}
+\end{proof}
 
 
 \begin{example}
