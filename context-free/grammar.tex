@@ -53,7 +53,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{remark}
 
 \begin{remark}
-  Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме следното твърдение:
+  Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме свойството:
   \begin{prooftree}
     \AxiomC{$A \derive{\ell_1} \rho B \delta$}
     \AxiomC{$B \derive{\ell_2} \beta$}
@@ -141,14 +141,6 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{example}
 \end{extra}
 
-
-% \begin{proposition}\label{pr:grammar:derive-one-step}
-%   Нека $G$ е безконтекстна граматика.
-%   Тогава за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ е изпълнено, че 
-%   $\alpha \derive{1}_G \beta$ точно тогава, когато $\alpha = \delta A \rho$, $A \to_G \gamma$ и $\beta = \delta\gamma\rho$.
-% \end{proposition}
-
-
 Следващото твърдение ни дава едно свойство, което е вярно за безконтекстни граматики, но не и за неограничени граматики.
 \begin{proposition}\label{pr:grammar:divide}
   Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \derive{\ell}_G \beta$, където $X_i \in V \cup \Sigma$.
@@ -176,16 +168,14 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
       \RightLabel{\scriptsize{$(\ell = \ell_1+\ell'')$}}
       \BinaryInfC{$X_1X_2\cdots X_k \derive{\ell}_G \beta_1\beta_2\cdots\beta_k$}
     \end{prooftree}
-    
   \end{itemize}
-  
 \end{hint}
 
-\begin{framed}
-  \begin{thm}
+\begin{important}
+  \begin{theorem}
     Всеки регулярен език е безконтекстен.
-  \end{thm}
-\end{framed}
+  \end{theorem}
+\end{important}
 \begin{hint}
   Ще направим индукция по построението на регулярните езици.
   \begin{itemize}
@@ -341,7 +331,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
 Комбинирайки предишните две леми получаваме следната теорема.
 \begin{framed}
-  \begin{theorem}
+  \begin{theorem}\label{th:grammar:yield-derive-equivalent}
     Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
     Тогава $X \yield{\star}_G \gamma$ точно тогава, когато $X \derive{\star}_G \gamma$.
   \end{theorem}  
@@ -362,6 +352,8 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \item
   $\L^0_G(A) = \emptyset$;
 \item
+  $\L^n_G(A)$ е краен език за всяко $n$;
+\item
   $\L^n_G(A) \subseteq \L^{n+1}_G(A)$ за всяко $n$;
 \item
   $\L_G(A) = \bigcup_{n\geq 0}\L^n_G(A)$.  
@@ -377,46 +369,22 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \L^0_G(A) & = \emptyset\\
     \L^{\ell+1}_G(A) & = \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.
   \end{align*}
-  % \[\L^0_G(X) =
-  %   \begin{cases}
-  %     X, & \text{ ако } X \in \Sigma\\
-  %     \emptyset, & \text{ ако } X \in V.
-  %   \end{cases}
-  % \]
-  % \[\L^{\ell+1}_G(X) = \L^\ell_G(X) \cup \bigcup\{\L^\ell_G(X_1)\cdots\L^\ell_G(X_n) \mid X \to_G X_1\cdots X_n\text{ е правило в }G\}.\]
 \end{proposition}
 \begin{proof}
-  Нека $A \yield{\leq \ell+1} \alpha$.
-  Имаме два случая.
-  \begin{itemize}
-  \item
-    $A \yield{\leq \ell} \alpha$. Щом $A \in V$, а $\alpha \in \Sigma^\star$, то е ясно, че $\ell > 0$.
-    Тогава имаме, че:
-    \begin{prooftree}
-      \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-      \AxiomC{$B_1 \yield{< \ell} \beta_1$}
-      \AxiomC{$\cdots$}
-      \AxiomC{$B_n \yield{< \ell} \beta_n$}
-      \QuaternaryInfC{$A \yield{\leq\ell} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
-    \end{prooftree}
-    Понеже $B_i \yield{\leq\ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^{\ell}_G(B_i)$.
-    Тогава $\alpha \in \L^{\ell+1}_G(A)$.
-  \item
-    Ако $A \yield{\ell+1} \alpha$, то имаме, че:
-    \begin{prooftree}
-      \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-      \AxiomC{$B_1 \yield{\ell_1} \beta_1$}
-      \AxiomC{$\cdots$}
-      \AxiomC{$B_n \yield{\ell_n} \beta_n$}
-      \LeftLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
-      \RightLabel{\scriptsize{(1)}}
-      \QuaternaryInfC{$A \yield{\ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
-    \end{prooftree}
-    Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$.
-    Тогава $\alpha \in \L^{\ell+1}_G(A)$.
-  \end{itemize}
-  Нека $\alpha \in \L^{\ell+1}_G(A)$. Тогава имаме, че $A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$
-  и $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$.
+  Нека $\alpha \in \L^{\ell+1}_G(A)$, т.е. $A \yield{\leq \ell+1} \alpha$. Имаме следния извод:
+  \begin{prooftree}
+    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
+    \AxiomC{$B_1 \yield{\leq\ell} \beta_1$}
+    \AxiomC{$\cdots$}
+    \AxiomC{$B_n \yield{\leq \ell} \beta_n$}
+    \QuaternaryInfC{$A \yield{\leq\ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+  \end{prooftree}
+  Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$.
+  Тогава 
+  \[\alpha \in \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}\]
+
+  Обратно, нека сега $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$, където $A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$,
+  $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$.
   Получаваме следния извод:
   \begin{prooftree}
     \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$}
@@ -432,35 +400,6 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{proof}
 
 
-\begin{example}
-  Да разгледаме граматика с правила
-  \begin{align*}
-    & S \to S + S\ |\ S * S\ |\ (S)\ |\ V\\
-    & V \to x\ |\ y\ |\ z
-  \end{align*}
-
-  Думата $x * y + z$ има две различни дървета на извод.
-
-  \begin{framed}
-    \qtreecenterfalse
-    \Tree [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$S$ [.$V$ $y$ ] ] $+$ [.$S$ [.$V$ $z$ ] ] ] ]
-    \hskip 0.4in
-    \Tree [.$S$ [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$V$ $y$ ] ] ]  $+$  [.$S$ [.$V$ $z$ ] ] ]
-  \end{framed}
-  
-  
-  Да разгледаме граматика с правила
-  \begin{align*}
-    & S \to E + S\ |\ E\\
-    & E \to V * E\ |\ V\ |\ (S) * E\ |\ (S)\\
-    & V \to x\ |\ y\ |\ z
-  \end{align*}
-  Сега думата $x * y + z$ има само едно дърво на извод.
-
-  \begin{framed}
-    \Tree [.$S$ [.$E$ [.$V$ $x$ ] $*$ [.$E$ [.$V$ $y$ ] ] ] $+$ [.$S$ [.$E$ [.$V$ $z$ ] ] ] ]
-  \end{framed}
-\end{example}
 
 \begin{example}
   \begin{align*}
@@ -485,31 +424,6 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     & N \to (E)\ |\ a.
   \end{align*}
 \end{example}
-
-
-% \begin{proposition}
-%   \label{pr:grammar:concat}
-%   Ако $\alpha_1 \derive{n_1} \beta_1, \dots, \alpha_k \derive{n_k} \beta_k$, тогава
-%   \[\alpha_1\cdots\alpha_k \derive{n} \beta_1\cdots\beta_k,\]
-%   където $n = \sum^k_{i=1} n_i$.
-% \end{proposition}
-% \begin{proof}
-%   Индукция по $k \geq 1$.
-%   \begin{itemize}
-%   \item
-%     За $k = 1$ е очевидно. В този случай $n_1 = n$.
-%   \item
-%    Нека $k > 1$. Тогава от И.П. за $k-1$ имаме, че
-%    $\alpha_1\cdots\alpha_{k-1} \derive{n'} \beta_1\cdots\beta_{k-1}$ и $n' = \sum^{k-1}_{i=1} n_i$.
-%    От \Proposition{grammar:add} имаме, че
-%    \[\alpha_1\cdots\alpha_{k-1}\alpha_{k} \derive{n'} \beta_1\cdots\beta_{k-1}\alpha_k.\]
-%    Понеже $\alpha_k \derive{n_k} \beta_k$, отново от \Proposition{grammar:add} получаваме, че
-%    \[\beta_1\cdots\beta_{k-1}\alpha_k \derive{n_k} \beta_1 \cdots \beta_{k-1}\beta_k.\]
-%    Сега обединяваме двата извода и получаваме, че
-%    \[\alpha_1\cdots\alpha_{k} \derive{n} \beta_1\cdots\beta_k,\]
-%    където $n = \sum^k_{i=1} n_i$.
-%   \end{itemize}
-% \end{proof}
 
 
 %%% Local Variables:

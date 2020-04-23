@@ -111,13 +111,13 @@
     \caption{Дърво на извод за думата $aabcc$.}      
     \end{figure}
   \end{framed}
-
+  \begin{extra2}
   Имаме, че:
   \begin{itemize}
   \item
-    $\high(T) = 5$;
+    $\high(P) = 5$;
   \item
-    $\leaves(T) = \{0, 10, 1100, 11010, 1102, 12\}$;
+    $\leaves(P) = \{0, 10, 1100, 11010, 1102, 12\}$;
   \item
     $\texttt{yield}(P) = aab\varepsilon cc = aabcc$.
   \item
@@ -145,8 +145,57 @@
   \item
     Ясно е, че $\lambda(1101) \to_G \lambda(11010)$;
   \end{itemize}
-  От всичко по-горе следва, че $P = (T,\lambda)$ е дърво на извод за думата $aabcc$ в граматиката $G$.  
+  От всичко по-горе следва, че $P = (T,\lambda)$ е дърво на извод за думата $aabcc$ в граматиката $G$.
+  \end{extra2}
 \end{example}
+
+Следващото твърдение ни казва, че има пряка връзка между релацията $\yield{\star}$ и дърветата на извод.
+
+\begin{important}
+  \begin{proposition}
+    Нека $G$ е безконтекстна граматика. Тогава
+    $X \yield{\ell} \gamma$ точно тогава, когато съществува дърво на извод $P$ съвместимо с $G$, за което
+    $\texttt{root}(P) = X$, $\texttt{yield}(P) = \alpha$ и $\texttt{height}(P) = \ell$.
+  \end{proposition}
+\end{important}
+\begin{hint}
+  Индукция по $\ell$.
+\end{hint}
+
+\begin{extra}
+  
+  Добре е да обърнем внимание, че е възможно, ако $A \yield{\ell} \alpha$, то да има няколко дървета на извод с корен променливата $A$,
+  които да извеждат думата $\alpha$ и да имат височина $\ell$.
+  \begin{example}
+    Да разгледаме граматика с правила
+    \begin{align*}
+      & S \to S + S\ |\ S * S\ |\ (S)\ |\ V\\
+      & V \to x\ |\ y\ |\ z
+    \end{align*}
+    
+    Думата $x * y + z$ има две различни дървета на извод $P_1$ и $P_2$, като и двете имат височина $4$ и
+    $\texttt{yield}(P_1) = \texttt{yield}(P_2) = x*y+z$.
+    
+    \begin{framed}
+      \qtreecenterfalse
+      \Tree [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$S$ [.$V$ $y$ ] ] $+$ [.$S$ [.$V$ $z$ ] ] ] ]
+      \hskip 0.6in
+      \Tree [.$S$ [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$V$ $y$ ] ] ]  $+$  [.$S$ [.$V$ $z$ ] ] ]
+    \end{framed}  
+    
+    Да разгледаме граматика с правила
+    \begin{align*}
+      & S \to E + S\ |\ E\\
+      & E \to V * E\ |\ V\ |\ (S) * E\ |\ (S)\\
+      & V \to x\ |\ y\ |\ z
+    \end{align*}
+    Сега думата $x * y + z$ има само едно дърво на извод.
+    
+    \begin{framed}
+      \Tree [.$S$ [.$E$ [.$V$ $x$ ] $*$ [.$E$ [.$V$ $y$ ] ] ] $+$ [.$S$ [.$E$ [.$V$ $z$ ] ] ] ]
+    \end{framed}
+  \end{example}
+\end{extra}
 
 \begin{problem}
   Докажете, че:
@@ -198,9 +247,7 @@
 \end{corollary}
 
 \begin{problem}
-  \mynote{Ясно е, че $\ell < b^{k}$.}
-  Докажете, че ако $X \yield{k} \alpha$, то $X \derive{\ell} \alpha$, където
-  \[\ell \leq \sum_{i < k}b^{i}.\]
+  Докажете, че ако $X \yield{k} \alpha$, то $X \derive{< b^k} \alpha$.
 \end{problem}
 
 \begin{problem}
@@ -436,8 +483,6 @@
     \end{subfigure}
   \end{figure}
 \end{hint}
-
-
 
 %%% Local Variables:
 %%% mode: latex

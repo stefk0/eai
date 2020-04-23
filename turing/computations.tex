@@ -130,13 +130,13 @@
   Обяснете как може ефективно да се кодира всяка безконтекстна граматика $G$ като дума $\code{G}$ над азбуката $\{0,1\}$.
 \end{problem}
 
-\begin{framed}
-\begin{thm}
+\begin{important}
+\begin{theorem}
   Езикът
   \[L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) \cap \L(G_2) = \emptyset\}\]
   не е полуразрешим.
-\end{thm}  
-\end{framed}
+\end{theorem}  
+\end{important}
 \begin{hint}
   По дадена дума $\code{\M}$, можем ефективно да намерим $G_1$ и $G_2$, за които
   $\L(G_1) \cap \L(G_2) = \texttt{Accept}(\M)$, т.е. съществува тотална изчислима функция $f$, за която
@@ -175,13 +175,13 @@
   Думите притежаващи някое от тези свойства могат да се опишат като обединение на три регулярни езика и два безконтекстни езика.
 \end{hint}
 
-\begin{framed}
-  \begin{thm}
+\begin{important}
+  \begin{theorem}
     За дадена азбука $\Sigma$, езикът 
     \[\texttt{All}_{\texttt{CFG}} = \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}\]
     не е полуразрешим.
-  \end{thm}
-\end{framed}
+  \end{theorem}
+\end{important}
 \begin{hint}
   Тук ще използваме, че ако $\L(\M) = \emptyset$, то $\overline{\texttt{Accept}(\M)} = \hat{\Sigma}^\star$,
   където $\hat{\Sigma} = \Gamma \cup Q \cup \{\sharp\}$.
@@ -192,7 +192,7 @@
   \[\code{\M} \in L_{\texttt{Empty}} \iff f(\code{\M}) \in \texttt{All}_{\texttt{CFG}}.\]
 \end{hint}
 
-\begin{cor}
+\begin{corollary}
   Следните езици не са разрешими:
   \begin{enumerate}[a)]
   \item
@@ -208,7 +208,7 @@
   \item
     $\{\code{G}\cdot \code{\A} \mid \text{$G$ е безконт. грам. и $\A$ е ДКА и }\L(\A) \subseteq \L(G)\}$.
   \end{enumerate}
-\end{cor}
+\end{corollary}
 
 \begin{remark}
   Добре е да обърнем внимание, че езикът 
@@ -218,7 +218,7 @@
   защото сечението на безконтекстен и регулярен език е безконтекстен език.
 \end{remark}
 
-\newpage
+
 
 
 

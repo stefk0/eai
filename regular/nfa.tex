@@ -141,12 +141,12 @@
 Получаваме, че 
 \[\L(\N) = \{\alpha\in\Sigma^\star \mid (\exists q\in Q_{\texttt{start}})(\exists f \in F)[(q,\alpha) \vdash^\star_\N (f,\varepsilon)]\}.\]
 
-\begin{framed}
-\begin{thm}[Рабин-Скот \cite{rabin-scott}]
+\begin{important}
+\begin{theorem}[Рабин-Скот \cite{rabin-scott}]
   За всеки недетерминиран краен автомат $\N$ съществува еквивалентен на него детерминиран краен автомат $\D$, т.е.
   \[\L(\N) = \L(\D).\]
-\end{thm}
-\end{framed}
+\end{theorem}
+\end{important}
 \begin{hint}
   Нека $\N = \NFA$. Ще построим детерминиран автомат
   \[\D = (Q',\Sigma,\delta,\qstart,F'),\]

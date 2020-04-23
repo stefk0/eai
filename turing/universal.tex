@@ -5,13 +5,13 @@
 
 \mynote{Можем за простота да считаме, че всички разглеждани машини на Тюринг са дефинирани над азбуката $\{0,1\}$.}
 \index{език!неразрешим}
-\begin{framed}
-  \begin{thm}
+\begin{important}
+  \begin{theorem}
     Езикът 
     \[\Luniv \df \{\ \code{\M} \sharp \omega \mid \text{$\M$ е машина на Тюринг и }\omega\in \L(\M)\ \}\]
     е полуразрешим, но {\bf не} е разрешим.
-  \end{thm}
-\end{framed}
+  \end{theorem}
+\end{important}
 \begin{hint}
   \mynote{Разсъждението е много сходно с това защо $\Laccept$ полуразрешим.}
   Първо да съобразим защо $\Luniv$ е полуразрешим език.
@@ -50,11 +50,11 @@
   Ако допуснем, че $\Luniv$ е разрешим, то тогава $\Laccept$ е разрешим език, което е противоречие.
 \end{hint}
 
-\begin{cor}
+\begin{corollary}
   Езикът
   \[\ov{\Luniv} \df \{\code{\M} \cdot \omega \mid \code{\M} \text{ е машина на Тюринг и }\omega\not\in \L(\M)\}\]
   {\bf не} е полуразрешим.
-\end{cor}
+\end{corollary}
 
 
 

@@ -254,13 +254,13 @@
 \end{proof}
 
 Предишните две леми ни дават следната теорема.
-\begin{framed}
-\begin{thm}
-  \label{th:push-down-context-free}
-  Класът на езиците, които се разпознават от краен стеков автомат съвпада с
-  класа на безконтекстните езици.
-\end{thm}
-\end{framed}
+\begin{important}
+  \begin{theorem}
+    \label{th:push-down-context-free}
+    Класът на езиците, които се разпознават от краен стеков автомат съвпада с
+    класа на безконтекстните езици.
+  \end{theorem}
+\end{important}
 
 \begin{example}
   Нека е дадена граматиката $G$ с правила 
@@ -298,13 +298,12 @@
   \end{itemize}
 \end{example}
 
-\begin{framed}
-  \begin{thm}
-    \label{th:intersection-context-reg}
+\begin{important}
+  \begin{theorem}\label{th:intersection-context-reg}
     Нека $L$ e безконтекстен език и $R$ е регулярен език.
     Тогава тяхното сечение $L \cap R$ е безконтекстен език.
-  \end{thm}  
-\end{framed}
+  \end{theorem}
+\end{important}
 \begin{hint}
   \mynote{\cite[стр. 144]{papadimitriou}}
   Нека имаме стеков автомат
@@ -363,7 +362,7 @@
   Достигнахме до противоречие. Следователно, $L$ не е безконтекстен език.
 \end{example}
 
-\begin{framed}
+\begin{important}
   \begin{remark}
     Не е вярно, че сечението на всеки два безконтекстни езика е безконтекстен език.
 
@@ -372,7 +371,7 @@
     \[L_1 \cap L_2 = \{a^nb^nc^n \mid n \in \Nat\}\]
     не е безконтекстен.
   \end{remark}
-\end{framed}
+\end{important}
 
 
 
