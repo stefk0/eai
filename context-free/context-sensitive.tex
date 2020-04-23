@@ -1,0 +1,51 @@
+\section{Контекстни граматики}
+
+\index{граматика!контекстна}
+Казваме, че $G = (V,\Sigma,R,S)$ е {\bf контекстна граматика}, ако правилата на $G$ са от вида
+\[\alpha_1 A \alpha_2 \to \alpha_1 \beta \alpha_2,\]
+където $\alpha_1,\alpha_2 \in (V\cup\Sigma)^\star$ и $\beta \in (V\cup\Sigma)^+$.
+
+\begin{problem}
+  Езикът $L = \{a^nb^nc^n \mid n \in \Nat\ \&\ n > 0\}$ е контекстен.
+\end{problem}
+\begin{hint}
+  Разгледайте контекстната граматика $G$ зададена със следните правила:
+  \begin{align*}
+    & S \to aSBC\ |\ aBC\\
+    & CB \to BC\\
+    & aB \to ab\\
+    & bB \to bb\\
+    & bC \to bc\\
+    & cC \to cc.
+  \end{align*}
+
+  Докажете, че
+  \begin{itemize}
+  \item
+    $S \to^\star_Ga^n(BC)^n$;
+  \item
+    $(BC)^n \to^\star_G B^nC^n$;
+  \item
+    $aB^n \to^\star_G ab^n$;
+  \item
+    $bC^n \to^\star_G bc^n$.
+  \end{itemize}
+\end{hint}
+
+\begin{prop}
+  Класът на безконтекстните езици строго се включва в класа на контекстните езици.
+\end{prop}
+
+\begin{prop}
+  Всеки контекстен език е разрешим.
+\end{prop}
+
+\begin{prop}
+  Съществува разрешим език, който не е контекстен.
+\end{prop}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
