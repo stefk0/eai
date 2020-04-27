@@ -141,36 +141,83 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{example}
 \end{extra}
 
+
 Следващото твърдение ни дава едно свойство, което е вярно за безконтекстни граматики, но не и за неограничени граматики.
+\begin{proposition}\label{pr:grammar:divide-2}
+  \mynote{Тук $\gamma_1,\gamma_2,\beta \in (V\cup\Sigma)^\star$.}
+  Нека $\gamma_1$ и $\gamma_2$ са непразни думи, за които $\gamma_1\gamma_2 \derive{\ell} \beta$. Тогава
+  съществуват числа $\ell_1$, $\ell_2$ и думи $\beta_1$ и $\beta_2$, за които:
+  $\gamma_1 \derive{\ell_1} \beta_1$ и $\gamma_2 \derive{\ell_2} \beta_2$ и $\beta = \beta_1\beta_2$ и $\ell = \ell_1 + \ell_2$.
+\end{proposition}
+\begin{proof}  
+Индукция по дължината на извода $\ell$.
+\begin{itemize}
+\item
+  Нека $\ell = 0$. Тогава $\beta_1 = \gamma_1$ и $\beta_2 = \gamma_2$.
+\item
+  Нека $\ell = 1$. Без ограничение на общността, можем да предположим, че имаме следния извод:
+  \mynote{Разсъждаваме аналогично, ако $\gamma_2 = \delta A \rho$.}
+  \begin{prooftree}
+    \AxiomC{$\overbrace{\delta A \rho}^{\gamma_1} \derive{0} \delta A \rho$}
+    \AxiomC{$A \to \alpha$}
+    \LeftLabel{\scriptsize{(\Proposition{unrestricted-grammar:context-general-step})}}
+    \BinaryInfC{$\gamma_1 \derive{1} \delta\alpha\rho$}
+    \AxiomC{$\gamma_2 \derive{0} \gamma_2$}
+    \LeftLabel{\scriptsize{правило (2)}}
+    \BinaryInfC{$\gamma_1\gamma_2 \derive{1} \underbrace{\delta\alpha\rho}_{\beta_1}\underbrace{\gamma_2}_{\beta_2}$}
+  \end{prooftree}
+\item
+  Нека $\ell > 1$. Тогава да разгледаме следната ситуация:
+  \begin{prooftree}
+    \AxiomC{$\vdots$}
+    \LeftLabel{\scriptsize{$(\ell_1 > 0)$}}
+    \UnaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta$}
+    \AxiomC{$\vdots$}
+    \RightLabel{\scriptsize{$(\ell_2 > 0)$}}
+    \UnaryInfC{$\delta \derive{\ell_2} \beta$}
+    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
+    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1+\ell_2} \beta$}
+  \end{prooftree}
+  Понеже $\ell_1 < \ell$, то можем да приложим \IndHyp, според което можем да разбием $\delta$ като $\delta = \delta_1\delta_2$ и да получим извода:
+  \begin{prooftree}
+    \AxiomC{$\gamma_1 \derive{\ell'_1} \delta_1$}
+    \AxiomC{$\gamma_2 \derive{\ell''_1} \delta_2$}
+    \RightLabel{\scriptsize{правило (2)}}
+    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta_1\delta_2$}
+  \end{prooftree}
+  Понеже $\ell_2 < \ell$, то отново можем да приложим \IndHyp, според което можем да разбием $\beta$ като $\beta = \beta_1\beta_2$ и да получим извода:
+  \begin{prooftree}
+    \AxiomC{$\delta_1 \derive{\ell'_2} \beta_1$}
+    \AxiomC{$\delta_2 \derive{\ell''_2} \beta_2$}
+    \RightLabel{\scriptsize{правило (2)}}
+    \BinaryInfC{$\delta_1\delta_2 \derive{\ell_2} \beta_1\beta_2$}
+  \end{prooftree}
+  Сега можем да обобщим всичко със следния извод:
+  \begin{prooftree}
+    \AxiomC{$\gamma_1 \derive{\ell'_1} \delta_1$}
+    \AxiomC{$\gamma_2 \derive{\ell''_1} \delta_2$}
+    \LeftLabel{\scriptsize{(2)}}
+    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta_1\delta_2$}
+    \AxiomC{$\delta_1 \derive{\ell'_2} \beta_1$}
+    \AxiomC{$\delta_2 \derive{\ell''_2} \beta_2$}
+    \RightLabel{\scriptsize{(2)}}
+    \BinaryInfC{$\delta_1\delta_2 \derive{\ell_2} \beta_1\beta_2$}
+    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
+    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1+\ell_2} \beta_1\beta_2$}
+  \end{prooftree}
+\end{itemize}
+\end{proof}
+
 \begin{proposition}\label{pr:grammar:divide}
-  Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \derive{\ell}_G \beta$, където $X_i \in V \cup \Sigma$.
+  Нека $G$ е безконтекстна граматика и нека $X_1\cdots X_k \derive{\ell}_G \beta$, където $X_i \in V \cup \Sigma$ и $k \geq 2$.
   Тогава съществуват думи $\beta_1,\dots,\beta_k$, такива че за $i = 1,\dots, k$ е изпълнено, че
   $X_i \derive{\ell_i} \beta_i$, където $\beta = \beta_1\cdots \beta_k$ и $\ell = \sum^k_{i = 1}\ell_i$.
 \end{proposition}
 \begin{hint}
   \mynote{Тук е възможно $X_i = a \in \Sigma$. Тогава $a \derive{0} a$ и $\beta_i = a$.}
-  Ще докажем твърдението с индукция по $k \geq 2$.
-  \begin{itemize}
-  \item
-    За $k = 2$, то твърдението е точно правило $(2)$.
-  \item
-    Нека $k > 2$.
-    Тогава имаме следното:
-    \begin{prooftree}
-      \AxiomC{$X_1 \derive{\ell_1} \beta_1$}
-      \AxiomC{$X_2 \derive{\ell_2} \beta_2$}
-      \AxiomC{$\dots$}
-      \AxiomC{$X_k \derive{\ell_k} \beta_k$}
-      \RightLabel{\scriptsize{($\ell'' = \sum^k_{i=2}\ell_i$)}}
-      \LeftLabel{\scriptsize{\IndHyp}}
-      \TrinaryInfC{$X_2\cdots X_k \derive{\ell''} \beta_2\cdots\beta_k$}
-      \LeftLabel{\scriptsize{правило (2)}}
-      \RightLabel{\scriptsize{$(\ell = \ell_1+\ell'')$}}
-      \BinaryInfC{$X_1X_2\cdots X_k \derive{\ell}_G \beta_1\beta_2\cdots\beta_k$}
-    \end{prooftree}
-  \end{itemize}
+  Пълна индукция по $k$ като използвате \Proposition{grammar:divide-2}.
 \end{hint}
-
+  
 \begin{important}
   \begin{theorem}
     Всеки регулярен език е безконтекстен.
@@ -194,236 +241,6 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \end{itemize}
 \end{hint}
 
-
-За произволна безконтекстна граматика $G$, дефинираме релацията $X \yield{\ell} \alpha$, където $X \in V \cup \Sigma$ и $\alpha \in (V\cup\Sigma)^\star$, по следния начин:
-\mynote{Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\derive{\star}$ е аналог на DFS.}
-\begin{prooftree}
-  \AxiomC{}
-  \RightLabel{\scriptsize{правило (0)}}
-  \UnaryInfC{$X \yield{0} X$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$X \to_G X_1\cdots X_n$}
-  \AxiomC{$X_1 \yield{\ell_1} \gamma_1$}
-  \AxiomC{$\cdots$}
-  \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
-  \LeftLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
-  \RightLabel{\scriptsize{правило (1)}}
-  \QuaternaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
-\end{prooftree}
-
-\mynote{ Съобразете, че имаме:
-\begin{prooftree}
-  \AxiomC{$X \to_G \gamma$}
-  \UnaryInfC{$X \yield{1} \gamma$.}
-\end{prooftree}}
-
-Нека $\yield{\star}$ е рефлексивното и транзитивно затваряне на релацията $\yield{\ell}$, т.е.
-\[X \yield{\star} \gamma \dff (\exists \ell\in\Nat)[X \yield{\ell} \gamma].\]
-
-
-\begin{proposition}
-  За произволни променливи $A$, $B$ и думи $\alpha_1,\alpha_2, \alpha_3$ е изпълнено, че:
-  \begin{prooftree}
-    \AxiomC{$A \yield{\ell_1}\alpha_1B\alpha_3$}
-    \AxiomC{$B \yield{\ell_2} \alpha_2$}
-    \BinaryInfC{$A \yield{\ell_1+\ell_2} \alpha_1\alpha_2\alpha_3$}
-  \end{prooftree}
-\end{proposition}
-\begin{hint}
-  Индукция по $\ell_1$.
-\end{hint}
-
-\begin{proposition}
-  За произволна променлива $A$ и произволни думи $\beta$ и $\gamma$ е изпълнено, че:
-  \begin{prooftree}
-    \AxiomC{$A \yield{\ell} \beta A \gamma$}
-    \AxiomC{$i \in \Nat$}
-    \BinaryInfC{$A \yield{\ell \cdot i} \beta^i A \gamma^i$}
-  \end{prooftree}
-  
-\end{proposition}
-\begin{hint}
-  Индукция по $i$.
-\end{hint}
-
-\begin{lemma}
-  Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
-  Тогава ако $X \derive{\star}_G \beta$, то $X \yield{\star}_G \beta$.
-\end{lemma}  
-\begin{proof}
-  С пълна индукция по $\ell$ ще докажем, че ако $X \derive{\ell} \beta$, то $X \yield{\star} \beta$.
-  \begin{itemize}
-  \item
-    $\ell = 0$, т.е. $X \derive{0} X$.
-    Тогава е ясно, че $X \yield{\star} X$.
-  \item
-    Нека $\ell > 0$ и $X \derive{\ell} \beta$.
-    Според правилата на извод в граматика имаме извода
-
-    \begin{prooftree}
-      \AxiomC{$X \to_G X_0X_1\cdots X_k$}
-      \AxiomC{$X_0X_1\cdots X_k \derive{\ell-1} \beta$}
-      \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$X \derive{\ell} \beta$}
-    \end{prooftree}
-
-    От \Proposition{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
-    \begin{itemize}
-    \item
-      $\beta = \beta_0 \cdots \beta_{k}$;
-    \item
-      $X_i \derive{\ell_i} \beta_i$, за всяко $i = 0,\dots,k$;
-    \item
-      $\ell-1 = \sum^k_{i=1} \ell_i$.
-    \end{itemize}
-    % От \IndHyp имаме, че $X_i \yield{\star} \beta_i$ за всяко $i = 0,1, \dots, k$.
-    Получаваме следното:
-    \begin{prooftree}
-      \AxiomC{$X \to_G X_0\cdots X_k$}
-      \AxiomC{$X_0 \derive{\ell_0} \beta_0$}
-      \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_0 \yield{\star} \beta_0$}
-      \AxiomC{$\cdots$}
-      \AxiomC{$X_k \derive{\ell_k} \beta_k$}
-      \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_k \yield{\star} \beta_k$}
-      \QuaternaryInfC{$X \yield{\star} \underbrace{\beta_0\cdots\beta_k}_{\beta}$}
-    \end{prooftree}
-  \end{itemize}
-\end{proof}
-
-\begin{lemma}
-  Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\gamma \in (V \cup \Sigma)^\star$.
-  Тогава ако $X \yield{\star}_G \gamma$, то $X \derive{\star}_G \gamma$.
-\end{lemma}
-\begin{proof}
-  С пълна индукция по $\ell$ ще докажем, че ако $X \yield{\ell} \gamma$, то $X \derive{\star} \gamma$.
-  \begin{itemize}
-  \item
-    Нека $\ell = 0$. Това означава, че $X \yield{0} X$. Ясно е, че $X \derive{\star} X$.
-  \item
-    Нека $\ell > 0$. Тогава имаме следното:
-    \begin{prooftree}
-      \AxiomC{$X \to_G X_0\cdots X_n$}
-      \AxiomC{$X_0 \yield{\ell_0} \gamma_0$}
-      \AxiomC{$\cdots$}
-      \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
-      \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_0,\dots,\ell_n\})$}}
-      \QuaternaryInfC{$X \yield{\ell} \gamma_0\cdots\gamma_n$}
-    \end{prooftree}
-    Получаваме, че:
-    \begin{prooftree}
-      \AxiomC{$X \to_G X_0 \cdots X_{n}$}
-      \AxiomC{$X_0 \yield{\ell_0} \gamma_0$}
-      \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_0 \derive{\star} \gamma_0$}
-      \AxiomC{$\cdots$}
-      \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
-      \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_n \derive{\star} \gamma_n$}
-      \TrinaryInfC{$X_0 \cdots X_{n} \derive{\star} \gamma_0\cdots\gamma_{n}$}
-      \BinaryInfC{$X \derive{\star} \underbrace{\gamma_0\cdots\gamma_{n}}_{\gamma}$}
-    \end{prooftree}
-  \end{itemize}
-\end{proof}
-
-Комбинирайки предишните две леми получаваме следната теорема.
-\begin{framed}
-  \begin{theorem}\label{th:grammar:yield-derive-equivalent}
-    Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
-    Тогава $X \yield{\star}_G \gamma$ точно тогава, когато $X \derive{\star}_G \gamma$.
-  \end{theorem}  
-\end{framed}
-
-\begin{corollary}
-  $\L(G) = \{\alpha \in \Sigma^\star \mid S \yield{\star}\alpha\}$.
-\end{corollary}
-
-Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
-Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$.
-\[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
-Ясно е, че $\L(G) = \L_G(S)$.
-Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$ по следния начин:
-\[\L^\ell_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\leq \ell} \alpha\}.\]
-Следните свойства са ясни:
-\begin{itemize}
-\item
-  $\L^0_G(A) = \emptyset$;
-\item
-  $\L^n_G(A)$ е краен език за всяко $n$;
-\item
-  $\L^n_G(A) \subseteq \L^{n+1}_G(A)$ за всяко $n$;
-\item
-  $\L_G(A) = \bigcup_{n\geq 0}\L^n_G(A)$.  
-\end{itemize}
-
-Следната характеризация на $\L^\ell_G(A)$ ще е важна за нас, когато искаме да докажем,
-че една безконтекстна граматика разпознава даден език.
-
-\begin{proposition}\label{pr:grammar:yield-approximation}
-  Нека $G$ е произволна безконтекстна граматика и $A$ е променлива в $G$.
-  Тогава имаме следното:
-  \begin{align*}
-    \L^0_G(A) & = \emptyset\\
-    \L^{\ell+1}_G(A) & = \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.
-  \end{align*}
-\end{proposition}
-\begin{proof}
-  Нека $\alpha \in \L^{\ell+1}_G(A)$, т.е. $A \yield{\leq \ell+1} \alpha$. Имаме следния извод:
-  \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_1 \yield{\leq\ell} \beta_1$}
-    \AxiomC{$\cdots$}
-    \AxiomC{$B_n \yield{\leq \ell} \beta_n$}
-    \QuaternaryInfC{$A \yield{\leq\ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
-  \end{prooftree}
-  Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$.
-  Тогава 
-  \[\alpha \in \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}\]
-
-  Обратно, нека сега $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$, където $A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$,
-  $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$.
-  Получаваме следния извод:
-  \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$}
-    \AxiomC{$\beta_1 \in \L^\ell_G(B_1)$}
-    \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_1 \yield{\leq \ell }\beta_1 $}
-    \AxiomC{$\cdots$}
-    \AxiomC{$\beta_n \in \L^\ell_G(B_n)$}
-    \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_n \yield{\leq \ell }\beta_n$}
-    \QuaternaryInfC{$A \yield{\leq \ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
-  \end{prooftree}
-\end{proof}
-
-
-
-\begin{example}
-  \begin{align*}
-    & S \to \texttt{if } S \texttt{ then } S \texttt{ else }S\ |\ \texttt{ if }S \texttt{ then }S\ |\ V\\
-    & V \to x\ |\ y\ |\ z
-  \end{align*}
-
-  Ние искаме следната граматика:
-  \begin{align*}
-    & S \to M\ |\ U\\
-    & M \to \texttt{if } S \texttt{ then } M \texttt{ else }M\ |\ X\\
-    & U \to \texttt{if } S \texttt{ then } S\ |\ \texttt{if } S \texttt{ then } M \texttt{ else }U
-  \end{align*}
-\end{example}
-
-\begin{example}
-  Да разгледаме граматика с правила
-  \begin{align*}
-    & S \to E\\
-    & E \to E + P\ |\ P\\
-    & P \to P * N\ |\ N\\
-    & N \to (E)\ |\ a.
-  \end{align*}
-\end{example}
 
 
 %%% Local Variables:

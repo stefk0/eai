@@ -15,7 +15,7 @@
   Нека е дадена безконтекстната граматика $G$ и $\L(G) \neq \emptyset$.
   Съществува алгоритъм, който намира граматика $G'$, за която
   $\L(G) = \L(G')$ и със свойството, че  за всяка променлива $A' \in V'$, съществува дума $\alpha \in \Sigma^\star$,
-  за която $A' \to^\star_{G'} \alpha$.
+  за която $A' \derive{\star}_{G'} \alpha$.
 \end{lemma}
 \begin{hint}
   Целта ни е да намерим множеството $\texttt{Gen}$ от променливи, които генерират думи, т.е. търсим
@@ -98,12 +98,12 @@
   \label{lem:useless2}
   Съществува алгоритъм, който по дадена безконтекстна граматика $G = \CFG$, намира $G' = \pair{V',\Sigma',S,R'}$, $\L(G') = \L(G)$,
   със свойството, че за всяко $X \in V' \cup \Sigma'$ съществуват $\alpha, \beta \in (V'\cup\Sigma')^\star$,
-  за които $S \to^\star \alpha X \beta$,
+  за които $S \derive{\star} \alpha X \beta$,
   т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
 \end{lemma}
 \begin{hint}
   Нашата цел е да намерим множеството
-  \[\texttt{Reach} \df \{X \in \Sigma \cup V \mid S \to^\star_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+  \[\texttt{Reach} \df \{X \in \Sigma \cup V \mid S \derive{\star}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
   Новата граматика $G'$ ще има букви $\Sigma' = \Sigma \cap \texttt{Reach}$ и променливи $V' = V \cap \texttt{Reach}$,
   като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$ и $\Sigma'$.
   Лесно се доказава, че $\L(G) = \L(G')$.
@@ -175,7 +175,6 @@
     & C \to CB\ |\ SC\ |\ AS.
   \end{align*}
 \end{problem}
-
 
 
 %%% Local Variables:

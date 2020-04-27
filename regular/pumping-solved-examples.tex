@@ -1,68 +1,6 @@
 \subsection{Примерни задачи}
 
-\begin{problem}\label{prob:regular:pumping:an-bn}
-  Докажете, че езикът $L = \{a^nb^n \mid n\in \Nat\}$ не е регулярен.
-\end{problem}
-\begin{proof}
-  \mynote{Това е важен пример. По-късно ще видим, че този език е безконтекстен}
-  Формално трябва докажем, че
-  {\scriptsize
-    \[(\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \land \abs{y} \geq 1 \land \abs{xy} \leq p) \to (\exists i\in\Nat)[xy^iz \not\in L]\ ].\]}
-  Както обяснихме по-горе, доказателството следва стъпките:
-\mynote{    
-\begin{description}
-\item[$(\forall)$]
-  Нямаме власт над избора на числото $p$.
-\item[$(\exists)$]
-  Няма общо правило, което да ни казва как избираме думата $\alpha$. Трябва сами да се досетим. Обърнете внимание, че думата $\alpha$ зависи от константата $p$.
-\item[$(\forall)$]
-  Не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства.
-\item[$(\exists)$]
-  Изборът на $i$ може да зависи разбиването $x$, $y$, $z$. В конкретния пример, не зависи.
-\end{description}
-}
-  \begin{description}
-  \item[$(\forall)$]
-    % \mynote{Нямаме власт над избора на числото $p$.}
-    Разглеждаме произволно число $p \geq 1$.
-  \item[$(\exists)$]
-    % \mynote{Няма общо правило, което да ни казва как избираме думата $\alpha$. Трябва сами да се досетим. Обърнете внимание, че думата $\alpha$ зависи от константата $p$.}
-    Избираме дума $\alpha \in L$, за която $\abs{\alpha} \geq p$. Имаме свободата да изберем каквато дума $\alpha$
-    си харесаме, стига тя да принадлежи на $L$ и да има дължина поне $p$.
-    Щом имаме тази свобода, нека да изберем думата $\alpha = a^pb^p \in L$.
-    Очевидно е, че $\abs{\alpha} \geq p$.
-  \item[$(\forall)$]
-    % \mynote{Не знаем нищо друго за $x$, $y$ и $z$ освен тези две свойства.}
-    Разглеждаме произволно разбиване на $\alpha$ на три части, $\alpha = xyz$,
-    за които изискваме свойствата $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
-  \item[$(\exists)$]
-    % \mynote{Изборът на $i$ може да зависи разбиването $x$, $y$, $z$. В конкретния пример, не зависи.}
-    Ще намерим $i\in\Nat$, за което $xy^iz \not\in L$.
-    Понеже $\abs{xy} \leq p$, то $y = a^k$, за  $1\leq k \leq p$.
-    Тогава ако вземем $i = 0$, получаваме $xy^0z = a^{p-k}b^p$.
-    Ясно е, че $xz \not\in L$, защото $p-k < p$.
-  \end{description}  
-  Тогава от \Corollary{pumping-reg} следва, че $L$ не е регулярен език.
-\end{proof}
-
-\begin{remark}
-  \mynote{\writedown Съобразете сами!}
-  Много често студентите правят следното разсъждение:
-  \[(\forall L,L' \subseteq \Sigma^\star)[L \text{ е регулярен}\ \&\ L' \subseteq L \implies L'\text{ е регулярен}].\]
-  Съобразете, че в общия случай това твърдение е {\em невярно}.
-  За да видим това, достатъчно е да посочим регулярен език $L$, който има като
-  подмножество нерегулярен език $L'$.
-  Също лесно се вижда, че твърдението
-  \[(\forall L,L' \subseteq \Sigma^\star)[L \text{ е регулярен}\ \&\ L \subseteq L' \implies L'\text{ е регулярен}]\]
-  е невярно.
-
-  Поради подобни съображения, следните твърдения също са {\em неверни}:
-  \begin{align*}
-    & (\forall L,L' \subseteq \Sigma^\star)[L \text{ не е регулярен}\ \&\ L' \subseteq L \implies L'\text{ не е регулярен}]\\
-    & (\forall L,L' \subseteq \Sigma^\star)[L' \text{ не е регулярен}\ \&\ L' \subseteq L \implies L\text{ не е регулярен}].
-  \end{align*}
-\end{remark}
-
+\begin{extra}
 \begin{problem}
   Докажете, че езикът $L = \{a^mb^n \mid m,n\in \Nat\ \&\ m < n\}$ не е регулярен.
 \end{problem}
@@ -186,7 +124,6 @@
   Тогава от \Corollary{pumping-reg} следва, че $L$ не е регулярен език.  
 \end{proof}
 
-
 \begin{problem}
   Докажете, че езикът
   \[L = \{\alpha\beta \in \{a,b\}^\star \mid |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}\] не е регулярен.
@@ -205,6 +142,7 @@
   За него вече лесно можем да приложим лемата за покачването и да получим, че $L_2$ не е регулярен.
   Така достигаме до противоречие с допускането, че $L$ е регулярен.
 \end{hint}
+\end{extra}
 
 \subsection*{Примери, за които лемата не е  приложима}
 

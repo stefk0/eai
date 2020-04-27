@@ -189,7 +189,7 @@
   Да разгледаме азбуката:
   \[\Sigma_3 = \left\{\begin{bmatrix} 0\\0\\0\end{bmatrix},\begin{bmatrix} 0\\0\\1\end{bmatrix},\begin{bmatrix} 0\\1\\0\end{bmatrix},\begin{bmatrix} 0\\1\\1\end{bmatrix},\dots,\begin{bmatrix} 1\\1\\1\end{bmatrix}\right\}.\]
   Докажете, че 
-  $L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \bin{\alpha}+\bin{\beta} = \bin{\gamma}\right\}$
+  \[L = \left\{\begin{bmatrix} \alpha\\\beta\\\gamma\end{bmatrix} \in \Sigma^\star_3 \mid \bin{\alpha}+\bin{\beta} = \bin{\gamma}\right\}\]
   е автоматен език.
 \end{problem}
 \ifhints
@@ -201,9 +201,9 @@
 
   Нека $\bin{\alpha}+\bin{\beta} = \bin{\gamma}$. Тогава:
   \begin{align*}
-    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment\text{ защото }\bin{0\alpha} + \bin{0\beta} = \bin{0\gamma}\\
-    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 1\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment\text{ защото }\bin{0\alpha} + \bin{1\beta} = \bin{1\gamma}\\
-    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}} & \comment\text{ защото }\bin{1\alpha} + \bin{0\beta} = \bin{1\gamma}
+    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 0 \\ 0\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment \bin{0\alpha} + \bin{0\beta} = \bin{0\gamma}\\
+    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 0\\ 1 \\ 1\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment \bin{0\alpha} + \bin{1\beta} = \bin{1\gamma}\\
+    & \delta(q_{\scriptscriptstyle{=}},\tiny{ \begin{bmatrix} 1\\ 0 \\ 1\end{bmatrix} }) = q_{\scriptscriptstyle{=}} & \comment \bin{1\alpha} + \bin{0\beta} = \bin{1\gamma}
   \end{align*}
   Остана случая $\bin{1\alpha} + \bin{1\beta} = \bin{10\gamma}$. Този случай е по-специален и трябва да бъде разгледан отделно.
   Трябва да отидем в състояние $q_1$, в което ще помним, че третия ред трябва да започва с $1$-ца. Затова имаме следния преход:
@@ -216,10 +216,10 @@
   \[\delta^\star(q, \tiny{ \begin{bmatrix} \alpha\\ \beta \\ \gamma\end{bmatrix} }) = q_{\scriptscriptstyle{1}}  \iff \bin{\alpha^{\rev}} + \bin{\beta^{\rev}} = \bin{1\gamma^{\rev}}.\]
   Да разгледаме сега случая $\bin{\alpha} + \bin{\beta} = \bin{1\gamma}$. Тогава:
   \begin{align*}
-    & \delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment\text{ защото }\bin{0\alpha} + \bin{0\beta} = \bin{1\gamma}\\
-    & \delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) \df q_{1} & \comment\text{ защото }\bin{1\alpha} + \bin{1\beta} = \bin{11\gamma}\\
-    & \delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) \df q_{1} & \comment\text{ защото }\bin{1\alpha} + \bin{0\beta} = \bin{10\gamma}\\
-    & \delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) \df q_{1} & \comment\text{ защото }\bin{0\alpha} + \bin{1\beta} = \bin{10\gamma}\\
+    & \delta(q_1,\tiny{ \begin{bmatrix} 0\\ 0 \\ 1\end{bmatrix} }) \df q_{\scriptscriptstyle{=}} & \comment \bin{0\alpha} + \bin{0\beta} = \bin{1\gamma}\\
+    & \delta(q_1,\tiny{ \begin{bmatrix} 1\\ 1 \\ 1\end{bmatrix} }) \df q_{1} & \comment \bin{1\alpha} + \bin{1\beta} = \bin{11\gamma}\\
+    & \delta(q_1,\tiny{ \begin{bmatrix} 1\\ 0 \\ 0\end{bmatrix} }) \df q_{1} & \comment \bin{1\alpha} + \bin{0\beta} = \bin{10\gamma}\\
+    & \delta(q_1,\tiny{ \begin{bmatrix} 0\\ 1 \\ 0\end{bmatrix} }) \df q_{1} & \comment \bin{0\alpha} + \bin{1\beta} = \bin{10\gamma}\\
     & \delta(q_1, \gamma) \df q_{\texttt{err}} & \comment\text{ за останалите }\gamma \in \Sigma_3
   \end{align*}
 \end{hint}

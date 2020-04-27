@@ -1,4 +1,4 @@
-\section{Дървета на извод}
+\section{Синтактични дървета}
 
 \newcommand{\high}{\texttt{height}}
 \newcommand{\leaves}{\texttt{leaves}}
@@ -66,7 +66,7 @@
   \item
     Ако $\alpha i \in T$, то $\alpha j \in T$ за всяко $j < i$.
   \item
-    Ако $\alpha \in T$ и $|\texttt{ext}_T(\alpha)| = k+1$, за някое $k \in \Nat$, то $X_\alpha \in V$,
+    Ако $\alpha \in T$ и $|\successor_T(\alpha)| = k+1$, за някое $k \in \Nat$, то $X_\alpha \in V$,
     като имаме също така и 
     % Освен това, ако $\alpha_0,\dots,\alpha_k$ са всички думи от множеството $\texttt{ext}_T(\alpha)$
     % подредени във възходящ ред относно лексикографската наредба, то имаме, че:
@@ -90,6 +90,11 @@
   Нека $P = (T,\lambda)$ и $\alpha \in T$. Тогава
   \[P_\alpha \df (T_\alpha, \lambda_\alpha).\]
 \end{itemize}
+
+\begin{problem}
+  Докажете, че ако $T$ е дърво, то $\texttt{Pref}(T) = T$.
+\end{problem}
+
 
 \begin{example}
   Да разгледаме граматиката $G$, където правилата са следните:
@@ -177,6 +182,7 @@
     $\texttt{yield}(P_1) = \texttt{yield}(P_2) = x*y+z$.
     
     \begin{framed}
+      \centering
       \qtreecenterfalse
       \Tree [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$S$ [.$V$ $y$ ] ] $+$ [.$S$ [.$V$ $z$ ] ] ] ]
       \hskip 0.6in
@@ -190,22 +196,12 @@
       & V \to x\ |\ y\ |\ z
     \end{align*}
     Сега думата $x * y + z$ има само едно дърво на извод.
-    
+    \mynote{Тук операцията $*$ е с по-висок приоритет в сравнение с операцията $+$.}    
     \begin{framed}
       \Tree [.$S$ [.$E$ [.$V$ $x$ ] $*$ [.$E$ [.$V$ $y$ ] ] ] $+$ [.$S$ [.$E$ [.$V$ $z$ ] ] ] ]
     \end{framed}
   \end{example}
 \end{extra}
-
-\begin{problem}
-  Докажете, че:
-  \begin{itemize}
-  \item
-    $T = \texttt{Pref}(\leaves(T))$;
-  \item
-    $T = T' \iff \leaves(T) = \leaves(T')$.
-  \end{itemize}
-\end{problem}
 
 \begin{lemma}
   Нека $T \subseteq \{0,\dots,b-1\}^\star$ е крайно дърво. Тогава
@@ -243,184 +239,189 @@
 \begin{corollary}
   Нека $G$ е безконтекстна граматика и 
   \[b \df \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
-  Тогава ако $A \yield{\ell} \alpha$ и $|\alpha| \geq b^k$, то $\ell \geq k$.
+  Тогава:
+  \begin{itemize}
+  \item
+    Ако $A \yield{\ell} \alpha$, то $|\alpha| \leq b^\ell$;
+  \item
+    Ако $X \yield{k} \alpha$, то $X \derive{< b^k} \alpha$.
+  \end{itemize}
 \end{corollary}
 
-\begin{problem}
-  Докажете, че ако $X \yield{k} \alpha$, то $X \derive{< b^k} \alpha$.
-\end{problem}
+% \begin{problem}
+% \end{problem}
 
-\begin{problem}
-  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$.
-  Докажете, че ако $\alpha \preceq \beta$, то $\texttt{yield}(T_\beta)$ е инфикс на $\texttt{yield}(T_\alpha)$.
-\end{problem}
-\begin{hint}
-  Нека $\beta = \alpha \cdot \gamma$. Тогава имаме следното дърво:
+% \begin{problem}
+%   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$.
+%   Докажете, че ако $\alpha \preceq \beta$, то $\texttt{yield}(T_\beta)$ е инфикс на $\texttt{yield}(T_\alpha)$.
+% \end{problem}
+% \begin{hint}
+%   Нека $\beta = \alpha \cdot \gamma$. Тогава имаме следното дърво:
   
-  \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-      \coordinate (A) at (0,0);
-      \coordinate (B) at (-3,-4);
-      \coordinate (C) at (3,-4);
-      \coordinate (D) at (0,-1.5);
-      \coordinate (E) at (-2,-4);
-      \coordinate (F) at (2,-4);
-      \coordinate (G) at (0,-2.5);
-      \coordinate (H) at (-1,-4);
-      \coordinate (I) at (1,-4);
+%   \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}
+%       \coordinate (A) at (0,0);
+%       \coordinate (B) at (-3,-4);
+%       \coordinate (C) at (3,-4);
+%       \coordinate (D) at (0,-1.5);
+%       \coordinate (E) at (-2,-4);
+%       \coordinate (F) at (2,-4);
+%       \coordinate (G) at (0,-2.5);
+%       \coordinate (H) at (-1,-4);
+%       \coordinate (I) at (1,-4);
       
-      \draw (A) -- node[left]{$T$} (B) -- (C) -- (A);
+%       \draw (A) -- node[left]{$T$} (B) -- (C) -- (A);
       
-      \draw (D) -- node[left]{$T_\alpha$}(E);
-      \draw (D) -- (F);
+%       \draw (D) -- node[left]{$T_\alpha$}(E);
+%       \draw (D) -- (F);
       
-      \draw (G) -- node[left]{$T_\beta$}(H);
-      \draw (G) -- (I);
+%       \draw (G) -- node[left]{$T_\beta$}(H);
+%       \draw (G) -- (I);
       
-      \draw [photon] (A) -- node[left]{$\alpha$} (D);
-      \draw [photon] (D) -- node[below left]{$\gamma$} (G);
-    \end{tikzpicture}
-    \caption{}
-  \end{figure}
-\end{hint}
+%       \draw [photon] (A) -- node[left]{$\alpha$} (D);
+%       \draw [photon] (D) -- node[below left]{$\gamma$} (G);
+%     \end{tikzpicture}
+%     \caption{}
+%   \end{figure}
+% \end{hint}
 
-\begin{problem}
-  Нека $P = (T,\lambda)$ и $P' = (T',\lambda')$ са дървета на извод съвместими с граматиката $G$ и нека
-  имаме думи $\omega_1, \omega_2 \in \Sigma^\star$, за които
-  \mynote{Това означава, че съществува $\alpha \in T$, за което $\lambda(\alpha) = \texttt{root}(P') = \lambda'(\varepsilon)$.}
-  \[\texttt{yield}(P) = \omega_1 \cdot \texttt{root}(P') \cdot \omega_2.\]
-  Дефинираме $P'' = (T'',\lambda'')$ по следния начин:
-  \begin{itemize}
-  \item
-    \mynote{Ясно е, че $\alpha \in T$ и $\alpha \in \alpha\cdot T'$, но понеже $X_\alpha = X'_\varepsilon$, то нямаме проблем.}
-    $T'' \df T \cup \{\alpha\} \cdot T'$;
-  \item
-    Сега трябва да дефинираме функцията $\lambda'' : T'' \to V \cup \Sigma \cup \{\varepsilon\}$.
+% \begin{problem}
+%   Нека $P = (T,\lambda)$ и $P' = (T',\lambda')$ са дървета на извод съвместими с граматиката $G$ и нека
+%   имаме думи $\omega_1, \omega_2 \in \Sigma^\star$, за които
+%   \mynote{Това означава, че съществува $\alpha \in T$, за което $\lambda(\alpha) = \texttt{root}(P') = \lambda'(\varepsilon)$.}
+%   \[\texttt{yield}(P) = \omega_1 \cdot \texttt{root}(P') \cdot \omega_2.\]
+%   Дефинираме $P'' = (T'',\lambda'')$ по следния начин:
+%   \begin{itemize}
+%   \item
+%     \mynote{Ясно е, че $\alpha \in T$ и $\alpha \in \alpha\cdot T'$, но понеже $X_\alpha = X'_\varepsilon$, то нямаме проблем.}
+%     $T'' \df T \cup \{\alpha\} \cdot T'$;
+%   \item
+%     Сега трябва да дефинираме функцията $\lambda'' : T'' \to V \cup \Sigma \cup \{\varepsilon\}$.
     
-    $\lambda''(\gamma) \df
-    \begin{cases}
-      \lambda(\gamma), & \text{ако }\gamma \in T\\
-      \lambda'(\beta), & \text{ако }\gamma = \alpha \cdot \beta\ \&\ \beta \in T'
-    \end{cases}$
+%     $\lambda''(\gamma) \df
+%     \begin{cases}
+%       \lambda(\gamma), & \text{ако }\gamma \in T\\
+%       \lambda'(\beta), & \text{ако }\gamma = \alpha \cdot \beta\ \&\ \beta \in T'
+%     \end{cases}$
 
-    \mynote{Тук трябва да сме внимателни, защото двата случая на дефиницията на $\lambda''$  се засичат за $\gamma = \alpha$.
-      Понеже $\alpha \in \texttt{leaves}(T)$ и $\lambda(\alpha) = \lambda'(\varepsilon)$, то функцията $\lambda''$ е коректно дефинирана.}
-  \end{itemize}
-  \index{дърво на извод!конкатенация}
-  Тогава $P''$ е дърво на извод съвместимо с граматиката $G$ и
-  \[\texttt{yield}(P'') = \omega_1 \cdot \texttt{yield}(P') \cdot \omega_2.\]
-  Нека в такъв случай да означаваме $P'' = P \odot P'$ и ще казваме, че $P''$ е конкатенацията на $P$ и $P'$.
+%     \mynote{Тук трябва да сме внимателни, защото двата случая на дефиницията на $\lambda''$  се засичат за $\gamma = \alpha$.
+%       Понеже $\alpha \in \texttt{leaves}(T)$ и $\lambda(\alpha) = \lambda'(\varepsilon)$, то функцията $\lambda''$ е коректно дефинирана.}
+%   \end{itemize}
+%   \index{дърво на извод!конкатенация}
+%   Тогава $P''$ е дърво на извод съвместимо с граматиката $G$ и
+%   \[\texttt{yield}(P'') = \omega_1 \cdot \texttt{yield}(P') \cdot \omega_2.\]
+%   Нека в такъв случай да означаваме $P'' = P \odot P'$ и ще казваме, че $P''$ е конкатенацията на $P$ и $P'$.
   
-  \begin{figure}[H]
-    \begin{subfigure}[t]{0.5\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \coordinate (A) at (0,0);
-        \coordinate (B) at (-2,-2.5);
-        \coordinate (C) at (2,-2.5);
-        \coordinate (D) at (0,-2.5);
-        \coordinate (E) at (-1,-3.5);
-        \coordinate (F) at (1,-3.5);
+%   \begin{figure}[H]
+%     \begin{subfigure}[t]{0.5\textwidth}
+%       \centering
+%       \begin{tikzpicture}
+%         \coordinate (A) at (0,0);
+%         \coordinate (B) at (-2,-2.5);
+%         \coordinate (C) at (2,-2.5);
+%         \coordinate (D) at (0,-2.5);
+%         \coordinate (E) at (-1,-3.5);
+%         \coordinate (F) at (1,-3.5);
         
-        \draw (A) -- node[above left]{$T$} (B) -- (C) -- (A);
-        \draw (D) -- node[left]{$T'$} (E) -- (F) -- (D);
+%         \draw (A) -- node[above left]{$T$} (B) -- (C) -- (A);
+%         \draw (D) -- node[left]{$T'$} (E) -- (F) -- (D);
         
-        \draw [photon] (A) -- node[left]{$\alpha$} (D);
-      \end{tikzpicture}
-      \caption{Дървото $T''$}
-      \end{subfigure}
-      $\stackrel{\lambda}{\Rightarrow}$
-      \begin{subfigure}[t]{0.5\textwidth}
-        \centering
-        \begin{tikzpicture}
-          \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-          \coordinate (B) at (-2,-2.5);
-          \coordinate (C) at (2,-2.5);
-          \node (D) at (0,-2.5) {${\scriptstyle X_\alpha}$};
-          \coordinate (E) at (-1,-3.5);
-          \coordinate (F) at (1,-3.5);
+%         \draw [photon] (A) -- node[left]{$\alpha$} (D);
+%       \end{tikzpicture}
+%       \caption{Дървото $T''$}
+%       \end{subfigure}
+%       $\stackrel{\lambda}{\Rightarrow}$
+%       \begin{subfigure}[t]{0.5\textwidth}
+%         \centering
+%         \begin{tikzpicture}
+%           \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
+%           \coordinate (B) at (-2,-2.5);
+%           \coordinate (C) at (2,-2.5);
+%           \node (D) at (0,-2.5) {${\scriptstyle X_\alpha}$};
+%           \coordinate (E) at (-1,-3.5);
+%           \coordinate (F) at (1,-3.5);
           
-          \draw (A) -- node[above left]{${\scriptstyle P\ =\ }$} (B) -- node[below]{$\omega_1$}(D) -- node[below]{$\omega_2$}(C) -- (A);
-          \draw (D) -- node[left]{${\scriptstyle P'\ =\ }$}(E) -- node[below]{$\texttt{yield}(P')$}(F) -- (D);
+%           \draw (A) -- node[above left]{${\scriptstyle P\ =\ }$} (B) -- node[below]{$\omega_1$}(D) -- node[below]{$\omega_2$}(C) -- (A);
+%           \draw (D) -- node[left]{${\scriptstyle P'\ =\ }$}(E) -- node[below]{$\texttt{yield}(P')$}(F) -- (D);
           
-          % \draw [photon] (A) -- node[left]{$\alpha$} (D);
-        \end{tikzpicture}
-        \caption{$P'' = P \odot P'$}
-      \end{subfigure}
-      \caption{Конкатенация на дървета}
-    \end{figure}
-  \end{problem}
+%           % \draw [photon] (A) -- node[left]{$\alpha$} (D);
+%         \end{tikzpicture}
+%         \caption{$P'' = P \odot P'$}
+%       \end{subfigure}
+%       \caption{Конкатенация на дървета}
+%     \end{figure}
+%   \end{problem}
   
-  Сега да разгледаме частния случай, когато разгледаме $P$ вместо $P'$ в горните условия. Тогава имаме, че $X_\varepsilon = X_\alpha$.
-  Дефинираме $n$-тата степен на дървото $P$ по следния начин:
-  \begin{itemize}
-\item
-  $P^{(0)} \df (T_0,\lambda_0)$, където $T_0 = \{\varepsilon\}$ и $\lambda_0(\varepsilon) = \texttt{root}(P)$;
-\item
-  $P^{(n+1)} \df P^{(n)} \odot P$.
-\end{itemize}
+%   Сега да разгледаме частния случай, когато разгледаме $P$ вместо $P'$ в горните условия. Тогава имаме, че $X_\varepsilon = X_\alpha$.
+%   Дефинираме $n$-тата степен на дървото $P$ по следния начин:
+%   \begin{itemize}
+% \item
+%   $P^{(0)} \df (T_0,\lambda_0)$, където $T_0 = \{\varepsilon\}$ и $\lambda_0(\varepsilon) = \texttt{root}(P)$;
+% \item
+%   $P^{(n+1)} \df P^{(n)} \odot P$.
+% \end{itemize}
 
-\begin{problem}
-  Докажете, че $P \odot (P \odot P) = (P \odot P) \odot P$.
-\end{problem}
+% \begin{problem}
+%   Докажете, че $P \odot (P \odot P) = (P \odot P) \odot P$.
+% \end{problem}
 
 
-\begin{problem}
-  Докажете, че $P^{(n+k)} = P^{(n)} \odot P^{(k)}$.
-\end{problem}
+% \begin{problem}
+%   Докажете, че $P^{(n+k)} = P^{(n)} \odot P^{(k)}$.
+% \end{problem}
 
-\begin{framed}
-  \begin{problem}
-    \label{prob:tree:iteration}
-    Нека $\texttt{yield}(P) = \omega_1 \cdot \texttt{root}(P) \cdot \omega_2$, за някои думи $\omega_1, \omega_2 \in \Sigma^\star$.
-    Докажете, че за всяко естествено число $i$ е изпълнено, че:
-    \[\texttt{yield}(P^{(i)}) = \omega^i_1 \cdot \texttt{root}(P) \cdot \omega^i_2.\]
-  \end{problem}
-\end{framed}
-\begin{hint}
-  Картинката за $i = 2$ изглежда така:
+% \begin{framed}
+%   \begin{problem}
+%     \label{prob:tree:iteration}
+%     Нека $\texttt{yield}(P) = \omega_1 \cdot \texttt{root}(P) \cdot \omega_2$, за някои думи $\omega_1, \omega_2 \in \Sigma^\star$.
+%     Докажете, че за всяко естествено число $i$ е изпълнено, че:
+%     \[\texttt{yield}(P^{(i)}) = \omega^i_1 \cdot \texttt{root}(P) \cdot \omega^i_2.\]
+%   \end{problem}
+% \end{framed}
+% \begin{hint}
+%   Картинката за $i = 2$ изглежда така:
 
-  \begin{figure}[H]
-    \begin{subfigure}[t]{0.5\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \coordinate (A) at (0,0);
-        \coordinate (B) at (-2,-2.5);
-        \coordinate (C) at (2,-2.5);
-        \coordinate (D) at (0,-2.5);
-        \coordinate (E) at (-2,-5);
-        \coordinate (F) at (2,-5);
-        \coordinate (G) at (0,-5);
+%   \begin{figure}[H]
+%     \begin{subfigure}[t]{0.5\textwidth}
+%       \centering
+%       \begin{tikzpicture}
+%         \coordinate (A) at (0,0);
+%         \coordinate (B) at (-2,-2.5);
+%         \coordinate (C) at (2,-2.5);
+%         \coordinate (D) at (0,-2.5);
+%         \coordinate (E) at (-2,-5);
+%         \coordinate (F) at (2,-5);
+%         \coordinate (G) at (0,-5);
         
-        \draw (A) -- node[above left]{$T$} (B) -- (C) -- (A);
-        \draw (D) -- node[left]{$T$} (E) -- (F) -- (D);
+%         \draw (A) -- node[above left]{$T$} (B) -- (C) -- (A);
+%         \draw (D) -- node[left]{$T$} (E) -- (F) -- (D);
         
-        \draw [photon] (A) -- node[left]{$\alpha$} (D);
-        \draw [photon] (D) -- node[left]{$\alpha$} (G);
-      \end{tikzpicture}
-      \caption{}
-    \end{subfigure}
-    $\stackrel{\lambda}{\Rightarrow}$
-    \begin{subfigure}[t]{0.5\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-        \coordinate (B) at (-2,-2.5);
-        \coordinate (C) at (2,-2.5);
-        \node (D) at (0,-2.5) {${\scriptstyle X_\varepsilon}$};
-        \coordinate (E) at (-2,-5);
-        \coordinate (F) at (2,-5);
-        \node (G) at (0,-5) {${\scriptstyle X_\varepsilon}$};
+%         \draw [photon] (A) -- node[left]{$\alpha$} (D);
+%         \draw [photon] (D) -- node[left]{$\alpha$} (G);
+%       \end{tikzpicture}
+%       \caption{}
+%     \end{subfigure}
+%     $\stackrel{\lambda}{\Rightarrow}$
+%     \begin{subfigure}[t]{0.5\textwidth}
+%       \centering
+%       \begin{tikzpicture}
+%         \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
+%         \coordinate (B) at (-2,-2.5);
+%         \coordinate (C) at (2,-2.5);
+%         \node (D) at (0,-2.5) {${\scriptstyle X_\varepsilon}$};
+%         \coordinate (E) at (-2,-5);
+%         \coordinate (F) at (2,-5);
+%         \node (G) at (0,-5) {${\scriptstyle X_\varepsilon}$};
         
-        \draw (A) -- node[above left]{${\scriptstyle P\ =\ }$} (B) -- node[below]{$\omega_1$}(D) -- node[below]{$\omega_2$}(C) -- (A);
-        \draw (D) -- node[above left]{${\scriptstyle P\ =\ }$}(E) -- node[below]{$\omega_1$} (G) -- node[below]{$\omega_2$} (F) -- (D);
-      \end{tikzpicture}
-      \caption{$\texttt{yield}(P^{(2)}) = \omega^2_1 \cdot \texttt{root}(P) \cdot \omega^2_2$}
-    \end{subfigure}
-    \caption{Степенуване на $P$.}
-  \end{figure}
-\end{hint}
+%         \draw (A) -- node[above left]{${\scriptstyle P\ =\ }$} (B) -- node[below]{$\omega_1$}(D) -- node[below]{$\omega_2$}(C) -- (A);
+%         \draw (D) -- node[above left]{${\scriptstyle P\ =\ }$}(E) -- node[below]{$\omega_1$} (G) -- node[below]{$\omega_2$} (F) -- (D);
+%       \end{tikzpicture}
+%       \caption{$\texttt{yield}(P^{(2)}) = \omega^2_1 \cdot \texttt{root}(P) \cdot \omega^2_2$}
+%     \end{subfigure}
+%     \caption{Степенуване на $P$.}
+%   \end{figure}
+% \end{hint}
 
 \begin{problem}
   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$ и нека разгледаме думата $\alpha \in T$.
@@ -483,6 +484,7 @@
     \end{subfigure}
   \end{figure}
 \end{hint}
+
 
 %%% Local Variables:
 %%% mode: latex

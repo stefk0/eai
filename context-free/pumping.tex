@@ -46,7 +46,7 @@
     \label{eq:10}
     X_\beta \in \{X_\gamma \mid \beta \prec \gamma \prec \pi\}.
   \end{equation}
-  Нека $\beta$ е най-дългата дума, за която е изпълнено свойството (\ref{eq:10}).
+  Нека $\beta$ е най-дългата дума, за която е изпълнено \Property{eq:10}.
   Да означим с $\gamma$ една от думите, за която $\beta \prec \gamma \prec \pi$ и $X_\gamma = X_\beta$.
   От избора на $\beta$ следва, че:
   \begin{equation}
@@ -54,7 +54,7 @@
     \texttt{height}(\lowercut{P}{\beta}) = |\{ X_\gamma \mid \beta \preceq \gamma \prec \pi\}| \leq |V| + 1,
   \end{equation}
   защото ако допуснем противното, то ще имаме, че $|\{ X_\gamma \mid \beta \prec \gamma \prec \pi\}| > |V| + 1$ и от принципа на Дирихле ще следва, че
-  съществува по-дълга от $\beta$ дума, за която е изпълнено свойството (\ref{eq:10}).
+  съществува по-дълга от $\beta$ дума, за която е изпълнено \Property{eq:10}.
   
   Нека $u = \texttt{yield}(\lowercut{P}{\gamma})$. Тогава $yuv = \texttt{yield}(\lowercut{P}{\beta})$, за някои думи $y,v \in \Sigma^\star$.
   Това означава, че думата $\alpha$ може да се запише като $\alpha = xyuvw$, за някои $x, w \in \Sigma^\star$.
@@ -78,7 +78,7 @@
     $\abs{yuv} \leq p$, защото $yuv = \texttt{yield}(\lowercut{P}{\beta})$ и оттук следва, че:
     \begin{align*}
       \abs{yuv} & \leq b^{\texttt{height}(\lowercut{P}{\beta})} & \comment\text{от \Corollary{tree:upper-bound}}\\
-                & \leq b^{|V|+1} & \comment\text{от (\ref{eq:11})}\\
+                & \leq b^{|V|+1} & \comment\text{от \Property{eq:11}}\\
                 & = p
     \end{align*}
   \item

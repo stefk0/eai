@@ -85,8 +85,8 @@
   където $|\omega\rho| \geq n+1$, защото $|\alpha_{n+1}\beta_{n+1}| = n+1$.
   Понеже няма безполезни символи в граматиката, то съществуват $\delta, \gamma \in \Sigma^\star$, за които
   $S \to^\star_G \delta  A_0 \gamma$. Получаваме:
-  \[ S \to^\star_G \delta A_0 \gamma \to^\star_G \delta \alpha_{n+1} A_0 \beta_{n+1} \gamma \to^\star_G \delta \omega A_0 \rho\gamma \to^\star_G \cdots \to^\star_G \delta \omega^i A_0 \rho^i \gamma \to^\star_G \delta\omega^i\alpha\rho^i\gamma,\]
-  където $A_0 \to^\star_G \alpha$, за някое $\alpha \in \Sigma^\star$.
+  \[ S \derive{\star}_G \delta A_0 \gamma \derive{\star}_G \delta \alpha_{n+1} A_0 \beta_{n+1} \gamma \derive{\star}_G \delta \omega A_0 \rho\gamma \derive{\star}_G \cdots \derive{\star}_G \delta \omega^i A_0 \rho^i \gamma \derive{\star}_G \delta\omega^i\alpha\rho^i\gamma,\]
+  където $A_0 \derive{\star}_G \alpha$, за някое $\alpha \in \Sigma^\star$.
 
   Ако в графът няма цикли, то езикът $\L(G)$ е краен, защото ако от променливата $A$ най-дългият път има дължина $k+1$,
   то за променливите $B$ и $C$, за които имаме правилото $A\to BC$, най-дългият път от $B$ и $C$ има дължина най-много $k$.
@@ -95,8 +95,6 @@
   е такова, че $\texttt{height}(P) \leq k$. От \Corollary{tree:upper-bound} следва, че всички думи, които се извеждат от $A$ са най-много $2^{k}$ на брой,
   защото всяко такова дърво на извод е двоично и $\texttt{yield}(P) \leq 2^k$.
 \end{proof}
-
-
 
 
 %%% Local Variables:

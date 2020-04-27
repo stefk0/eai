@@ -5,7 +5,7 @@
 \end{theorem}
 % \begin{proof}[стр. 154 от \cite{papadimitriou}]
 Можем да приемем, че $G = \CFG$ е граматика в нормална форма на Чомски.
-Нека $\alpha = a_0a_1\dots a_{n-1}$ е дума, за която искаме да проверим дали $\alpha \in \L(G)$.
+% Нека $\alpha = a_0a_1\dots a_{n-1}$ е дума, за която искаме да проверим дали $\alpha \in \L(G)$.
 \mynote{Това е алгоритъм на Cocke, Younger и Kasami (CYK), които откриват идеята за този алгоритъм независимо един от друг. Той е пример за динамично
   програмиране \cite[стр. 192]{kozen}, \cite[стр. 141]{shallit}. При вход дума $\alpha$, алгоритъмът работи за време $\mathcal{O}(\abs{\alpha}^3)$.}
 \begin{algorithm}[H]
@@ -14,19 +14,20 @@
   \begin{algorithmic}[1]
     \State $n = \texttt{len}(\alpha)$ \Comment{Вход дума $\alpha = a_0a_1\cdots a_{n-1}$}
     \ForAll{$i < n$}
-    \ForAll{$j < n$}
-    \If{$i = j$}
-    \State $\texttt{V[i][i]} = \{A \in V \mid A\to_G \alpha\slice{i}\}$ \label{alg:cyk:initial}
-    \Else
-    \State{$\texttt{V[i][j]} = \emptyset$}
-    \EndIf
+    \State $\texttt{V[i][i]} := \{A \in V \mid A\to_G \alpha\slice{i}\}$ \label{alg:cyk:initial}
+    \ForAll{$j \in (i,n)$}
+    % \If{$i = j$}
+    % \State $\texttt{V[i][i]} = \{A \in V \mid A\to_G \alpha\slice{i}\}$ \label{alg:cyk:initial}
+    % \Else
+    \State{$\texttt{V[i][j]} := \emptyset$}
+    % \EndIf
     \EndFor
     \EndFor
     \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала} \label{alg:cyk:first-loop}
     \ForAll{$i < n-s$}\Comment{Начало на интервала}
     \ForAll{$k \in [i, i + s)$}\Comment{Разделяне на интервала}
     \If{$\exists A\to BC \in R\ \&\ B \in \texttt{V[i][k]}\ \&\ C\in \texttt{V[k+1][i+s]}$}
-    \State $\texttt{V[i][i+s]} = \texttt{V[i][i+s]} \cup \{A\}$ \label{alg:cyk:add-variable}
+    \State $\texttt{V[i][i+s]} := \texttt{V[i][i+s]} \cup \{A\}$ \label{alg:cyk:add-variable}
     \EndIf
     \EndFor
     \EndFor
@@ -43,24 +44,21 @@
   Нека е дадена безконтекстната граматика $G$ в нормална форма на Чомски и думата $\alpha$.
   Всеки път, точно преди да изпълни ред (\ref{alg:cyk:first-loop}) от програмата описана в Алгоритъм \ref{alg:belongs-to-grammar},
   е изпълнено, че за всяко $i < n-s$,
-  \[\texttt{V[i][i+s]} = \{A \in V \mid A \rightarrow^\star_G \alpha\slice{i:i+s+1}\}.\]
+  \[\texttt{V[i][i+s]} \df \{A \in V \mid A \rightarrow^\star_G \alpha\slice{i:i+s+1}\}.\]
 \end{lemma}
 \begin{proof}
   Пълна индукция по $s$.
   За $s = 0$ е ясно, защото от ред (\ref{alg:cyk:initial}) и от факта, че граматиката е в нормална форма на Чомски следва, че за всяко $i < n$, 
   \[\texttt{V[i][i]} = \{A \in V \mid A \to_G \alpha\slice{i}\} = \{A \in V \mid A \derive{\star}_G \alpha\slice{i:i+1}\}.\]
   
-  Сега ще докажем твърдението за $s > 0$, т.е. ще докажем, че за всяко $i = 1,\dots,n-s$
-  % Нека твърдението е вярно за $s < n$. Ще докажем твърдението за $s+1$, т.е. ще докажем, че за всяко $i = 1,\dots,n-s-1$
-  е изпълнено, че:
-  \[\texttt{V[i][i+s]} = \{A \in V \mid A \rightarrow^\star_G \alpha\slice{i:i+s+1}\}.\]
+  Сега ще докажем твърдението за $s > 0$, т.е. ще докажем, че за всяко $i < n-s$ е изпълнено, че:
+  \[\texttt{V[i][i+s]} = \{A \in V \mid A \derive{\star}_G \alpha\slice{i:i+s+1}\}.\]
   Да разгледаме двете посоки на това равенство.
-  % Да разгледаме $A \in V[i,i+s+1]$.
   \begin{description}
   \item[($\subseteq$)]
     Нека $A \in \texttt{V[i][i+s]}$.
     Единствената стъпка на алгоритъма, при която може да сме добавили променливата $A$ към множеството $\texttt{V[i][i+s]}$ е ред (\ref{alg:cyk:add-variable}).
-    Тогава имаме, че съществува $k$, $i \leq k < i+s$, за което
+    Тогава имаме, че съществува $k$, което $i \leq k < i+s$, и 
     \begin{align*}
       & B \in \texttt{V[i][k]},\\
       & C \in \texttt{V[k+1][i+s]},\\
@@ -68,19 +66,19 @@
     \end{align*}
     Понеже $k-i < s$ и $i + s - k < s$, от \IndHyp имаме, че
     \begin{align*}
-      & B \derive{\star}_G \alpha\slice{i:k+1}\\
-      & C \derive{\star}_G \alpha\slice{k+1:i+s+1}.
+      & B \derive{\star}_G \alpha\slice{i:k+1} & \comment i+(k-i) = k\\
+      & C \derive{\star}_G \alpha\slice{k+1:i+s+1}. & \comment (k+1)+(i+s-k) = (k+1)+s
     \end{align*}
     Заключаваме веднага, че 
     \[A \derive{\star}_G \alpha\slice{i:i+s+1}.\]
   \item[($\supseteq$)]
     Нека $A \derive{\star}_G \alpha\slice{i:i+s+1}$ и да разгледаме първото правило, което сме приложили в този извод.
-    Понеже $G$ е в нормална форма на Чомски, правилото е от вида $A \to_G BC$ и тогава съществува някое $k$, $i \leq k < i+s$, за което
+    Понеже $G$ е в нормална форма на Чомски, правилото е от вида $A \to_G BC$ и тогава съществува някое $k$, за което $i \leq k < i+s$, и
     \begin{align*}
-      & B \derive{\star} \alpha\slice{i:k+1}\\
+      & B \derive{\star} \alpha\slice{i:k+1} \\
       & C \derive{\star} \alpha\slice{k+1:i+s+1}.
     \end{align*}
-    От {\bf И.П.} получаваме, че $B \in \texttt{V[i][k]}$ и $C \in \texttt{V[k+1][i+s]}$.
+    От \IndHyp получаваме, че $B \in \texttt{V[i][k]}$ и $C \in \texttt{V[k+1][i+s]}$.
     Тогава от ред (\ref{alg:cyk:add-variable}) на алгоритъма е ясно, че 
     \[A \in \texttt{V[i][i+s]}.\]
   \end{description}
@@ -105,51 +103,50 @@
     За $s = 0$ имаме, че:
     \begin{itemize}
     \item 
-      $\texttt{V[1][1]} = \texttt{V[2][2]} = \texttt{V[3][3]} = \{S,A\}$;
+      $\texttt{V[0][0]} = \texttt{V[1][1]} = \texttt{V[2][2]} = \{S,A\}$;
     \item
-      $\texttt{V[4][4]} = \texttt{V[5][5]} = \{B\}$.
+      $\texttt{V[3][3]} = \texttt{V[4][4]} = \{B\}$.
     \end{itemize}
   \item
     За $s = 1$ имаме, че:
     \begin{itemize}
     \item
-      $\texttt{V[1][2]} = \texttt{V[2][3]} = \{C\}$;
+      $\texttt{V[0][1]} = \texttt{V[1][2]} = \{C\}$;
     \item
-      $\texttt{V[3][4]} = \{S,C\}$;
+      $\texttt{V[2][3]} = \{S,C\}$;
     \item
-      $\texttt{V[4][5]} = \emptyset$.
+      $\texttt{V[3][4]} = \emptyset$.
     \end{itemize}
   \item
     За $s = 2$ имаме, че:
     \begin{itemize}
     \item
-      $\texttt{V[1][3]} = \{S\} \cup \emptyset$;
+      $\texttt{V[0][2]} = \{S\} \cup \emptyset$;
     \item
-      $\texttt{V[2][4]} = \{S,C\} \cup \emptyset$;
+      $\texttt{V[1][3]} = \{S,C\} \cup \emptyset$;
     \item
-      $\texttt{V[3][5]} = \emptyset \cup \{C\}$.
+      $\texttt{V[2][4]} = \emptyset \cup \{C\}$.
     \end{itemize}
   \item
     За $s = 3$ имаме, че:
     \begin{itemize}
     \item
-      $\texttt{V[1][4]} = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$;
+      $\texttt{V[0][3]} = \{S,C\} \cup \emptyset \cup \emptyset = \{S,C\}$;
     \item
-      $\texttt{V[2][5]} = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$.
+      $\texttt{V[1][4]} = \{S\} \cup \emptyset \cup \{C\} = \{S,C\}$.
     \end{itemize}
   \item
     За $s = 4$ имаме, че:
     \begin{itemize}
     \item 
-      $\texttt{V[1][5]} = \{S,C\} \cup \emptyset \cup \emptyset \cup \{C\}= \{S,C\}$.
+      $\texttt{V[0][4]} = \{S,C\} \cup \emptyset \cup \emptyset \cup \{C\}= \{S,C\}$.
     \end{itemize}
   \end{itemize}
-  Понеже $S \in \texttt{V[1][5]}$, то $aaabb \in \L(G)$.
+  Понеже $S \in \texttt{V[0][4]}$, то $aaabb \in \L(G)$.
 \end{example}
 \end{multicols}
 
 }
-
 
 %%% Local Variables:
 %%% mode: latex

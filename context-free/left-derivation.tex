@@ -27,12 +27,7 @@
   \TrinaryInfC{$\alpha_1\alpha_2 \lderive{\ell_1+\ell_2}\beta_1\beta_2$}
 \end{prooftree}
 
-% \mynote{Сравнете с \Proposition{grammar:derive-one-step}. Тук новото е, че имаме изискване $\delta \in \Sigma^\star$.}
-% \begin{proposition}\label{pr:grammar:left-derive-one-step}
-%   Нека $G$ е безконтекстна граматика. 
-%   Тогава за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ е изпълнено, че 
-%   $\alpha \lderive{1} \beta$ точно тогава, когато $\alpha = \delta A \rho$ и $\delta \in \Sigma^\star$, $A \to_G \gamma$ и $\beta = \delta\gamma\rho$.
-% \end{proposition}
+\mynote{Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\lderive{\star}$ е аналог на DFS като винаги се избира най-левия необходен клон.}
 
 Удобно ще бъде да разгледаме следния аналог на \Proposition{unrestricted-grammar:context-general-step}.
 \begin{proposition}\label{pr:grammar:context-left-step}
@@ -49,7 +44,9 @@
   \begin{lemma}
     За всяка безконтекстна граматика $G$, променлива $A$ и дума $\alpha \in \Sigma^\star$,
     \[A \lderive{\star} \alpha\text{ точно тогава, когато } A \derive{\star} \alpha.\]
-  \end{lemma}  
+    В частност,
+    \[\L(G) = \{\alpha\in\Sigma^\star \mid S \lderive{\star} \alpha\}.\]
+  \end{lemma}
 \end{important}
 \begin{proof}
   От правилата за извод е видно, че ако $A \lderive{\star} \alpha$, то $A \derive{\star} \alpha$.
@@ -68,38 +65,34 @@
     \AxiomC{$B_n \yield{< \ell} \beta_n$}
     \QuaternaryInfC{$A \yield{\ell} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
   \end{prooftree}
-  Започваме със следния извод:
+  Започваме така:
   \begin{prooftree}
     \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
     \AxiomC{$B_1 \yield{< \ell} \beta_1$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_1 \lderive{^\star}\beta_1$}
-    \LeftLabel{\scriptsize{\Proposition{grammar:context-left-step}}}
+    \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
     \BinaryInfC{$A \lderive{^\star}\alpha_1\beta_1\alpha_2B_2\cdots\alpha_n B_n \alpha_{n+1}$}
   \end{prooftree}
-  Продължаваме последователно за всяко $i < n$ правим следния извод:
+  Продължаваме последователно за всяко $i < n$ правим да правим извода:
   \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1\beta_1\cdots\alpha_iB_i\cdots\alpha_n B_n\alpha_{n+1}$}
+    \AxiomC{$A \to_G \overbrace{\alpha_1\beta_1\cdots\alpha_i}^{\in\Sigma^\star}B_i\cdots\alpha_n B_n\alpha_{n+1}$}
     \AxiomC{$B_i \yield{< \ell} \beta_i$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_i \lderive{^\star}\beta_i$}
-    \LeftLabel{\scriptsize{\Proposition{grammar:context-left-step}}}
+    \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
     \BinaryInfC{$A \lderive{^\star}\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n B_n \alpha_{n+1}$}
   \end{prooftree}
   Завършваме със следния извод:
   \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n B_n\alpha_{n+1}$}
+    \AxiomC{$A \to_G \overbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n}^{\in\Sigma^\star} B_n\alpha_{n+1}$}
     \AxiomC{$B_n \yield{< \ell} \beta_n$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_n \lderive{^\star}\beta_n$}
-    \LeftLabel{\scriptsize{\Proposition{grammar:context-left-step}}}
+    \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
     \BinaryInfC{$A \lderive{^\star}\underbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n \beta_n \alpha_{n+1}}_{\alpha}$}
   \end{prooftree}
 \end{proof}
-
-\begin{corollary}
-  $\L(G) = \{\alpha\in\Sigma^\star \mid S \lderive{\star} \alpha\}$.
-\end{corollary}
 
 
 %%% Local Variables:

@@ -1,13 +1,13 @@
 \section{Контекстни граматики}
-
 \index{граматика!контекстна}
+\mynote{На англ. context-sensitive.}
 Казваме, че $G = (V,\Sigma,R,S)$ е {\bf контекстна граматика}, ако правилата на $G$ са от вида
-\[\alpha_1 A \alpha_2 \to \alpha_1 \beta \alpha_2,\]
-където $\alpha_1,\alpha_2 \in (V\cup\Sigma)^\star$ и $\beta \in (V\cup\Sigma)^+$.
+\[\rho A \delta \to \rho \alpha \delta,\]
+където $\rho,\delta \in (V\cup\Sigma)^\star$ и $\alpha \in (V\cup\Sigma)^+$.
 
-\begin{problem}
-  Езикът $L = \{a^nb^nc^n \mid n \in \Nat\ \&\ n > 0\}$ е контекстен.
-\end{problem}
+\begin{example}
+  Езикът $L = \{a^nb^nc^n \mid n > 0\}$ е контекстен.
+\end{example}
 \begin{hint}
   Разгледайте контекстната граматика $G$ зададена със следните правила:
   \begin{align*}
@@ -19,30 +19,31 @@
     & cC \to cc.
   \end{align*}
 
-  Докажете, че
+  Докажете, че:
   \begin{itemize}
   \item
-    $S \to^\star_Ga^n(BC)^n$;
+    $S \derive{\star} a^n(BC)^n$;
   \item
-    $(BC)^n \to^\star_G B^nC^n$;
+    $(BC)^n \derive{\star} B^nC^n$;
   \item
-    $aB^n \to^\star_G ab^n$;
+    $aB^n \derive{\star} ab^n$;
   \item
-    $bC^n \to^\star_G bc^n$.
+    $bC^n \derive{\star} bc^n$.
   \end{itemize}
+  Оттук следва, че $L \subseteq \L(G)$.
 \end{hint}
 
-\begin{prop}
+\begin{proposition}
   Класът на безконтекстните езици строго се включва в класа на контекстните езици.
-\end{prop}
+\end{proposition}
 
-\begin{prop}
+\begin{proposition}
   Всеки контекстен език е разрешим.
-\end{prop}
+\end{proposition}
 
-\begin{prop}
+\begin{proposition}
   Съществува разрешим език, който не е контекстен.
-\end{prop}
+\end{proposition}
 
 
 %%% Local Variables:
