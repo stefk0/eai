@@ -19,6 +19,13 @@
   \UnaryInfC{$\alpha \derive{0}_G \alpha$}
 \end{prooftree}
 
+\mynote{В частност имаме, че:
+\begin{prooftree}
+  \AxiomC{$A \to_G \beta$}
+  \UnaryInfC{$A \derive{1}_G \beta$}
+\end{prooftree}
+}
+
 \begin{prooftree}
   \AxiomC{$A \to_G \gamma$}
   \AxiomC{$\gamma \derive{\ell}_G \beta$}
@@ -32,13 +39,6 @@
   \RightLabel{\scriptsize{правило (2)}}
   \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
 \end{prooftree}
-
-\mynote{В частност имаме, че:
-\begin{prooftree}
-  \AxiomC{$A \to_G \beta$}
-  \UnaryInfC{$A \derive{1}_G \beta$}
-\end{prooftree}
-}
 
 Нека $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
 \[ \alpha \derive{\star}_G \beta\ \iff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
@@ -55,10 +55,10 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \begin{remark}
   Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме свойството:
   \begin{prooftree}
-    \AxiomC{$A \derive{\ell_1} \rho B \delta$}
+    \AxiomC{$\alpha \derive{\ell_1} \rho B \delta$}
     \AxiomC{$B \derive{\ell_2} \beta$}
     \RightLabel{\scriptsize{правило (3)}}
-    \BinaryInfC{$A \derive{\ell_1+\ell_2} \rho\beta\delta$,}
+    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\beta\delta$,}
   \end{prooftree}
   което ще означим като правило (3), защото ще го използваме често.
 \end{remark}
@@ -240,7 +240,6 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \end{itemize}
   \end{itemize}
 \end{hint}
-
 
 
 %%% Local Variables:
