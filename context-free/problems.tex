@@ -9,7 +9,7 @@
 \end{problem}
 \ifhints
 \begin{hint}
-  Да разгледаме ситуацията $\alpha \in L$ и
+  Да разгледаме ситуацията $\alpha = a^pb^{p^2}\in L$ и
   $\alpha = xyuvw$, където $y = a^i$ и $v = b^j$
   Интересният случай е когато $0 < i,j < p$.
   \begin{itemize}
@@ -293,35 +293,35 @@
   където началната променлива е $E$.
 \end{hint}
 
-\begin{proposition}
-  Да разгледаме езиците:
-  \begin{align*}
-    & L_{\text{even}} = \{\ \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\ \}\\
-    & L_{\text{odd}} = \{\ \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n+1} \mid n\in\Nat\ \&\ \sum^n_{i=0}\abs{\omega_{2i+1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\ \}.
-  \end{align*}
-  Тогава:
-  \begin{align*}
-    (\forall \alpha)[\ \alpha\in L_{\text{even}}\ \implies\ (\exists \alpha_1,\alpha_2)[\ & \alpha \in \{a,b\}^\star\sharp\{a,b\}^\star\ \lor\\
-                                                                                        & ( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{odd}})\ \lor\\
-                                                                                        &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{odd}}\ \&\ \alpha_2 \in L_{\text{even}})\ ]\ ]\\
-    (\forall \alpha)[\ \alpha\in L_{\text{odd}}\ \implies\ (\exists \alpha_1,\alpha_2)[\ &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{even}})\ \lor\\
-                                                                                        &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{odd}}\ \&\ \alpha_2 \in L_{\text{odd}})\ ]\ ].
-  \end{align*}
-\end{proposition}
-\begin{hint}
-  Да разгледаме една дума $\alpha = \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \in L_{\text{even}}$.
-  Не е възможно $|\omega_{2i-1}| < |\omega_{2i}|$ за $i = 1,\dots,n$, защото тогава бихме имали 
-  \[\sum^n_{i=1}|\omega_{2i-1}|\ <\ \sum^n_{i=1}|\omega_{2i}|.\]
-  Нека $|\omega_{2i-1}| \geq |\omega_{2i}|$ за първото такова $i$.
-  Тогава
-  \[\alpha = \omega_1 \sharp \omega_2 \sharp \cdots \sharp\omega'_{2i-1}\omega''_{2i-1}\sharp\omega_{2i}\sharp\cdots \omega_{2n},\]
-  където $|\omega''_{2i-1}| = |\omega_{2i}|$.
-  Като махнем от $\alpha$ подниза $\omega''_{2i-1}\sharp\omega_{2i}$, 
-  получаваме думата
-  \[\alpha' = \omega_1 \sharp \omega_2 \sharp \cdots \sharp\omega'_{2i-1}\sharp\cdots \omega_{2n} \in L_{\text{odd}}.\]
-  Понеже $|\alpha'| < |\alpha|$, от И.П. знаем, че $\alpha' = \alpha_1\alpha_2$, такива че
-  $\alpha_1,\alpha_2 \in L_{\text{even}}$ или $\alpha_1,\alpha_2 \in L_{\text{odd}}$.
-\end{hint}
+% \begin{proposition}
+%   Да разгледаме езиците:
+%   \begin{align*}
+%     & L_{\text{even}} = \{\ \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \mid n\in\Nat\ \&\ \sum^n_{i=1}\abs{\omega_{2i-1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\ \}\\
+%     & L_{\text{odd}} = \{\ \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n+1} \mid n\in\Nat\ \&\ \sum^n_{i=0}\abs{\omega_{2i+1}} = \sum^{n}_{i=1}\abs{\omega_{2i}}\ \}.
+%   \end{align*}
+%   Тогава:
+%   \begin{align*}
+%     (\forall \alpha)[\ \alpha\in L_{\text{even}}\ \implies\ (\exists \alpha_1,\alpha_2)[\ & \alpha \in \{a,b\}^\star\sharp\{a,b\}^\star\ \lor\\
+%                                                                                         & ( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{odd}})\ \lor\\
+%                                                                                         &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{odd}}\ \&\ \alpha_2 \in L_{\text{even}})\ ]\ ]\\
+%     (\forall \alpha)[\ \alpha\in L_{\text{odd}}\ \implies\ (\exists \alpha_1,\alpha_2)[\ &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{even}}\ \&\ \alpha_2 \in L_{\text{even}})\ \lor\\
+%                                                                                         &( \alpha = \alpha_1\alpha_2\ \&\ \alpha_1 \in L_{\text{odd}}\ \&\ \alpha_2 \in L_{\text{odd}})\ ]\ ].
+%   \end{align*}
+% \end{proposition}
+% \begin{hint}
+%   Да разгледаме една дума $\alpha = \omega_1 \sharp \omega_2 \sharp \cdots \sharp \omega_{2n} \in L_{\text{even}}$.
+%   Не е възможно $|\omega_{2i-1}| < |\omega_{2i}|$ за $i = 1,\dots,n$, защото тогава бихме имали 
+%   \[\sum^n_{i=1}|\omega_{2i-1}|\ <\ \sum^n_{i=1}|\omega_{2i}|.\]
+%   Нека $|\omega_{2i-1}| \geq |\omega_{2i}|$ за първото такова $i$.
+%   Тогава
+%   \[\alpha = \omega_1 \sharp \omega_2 \sharp \cdots \sharp\omega'_{2i-1}\omega''_{2i-1}\sharp\omega_{2i}\sharp\cdots \omega_{2n},\]
+%   където $|\omega''_{2i-1}| = |\omega_{2i}|$.
+%   Като махнем от $\alpha$ подниза $\omega''_{2i-1}\sharp\omega_{2i}$, 
+%   получаваме думата
+%   \[\alpha' = \omega_1 \sharp \omega_2 \sharp \cdots \sharp\omega'_{2i-1}\sharp\cdots \omega_{2n} \in L_{\text{odd}}.\]
+%   Понеже $|\alpha'| < |\alpha|$, от И.П. знаем, че $\alpha' = \alpha_1\alpha_2$, такива че
+%   $\alpha_1,\alpha_2 \in L_{\text{even}}$ или $\alpha_1,\alpha_2 \in L_{\text{odd}}$.
+% \end{hint}
 
 
 % \begin{problem}
@@ -346,22 +346,22 @@
 %   Обосновете се!
 % \end{problem}
 
-\begin{problem}
-  Нека $G = \CFG$ е {\em регулярна} граматика, т.е.
-  всички правила на $G$ са от вида $A \to bC$ и $A \to \varepsilon$.
-  Посочете кои от следните езици са безконтекстни, където:
-  \begin{enumerate}[a)]
-  \item 
-    $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash_G \beta\}$;
-  \item 
-    $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash^\star_G \beta\}$;
-  \item
-    $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash_G \beta\}$;
-  \item
-    $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash^\star_G \beta\}$.
-  \end{enumerate}
-  Обосновете се!
-\end{problem}
+% \begin{problem}
+%   Нека $G = \CFG$ е {\em регулярна} граматика, т.е.
+%   всички правила на $G$ са от вида $A \to bC$ и $A \to \varepsilon$.
+%   Посочете кои от следните езици са безконтекстни, където:
+%   \begin{enumerate}[a)]
+%   \item 
+%     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash_G \beta\}$;
+%   \item 
+%     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash^\star_G \beta\}$;
+%   \item
+%     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash_G \beta\}$;
+%   \item
+%     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash^\star_G \beta\}$.
+%   \end{enumerate}
+%   Обосновете се!
+% \end{problem}
 
 \begin{problem}
   Да разгледаме една {\em безконтекстна} граматика $G = \CFG$.
@@ -381,23 +381,21 @@
   Обосновете се!
 \end{problem}
 
-\begin{problem}
-  Да разгледаме една {\em неограничена} граматика $G = \CFG$.
-  Посочете кои от следните езици са безконтекстни, където:
-  \begin{enumerate}[a)]
-  \item 
-    $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash_G \beta\}$;
-  \item 
-    $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \vdash^\star_G \beta\}$;
-  \item
-    $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash_G \beta\}$;
-  \item
-    $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\vdash^\star_G \beta\}$.
-  \end{enumerate}
-  Обосновете се!
-\end{problem}
-
-
+% \begin{problem}
+%   Да разгледаме една {\em неограничена} граматика $G = \CFG$.
+%   Посочете кои от следните езици са безконтекстни, където:
+%   \begin{enumerate}[a)]
+%   \item 
+%     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \derive{1}_G \beta\}$;
+%   \item 
+%     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \derive{\star}_G \beta\}$;
+%   \item
+%     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\derive{1}_G \beta\}$;
+%   \item
+%     $L = \{\alpha\sharp\beta^{\rev} \mid \alpha,\beta \in (V \cup \Sigma)^\star\ \&\ \alpha \not\derive{\star}_G \beta\}$.
+%   \end{enumerate}
+%   Обосновете се!
+% \end{problem}
 
 %%% Local Variables:
 %%% mode: latex
