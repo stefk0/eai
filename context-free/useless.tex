@@ -96,44 +96,50 @@
 
 \begin{lemma}
   \label{lem:useless2}
-  Съществува алгоритъм, който по дадена безконтекстна граматика $G = \CFG$, намира $G' = \pair{V',\Sigma',S,R'}$, $\L(G') = \L(G)$,
-  със свойството, че за всяко $X \in V' \cup \Sigma'$ съществуват $\alpha, \beta \in (V'\cup\Sigma')^\star$,
+  Съществува алгоритъм, който по дадена безконтекстна граматика $G = \CFG$, намира $G' = \pair{V',\Sigma,S,R'}$, $\L(G') = \L(G)$,
+  със свойството, че за всяко $X \in V'$ съществуват $\alpha, \beta \in (V'\cup\Sigma)^\star$,
   за които $S \derive{\star} \alpha X \beta$,
-  т.е. всяка променлива или буква в $G'$ е достижима от началната променлива $S$.
+  т.е. всяка променлива в $G'$ е достижима от началната променлива $S$.
 \end{lemma}
 \begin{hint}
   Нашата цел е да намерим множеството
-  \[\texttt{Reach} \df \{X \in \Sigma \cup V \mid S \derive{\star}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
-  Новата граматика $G'$ ще има букви $\Sigma' = \Sigma \cap \texttt{Reach}$ и променливи $V' = V \cap \texttt{Reach}$,
-  като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$ и $\Sigma'$.
+  \[\texttt{Reach} \df \{X \in V \mid S \derive{\star}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+  Новата граматика $G'$ ще има променливи $V' \df \texttt{Reach}$,
+  като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$.
   Лесно се доказава, че $\L(G) = \L(G')$.
   Остава да намерим множеството $\texttt{Reach}$.
 
-  За целта ще започнем да строим мномножествата $\texttt{Reach[i]} \subseteq V \cup \Sigma$ по следния начин:
-  \begin{itemize}
-  \item
-    $\texttt{Reach[0]} \df \{S\}$.
-  \item
-    \mynote{Всяка итерация отнема време $\mathcal{O}(|G|)$. Следователно, можем да намерим $G'$ за време $\mathcal{O}(|G|^2)$.}
-    Нека приемем, че сме построили $\texttt{Reach[i]}$ и да положим $V_i = V \cap \texttt{Reach[i]}$.
-    Тогава
-    \[\texttt{Reach[i+1]} \df \{ X \in V \cup \Sigma \mid (\exists A \in V_i)[ A \to_G \alpha X \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}.\]
-  \item
+  За целта ще започнем да строим мномножествата $\texttt{Reach[i]} \subseteq V$ по следния начин:
+  \begin{align*}
+    \texttt{Reach[0]} \df & \{S\}\\
+    \texttt{Reach[i+1]} \df & \{ X \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha X \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
+                          & \cup \texttt{Reach[i]}.
+  \end{align*}
+  
+  % \begin{itemize}
+  % \item
+  %   $
+  % \item
+  %   \mynote{Всяка итерация отнема време $\mathcal{O}(|G|)$. Следователно, можем да намерим $G'$ за време $\mathcal{O}(|G|^2)$.}
+  %   % Нека приемем, че сме построили $\texttt{Reach[i]}$ и да положим $V_i = V \cap \texttt{Reach[i]}$.
+  %   \begin{align*}
+      
+
+  %   \end{align*}
     Докажете, че за всяко $i$,
-    \[\texttt{Reach[i]} = \{X \in \Sigma \cup V \mid S \derive{\leq i}_{G} \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
-  \item
+    \[\texttt{Reach[i]} = \{X \in V \mid S \derive{\leq i}_{G} \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
     \mynote{Защо сме сигурни, че ще достигнем такава стъпка?}
     Спираме да строим тези множества, когато достигнем до стъпка $n$, за която
     \[\texttt{Reach[n]} = \texttt{Reach[n+1]}.\]
     Съобразете, че за това $n$ е изпълнено, че
-    \[\texttt{Reach[n]} = \{X \in \Sigma \cup V \mid S \derive{\star}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+    \[\texttt{Reach[n]} = \{X \in V \mid S \derive{\star}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
   % \item
   %   Новата граматика $G'$ ще има букви $\Sigma' = \Sigma \cap \texttt{Reach[n]}$ и променливи $V' = V \cap \texttt{Reach[n]}$,
   %   като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$ и $\Sigma'$.
   %   Ясно е, че $\L(G') \subseteq \L(G)$.
   % \item
   %   Докажте, че $\L(G) \subseteq \L(G')$.
-  \end{itemize}
+
   
   
   
@@ -166,6 +172,7 @@
   Прилагаме върху $G$ първо процедурата от \Lemma{useless1} и след това върху резултата прилагаме процедурата от \Lemma{useless2}.
 \end{hint}
 
+\begin{extra}
 \begin{problem}
   Проверете дали $\L(G) = \emptyset$, където правилата на $G$ са:
   \begin{align*}
@@ -175,7 +182,7 @@
     & C \to CB\ |\ SC\ |\ AS.
   \end{align*}
 \end{problem}
-
+\end{extra}
 
 %%% Local Variables:
 %%% mode: latex

@@ -88,7 +88,64 @@
   \end{prooftree}  
 \end{proposition}
 \begin{hint}
-  Индукция по $\ell_1$.
+  Пълна индукция по $\ell_1$.
+  % \begin{itemize}
+  % \item
+  %   Ако $\ell_1 = 0$, то е тривиално.
+  % \item
+  %   Ако $\ell_1 = 1$, то следва от правило (1).
+  % \item
+  %   Ако $\ell_1 > 1$, то имаме два случая за това как сме получили $\alpha \derive{\ell_1} \beta$.
+  %   \begin{itemize}
+  %   \item
+  %     Първият случай е, ако сме приложили правило (1), т.е.
+  %     \begin{prooftree}
+  %       \AxiomC{$\alpha \to \delta$}
+  %       \AxiomC{$\delta \derive{\ell_1-1} \beta$}
+  %       \RightLabel{\scriptsize{(1)}}
+  %       \BinaryInfC{$\alpha \derive{\ell_1} \beta$}
+  %     \end{prooftree}
+  %     Тогава получаваме следния извод:
+  %     \begin{prooftree}
+  %       \AxiomC{$\alpha \to \delta$}
+  %       \AxiomC{$\delta \derive{\ell_1-1} \beta$}
+  %       \AxiomC{$\beta \derive{\ell_2} \gamma$}
+  %       \RightLabel{\scriptsize{\IndHyp}}
+  %       \BinaryInfC{$\delta \derive{\ell_1+\ell_2-1} \gamma$}
+  %       \RightLabel{\scriptsize{(1)}}
+  %       \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \gamma$}
+  %     \end{prooftree}
+  %   \item
+  %     Вторият случай е, ако сме приложили правило (2), т.е. $\ell_1 = \ell'_1 + \ell''_1$ и $\ell'_1 > 0$ и $\ell''_1 > 0$ и имаме извода:
+  %     \begin{prooftree}
+  %       \AxiomC{$\alpha_1 \derive{\ell'_1} \beta_1$}
+  %       \AxiomC{$\alpha_2 \derive{\ell''_1} \beta_2$}
+  %       \RightLabel{\scriptsize{(2)}}
+  %       \BinaryInfC{$\underbrace{\alpha_1\alpha_2}_{\alpha} \derive{\ell'_1+\ell''_2} \underbrace{\beta_1\beta_2}_{\beta}$}
+  %     \end{prooftree}
+  %     Тогава получаваме следния извод:
+  %     \begin{prooftree}
+  %       \AxiomC{$\alpha_1 \derive{\ell'_1} \beta_1$}
+  %       \LeftLabel{\scriptsize{(2)}}
+  %       \AxiomC{}
+  %       \LeftLabel{\scriptsize{(0)}}
+  %       \UnaryInfC{$\alpha_2 \derive{0} \alpha_2$}
+  %       \LeftLabel{\scriptsize{(2)}}
+  %       \BinaryInfC{$\alpha \derive{\ell'_1} \beta_1\alpha_2$}
+  %       \AxiomC{}
+  %       \RightLabel{\scriptsize{(0)}}
+  %       \UnaryInfC{$\beta_1 \derive{0} \beta_1$}
+  %       \AxiomC{$\alpha_2 \derive{\ell''_1} \beta_2$}
+  %       \RightLabel{\scriptsize{(2)}}
+  %       \BinaryInfC{$\beta_1\alpha_2 \derive{\ell''_1} \beta$}
+  %       \AxiomC{$\beta \derive{\ell_2} \gamma$}
+  %       \RightLabel{\scriptsize{\IndHyp}}
+  %       \BinaryInfC{$\beta_1\alpha_2 \derive{\ell''_1+\ell_2} \gamma$}
+  %       \RightLabel{\scriptsize{\IndHyp}}
+  %       \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \gamma$}
+  %     \end{prooftree}
+  %   \end{itemize}
+  % \end{itemize}
 \end{hint}
 
 \begin{proposition}\label{pr:unrestricted-grammar:context-general-step}
@@ -118,7 +175,6 @@
     \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\gamma\delta$}
   \end{prooftree}
 \end{proof}
-
 
 
 %%% Local Variables:

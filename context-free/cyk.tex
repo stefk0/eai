@@ -44,7 +44,7 @@
   Нека е дадена безконтекстната граматика $G$ в нормална форма на Чомски и думата $\alpha$.
   Всеки път, точно преди да изпълни ред (\ref{alg:cyk:first-loop}) от програмата описана в Алгоритъм \ref{alg:belongs-to-grammar},
   е изпълнено, че за всяко $i < n-s$,
-  \[\texttt{V[i][i+s]} \df \{A \in V \mid A \rightarrow^\star_G \alpha\slice{i:i+s+1}\}.\]
+  \[\texttt{V[i][i+s]} \df \{A \in V \mid A \derive{\star}_G \alpha\slice{i:i+s+1}\}.\]
 \end{lemma}
 \begin{proof}
   Пълна индукция по $s$.
@@ -147,6 +147,7 @@
 \end{multicols}
 
 }
+
 
 %%% Local Variables:
 %%% mode: latex

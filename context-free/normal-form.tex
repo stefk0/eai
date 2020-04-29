@@ -59,8 +59,8 @@
 \end{theorem}
 
 \begin{theorem}
-  \mynote{\cite[стр. 137]{hopcroft1}}
-  Съществуват алгоритми, които определят по дадена безконтекстна граматика $G$ дали:
+  \mynote{\cite[стр. 137]{hopcroft1}. Важно е, че алгоритмите са полиномиални. От \Lemma{pumping-context} имаме експоненциални алгоритми.}
+  Съществуват \emph{полиномиални} алгоритми, които определят по дадена безконтекстна граматика $G$ дали:
   \begin{enumerate}[a)]
   \item
     $\abs{\L(G)} < \infty$;
@@ -79,12 +79,12 @@
   Да разгледаме един такъв цикъл в графа:
   \[A_0 \to A_1 \to A_2 \to \cdots \to A_n \to A_0.\]
   Това означава, че 
-  \[A_0 \to_G \alpha_1 A_1 \beta_1 \to_G \alpha_2 A_2 \beta_2 \to_G \cdots \to_G \alpha_n A_n \beta_n \to_G \alpha_{n+1} A_0 \beta_{n+1}.\]
+  \[A_0 \derive{1}_G \alpha_1 A_1 \beta_1 \derive{1}_G \alpha_2 A_2 \beta_2 \derive{1}_G \cdots \derive{1}_G \alpha_n A_n \beta_n \derive{1}_G \alpha_{n+1} A_0 \beta_{n+1}.\]
   Понеже граматиката е в НФЧ имаме, че $|\alpha_i\beta_i| = i$.
-  Понеже няма безполезни символи в граматика и тя е в НФЧ следва, че съществуват $\omega,\rho \in \Sigma^\star$, за които $\alpha_{n+1} \to^\star_G \omega$ и $\beta_{n+1} \to^\star_G \rho$,
+  Понеже няма безполезни символи в граматика и тя е в НФЧ следва, че съществуват думи $\omega,\rho \in \Sigma^\star$, за които $\alpha_{n+1} \derive{\star} \omega$ и $\beta_{n+1} \derive{\star} \rho$,
   където $|\omega\rho| \geq n+1$, защото $|\alpha_{n+1}\beta_{n+1}| = n+1$.
   Понеже няма безполезни символи в граматиката, то съществуват $\delta, \gamma \in \Sigma^\star$, за които
-  $S \to^\star_G \delta  A_0 \gamma$. Получаваме:
+  $S \derive{\star} \delta  A_0 \gamma$. Получаваме:
   \[ S \derive{\star}_G \delta A_0 \gamma \derive{\star}_G \delta \alpha_{n+1} A_0 \beta_{n+1} \gamma \derive{\star}_G \delta \omega A_0 \rho\gamma \derive{\star}_G \cdots \derive{\star}_G \delta \omega^i A_0 \rho^i \gamma \derive{\star}_G \delta\omega^i\alpha\rho^i\gamma,\]
   където $A_0 \derive{\star}_G \alpha$, за някое $\alpha \in \Sigma^\star$.
 

@@ -30,10 +30,23 @@
 а съдържанието на стека е думата $\gamma$.
 Удобно е да въведем бинарната релация $\vdash_P$ над $Q\times\Sigma^\star\times\Gamma^\star$,
 която ще ни казва как моментното описание на автомата $P$ се променя след изпълнение на една стъпка:
-\begin{align*}
-  (p,\varepsilon) \in \Delta(q,x,A) & \implies (q,x\alpha,A\gamma) \vdash_P (p,\alpha,\gamma)\\
-  (p,\beta) \in \Delta(q,\varepsilon,Y) & \implies (q,\alpha,Y\gamma) \vdash_P (p,\alpha,\beta\gamma).
-\end{align*}
+
+\begin{prooftree}
+  \AxiomC{$\Delta(q,x,A) \ni (p,\beta)$}
+  \UnaryInfC{$(q,x\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$\Delta(q,\varepsilon,A) \ni (p,\beta)$}
+  \UnaryInfC{$(q,\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+\end{prooftree}
+
+
+
+% \begin{align*}
+%   (p,\varepsilon) \in \Delta(q,x,A) & \implies (q,x\alpha,A\gamma) \vdash_P (p,\alpha,\gamma)\\
+%   (p,\beta) \in \Delta(q,\varepsilon,Y) & \implies (q,\alpha,Y\gamma) \vdash_P (p,\alpha,\beta\gamma).
+% \end{align*}
 Рефлексивното и транзитивно затваряне на $\vdash_P$ ще означаваме с $\vdash^\star_P$.
 Сега вече можем да дадем дефиниция на език, разпознаван от стеков автомат $P$.
 \mynote{Възможно е да се даде и друга еквивалентна дефиниция - разпознаване с празен стек.}
@@ -76,12 +89,11 @@
   \end{itemize}
   
   Ще докажем, че за всяка променлива $A \in V$, за всяка дума $\alpha \in \Sigma^\star$ и $\gamma \in (\Sigma \cup V)^\star$, то е изпълнено, че:
-  \mynote{Трябва да се каже, че $S \derive{\star}_G \alpha \gamma$ го правим като заместваме най-лявата променлива.}
   \begin{enumerate}[(a)]
   \item
-    ако $S \derive{\star}_G \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
+    ако $S \lderive{\star} \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
   \item
-    ако $(p, \alpha, \gamma\sharp) \vdash^\star_P (p, \varepsilon, \sharp)$, то $\gamma \derive{\star}_G \alpha$.
+    ако $(p, \alpha, \gamma\sharp) \vdash^\star_P (p, \varepsilon, \sharp)$, то $\gamma \lderive{\star} \alpha$.
   \end{enumerate}
   Тогава, ако вземем $\gamma = \varepsilon$, то ще получим, че
   \begin{align*}
@@ -95,14 +107,14 @@
 
   \begin{enumerate}[(a)]
   \item
-    Индукция по дължината на извода $S \to^\star_G \alpha\gamma$.
+    Индукция по дължината $\ell$ на извода $S \lderive{\ell} \alpha\gamma$.
     Нека $\ell = 0$. Този случай е тривиален, защото тогава $\alpha = \varepsilon$ и $\gamma = S$.
     Ясно е, че
     \[(p,\varepsilon,S\sharp) \vdash^0_P (p,\varepsilon,S\sharp).\]
 
-    Нека $\ell > 0$ и $S \stackrel{\ell}{\to}_G \alpha\gamma$. Това означава, че този извод може да се запише по следния начин:
-    \[S \stackrel{\ell-1}{\to}_G \alpha_1A\gamma_2 \to_G \underbrace{\alpha_1\alpha_2}_{\alpha}\underbrace{\gamma_1\gamma_2}_{\gamma},\]
-    където $A \to_G \alpha_2\gamma_1$ е правилото в граматиката, което сме приложили най-накрая. Тогава от И.П. имаме, че
+    Нека $\ell > 0$ и $S \lderive{\ell} \alpha\gamma$. Това означава, че този извод може да се запише по следния начин:
+    \[S \lderive{\ell-1} \alpha_1A\gamma_2 \to_G \underbrace{\alpha_1\alpha_2}_{\alpha}\underbrace{\gamma_1\gamma_2}_{\gamma},\]
+    където $A \to_G \alpha_2\gamma_1$ е правилото в граматиката, което сме приложили най-накрая. Тогава от \IndHyp имаме, че
     \begin{equation}
       \label{eq:5}
       (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp).
@@ -125,19 +137,42 @@
       $\Delta(p,a,a) \ni (p,\varepsilon)$.
       Това означава, че $\alpha = a\beta$, $\gamma = a\gamma_1$ и
       \[(p, \alpha, \gamma \sharp) \vdash_P (p,\beta,\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
-      Тогава от И.П. получаваме, че $\gamma_1 \derive{\star}_G \beta$ и оттук
-      \[\underbrace{a \gamma_1}_{\gamma} \derive{\star}_G \underbrace{a\beta}_{\alpha}.\]
+      Тук имаме следния извод:
+      \begin{prooftree}
+        \AxiomC{$a \lderive{0} a$}
+        \AxiomC{$(p,\beta,\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$}
+        \RightLabel{\scriptsize{\IndHyp}}
+        \UnaryInfC{$\gamma_1 \lderive{\star} \beta$}
+        \BinaryInfC{$\underbrace{a \gamma_1}_{\gamma} \lderive{\star} \underbrace{a\beta}_{\alpha}$}
+      \end{prooftree}
+      % Тогава от \IndHyp получаваме, че $\gamma_1 \lderive{\star} \beta$ и оттук
+      % \[\underbrace{a \gamma_1}_{\gamma} \lderive{\star} \underbrace{a\beta}_{\alpha}.\]
     \item
       $\Delta(p,\varepsilon,A) \ni (p,a)$. Това означава, че $A \to_G a$, $\gamma = A\gamma_1$ и
       \[(p, \alpha, \gamma \sharp) \vdash_P (p,\alpha,a\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
-      Тогава от И.П. получаваме, че $a\gamma_1 \derive{\star}_G \alpha$ и оттук
-      \[\underbrace{A\gamma_1}_{\gamma} \derive{\star}_G \alpha.\]
+      Можем да направим следния извод:
+      \begin{prooftree}
+        \AxiomC{$A \to a$}
+        \UnaryInfC{$A\gamma_1 \lderive{1} a\gamma_1$}
+        \AxiomC{$(p,\alpha,a\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$}
+        \RightLabel{\scriptsize{\IndHyp}}
+        \UnaryInfC{$a\gamma_1 \lderive{\star} \alpha$}
+        % \RightLabel{\scriptsize{правило (1)}}
+        \BinaryInfC{$\underbrace{A\gamma_1}_{\gamma} \lderive{\star} \alpha$}
+      \end{prooftree}
     \item
       Нека $\Delta(p,\varepsilon,A) \ni (p,BC)$. Това означава, че $A \to_G BC$, $\gamma = A\gamma_1$ и
       \[(p, \alpha, \gamma \sharp) \vdash_P (p,\alpha, BC\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
-      Тогава от И.П. получаваме, че
-      $BC\gamma_1 \derive{\star}_G \alpha$. Заключаваме, че
-      \[ \underbrace{A\gamma_1}_{\gamma}\derive{\star}_G \alpha.\]
+      Можем да направим следния извод:
+      \begin{prooftree}
+        \AxiomC{$A \to BC$}
+        \UnaryInfC{$A\gamma_1 \lderive{1} BC\gamma_1$}
+        \AxiomC{$(p,\alpha, BC\gamma_1\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$}
+        \RightLabel{\scriptsize{\IndHyp}}
+        \UnaryInfC{$BC\gamma_1 \lderive{\star} \alpha$}
+        % \RightLabel{\scriptsize{правило (1)}}
+        \BinaryInfC{$\underbrace{A\gamma_1}_{\gamma} \lderive{\star} \alpha$}
+      \end{prooftree}
     \end{itemize}
   \end{enumerate}
 \end{proof}
@@ -209,11 +244,11 @@
         & (q', \beta_2, C) \vdash^{\ell_2}_P (p, \varepsilon, \varepsilon) \implies [q', C, p] \derive{\star}_G \beta_2.
       \end{align*}
       Тогава от правилата за извод в граматика получваме, че
-      \[[r,B,q'][q',C,p] \derive{\star}_G \beta_1\beta_2.\]
+      \[[r,B,q'][q',C,p] \lderive{\star} \beta_1\beta_2.\]
       Понеже имаме, че $\Delta(q,a,A) \ni (r,BC)$, то в граматиката имаме правилото
       \[[q,A,p] \to_G a[r,B,q'][q',C,p].\]
       Обединявайки всичко, получаваме извода
-      \[[q,A,p] \derive{\star}_G \underbrace{a\beta_1\beta_2}_{\alpha}.\]
+      \[[q,A,p] \lderive{\star} \underbrace{a\beta_1\beta_2}_{\alpha}.\]
     \end{itemize}
   \item[$(\Leftarrow)$]
     Този път с пълна индукция по дължината на извода $\ell$ в граматиката $G$ ще докажем, че

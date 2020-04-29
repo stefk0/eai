@@ -14,12 +14,12 @@
 \end{lemma}
 \begin{hint}
   Първо намираме множеството от двойки
-  \[\texttt{Ren} = \{(A,B) \in V\times V \mid A \derive{+} B\}\]
+  \[\texttt{Ren} = \{(A,B) \in V\times V \mid A \derive{\star} B\}\]
   като строим множествата по такъв начин, че:
-  \[\texttt{Ren[n]} = \{(A,B) \in V\times V \mid A \derive{< n} B\}\]
+  \[\texttt{Ren[n]} = \{(A,B) \in V\times V \mid A \derive{\leq n} B\}\]
 
   \begin{align*}
-    & \texttt{Ren[0]} \df \emptyset\\
+    & \texttt{Ren[0]} \df \{(A,A) \mid A \in V\}\\
     & \texttt{Ren[n+1]} \df \texttt{Ren[n]} \cup \{(A,B) \mid (\exists C)[ A \to_G C\ \&\ (C,B) \in \texttt{Ren[n]}]\}.
   \end{align*}
   
@@ -36,8 +36,8 @@
   Спираме на първото $n$, за което $\texttt{Ren[n]} = \texttt{Ren[n+1]}$. Тогава $\texttt{Ren} = \texttt{Ren[n]}$.
   % \end{itemize}
   
-  Нека $R'_0 \df R \setminus \texttt{Ren}$ са правилата на $R$, които не са преименуващи. Тогава
-  \[R' \df R'_0 \cup \{\ (A,\alpha) \in V \times (V\cup\Sigma)^\star \mid (\exists B)[(A,B) \in \texttt{Ren}\ \&\ (B,\alpha) \in R'_0]\ \}.\]
+  Нека $R'_0 \df R \setminus (V\times V)$ са правилата на $R$, които не са преименуващи. Тогава
+  \[R' \df  \{\ (A,\alpha) \in V \times (V\cup\Sigma)^\star \mid (\exists B)[(A,B) \in \texttt{Ren}\ \&\ (B,\alpha) \in R'_0]\ \}.\]
 \end{hint}
 
 \ExtraMaterial{
@@ -51,26 +51,27 @@
         & C \to AB\ |\ a\ |\ b.
       \end{align*}
       Да намерим първо $\texttt{Ren}$.
-      \begin{itemize}
-      \item
-        $\texttt{Ren[0]} = \emptyset$
-      \item
-        $\texttt{Ren[1]} = \{(S,B),(A,S),(B,C)\}$;
-      \item
-        $\texttt{Ren[2]} = \{(S,B),(A,S),(A,B),(B,C),(S,C)\}$;
-      \item
-        $\texttt{Ren[3]} = \{(S,B),(A,S),(A,B),(A,C),(B,C),(S,C)\}$;
-      \item
-        $\texttt{Ren[4]} = \{(S,B),(A,S),(A,B),(A,C),(B,C),(S,C)\}$;
-      \item
-        Получихме, че $\texttt{Ren[3]} = \texttt{Ren[4]}$.
-        Оттук можем да заключим следното:
-        \begin{align*}
-          & A \derive{\star} B,S,C\\
-          & B \derive{\star} C\\
-          & S \derive{\star} B,C.
-        \end{align*}
-      \end{itemize}
+      \begin{align*}
+        \texttt{Ren[0]} = \{ & (S,S), (A,A), (B,B), (C,C)\};\\
+        \texttt{Ren[1]} = \{ & (S,S), (S,B), (A,A), (A,S),\\
+                             & (B,B), (B,C), (C,C)\};\\
+        \texttt{Ren[2]} = \{ & (S,S),(S,B), (S,C), (B,B), (B,C), (C,C),\\
+                             & (A,A), (A,S), (A,B)\};\\
+        \texttt{Ren[3]} = \{ & (S,S),(S,B), (S,C), (B,B), (B,C), (C,C),\\
+                             & (A,A), (A,S), (A,B), (A,C)\};\\
+        \texttt{Ren[4]} = \{ & (S,S),(S,B), (S,C), (B,B), (B,C), (C,C),\\
+                             & (A,A), (A,S), (A,B), (A,C)\};\\
+      \end{align*}
+      
+      Получихме, че $\texttt{Ren[3]} = \texttt{Ren[4]}$.
+      Оттук можем да заключим следното:
+      \begin{align*}
+        & A \derive{\star} A,B,S,C\\
+        & B \derive{\star} B,C\\
+        & S \derive{\star} S,B,C\\
+        & C \derive{\star} C.          
+      \end{align*}
+      % \end{itemize}
       
       Първо добавяме към $R'$ правилата, които не са преименуващи, а именно:
       \begin{align*}
@@ -101,6 +102,7 @@
   \end{multicols}
 }
 
+\begin{extra}
 \begin{problem}
   Премахнете преименуващите правила от граматиката $G$, като запазите езика, ако $G$ има следните правила:
     \begin{align*}
@@ -110,7 +112,7 @@
       & C \to a\ |\ AB;
     \end{align*}
 \end{problem}
-
+\end{extra}
 
 %%% Local Variables:
 %%% mode: latex
