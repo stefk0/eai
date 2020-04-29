@@ -22,39 +22,17 @@
   \AxiomC{$X \to_G \gamma$}
   \UnaryInfC{$X \yield{1} \gamma$.}
 \end{prooftree}
-Обърнете внимание също, че тТази релация е рефликсивна, но не е транзитивна!}
+Обърнете внимание също, че тази релация е рефликсивна, но не е транзитивна!}
 
 Да дефинираме $\yield{\star}$ по следния начин:
 \[X \yield{\star} \gamma \dff (\exists \ell\in\Nat)[X \yield{\ell} \gamma].\]
 
-\begin{proposition}
-  За произволни променливи $A$, $B$ и думи $\alpha_1,\alpha_2, \alpha_3$ е изпълнено, че:
-  \begin{prooftree}
-    \AxiomC{$A \yield{\ell_1}\alpha_1B\alpha_3$}
-    \AxiomC{$B \yield{\ell_2} \alpha_2$}
-    \BinaryInfC{$A \yield{\ell_1+\ell_2} \alpha_1\alpha_2\alpha_3$}
-  \end{prooftree}
-\end{proposition}
-\begin{hint}
-  Индукция по $\ell_1$.
-\end{hint}
 
-\begin{proposition}
-  За произволна променлива $A$ и произволни думи $\beta$ и $\gamma$ е изпълнено, че:
-  \begin{prooftree}
-    \AxiomC{$A \yield{\ell} \beta A \gamma$}
-    \AxiomC{$i \in \Nat$}
-    \BinaryInfC{$A \yield{\ell \cdot i} \beta^i A \gamma^i$}
-  \end{prooftree}
-  
-\end{proposition}
-\begin{hint}
-  Индукция по $i$.
-\end{hint}
+
 
 \begin{lemma}
   Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
-  Тогава ако $X \derive{\star}_G \beta$, то $X \yield{\star}_G \beta$.
+  Тогава ако $X \derive{\star} \beta$, то $X \yield{\star} \beta$.
 \end{lemma}  
 \begin{proof}
   С пълна индукция по $\ell$ ще докажем, че ако $X \derive{\ell} \beta$, то $X \yield{\star} \beta$.
@@ -82,7 +60,6 @@
     \item
       $\ell-1 = \sum^k_{i=1} \ell_i$.
     \end{itemize}
-    % От \IndHyp имаме, че $X_i \yield{\star} \beta_i$ за всяко $i = 0,1, \dots, k$.
     Получаваме следното:
     \begin{prooftree}
       \AxiomC{$X \to_G X_0\cdots X_k$}
@@ -146,66 +123,53 @@
   \end{theorem}  
 \end{framed}
 
-Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
-Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$.
-\[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
-Ясно е, че $\L(G) = \L_G(S)$.
-Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$ по следния начин:
-\[\L^\ell_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\leq \ell} \alpha\}.\]
-Следните свойства са ясни:
-\begin{itemize}
-\item
-  $\L^0_G(A) = \emptyset$;
-\item
-  $\L^n_G(A)$ е краен език за всяко $n$;
-\item
-  $\L^n_G(A) \subseteq \L^{n+1}_G(A)$ за всяко $n$;
-\item
-  $\L_G(A) = \bigcup_{n\geq 0}\L^n_G(A)$.  
-\end{itemize}
+Следващото твърдение ни казва, че има пряка връзка между релацията $\yield{\star}$ и дърветата на извод.
 
-Следната характеризация на $\L^\ell_G(A)$ ще е важна за нас, когато искаме да докажем,
-че една безконтекстна граматика разпознава даден език.
+\begin{important}
+  \begin{proposition}
+    Нека $G$ е безконтекстна граматика. Тогава
+    $X \yield{\ell} \gamma$ точно тогава, когато съществува дърво на извод $P$ съвместимо с $G$, за което
+    $\texttt{root}(P) = X$, $\texttt{yield}(P) = \alpha$ и $\texttt{height}(P) = \ell$.
+  \end{proposition}
+\end{important}
+\begin{hint}
+  Индукция по $\ell$.
+\end{hint}
 
-\begin{proposition}\label{pr:grammar:yield-approximation}
-  Нека $G$ е произволна безконтекстна граматика и $A$ е променлива в $G$.
-  Тогава имаме следното:
-  \begin{align*}
-    \L^0_G(A) & = \emptyset\\
-    \L^{\ell+1}_G(A) & = \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.
-  \end{align*}
-\end{proposition}
-\begin{proof}
-  Пълна индукция по $\ell$. Твърдението очевидно е изпълнено за $\ell = 0$.
-  Нека $\alpha \in \L^{\ell+1}_G(A)$, т.е. $A \yield{\leq \ell+1} \alpha$. Имаме следния извод:
-  \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_1 \yield{\leq\ell} \beta_1$}
-    \AxiomC{$\cdots$}
-    \AxiomC{$B_n \yield{\leq \ell} \beta_n$}
-    \QuaternaryInfC{$A \yield{\leq\ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
-  \end{prooftree}
-  Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$.
-  Тогава 
-  \[\alpha \in \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}\]
-
-  Обратно, нека сега $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$, където $A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$,
-  $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$.
-  Получаваме следния извод:
-  \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$}
-    \AxiomC{$\beta_1 \in \L^\ell_G(B_1)$}
-    \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_1 \yield{\leq \ell }\beta_1 $}
-    \AxiomC{$\cdots$}
-    \AxiomC{$\beta_n \in \L^\ell_G(B_n)$}
-    \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_n \yield{\leq \ell }\beta_n$}
-    \QuaternaryInfC{$A \yield{\leq \ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
-  \end{prooftree}
-\end{proof}
-
-
+\begin{extra}
+  
+  Добре е да обърнем внимание, че е възможно, ако $A \yield{\ell} \alpha$, то да има няколко дървета на извод с корен променливата $A$,
+  които да извеждат думата $\alpha$ и да имат височина $\ell$.
+  \begin{example}
+    Да разгледаме граматика с правила
+    \begin{align*}
+      & S \to S + S\ |\ S * S\ |\ (S)\ |\ V\\
+      & V \to x\ |\ y\ |\ z
+    \end{align*}
+    
+    Думата $x * y + z$ има две различни дървета на извод $P_1$ и $P_2$, като и двете имат височина $4$ и
+    $\texttt{yield}(P_1) = \texttt{yield}(P_2) = x*y+z$.
+    
+    \begin{framed}
+      \centering
+      \qtreecenterfalse
+      \Tree [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$S$ [.$V$ $y$ ] ] $+$ [.$S$ [.$V$ $z$ ] ] ] ]
+      \hskip 0.6in
+      \Tree [.$S$ [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$V$ $y$ ] ] ]  $+$  [.$S$ [.$V$ $z$ ] ] ]
+    \end{framed}  
+    
+    Да разгледаме граматика с правила
+    \begin{align*}
+      & S \to E + S\ |\ E\\
+      & E \to V * E\ |\ V\ |\ (S) * E\ |\ (S)\\
+      & V \to x\ |\ y\ |\ z
+    \end{align*}
+    Сега думата $x * y + z$ има само едно дърво на извод.
+    \mynote{Тук операцията $*$ е с по-висок приоритет в сравнение с операцията $+$.}    
+    \begin{framed}
+      \Tree [.$S$ [.$E$ [.$V$ $x$ ] $*$ [.$E$ [.$V$ $y$ ] ] ] $+$ [.$S$ [.$E$ [.$V$ $z$ ] ] ] ]
+    \end{framed}
+  \end{example}
 
 \begin{example}
   \begin{align*}
@@ -231,9 +195,10 @@
   \end{align*}
 \end{example}
 
+\end{extra}
 
 
-%%% Local Variables:
+%%%Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"
 %%% End:

@@ -1,336 +1,324 @@
 \section{Лема за покачването}
 
-\begin{lemma}[за покачването (безконтекстни езици)]
-  \index{лема за покачването!безконтекстни езици}
-  \label{lem:pumping-context} 
-  \mynote{\cite[стр. 125]{sipser3}, \cite[стр. 125]{hopcroft1}, \cite[стр. 148]{kozen}}
-  За всеки безконтекстен език $L$ съществува $p>0$, такова
-  че ако $\alpha\in L$, за която $\abs{\alpha} \geq p$, то съществува разбиване на думата на пет части, $\alpha=xyuvw$,
-  \mynote{Ще казваме, че $p$ е константа на покачването. Тук отново да напомним, че $0 \in \Nat$ и $xy^0uv^0w = xuw$.}
-  за което е изпълнено:
-  \begin{enumerate}[1)]
+В този раздел ще разгледаме едно твърдение, което ще ни даде критерий за проверка кога един език не е безконтекстен. Ще започнем с няколко помощни твърдения.
+
+\begin{proposition}\label{pr:pumping:ground}
+  За произволни променливи $A$, $B$ и думи $\alpha_1,\alpha_2, \alpha_3$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$A \yield{\ell_1}\alpha_1B\alpha_3$}
+    \AxiomC{$B \yield{\ell_2} \alpha_2$}
+    \BinaryInfC{$A \yield{ \leq \ell_1+\ell_2} \alpha_1\alpha_2\alpha_3$}
+  \end{prooftree}
+\end{proposition}
+\begin{hint}
+  Формално доказателството протича с индукция по $\ell_1$.
+  
+  \begin{figure}[H]
+    \begin{subfigure}[t]{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \node (A) at (0,0) {$A$};
+        \coordinate (B) at (-2,-2.5);
+        \coordinate (C) at (2,-2.5);
+        \coordinate (D) at (-0.9,-2.5);
+        \coordinate (E) at (0.9,-2.5);
+        \node (F) at (0,-1.5) {$B$};
+        
+        \node (G) at (0,-2.6) {$B$};
+        \coordinate (H) at (-0.9,-3.6);
+        \coordinate (I) at (0.9,-3.6);
+        
+        \draw (A) -- (B) -- node[below]{$\alpha_1$} (D) -- (F) -- (E) -- node[below]{$\alpha_3$} (C) -- (A);
+        \draw (G) -- (H) -- node[below]{$\alpha_2$}(I) -- (G);
+        
+        % \draw [photon] (A) -- node[left]{$\alpha$} (F);
+      \end{tikzpicture}
+      \caption{\scriptsize{Синтактични дървета за изводите $A \yield{\ell_1}\alpha_1B\alpha_3$ и $B \yield{\ell_2} \alpha_2$}}
+    \end{subfigure}
+    % $\stackrel{\lambda}{\Rightarrow}$
+    ~
+    \begin{subfigure}[t]{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \node (A) at (0,0) {$A$};
+        \coordinate (B) at (-2,-2.5);
+        \coordinate (C) at (2,-2.5);
+        \coordinate (D) at (-0.9,-2.5);
+        \coordinate (E) at (0.9,-2.5);
+        \node (F) at (0,-1.5) {$B$};
+        
+        % \coordinate (G) at (0,-2.3) {${\scriptstyle X_\alpha}$};
+        % \coordinate (H) at (-0.9,-3.3);
+        % \coordinate (I) at (0.9,-3.3);
+        
+        \draw (A) -- (B) -- node[below]{$\alpha_1$} (D) -- (F) -- (E) -- node[below]{$\alpha_3$} (C) -- (A);
+        \draw (D) -- node[below]{$\alpha_2$} (E);
+      \end{tikzpicture}
+      \caption{\scriptsize{Съединяваме двете дървета}}
+      % \caption{$\texttt{yield}(\uppercut{P}{\alpha}) = \omega_1 \cdot \texttt{root}(\lowercut{P}{\alpha}) \cdot \omega_2$}
+    \end{subfigure}
+  \end{figure}
+\end{hint}
+
+\begin{proposition}\label{pr:pumping:iteration}
+  За произволна променлива $A$ и произволни думи $\beta$ и $\gamma$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$A \yield{\ell} \beta A \gamma$}
+    \AxiomC{$i \in \Nat$}
+    \BinaryInfC{$A \yield{\leq i \cdot \ell} \beta^i A \gamma^i$}
+  \end{prooftree}
+  
+\end{proposition}
+\begin{hint}
+  Формално доказателството трябва да следва индукция по $i$.
+  Понеже това доказателство не крие изненади, ще се задоволим с един пример. Нека $P$ да бъде синтактично дърво съответстващо на извода $A \yield{\ell} \beta A \gamma$.
+  Тогава можем да получим синтактично дърво $P^{(2)}$  съответстващо на $A \yield{\leq 2\ell} \beta^2A\gamma^2$ по следния начин.
+  \begin{figure}[H]
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \node (A) at (0,0) {\footnotesize{$A$}};
+        \coordinate (B) at (-2,-2.2);
+        \coordinate (C) at (2,-2.2);
+        \coordinate (S) at (-1,-2.2);
+        \coordinate (T) at (1,-2.2);
+        \node (L) at (0,-1) {$A$};
+        
+        \draw (A) -- (B) -- node[below]{$\beta$}(S) -- (L) -- (T) -- node[below]{$\gamma$}(C) -- (A);
+      \end{tikzpicture}
+      \caption{\scriptsize{Синтактично дърво $P$ за извода $A \yield{\ell} \beta A\gamma$}}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \node       (A) at (0,0) {\footnotesize{$A$}};
+        \coordinate (B) at (-2,-2.2);
+        \coordinate (C) at (2,-2.2);
+        \coordinate (S) at (-1,-2.2);
+        \coordinate (T) at (1,-2.2);
+        \node       (L) at (0,-1) {\footnotesize{$A$}};
+        
+        \coordinate (E) at (-0.7,-2.5);
+        \coordinate (F) at (0.7,-2.5);
+        
+        
+        \node       (H) at (0,-2) {\footnotesize{$A$}};
+        \node       (X) at (0,-3) {\footnotesize{$A$}};
+        \coordinate (D) at (-2,-4.2);
+        \coordinate (G) at (2,-4.2);
+        \coordinate (E) at (-1,-4.2);
+        \coordinate (F) at (1,-4.2);
+        
+        \draw (A) -- (B) -- node[below]{$\beta$}(S) -- (L) -- (T) -- node[below]{$\gamma$}(C) -- (A);
+        \draw (H) -- (D) -- node[below]{$\beta$}(E) -- (X) -- (F) -- node[below]{$\gamma$}(G) -- (H);
+      \end{tikzpicture}
+      \caption{\scriptsize{Съединяваме две копия на $P$}}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \node       (A) at (0,0) {\footnotesize{$A$}};
+        \coordinate (B) at (-2,-2.2);
+        \coordinate (C) at (2,-2.2);
+        \coordinate (S) at (-1,-2.2);
+        \coordinate (T) at (1,-2.2);
+        \node       (L) at (0,-1) {\footnotesize{$A$}};
+        
+        \coordinate (E) at (-0.7,-2.2);
+        \coordinate (F) at (0.7,-2.2);
+        
+        \node       (X) at (0,-2) {\footnotesize{$A$}};
+        \coordinate (D) at (-1.82,-3.2);
+        \coordinate (G) at (1.82,-3.2);
+        \coordinate (E) at (-1,-3.2);
+        \coordinate (F) at (1,-3.2);
+        
+        \draw (A) -- (B) -- node[below]{$\beta$}(S) -- (L) -- (T) -- node[below]{$\gamma$}(C) -- (A);
+        \draw (L) -- (D) -- node[below]{$\beta$}(E) -- (X) -- (F) -- node[below]{$\gamma$}(G) -- (L);
+      \end{tikzpicture}
+      \caption{\scriptsize{Получаваме синтактично дърво $P^{(2)}$ за извода $A \yield{\leq 2\ell} \beta^2 A \gamma^2$}}
+    \end{subfigure}
+  \end{figure}
+\end{hint}
+
+\begin{proposition}\label{pr:pumping:lower-bound}
+  Нека $G$ е безконтекстна граматика и 
+  \[b \df \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
+  Тогава:
+  \begin{itemize}
+  \item 
+    Ако $A \yield{\leq\ell} \alpha$, то $|\alpha| \leq b^\ell$.
   \item
-    $\abs{yv}\geq 1$,
+    Ако $\alpha \in \L(G)$ и $|\alpha| > b^\ell$, то $S \yield{\geq \ell+1} \alpha$.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Това твърдение е на практика реформулировка на \Corollary{tree:upper-bound}.
+  \begin{itemize}
   \item
-    $\abs{yuv}\leq p$, и
+    Да разгледаме синтактично дърво $P$ за извода $A \yield{\leq\ell} \alpha$.
+    Според \Corollary{tree:upper-bound} имаме, че $\abs{\alpha} \leq b^{\texttt{height}(P)} \leq b^{\ell}$.
   \item
-    $(\forall i\in\Nat)[xy^iuv^iw\in L]$.
-\end{enumerate}
-\end{lemma}
+    Нека $\alpha \in \L(G)$. Това означава, че $S \yield{\star} \alpha$.
+    Ако допуснем, че $S \yield{\leq \ell} \alpha$, то бихме имали, че $\abs{\alpha} \leq b^\ell$, което е противоречие.
+    Заключаваме, че $S \yield{\geq \ell+1} \alpha$.
+  \end{itemize}
+\end{proof}
+
+\begin{important}
+  \begin{lemma}[за покачването (безконтекстни езици)]
+    \index{лема за покачването!безконтекстни езици}
+    \label{lem:pumping-context} 
+    \mynote{\cite[стр. 125]{sipser3}, \cite[стр. 125]{hopcroft1}, \cite[стр. 148]{kozen}}
+    За всеки безконтекстен език $L$ съществува $p>0$, такова
+    че ако $\alpha\in L$, за която $\abs{\alpha} \geq p$, то съществува разбиване на думата на пет части, $\alpha=xyuvw$,
+    \mynote{Ще казваме, че $p$ е константа на покачването. Тук отново да напомним, че $0 \in \Nat$ и $xy^0uv^0w = xuw$.}
+    за което е изпълнено:
+    \begin{enumerate}[1)]
+    \item
+      $\abs{yv}\geq 1$,
+    \item
+      $\abs{yuv}\leq p$, и
+    \item
+      $(\forall i\in\Nat)[xy^iuv^iw\in L]$.
+    \end{enumerate}
+  \end{lemma}
+\end{important}
 \begin{proof}
   \mynote{Числото $b$ е максималната разклоненост на всяко дърво на извод за дума изводима от граматиката $G$.}
   Нека $G$ е безконтекстна граматика за езика $L$. Да положим
-  \[b \df \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
-  Нека
-  \[p \df b^{\abs{V} + 1}.\]
+  \[p \df b^{\abs{V}+1}, \text{ където }b \df \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
   Ще покажем, че този избор на $p$ е удачен за удовлетворяването на условията на лемата. Ще наричаме $p$ константа на покачването за граматиката $G$.
   
   Да разгледаме произволна дума $\alpha \in \L(G)$, за която $\abs{\alpha} \geq p$.
   Понеже $\L(G)$ е безкраен език, то със сигурност можем да намерим такава дума.
-  Нека $P = (T,\lambda)$ е дърво на извод за $\alpha$ в граматиката $G$ с корен $S$.
-  \mynote{Според нашите означения, $\alpha = \texttt{yield}(P)$.}
-  Тогава от \Corollary{tree:upper-bound} следва, че 
-  \[p = b^{|V| + 1}\leq |\alpha| \leq b^{\texttt{height}(T)}.\]
-  Оттук следва, че
-  \[|V| + 1 \leq \texttt{height}(T).\]
-  Нека измежду всички дървета на извод $P = (T,\lambda)$ за думата $\alpha$ в граматиката $G$ сме избрали такова с \emph{минимален} брой върхове в дървото $T$.
-  Да фиксираме \emph{максимален} път $\pi$ в $T$, т.е. дума $\pi \in T$ и $|\pi| = \texttt{height}(T)$.
-  Ясно е, че
-  \mynote{Броят на върховете по пътя $\pi$ е 1 + броя на ребрата.}
-  \[|V| + 1 \leq |\{ X_\gamma \mid \gamma \prec \pi\}| = \texttt{height}(T).\]
-  Да напомним, че $X_\gamma$ за $\gamma \prec \pi$ са променливите, които съответстват на всички върхове по пътя $\pi$.
-  Тук нарочно не броим $X_\pi$, защото $X_\pi \in \Sigma$, а ние се интересуваме само от променливите.
-  От принципа на Дирихле следва, че в множеството $\{ X_\gamma \mid \gamma \prec \pi\}$ има повторения на променливи.
-  Това означава, че съществува $\beta \prec \pi$, за която
-  \begin{equation}
-    \label{eq:10}
-    X_\beta \in \{X_\gamma \mid \beta \prec \gamma \prec \pi\}.
-  \end{equation}
-  Нека $\beta$ е най-дългата дума, за която е изпълнено \Property{eq:10}.
-  Да означим с $\gamma$ една от думите, за която $\beta \prec \gamma \prec \pi$ и $X_\gamma = X_\beta$.
-  От избора на $\beta$ следва, че:
-  \begin{equation}
-    \label{eq:11}
-    \texttt{height}(\lowercut{P}{\beta}) = |\{ X_\gamma \mid \beta \preceq \gamma \prec \pi\}| \leq |V| + 1,
-  \end{equation}
-  защото ако допуснем противното, то ще имаме, че $|\{ X_\gamma \mid \beta \prec \gamma \prec \pi\}| > |V| + 1$ и от принципа на Дирихле ще следва, че
-  съществува по-дълга от $\beta$ дума, за която е изпълнено \Property{eq:10}.
-  
-  Нека $u = \texttt{yield}(\lowercut{P}{\gamma})$. Тогава $yuv = \texttt{yield}(\lowercut{P}{\beta})$, за някои думи $y,v \in \Sigma^\star$.
-  Това означава, че думата $\alpha$ може да се запише като $\alpha = xyuvw$, за някои $x, w \in \Sigma^\star$.
-  % \mynote{По пътя $\pi$ е възможно да срещнем много различни двойки повтарящи се променливи, ние избрахме възможно най-долната.}
-  Освен това имаме свойствата:
-  \begin{enumerate}[1)]
+  Според \Proposition{pumping:lower-bound}, имаме $S \yield{\ell}\alpha$, където $\ell \geq \abs{V}+1$.
+  Нека измежду всички синтактични дървета $P = (T,\lambda)$ за извода $S \yield{\star} \alpha$ сме избрали такова с \emph{минимален} брой върхове в дървото $T$.
+  Да фиксираме \emph{максимален} път $\pi$ в $T$, т.е. дума $\pi \in T$ и $|\pi| = \ell$. Щом $\ell \geq \abs{V}+1$, то това означава, че по този път $\pi$
+  се срещат поне $\abs{V}+1$ на брои променливи. От принципа на Дирихле следва, че трябва да има повторения на променливи по този път. 
+  В $P$ можем да изберем това срещане на двойка повтарящи се променливи по пътя $\pi$, както на \Figure{pumping:partition}, което е възможно най-близо до края на пътя.
+  Това означава, че можем да разбием извода $S \yield{\star} \alpha$ като $S \yield{\star} xAw$ и $A \yield{\leq \abs{V}+1} \gamma$, където $\alpha = x\gamma w$.
+  Сега според нашия избор, изводът $A \yield{\leq \abs{V}+1} \gamma$ може да се разбие като $A \yield{\leq \abs{V}+1} yAv$ и $A \yield{\leq \abs{V}} u$,
+  където $\gamma = yuv$.
+  Да обобщим. Можем да разбием думата $\alpha$ на пет части като $\alpha = xyuvw$ с изводите:
+  \begin{enumerate}[(1)]
   \item
-    $\abs{yv}\geq 1$, защото ако допуснем, че $|yv| = 0$, то това означава, че $\alpha = xuw$ и тази дума
-    би имала дърво на извод $P' \df (\uppercut{P}{\beta}) \odot (\lowercut{P}{\gamma})$ понеже:
-    \begin{itemize}
-    \item 
-      $\texttt{yield}(\lowercut{P}{\gamma}) = u$;
-    \item
-      $\texttt{yield}(\uppercut{P}{\beta}) = x X_\beta w$;
-    \item
-      $X_\alpha = X_\beta$.
-    \end{itemize}
-    \mynote{$\alpha = \texttt{yield}(P) = \texttt{yield}(P')$, но $P'$ има по-малко възли от $P$.}
-    Но това противоречи на избора на $P$ като дървото на извод за думата $\alpha$ с минимален брой възли в дървото $T$.
+    $S \yield{\star} x A w$, 
   \item
-    $\abs{yuv} \leq p$, защото $yuv = \texttt{yield}(\lowercut{P}{\beta})$ и оттук следва, че:
-    \begin{align*}
-      \abs{yuv} & \leq b^{\texttt{height}(\lowercut{P}{\beta})} & \comment\text{от \Corollary{tree:upper-bound}}\\
-                & \leq b^{|V|+1} & \comment\text{от \Property{eq:11}}\\
-                & = p
-    \end{align*}
+    $A \yield{\leq \abs{V}+1} y A v$, защото в $P$ можем да изберем това срещане на повтаряща се променлива по пътя $\pi$, което е възможно най-близо до листото.
   \item
-    За всяко естествено число $i$ е изпълнено, че $xy^iuv^iw \in L$.
-    Това е най-сложното разсъждение в лемата, затова нека да го разгледаме внимателно.
-    Понеже $\beta \prec \gamma$, нека $\rho$ е тази дума, за която $\gamma = \beta \cdot \rho$.
-    Ясно е, че:
-    \begin{align*}
-      & \lowercut{P}{\gamma} = \lowercut{(\lowercut{P}{\beta})}{\rho};\\
-      & \uppercut{(\lowercut{P}{\beta})}{\rho} = \lowercut{(\uppercut{P}{\gamma})}{\beta}.
-    \end{align*}
-    Да разгледаме няколко случая за $i$.
-    \begin{itemize}
-    \item
-      \mynote{Да напомним, че $X_\beta \df \lambda(\beta)$.}
-      Нека $i = 0$. Тогава $xy^0uv^0w = xuv$ има дърво на извод $(\uppercut{P}{\beta}) \odot (\lowercut{P}{\gamma})$,
-      защото от избора на $\gamma$ и $\beta$ имаме, че:
-      \begin{itemize}
-      \item 
-        $\texttt{yield}(\lowercut{P}{\gamma}) = u$;
-      \item
-        $\texttt{yield}(\uppercut{P}{\beta}) = x X_\beta w$;
-      \item
-        $X_\alpha = X_\beta$.
-      \end{itemize}
-      Добре е да преставим тази ситуация и визуално.
-      \begin{figure}[H]
-        \begin{subfigure}[t]{0.3\textwidth}
-          \centering
-          \begin{tikzpicture}[scale=0.9]
-            \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-            \coordinate (B) at (-2,-2.2);
-            \coordinate (C) at (2,-2.2);
-            \coordinate (S) at (-1,-2.2);
-            \coordinate (T) at (1,-2.2);
-            \node (L) at (0,-1) {${\scriptstyle X_\beta}$};
-            
-            \coordinate (E) at (-0.7,-2.5);
-            \coordinate (F) at (0.7,-2.5);
-            
-            
-            \node (H) at (0,-2) {${\scriptstyle X_\beta}$};
-            \node (X) at (0,-3) {${\scriptstyle X_\gamma}$};
-            \coordinate (D) at (-1.5,-4);
-            \coordinate (G) at (1.5,-4);
-            \coordinate (E) at (-0.7,-4);
-            \coordinate (F) at (0.7,-4);
-            
-            \node (I) at (0,-4.2) {${\scriptstyle X_\gamma}$};
-            \coordinate (U) at (-0.7,-5.2);
-            \coordinate (V) at (0.7,-5.2);
-            
-            \draw (A) -- node[left]{${\scriptstyle \uppercut{P}{\beta} \ =\ } $}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
-            \draw (H) -- node[left]{${\scriptstyle \lowercut{(\uppercut{P}{\gamma})}{\beta}\ =\ }$}(D) -- node[below]{$y$}(E) -- (X) -- (F) -- node[below]{$v$}(G) -- (H);
-            \draw (I) -- node[left]{${\scriptstyle \lowercut{P}{\gamma}\ =\ }$}(U) -- node[below]{$u$}(V) -- (I);
-          \end{tikzpicture}
-          \caption{\scriptsize{Разделяме $P$ на три части}}
-        \end{subfigure}
-        \hspace{10pt}
-        \begin{subfigure}[t]{0.3\textwidth}
-          \begin{tikzpicture}[scale=0.9]
-            \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-            \coordinate (B) at (-2,-2.2);
-            \coordinate (C) at (2,-2.2);
-            \coordinate (S) at (-1,-2.2);
-            \coordinate (T) at (1,-2.2);
-            \node (L) at (0,-1) {${\scriptstyle X_\beta}$};
-            
-            \coordinate (E) at (-0.7,-2.5);
-            \coordinate (F) at (0.7,-2.5);
-            
-            \coordinate (D) at (-1.5,-4);
-            \coordinate (G) at (1.5,-4);
-            \coordinate (E) at (-0.7,-4);
-            \coordinate (F) at (0.7,-4);
-            
-            \node (I) at (0,-2.2) {${\scriptstyle X_\gamma}$};
-            \coordinate (U) at (-0.9,-3.2);
-            \coordinate (V) at (0.9,-3.2);
-            
-            \draw (A) -- node[left]{${\scriptstyle \uppercut{P}{\beta}\ =\ } $}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
-            \draw (I) -- node[left]{${\scriptstyle \lowercut{P}{\gamma}\ =\ }$}(U) -- node[below]{$u$}(V) -- (I);
-          \end{tikzpicture}
-          \caption{\scriptsize{Понеже $X_\beta = X_\gamma$, можем да махнем средната част и пак да получим дърво на извод.}}
-        \end{subfigure}
-        \hspace{10pt}
-        \begin{subfigure}[t]{0.3\textwidth}
-          \centering
-          \begin{tikzpicture}[scale=0.9]
-            \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-            \coordinate (B) at (-2,-2.2);
-            \coordinate (C) at (2,-2.2);
-            \coordinate (S) at (-1,-2.2);
-            \coordinate (T) at (1,-2.2);
-            \node (L) at (0,-1) {${\scriptstyle X_\beta}$};
-
-            \coordinate (U) at (-0.84,-2);
-            \coordinate (V) at (0.84,-2);
-        
-            \draw (A) -- (B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
-            \draw (U) -- node[below]{$u$}(V);
-          \end{tikzpicture}
-          \caption{\scriptsize{$(\uppercut{P}{\beta}) \odot (\lowercut{P}{\gamma})$ е дърво на извод за думата $xuw$}}
-        \end{subfigure}
-      \end{figure}
-    \item
-      Нека $i = 1$.
-      Ясно е от условието, че $xyuvw \in L$, но нека да направим наблюдението, че дървото на извод $P$ за думата $\alpha$ в граматиката $G$
-      може да се запише и така:
-      \[P = (\uppercut{P}{\beta}) \odot (\lowercut{(\uppercut{P}{\gamma})}{\beta}) \odot (\lowercut{P}{\gamma}), \]
-      защото:
-      \begin{itemize}
-      \item
-        $\texttt{yield}(\uppercut{P}{\beta}) = x X_\beta w$;
-      \item
-        $\texttt{yield}(\lowercut{(\uppercut{P}{\gamma})}{\beta}) = y X_\gamma v$, защото $X_\gamma = \lambda(\gamma) = \lambda_\beta(\rho)$;
-      \item
-        $\texttt{yield}(\lowercut{P}{\gamma}) = u$;
-      \item
-        $X_\beta = X_\gamma$.
-      \end{itemize}
-
-      Сега вече имаме идея как да обобщим горната конструкция за $i > 1$.
-      Да разгледаме случая $i = 2$.
-      \begin{figure}[H]
-        \begin{subfigure}[t]{0.3\textwidth}
-          \centering
-          \begin{tikzpicture}[scale=0.9]
-            \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-            \coordinate (B) at (-2,-2.2);
-            \coordinate (C) at (2,-2.2);
-            \coordinate (S) at (-1,-2.2);
-            \coordinate (T) at (1,-2.2);
-            \node (L) at (0,-1) {${\scriptstyle X_\beta}$};
-            
-            \coordinate (E) at (-0.7,-2.5);
-            \coordinate (F) at (0.7,-2.5);
-            
-            
-            \node (H) at (0,-2) {${\scriptstyle X_\beta}$};
-            \node (X) at (0,-3) {${\scriptstyle X_\gamma}$};
-            \coordinate (D) at (-1.5,-4);
-            \coordinate (G) at (1.5,-4);
-            \coordinate (E) at (-0.7,-4);
-            \coordinate (F) at (0.7,-4);
-            
-            \node (I) at (0,-4.2) {${\scriptstyle X_\gamma}$};
-            \coordinate (U) at (-0.7,-5.2);
-            \coordinate (V) at (0.7,-5.2);
-            
-            \draw (A) -- node[left]{${\scriptstyle \uppercut{P}{\beta} \ =\ } $}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
-            \draw (H) -- node[left]{${\scriptstyle \lowercut{(\uppercut{P}{\gamma})}{\beta}\ =\ }$}(D) -- node[below]{$y$}(E) -- (X) -- (F) -- node[below]{$v$}(G) -- (H);
-            \draw (I) -- node[left]{${\scriptstyle \lowercut{P}{\gamma}\ =\ }$}(U) -- node[below]{$u$}(V) -- (I);
-          \end{tikzpicture}
-          \caption{\scriptsize{Разделяме $P$ на три части}}
-        \end{subfigure}
-        \hspace{10pt}
-        \begin{subfigure}[t]{0.3\textwidth}
-          \centering
-          \begin{tikzpicture}[scale=0.9]
-            \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-            \coordinate (B) at (-2,-2.2);
-            \coordinate (C) at (2,-2.2);
-            \coordinate (S) at (-1,-2.2);
-            \coordinate (T) at (1,-2.2);
-            \node (L) at (0,-1) {${\scriptstyle X_\beta}$};
-            
-            \coordinate (E) at (-0.7,-2.5);
-            \coordinate (F) at (0.7,-2.5);
-                        
-            \node (H) at (0,-2) {${\scriptstyle X_\beta}$};
-            \node (X) at (0,-3) {${\scriptstyle X_\gamma}$};
-            \coordinate (D) at (-2,-4);
-            \coordinate (G) at (2,-4);
-            \coordinate (E) at (-1,-4);
-            \coordinate (F) at (1,-4);
-            
-            \node (H1) at (0,-4) {${\scriptstyle X_\beta}$};
-            \node (X1) at (0,-5) {${\scriptstyle X_\gamma}$};
-            \coordinate (D1) at (-2,-6);
-            \coordinate (G1) at (2,-6);
-            \coordinate (E1) at (-1,-6);
-            \coordinate (F1) at (1,-6);
-            
-            \node (I) at (0,-6.2) {${\scriptstyle X_\gamma}$};
-            \coordinate (U) at (-1,-7.2);
-            \coordinate (V) at (1,-7.2);
-            
-            \draw (A) -- node[left]{${\scriptstyle \uppercut{P}{\beta}\ =\ } $}(B) -- node[below]{$\scriptstyle{x}$}(S) -- (L) -- (T) -- node[below]{$\scriptstyle{w}$}(C) -- (A);
-            \draw (H) -- node[left]{${\scriptstyle \lowercut{(\uppercut{P}{\gamma})}{\beta}\ =\ }$}(D) -- node[below]{$\scriptstyle{y}$}(E) -- (X) -- (F) -- node[below]{$\scriptstyle{v}$}(G) -- (H);
-            \draw (H1) -- node[left]{${\scriptstyle \lowercut{(\uppercut{P}{\gamma})}{\beta}\ =\ }$}(D1) -- node[below]{$\scriptstyle{y}$}(E1) -- (X1) -- (F1) -- node[below]{$\scriptstyle{v}$}(G1) -- (H1);
-            \draw (I) -- node[left]{${\scriptstyle \lowercut{P}{\gamma}\ =\ }$}(U) -- node[below]{$\scriptstyle{u}$}(V) -- (I);
-          \end{tikzpicture}
-          \caption{\scriptsize{Понеже $X_\beta = X_\gamma$, можем да добавим средната част втори път и пак да получим дърво на извод.}}
-        \end{subfigure}
-        \hspace{10pt}
-        \begin{subfigure}[t]{0.3\textwidth}
-          \centering
-          \begin{tikzpicture}[scale=0.9]
-            \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-            \coordinate (B) at (-2.5,-3.2);
-            \coordinate (C) at (2.5,-3.2);
-            \coordinate (S) at (-1.8,-3.2);
-            \coordinate (T) at (1.8,-3.2);
-            \node (L) at (0,-1) {${\scriptstyle X_\beta}$};
-            
-            \coordinate (E) at (-0.7,-2.5);
-            \coordinate (F) at (0.7,-2.5);
-            
-            \node (X) at (0,-2) {${\scriptstyle X_\beta}$};
-            \coordinate (D) at (-1.8,-3.2);
-            \coordinate (G) at (1.8,-3.2);
-            \coordinate (E) at (-1,-3.2);
-            \coordinate (F) at (1,-3.2);
-            
-            \node (X1) at (0,-3) {${\scriptstyle X_\beta}$};
-            \coordinate (D1) at (-1.8,-4.2);
-            \coordinate (G1) at (1.8,-4.2);
-            \coordinate (E1) at (-1,-4.2);
-            \coordinate (F1) at (1,-4.2);
-            
-            \coordinate (U) at (-1,-4.2);
-            \coordinate (V) at (1,-4.2);
-            
-            \draw (A) --  (B)  -- node[below]{$\scriptstyle{x}$}(S);
-            \draw (T)  -- node[below]{$\scriptstyle{w}$}(C)  -- (A);
-            \draw (L) --  (D)  -- node[below]{$\scriptstyle{y}$}(E);
-            \draw (F)  -- node[below]{$\scriptstyle{v}$}(G)  -- (L);
-            \draw (X) --  (D1) -- node[below]{$\scriptstyle{y}$}(E1) -- (X1) -- (F1) -- node[below]{$\scriptstyle{v}$}(G1) -- (X);
-            \draw (U)  -- node[below]{$\scriptstyle{u}$}(V);
-          \end{tikzpicture}
-          \caption{\scriptsize{$(\uppercut{P}{\beta}) \odot (\lowercut{(\uppercut{P}{\gamma})}{\beta})^{(2)} \odot (\lowercut{P}{\gamma})$ е дърво на извод за
-              думата $xy^2uv^2w$}}
-        \end{subfigure}
-        \end{figure}
-    \item
-      Нека $i > 1$. Тогава $xy^iuv^iw$ има дърво на извод
-      \[(\uppercut{P}{\beta}) \odot ( \lowercut{(\uppercut{P}{\gamma})}{\beta})^{(i)} \odot \lowercut{P}{\gamma},\]
-      защото:
-      \begin{itemize}
-      \item
-        $\texttt{yield}(\uppercut{P}{\beta}) = x X_\beta w$;
-      \item
-        $\texttt{yield}(\lowercut{(\uppercut{P}{\gamma})}{\beta})^{(i)}) = y^i X_\gamma v^i$ от \Problem{tree:iteration},
-        защото $X_\gamma = \lambda(\gamma) = \lambda_\beta(\rho)$;
-      \item
-        $\texttt{yield}(\lowercut{P}{\gamma}) = u$;
-      \item
-        $X_\beta = X_\gamma$.
-      \end{itemize}
-    \end{itemize}
+    $A \yield{\leq \abs{V}} u$, като тук вече няма повтарящи се променливи по останалата част от пътя $\pi$.
   \end{enumerate}
+
+  \begin{figure}[H]
+    \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+      \node (A) at (0,0) {\footnotesize{$S$}};
+      \coordinate (B) at (-2,-3);
+      \coordinate (C) at (2,-3);
+      \node (D) at (0,-1.2) {\footnotesize{$A$}};
+      \coordinate (D1) at (1.4,-3);
+      \coordinate (D2) at (-1.4,-3);
+      \node (E) at (0,-2.3) {\footnotesize{$A$}};
+      \coordinate (E1) at (0.7,-3);
+      \coordinate (E2) at (-0.7,-3);
+      \coordinate (F) at (0,-3);
+
+      \draw (A) -- node[above left]{$P = $} (B) -- node[below]{$\pi$}(C) -- (A);
+      \draw [photon] (A) -- (D) -- (E) -- (F);
+    \end{tikzpicture}
+    \caption{\scriptsize{Най-долните две повторения на променлива по пътя $\pi$.}}
+    \label{fig:pumping:partition}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[t]{0.3\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+      \node (A) at (0,0) {\footnotesize{$S$}};
+      \coordinate (B) at (-2,-3);
+      \coordinate (C) at (2,-3);
+      \node (D) at (0,-1.2) {\footnotesize{$A$}};
+      \coordinate (D1) at (1.4,-3);
+      \coordinate (D2) at (-1.4,-3);
+      \node (E) at (0,-2.3) {\footnotesize{$A$}};
+      \coordinate (E1) at (0.7,-3);
+      \coordinate (E2) at (-0.7,-3);
+      \coordinate (F) at (0,-3);
+
+      \draw (A) -- node[above left]{$P = $} (B) -- node[below] {$x$} (D2) -- (D) -- (D1) -- node[below]{$w$} (C) -- (A);
+      \draw (D2) -- node[below]{$y$} (E2) -- (E) -- (E1) -- node[below]{$v$} (D1);
+      \draw (E2) -- node[below]{$u$} (E1);
+
+      \draw [photon] (A) -- (D) -- (E) -- (F);
+    \end{tikzpicture}
+    \caption{\scriptsize{Разбиваме дървото на три части.}}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.3\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \node (A) at (0,0) {\footnotesize{$S$}};
+        \coordinate (B) at (-2,-2.2);
+        \coordinate (C) at (2,-2.2);
+        \coordinate (S) at (-1,-2.2);
+        \coordinate (T) at (1,-2.2);
+        \node (L) at (0,-1) {\footnotesize{$A$}};
+        
+        \coordinate (E) at (-0.7,-2.5);
+        \coordinate (F) at (0.7,-2.5);
+        
+        
+        \node (H) at (0,-2) {\footnotesize{$A$}};
+        \node (X) at (0,-3) {\footnotesize{$A$}};
+        \coordinate (D) at (-1.5,-4);
+        \coordinate (G) at (1.5,-4);
+        \coordinate (E) at (-0.7,-4);
+        \coordinate (F) at (0.7,-4);
+        
+        \node (I) at (0,-4.2) {\footnotesize{$A$}};
+        \coordinate (U) at (-0.7,-5.2);
+        \coordinate (V) at (0.7,-5.2);
+        
+        \draw (A) -- node[left]{\scriptsize{(1)}}(B) -- node[below]{$x$}(S) -- (L) -- (T) -- node[below]{$w$}(C) -- (A);
+        \draw (H) -- node[left]{\scriptsize{(2)}}(D) -- node[below]{$y$}(E) -- (X) -- (F) -- node[below]{$v$}(G) -- (H);
+        \draw (I) -- node[left]{\scriptsize{(3)}}(U) -- node[below]{$u$}(V) -- (I);
+      \end{tikzpicture}
+      \caption{\scriptsize{Получаваме три отделни синтактични дървета.}}
+    \end{subfigure}
+  \end{figure}
+  Сега остава да проверим условието на лемата:
+  \begin{itemize}
+  \item
+    Да допуснем, че $\abs{yv} = 0$. Това означава, че $\alpha = xuw$ и имаме извода:
+    \begin{prooftree}
+      \AxiomC{$S \yield{\star} xAu$}
+      \AxiomC{$A \yield{\star} u$}
+      \RightLabel{\scriptsize{(\Proposition{pumping:ground})}}
+      \BinaryInfC{$S \yield{\star} \underbrace{xuv}_{\alpha}$,}
+    \end{prooftree}
+    за който съществува дърво на извод с по-малко на брой възли отколкото $P$, защото махаме средната част, която съдържа поне един възел.
+    Това е противоречие с избора на $P$ като синтактично дърво за $S \yield{\star}\alpha$ с минимален брой възли.
+    Заключаваме, че $\abs{yv} \geq 1$.
+  \item
+    Понеже имаме извода $A \yield{\leq\abs{V}+1} yuv$, то от \Proposition{pumping:lower-bound} следва, че $\abs{yuv} \leq b^{\abs{V}+1} = p$.
+  \item
+    За произволно $i\in\Nat$ имаме извода:
+    \begin{prooftree}
+      \AxiomC{$A \yield{\star}yAv$}
+      \LeftLabel{\scriptsize{(\Proposition{pumping:iteration})}}
+      \UnaryInfC{$A \yield{\star}y^iAv^i$}
+      \AxiomC{$A \yield{\star} u$}
+      \LeftLabel{\scriptsize{(\Proposition{pumping:ground})}}
+      \BinaryInfC{$A \yield{\star} y^iuv^i$}
+      \AxiomC{$S \yield{\star}xAw$}
+      \LeftLabel{\scriptsize{(\Proposition{pumping:ground})}}
+      \BinaryInfC{$S \yield{\star} xy^iuv^iw$}
+    \end{prooftree}
+    Оттук заключаваме, че $(\forall i \in \Nat)[xy^iuv^iw \in \L(G)]$.
+  \end{itemize}
 \end{proof}
 
 Както и при \Lemma{pumping-reg}, ние ще използваме \emph{контрапозицията} на условието на \Lemma{pumping-context}

@@ -57,8 +57,8 @@
   С всяко дърво $T$ ще асоциираме функцията $\lambda: T \to V \cup \Sigma \cup \{\varepsilon\}$.
   Нека положим $X_\alpha \df \lambda(\alpha)$.
 \item
-  \index{дърво на извод}
-  \mynote{Също се нарича синтактично дърво. На англ. \emph{parse tree}.}
+  \index{синтактично дърво}
+  \mynote{На англ. \emph{parse tree}.}
   Двойката $P = (T,\lambda)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
@@ -68,8 +68,6 @@
   \item
     Ако $\alpha \in T$ и $|\successor_T(\alpha)| = k+1$, за някое $k \in \Nat$, то $X_\alpha \in V$,
     като имаме също така и 
-    % Освен това, ако $\alpha_0,\dots,\alpha_k$ са всички думи от множеството $\texttt{ext}_T(\alpha)$
-    % подредени във възходящ ред относно лексикографската наредба, то имаме, че:
     \mynote{С други думи,
       \[\lambda(\alpha)\to_G\lambda(\alpha 0)\cdots\lambda(\alpha k).\]}
     \[X_\alpha \to_G X_{\alpha 0} X_{\alpha 1} \cdots X_{\alpha k}.\] 
@@ -82,7 +80,7 @@
   подредени във възходящ ред относно лексикографската наредба. Тогава 
   \[\texttt{yield}(P) \df X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}.\]
 \item
-  \mynote{В \cite[стр. 123]{papadimitriou} дават рекурсивна дефиниция на дърво на извод.}
+  \mynote{В \cite[стр. 123]{papadimitriou} дават рекурсивна дефиниция на синтактично дърво.}
   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$.
   За всяко $\alpha \in T$, дефинираме $\lambda_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
   \[\lambda_\alpha(\beta) \df \lambda(\alpha \cdot \beta).\]
@@ -91,13 +89,13 @@
   \[P_\alpha \df (T_\alpha, \lambda_\alpha).\]
 \end{itemize}
 
-\begin{problem}
-  Докажете, че ако $T$ е дърво, то $\texttt{Pref}(T) = T$.
-\end{problem}
+% \begin{problem}
+%   Докажете, че ако $T$ е дърво, то $\texttt{Pref}(T) = T$.
+% \end{problem}
 
-
+\begin{extra}
 \begin{example}
-  Да разгледаме граматиката $G$, където правилата са следните:
+  Да разгледаме граматиката $G$ зададена със следните правила:
   \begin{align*}
     & S \to aS\ |\ aSc\ |\ B\\
     & B \to bB\ |\ bBc\ |\ \varepsilon.
@@ -116,7 +114,7 @@
     \caption{Дърво на извод за думата $aabcc$.}      
     \end{figure}
   \end{framed}
-  \begin{extra2}
+  \begin{multicols}{2}
   Имаме, че:
   \begin{itemize}
   \item
@@ -151,57 +149,10 @@
     Ясно е, че $\lambda(1101) \to_G \lambda(11010)$;
   \end{itemize}
   От всичко по-горе следва, че $P = (T,\lambda)$ е дърво на извод за думата $aabcc$ в граматиката $G$.
-  \end{extra2}
+  \end{multicols}
 \end{example}
-
-Следващото твърдение ни казва, че има пряка връзка между релацията $\yield{\star}$ и дърветата на извод.
-
-\begin{important}
-  \begin{proposition}
-    Нека $G$ е безконтекстна граматика. Тогава
-    $X \yield{\ell} \gamma$ точно тогава, когато съществува дърво на извод $P$ съвместимо с $G$, за което
-    $\texttt{root}(P) = X$, $\texttt{yield}(P) = \alpha$ и $\texttt{height}(P) = \ell$.
-  \end{proposition}
-\end{important}
-\begin{hint}
-  Индукция по $\ell$.
-\end{hint}
-
-\begin{extra}
-  
-  Добре е да обърнем внимание, че е възможно, ако $A \yield{\ell} \alpha$, то да има няколко дървета на извод с корен променливата $A$,
-  които да извеждат думата $\alpha$ и да имат височина $\ell$.
-  \begin{example}
-    Да разгледаме граматика с правила
-    \begin{align*}
-      & S \to S + S\ |\ S * S\ |\ (S)\ |\ V\\
-      & V \to x\ |\ y\ |\ z
-    \end{align*}
-    
-    Думата $x * y + z$ има две различни дървета на извод $P_1$ и $P_2$, като и двете имат височина $4$ и
-    $\texttt{yield}(P_1) = \texttt{yield}(P_2) = x*y+z$.
-    
-    \begin{framed}
-      \centering
-      \qtreecenterfalse
-      \Tree [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$S$ [.$V$ $y$ ] ] $+$ [.$S$ [.$V$ $z$ ] ] ] ]
-      \hskip 0.6in
-      \Tree [.$S$ [.$S$ [.$S$ [.$V$ $x$ ] ] $*$ [.$S$ [.$V$ $y$ ] ] ]  $+$  [.$S$ [.$V$ $z$ ] ] ]
-    \end{framed}  
-    
-    Да разгледаме граматика с правила
-    \begin{align*}
-      & S \to E + S\ |\ E\\
-      & E \to V * E\ |\ V\ |\ (S) * E\ |\ (S)\\
-      & V \to x\ |\ y\ |\ z
-    \end{align*}
-    Сега думата $x * y + z$ има само едно дърво на извод.
-    \mynote{Тук операцията $*$ е с по-висок приоритет в сравнение с операцията $+$.}    
-    \begin{framed}
-      \Tree [.$S$ [.$E$ [.$V$ $x$ ] $*$ [.$E$ [.$V$ $y$ ] ] ] $+$ [.$S$ [.$E$ [.$V$ $z$ ] ] ] ]
-    \end{framed}
-  \end{example}
 \end{extra}
+
 
 \begin{lemma}
   Нека $T \subseteq \{0,\dots,b-1\}^\star$ е крайно дърво. Тогава
@@ -236,20 +187,7 @@
   \[|\texttt{yield}(P)| \leq |\leaves(P)|.\]
 \end{proof}
 
-\begin{corollary}
-  Нека $G$ е безконтекстна граматика и 
-  \[b \df \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
-  Тогава:
-  \begin{itemize}
-  \item
-    Ако $A \yield{\ell} \alpha$, то $|\alpha| \leq b^\ell$;
-  \item
-    Ако $X \yield{k} \alpha$, то $X \derive{< b^k} \alpha$.
-  \end{itemize}
-\end{corollary}
 
-% \begin{problem}
-% \end{problem}
 
 % \begin{problem}
 %   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$.
@@ -423,8 +361,10 @@
 %   \end{figure}
 % \end{hint}
 
+\subsection{Операции върху синтактични дървета}
+
 \begin{problem}
-  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$ и нека разгледаме думата $\alpha \in T$.
+  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$ и нека разгледаме един път $\alpha$ в дървото $T$.
   % Дефинираме $P \setminus P_\alpha = (T',\lambda')$ по следния начин:
   Дефинираме $\uppercut{P}{\alpha} = (T',\lambda')$ по следния начин:
   \begin{itemize}

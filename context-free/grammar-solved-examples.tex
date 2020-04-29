@@ -1,7 +1,66 @@
 \subsection{Примерни задачи}
 
-
 \begin{extra}
+
+Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
+Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$.
+\[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
+Ясно е, че $\L(G) = \L_G(S)$.
+Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$ по следния начин:
+\[\L^\ell_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\leq \ell} \alpha\}.\]
+Следните свойства са ясни:
+\begin{itemize}
+\item
+  $\L^0_G(A) = \emptyset$;
+\item
+  $\L^\ell_G(A)$ е краен език за всяко $\ell$;
+\item
+  $\L^\ell_G(A) \subseteq \L^{\ell+1}_G(A)$ за всяко $\ell$;
+\item
+  $\L_G(A) = \bigcup_{\ell\geq 0}\L^\ell_G(A)$.  
+\end{itemize}
+
+Следната характеризация на $\L^\ell_G(A)$ ще е важна за нас, когато искаме да докажем,
+че една безконтекстна граматика разпознава даден език.
+
+\begin{proposition}\label{pr:grammar:yield-approximation}
+  Нека $G$ е произволна безконтекстна граматика и $A$ е променлива в $G$.
+  Тогава имаме следното:
+  \begin{align*}
+    \L^0_G(A) & = \emptyset\\
+    \L^{\ell+1}_G(A) & = \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.
+  \end{align*}
+\end{proposition}
+\begin{proof}
+  Пълна индукция по $\ell$. Твърдението очевидно е изпълнено за $\ell = 0$.
+  Нека $\alpha \in \L^{\ell+1}_G(A)$, т.е. $A \yield{\leq \ell+1} \alpha$. Имаме следния извод:
+  \begin{prooftree}
+    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
+    \AxiomC{$B_1 \yield{\leq\ell} \beta_1$}
+    \AxiomC{$\cdots$}
+    \AxiomC{$B_n \yield{\leq \ell} \beta_n$}
+    \QuaternaryInfC{$A \yield{\leq\ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+  \end{prooftree}
+  Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$.
+  Тогава 
+  \[\alpha \in \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}\]
+
+  Обратно, нека сега $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$, където $A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$,
+  $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$.
+  Получаваме следния извод:
+  \begin{prooftree}
+    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$}
+    \AxiomC{$\beta_1 \in \L^\ell_G(B_1)$}
+    \RightLabel{\scriptsize{\IndHyp}}
+    \UnaryInfC{$B_1 \yield{\leq \ell }\beta_1 $}
+    \AxiomC{$\cdots$}
+    \AxiomC{$\beta_n \in \L^\ell_G(B_n)$}
+    \RightLabel{\scriptsize{\IndHyp}}
+    \UnaryInfC{$B_n \yield{\leq \ell }\beta_n$}
+    \QuaternaryInfC{$A \yield{\leq \ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+  \end{prooftree}
+\end{proof}
+
 
   Като първи пример, нека да видим, че съществува безконтекстен език, който не е регулярен.
   Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
@@ -155,7 +214,6 @@
       Ако $\alpha \in \{a\} \cdot \L^{\ell}_G(S) \cdot \{c\}$, то от \IndHyp имаме, че
       \[\alpha \in \{a^{n+1}b^mc^{k+1} \mid n+m \geq k\} \subseteq \{a^nb^mc^k \mid n+m \geq k\}.\]
     \end{itemize}
-    
     За второто включване, нека $\alpha \in \L^{\ell+1}_G(B)$. Имаме три случая за думата $\alpha$.
     \begin{itemize}
     \item
