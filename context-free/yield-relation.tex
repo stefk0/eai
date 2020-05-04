@@ -1,5 +1,6 @@
 \section{Извод върху синтактично дърво}
 
+\mynote{Не знам да има учебник, в който формално да е въведена тази релация. Тя е удобна най-вече за решаване на задачи, както и за доказателството на лемата за покачването.}
 За произволна безконтекстна граматика $G$, дефинираме релацията $X \yield{\ell} \alpha$, където $X \in V \cup \Sigma$ и $\alpha \in (V\cup\Sigma)^\star$, по следния начин:
 \begin{prooftree}
   \AxiomC{}
@@ -78,7 +79,7 @@
 
 \begin{lemma}
   Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\gamma \in (V \cup \Sigma)^\star$.
-  Тогава ако $X \yield{\star}_G \gamma$, то $X \derive{\star}_G \gamma$.
+  Тогава ако $X \yield{\star} \gamma$, то $X \derive{\star} \gamma$.
 \end{lemma}
 \begin{proof}
   С пълна индукция по $\ell$ ще докажем, че ако $X \yield{\ell} \gamma$, то $X \derive{\star} \gamma$.
@@ -93,7 +94,7 @@
       \AxiomC{$\cdots$}
       \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
       \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_0,\dots,\ell_n\})$}}
-      \QuaternaryInfC{$X \yield{\ell} \gamma_0\cdots\gamma_n$}
+      \QuaternaryInfC{$X \yield{\ell} \underbrace{\gamma_0\cdots\gamma_n}_{\gamma}$}
     \end{prooftree}
     Получаваме, че:
     \begin{prooftree}
@@ -123,7 +124,7 @@
   \end{theorem}  
 \end{framed}
 
-Следващото твърдение ни казва, че има пряка връзка между релацията $\yield{\star}$ и дърветата на извод.
+Следващото твърдение ни казва, че има пряка връзка между релацията $\yield{\star}$ и синтактичните дървета.
 
 \begin{important}
   \begin{proposition}
@@ -172,11 +173,17 @@
   \end{example}
 
 \begin{example}
+  \mynote{Тези примери трябва да се обяснят по-подробно.}
+  Да разгледаме следната граматика:
   \begin{align*}
     & S \to \texttt{if } S \texttt{ then } S \texttt{ else }S\ |\ \texttt{ if }S \texttt{ then }S\ |\ V\\
     & V \to x\ |\ y\ |\ z
   \end{align*}
 
+  Да разгледаме думата
+  \[\texttt{if } x \texttt{ then } \texttt{ if }y \texttt{ then }u\ \texttt{ else }z.\]
+  Имаме многозначност. 
+  
   Ние искаме следната граматика:
   \begin{align*}
     & S \to M\ |\ U\\
@@ -198,7 +205,7 @@
 \end{extra}
 
 
-%%%Local Variables:
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"
 %%% End:

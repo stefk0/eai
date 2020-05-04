@@ -40,17 +40,21 @@
   \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
 \end{prooftree}
 
-Нека $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
-\[ \alpha \derive{\star}_G \beta\ \iff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
+% \mynote{На практика във всички учебници дефинират $\alpha \derive{1}_G \beta$ точно тогава когато $\alpha$ може да се представи като $\alpha = \rho A \delta$, имаме правило в граматиката $A \to_G \gamma$ и $\beta = \rho \gamma \delta$. }
+
+Нека дефинираме релацията $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
+\[ \alpha \derive{\star}_G \beta\ \dff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
 
 \index{език!безконтекстен}
 Един език $L$ се нарича {\bf безконтекстен}, ако съществува безконтекстна граматика $G$, за която 
 $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
+\begin{important}
 \begin{remark}
   Очевидно е, че всяка регулярна граматика е безконтекстна. Следователно, 
   {\em всеки регулярен език е безконтекстен.}
 \end{remark}
+\end{important}
 
 \begin{remark}
   Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме свойството:
@@ -141,6 +145,10 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{example}
 \end{extra}
 
+В повечето учебници дават следната дефиниция на релацията $\derive{1}$, която тук ще формулираме като твърдение, което следва от нашите правила за извод.
+\begin{proposition}
+  $\alpha \derive{1} \beta$ точно тогава, когато $\alpha = \alpha_1 A \alpha_2$, $A \to_G \gamma$ и $\beta = \alpha_1 \gamma \alpha_2$.
+\end{proposition}
 
 Следващото твърдение ни дава едно свойство, което е вярно за безконтекстни граматики, но не и за неограничени граматики.
 \begin{proposition}\label{pr:grammar:divide-2}

@@ -1,5 +1,6 @@
 \subsection{Примерни задачи}
 
+\begin{extra}
 \begin{problem}
   Приложете конструкцията от \hyperref[th:regular:kleenef]{теоремата на Клини} за да получите регулярен израз, който описва езика на автомата $\A$ изобразен на Фигура~\ref{fig:a1}.
     \begin{figure}[H]
@@ -20,7 +21,6 @@
       \label{fig:a1}
     \end{figure}
 \end{problem}
-\ExtraMaterial{
 \begin{solution}
   Лесно се съобразява, че езикът на автомата от \Figure{a1} се описва с регулярния израз $\mathbf{b^\star a (a + b)^\star}$.
   Следвайки означенията и конструкцията от доказателството на \hyperref[th:regular:kleene]{теоремата на Клини},
@@ -46,7 +46,7 @@
                      & = \bm{\varepsilon + a + b}. & \comment \text{защото }\bm{\emptyset \cdot r = \emptyset}
 \end{align*}  
 \end{solution}
-}
+
 
 \begin{problem}
   Приложете конструкцията от \hyperref[th:regular:kleenef]{теоремата на Клини} за да получите регулярен израз, който описва езика на автомата $\A$ изобразен на Фигура~\ref{fig:a2}.
@@ -71,7 +71,6 @@
       \label{fig:a2}
     \end{figure}
   \end{problem}
-\ExtraMaterial{
   \begin{solution}
     От \hyperref[th:regular:kleene]{теоремата на Клини} знаем, че $\L(\A) = \L(\mathbf{r}^3_{0,2})$, където:
   \begin{align*}
@@ -90,9 +89,10 @@
   \end{align*}
   Заключаваме, че $\L(\A) = \L(\mathbf{a^\star b(a+b)^\star})$.
 \end{solution}
-}
+\end{extra}
 
 % \todo{Може да се сложи още един пример, но без да има решение.}
+
 
 %%% Local Variables:
 %%% mode: latex

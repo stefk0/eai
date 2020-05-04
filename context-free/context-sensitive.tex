@@ -1,6 +1,6 @@
 \section{Контекстни граматики}
 \index{граматика!контекстна}
-\mynote{На англ. context-sensitive. Евентуално позволяваме и правилото $S \to \varepsilon$,
+\mynote{На англ. context-sensitive \cite[стр. 223]{hopcroft1}. Евентуално позволяваме и правилото $S \to \varepsilon$,
 ако искаме да включим $\varepsilon$ в езика, като $S$ не се среща в дясна страна на правило.}
 Казваме, че $G = (V,\Sigma,R,S)$ е {\bf контекстна граматика}, ако правилата на $G$ са от вида
 \[\rho A \delta \to \rho \alpha \delta,\]
@@ -20,34 +20,28 @@
     & cC \to cc.
   \end{align*}
 
-  Докажете, че:
+  Докажете, че за всяко $n > 0$ е изпълено следното:
   \begin{itemize}
   \item
-    $S \derive{\star} a^n(BC)^n$;
+    $S \derive{n} a^n(BC)^n$;
   \item
-    $(BC)^n \derive{\star} B^nC^n$;
+    $(BC)^n \derive{n-1} B^nC^n$;
   \item
-    $aB^n \derive{\star} ab^n$;
+    $aB^n \derive{n} ab^n$;
   \item
-    $bC^n \derive{\star} bc^n$.
+    $bC^n \derive{n} bc^n$.
   \end{itemize}
-  Оттук следва, че $L \subseteq \L(G)$.
+  Оттук лесно можем да докажем, че $L \subseteq \L(G)$.
 \end{hint}
 
-\begin{proposition}
-  Класът на безконтекстните езици строго се включва в класа на контекстните езици.
-\end{proposition}
+% \begin{proposition}
+%   Класът на безконтекстните езици строго се включва в класа на контекстните езици.
+% \end{proposition}
 
-\begin{proposition}
-  Всеки контекстен език е разрешим.
-\end{proposition}
+% \begin{proposition}
+%   Всеки контекстен език е разрешим.
+% \end{proposition}
 
-\begin{proposition}
-  Съществува разрешим език, който не е контекстен.
-\end{proposition}
-
-
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../eai"
-%%% End:
+% \begin{proposition}
+%   Съществува разрешим език, който не е контекстен.
+% \end{proposition}

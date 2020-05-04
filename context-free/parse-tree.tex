@@ -361,69 +361,69 @@
 %   \end{figure}
 % \end{hint}
 
-\subsection{Операции върху синтактични дървета}
+% \subsection{Операции върху синтактични дървета}
 
-\begin{problem}
-  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$ и нека разгледаме един път $\alpha$ в дървото $T$.
-  % Дефинираме $P \setminus P_\alpha = (T',\lambda')$ по следния начин:
-  Дефинираме $\uppercut{P}{\alpha} = (T',\lambda')$ по следния начин:
-  \begin{itemize}
-  \item
-    \mynote{Съобразете, че $\alpha \in \texttt{front}(T')$.}
-    $T' = T \setminus \{ \gamma \in T\mid \alpha \prec \gamma\}$, т.е. махаме от $T$ същинските разширения на $\alpha$
-  \item
-    $\lambda'(\gamma) = \lambda(\gamma)$ за $\gamma \in T'$.
-  \end{itemize}
-  Докажете, че $\uppercut{P}{\alpha}$ е дърво на извод съвместимо с граматиката $G$ и 
-  \[P = (\uppercut{P}{\alpha}) \odot (\lowercut{P}{\alpha}).\]
-\end{problem}
-\begin{hint}
-  Имаме следната картинка:
+% \begin{problem}
+%   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$ и нека разгледаме един път $\alpha$ в дървото $T$.
+%   % Дефинираме $P \setminus P_\alpha = (T',\lambda')$ по следния начин:
+%   Дефинираме $\uppercut{P}{\alpha} = (T',\lambda')$ по следния начин:
+%   \begin{itemize}
+%   \item
+%     \mynote{Съобразете, че $\alpha \in \texttt{front}(T')$.}
+%     $T' = T \setminus \{ \gamma \in T\mid \alpha \prec \gamma\}$, т.е. махаме от $T$ същинските разширения на $\alpha$
+%   \item
+%     $\lambda'(\gamma) = \lambda(\gamma)$ за $\gamma \in T'$.
+%   \end{itemize}
+%   Докажете, че $\uppercut{P}{\alpha}$ е дърво на извод съвместимо с граматиката $G$ и 
+%   \[P = (\uppercut{P}{\alpha}) \odot (\lowercut{P}{\alpha}).\]
+% \end{problem}
+% \begin{hint}
+%   Имаме следната картинка:
 
-  \begin{figure}[H]
-    \begin{subfigure}[t]{0.5\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \coordinate (A) at (0,0);
-        \coordinate (B) at (-2,-2.5);
-        \coordinate (C) at (2,-2.5);
-        \coordinate (D) at (-0.9,-2.5);
-        \coordinate (E) at (0.9,-2.5);
-        \coordinate (F) at (0,-1.5);
+%   \begin{figure}[H]
+%     \begin{subfigure}[t]{0.5\textwidth}
+%       \centering
+%       \begin{tikzpicture}
+%         \coordinate (A) at (0,0);
+%         \coordinate (B) at (-2,-2.5);
+%         \coordinate (C) at (2,-2.5);
+%         \coordinate (D) at (-0.9,-2.5);
+%         \coordinate (E) at (0.9,-2.5);
+%         \coordinate (F) at (0,-1.5);
         
-        \coordinate (G) at (0,-2.3);
-        \coordinate (H) at (-0.9,-3.3);
-        \coordinate (I) at (0.9,-3.3);
+%         \coordinate (G) at (0,-2.3);
+%         \coordinate (H) at (-0.9,-3.3);
+%         \coordinate (I) at (0.9,-3.3);
         
-        \draw (A) -- node[above left]{${\scriptstyle T'\ =\ }$}(B) -- (D) -- (F) -- (E) -- (C) -- (A);
-        \draw (G) -- node[left]{${\scriptstyle T_\alpha\ =\ }$} (H) -- (I) -- (G);
+%         \draw (A) -- node[above left]{${\scriptstyle T'\ =\ }$}(B) -- (D) -- (F) -- (E) -- (C) -- (A);
+%         \draw (G) -- node[left]{${\scriptstyle T_\alpha\ =\ }$} (H) -- (I) -- (G);
         
-        \draw [photon] (A) -- node[left]{$\alpha$} (F);
-      \end{tikzpicture}
-      \caption{$T_\alpha = \alpha^{-1}(T)$}
-    \end{subfigure}
-    $\stackrel{\lambda}{\Rightarrow}$
-    \begin{subfigure}[t]{0.5\textwidth}
-      \centering
-      \begin{tikzpicture}
-        \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
-        \coordinate (B) at (-2,-2.5);
-        \coordinate (C) at (2,-2.5);
-        \coordinate (D) at (-0.9,-2.5);
-        \coordinate (E) at (0.9,-2.5);
-        \node (F) at (0,-1.5) {${\scriptstyle X_\alpha}$};
+%         \draw [photon] (A) -- node[left]{$\alpha$} (F);
+%       \end{tikzpicture}
+%       \caption{$T_\alpha = \alpha^{-1}(T)$}
+%     \end{subfigure}
+%     $\stackrel{\lambda}{\Rightarrow}$
+%     \begin{subfigure}[t]{0.5\textwidth}
+%       \centering
+%       \begin{tikzpicture}
+%         \node (A) at (0,0) {${\scriptstyle X_\varepsilon}$};
+%         \coordinate (B) at (-2,-2.5);
+%         \coordinate (C) at (2,-2.5);
+%         \coordinate (D) at (-0.9,-2.5);
+%         \coordinate (E) at (0.9,-2.5);
+%         \node (F) at (0,-1.5) {${\scriptstyle X_\alpha}$};
         
-        \node (G) at (0,-2.3) {${\scriptstyle X_\alpha}$};
-        \coordinate (H) at (-0.9,-3.3);
-        \coordinate (I) at (0.9,-3.3);
+%         \node (G) at (0,-2.3) {${\scriptstyle X_\alpha}$};
+%         \coordinate (H) at (-0.9,-3.3);
+%         \coordinate (I) at (0.9,-3.3);
         
-        \draw (A) -- node[above left]{${\scriptstyle \uppercut{P}{\alpha}}\ =\ $}(B) -- (D) -- (F) -- (E) -- (C) -- (A);
-        \draw (G) -- node[left]{${\scriptstyle \lowercut{P}{\alpha}}\ =\ $} (H) -- (I) -- (G);
-      \end{tikzpicture}
-      \caption{$\texttt{yield}(\uppercut{P}{\alpha}) = \omega_1 \cdot \texttt{root}(\lowercut{P}{\alpha}) \cdot \omega_2$}
-    \end{subfigure}
-  \end{figure}
-\end{hint}
+%         \draw (A) -- node[above left]{${\scriptstyle \uppercut{P}{\alpha}}\ =\ $}(B) -- (D) -- (F) -- (E) -- (C) -- (A);
+%         \draw (G) -- node[left]{${\scriptstyle \lowercut{P}{\alpha}}\ =\ $} (H) -- (I) -- (G);
+%       \end{tikzpicture}
+%       \caption{$\texttt{yield}(\uppercut{P}{\alpha}) = \omega_1 \cdot \texttt{root}(\lowercut{P}{\alpha}) \cdot \omega_2$}
+%     \end{subfigure}
+%   \end{figure}
+% \end{hint}
 
 
 %%% Local Variables:
