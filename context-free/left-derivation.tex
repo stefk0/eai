@@ -42,6 +42,7 @@
 
 \begin{important}
   \begin{lemma}
+\mynote{Важно е да отбележим, че имаме горната еквивалентност само когато $\alpha \in \Sigma^\star$. Съобразете сами защо тази лема не е вярна в общия случай, когато позволим $\alpha$ да съдържа променливи.}
     За всяка безконтекстна граматика $G$, променлива $A$ и дума $\alpha \in \Sigma^\star$,
     \[A \lderive{\star} \alpha\text{ точно тогава, когато } A \derive{\star} \alpha.\]
     В частност,
@@ -52,10 +53,8 @@
   От правилата за извод е видно, че ако $A \lderive{\star} \alpha$, то $A \derive{\star} \alpha$.
   За другата посока, достатъчно е да се докаже, че ако $A \yield{\star} \alpha$ то $A \lderive{\star} \alpha$.
 
-  % Пълна индукция по $\ell$, където $A \yield{\ell}\alpha$.
-  % Щом $A \in V$, а $\alpha \in \Sigma^\star$ е ясно, че $\ell > 0$.
-  За другата посока ще използваме \Theorem{grammar:yield-derive-equivalent}.
-  Ще докажем с пълна индукция по $\ell$, че ако $A \yield{\ell}\alpha$, то $A \lderive{\star}\alpha$.
+  Това ще направим като използваме \Theorem{grammar:yield-derive-equivalent},
+  а именно ще докажем с пълна индукция по $\ell$, че за произволно число $\ell$, ако $A \yield{\ell}\alpha$, то $A \lderive{\star}\alpha$.
   Да отбележим, че щом $A \in V$, а $\alpha \in \Sigma^\star$ е ясно, че $\ell > 0$.
   Имаме следното:
   \begin{prooftree}
@@ -94,6 +93,50 @@
   \end{prooftree}
 \end{proof}
 
+\begin{extra}
+  \index{граматика!най-десен извод}
+  За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-десен извод} в граматиката $G$, $\alpha \rderive{\ell} \beta$, по следния начин:
+\begin{prooftree}
+  \AxiomC{}
+  \RightLabel{\scriptsize{правило (0)}}
+  \UnaryInfC{$\alpha \rderive{0} \alpha$}
+\end{prooftree}
+
+\begin{prooftree}
+  \AxiomC{$A \to_G \alpha$}
+  \AxiomC{$\alpha \rderive{\ell} \beta$}
+  \RightLabel{\scriptsize{правило (1)}}
+  \BinaryInfC{$A \rderive{\ell+1} \beta$}
+\end{prooftree}
+
+% \mynote{Единствената разлика между дефиницията на $\rderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_2 \in \Sigma^\star$.}
+\begin{prooftree}
+  \AxiomC{$\alpha_1 \rderive{\ell_1} \beta_1$}
+  \AxiomC{$\alpha_2 \rderive{\ell_2} \beta_2$}
+  \AxiomC{$\beta_2 \in \Sigma^\star$}
+  \RightLabel{\scriptsize{правило (2)}}
+  \TrinaryInfC{$\alpha_1\alpha_2 \rderive{\ell_1+\ell_2}\beta_1\beta_2$}
+\end{prooftree}
+
+% \mynote{Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\rderive{\star}$ е аналог на DFS като винаги се избира най-десния необходен клон.}
+
+Удобно ще бъде да разгледаме следния аналог на \Proposition{unrestricted-grammar:context-general-step}.
+\begin{problem}\label{prob:grammar:context-right-step}
+  Докажете, че имаме извода:
+  \begin{prooftree}
+    \AxiomC{$\delta \rderive{\ell_1} \alpha B \gamma$}
+    \AxiomC{$B \rderive{\ell_2}\beta$}
+    \AxiomC{$\gamma \in \Sigma^\star$}
+    \TrinaryInfC{$\delta \rderive{\ell_1+\ell_2}\alpha\beta\gamma$}
+  \end{prooftree}
+\end{problem}
+
+\begin{problem}
+  Докажете, че за всяка безконтекстна граматика $G$, променлива $A$ и дума $\alpha \in \Sigma^\star$,
+  \[A \rderive{\star} \alpha\text{ точно тогава, когато } A \derive{\star} \alpha.\]
+\end{problem}
+
+\end{extra}
 
 %%% Local Variables:
 %%% mode: latex
