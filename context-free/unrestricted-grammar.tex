@@ -51,10 +51,21 @@
 \end{prooftree}
 }
 
-Нека $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
-\[ \alpha \derive{\star}_G \beta\ \iff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
-Езикът, който се поражда от граматиката $G$ е следния:
+% Нека дефинираме $\derive{\star}_G$ като рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
+Сега дефинираме релацията $\derive{\star}_G$ като
+\[ \alpha \derive{\star}_G \beta\ \dff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
+
+Езикът, който се поражда от граматиката $G$ дефинираме по следния начин:
 \[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star}_G \omega\}.\]
+
+\begin{extra}
+  \begin{remark}\label{rem:unrestricted-grammar:original-def}
+    В повечето учебници авторите дефинират релацията $\derive{\star}_G$ като
+    рефлексивното и транзитивното затваряне на релацията $\derive{}_G$, където
+    \[\alpha \derive{}_G \beta \dff \alpha = \rho\gamma\delta\ \&\ \gamma \to_G \gamma'\ \&\ \beta = \rho\gamma'\delta.\]
+    Нашата дефиниция е еквивалентна.
+  \end{remark}
+\end{extra}
 
 % \begin{proposition}\label{pr:unrestricted-grammar:add}
 %   За произволно естествено число $\ell$ е изпълнено, че:
@@ -172,7 +183,7 @@
     \UnaryInfC{$\delta \derive{0} \delta$}
     \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$\rho \beta \delta \derive{\ell_2} \rho \gamma \delta$}
-    \RightLabel{\scriptsize{\Proposition{unrestricted-grammar:general-step}}}
+    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
     \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\gamma\delta$}
   \end{prooftree}
 \end{proof}

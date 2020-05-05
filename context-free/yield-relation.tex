@@ -96,7 +96,7 @@
       \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_0,\dots,\ell_n\})$}}
       \QuaternaryInfC{$X \yield{\ell} \underbrace{\gamma_0\cdots\gamma_n}_{\gamma}$}
     \end{prooftree}
-    Получаваме, че:
+    Понеже $\ell_0 < \ell, \dots, \ell_n < \ell$, получаваме, че:
     \begin{prooftree}
       \AxiomC{$X \to_G X_0 \cdots X_{n}$}
       \AxiomC{$X_0 \yield{\ell_0} \gamma_0$}
@@ -183,7 +183,6 @@
   Да разгледаме думата
   \[\texttt{if } x \texttt{ then } \texttt{ if }y \texttt{ then }u\ \texttt{ else }z.\]
   Имаме многозначност. 
-  
   Ние искаме следната граматика:
   \begin{align*}
     & S \to M\ |\ U\\

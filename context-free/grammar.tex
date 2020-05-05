@@ -2,7 +2,11 @@
 
 \index{граматика!безконтекстна}
 \mynote{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$. На англ. {\em context-free grammar}. Други срещани наименования на български са
-  {\em контекстно-свободна}, {\em контекстно-независима}. Тук всички правила са от вида $A \to \alpha$, където $\alpha \in (V\cup\Sigma)^\star$.}
+  {\em контекстно-свободна}, {\em контекстно-независима}. Тук всички правила са от вида $A \to \alpha$, където $\alpha \in (V\cup\Sigma)^\star$. В частност имаме, че:
+  \begin{prooftree}
+    \AxiomC{$A \to_G \beta$}
+    \UnaryInfC{$A \derive{1}_G \beta$}
+  \end{prooftree}}
 
 В Раздел \ref{sect:regular-grammar} въведохме понятието неограничена граматика. След това видяхме как можем да опишем регулярните езици
 със специален вид граматики, които нарекохме регулярни граматики.
@@ -10,7 +14,6 @@
 
 Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
 имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
-
 Дефинираме релацията $\alpha \derive{\ell}_G \beta$ за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ по следния начин:
 
 \begin{prooftree}
@@ -18,13 +21,6 @@
   \RightLabel{\scriptsize{правило (0)}}
   \UnaryInfC{$\alpha \derive{0}_G \alpha$}
 \end{prooftree}
-
-\mynote{В частност имаме, че:
-\begin{prooftree}
-  \AxiomC{$A \to_G \beta$}
-  \UnaryInfC{$A \derive{1}_G \beta$}
-\end{prooftree}
-}
 
 \begin{prooftree}
   \AxiomC{$A \to_G \gamma$}
@@ -74,6 +70,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     & S \to AS\ |\ \varepsilon\\
     & A \to aAb\ |\ ab.
   \end{align*}
+  \mynote{За момента не е ясно как можем да проверим, че примерно думата $abbba \not\in \L(G)$. Този въпрос ще разгледаме по-нататък.}
   Да видим защо думата $aabbab \in \L(G)$. Ако следваме формално правилата за извод, получаваме следното:
   \begin{prooftree}
     \AxiomC{$S \to_G AS$}
@@ -145,10 +142,30 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{example}
 \end{extra}
 
-В повечето учебници дават следната дефиниция на релацията $\derive{1}$, която тук ще формулираме като твърдение, което следва от нашите правила за извод.
-\begin{proposition}
+Както отбелязахме в \Remark{unrestricted-grammar:original-def}, в повечето учебници дават следната дефиниция на релацията $\derive{1}$, която тук ще формулираме като твърдение, което следва от нашите правила за извод.
+\begin{proposition}\label{pr:grammar:alternative-def}
   $\alpha \derive{1} \beta$ точно тогава, когато $\alpha = \alpha_1 A \alpha_2$, $A \to_G \gamma$ и $\beta = \alpha_1 \gamma \alpha_2$.
 \end{proposition}
+\begin{hint}
+  За посоката $(\leftarrow)$, нека $\alpha = \alpha_1 A \alpha_2$, $A \to_G \gamma$ и $\beta = \alpha_1 \gamma \alpha_2$. Тогава
+  \begin{prooftree}
+    \AxiomC{$\alpha_1 A \alpha_2 \derive{0} \alpha_1 A \alpha_2$}
+    \AxiomC{$A \derive{1} \gamma$}
+    \RightLabel{\scriptsize{правило (3)}}
+    \BinaryInfC{$\underbrace{\alpha_1 A \alpha_2}_{\alpha} \derive{1} \underbrace{\alpha_1\gamma\alpha_2}_{\beta}$}
+  \end{prooftree}
+  За посоката $(\rightarrow)$, индукция по $\abs{\alpha}$.
+  Ако $\abs{\alpha} = 1$, то е ясно. Нека $\abs{\alpha} > 1$. Тогава имаме $\ell' + \ell'' = 1$
+  \begin{prooftree}
+    \AxiomC{$\alpha' \derive{\ell'} \beta'$}
+    \AxiomC{$\alpha'' \derive{\ell''} \beta''$}
+    \BinaryInfC{$\underbrace{\alpha'\alpha''}_{\alpha} \derive{\ell'+\ell''} \underbrace{\beta'\beta''}_{\beta}$}
+  \end{prooftree}
+  Без ограничение на общността, нека $\ell' = 1$ и $\ell'' = 0$. Понеже $\abs{\alpha'} < \abs{\alpha}$, можем да приложим \IndHyp
+  за $\alpha'$. Получаваме, че $\alpha' = \alpha'_1A\alpha'_2$, $A \to_G \gamma$ и $\beta' = \alpha'_1 \gamma \alpha'_2$.
+  Ясно е, че тогава $\alpha_1 = \alpha'_1$ и $\alpha_2 = \alpha'_2 \alpha''$.
+\end{hint}
+
 
 Следващото твърдение ни дава едно свойство, което е вярно за безконтекстни граматики, но не и за неограничени граматики.
 \begin{proposition}\label{pr:grammar:divide-2}
@@ -163,12 +180,13 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \item
   Нека $\ell = 0$. Тогава $\beta_1 = \gamma_1$ и $\beta_2 = \gamma_2$.
 \item
-  Нека $\ell = 1$. Без ограничение на общността, можем да предположим, че имаме следния извод:
+  Нека $\ell = 1$. Без ограничение на общността, според \Proposition{grammar:alternative-def}, да предположим, че сме приложили правило в $\gamma_1$.
+  Получаваме извода
   \mynote{Разсъждаваме аналогично, ако $\gamma_2 = \delta A \rho$.}
   \begin{prooftree}
     \AxiomC{$\overbrace{\delta A \rho}^{\gamma_1} \derive{0} \delta A \rho$}
     \AxiomC{$A \to \alpha$}
-    \LeftLabel{\scriptsize{(\Proposition{unrestricted-grammar:context-general-step})}}
+    \LeftLabel{\scriptsize{(\Proposition{grammar:alternative-def})}}
     \BinaryInfC{$\gamma_1 \derive{1} \delta\alpha\rho$}
     \AxiomC{$\gamma_2 \derive{0} \gamma_2$}
     \LeftLabel{\scriptsize{правило (2)}}
@@ -191,7 +209,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \AxiomC{$\gamma_1 \derive{\ell'_1} \delta_1$}
     \AxiomC{$\gamma_2 \derive{\ell''_1} \delta_2$}
     \RightLabel{\scriptsize{правило (2)}}
-    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta_1\delta_2$}
+    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \underbrace{\delta_1\delta_2}_{\delta}$}
   \end{prooftree}
   Понеже $\ell_2 < \ell$, то отново можем да приложим \IndHyp, според което можем да разбием $\beta$ като $\beta = \beta_1\beta_2$ и да получим извода:
   \begin{prooftree}

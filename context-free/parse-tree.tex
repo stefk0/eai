@@ -45,12 +45,12 @@
       \coordinate (D) at (0,-1.5);
       \coordinate (E) at (-1,-3);
       \coordinate (F) at (1,-3);
-      \draw (A) -- node[above left]{$T$} (B) -- node[below]{$T_\alpha$}(C) -- (A);
+      \draw (A) -- node[above left]{$T$} (B) -- node[below]{$\alpha^{-1}(T)$}(C) -- (A);
       \draw (D) -- (E);
       \draw (D) -- (F);
       \draw [photon] (A) -- node[left]{$\alpha$} (D);
     \end{tikzpicture}
-    \caption{Поддърво $T_\alpha$ на $T$.}
+    \caption{$\alpha^{-1}(T)$ е поддърво на $T$.}
   \end{figure}  
 \item
   Нека фиксираме граматиката $G = (\Sigma,V,S,R)$.
@@ -58,7 +58,7 @@
   Нека положим $X_\alpha \df \lambda(\alpha)$.
 \item
   \index{синтактично дърво}
-  \mynote{На англ. \emph{parse tree}.}
+  \mynote{На англ. \emph{parse tree}. В \cite[стр. 123]{papadimitriou} дават рекурсивна дефиниция на синтактично дърво.}
   Двойката $P = (T,\lambda)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
@@ -79,19 +79,18 @@
   Нека $\alpha_0, \alpha_1,\dots,\alpha_k$ са всички думи от множеството $\leaves(T)$
   подредени във възходящ ред относно лексикографската наредба. Тогава 
   \[\texttt{yield}(P) \df X_{\alpha_0} X_{\alpha_1}\cdots X_{\alpha_k}.\]
-\item
-  \mynote{В \cite[стр. 123]{papadimitriou} дават рекурсивна дефиниция на синтактично дърво.}
-  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$.
-  За всяко $\alpha \in T$, дефинираме $\lambda_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
-  \[\lambda_\alpha(\beta) \df \lambda(\alpha \cdot \beta).\]
-\item
-  Нека $P = (T,\lambda)$ и $\alpha \in T$. Тогава
-  \[P_\alpha \df (T_\alpha, \lambda_\alpha).\]
+% \item
+%   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с граматиката $G$.
+%   За всяко $\alpha \in T$, дефинираме $\lambda_\alpha:T_\alpha \to V \cup \Sigma \cup \{\varepsilon\}$ като
+%   \[\lambda_\alpha(\beta) \df \lambda(\alpha \cdot \beta).\]
+% \item
+%   Нека $P = (T,\lambda)$ и $\alpha \in T$. Тогава
+%   \[P_\alpha \df (T_\alpha, \lambda_\alpha).\]
 \end{itemize}
 
-% \begin{problem}
-%   Докажете, че ако $T$ е дърво, то $\texttt{Pref}(T) = T$.
-% \end{problem}
+\begin{problem}
+  Докажете, че ако $T$ е дърво, то $\texttt{Pref}(\texttt{leaves}(T)) = T$.
+\end{problem}
 
 \begin{extra}
 \begin{example}

@@ -18,7 +18,6 @@
   \BinaryInfC{$A \lderive{\ell+1} \beta$}
 \end{prooftree}
 
-\mynote{Единствената разлика между дефиницията на $\lderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_1 \in \Sigma^\star$.}
 \begin{prooftree}
   \AxiomC{$\alpha_1 \lderive{\ell_1} \beta_1$}
   \AxiomC{$\beta_1 \in \Sigma^\star$}
@@ -27,7 +26,8 @@
   \TrinaryInfC{$\alpha_1\alpha_2 \lderive{\ell_1+\ell_2}\beta_1\beta_2$}
 \end{prooftree}
 
-\mynote{Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\lderive{\star}$ е аналог на DFS като винаги се избира най-левия необходен клон.}
+\mynote{Единствената разлика между дефиницията на $\lderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_1 \in \Sigma^\star$.
+  Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\lderive{\star}$ е аналог на DFS като винаги се избира най-левия необходен клон.}
 
 Удобно ще бъде да разгледаме следния аналог на \Proposition{unrestricted-grammar:context-general-step}.
 \begin{proposition}\label{pr:grammar:context-left-step}
@@ -92,6 +92,8 @@
     \BinaryInfC{$A \lderive{^\star}\underbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n \beta_n \alpha_{n+1}}_{\alpha}$}
   \end{prooftree}
 \end{proof}
+
+\subsection{Допълнителни задачи}
 
 \begin{extra}
   \index{граматика!най-десен извод}

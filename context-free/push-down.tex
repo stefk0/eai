@@ -146,11 +146,9 @@
     \item
       Нека $\ell > 0$ и $(p, \alpha, \gamma \sharp) \vdash^{\ell}_P (p, \varepsilon, \sharp)$.      
       Имаме три избора за първата стъпка в това изчисление.
-    \begin{itemize}
-    \item
-      Нека $\Delta(p,a,a) \ni (p,\varepsilon)$.
-      Това означава, че $\alpha = a\beta$, $\delta = a\rho$ и
-      \[(p, \alpha, \delta \sharp) \vdash_P (p,\beta,\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
+      
+      Започваме със случая, когато $\Delta(p,a,a) \ni (p,\varepsilon)$. Това означава, че $\alpha = a\beta$, $\delta = a\rho$ и
+      $(p, \alpha, \delta \sharp) \vdash_P (p,\beta,\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$.
       Тук имаме следния извод:
       \begin{prooftree}
         \AxiomC{$a \lderive{0} a$}
@@ -160,8 +158,8 @@
         \RightLabel{\scriptsize{правило (2)}}
         \BinaryInfC{$\underbrace{a \rho}_{\delta} \lderive{\star} \underbrace{a\beta}_{\alpha}$}
       \end{prooftree}
-    \item
-      Нека $\Delta(p,\varepsilon,A) \ni (p,a)$. Това означава, че $A \to_G a$, $\delta = A\rho$ и
+    % \item
+      Вторият случай е ако $\Delta(p,\varepsilon,A) \ni (p,a)$. Това означава, че $A \to_G a$, $\delta = A\rho$ и
       \[(p, \alpha, \delta \sharp) \vdash_P (p,\alpha,a\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
       Можем да направим следния извод:
       \begin{prooftree}
@@ -175,9 +173,9 @@
         \LeftLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
         \BinaryInfC{$\underbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
       \end{prooftree}
-    \item
-      Нека $\Delta(p,\varepsilon,A) \ni (p,BC)$. Това означава, че $A \to_G BC$, $\delta = A\rho$ и
-      \[(p, \alpha, \delta \sharp) \vdash_P (p,\alpha, BC\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
+    % \item
+      Последният случай е ако $\Delta(p,\varepsilon,A) \ni (p,BC)$. Това означава, че $A \to_G BC$, $\delta = A\rho$ и
+      $(p, \alpha, \delta \sharp) \vdash_P (p,\alpha, BC\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$.
       Можем да направим следния извод:
       \begin{prooftree}
         \AxiomC{$A \to_G BC$}
@@ -190,7 +188,7 @@
         \LeftLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
         \BinaryInfC{$\underbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
       \end{prooftree}
-    \end{itemize}
+    % \end{itemize}
   \end{itemize}
 \end{enumerate}
 \end{proof}
