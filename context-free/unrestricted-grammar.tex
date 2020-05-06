@@ -1,6 +1,6 @@
-\section{Неограничени граматики}
+\section{Неограничени граматики}\label{sect:unrestricted-grammar}
 \index{граматика!неограничена}
-\label{sect:regular-grammar}
+
 \mynote{На англ. {\em unrestricted grammar}. Това е тип 0 граматики в йерархията на Чомски \cite[стр. 220]{hopcroft1}.}
 {\bf Неограничена граматика} e наредена четворка от вида
 \[G = (V, \Sigma, R, S),\]
@@ -24,6 +24,7 @@
 с индукция по броя на стъпките $\ell$ по следния начин:
 \mynote{Обърнете внимание, че имаме недетерминизъм в тази дефиниция на извод. Също така, понякога ,за удобство, ще пишем просто $\derive{\ell}$ вместо $\derive{\ell}_G$,
   когато се знае за коя граматика говорим.}
+
 \begin{prooftree}
   \AxiomC{}
   \RightLabel{\scriptsize{правило (0)}}
@@ -58,14 +59,6 @@
 Езикът, който се поражда от граматиката $G$ дефинираме по следния начин:
 \[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star}_G \omega\}.\]
 
-\begin{extra}
-  \begin{remark}\label{rem:unrestricted-grammar:original-def}
-    В повечето учебници авторите дефинират релацията $\derive{\star}_G$ като
-    рефлексивното и транзитивното затваряне на релацията $\derive{}_G$, където
-    \[\alpha \derive{}_G \beta \dff \alpha = \rho\gamma\delta\ \&\ \gamma \to_G \gamma'\ \&\ \beta = \rho\gamma'\delta.\]
-    Нашата дефиниция е еквивалентна.
-  \end{remark}
-\end{extra}
 
 % \begin{proposition}\label{pr:unrestricted-grammar:add}
 %   За произволно естествено число $\ell$ е изпълнено, че:
@@ -187,6 +180,51 @@
     \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\gamma\delta$}
   \end{prooftree}
 \end{proof}
+
+
+
+\begin{extra}
+  \begin{remark}\label{rem:unrestricted-grammar:original-def}
+    В повечето учебници авторите дефинират релацията $\derive{\star}_G$ като
+    рефлексивното и транзитивното затваряне на релацията $\derive{}_G$, където
+    \[\alpha \derive{}_G \beta \dff \alpha = \rho\gamma\delta\ \&\ \gamma \to_G \gamma'\ \&\ \beta = \rho\gamma'\delta\text{, за някои $\rho$ и $\delta$}.\]
+    Както се вижда от следващото твърдение, релацията $\derive{1}_G$, която дефинирахме по-горе, е точно релацията $\derive{}_G$.
+  \end{remark}
+  
+  % Както отбелязахме в \Remark{unrestricted-grammar:original-def}, в повечето учебници дават следната дефиниция на релацията $\derive{1}$, която тук ще формулираме като твърдение, което следва от нашите правила за извод.
+  \begin{proposition}\label{pr:grammar:alternative-def}
+    $\alpha \derive{1}_G \beta$ точно тогава, когато $\alpha \derive{}_G \beta$.
+  \end{proposition}
+  \begin{hint}
+    За посоката $(\leftarrow)$, нека $\alpha \derive{}_G \beta$, т.е. $\alpha = \delta \gamma \rho$, $\gamma \to_G \gamma'$ и $\beta = \delta \gamma' \rho$. Тогава
+    \begin{prooftree}
+      \AxiomC{$\delta \gamma \rho \derive{0} \delta \gamma \rho$}
+      \AxiomC{$\gamma \to_G \gamma'$}
+      \RightLabel{\scriptsize{правило (2)}}
+      \UnaryInfC{$\gamma \derive{1} \gamma'$}
+      \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:context-general-step})}}
+      \BinaryInfC{$\underbrace{\delta \gamma \rho}_{\alpha} \derive{1} \underbrace{\delta \gamma' \rho}_{\beta}$}
+    \end{prooftree}
+    За посоката $(\rightarrow)$, индукция по $\abs{\alpha}$. Имаме два случая.
+    \begin{itemize}
+    \item
+      Ако $\alpha \to_G \beta$ е правило в граматиката $G$, то всичко е ясно, защото тогава $\rho = \delta = \varepsilon$.
+    \item
+      В противен случай, достигнали сме до извода $\alpha \derive{1} \beta$ като сме приложили правилото:
+      \begin{prooftree}
+        \AxiomC{$\alpha_1 \derive{\ell_1} \beta_1$}
+        \AxiomC{$\alpha_2 \derive{\ell_2} \beta_2$}
+        \BinaryInfC{$\underbrace{\alpha_1\alpha_2}_{\alpha} \derive{\ell_1+\ell_2} \underbrace{\beta_1\beta_2}_{\beta}$,}
+      \end{prooftree}
+    \end{itemize}
+    където $\ell_1 + \ell_2 = 1$.
+    Без ограничение на общността, нека $\ell_1 = 1$ и $\ell_2 = 0$. Понеже $\abs{\alpha_1} < \abs{\alpha}$, можем да приложим \IndHyp
+    за $\alpha_1$. Получаваме, че $\alpha_1 \derive{}_G \beta_1$. Понеже $\ell_2 = 0$, то $\alpha_2 = \beta_2$.
+    Заключваме, че $\underbrace{\alpha_1\alpha_2}_{\alpha} \derive{}_G \underbrace{\beta_1\beta_2}_{\beta}$.
+  \end{hint}
+\end{extra}
+
+
 
 %%% Local Variables:
 %%% mode: latex

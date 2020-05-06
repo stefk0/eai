@@ -14,7 +14,7 @@
 
 Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
 имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
-Дефинираме релацията $\alpha \derive{\ell}_G \beta$ за произволни думи $\alpha,\beta \in (V\cup\Sigma)^\star$ по следния начин:
+Да повторим дефиницията на релацията $\alpha \derive{\ell}_G \beta$ от Раздел~\ref{sect:unrestricted-grammar} в частния случай, когато граматиката е безконтекстна.
 
 \begin{prooftree}
   \AxiomC{}
@@ -38,11 +38,11 @@
 
 % \mynote{На практика във всички учебници дефинират $\alpha \derive{1}_G \beta$ точно тогава когато $\alpha$ може да се представи като $\alpha = \rho A \delta$, имаме правило в граматиката $A \to_G \gamma$ и $\beta = \rho \gamma \delta$. }
 
-Нека дефинираме релацията $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
-\[ \alpha \derive{\star}_G \beta\ \dff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
+% Нека дефинираме релацията $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
+% \[ \alpha \derive{\star}_G \beta\ \dff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
 
 \index{език!безконтекстен}
-Един език $L$ се нарича {\bf безконтекстен}, ако съществува безконтекстна граматика $G$, за която 
+Нека официално да обявим, че един език $L$ се нарича {\bf безконтекстен}, ако съществува безконтекстна граматика $G$, за която 
 $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
 \begin{important}
@@ -142,30 +142,6 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{example}
 \end{extra}
 
-Както отбелязахме в \Remark{unrestricted-grammar:original-def}, в повечето учебници дават следната дефиниция на релацията $\derive{1}$, която тук ще формулираме като твърдение, което следва от нашите правила за извод.
-\begin{proposition}\label{pr:grammar:alternative-def}
-  $\alpha \derive{1} \beta$ точно тогава, когато $\alpha = \alpha_1 A \alpha_2$, $A \to_G \gamma$ и $\beta = \alpha_1 \gamma \alpha_2$.
-\end{proposition}
-\begin{hint}
-  За посоката $(\leftarrow)$, нека $\alpha = \alpha_1 A \alpha_2$, $A \to_G \gamma$ и $\beta = \alpha_1 \gamma \alpha_2$. Тогава
-  \begin{prooftree}
-    \AxiomC{$\alpha_1 A \alpha_2 \derive{0} \alpha_1 A \alpha_2$}
-    \AxiomC{$A \derive{1} \gamma$}
-    \RightLabel{\scriptsize{правило (3)}}
-    \BinaryInfC{$\underbrace{\alpha_1 A \alpha_2}_{\alpha} \derive{1} \underbrace{\alpha_1\gamma\alpha_2}_{\beta}$}
-  \end{prooftree}
-  За посоката $(\rightarrow)$, индукция по $\abs{\alpha}$.
-  Ако $\abs{\alpha} = 1$, то е ясно. Нека $\abs{\alpha} > 1$. Тогава имаме $\ell' + \ell'' = 1$
-  \begin{prooftree}
-    \AxiomC{$\alpha' \derive{\ell'} \beta'$}
-    \AxiomC{$\alpha'' \derive{\ell''} \beta''$}
-    \BinaryInfC{$\underbrace{\alpha'\alpha''}_{\alpha} \derive{\ell'+\ell''} \underbrace{\beta'\beta''}_{\beta}$}
-  \end{prooftree}
-  Без ограничение на общността, нека $\ell' = 1$ и $\ell'' = 0$. Понеже $\abs{\alpha'} < \abs{\alpha}$, можем да приложим \IndHyp
-  за $\alpha'$. Получаваме, че $\alpha' = \alpha'_1A\alpha'_2$, $A \to_G \gamma$ и $\beta' = \alpha'_1 \gamma \alpha'_2$.
-  Ясно е, че тогава $\alpha_1 = \alpha'_1$ и $\alpha_2 = \alpha'_2 \alpha''$.
-\end{hint}
-
 
 Следващото твърдение ни дава едно свойство, което е вярно за безконтекстни граматики, но не и за неограничени граматики.
 \begin{proposition}\label{pr:grammar:divide-2}
@@ -185,7 +161,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \mynote{Разсъждаваме аналогично, ако $\gamma_2 = \delta A \rho$.}
   \begin{prooftree}
     \AxiomC{$\overbrace{\delta A \rho}^{\gamma_1} \derive{0} \delta A \rho$}
-    \AxiomC{$A \to \alpha$}
+    \AxiomC{$A \to_G \alpha$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:alternative-def})}}
     \BinaryInfC{$\gamma_1 \derive{1} \delta\alpha\rho$}
     \AxiomC{$\gamma_2 \derive{0} \gamma_2$}
@@ -211,12 +187,12 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \RightLabel{\scriptsize{правило (2)}}
     \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \underbrace{\delta_1\delta_2}_{\delta}$}
   \end{prooftree}
-  Понеже $\ell_2 < \ell$, то отново можем да приложим \IndHyp, според което можем да разбием $\beta$ като $\beta = \beta_1\beta_2$ и да получим извода:
+  Понеже $\ell_2 < \ell$, то отново можем да приложим \IndHyp и да получим извода:
   \begin{prooftree}
     \AxiomC{$\delta_1 \derive{\ell'_2} \beta_1$}
     \AxiomC{$\delta_2 \derive{\ell''_2} \beta_2$}
     \RightLabel{\scriptsize{правило (2)}}
-    \BinaryInfC{$\delta_1\delta_2 \derive{\ell_2} \beta_1\beta_2$}
+    \BinaryInfC{$\underbrace{\delta_1\delta_2}_{\delta} \derive{\ell_2} \underbrace{\beta_1\beta_2}_{\beta}$}
   \end{prooftree}
   Сега можем да обобщим всичко със следния извод:
   \begin{prooftree}
@@ -243,30 +219,22 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \mynote{Тук е възможно $X_i = a \in \Sigma$. Тогава $a \derive{0} a$ и $\beta_i = a$.}
   Пълна индукция по $k$ като използвате \Proposition{grammar:divide-2}.
 \end{hint}
-  
-\begin{important}
-  \begin{theorem}
-    Всеки регулярен език е безконтекстен.
-  \end{theorem}
-\end{important}
-\begin{hint}
-  Ще направим индукция по построението на регулярните езици.
-  \begin{itemize}
-  \item
-    Всеки от езиците $\emptyset$, $\{\varepsilon\}$ и $\{a\}$, за всяка буква $a \in \Sigma$ е безконтекстен.
-  \item
-    Нека $L_1$ и $L_2$ са безконтекстни езици. Тогава:
-    \begin{itemize}
-    \item
-      $L_1 \cup L_2$ е безконтекстен език.
-    \item
-      $L_1 \cdot L_2$ е безконтекстен език.
-    \item
-      $L^\star_1$ е безконтекстен език.
-    \end{itemize}
-  \end{itemize}
-\end{hint}
 
+Следващото твърдение е важно, но е трудно да не пропуснем доказателството му.
+\begin{important}
+  \begin{proposition}
+    Безконтекстните езици са затворени относно операциите обединение, конкатенация и звезда на Клини.
+  \end{proposition}
+\end{important}
+
+Оттук можем да извлечем второ доказателство на твърдението, че всеки регулярен език е безконтекстен.
+
+\begin{proposition}
+  Всеки регулярен език е безконтекстен.
+\end{proposition}
+\begin{hint}
+  Индукция по построението на регулярните езици.
+\end{hint}
 
 %%% Local Variables:
 %%% mode: latex

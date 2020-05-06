@@ -11,9 +11,13 @@
 \end{example}
 \begin{hint}
   Разгледайте контекстната граматика $G$ зададена със следните правила:
+  \mynote{Съобразете, че имаме извода $CB \derive{} BC$.}
   \begin{align*}
     & S \to aSBC\ |\ aBC\\
-    & CB \to BC\\
+    & CB \to CZ\\
+    & CZ \to WZ\\
+    & WZ \to WC\\
+    & WC \to BC\\
     & aB \to ab\\
     & bB \to bb\\
     & bC \to bc\\
@@ -34,14 +38,7 @@
   Оттук лесно можем да докажем, че $L \subseteq \L(G)$.
 \end{hint}
 
-% \begin{proposition}
-%   Класът на безконтекстните езици строго се включва в класа на контекстните езици.
-% \end{proposition}
-
-% \begin{proposition}
-%   Всеки контекстен език е разрешим.
-% \end{proposition}
-
-% \begin{proposition}
-%   Съществува разрешим език, който не е контекстен.
-% \end{proposition}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
