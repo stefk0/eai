@@ -155,11 +155,24 @@
   \end{itemize}
 \end{proposition}
 \begin{proof}
-  Това твърдение е на практика реформулировка на \Corollary{tree:upper-bound}.
+
+%   \begin{proposition}
+%   \label{cor:tree:upper-bound}
+%   \mynote{Това следствие ще бъде важно за нас, когато разгледаме лемата за покачването за безконтекстни езици.}
+%   Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$. Тогава
+%   \[|\texttt{yield}(P)| \leq b^{{\high}(P)}.\]
+% \end{proposition}
+% \begin{proof}
+%   Следва директно от горното твърдение след като съобразим, че
+%   \[|\texttt{yield}(P)| \leq |\leaves(P)|.\]
+% \end{proof}
+
+  
+  Това твърдение е на практика следствие от \Problem{tree:leaves-upper-bound} в комбинация с \Proposition{yield-relation:parse-tree}.
   \begin{itemize}
   \item
-    Да разгледаме синтактично дърво $P$ за извода $A \yield{\leq\ell} \alpha$.
-    Според \Corollary{tree:upper-bound} имаме, че $\abs{\alpha} \leq b^{\texttt{height}(P)} \leq b^{\ell}$.
+    Да разгледаме синтактично дърво $P = (T,\lambda)$ за извода $A \yield{\leq\ell} \alpha$.
+    Според \Problem{tree:leaves-upper-bound} имаме, че $\abs{\alpha} = \abs{\leaves(T)}\leq b^{\high(T)} = b^{\ell}$.
   \item
     Нека $\alpha \in \L(G)$. Това означава, че $S \yield{\star} \alpha$.
     Ако допуснем, че $S \yield{\leq \ell} \alpha$, то бихме имали, че $\abs{\alpha} \leq b^\ell$, което е противоречие.
@@ -435,6 +448,7 @@
     е безконтекстен, което е противоречие.
   \end{itemize}
 \end{hint}
+
 
 %%% Local Variables:
 %%% mode: latex

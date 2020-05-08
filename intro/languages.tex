@@ -76,15 +76,7 @@
     Ако $\abs{\alpha} = n+1$, то $\alpha = a\beta$, където $\abs{\beta} = n$.
     Тогава $\alpha^{rev} \df (\beta^{rev})a$.
   \end{itemize}
-\item
-  \index{дума!префикс}
-  Казваме, че думата $\alpha$ е {\bf префикс} на думата $\beta$,
-  ако съществува дума $\gamma$, такава че $\beta = \alpha\cdot\gamma$.
-  Да обърнем внимание, че позволяваме $\gamma = \varepsilon$. Тогава $\beta$ е префикс на самата себе си.
-  Ако се ограничим до думи $\gamma \neq \varepsilon$, то ще казваме, че $\alpha$ е същински префикс на $\beta$.
-\item
-  \index{дума!суфикс}
-  $\alpha$ е {\bf суфикс} на $\beta$, ако $\beta = \gamma\cdot\alpha$, за някоя дума $\gamma$.
+
 \item
   \mynote{Обърнете внимание, че $\emptyset\cdot A = A\cdot\emptyset = \emptyset$}
   \mynote{Също така, $\{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A$}
@@ -184,6 +176,48 @@
     $(\alpha^n)^{\rev} = (\alpha^{\rev})^n$, за всяко $n \geq 0$.
   \end{enumerate}
 \end{problem}
+
+% https://stackoverflow.com/questions/509211/understanding-slice-notation
+Понякога може да е удобно да вземем назаем от \texttt{python} нотацията за \texttt{slices} на масив и
+ако думата $\alpha = a_0 a_1 \cdots a_{n-1}$, то нека 
+\begin{align*}
+  \alpha\slice{i} & \df a_i\\
+  \alpha\slice{i:j} & \df
+                      \begin{cases}
+                        a_i \cdots a_{m-1}, & \text{ ако }i < j\ \&\ m = \min\{j,|\alpha|\}\\
+                        \varepsilon, & \text{ иначе}
+                      \end{cases}\\
+  \alpha\slice{i:} & \df \alpha\slice{i:|\alpha|}\\
+  \alpha\slice{:i} & \df \alpha\slice{0:i}\\
+\end{align*}
+
+
+\subsection{Релации между думи}
+
+\begin{itemize}
+\item 
+  \index{дума!префикс}
+  Казваме, че думата $\alpha$ е {\bf префикс} на думата $\beta$,
+  ако съществува дума $\gamma$, такава че $\beta = \alpha\cdot\gamma$.
+  Да обърнем внимание, че позволяваме $\gamma = \varepsilon$. Тогава $\beta$ е префикс на самата себе си.
+  Ако се ограничим до думи $\gamma \neq \varepsilon$, то ще казваме, че $\alpha$ е \emph{същински} префикс на $\beta$.
+\item
+  За един език $L$, можем да дефинираме езика от префиксите на думите от $L$, т.е.
+  \[\texttt{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \gamma \in \Sigma^\star)[\alpha\cdot \gamma \in L]\}.\]
+\item
+  \index{дума!суфикс}
+  $\alpha$ е {\bf суфикс} на $\beta$, ако $\beta = \gamma\cdot\alpha$, за някоя дума $\gamma$.
+\item
+  За един език $L$, можем да дефинираме езика от суфиксите на думите от $L$, т.е.
+  \[\texttt{Suff}(L) = \{\alpha \in \Sigma^\star \mid (\exists \gamma \in \Sigma^\star)[\gamma\cdot\alpha \in L]\}.\]
+\item
+  \index{наредба!лексикографска}
+  \mynote{Тук не е съществено, че буквите в азбуката $\Sigma$ са числа. Можем да дефинираме наредба между елементите на произволна крайна азбука.}
+  Нека имаме азбука $\Sigma = \{0,1,2,\dots,n\}$.
+  Казваме, че една дума $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
+  \[(\exists i < \min\{|\alpha|,|\beta|\})[\ \alpha\slice{:i} = \beta\slice{:i}\ \&\ \alpha\slice{i} < \beta\slice{i}\ ].\]
+\end{itemize}
+
 
 % \begin{problem}
 %   \mynote{С други думи, ако $\varepsilon \not\in X$, то $X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$, където неизвестната променлива е $Z$.}

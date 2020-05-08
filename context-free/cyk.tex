@@ -41,6 +41,8 @@
 \end{algorithm}
 
 \begin{lemma}
+  \mynote{Да напомним, че според нашата нотация,
+  \[\alpha\slice{i:j} = a_i\cdots a_{j-1}.\]}
   Нека е дадена безконтекстната граматика $G$ в нормална форма на Чомски и думата $\alpha$.
   Всеки път, точно преди да изпълни ред (\ref{alg:cyk:first-loop}) от програмата описана в Алгоритъм \ref{alg:belongs-to-grammar},
   е изпълнено, че за всяко $i < n-s$,
@@ -69,8 +71,7 @@
       & B \derive{\star}_G \alpha\slice{i:k+1} \\
       & C \derive{\star}_G \alpha\slice{k+1:i+s+1}. 
     \end{align*}
-    Заключаваме веднага, че 
-    \[A \derive{\star}_G \alpha\slice{i:i+s+1}.\]
+    Заключаваме веднага, че $A \derive{\star}_G \alpha\slice{i:i+s+1}$.
   \item[($\supseteq$)]
     Нека $A \derive{\star}_G \alpha\slice{i:i+s+1}$ и да разгледаме първото правило, което сме приложили в този извод.
     Понеже $G$ е в нормална форма на Чомски, правилото е от вида $A \to_G BC$ и тогава, според \Proposition{grammar:divide-2}, съществува някое $k$, за което $i \leq k < i+s$, и
@@ -79,8 +80,7 @@
       & C \derive{\star} \alpha\slice{k+1:i+s+1}.
     \end{align*}
     От \IndHyp получаваме, че $B \in \texttt{V[i][k]}$ и $C \in \texttt{V[k+1][i+s]}$.
-    Тогава от ред (\ref{alg:cyk:add-variable}) на алгоритъма е ясно, че 
-    \[A \in \texttt{V[i][i+s]}.\]
+    Тогава от ред (\ref{alg:cyk:add-variable}) на алгоритъма е ясно, че $A \in \texttt{V[i][i+s]}$.
   \end{description}
 \end{proof}
 

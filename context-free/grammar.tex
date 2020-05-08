@@ -1,4 +1,4 @@
-\section{Извод в безконтекстна граматика}
+\section{Извод в безконтекстна граматика}\index{sect:context-free:derive}
 
 \index{граматика!безконтекстна}
 \mynote{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$. На англ. {\em context-free grammar}. Други срещани наименования на български са
@@ -8,7 +8,7 @@
     \UnaryInfC{$A \derive{1}_G \beta$}
   \end{prooftree}}
 
-В Раздел \ref{sect:regular-grammar} въведохме понятието неограничена граматика. След това видяхме как можем да опишем регулярните езици
+В Раздел \ref{sect:unrestricted-grammar} въведохме понятието неограничена граматика. След това видяхме как можем да опишем регулярните езици
 със специален вид граматики, които нарекохме регулярни граматики.
 Сега ще разгледаме още един вид граматики, които описват по-широк клас от езици.
 
@@ -184,6 +184,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$\gamma_1 \derive{\ell'_1} \delta_1$}
     \AxiomC{$\gamma_2 \derive{\ell''_1} \delta_2$}
+    \LeftLabel{\scriptsize{($\ell'_1+\ell''_1 = \ell_1$)}}
     \RightLabel{\scriptsize{правило (2)}}
     \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \underbrace{\delta_1\delta_2}_{\delta}$}
   \end{prooftree}
@@ -191,6 +192,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$\delta_1 \derive{\ell'_2} \beta_1$}
     \AxiomC{$\delta_2 \derive{\ell''_2} \beta_2$}
+    \LeftLabel{\scriptsize{($\ell'_2+\ell''_2 = \ell_2$)}}
     \RightLabel{\scriptsize{правило (2)}}
     \BinaryInfC{$\underbrace{\delta_1\delta_2}_{\delta} \derive{\ell_2} \underbrace{\beta_1\beta_2}_{\beta}$}
   \end{prooftree}

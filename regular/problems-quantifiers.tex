@@ -1,17 +1,7 @@
 \begin{extra}
-  Нека да вземем назаем от \texttt{python} нотацията за \texttt{slices} на масив и
-  ако $\alpha = a_0 \cdot a_1 \cdots a_{n-1}$, то нека 
-  \begin{align*}
-    \alpha\slice{i:j} & \df
-                  \begin{cases}
-                    a_i \cdots a_{m-1}, & \text{ ако }i < j\ \&\ m = \min\{j,|\alpha|\}\\
-                    \varepsilon, & \text{ иначе}
-                  \end{cases}\\
-    \alpha\slice{i:} & \df \alpha\slice{i:|\alpha|}\\
-    \alpha\slice{:i} & \df \alpha\slice{0:i}.
-  \end{align*}
-Нека също така $\Sigma^{\geq k} \df \{ \alpha \in \Sigma^\star \mid |\alpha| \geq k\}$.
 
+\mynote{Нека $\Sigma^{\geq k} \df \{ \alpha \in \Sigma^\star \mid |\alpha| \geq k\}$.}
+  
 \begin{problem}
   Нека $L$ е регулярен език. Тогава езиците
   \begin{itemize}

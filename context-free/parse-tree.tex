@@ -1,80 +1,71 @@
 \section{Синтактични дървета}
 
-\newcommand{\high}{\texttt{height}}
-\newcommand{\leaves}{\texttt{leaves}}
-\newcommand{\successor}{\texttt{succ}}
+\mynote{ На английски се нарича parse tree, syntax tree, derivation tree. Обикновено, например в \cite[стр. 123]{papadimitriou},  дават рекурсивна дефиниция на синтактично дърво.}
 
-\tikzset{
-  photon/.style={decorate, decoration={snake}, draw=black}
-}
-
-\mynote{Понятието дърво е едно от най-основните в информатиката и може да се дефинира по много различни начини, в зависимост от това за какви цели се използва. Тук на практика следваме \cite{nerode-shore}, защото е важно да имаме наредба между възлите на дървото.}
 \begin{itemize}
-\item
-  За фиксирано $b \in \Nat$, ще разглеждаме думи $\alpha$ и $\beta$ над азбуката $\{0,1,\dots,b-1\}$.
-\item
-  С $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$, а с $\alpha \prec \beta$,
-  че $\alpha$ е \emph{същински} префикс на $\beta$, т.е. $\alpha \preceq \beta\ \&\ \alpha \neq \beta$.
-\item
-  \index{наредба!лексикографска}
-  Ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
-  \[(\exists i < \min\{|\alpha|,|\beta|\})[\ \alpha\slice{:i} = \beta\slice{:i}\ \&\ \alpha\slice{i} < \beta\slice{i}\ ].\]
-\item
-  \index{дърво}
-  \mynote{Всеки възел в дървото еднозначно се определя от пътя от възела до корена.}
-  Непразното множество $T \subseteq \{0,1,\dots,b-1\}^\star$ се нарича {\bf дърво},
-  ако $T$ е затворено относно префикси, т.е. $\texttt{Pref}(T) = T$.
-  С други думи,
-  \[(\forall \alpha)(\forall \beta)[\ \alpha \in T\ \&\ \beta \preceq \alpha\ \implies\ \beta \in T\ ].\]
-  \mynote{При нас всички дървета са крайно разклонени.}
-\item
-  Нека да въведем следните означения:
-  \begin{align*}
-    & \high(T) \df \max\{\ \abs{\alpha}\ \mid\ \alpha \in T\ \} & \comment\text{височина}\\
-    & \successor_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\ \&\ i < b\} & \comment\text{наследниците на }\alpha\\
-    & T_\alpha \df \alpha^{-1}(T) & \comment\text{поддървото на }\alpha\\
-    & \leaves(T) \df \{ \alpha \in T \mid \successor_T(\alpha) = \emptyset \}. & \comment\text{листата на }T
-  \end{align*}
+% \item
+%   За фиксирано $b \in \Nat$, ще разглеждаме думи $\alpha$ и $\beta$ над азбуката $\{0,1,\dots,b-1\}$.
+% \item
+%   С $\alpha \preceq \beta$ ще означаваме, че $\alpha$ е префикс на $\beta$, а с $\alpha \prec \beta$,
+%   че $\alpha$ е \emph{същински} префикс на $\beta$, т.е. $\alpha \preceq \beta\ \&\ \alpha \neq \beta$.
+% \item
+%   \index{наредба!лексикографска}
+%   Ще казваме, че $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
+%   \[(\exists i < \min\{|\alpha|,|\beta|\})[\ \alpha\slice{:i} = \beta\slice{:i}\ \&\ \alpha\slice{i} < \beta\slice{i}\ ].\]
+% \item
+%   \index{дърво}
+%   \mynote{Всеки възел в дървото еднозначно се определя от пътя от възела до корена.}
+%   Непразното множество $T \subseteq \{0,1,\dots,b-1\}^\star$ се нарича {\bf дърво},
+%   ако $T$ е затворено относно префикси, т.е. $\texttt{Pref}(T) = T$.
+%   С други думи,
+%   \[(\forall \alpha)(\forall \beta)[\ \alpha \in T\ \&\ \beta \preceq \alpha\ \implies\ \beta \in T\ ].\]
+%   \mynote{При нас всички дървета са крайно разклонени.}
+% \item
+%   Нека да въведем следните означения:
+%   \begin{align*}
+%     & \high(T) \df \max\{\ \abs{\alpha}\ \mid\ \alpha \in T\ \} & \comment\text{височина}\\
+%     & \successor_T(\alpha) \df \{ \alpha i \mid \alpha i \in T\ \&\ i < b\} & \comment\text{наследниците на }\alpha\\
+%     & T_\alpha \df \alpha^{-1}(T) & \comment\text{поддървото на }\alpha\\
+%     & \leaves(T) \df \{ \alpha \in T \mid \successor_T(\alpha) = \emptyset \}. & \comment\text{листата на }T
+%   \end{align*}
 
-  \begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-      \coordinate (A) at (0,0);
-      \coordinate (B) at (-2,-3);
-      \coordinate (C) at (2,-3);
-      \coordinate (D) at (0,-1.5);
-      \coordinate (E) at (-1,-3);
-      \coordinate (F) at (1,-3);
-      \draw (A) -- node[above left]{$T$} (B) -- node[below]{$\alpha^{-1}(T)$}(C) -- (A);
-      \draw (D) -- (E);
-      \draw (D) -- (F);
-      \draw [photon] (A) -- node[left]{$\alpha$} (D);
-    \end{tikzpicture}
-    \caption{$\alpha^{-1}(T)$ е поддърво на $T$.}
-  \end{figure}  
+%   \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}
+%       \coordinate (A) at (0,0);
+%       \coordinate (B) at (-2,-3);
+%       \coordinate (C) at (2,-3);
+%       \coordinate (D) at (0,-1.5);
+%       \coordinate (E) at (-1,-3);
+%       \coordinate (F) at (1,-3);
+%       \draw (A) -- node[above left]{$T$} (B) -- node[below]{$\alpha^{-1}(T)$}(C) -- (A);
+%       \draw (D) -- (E);
+%       \draw (D) -- (F);
+%       \draw [photon] (A) -- node[left]{$\alpha$} (D);
+%     \end{tikzpicture}
+%     \caption{$\alpha^{-1}(T)$ е поддърво на $T$.}
+%   \end{figure}  
 \item
-  Нека фиксираме граматиката $G = (\Sigma,V,S,R)$.
-  С всяко дърво $T$ ще асоциираме функцията $\lambda: T \to V \cup \Sigma \cup \{\varepsilon\}$.
-  Нека положим $X_\alpha \df \lambda(\alpha)$.
+  Нека фиксираме граматиката $G = (\Sigma,V,S,R)$ и
+  \[b \df \max\{\abs{\gamma} \mid A \to_G \gamma\text{ е правило в }G\}.\]
 \item
   \index{синтактично дърво}
-  \mynote{На англ. \emph{parse tree}. В \cite[стр. 123]{papadimitriou} дават рекурсивна дефиниция на синтактично дърво.}
   Двойката $P = (T,\lambda)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
-    $T$ е крайно.
+    $T$ е крайно \emph{оптимално} дърво и $T \subseteq \{0,1,\dots,b-1\}^\star$.
   \item
-    Ако $\alpha i \in T$, то $\alpha j \in T$ за всяко $j < i$.
+    Имаме функция $\lambda: T \to V \cup \Sigma \cup \{\varepsilon\}$.
+    Нека положим $X_\alpha \df \lambda(\alpha)$.
   \item
-    Ако $\alpha \in T$ и $|\successor_T(\alpha)| = k+1$, за някое $k \in \Nat$, то $X_\alpha \in V$,
-    като имаме също така и 
     \mynote{С други думи,
-      \[\lambda(\alpha)\to_G\lambda(\alpha 0)\cdots\lambda(\alpha k).\]}
-    \[X_\alpha \to_G X_{\alpha 0} X_{\alpha 1} \cdots X_{\alpha k}.\] 
+      \[\lambda(\alpha)\to_G\lambda(\alpha 0)\cdots\lambda(\alpha k).\] Това свойство е ключово, защото то ни казва, че дървото е съвместимо с правилата на граматиката $G$.}
+    Ако $\alpha \in T$ и $|\successor_T(\alpha)| = k+1$, за някое $k \in \Nat$, то $X_\alpha \in V$,
+    като имаме и 
+    \[X_\alpha \to_G X_{\alpha 0} X_{\alpha 1} \cdots X_{\alpha k}.\]
   \end{itemize}
 \item
-  За дървото на извод $P$, нека
-  \[\texttt{root}(P) \df X_\varepsilon.\]
+  За дървото на извод $P$, нека $\texttt{root}(P) \df X_\varepsilon$.
 \item
   Нека $\alpha_0, \alpha_1,\dots,\alpha_k$ са всички думи от множеството $\leaves(T)$
   подредени във възходящ ред относно лексикографската наредба. Тогава 
@@ -88,9 +79,6 @@
 %   \[P_\alpha \df (T_\alpha, \lambda_\alpha).\]
 \end{itemize}
 
-\begin{problem}
-  Докажете, че ако $T$ е дърво, то $\texttt{Pref}(\texttt{leaves}(T)) = T$.
-\end{problem}
 
 \begin{extra}
 \begin{example}
@@ -99,7 +87,7 @@
     & S \to aS\ |\ aSc\ |\ B\\
     & B \to bB\ |\ bBc\ |\ \varepsilon.
   \end{align*}
-  Вече знаем, че $\L(G) = \{a^nb^kc^\ell \mid n+k\geq \ell\}$.
+  \mynote{По-нататък ще докажем, че езикът на граматиката $G$ е $\{a^nb^kc^\ell \mid n+k\geq \ell\}$.}
   Да разгледаме дървото на извод $P = (T, \lambda)$, където:
 
   \begin{framed}
@@ -152,39 +140,6 @@
 \end{example}
 \end{extra}
 
-
-\begin{lemma}
-  Нека $T \subseteq \{0,\dots,b-1\}^\star$ е крайно дърво. Тогава
-  \[ |\leaves(T)| \leq b^{\high(T)}.\]
-\end{lemma}
-\begin{proof}
-  Индукция по $\high(T)$.
-  \begin{itemize}
-  \item
-    Нека $\high(T) = 0$. Тогава е ясно, че $|\leaves(T)| = |\{\varepsilon\}| = 1 \leq b^0$.
-  \item
-    Нека $\high(T) > 0$.
-    За всяко $a \in T$ е ясно, че $\high(T_a) < \high(T)$. Тогава:
-    \mynote{В този случай имаме, че $\leaves(T) = \bigcup_{a\in T} (\{a\}\cdot \leaves(T_a))$. Тук гледаме на $a$ и $b$ от една страна като букви в азбука, но и като числа.}
-    \begin{align*}
-      |\texttt{leaves}(T)| & = \sum_{a \in T}|\texttt{leaves}(T_a)|\\
-                           & \leq \sum_{a \in T} b^{\high(T_a)} & \comment\text{от \IndHyp}\\
-                           & \leq \sum_{a < b} b^{\high(T_a)}\\
-                           & \leq \sum_{a < b} b^{\high(T) -1} & \comment \high(T_a) \leq \high(T)-1 \\
-                           & = b^{\high(T)}.
-    \end{align*}
-  \end{itemize}
-\end{proof}
-
-\begin{corollary}
-  \label{cor:tree:upper-bound}
-  Нека $P = (T,\lambda)$ е дърво на извод съвместимо с $G$. Тогава
-  \[|\texttt{yield}(P)| \leq b^{{\high}(P)}.\]
-\end{corollary}
-\begin{proof}
-  Следва директно от горното твърдение след като съобразим, че
-  \[|\texttt{yield}(P)| \leq |\leaves(P)|.\]
-\end{proof}
 
 
 
@@ -423,6 +378,7 @@
 %     \end{subfigure}
 %   \end{figure}
 % \end{hint}
+
 
 
 %%% Local Variables:

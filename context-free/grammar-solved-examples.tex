@@ -61,84 +61,89 @@
   \end{prooftree}
 \end{proof}
 
+\begin{corollary}\label{cor:grammar:yield-approximation}
+  Нека $G$ е произволна безконтекстна граматика и $A$ е променлива в $G$. Тогава
+  \[\L_G(A) = \bigcup\{\{\alpha_1\}\cdot \L_G(A_1) \cdots \{\alpha_n\} \cdot \L_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.\]
+\end{corollary}
 
-  Като първи пример, нека да видим, че съществува безконтекстен език, който не е регулярен.
-  Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
-  \begin{example}\label{ex:grammar:anbn}
-    Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
-    \begin{align*}
-      & S \to aSb \mid \varepsilon.
-    \end{align*}
-    Тогава
-    \begin{align*}
-      & \L^0_G(S) = \emptyset\\
-      & \L^1_G(S) = \{a\} \cdot \emptyset \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon\}\\
-      & \L^{2}_G(S) = \{a\} \cdot \{\varepsilon\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon, ab\}\\
-      & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < 3\}\\
-      & \vdots
-    \end{align*}
-    Лесно се съобразява, че
-    \[\L^\ell_G(S) = \{a^nb^n \mid n < \ell\}.\]
-    Заключаваме, че:
-    \[\L(G) = \L_G(S) = \bigcup_{\ell}\L^\ell_G(S) = \{a^nb^n \mid n\in\Nat\}.\]
-  \end{example}
-  
-  \begin{example}
-    Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
-    \begin{align*}
-      & S \to aSc\ |\  B\\
-      & B \to bBc\ |\ \varepsilon.
-    \end{align*}
-    Да видим защо $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
-    Първо ще докажем \emph{коректност} на граматиката. Това означава, че $G$ не генерира думи извън езика, т.е.
-    $\L_G(S) \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$. За да направим това обаче, трябва да знаем също така и $\L_G(B)$.
-    Формално казано, трябва да докажем, че за всяко $\ell$ е изпълнено следното:
-    \begin{align}
-      \L^\ell_G(S) & \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\} \label{eq:nknk1}\\
-      \L^\ell_G(B) & \subseteq \{b^kc^k \mid k \in \Nat\} \label{eq:nknk2}.
-    \end{align}
-    Това ще направим с индукция по $\ell$.
-    Да напомним, че според \Proposition{grammar:yield-approximation} имаме следните връзки:
-    \begin{align*}
-      & \L^0_G(S) = \emptyset\\
-      & \L^{\ell+1}_G(S) = \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \cup \L^\ell_G(B)\\
-      & \L^0_G(B) = \emptyset\\
-      & \L^{\ell+1}_G(B) = \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{\varepsilon\}.
-    \end{align*}
-    Очевидно е, че \Property{eq:nknk1} и \Property{eq:nknk2} са изпълнени за $\ell = 0$.
-    Да примем, че имаме \Property{eq:nknk1} и \Property{eq:nknk2} за някое $\ell$.
-    \mynote{Обърнете внимание, че не можем да докажем \Property{eq:nknk1} независимо от \Property{eq:nknk2}.}
-    Ще докажем свойствата и за $\ell+1$.
+
+Като първи пример, нека да видим, че съществува безконтекстен език, който не е регулярен.
+Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
+\begin{example}\label{ex:grammar:anbn}
+  Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
+  \begin{align*}
+    & S \to aSb \mid \varepsilon.
+  \end{align*}
+  Тогава
+  \begin{align*}
+    & \L^0_G(S) = \emptyset\\
+    & \L^1_G(S) = \{a\} \cdot \emptyset \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon\}\\
+    & \L^{2}_G(S) = \{a\} \cdot \{\varepsilon\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon, ab\}\\
+    & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < 3\}\\
+    & \vdots
+  \end{align*}
+  Лесно се съобразява, че
+  \[\L^\ell_G(S) = \{a^nb^n \mid n < \ell\}.\]
+  Заключаваме, че:
+  \[\L(G) = \L_G(S) = \bigcup_{\ell}\L^\ell_G(S) = \{a^nb^n \mid n\in\Nat\}.\]
+\end{example}
+
+\begin{example}
+  Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
+  \begin{align*}
+    & S \to aSc\ |\  B\\
+    & B \to bBc\ |\ \varepsilon.
+  \end{align*}
+  Да видим защо $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
+  Първо ще докажем \emph{коректност} на граматиката. Това означава, че $G$ не генерира думи извън езика, т.е.
+  $\L_G(S) \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$. За да направим това обаче, трябва да знаем също така и $\L_G(B)$.
+  Формално казано, трябва да докажем, че за всяко $\ell$ е изпълнено следното:
+  \begin{align}
+    \L^\ell_G(S) & \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\} \label{eq:nknk1}\\
+    \L^\ell_G(B) & \subseteq \{b^kc^k \mid k \in \Nat\} \label{eq:nknk2}.
+  \end{align}
+  Това ще направим с индукция по $\ell$.
+  Да напомним, че според \Proposition{grammar:yield-approximation} имаме следните връзки:
+  \begin{align*}
+    & \L^0_G(S) = \emptyset\\
+    & \L^{\ell+1}_G(S) = \{a\} \cdot \L^\ell_G(S) \cdot \{c\} \cup \L^\ell_G(B)\\
+    & \L^0_G(B) = \emptyset\\
+    & \L^{\ell+1}_G(B) = \{b\} \cdot \L^\ell_G(B) \cdot \{c\} \cup \{\varepsilon\}.
+  \end{align*}
+  Очевидно е, че \Property{eq:nknk1} и \Property{eq:nknk2} са изпълнени за $\ell = 0$.
+  Да примем, че имаме \Property{eq:nknk1} и \Property{eq:nknk2} за някое $\ell$.
+  \mynote{Обърнете внимание, че не можем да докажем \Property{eq:nknk1} независимо от \Property{eq:nknk2}.}
+  Ще докажем свойствата и за $\ell+1$.
+  \begin{itemize}
+  \item
+    Първо, нека $\alpha \in \L^{\ell+1}_G(S)$. Имаме два случая.
     \begin{itemize}
     \item
-      Първо, нека $\alpha \in \L^{\ell+1}_G(S)$. Имаме два случая.
-      \begin{itemize}
-      \item
-        Нека $\alpha \in \{a\} \cdot \L^\ell_G(S) \cdot \{c\}$. От \IndHyp следва, че
-        $\alpha = a^{n+1}b^kc^{n+k+1}$ за някои естествени числа $n$ и $k$.
-        Тогава е ясно, че $\alpha \in \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
-      \item
-        Нека $\alpha \in  \L^\ell_G(B)$. От \IndHyp следва, че
-        $\alpha \in \{b^kc^k \mid k \in \Nat\} \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
-      \end{itemize}
+      Нека $\alpha \in \{a\} \cdot \L^\ell_G(S) \cdot \{c\}$. От \IndHyp следва, че
+      $\alpha = a^{n+1}b^kc^{n+k+1}$ за някои естествени числа $n$ и $k$.
+      Тогава е ясно, че $\alpha \in \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
     \item
-      Второ, нека $\alpha \in \L^{\ell+1}_G(B)$. Имаме два случая.
-      \begin{itemize}
-      \item
-        Нека $\alpha \in \{b\} \cdot \L^\ell_G(B) \cdot \{c\}$. От \IndHyp следва, че
-        $\alpha = b^{k+1}c^{k+1}$ за някое естествено число $k$.
-        Тогава е ясно, че $\alpha \in \{b^{k}c^{k} \mid k\in\Nat\}$.
-      \item
-        Нека $\alpha = \varepsilon$. В този случай също е ясно, че $\alpha \in \{b^{k}c^{k} \mid k\in\Nat\}$.
-      \end{itemize}
+      Нека $\alpha \in  \L^\ell_G(B)$. От \IndHyp следва, че
+      $\alpha \in \{b^kc^k \mid k \in \Nat\} \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
     \end{itemize}
-    Оттук заключаваме, че $\L_G(S) \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
-    
-    Сега да разгледаме пълнота на граматиката, което означава, че
-    всяка дума от езика се генерира от $G$. С други думи, $\{a^nb^kc^{n+k} \mid n,k\in\Nat\} \subseteq \L_G(S)$.
-    Първо ще докажем, че
-    \begin{equation}
-      \label{eq:4}
+  \item
+    Второ, нека $\alpha \in \L^{\ell+1}_G(B)$. Имаме два случая.
+    \begin{itemize}
+    \item
+      Нека $\alpha \in \{b\} \cdot \L^\ell_G(B) \cdot \{c\}$. От \IndHyp следва, че
+      $\alpha = b^{k+1}c^{k+1}$ за някое естествено число $k$.
+      Тогава е ясно, че $\alpha \in \{b^{k}c^{k} \mid k\in\Nat\}$.
+    \item
+      Нека $\alpha = \varepsilon$. В този случай също е ясно, че $\alpha \in \{b^{k}c^{k} \mid k\in\Nat\}$.
+    \end{itemize}
+  \end{itemize}
+  Оттук заключаваме, че $\L_G(S) \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
+  
+  Сега да разгледаме пълнота на граматиката, което означава, че
+  всяка дума от езика се генерира от $G$. С други думи, $\{a^nb^kc^{n+k} \mid n,k\in\Nat\} \subseteq \L_G(S)$.
+  Първо ще докажем, че
+  \begin{equation}
+    \label{eq:4}
       \{b^kc^k \mid k \in \Nat\} \subseteq \L_G(B).
     \end{equation}
     Това ще направим с \emph{пълна} индукция по дължината на думата.
@@ -233,7 +238,7 @@
       \L_G(B) & = \bigcup_\ell\L^\ell_G(B) \subseteq \{a^nb^mc^k \mid n+m \geq k\}.
     \end{align*}
     
-    \mynote{Сега ще докажем \emph{пълнота} на граматиката.}
+    \mynote{Сега ще докажем \emph{пълнота} на граматиката. Тук ще използваме представянията на $\L_G(S)$ и $\L_G(B)$ според \Corollary{grammar:yield-approximation}.}
     Сега трябва да докажем обратните включвания, а именно:
     \begin{align}
       & \{a^nb^mc^k \mid n+m \geq k\} \subseteq \L_G(S) \label{eq:anbmck:S}\\
@@ -381,9 +386,7 @@
     $S \to aS \mid aSc \mid aB \mid bB$\\
     $B \to bB \mid bBc \mid \varepsilon$
   }
-  Докажете, че езикът 
-  \[L = \{a^mb^nc^k\mid m+n \geq k + 1\}\]
-  е безконтекстен.  
+  Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k + 1\}$ е безконтекстен.  
 \end{problem}
 
 \begin{problem}
@@ -397,7 +400,6 @@
 \end{problem}
 
 \end{extra}
-
 
 %%% Local Variables:
 %%% mode: latex

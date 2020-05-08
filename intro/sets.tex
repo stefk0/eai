@@ -114,18 +114,18 @@
     $\Ps(\{1,2\}) = \{\emptyset,\{1\},\{2\},\{1,2\}\}$.
   \end{itemize}
 \end{itemize}
-Нека имаме редица от множества $\{A_1,A_2,\dots,A_n\}$.
-Тогава имаме следните операции:
-\begin{itemize}
-\item
-  {\bf Обединение на редица от множества}
-  \[\bigcup^{n}_{i=1} A_i = \{x \mid \exists i (1\leq i\leq n\ \&\ x\in A_i)\}.\]
-  % \[(\forall x)[x \in \bigcup^n_{i=1}A_i \iff (\exists i)[1 \leq i \leq n\ \wedge\ x \in A_i]].\]
-\item
-  {\bf Сечение на редица от множества}
-  \[\bigcap^{n}_{i=1} A_i = \{x \mid \forall i (1\leq i\leq n \rightarrow x\in A_i)\}.\]
-  % \[(\forall x)[x \in \bigcap^n_{i=1}A_i \iff (\forall i)[1 \leq i \leq n\ \rightarrow\ x \in A_i]].\]
-\end{itemize}
+% Нека имаме редица от множества $\{A_1,A_2,\dots,A_n\}$.
+% Тогава имаме следните операции:
+% \begin{itemize}
+% \item
+%   {\bf Обединение на редица от множества}
+%   \[\bigcup^{n}_{i=1} A_i = \{x \mid \exists i (1\leq i\leq n\ \&\ x\in A_i)\}.\]
+%   % \[(\forall x)[x \in \bigcup^n_{i=1}A_i \iff (\exists i)[1 \leq i \leq n\ \wedge\ x \in A_i]].\]
+% \item
+%   {\bf Сечение на редица от множества}
+%   \[\bigcap^{n}_{i=1} A_i = \{x \mid \forall i (1\leq i\leq n \rightarrow x\in A_i)\}.\]
+%   % \[(\forall x)[x \in \bigcap^n_{i=1}A_i \iff (\forall i)[1 \leq i \leq n\ \rightarrow\ x \in A_i]].\]
+% \end{itemize}
 
 % \begin{example}
 %   Нека $A = \{x\in\Nat\mid x > 1\}$ и $B = \{x\in\Nat\mid x>3\}$. Тогава :
@@ -171,8 +171,8 @@
   \item
     \mynote{Закони на Де Морган}
     $C\setminus (A\cup B) = (C\backslash A)\cap(C\backslash B)$ и $C \backslash (A\cap B) = (C\backslash A)\cup(C\backslash B)$
-  \item
-    $C\backslash(\bigcup^{n}_{i=1} A_i) = \bigcap^{n}_{i=1} (C\backslash A_i)$ и $C \backslash(\bigcap^{n}_{i=1} A_i) = \bigcup^{n}_{i=1} (C\backslash A_i)$;
+  % \item
+  %   $C\backslash(\bigcup^{n}_{i=1} A_i) = \bigcap^{n}_{i=1} (C\backslash A_i)$ и $C \backslash(\bigcap^{n}_{i=1} A_i) = \bigcup^{n}_{i=1} (C\backslash A_i)$;
   \item
     $(A\backslash B)\backslash C = (A\backslash C)\backslash(B \backslash C)$ и $A\backslash (B\backslash C) = (A\backslash B) \cup (A\cap C)$;
   \item
@@ -256,13 +256,13 @@
 \begin{itemize}
 \item
   \mynote{\comment{или $f$ е {\bf обратима}}}
-  {\bf инекция}\index{функция!инекция}, ако 
+  {\bf инекция}\index{функция!инекция}, ако е изпълнено свойството:
   \[(\forall a_1,a_2\in A)[\ a_1\neq a_2\ \to\ f(a_1)\neq f(a_2)\ ],\]
   или еквивалентно,
   \[(\forall a_1,a_2\in A)[\ f(a_1) = f(a_2)\ \to\ a_1 = a_2\ ].\]
 \item
   \mynote{\comment{или $f$ е {\bf върху} $B$ }}
-  {\bf сюрекция}\index{функция!сюрекция}, ако 
+  {\bf сюрекция}\index{функция!сюрекция}, ако е изпълнено свойството:
   \[(\forall b\in B)(\exists a\in A)[\ f(a) = b\ ].\]
 \item
   {\bf биекция}\index{функция!биекция}, ако е инекция и сюрекция.
