@@ -108,8 +108,7 @@
   като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$.
   Лесно се доказава, че $\L(G) = \L(G')$.
   Остава да намерим множеството $\texttt{Reach}$.
-
-  За целта ще започнем да строим мномножествата $\texttt{Reach[i]} \subseteq V$ по следния начин:
+  За да постигнем тази цел, ще започнем да строим мномножествата $\texttt{Reach[i]} \subseteq V$ по следния начин:
   \begin{align*}
     \texttt{Reach[0]} \df & \{S\}\\
     \texttt{Reach[i+1]} \df & \{ X \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha X \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
