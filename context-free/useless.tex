@@ -18,7 +18,7 @@
   за която $A' \derive{\star}_{G'} \alpha$.
 \end{lemma}
 \begin{hint}
-  Целта ни е да намерим множеството $\texttt{Gen}$ от променливи, които генерират думи, т.е. търсим
+  Целта ни е да намерим множеството $\texttt{Gen}$ от променливи, които генерират думи, т.е. търсим множеството
   \[\texttt{Gen} \df \{A \in V \mid A \yield{\star} \alpha\ \&\ \alpha \in \Sigma^\star \}.\]
   За целта ще построим редица от множества $\texttt{Gen[n]}$ по следния начин:
   \mynote{Всяка итерация на алгоритъма отнема $\mathcal{O}(|G|)$ време. Следователно, изпълнението на целия алгоритъм отнема $\mathcal{O}(|G|^2)$ време.}
@@ -31,17 +31,11 @@
     Спираме, когато стигнем до такова $n$, за което $\texttt{Gen[n]} = \texttt{G[n+1]}$. Лесно се съобразява, че
     $(\forall k \geq n)[\texttt{Gen[n]} = \texttt{Gen[k]}]$.
   \end{itemize}
-
   Трябва да докажем, че $\texttt{Gen} = \texttt{Gen[n]}$.
+  \mynote{\writedown Докажете сами!}
   Това ще направим като докажем, че
   \[A \in \texttt{Gen[n]} \iff (\exists \alpha\in\Sigma^\star)[A \yield{\leq n} \alpha]\]
-  % \begin{align*}
-  %   A \in \texttt{Gen[n]} \iff &
-
-  %                                \text{ съществува дърво на извод } P\text{, за което}\\
-  %                              & \texttt{root}(P) = A\ \&\ \texttt{yield}(P) \in \Sigma^\star\ \&\ \texttt{height}(P) \leq n.
-  % \end{align*}
-  Дефинираме $G'$ като $V' = V_n$ и правилата на $G'$ са само тези правила на $G$, в които участват променливи от $V_n$ и букви от $\Sigma$.
+  Дефинираме $G'$ като $V' = \texttt{Gen[n]}$ и правилата на $G'$ са само тези правила на $G$, в които участват променливи от $V'$ и букви от $\Sigma$.
 \end{hint}
 
 
@@ -90,7 +84,7 @@
   \end{corollary}  
 \end{framed}
 \begin{proof}
-  Прилагаме алгоритъма от \Lemma{useless1}.
+  Прилагаме алгоритъма от \Lemma{useless1} и намераме множеството от променливи $V'$.
   Тогава $\L(G) = \emptyset$ точно тогава, когато $S \not\in V'$.  
 \end{proof}
 
@@ -103,7 +97,7 @@
 \end{lemma}
 \begin{hint}
   Нашата цел е да намерим множеството
-  \[\texttt{Reach} \df \{X \in V \mid S \derive{\star}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+  \[\texttt{Reach} \df \{B \in V \mid S \yield{\star} \alpha B \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
   Новата граматика $G'$ ще има променливи $V' \df \texttt{Reach}$,
   като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$.
   Лесно се доказава, че $\L(G) = \L(G')$.
@@ -111,55 +105,15 @@
   За да постигнем тази цел, ще започнем да строим мномножествата $\texttt{Reach[i]} \subseteq V$ по следния начин:
   \begin{align*}
     \texttt{Reach[0]} \df & \{S\}\\
-    \texttt{Reach[i+1]} \df & \{ X \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha X \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
-                          & \cup \texttt{Reach[i]}.
+    \texttt{Reach[i+1]} \df & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
+                          & \cup \{S\}.
   \end{align*}
-  
-  % \begin{itemize}
-  % \item
-  %   $
-  % \item
-  %   \mynote{Всяка итерация отнема време $\mathcal{O}(|G|)$. Следователно, можем да намерим $G'$ за време $\mathcal{O}(|G|^2)$.}
-  %   % Нека приемем, че сме построили $\texttt{Reach[i]}$ и да положим $V_i = V \cap \texttt{Reach[i]}$.
-  %   \begin{align*}
-      
-
-  %   \end{align*}
-    Докажете, че за всяко $i$,
-    \[\texttt{Reach[i]} = \{X \in V \mid S \derive{\leq i}_{G} \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
-    \mynote{Защо сме сигурни, че ще достигнем такава стъпка?}
-    Спираме да строим тези множества, когато достигнем до стъпка $n$, за която
-    \[\texttt{Reach[n]} = \texttt{Reach[n+1]}.\]
-    Съобразете, че за това $n$ е изпълнено, че
-    \[\texttt{Reach[n]} = \{X \in V \mid S \derive{\star}_G \alpha X \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
-  % \item
-  %   Новата граматика $G'$ ще има букви $\Sigma' = \Sigma \cap \texttt{Reach[n]}$ и променливи $V' = V \cap \texttt{Reach[n]}$,
-  %   като правилата на граматика $G'$ са същите като тези на $G$, но ограничени до $V'$ и $\Sigma'$.
-  %   Ясно е, че $\L(G') \subseteq \L(G)$.
-  % \item
-  %   Докажте, че $\L(G) \subseteq \L(G')$.
-
-  
-  
-  
-  % \begin{align*}
-  %   & V_n = \{A \in V \mid S \stackrel{\leq n}{\to}_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}\\
-  %   & \Sigma_n = \{a \in \Sigma \mid S \stackrel{\leq n}{\to}_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star\}.
-  % \end{align*}
-  % \begin{itemize}
-  % \item
-  %   Ясно е, че $V_0 = \{S\}$ и $\Sigma_0 = \emptyset$.
-  % \item
-  %   \marginpar{Всяка итерация отнема време $\mathcal{O}(|G|)$. Следователно, можем да намерим $G'$ за време $\mathcal{O}(|G|^2)$.}
-  %   Нека имаме $V_n$ и $\Sigma_n$. Тогава:
-  %   \begin{align*}
-  %     & V_{n+1} = \{A \in V \mid (\exists B \in V_n)[ B \to_G \alpha A \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star]\}\\
-  %     & \Sigma_{n+1} = \{a \in \Sigma \mid (\exists B \in V_n)[ B \to_G \alpha a \beta\text{, за някои }\alpha,\beta \in (\Sigma\cup V)^\star]\}.
-  %   \end{align*}
-  % \item
-  %   Спираме, когато намерим първото $n$, за което $V_n = V_{n+1}$ и $\Sigma_n = \Sigma_{n+1}$.
-  %   Тогава $V' = V_n$ и $\Sigma' = \Sigma_n$.
-  % \end{itemize}
+  Докажете, че за всяко $i$,
+  \[\texttt{Reach[i]} = \{B \in V \mid S \yield{\leq i} \alpha B \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
+  \mynote{Защо сме сигурни, че ще достигнем такава стъпка?}
+  Спираме да строим тези множества, когато достигнем до стъпка $n$, за която $\texttt{Reach[n]} = \texttt{Reach[n+1]}$.
+  Съобразете, че за това $n$ е изпълнено, че
+  \[\texttt{Reach[n]} = \{B \in V \mid S \yield{\star} \alpha B \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
 \end{hint}
 
 \begin{theorem}
@@ -167,7 +121,16 @@
   Освен това, граматиката $G'$ може да се намери за полиномиално време.
 \end{theorem}
 \begin{hint}
-  \mynote{\writedown Защо е важна последователността на прилагане? Алгоритъмът описан тук е квадратичен. Има и линеен такъв. Вижте \cite[стр. 296]{hopcroft2}}
+  \mynote{\writedown Защо е важна последователността на прилагане? Например, да разгледаме граматиката
+    \begin{align*}
+      & S \to AB\ |\ ab\\
+      & A \to aA\ |\ \varepsilon\\
+      & B \to bB.      
+    \end{align*}
+    Ако първо приложим процедурата от \Lemma{useless2}, то нищо няма да премахнем, защото $A$ и $B$ са достижими от $S$.
+    След това, ако приложим процедурата от \Lemma{useless1}, то ще премахнем всички правила, в които участва $B$.
+    Така $A$ става недостижима от $S$ и трябва пак да приложим процедурата от \Lemma{useless2}.
+    Алгоритъмът описан тук е квадратичен. Има и линеен такъв. Вижте \cite[стр. 296]{hopcroft2}}
   Прилагаме върху $G$ първо процедурата от \Lemma{useless1} и след това върху резултата прилагаме процедурата от \Lemma{useless2}.
 \end{hint}
 

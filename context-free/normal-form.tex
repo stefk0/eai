@@ -76,25 +76,84 @@
   за $A,B \in V'$ имаме ребро $A \to B$ точно тогава, когато съществува $C \in V'$,
   за което $A \to BC$ или $A \to CB$ е правило в $R'$.
   Сега ще съобразим, че ако в получения граф имаме цикъл, то $\L(G') = \infty$.
-
   Да разгледаме един такъв цикъл в графа:
   \[A_0 \to A_1 \to A_2 \to \cdots \to A_n \to A_0.\]
-  Това означава, че 
-  \[A_0 \derive{1}_G \alpha_1 A_1 \beta_1 \derive{1}_G \alpha_2 A_2 \beta_2 \derive{1}_G \cdots \derive{1}_G \alpha_n A_n \beta_n \derive{1}_G \alpha_{n+1} A_0 \beta_{n+1}.\]
-  Понеже граматиката е в НФЧ имаме, че $|\alpha_i\beta_i| = i$.
-  Понеже няма безполезни символи в граматика и тя е в НФЧ следва, че съществуват думи $\omega,\rho \in \Sigma^\star$, за които $\alpha_{n+1} \derive{\star} \omega$ и $\beta_{n+1} \derive{\star} \rho$,
-  където $|\omega\rho| \geq n+1$, защото $|\alpha_{n+1}\beta_{n+1}| = n+1$.
-  Понеже няма безполезни символи в граматиката, то съществуват $\delta, \gamma \in \Sigma^\star$, за които
-  $S \derive{\star} \delta  A_0 \gamma$. Получаваме:
-  \[ S \derive{\star}_G \delta A_0 \gamma \derive{\star}_G \delta \alpha_{n+1} A_0 \beta_{n+1} \gamma \derive{\star}_G \delta \omega A_0 \rho\gamma \derive{\star}_G \cdots \derive{\star}_G \delta \omega^i A_0 \rho^i \gamma \derive{\star}_G \delta\omega^i\alpha\rho^i\gamma,\]
-  където $A_0 \derive{\star}_G \alpha$, за някое $\alpha \in \Sigma^\star$.
+  Това означава, че $A_0 \yield{n+1} \delta A_0 \rho$ и поради избора на граматика, $\abs{\delta\rho} = n+1$
 
+  \begin{figure}[H]
+    \begin{subfigure}[t]{0.5\textwidth}
+    \centering
+      \begin{tikzpicture}[scale=0.8]
+      \node (A) at (0,0) {\footnotesize{$A_0$}};
+      \coordinate (B) at (-2,-3);
+      \coordinate (C) at (2,-3);
+      \node (D) at (0,-1.2) {\footnotesize{$A_i$}};
+      \coordinate (D1) at (1.4,-3);
+      \coordinate (D2) at (-1.4,-3);
+      \node (E) at (0,-2.3) {\footnotesize{$A_n$}};
+      \coordinate (E1) at (0.7,-3);
+      \coordinate (E2) at (-0.7,-3);
+      \coordinate (F) at (0,-3);
+
+      \draw (A) -- node[above left]{$P = $} (B) -- node[below]{$A_0$}(C) -- (A);
+      \draw [photon] (A) -- (D) -- (E) -- (F);
+    \end{tikzpicture}
+    \caption{\scriptsize{$A_0 \yield{n+1} \delta A_0 \rho$, където $\delta, \rho \in (V\cup\Sigma)^\star$}}
+    \end{subfigure}
+    ~ 
+    \begin{subfigure}[t]{0.5\textwidth}
+      \centering
+      \begin{tikzpicture}[scale=0.8]
+        \node (A) at (0,0) {$A_0$};
+        \coordinate (B) at (-2,-2.5);
+        \coordinate (C) at (2,-2.5);
+        \coordinate (D) at (-0.9,-2.5);
+        \coordinate (E) at (0.9,-2.5);
+        \node (F) at (0,-1.5) {$A_0$};
+        
+        % \node (G) at (0,-2.6) {$B$};
+        % \coordinate (H) at (-0.9,-3.6);
+        % \coordinate (I) at (0.9,-3.6);
+        
+        \draw (A) -- (B) -- node[below]{$\alpha$} (D) -- (F) -- (E) -- node[below]{$\gamma$} (C) -- (A);
+        % \draw (G) -- (H) -- node[below]{$\alpha_2$}(I) -- (G);
+        
+        % \draw [photon] (A) -- node[left]{$\alpha$} (F);
+      \end{tikzpicture}
+      \caption{\scriptsize{$A_0 \yield{\geq n+1}\alpha A_0\gamma$, където $\alpha,\gamma \in \Sigma^\star$}}
+    \end{subfigure}
+  \end{figure}
+    
+
+  % \
+  % Това означава, че 
+  % \[A_0 \derive{1}_G \alpha_1 A_1 \beta_1 \derive{1}_G \alpha_2 A_2 \beta_2 \derive{1}_G \cdots \derive{1}_G \alpha_n A_n \beta_n \derive{1}_G \alpha_{n+1} A_0 \beta_{n+1}.\]
+  % Понеже граматиката е в НФЧ имаме, че $|\alpha_i\beta_i| = i$.
+  % Понеже няма безполезни символи в граматика и тя е в НФЧ следва, че съществуват думи $\omega,\rho \in \Sigma^\star$, за които $\alpha_{n+1} \derive{\star} \omega$ и $\beta_{n+1} \derive{\star} \rho$,
+  % където $|\omega\rho| \geq n+1$, защото $|\alpha_{n+1}\beta_{n+1}| = n+1$.
+  % Понеже няма безполезни символи в граматиката, то съществуват $\delta, \gamma \in \Sigma^\star$, за които
+  % $S \derive{\star} \delta  A_0 \gamma$.
+  % Получаваме:
+  % \[ S \derive{\star}_G \delta A_0 \gamma \derive{\star}_G \delta \alpha_{n+1} A_0 \beta_{n+1} \gamma \derive{\star}_G \delta \omega A_0 \rho\gamma \derive{\star}_G \cdots \derive{\star}_G \delta \omega^i A_0 \rho^i \gamma \derive{\star}_G \delta\omega^i\alpha\rho^i\gamma,\]
+  % където $A_0 \derive{\star}_G \alpha$, за някое $\alpha \in \Sigma^\star$.
+  Понеже в $G$ няма безполезни променливи, то $\delta \derive{\star} \alpha$, където $\alpha \in \Sigma^\star$ и $\abs{\delta} \leq \abs{\alpha}$ и $\rho \derive{\star} \gamma$,
+  където $\gamma \in \Sigma^\star$ и $\abs{\rho} \leq \abs{\gamma}$.
+  Оттук заключаваме, че $A_0 \yield{\star} \alpha A_0 \gamma$ и $\abs{\alpha\gamma} \geq 1$.
+  Понеже $A_0$ не е безполезна променлива, то $A_0 \yield{\star} \beta$, за някоя дума $\beta \in \Sigma^\star$.
+  Сега комбинираме \Proposition{pumping:ground} и \Proposition{pumping:iteration} за да получим следния извод.
+  \begin{prooftree}
+    \AxiomC{$A_0 \yield{\star} \alpha A_0 \gamma$}
+    \AxiomC{$A_0 \yield{\star} \beta$}
+    \AxiomC{$i \in \Nat$}
+    \TrinaryInfC{$A_0 \yield{\star} \alpha^i \beta \gamma^i$}
+  \end{prooftree}
+  Понеже $\abs{\alpha\beta} \geq 1$, заключаваме, че $\L(G)$ е безкраен език.
+  
   Ако в графът няма цикли, то езикът $\L(G)$ е краен, защото ако от променливата $A$ най-дългият път има дължина $k+1$,
   то за променливите $B$ и $C$, за които имаме правилото $A\to BC$, най-дългият път от $B$ и $C$ има дължина най-много $k$.
-
-  Ако най-дългият път от $A$ има дължина $k$, то всяко дърво на извод $P$, за което $\texttt{root}(P) = A$ и $\texttt{yield}(P) \in \Sigma^\star$,
-  е такова, че $\texttt{height}(P) \leq k$. Оттук следва, че всички думи, които се извеждат от $A$ са най-много $2^{k}$ на брой,
-  защото всяко такова дърво на извод е двоично и $\texttt{yield}(P) \leq 2^k$.
+  Ако най-дългият път от $A$ има дължина $k$, то ако $A \yield{\star} \alpha$, за някоя дума $\alpha \in \Sigma^\star$,
+  то $A \yield{\leq k} \alpha$. Оттук следва, че всички думи, които се извеждат от $A$ са най-много $2^{k-1}$ на брой,
+  защото граматиката е в нормална форма на Чомски.
 \end{proof}
 
 
