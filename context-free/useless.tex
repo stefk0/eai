@@ -106,7 +106,7 @@
   \begin{align*}
     \texttt{Reach[0]} \df & \{S\}\\
     \texttt{Reach[i+1]} \df & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
-                          & \cup \{S\}.
+                          & \cup \texttt{Reach[i]}
   \end{align*}
   Докажете, че за всяко $i$,
   \[\texttt{Reach[i]} = \{B \in V \mid S \yield{\leq i} \alpha B \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]

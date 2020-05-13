@@ -25,14 +25,12 @@
   % [стр. 99 от \cite{sipser}]
   Следваме следната процедура:
   \begin{itemize}
-  % \item
-  %   Добавяме нов начален символ $S_0$ и правило $S_0 \to S$.
   \item
     Премахваме дългите правила.
     Това можем да направим за време $\mathcal{O}(|G|)$
     като новата граматика ще има дължина $\mathcal{O}(|G|)$.
   \item
-    \mynote{Важно е, че преди това сме премахнали дългите правила. Вижте \cite[стр. 296]{hopcroft2}.}
+    \mynote{Редът на стъпките е важен. Трябва преди това сме премахнали дългите правила. Вижте \cite[стр. 296]{hopcroft2}.}
     Премахваме $\varepsilon$-правилата.
     Това можем да направим за време $\mathcal{O}(|G|^2)$
     като новата граматика ще има дължина $\mathcal{O}(|G|)$.
@@ -49,7 +47,7 @@
     Това можем да направим за време $\mathcal{O}(|G|)$ и новата граматика ще има дължина $\mathcal{O}(|G|)$.
   \item
     Ако искаме $\varepsilon$ да бъде в езика на граматиката, то добавяме нова начална променлива $S_0$
-    и правило $S_0 \to_G \varepsilon$.
+    и правило $S_0 \to_G \varepsilon$ и правилата $S_0 \to \alpha$ за $S \to \alpha$.
   \end{itemize}
 \end{proof}
 
@@ -61,13 +59,7 @@
 
 \begin{theorem}
   \mynote{\cite[стр. 137]{hopcroft1}. Важно е, че алгоритмите са полиномиални. От \Lemma{pumping-context} имаме експоненциални алгоритми.}
-  Съществуват \emph{полиномиални} алгоритми, които определят по дадена безконтекстна граматика $G$ дали:
-  \begin{enumerate}[a)]
-  \item
-    $\abs{\L(G)} < \infty$;
-  \item
-    $\abs{\L(G)} = \infty$.
-  \end{enumerate}
+  Съществуват \emph{полиномиални} алгоритми, които определят по дадена безконтекстна граматика $G$ дали $\abs{\L(G)} = \infty$.
 \end{theorem}
 \begin{proof}
   Нека е дадена една безконтекстна граматика $G$.
@@ -110,32 +102,12 @@
         \coordinate (D) at (-0.9,-2.5);
         \coordinate (E) at (0.9,-2.5);
         \node (F) at (0,-1.5) {$A_0$};
-        
-        % \node (G) at (0,-2.6) {$B$};
-        % \coordinate (H) at (-0.9,-3.6);
-        % \coordinate (I) at (0.9,-3.6);
-        
         \draw (A) -- (B) -- node[below]{$\alpha$} (D) -- (F) -- (E) -- node[below]{$\gamma$} (C) -- (A);
-        % \draw (G) -- (H) -- node[below]{$\alpha_2$}(I) -- (G);
-        
-        % \draw [photon] (A) -- node[left]{$\alpha$} (F);
       \end{tikzpicture}
       \caption{\scriptsize{$A_0 \yield{\geq n+1}\alpha A_0\gamma$, където $\alpha,\gamma \in \Sigma^\star$}}
     \end{subfigure}
   \end{figure}
-    
 
-  % \
-  % Това означава, че 
-  % \[A_0 \derive{1}_G \alpha_1 A_1 \beta_1 \derive{1}_G \alpha_2 A_2 \beta_2 \derive{1}_G \cdots \derive{1}_G \alpha_n A_n \beta_n \derive{1}_G \alpha_{n+1} A_0 \beta_{n+1}.\]
-  % Понеже граматиката е в НФЧ имаме, че $|\alpha_i\beta_i| = i$.
-  % Понеже няма безполезни символи в граматика и тя е в НФЧ следва, че съществуват думи $\omega,\rho \in \Sigma^\star$, за които $\alpha_{n+1} \derive{\star} \omega$ и $\beta_{n+1} \derive{\star} \rho$,
-  % където $|\omega\rho| \geq n+1$, защото $|\alpha_{n+1}\beta_{n+1}| = n+1$.
-  % Понеже няма безполезни символи в граматиката, то съществуват $\delta, \gamma \in \Sigma^\star$, за които
-  % $S \derive{\star} \delta  A_0 \gamma$.
-  % Получаваме:
-  % \[ S \derive{\star}_G \delta A_0 \gamma \derive{\star}_G \delta \alpha_{n+1} A_0 \beta_{n+1} \gamma \derive{\star}_G \delta \omega A_0 \rho\gamma \derive{\star}_G \cdots \derive{\star}_G \delta \omega^i A_0 \rho^i \gamma \derive{\star}_G \delta\omega^i\alpha\rho^i\gamma,\]
-  % където $A_0 \derive{\star}_G \alpha$, за някое $\alpha \in \Sigma^\star$.
   Понеже в $G$ няма безполезни променливи, то $\delta \derive{\star} \alpha$, където $\alpha \in \Sigma^\star$ и $\abs{\delta} \leq \abs{\alpha}$ и $\rho \derive{\star} \gamma$,
   където $\gamma \in \Sigma^\star$ и $\abs{\rho} \leq \abs{\gamma}$.
   Оттук заключаваме, че $A_0 \yield{\star} \alpha A_0 \gamma$ и $\abs{\alpha\gamma} \geq 1$.
@@ -155,7 +127,6 @@
   то $A \yield{\leq k} \alpha$. Оттук следва, че всички думи, които се извеждат от $A$ са най-много $2^{k-1}$ на брой,
   защото граматиката е в нормална форма на Чомски.
 \end{proof}
-
 
 %%% Local Variables:
 %%% mode: latex
