@@ -51,11 +51,11 @@
     $L = \{a,b\}^\star \setminus \{a^{2n}b^n \mid n\in\Nat\}$;
   \item
     \mynote{$S\to EaE$, $E \to aEbE\ |\ bEaE\ |\ \varepsilon$}
-    $L = \{\alpha \in \{a,b\}^\star\mid \card{\alpha}{a} = \card{\alpha}{b} + 1\}$;
+    $L = \{\omega \in \{a,b\}^\star\mid \card{\omega}{a} = \card{\omega}{b} + 1\}$;
   \item
-    $L = \{\alpha \in \{a,b\}^\star\mid \card{\alpha}{a} \geq \card{\alpha}{b}\}$;
+    $L = \{\omega \in \{a,b\}^\star\mid \card{\omega}{a} \geq \card{\omega}{b}\}$;
   \item
-    $L = \{\alpha \in \{a,b\}^\star\mid \card{\alpha}{a} > \card{\alpha}{b}\}$;
+    $L = \{\omega \in \{a,b\}^\star\mid \card{\omega}{a} > \card{\omega}{b}\}$;
   \item
     $L = \{\alpha \in \{a,b\}^\star \mid \text{ във всеки префикс $\beta$ на $\alpha$, } \card{\beta}{b} \leq \card{\beta}{a}\}$;
   \item
@@ -92,29 +92,29 @@
     $L^\star$, където
     $L = \{\alpha\alpha^{\rev} \mid \alpha \in \{a,b\}^\star\}$;
   \item
-    $\{www\mid w\in \{a,b\}^\star\}$;
+    $\{\omega\omega\omega\mid \omega\in \{a,b\}^\star\}$;
   \item
     $\{a^{n^2}b^n\ \mid n \in \Nat\}$;
   \item
     $\{a^p\ \mid\ p\mbox{ е просто }\}$;
   \item
-    $\{\omega \in \{a,b\}^\star \mid \omega = \omega^R\}$;
+    $\{\omega \in \{a,b\}^\star \mid \omega = \omega^{\rev}\}$;
   \item
     $\{\omega^n \mid \omega \in \{a,b\}^\star\ \&\ \card{\omega}{b} = 2\ \&\ n \in \Nat\}$;
   \item
     $\{\omega c^n \omega^R \mid \omega \in \{a,b\}^\star\ \&\ n = \abs{\omega}\}$;
   \item
     % Дефиниция на подниз
-    $\{w c x\mid w,x\in \{a,b\}^\star\ \&\ w\mbox{ е подниз на }x\}$;
+    $\{\alpha c \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\mbox{ е подниз на }\beta\}$;
   \item
-    $\{x_1 \sharp x_2 \sharp \dots \sharp x_k\mid k\geq 2\ \&\ x_i\in a^\star\ \&\ (\exists i,j)[i \neq j\ \&\ x_i = x_j]\}$;
+    $\{\omega_1 \sharp \omega_2 \sharp \dots \sharp \omega_k\mid k\geq 2\ \&\ \omega_i\in \{a\}^\star\ \&\ (\exists i,j)[i \neq j\ \&\ \omega_i = \omega_j]\}$;
   \item
-    $\{x_1 \sharp x_2 \sharp \dots \sharp x_k\mid k\geq 2\ \&\ x_i\in a^\star\ \&\ (\forall i,j \leq k)[i \neq j \iff x_i \neq x_j]\}$;
+    $\{\omega_1 \sharp \omega_2 \sharp \dots \sharp \omega_k\mid k\geq 2\ \&\ \omega_i\in \{a\}^\star\ \&\ (\forall i,j \leq k)[i \neq j \iff \omega_i \neq \omega_j]\}$;
   \item
     $\{a^ib^jc^k\mid i,j,k\geq 0\ \&\ (i = j \vee j = k)\}$;
   \item
     % \marginpar{Разгл. $L' = L \cap L(a^*b^*c^*)$.}
-    $\{\alpha \in \{a,b,c\}^\star\mid \card{\alpha}{a} > \card{\alpha}{b} > \card{\alpha}{c}\}$;
+    $\{\omega \in \{a,b,c\}^\star\mid \card{\omega}{a} > \card{\omega}{b} > \card{\omega}{c}\}$;
   \item
     $\{a,b\}^\star \setminus \{a^nb^n\mid n\in \Nat\}$;
   \item
@@ -128,8 +128,8 @@
     $\{a^mb^nc^k\mid m = n \vee n = k \vee m = k\}$;
   \item
     $\{a^mb^nc^k\mid m \neq n \vee n \neq k \vee m \neq k\}$;
-  \item
-    $\{a^mb^nc^k\mid m = n \wedge n = k \wedge m = k\}$;
+  % \item
+  %   $\{a^mb^nc^k\mid m = n \wedge n = k \wedge m = k\}$;
   \item
     $\{\omega \in \{a,b,c\}^\star\mid \card{\omega}{a} \neq \card{\omega}{b} \vee \card{\omega}{a} \neq \card{\omega}{c} \vee \card{\omega}{b} \neq \card{\omega}{c}\}$.
   \end{enumerate}

@@ -12,14 +12,13 @@
 \ifhints
 \begin{hint}
   Да разгледаме ситуацията $\alpha = a^pb^{p^2}\in L$ и
-  $\alpha = xyuvw$, където $y = a^i$ и $v = b^j$
+  $\alpha = xyuvw$, където $y = a^i$ и $v = b^j$.
   Интересният случай е когато $0 < i,j < p$.
   \begin{itemize}
   \item 
     Нека $i = j$.
-    Разглеждаме думата $xy^{p^2+1}uv^{p^2+1}w$.
-    Това означава дали $p+p^2i$ дели $p^2+p^2i$, т.е.
-    дали $1 + pi$ дели $p+pi$.
+    Да разглеждаме думата $xy^{p^2+1}uv^{p^2+1}w$, която за да бъде в езика $L$ означава, че трябва $p+p^2i$ дели $p^2+p^2i$, т.е.
+    $1 + pi$ трябва да дели $p+pi$.
     \begin{align*}
       & p + pi = k(1+pi), \text{ за някое }1 \leq k < p\\
       & p = k + pi(k-1), \text{ за някое }1 \leq k < p\\
@@ -28,9 +27,9 @@
   \item
     Нека $i > j$, т.е. $i \geq j+1$.
     Отново разглеждаме думата $xy^{p^2+1}uv^{p^2+1}w$.
-    Това означава дали $p+p^2i$ дели $p^2+p^2j$, т.е.
-    дали $1 + pi$ дели $p+pj$, но
-    $1+pi \geq 1 + p(j+1) > p + pj$.
+    За да бъде тази дума в езика $L$, трябва $p+p^2i$ да дели $p^2+p^2j$, т.е.
+    $1 + pi$ трябва да дели $p+pj$, но 
+    \[1+pi \geq 1 + p(j+1) > p + pj.\]
     Противоречие.
   \item
     Нека $i < j$ и тогава нека $j = mi + r$, където $p > i > r \geq 0$
@@ -52,7 +51,6 @@
       Възможно ли е $k \leq m$? Тогава:
       \begin{align*}
         & p + pmj = k(1+pmi) \leq m(1+pmi) \leq m(1+pj)\\
-        & p(1+mj) \leq m(1+pj)\\
         & p + pmj \leq m + pmj\\
         & p \leq m.
       \end{align*}
@@ -227,11 +225,11 @@
   Докажете, че всеки безконтекстен език над азбуката $\Sigma = \{a\}$
   е регулярен.
 \end{problem}
-\ifhints
-\begin{hint}
+% \ifhints
+% \begin{hint}
   
-\end{hint}
-\fi
+% \end{hint}
+% \fi
 
 \begin{problem}
 %  \marginpar{\cite{papadimitriou} стр. 149}
@@ -398,6 +396,7 @@
 %   \end{enumerate}
 %   Обосновете се!
 % \end{problem}
+
 
 %%% Local Variables:
 %%% mode: latex
