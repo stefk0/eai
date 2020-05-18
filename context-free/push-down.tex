@@ -32,9 +32,9 @@
 която ще ни казва как моментното описание на автомата $P$ се променя след изпълнение на една стъпка:
 
 \begin{prooftree}
-  \AxiomC{$\Delta(q,x,A) \ni (p,\beta)$}
-  \AxiomC{$x \in \Sigma$}
-  \BinaryInfC{$(q,x\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+  \AxiomC{$\Delta(q,b,A) \ni (p,\beta)$}
+  \AxiomC{$b \in \Sigma$}
+  \BinaryInfC{$(q,b\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
 \end{prooftree}
 
 \begin{prooftree}
@@ -112,11 +112,12 @@
   \begin{enumerate}[(a)]
   \item
     Индукция по дължината $\ell$ на извода $S \lderive{\ell} \alpha\gamma$.
-    \begin{itemize}
-    \item
+    % \begin{itemize}
+    % \item
       Нека $\ell = 0$. Този случай е тривиален, защото тогава $\alpha = \varepsilon$ и $\gamma = S$.
       Ясно е, че $(p,\varepsilon,S\sharp) \vdash^0_P (p,\varepsilon,S\sharp)$.
-    \item
+      % \item
+      
       Нека $\ell > 0$ и $S \lderive{\ell} \alpha\gamma$. Това означава, че този извод може да се запише по следния начин:
       \begin{prooftree}
         \AxiomC{$S\lderive{\ell-1} \alpha_1A\gamma_2$}
@@ -136,14 +137,17 @@
                                                             & \vdash_P (p, \alpha_2, \alpha_2\gamma_1\gamma_2\sharp) & \comment{\text{ред (2) от деф. на }\Delta}\\
                                                             & \vdash^\star_P (p, \varepsilon, \underbrace{\gamma_1\gamma_2}_{\gamma}\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
       \end{align*}
-    \end{itemize}
+    % \end{itemize}
   \item
     Индукция по броя на стъпките $\ell$ в изчислението на стековия автомат.
-    \begin{itemize}
-    \item
+    % \begin{itemize}
+    % \item
+    
       Нека $\ell = 0$. Тогава е ясно, че единствената възможност $\alpha = \varepsilon$ и $\delta = \varepsilon$.
       Тогава $\varepsilon \derive{\star}_G \varepsilon$.
-    \item
+      % \item
+
+      
       Нека $\ell > 0$ и $(p, \alpha, \gamma \sharp) \vdash^{\ell}_P (p, \varepsilon, \sharp)$.      
       Имаме три избора за първата стъпка в това изчисление.
       
@@ -189,7 +193,7 @@
         \BinaryInfC{$\underbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
       \end{prooftree}
     % \end{itemize}
-  \end{itemize}
+  % \end{itemize}
 \end{enumerate}
 \end{proof}
 
@@ -457,6 +461,7 @@
     не е безконтекстен.
   \end{remark}
 \end{important}
+
 
 %%% Local Variables:
 %%% mode: latex
