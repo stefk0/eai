@@ -101,19 +101,17 @@
   Обединявайки всичко това, заключаваме, че  $\alpha \in \L(\N)$.
 
   Така доказахме, че $\L(\N) = (\L(\A))^+$.
-  Сега ще построим недетерминиран краен автомат
-  \[\N' = \pair{\Sigma,Q',\qstart',\Delta',F'},\]
-  такъв че
+  Сега ще построим недетерминиран краен автомат $\N' = \pair{\Sigma,Q',\qstart',\Delta',F'}$, такъв че:
   \[\L(\N') = \L(\N)\cup\{\varepsilon\} = (\L(\A))^+ \cup \{\varepsilon\} = (\L(\A))^\star.\]
   \begin{itemize}
   \item
-    $Q' = Q \cup \{\qstart'\}$;
+    $Q' \df Q \cup \{\qstart'\}$;
   \item
-    $F' = F \cup \{\qstart'\}$;
+    $F' \df F \cup \{\qstart'\}$;
   \item
-    $\Delta'(\qstart',a) = \Delta(\qstart,a)$, за всяко $a \in \Sigma$;
+    $\Delta'(\qstart',a) \df \Delta(\qstart,a)$, за всяко $a \in \Sigma$;
   \item
-    $\Delta'(q,a) = \Delta(q,a)$, за всяко $a \in \Sigma$ и $q\in Q$.
+    $\Delta'(q,a) \df \Delta(q,a)$, за всяко $a \in \Sigma$ и $q\in Q$.
   \end{itemize}
   Лесно се съобразява, че $\L(\N') = \L(\N)\cup\{\varepsilon\}$.
 \end{proof}

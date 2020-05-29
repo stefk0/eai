@@ -1,11 +1,11 @@
 \subsection{Примерни задачи}
 
 \mynote{Тук $\mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star$.}
+\begin{extra}
 \begin{problem}
   Постройте автомат $\B$ по метода на Бжозовски за регулярния език
   \[L = \L(\mathbf{((a+b)^+\cdot a)^\star}).\]
-\end{problem}
-\ExtraMaterial{
+\end{problem}  
 \begin{solution}
   \begin{multicols}{2}
   \begin{itemize}
@@ -76,10 +76,7 @@
   Сега вече сме готови да нарисуваме картинка на автомата.
 \end{itemize}
 
-
-% \begin{framed}
 \begin{figure}[H]
-  % \begin{subfigure}[b]{.45\textwidth}
   \centering
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=70pt,scale=0.8, every node/.style={scale=0.8}]
       \tikzstyle{every state}=[circle,font=\small]
@@ -95,38 +92,17 @@
       (N) edge [loop above] node [above]   {$a$}   (N);
     \end{tikzpicture}
     \caption{\scriptsize{Автомат за езика $L$ по метода на Бжозовски.}}
-    % \end{subfigure}
   \end{figure}
-  % \quad
-%   ~
-%   \quad
-%   \begin{subfigure}[b]{.45\textwidth}
-%     \centering
-%     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
-%       \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-      
-%       \node[initial above, state,accepting]   (L) {$[\varepsilon]_L$};
-%       \node[state]                            (M) [right of=L]{$[a]_L$};
-%       \node[state,accepting]                  (N) [right of=M]{$[aa]_L$};
-      
-%       \path 
-%       (L) edge [bend left=15] node [above] {$a,b$} (M)
-%       (M) edge [loop above] node [above]   {$b$}   (M)
-%       (M) edge [bend left=15] node [above] {$a$}   (N)
-%       (N) edge [bend left=15] node [below] {$b$}   (M)
-%       (N) edge [loop above] node [above]   {$a$}   (N);
-%     \end{tikzpicture}
-%     \caption{Минимален автомат $\M$ за езика $L$ по метода на Майхил-Нероуд.}
-%   \end{subfigure}
-% \end{figure}
 \end{multicols}
   \end{solution}
-}
+\end{extra}
 
-\begin{problem}
-  Постройте автомат $\B$ по метода на Бжозовски, който рапознава регулярния език
-  \[L = \L(\mathbf{a\cdot(a+b)^\star\cdot b}).\]
-\end{problem}
+\begin{extra}
+  \begin{problem}
+    Постройте автомат $\B$ по метода на Бжозовски, който рапознава регулярния език
+    \[L = \L(\mathbf{a\cdot(a+b)^\star\cdot b}).\]
+  \end{problem}  
+\end{extra}
 \ExtraMaterial{
 \begin{solution}
   \begin{multicols}{2}
@@ -195,15 +171,17 @@
 \end{solution}
 }
 
+\begin{extra}
 \begin{problem}
   Постройте автомат по метода на Бжозовски за регулярния език
   \[L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно и }\card{\omega}{b} = 1\}.\]
 \end{problem}
+\end{extra}
 \ExtraMaterial{
-  \begin{solution}
     \begin{multicols}{2}
+  \begin{solution}
     \begin{align*}
-        a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечетно и }\card{\omega}{b} = 1\}\\
+        a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и }\card{\omega}{b} = 1\}\\
                   & \df M.
       \end{align*}
       Ясно е, че $M \neq L$, защото например $aab \in L$, но $aab \not\in M$.
@@ -214,15 +192,13 @@
       Ясно е, че $N \neq M$ и $N \neq L$, защото $aa \in N$, но $aa \notin M$ и $aa \notin L$.
       \begin{align*}
         a^{-1}(M) & = L;\\
-        b^{-1}(M) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечетно и } \card{\omega}{b} = 0\}\\
+        b^{-1}(M) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и } \card{\omega}{b} = 0\}\\
                   & \df P.
       \end{align*}
       Ясно е, че $P \neq M,L,N$, защото $a \in P$, но $a \notin M,L,N$.
       \begin{align*}
-        a^{-1}(N) & = P\\
-        b^{-1}(N) & = \emptyset\\
-        a^{-1}(P) & = N\\
-        b^{-1}(P) & = \emptyset.
+        a^{-1}(N) & = P \quad\text{и}\quad b^{-1}(N) = \emptyset\\
+        a^{-1}(P) & = N \quad\text{и}\quad b^{-1}(P) = \emptyset.
       \end{align*}
 
       \begin{figure}[H]
@@ -249,17 +225,21 @@
     \end{tikzpicture}
     \caption{\scriptsize{Автомат, който приема думи с четен брой $a$ и точно едно $b$, получен чрез метода на Бжозовски.}}
   \end{figure}
+  \end{solution}
+
   \end{multicols}
-\end{solution}
 }
 
-\begin{problem}
-  Да припомним, че в \Problem{regular:dfa:binary} се искаше да се докаже, че езикът 
-  \[L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\]
-  е регулярен.
-  Ние направихме това като построихме автомат за $L$ и доказахме, че той разпознава $L$.
-  Сега пък постройте автомат за $L$ по метода на Бжозовски.
-\end{problem}
+
+\begin{extra}
+  \begin{problem}
+    Да припомним, че в \Problem{regular:dfa:binary} се искаше да се докаже, че езикът 
+    \[L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\]
+    е регулярен.
+    Ние направихме това като построихме автомат за $L$ и доказахме, че той разпознава $L$.
+    Сега пък постройте автомат за $L$ по метода на Бжозовски.
+  \end{problem}  
+\end{extra}
 \ExtraMaterial{
   \begin{solution}
     \begin{multicols}{2}
@@ -356,17 +336,17 @@
 \end{solution}
 }
 
+\begin{extra}
 \begin{example}\label{ex:regular:brzozowski:an-bn}
   Да разгледаме езика $L = \{a^nb^n\mid n \in \Nat\}$.
-  Ние вече знаем от \Problem{regular:pumping:an-bn}, че $L$ не е регулярен език.
+  Ние вече знаем от \Example{regular:pumping:an-bn}, че $L$ не е регулярен език.
   Да се опитаме да построим автомат, който го разпознава.
-  \ExtraMaterial{
-    \begin{multicols}{2}
-      Нека за всяко $k$ положим
-      \[L_k \df \{a^nb^{n+k}\mid n \in \Nat\}.\]
-      Да видим какво се получава като приложим процедурата за строене 
-      на минимален автомат.
-      \begin{itemize}
+  \begin{multicols}{2}
+    Нека за всяко $k$ положим
+    \[L_k \df \{a^nb^{n+k}\mid n \in \Nat\}.\]
+    Да видим какво се получава като приложим процедурата за строене 
+    на минимален автомат.
+    \begin{itemize}
     \item 
       $a^{-1}(L) = L_1$;
     \item
@@ -428,10 +408,11 @@
     \caption{\scriptsize{{\em Безкраен} автомат за $\{a^nb^n \mid n \in \Nat\}$ построен по метода на Бжозовски.}}
   \end{figure}
     \end{multicols}  
-}
+
 
 % \end{framed}
 \end{example}
+\end{extra}
 
 %%% Local Variables:
 %%% mode: latex

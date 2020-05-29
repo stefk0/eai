@@ -2,6 +2,7 @@
 
 Да фиксираме една непразна азбука $\Sigma$.
 \index{регулярен израз}
+
 {\bf Регулярните изрази} $\mathbf{r}$ могат да се опишат със следната абстрактна граматика
 \[\mathbf{r} ::= \bm{\emptyset}\ |\ \bm{\varepsilon}\ |\ \mathbf{a}\ |\ (\bm{r}_1 \cdot \bm{r}_2)\ |\ (\bm{r}_1 + \bm{r_2})\ |\ \bm{r}^\star_1.\]
 Регулярните изрази могат да се опишат и по следния начин:
@@ -90,7 +91,8 @@
     Нека $\mathbf{r} \df \mathbf{b^\star ab^\star a(a+b)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \geq 2\}.\]
   \item
-    Нека $\mathbf{r} \df \mathbf{(b^\star abb^\star)^\star}$. Тогава
+    \mynote{За момента не е ясно как можем да верифицираме дали регулярният израз $\mathbf{r}$ наистина описва посочения език.}
+    Нека $\mathbf{r} \df \mathbf{(b + ab)^\star}$. Тогава
     \[\L(\mathbf{r}) = \{\omega \in \{a,b\}^\star \mid \text{ всяко $a$ в $\omega$ се следва от поне едно $b$}\}.\]
   \item
     Нека $\mathbf{r} \df \mathbf{(b^\star ab^\star ab^\star ab^\star)^\star}$. Тогава
@@ -129,7 +131,7 @@
 \end{extra}
 
 
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"
-%%% End: 
+%%% End:

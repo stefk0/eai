@@ -1,7 +1,8 @@
 \section{Недетерминирани крайни автомати}
 \index{автомат!недетерминиран (НКА)}
 \begin{definition}
-  \mynote{Въведени от Рабин и Скот \cite{rabin-scott}. За по-голяма яснота, често ще означаваме с $\N$ недетерминирани автомати, като ще запазим $\A$ за детерминираните.}
+  \mynote{Въведени от Рабин и Скот \cite{rabin-scott}. За по-голяма яснота, често ще означаваме с $\N$ недетерминирани автомати, като ще запазим $\A$ за детерминираните.
+  Мотивация - \cite[стр. 25]{kozen}.}
   \index{Рабин}
   \index{Скот}
   Недетерминиран краен автомат представлява петорка
@@ -107,10 +108,23 @@
 За да дадем по-ясна дефиниция на $\vdash^\star_\N$, първо ще дефинираме релацията $\vdash^n_\N$, която
 определя работата на автомата $\N$ за $n$ на брой стъпки.
 
-\begin{prooftree}
-  \AxiomC{}
-  \UnaryInfC{$(q,\alpha) \vdash^0_\N (q,\alpha)$}
-\end{prooftree}
+\begin{figure}[H]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{}
+      \UnaryInfC{$(q,\alpha) \vdash^0_\N (q,\alpha)$}
+    \end{prooftree}    
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$(q,\alpha) \vdash^n_\N (r, b \beta)$}
+      \AxiomC{$p \in \Delta(r,b)$}
+      \BinaryInfC{$(q,\alpha) \vdash^{n+1}_\N (p,\beta)$}
+    \end{prooftree}
+  \end{subfigure}
+\end{figure}
+
 \mynote{Добре е дефиницията на $\vdash^n_\N$ да е съгласувана с дефиницията на $\Delta^\star$. Алтернативна дефиниция в този случай е следната:
   \begin{prooftree}
     \def\defaultHypSeparation{\hskip .0in}
@@ -119,21 +133,7 @@
   \BinaryInfC{$(q,b\alpha) \vdash^{n+1}_\N (p,\beta)$}
 \end{prooftree}
 }
-\begin{prooftree}
-  \AxiomC{$(q,\alpha) \vdash^n_\N (r, b \beta)$}
-  \AxiomC{$p \in \Delta(r,b)$}
-  \BinaryInfC{$(q,\alpha) \vdash^{n+1}_\N (p,\beta)$}
-\end{prooftree}
 
-
-% \begin{itemize}
-% \item 
-%   $(q,\alpha) \vdash^0_\N (q,\alpha)$, защото за $0$ стъпки се случва нищо.
-% \item
-%   Нека $\Delta(q,x) \ni q'$ и $(q',\alpha) \vdash^n_\N (p, \beta)$. Тогава
-%   $(q,x\alpha) \vdash^{n+1}_\N (p,\beta)$, защото за $n+1$ на брой стъпки първо правим една стъпка 
-%   и отиваме в моментното описание $(q',\alpha)$ и след това правим още $n$ на брой стъпки.
-% \end{itemize}
 Сега можем да дефинираме $\vdash^\star_\N$ като:
 \[(q,\alpha) \vdash^\star_\N (p,\beta) \dff (\exists n\in\Nat)[(q,\alpha) \vdash^n_\N (p,\beta)].\]
 Друг начин да дефинираме релацията $\vdash^\star_\N$ е следния:
@@ -167,6 +167,7 @@
   \item
     $F' \df \{\code{R} \in Q' \mid R\cap F \neq \emptyset\}$.
   \end{itemize}
+  \mynote{Тук използваме $\code{R}$ за да покажем в явен вид, че в новия автомат кодираме множества от състояния на стария.}
   Ще докажем, че за произволна дума $\alpha$ и произволно множество $R \subseteq Q$
   е изпълнено, че:
   \begin{equation}
@@ -252,12 +253,11 @@
 % Обърнете внимание, че примерът показва, че е възможно $\N$ да е детерминиран автомат, но полученият $\N'$ да бъде недетерминиран.
 % \end{hint}
 
+\begin{extra}
 \begin{problem}
   \mynote{По-късно ще видим, че можем да дадем и друго доказателство на това твърдение, като направим индукция по построението на регулярните езици.}
   Докажете, че автоматните езици са затворени относно операцията $\rev$.
-  С други думи, докажете, че ако $L$ е автоматен език, то
-  \[L^{\rev} = \{\omega^{\rev} \mid \omega \in L\}\]
-  също е автоматен.
+  С други думи, докажете, че ако $L$ е автоматен език, то $L^{\rev} \df \{\omega^{\rev} \mid \omega \in L\}$ също е автоматен.
 \end{problem}
 \begin{hint}
   Идеята е съвсем проста - просто обръщаме стрелките и правим финалните състояния да са начални, а началното става финално.
@@ -272,9 +272,9 @@
   \item
     $F^\N = \{\qstart\}$.
   \end{itemize}
-  Достатъчно е да се докаже, че:
-  \[\Delta^\star_\N(Q_{\texttt{start}},\alpha) = \{ q \in Q^\A \mid \delta^\star_\A(q,\alpha^\rev) \in F^\A\}.\]
+  Достатъчно е да се докаже, че $\Delta^\star_\N(Q_{\texttt{start}},\alpha) = \{ q \in Q^\A \mid \delta^\star_\A(q,\alpha^\rev) \in F^\A\}$.
 \end{hint}
+\end{extra}
 
 \begin{lemma}
   \label{lem:automata-basic}
@@ -325,9 +325,6 @@
 \input{regular/nfa-concatenation}
 \input{regular/nfa-union}
 \input{regular/nfa-kleene-star}
-
-
-
 
 
 %%% Local Variables:

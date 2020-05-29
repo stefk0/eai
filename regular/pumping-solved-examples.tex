@@ -125,17 +125,14 @@
 \end{proof}
 
 \begin{problem}
-  Докажете, че езикът
-  \[L = \{\alpha\beta \in \{a,b\}^\star \mid |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}\] не е регулярен.
+  Докажете, че езикът $L = \{\alpha\beta \in \{a,b\}^\star \mid |\alpha| = |\beta|\ \&\ \alpha \neq \beta\}$ не е регулярен.
 \end{problem}
 \begin{hint}
   Да допуснем, че $L$ е регулярен.
   Тогава езикът $\ov{L} = \{a,b\}^\star \setminus L$ също е регулярен.
   Ясно е, че
   \[\ov{L} = \{ \alpha\beta \in \{a,b\}^\star\ \mid\ \alpha = \beta\}\ \cup\ \{\alpha \in \{a,b\}^\star \mid |\alpha| \text{ е нечетно число}\}.\]
-  Тогава езикът 
-  \[L_1 = \ov{L} \cap \{ \alpha \in \{a,b\}^\star \mid |\alpha| \text{ е четно число}\}\]
-  също е регулярен.
+  Тогава езикът $L_1 = \ov{L} \cap \{ \alpha \in \{a,b\}^\star \mid |\alpha| \text{ е четно число}\}$ също е регулярен.
   Ясно е, че $L_1 = \{\alpha\beta \in \{a,b\}^\star\ \mid\ \alpha = \beta\}$.
   Сега можем да разгледаме регулярния език
   \[L_2 = L_1 \cap \L(\mathbf{a^\star b a^\star b}) = \{a^n b a^n b \mid n \in \Nat\}.\]
@@ -191,6 +188,7 @@
     Избираме $x = \varepsilon$, $y = c$, $z = c^{k-1}a^nb^m$.
   \end{itemize}
 \end{hint}
+
 
 %%% Local Variables:
 %%% mode: latex
