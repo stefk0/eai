@@ -3,10 +3,9 @@
 \mynote{Възможно е да се дефинира и за двулентова машина на Тюринг, като $f(\alpha)$ ще бъде върху втората лента.}
 Една {\em тотална} функция $f:\Sigma^\star \to \Sigma^\star$ се нарича изчислима с машина на Тюринг $\M$, ако 
 за всяка дума $\alpha \in \Sigma^\star$,
-\[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\varepsilon, \qaccept, f(\alpha)\blank^k), \text{ за някое }k \in \Nat.\]
+\[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\blank^m, \qaccept, f(\alpha)\blank^k), \text{ за някои }m,k \in \Nat.\]
 Това означава, че машината на Тюринг $\M$ винаги завършва. Лесно се съобразява, че езикът
-\[\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}\]
-е разрешим.
+$\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}$ е разрешим.
 
 \begin{problem}
   Докажете, че съществуват функции от вида $f:\Sigma^\star\to\Sigma^\star$, които не са изчислими с машина на Тюринг.
@@ -16,26 +15,6 @@
   Това означава, че съществуват изброимо безкрайно много машини на Тюринг.
   От друга страна, съществуват неизброимо много функции от вида $f:\Sigma^\star \to \Sigma^\star$.
 \end{hint}
-
-% Нека е дадена функцията $f:\Nat^k \to \Nat$.
-% Ще казваме, че $f$ е изчислима с машината на Тюринг $\M$,
-% ако за всяко $n_1,\dots,n_k$ е изпълнено:
-% \begin{itemize}
-% \item 
-%   Представяме всяко от числата $n_1,\dots,n_k$ в монадична бройна система
-%   като лентата на $\M$ има вида:  
-%   \[\dots \blank \blank \underbrace{1111\dots 11}_{n} \blank\blank\dots,\]
-%   като изискваме главата на $\M$ да е позиционирана върху най-лявата единица.
-%   Такава конфигурация ще наричаме {\bf стандартна начална конфигурация}.
-% \item
-%   Ако $f(n_1,\dots,n_k) = m$, то $\M$ завършва с резултат върху лентата
-%   \[\dots \blank \blank \underbrace{1111\dots 11}_{m} \blank\blank\dots,\]
-%   като главата на $\M$ е върху най-лявата 1-ца.
-%   Такава конфигурация се нарича {\bf стандартна финална конфигурация}.
-% \item
-%   Ако $f(n_1,\dots,n_k)$ е недефенирана, то $\M$ няма да завърши в стандартна конфигурация, т.е.
-%   или $\M$ ще работи безкрайно време, или ще завърши в конфигурация, която не е стандартна.
-% \end{itemize}
 
 \begin{example}
   \mynote{При двулентова машина на Тюринг тази задача е много по-лесна и сложността ще бъде $\mathcal{O}(n)$ вместо $\mathcal{O}(n^2)$.}
@@ -85,14 +64,14 @@
             (11) edge [] node [right] {$\blank;\goright$} (12);
           \end{scope}
         \end{tikzpicture}
-        \caption{Машина на Тюринг за $f(1^n) = 1^{2n}$.}
+        \caption{Машина на Тюринг за функцията $f(1^n) = 1^{2n}$.}
       \end{center}
     \end{figure}
   \end{framed}
 
 \begin{align*}
-  (q_0, \underline{1}1) & \vdash (q_1, \underline{\blank}11) \vdash  (q_2, \underline{\blank} \blank 11) \vdash  (q_3, \underline{\blank} 1 \blank 11)\\
-                        & \vdash (q_4, 1\underline{1}\blank 11) \vdash (q_4, 11 \underline{\blank} 11) \vdash (q_5, 11\blank \underline{1}1)\\
+  (q_0, \underline{1}1\blank) & \vdash (q_1, \underline{\blank}11\blank) \vdash  (q_2, \underline{\blank} \blank 11 \blank) \vdash  (q_3, \underline{\blank} 1 \blank 11\blank)\\
+                        & \vdash (q_4, 1\underline{1}\blank 11\blank) \vdash (q_4, 11 \underline{\blank} 11\blank) \vdash (q_5, 11\blank \underline{1}1\blank)\\
                         & \vdash \cdots \vdash (q_7, 11 \blank \underline{1}\blank) \vdash \cdots
 \end{align*}
 
@@ -105,13 +84,11 @@
   
   \begin{itemize}
   \item
-    $\Sigma = \{a,b\}$;
+    $\Sigma \df \{a,b\}$;
   \item 
-    $\Gamma = \{a,b,x,A,B\}$;
+    $\Gamma \df \{a,b,x,A,B\}$;
   \item
-    $\qstart = q_0$;
-  \item
-    $\qaccept = q_6$
+    $\qstart \df q_0$ и $\qaccept \df q_6$
   \end{itemize}
   \begin{framed}
   \begin{figure}[H]
@@ -155,7 +132,7 @@
 След това заменяме $A$ с $a$ и $B$ с $b$. Така най-накравя полуваме върху лентата думата $abab$.
 
 \begin{align*}
-  (q_0, \underline{a}b) & \vdash_\M (q_1, x\underline{b}) \vdash_\M (q_1,xb\underline{\blank}) \vdash_\M (q_2, x\underline{b}A) \vdash_\M (q_2, \underline{x}bA)\\
+  (q_0, \underline{a}b\blank) & \vdash_\M (q_1, x\underline{b}\blank) \vdash_\M (q_1,xb\underline{\blank}) \vdash_\M (q_2, x\underline{b}A) \vdash_\M (q_2, \underline{x}bA)\\
                         & \vdash_\M (q_0, a\underline{b}A) \vdash_\M (q_3, ax\underline{A}) \vdash_\M (q_3, axA\underline{\blank}) \vdash_\M (q_4, ax\underline{A}B)\\
                         & \vdash_\M (q_4, a\underline{x}AB) \vdash_\M (q_0, ab\underline{A}B) \vdash_\M (q_0,aba\underline{B}) \vdash_\M (q_0, abab\underline{\blank})\\
                         & \vdash_\M (q_5, aba\underline{b}) \vdash_\M (q_5, ab\underline{a}b) \vdash_\M (q_5, a\underline{b}ab) \vdash_\M (q_5, \underline{a}bab)\\
@@ -176,13 +153,11 @@
 
   \begin{itemize}
   \item 
-    $\Sigma = \{0,1\}$;
+    $\Sigma \df \{0,1\}$;
   \item
-    $\Gamma = \{0,1,\blank\}$;
+    $\Gamma \df \{0,1,\blank\}$;
   \item
-    $\qstart = q_0$;
-  \item
-    $\qaccept = q_4$.
+    $\qstart = q_0$ и $\qaccept \df q_4$.
   \end{itemize}
 
   \begin{framed}
@@ -219,10 +194,10 @@
 Да проследим изчислението на $\M$ върху вход $01011$.
 
 \begin{align*}
-  (q_0, 0\underline{1}011) & \vdash_\M (q_0,\underline{1}011) \vdash_\M (q_1, 1\underline{0}11) \vdash_\M (q_1, 10\underline{1}1)\\
-                           & \vdash_\M (q_1, 101\underline{1}) \vdash_\M (q_1, 1011\underline{\blank}) \vdash_\M (q_2, 101\underline{1})\\
-                           & \vdash_\M (q_2, 10\underline{1}0) \vdash_\M (q_2, 1\underline{0}00) \vdash_\M (q_3, \underline{1}100)\\
-                           & \vdash_\M (q_3, \underline{\blank}1100) \vdash_\M (q_4, \underline{1}100).
+  (q_0, 0\underline{1}011\blank) & \vdash_\M (q_0,\blank\underline{1}011\blank) \vdash_\M (q_1, \blank 1\underline{0}11\blank) \vdash_\M (q_1, \blank 10\underline{1}1\blank)\\
+                           & \vdash_\M (q_1, \blank 101\underline{1}\blank) \vdash_\M (q_1, \blank 1011\underline{\blank}) \vdash_\M (q_2, \blank 101\underline{1}\blank)\\
+                           & \vdash_\M (q_2, \blank 10\underline{1}0\blank) \vdash_\M (q_2, \blank 1\underline{0}00\blank) \vdash_\M (q_3, \blank \underline{1}100\blank)\\
+                           & \vdash_\M (q_3, \underline{\blank}1100\blank) \vdash_\M (q_4, \blank\underline{1}100\blank).
 \end{align*}
 \end{example}
 
@@ -235,7 +210,6 @@
   \[\ov{f(\alpha)}_{(k)} = \ov{\alpha}_{(k)} + 1.\]
   Дефинирайте машина на Тюринг $\M$, която изчислява функцията $f$.
 \end{problem}
-
 
 %%% Local Variables:
 %%% mode: latex

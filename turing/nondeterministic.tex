@@ -2,22 +2,58 @@
 \index{машина на Тюринг!недетерминистична}
 
 Една машина на Тюринг $\N$ се нарича недетерминистична, ако функцията на преходите има вида
-\[\Delta_\N: Q'\times \Gamma \to \Ps(Q \times \Gamma\times \{\goleft,\goright,\stay\}). \]
+\[\Delta: Q'\times \Gamma \to \Ps(Q \times \Gamma\times \{\goleft,\goright,\stay\}). \]
 
-Отново можем да дефинираме бинарна релация $\vdash_\N$ над $\Gamma^\star \times Q \times \Gamma^\star$,
+Отново можем да дефинираме бинарна релация $\vdash$ над $\Gamma^\star \times Q \times \Gamma^+$,
 която ще казва как моментното описание на машината $\N$ се променя при изпълнение на една стъпка.
-\begin{itemize}
-\item
-  Ако $\Delta_\N(q,z) \ni (p,y,\goright)$, то дефинираме $(\alpha, q, z\beta) \vdash_\N (\alpha y, p, \beta)$.
-\item 
-  Ако $\Delta_\N(q,z) \ni (p,y,\goleft)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\N (\alpha , p, xy\beta)$.
-\item 
-  Ако $\Delta_\N(q,z) \ni (p,y,\stay)$, то дефинираме $(\alpha, q, z\beta) \vdash_\N (\alpha, p, y\beta)$.
-\end{itemize}
-С $\vdash^\star_\N$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\N$.
 
+\begin{figure}[H]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\Delta(q,x) \ni (p,y,\goright)$}
+      \RightLabel{\scriptsize{(right-1)}}
+      \UnaryInfC{$(\alpha, q, xz\beta) \vdash (\alpha y, p, z\beta)$}
+    \end{prooftree}
+    \vspace*{2mm}
+  \end{subfigure}
+  ~
+\begin{subfigure}[b]{0.5\textwidth}
+\begin{prooftree}
+  \AxiomC{$\Delta(q,x) \ni (p,y,\goleft)$}
+  \RightLabel{\scriptsize{(left-1)}}
+  \UnaryInfC{$(\alpha z, q, x\beta) \vdash (\alpha,p,zy\beta)$}
+\end{prooftree}
+\vspace*{2mm}
+\end{subfigure}
+
+\begin{subfigure}[b]{0.5\textwidth}
+\begin{prooftree}
+  \AxiomC{$\Delta(q,x) \ni (p,y,\goright)$}
+  \RightLabel{\scriptsize{(right-2)}}
+  \UnaryInfC{$(\alpha, q, x) \vdash (\alpha y, p, \blank)$}
+\end{prooftree}
+\vspace*{2mm}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.5\textwidth}
+  \begin{prooftree}
+    \AxiomC{$\Delta(q,x) \ni (p,y,\goleft)$}
+    \RightLabel{\scriptsize{(left-2)}}
+    \UnaryInfC{$(\varepsilon,q,x\beta) \vdash (\varepsilon,p,\blank y\beta)$}
+  \end{prooftree}
+  \vspace*{2mm}
+\end{subfigure}
+
+\begin{prooftree}
+  \AxiomC{$\Delta(q, z) \ni (p, y, \stay)$}
+  \RightLabel{\scriptsize{(stay)}}
+  \UnaryInfC{$(\alpha, q, z\beta) \vdash (\alpha , p, y\beta)$}
+\end{prooftree}
+\end{figure}
+
+С $\vdash^\star$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash$.
 Тогава за недетерминистична машина на Тюринг $\N$, 
-\[\L(\N) = \{\ \alpha\in\Sigma^\star \mid (\exists \beta,\gamma \in \Gamma^\star)[(\varepsilon, \qstart, \alpha) \vdash^\star_\N (\beta, \qaccept, \gamma) ]\ \}.\]
+\[\L(\N) = \{\ \omega\in\Sigma^\star \mid (\exists \gamma_1,\gamma_2 \in \Gamma^\star)[(\varepsilon, \qstart, \omega\blank) \vdash^\star_\N (\gamma_1, \qaccept, \gamma_2) ]\ \}.\]
 
 \begin{remark}
   Върху дадена дума $\omega$, недетерминистичната машина на Тюринг $\N$ може да има много различни изчисления.
@@ -26,7 +62,7 @@
 \end{remark}
 
 Аналогично, дефинираме една недетерминистична машина на Тюринг $\N$ да бъде {\bf разрешител}, ако за всяка дума и 
-всяко изчисление на $\N$ върху $\omega$ завършва в $\qaccept$ или $\qreject$.
+\emph{всяко изчисление} на $\N$ върху $\omega$ завършва в $\qaccept$ или $\qreject$.
 
 % \begin{problem}
 %   \mynote{\cite{hopcroft2}}
@@ -47,9 +83,9 @@
 % \end{problem}
 
 \begin{example}
-  Да разгледаме езика  
-  \[L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\text{ е подниз на }\beta\}.\]
-  Ще видим, че този език е разрешим като построим недетерминистична машина на Тюринг $\N$,
+  \mynote{Не е ясно защо е разрешим.}
+  Нека да видим, че $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\text{ е подниз на }\beta\}$
+  е разрешим език като построим недетерминистична машина на Тюринг $\N$,
   която разрешава този език.
   \begin{framed}
     \begin{figure}[H]
@@ -83,7 +119,7 @@
             (6) edge [bend right=15] node [right] {$\sharp;\goright$} (7)
             (7) edge [loop right] node [right] {$\blank;\goright$} (7)
             (7) edge [bend left=15] node [below] {$a/\blank;\goleft$} (3)
-            (8) edge [loop right] node [below] {$\{a,b\};\goright$} (8)
+            (8) edge [loop right] node [right] {$\{a,b\};\goright$} (8)
             (5) edge [bend right=30] node [right] {$b/\blank;\goright$} (8)
             (8) edge [bend right=15] node [right] {$\sharp;\goright$} (9)
             (9) edge [loop right] node [above] {$\blank;\goright$} (9)
@@ -124,6 +160,8 @@
 \[\varepsilon, 0, 1, \underbrace{00, 01, 10, 11}_{\text{от $0$ до $3$}}, \underbrace{000, 001, 010, 011, 100, 101, 110, 111}_{\text{от $0$ до $7$}}, 0000, 0001, \dots\]
 В този случай, $\omega_0 = \varepsilon$, $\omega_7 = 000$, $\omega_{13} = 110$.
 Обърнете внимание, че тази наредба отговаря на обхождане в широчина на едно пълно наредено двоично дърво.
+Можем да дефинираме и релацията $<_{\text{can}}$ по следния начин:
+\[\alpha <_{\text{can}} \beta \dff |\alpha| < |\beta| \lor \alpha <_{\text{lex}} \beta. \]
 
 \begin{problem}
   \label{prob:canonical:function}
@@ -218,28 +256,6 @@
   \end{itemize}
 \end{proof}
 
-\begin{proposition}[Лема на Кьониг]
-  \index{Кьониг}
-  \mynote{Според нашата дефиниция, $T$ е безкраен език над крайната азбука $\Sigma$, затворено относно префикси.}
-  Ако $T$ е безкрайно дърво с крайно разклонение, то $T$ съдържа безкраен път.
-\end{proposition}
-\begin{hint}
-  Дефинираме безкрайния път на стъпки.
-  На всяка стъпка избираме този наследник, който е корен на безкрайно дърво.
-  Понеже $T$ е безкрайно дърво с крайно разклонение, на всяка стъпка можем да изберем такъв наследник.
-\end{hint}
-
-\begin{proof}
-  По-формално, ще дефинираме редица от елементи на дървото $\alpha_0\prec\alpha_1\prec\cdots\prec\alpha_n\prec\cdots$, които ще образуват безкрайния път,
-  като искаме, за всяко $n$, $T_{\alpha_n}$ да бъде крайно разклонено безкрайно дърво.
-  \mynote{Да напомним, че $T_{\alpha_n} \df \alpha^{-1}_n(T)$.}
-  Нека $\alpha_0 = \varepsilon$, коренът на $T$. По условие, $T_{\alpha_0} = T$ е крайно разклонено и безкрайно дърво.
-  Да приемем, че сме дефинирали $\alpha_0\prec\alpha_1\prec\cdots\prec\alpha_n$ и $T_{\alpha_n}$ е крайно разклонено безкрайно дърво.
-  Ще дефинираме $\alpha_{n+1}$.
-  Понеже $T_{\alpha_n}$ е крайно разклонено дърво, възелът $\alpha_n$ в дървото има крайно много наследници.
-  Понеже $T_{\alpha_n}$ е безкрайно дърво, то поне един от наследниците, да кажем $y$, на $\alpha_n$ ще има безкрайно много наследници.
-  Нека $\alpha_{n+1} \df \alpha_n \cdot y$. Ясно е, че $T_{\alpha_{n+1}}$ е безкрайно дърво.  
-\end{proof}
 
 \begin{cor}
   Ако $L$ се разпознава от {\em недетерминистичен} разрешител $\N$, то $L$
@@ -247,7 +263,7 @@
 \end{cor}
 \begin{proof}
   Да разгледаме дървото $T$ с крайно разклонение $r$, което представя всички изчисления на разрешителя $\N$ при вход думата $\omega$.
-  От лемата на Кьониг следва, че $T$ е крайно дърво, да кажем с височина $h$, защото ако допуснем, че $T$ е безкрайно, то ще има безкрайно дълго изчисление на $\N$,
+  От \Lemma{konig} следва, че $T$ е крайно дърво, да кажем с височина $h$, защото ако допуснем, че $T$ е безкрайно, то ще има безкрайно дълго изчисление на $\N$,
   което е невъзможно, понеже $\N$ винаги достига до заключително състояние ($\qaccept$ или $\qreject$).
   \begin{itemize}
   \item 
@@ -259,7 +275,6 @@
     Спираме, когато този брояч достигне $r^h$.
   \end{itemize}
 \end{proof}
-
 
 
 %%% Local Variables:

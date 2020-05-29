@@ -1,8 +1,9 @@
 \section{Примери за разрешими езици}
 \label{sect:turing:examples}
 
+\begin{extra}
 \begin{example}
-  \mynote{Знаем, че $L$ не е безконтекстен.}
+  \mynote{Знаем, че $L$ не е безконтекстен, но е контекстен.}
   Да разгледаме езика $L = \{a^nb^nc^n \mid n\in\Nat\}$.
   Нека да видим защо този език е разрешим.
   Идеята на алгоритъма, който ще разгледаме е да маркира на всяка итерация по един символ $a$, $b$ или $c$.
@@ -35,7 +36,7 @@
   \item
     $Q = \{q_0,q_1,q_2,q_3,q_4,q_5\}$, където $\qstart = q_0$ и $\qaccept = q_5$;
   \item
-    Непълната функция на преходите $\delta:(Q\setminus\{q_5\})\times\Gamma \to Q\times\Gamma\times\{\goleft,\goright,\stay\}$
+    Частичната функция на преходите $\delta:(Q\setminus\{q_5\})\times\Gamma \to Q\times\Gamma\times\{\goleft,\goright,\stay\}$
     е описана на схемата отдолу. Остава да добавим състоянието $\qreject$.
   \end{itemize}
 
@@ -50,12 +51,12 @@
         \node[state]            (3) [right of=2]{$q_2$};
         \node[state]            (4) [right of=3]{$q_3$};
         \node[state]            (5) [right of=4]{$q_4$};
-        \node[state,accepting]  (6) [below of=1]{$q_5$};
+        \node[state,accepting]  (6) [above of=1]{$q_5$};
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
-          (1) edge [loop above]    node [above] {$x;\goright$} (1)
-          (1) edge [bend right=15] node [left]  {$\blank;\stay$} (6)
+          (1) edge [loop below]    node [below] {$x;\goright$} (1)
+          (1) edge [bend left=15]  node [left]  {$\blank;\stay$} (6)
           (1) edge [bend left=15]  node [above] {$a/x;\goright$} (2)
           (2) edge [bend left=15]  node [above] {$b/x;\goright$} (3)
           (2) edge [loop above]    node [above] {$\{a,x\};\goright$} (2)
@@ -67,7 +68,7 @@
         \end{scope}
       \end{tikzpicture}
     \end{center}
-    \caption{Част от детерминистична машина на Тюринг $\M$, за която $\L(\M) = \{a^nb^nc^n \mid n \in \Nat\}$. Остава да се добави $\qreject$.}
+    \caption{\footnotesize{Част от детерминистична машина на Тюринг $\M$, за която разрешава езика $\{a^nb^nc^n \mid n \in \Nat\}$. Остава да се добави $\qreject$ и да се попълни $\delta$ функцията до тотална.}}
   \end{figure}
   \end{framed}
 
@@ -96,13 +97,13 @@
         \node[state]            (3) [right of=2]{$q_2$};
         \node[state]            (4) [right of=3]{$q_3$};
         \node[state]            (5) [right of=4]{$q_4$};
-        \node[state,accepting]  (6) [below of=1]{$q_5$};
+        \node[state,accepting]  (6) [above of=1]{$q_5$};
         \node[state]            (7) [below of=3]{$q_6$};
         
         \begin{scope}[every node/.style={scale=.8}]
           \path
-          (1) edge [loop above]    node [above] {$x;\goright$} (1)
-          (1) edge [bend right=15] node [left]  {$\blank;\stay$} (6)
+          (1) edge [loop below]    node [below] {$x;\goright$} (1)
+          (1) edge [bend left=15] node [left]  {$\blank;\stay$} (6)
           (1) edge [bend left=15]  node [above] {$a/x;\goright$} (2)
           (2) edge [bend left=15]  node [above] {$b/x;\goright$} (3)
           (2) edge [loop above]    node [above] {$\{a,x\};\goright$} (2)
@@ -111,30 +112,30 @@
           (3) edge [loop above]    node [above] {$\{b,x\};\goright$} (3)
           (5) edge [loop right]    node [below right] {$\{a,b,x\};\goleft$} (5)
           (5) edge [in=65,out=115,above] node [above] {$\blank;\goright$} (1)
-          (1) edge [dashed, bend right=15] node [left] {$\{b,c\};\stay$} (7)
+          (1) edge [dashed, bend right=25] node [left] {$\{b,c\};\stay$} (7)
           (2) edge [dashed, bend left=30] node [left] {$\{c,\blank\};\stay$} (7)
           (3) edge [dashed, bend left=25] node [right] {$\{a,\blank\};\stay$} (7)
-          (4) edge [dashed, bend left=45] node [right] {$\{a,b,x\};\stay$} (7);
+          (4) edge [dashed, bend left=45] node [right] {$\{a,b,x\};\stay$} (7)
+          (5) edge [dashed, bend left=55] node [right] {$c;\stay$} (7);
         \end{scope}
       \end{tikzpicture}
     \end{center}
-    \caption{Детерминистична машина на Тюринг $\M$, за която $\L(\M) = \{a^nb^nc^n \mid n \in \Nat\}$.}
+    \caption{\footnotesize{Детерминистична машина на Тюринг $\M$, която \emph{разрешава} езика $\{a^nb^nc^n \mid n \in \Nat\}$. Отхвърлящото състояние е $q_6$, т.е. $\qreject \df q_6$.}}
   \end{figure}
 \end{framed}
 \end{example}
 
 \begin{example}
   \mynote{Да напомним, че този език не е безконтекстен. В \cite[стр. 155]{hopcroft1} е дадено по-различно решение. Тук следваме \cite[стр. 173]{sipser3}. Там има малка грешка.}
-  Да разгледаме езика
-  \[L = \{\omega \sharp \omega \mid \omega\in\{a,b\}^\star\}.\]
+  Да разгледаме езика $L = \{\omega \sharp \omega \mid \omega\in\{a,b\}^\star\}$.
   Първо неформално ще опишем алгоритъм, който да разпознава думите на езика $L$.
   Нека една дума е копирана върху лентата и четящата глава е поставена върху първия символ от думата.
   \begin{enumerate}[(1)]
   \item
-    \mynote{Това запаметяване става в състоянията.}
     Чете $x$-ове надясно по лентата докато не срещне $a$ или $b$ и го замества с $x$.
     Запомня дали сме срещнали $a$ или $b$.
     Ако вместо $a$ или $b$ срещне $\sharp$, то отива на стъпка $(6)$.
+    \mynote{Това запаметяване става в състоянията.}
   \item
     Чете $a$-та и $b$-та надясно по лентата докато не стигне $\sharp$. 
   \item
@@ -155,13 +156,13 @@
   Ще построим машина на Тюринг $\M$, за която $L = \L(\M)$.
   \begin{itemize}
   \item 
-    $\Sigma = \{a,b,\sharp\}$;
+    $\Sigma \df \{a,b,\sharp\}$;
   \item
-    $\Gamma = \{a,b,\sharp,x,\blank\}$;
+    $\Gamma \df \{a,b,\sharp,x,\blank\}$;
   \item
-    $Q = \{q_0,q_1,\dots,q_8\}$;
+    $Q \df \{q_0,q_1,\dots,q_8\}$;
   \item
-    $\qstart = q_0$ и $\qaccept = q_8$;
+    $\qstart \df q_0$ и $\qaccept \df q_8$;
   \end{itemize}
 
   \begin{framed}
@@ -202,18 +203,18 @@
           \end{scope}
         \end{tikzpicture}
       \end{center}
-      \caption{Част от детерминистична машина на Тюринг $\M$, за която $\L(\M) = \{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$.}
+      \caption{\footnotesize{Част от машина на Тюринг $\M$, която разрешава езика $\{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$.}}
     \end{figure}
   \end{framed}
   
   Да проследим изчислението на думата $ab\sharp ab$.  
   \begin{align*}
-    (q_0, \underline{a}b\sharp ab) & \vdash_\M (q_1, x\underline{b}\sharp ab) \vdash_\M (q_1,xb\underline{\sharp}ab) \vdash_\M (q_3, xb\sharp\underline{a}b)\\
-                                   & \vdash_\M (q_5, xb\underline{\sharp}xb) \vdash_\M (q_6, x\underline{b}\sharp xb) \vdash_\M (q_6, \underline{x}b\sharp xb)\\
-                                   & \vdash_\M (q_0, x\underline{b}\sharp xb) \vdash_\M (q_2, xx\underline{\sharp}xb) \vdash_\M (q_4, xx\sharp\underline{x}b)\\
-                                   & \vdash_\M (q_4, xx\sharp x\underline{b}) \vdash_\M (q_5, xx\sharp\underline{x}x) \vdash_\M (q_5, xx\underline{\sharp} xx)\\
-                                   & \vdash_\M (q_6, x\underline{x}\sharp xx) \vdash_\M (q_0, xx\underline{\sharp} xx) \vdash_\M (q_7, xx\sharp\underline{x}x)\\
-                                   & \vdash_\M (q_7, xx\sharp x\underline{x}) \vdash_\M (q_7, xx\sharp xx\underline{\blank}) \vdash_\M (q_8,xx\sharp xx\underline{\blank}).
+    (q_0, \underline{a}b\sharp ab\blank) & \vdash_\M (q_1, x\underline{b}\sharp ab\blank) \vdash_\M (q_1,xb\underline{\sharp}ab\blank) \vdash_\M (q_3, xb\sharp\underline{a}b\blank)\\
+                                   & \vdash_\M (q_5, xb\underline{\sharp}xb\blank) \vdash_\M (q_6, x\underline{b}\sharp xb\blank) \vdash_\M (q_6, \underline{x}b\sharp xb\blank)\\
+                                   & \vdash_\M (q_0, x\underline{b}\sharp xb\blank) \vdash_\M (q_2, xx\underline{\sharp}xb\blank) \vdash_\M (q_4, xx\sharp\underline{x}b\blank)\\
+                                   & \vdash_\M (q_4, xx\sharp x\underline{b}\blank) \vdash_\M (q_5, xx\sharp\underline{x}x\blank) \vdash_\M (q_5, xx\underline{\sharp} xx\blank)\\
+                                   & \vdash_\M (q_6, x\underline{x}\sharp xx\blank) \vdash_\M (q_0, xx\underline{\sharp} xx\blank) \vdash_\M (q_7, xx\sharp\underline{x}x\blank)\\
+                                   & \vdash_\M (q_7, xx\sharp x\underline{x}\blank) \vdash_\M (q_7, xx\sharp xx\underline{\blank}) \vdash_\M (q_8,xx\sharp xx\underline{\blank}).
   \end{align*}
   Може лесно да се съобрази, че тази машина на Тюринг може да се допълни до {\em тотална}.
 \end{example}
@@ -222,6 +223,7 @@
   Докажете, че езикът $L = \{\ \omega \cdot \omega \mid \omega\in\{a,b\}^\star\ \}$ е разрешим.
 \end{problem}
 
+\end{extra}
 
 %%% Local Variables:
 %%% mode: latex

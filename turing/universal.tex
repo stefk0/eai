@@ -8,7 +8,7 @@
 \begin{important}
   \begin{theorem}
     Езикът 
-    \[\Luniv \df \{\ \code{\M} \sharp \omega \mid \text{$\M$ е машина на Тюринг и }\omega\in \L(\M)\ \}\]
+    \[\Luniv \df \{\ \code{\M} \cdot \omega \mid \text{$\M$ е машина на Тюринг и }\omega\in \L(\M)\ \}\]
     е полуразрешим, но {\bf не} е разрешим.
   \end{theorem}
 \end{important}
@@ -24,7 +24,7 @@
     за някоя машина на Тюринг $\M$ и дума $\omega$. Това става лесно, защото $\omega$
     започва веднага след второ срещане на $111$ в $\alpha$.
   \item
-    Ако $\alpha = \code{\M} \sharp \omega$, 
+    Ако $\alpha = \code{\M} \cdot \omega$, 
     то $\M'$ симулира работата на $\M$ върху $\omega$.
     \begin{itemize}
     \item 
@@ -45,7 +45,7 @@
   \[\alpha \in \Luniv \iff \alpha \in \L(\M').\]
   
   Сега да съобразим защо $\Luniv$ не е разрешим език.
-  Имаме, че за произволна дума $\omega$,
+  За произволна дума $\omega$ имаме:
   \[\omega \in \Laccept \iff \omega\sharp\omega \in \Luniv.\]
   Ако допуснем, че $\Luniv$ е разрешим, то тогава $\Laccept$ е разрешим език, което е противоречие.
 \end{hint}
@@ -55,8 +55,6 @@
   \[\ov{\Luniv} \df \{\code{\M} \cdot \omega \mid \code{\M} \text{ е машина на Тюринг и }\omega\not\in \L(\M)\}\]
   {\bf не} е полуразрешим.
 \end{corollary}
-
-
 
 
 

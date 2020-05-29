@@ -9,179 +9,15 @@
 %   {\bf Теза на Чърч-Тюринг:} Всеки алгоритъм може да се осъществи като машина на Тюринг.
 % \end{framed}
 
-\section{Основни понятия}
-\index{Тюринг}
-\index{машина на Тюринг!детерминирана}
-\mynote{Тук до голяма степен следваме \cite[Глава 3]{sipser3}. Понятието за машина на Тюринг има много еквивалентни дефиниции. }
-{\em Детерминирана} машина на Тюринг ще наричаме осморка от вида 
-\[\M = \TM,\] където:
-\begin{itemize}
-\item 
-  $Q$ - крайно множество от състояния;
-\item
-  $\Sigma$ - крайна азбука за входа;
-\item
-  $\Gamma$ - крайна азбука за лентата, $\Sigma \subseteq \Gamma$;
-\item
-  $\qstart$ - начално състояние, $\qstart \in Q$;
-\item
-  $\blank$ - празен символ,  $\blank \in \Gamma \setminus \Sigma$;
-\item
-  \mynote{Тези две състояния ще наричаме заключителни}
-  $\qaccept \in Q$ - приемащо състояние;
-\item
-  $\qreject \in Q$ - отхвърлящо състояние, където $\qaccept \neq \qreject$;
-\item
-  % \mynote{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
-  \mynote{Това означава, че веднъж достигнем ли заключително състояние, не можем да правим повече преходи. Тук следваме \cite[стр. 169]{sipser3} и \cite[стр. 327]{hopcroft2}.}
-  $\delta:Q'\times\Gamma \to Q\times \Gamma \times \{\goleft,\goright,\stay\}$ - функция на преходите, където
-  $Q' = Q \setminus\{\qaccept, \qreject\}$.
-\end{itemize}
-
-Сега ще опишем как $\M$ работи върху вход думата $\alpha \in \Sigma^\star$.
-Първоначално безкрайната лента съдържа само думата $\alpha$. Останалите клетки на лентата съдържат символа $\blank$.
-
-Освен това, $\M$ се намира в началното състояние $\qstart$ и главата за четене е върху най-левия символ на $\alpha$.
-Работата на $\M$ е описана от функцията на преходите $\delta$.
-  
-\begin{itemize}
-\item 
-  \mynote{На англ. instanteneous description}
-  Формално, {\bf моментната конфигурация} (или описание) на едно изчисление на машина на Тюринг
-  е тройка от вида 
-  \[(\alpha, q, \beta) \in \Gamma^\star\times Q \times \Gamma^\star,\]
-  като интерпретацията на тази тройка е, че машината се намира в състояние $q$ и лентата има вида
-  \[\tape{\alpha\underline{x}\beta'},\]
-  \mynote{Понякога за удобство ще означаваме моментната конфигурация като $(q,\alpha\underline{x}\beta)$}
-  където $\beta = x\beta'$ и четящата глава на машината е поставена върху $x$.
-\item
-  Ако $\beta = \varepsilon$, това означава, че главата на машината е върху $\blank$, т.е.
-  лентата има вида  \[\tape{\alpha\ \underline{\blank}}\]
-  \mynote{Тази ситуация можем да опишем като $(q, \alpha\underline{\blank})$}
-\item
-  Макар и да имаме безкрайна лента, моментната конфигурация, която може да се представи като {\em крайна} дума,
-  описва цялото моментно състояние на машината на Тюринг.
-  % Обърнете внимание, че тройката $(\blank\blank ab, q, \blank)$ описва същото моментно състояние както и 
-  % тройката $(ab, q, \varepsilon)$.
-\item
-  {\bf Началната конфигурация} за входната дума $\alpha \in \Sigma^\star$ представлява тройката
-  \[(\varepsilon, \qstart, \alpha).\]
-  \begin{itemize}
-  \item
-    Ако $\alpha = x\alpha'$, за $x \in \Sigma$, то  лентата има вида \[\cdots\blank\blank\ \underline{x}\alpha'\blank\blank\cdots,\]
-  \item
-    Ако $\alpha = \varepsilon$, то началната конфигурация е $(\varepsilon, \qstart, \varepsilon)$ и лентата има вида
-    \[\tape{\underline{\blank}}\]
-  \end{itemize}
-\item
-  {\bf Заключителна конфигурация} представлява тройка от вида
-  \[(\beta, \qaccept, \gamma), \text{ или }(\beta, \qreject, \gamma).\]
-  Ако машината, която работи върху дадена входна дума, достигне до заключително състояние, ще казваме
-  че машината {\em спира работа}.
-\end{itemize}
-
-Както за автомати, удобно е да дефинираме бинарна релация $\vdash_\M$ над $\Gamma^\star \times Q \times \Gamma^\star$,
-която ще казва как моментната конфигурация на машината $\M$ се променя при изпълнение на една стъпка.
-\begin{itemize}
-\item
-  \mynote{Понеже $z \in \Gamma$, то е възможно и $z = \blank$.}
-  Ако $\delta_\M(q,z) = (p,y,\goright)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha y, p, \beta)$.
-  Това означава, че ако лентата е имала вида 
-  \[\tape{\alpha\underline{z}\beta},\]
-  след този преход на $\M$ лентата има следния вид:
-  \[\tape{\alpha y\underline{x}\beta'}, \text{ ако }\beta = x\beta',\]
-  или 
-  \[\tape{\alpha y\underline{\blank}}, \text{ ако }\beta = \varepsilon.\]
-\item
-  Ако $\delta_\M(q,\blank) = (p,y,\goright)$, то дефинираме също така и $(\alpha, q, \varepsilon) \vdash_\M (\alpha y, p, \varepsilon)$.
-  Това означава, че ако лентата е имала вида 
-  \[\tape{\alpha\underline{\blank}},\]
-  след този преход на $\M$ лентата има следния вид:
-  \[\tape{\alpha y\underline{\blank}}\]
-\item 
-  Ако $\delta_\M(q,z) = (p,y,\goleft)$, то дефинираме $(\alpha x, q, z\beta) \vdash_\M (\alpha , p, xy\beta)$.
-  Това означава, че ако лентата е имала вида 
-  \[\tape{\alpha x\underline{z}\beta},\]
-  след този преход на $\M$ лентата има вида 
-  \[\tape{\alpha \underline{x}y\beta}\]
-  Също така, в тази ситуация трябва да дефинираме и
-  $(\varepsilon, q, z\beta) \vdash_\M (\varepsilon , p, \blank y\beta)$.
-  Това означава, че ако лентата е имала вида 
-  \[\tape{\underline{z}\beta},\]
-  след този преход на $\M$ лентата има вида 
-  \[\tape{ \underline{\blank}y\beta}\]
-\item
-  Ако $\delta_\M(q,\blank) = (p,y,\goleft)$, то дефинираме и $(\alpha x, q, \varepsilon) \vdash_\M (\alpha , p, xy)$,
-  а също така и $(\varepsilon, q, \varepsilon) \vdash_\M (\varepsilon , p, \blank y)$,
-\item
-  Ако $\delta_\M(q, z) = (p, y, \stay)$, то дефинираме $(\alpha, q, z\beta) \vdash_\M (\alpha , p, y\beta)$.
-  % Това означава, че ако лентата е имала вида 
-  % \[\tape{\alpha \underline{z}\beta},\]
-  % след този преход на $\M$ лентата има вида 
-  % \[\tape{\alpha \underline{y}\beta}\]
-\item
-  Ако $\delta_\M(q, \blank) = (p, y, \stay)$, то дефинираме и $(\alpha, q, \varepsilon) \vdash_\M (\alpha , p, y)$.
-\end{itemize}
-С $\vdash^\star_\M$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash_\M$.
-
-\begin{itemize}
-\item
-  Машината на Тюринг $\M$ {\bf приема} думата $\alpha$, 
-  ако 
-  \[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\gamma_1, \qaccept, \gamma_2),\]
-  за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
-\item
-  Машината на Тюринг $\M$ {\bf отхвърля} думата $\alpha$, 
-  ако 
-  \[(\varepsilon, \qstart, \alpha) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2),\]
-  за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
-\item
-  Машината на Тюринг $\M$ {\bf не приема} думата $\alpha$, 
-  ако $\M$ отхвърля $\alpha$ или $\M$ никога не завършва при начална конфигурация $(\varepsilon,\qstart,\alpha)$.
-\item
-  \index{машина на Тюринг!разрешител}
-  \mynote{На англ. такава машина на Тюринг се нарича {\bf decider} \cite[стр. 170]{sipser3}. Може такива машини на Тюринг да се наричат и тотални \cite[стр. 213]{kozen}.}
-  Една машина на Тюринг се нарича {\bf разрешител}, ако при всеки вход достига до заключително състояние,
-  т.е. достига до $\qaccept$ или $\qreject$.
-\item 
-  Езикът, който се {\bf разпознава} от машината $\M$ е:
-  \[\L(\M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, \qstart, \alpha) \vdash^\star_\M (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
-\item
-  \index{език!полуразрешим}
-  \mynote{На англ. {\bf semidecidable language}. В литературата се използва и названието {\bf рекурсивно номеруем език}.}
-  Езикът $L$ се нарича {\bf полуразрешим}, ако съществува машина на Тюринг $\M$, за която
-  $L = \L(\M)$.
-  В този случай се казва, че $\M$ разпознава езика $L$.
-  Ако една дума $\alpha \in L$, то след крайно много стъпки ще достигнем до състоянието $\qaccept$.
-  Ако $\alpha \not\in L$, то не е ясно дали какво се случва с изчислението на $\M$ върху $\alpha$. Възможно е да достигнем до състоянието $\qreject$, но може да попаднем в безкрайно изчисление.
-\item
-  \index{език!разрешим}
-  \mynote{На англ. {\bf decidable language}. В литературата се използва и названието {\bf рекурсивен език}.}
-  Един език $L$ се нарича {\bf разрешим}, ако за него съществува {\em разрешител} $\M$, за която
-  $L = \L(\M)$.
-  В този случай се казва, че $\M$ разрешава езика $L$.
-\end{itemize}
-
-\begin{framed}
-  \begin{proposition}
-    Ако $L$ е разрешим език над азбуката $\Sigma$, то $\Sigma^\star \setminus L$ също е разрешим език.
-  \end{proposition}
-\end{framed}
-
-От дефинициите е ясно, че всеки разрешим език е полуразрешим.
-По-късно, ще видим, че съществуват полуразрешими езици, чиито допълнения не са полуразрешими,
-т.е. не всеки полуразрешим език е разрешим.
-Една от основните ни задачи ще бъде да класифицираме различни езици като (не)раз\-ре\-ши\-ми и (не)полуразрешими.
-За да придобием по-добра интуиция за тези нови понятия, ще разгледаме подробно няколко примера.
-Ще видим също как можем да изобразяваме функцията на преходите на $\M$ графично.
+\input{turing/intro}
 
 \input{turing/examples}
-
-\input{turing/functions}
 
 \input{turing/multitape}
 \newpage
 \input{turing/nondeterministic}
+
+\input{turing/functions}
 
 \input{turing/properties}
 
@@ -329,6 +165,7 @@
 % %   За по-задълбочено запознаване с теория на изчислимостта, добри уводни книги са
 % %   \cite{ditchev-soskov} и \cite{nikolova-soskova}.
 % \end{itemize}
+
 
 %%% Local Variables:
 %%% mode: latex

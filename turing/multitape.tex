@@ -1,7 +1,7 @@
-\section{Многолентови машини на Тюринг}
+\section{Многолентови детерминистични машини на Тюринг}
 \index{машина на Тюринг!многолентова}
 
-Машина на Тюринг с $k$ ленти има същата дефиниция като еднолентова машина на Тюринг
+Детерминистична машина на Тюринг с $k$ ленти има същата дефиниция като еднолентова машина на Тюринг
 с единствената разлика, че
 \[\delta: Q' \times \Gamma^k\to Q \times \Gamma^k \times \{\goleft,\goright,\stay\}^k,\]
 където $Q' = Q \setminus\{\qaccept, \qreject\}$, 
@@ -62,19 +62,23 @@
 Лесно се съобразява, че сега сложността на изчислението е $\mathcal{O}(n)$,
 докато при еднолентова машина на Тюринг то беше $\mathcal{O}(n^2)$.
 Да разгледаме един пример:
-\begin{align*}
-  (q_1, \frac{\hat{a}}{\hat{\blank}}\frac{b}{\blank}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}) & \vdash (q_1, \frac{a}{a}\frac{\hat{b}}{\hat{\blank}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}) \vdash (q_1, \frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}) \\
-                                                                                                           & \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank})\\
-                                                                                                           & \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{a}{\blank}\frac{\hat{b}}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}\frac{\hat{\blank}}{\blank})\\
-                                                                                                           & \vdash (q_3, \frac{a}{a}\frac{b}{\hat{b}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{\hat{b}}{\blank}) \vdash (q_3, \frac{a}{\hat{a}}\frac{b}{b}\frac{\sharp}{\blank}\frac{\hat{a}}{\blank}\frac{b}{\blank}) \\
-                                                                                                           & \vdash (q_3, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}) \vdash (q_4, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}).
-\end{align*}
+\begin{extra}
+  \begin{align*}
+    (q_1, \frac{\hat{a}}{\hat{\blank}}\frac{b}{\blank}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) & \vdash (q_1, \frac{a}{a}\frac{\hat{b}}{\hat{\blank}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \vdash (q_1, \frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \\
+                                                                                                             & \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank}\frac{\blank}{\blank})\\
+                                                                                                             & \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{a}{\blank}\frac{\hat{b}}{\blank}\frac{\blank}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}\frac{\hat{\blank}}{\blank})\\
+                                                                                                             & \vdash (q_3, \frac{a}{a}\frac{b}{\hat{b}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{\hat{b}}{\blank}\frac{\blank}{\blank}) \vdash (q_3, \frac{a}{\hat{a}}\frac{b}{b}\frac{\sharp}{\blank}\frac{\hat{a}}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \\
+                                                                                                             & \vdash (q_3, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \vdash (q_4, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}).
+  \end{align*}
+\end{extra}
 \end{example}
 
-\begin{proposition}
-  За всяка $k$-лентова машина на Тюринг $\M$ съществува еднолентова машина на Тюринг $\M'$,
-  такава че $\L(\M) = \L(\M')$.
-\end{proposition}
+\begin{important}
+  \begin{proposition}
+    За всяка $k$-лентова машина на Тюринг $\M$ съществува еднолентова машина на Тюринг $\M'$,
+    такава че $\L(\M) = \L(\M')$.
+  \end{proposition}  
+\end{important}
 \begin{hint}
   \mynote{В \cite[стр. 177]{sipser3} конструкцията е малко по-различна. Там съдържанието на всяка лента се поставя последователно върху една лента, като се разделят със специален символ. Тук следваме \cite[стр. 162]{hopcroft1}.}
   Нека $\M$ е $k$-лентова машина на Тюринг.
@@ -86,7 +90,7 @@
   като във всяка компонента на лентата има точно по един символ от вида $\hat x$.
   При вход думата $\alpha = a_1a_2\cdots a_n$, която е поставена върху единствената лента на $\M'$, в случая на $k = 2$,
   първата работа на $\M'$ е да замени $\alpha$ с думата
-  \[\frac{\hat{a_1}}{\hat{\blank}}\frac{a_2}{\blank}\cdots\frac{a_n}{\blank}\]
+  \[\frac{\hat{a}_1}{\hat{\blank}}\frac{a_2}{\blank}\cdots\frac{a_n}{\blank}\]
   За да определим следващия ход на машината $\M'$, трябва да сканираме лентата докато не 
   открием разположението на всичките $k$ на брой маркирани клетки. Тогава симулираме ход на $\M$
   и отново трябва да променим маркираните клетки.
