@@ -67,19 +67,22 @@
 \item
   \index{дума!обръщане}
   Друга често срещана операция върху думи е {\bf обръщането} на дума.
-  Дефинираме думата $\alpha^{rev}$ като обръщането на $\alpha$ по следния начин.
-  \mynote{Например, $reverse^{rev} = esrever$}
+  Дефинираме думата $\alpha^{\rev}$ като обръщането на $\alpha$ по следния начин.
+  \mynote{Например, $reverse^{\rev} = esrever$}
   \begin{itemize}
   \item 
-    Ако $\abs{\alpha} = 0$, то $\alpha = \varepsilon$ и $\alpha^{rev} \df \varepsilon$.
+    Ако $\abs{\alpha} = 0$, то $\alpha = \varepsilon$ и $\alpha^{\rev} \df \varepsilon$.
   \item
     Ако $\abs{\alpha} = n+1$, то $\alpha = a\beta$, където $\abs{\beta} = n$.
-    Тогава $\alpha^{rev} \df (\beta^{rev})a$.
+    Тогава $\alpha^{\rev} \df (\beta^{\rev})a$.
   \end{itemize}
 
 \item
-  \mynote{Обърнете внимание, че $\emptyset\cdot A = A\cdot\emptyset = \emptyset$}
-  \mynote{Също така, $\{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A$}
+  \mynote{Обърнете внимание, че:
+    \begin{align*}
+      & \emptyset\cdot A = A\cdot\emptyset = \emptyset\\
+      & \{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A.
+    \end{align*}}
   Нека $A$ и $B$ са множества от думи.
   Дефинираме конкатенацията на $A$ и $B$ като
   \[A\cdot B \df \{\alpha\cdot\beta \mid \alpha\in A\ \&\ \beta \in B\}.\]
@@ -176,6 +179,8 @@
     $(\alpha^n)^{\rev} = (\alpha^{\rev})^n$, за всяко $n \geq 0$.
   \end{enumerate}
 \end{problem}
+
+\subsection*{Отрези на дума}
 
 % https://stackoverflow.com/questions/509211/understanding-slice-notation
 Понякога може да е удобно да вземем назаем от \texttt{python} нотацията за \texttt{slices} на масив и
