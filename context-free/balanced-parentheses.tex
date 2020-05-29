@@ -14,13 +14,13 @@
 
 \begin{framed}
   \begin{problem}
-    \mynote{\writedown Докажете, че езикът $L$ не е регулярен! }
     Докажете, че $L = \{\ \alpha \in \{a,b\}^\star \mid \alpha\text{ е балансирана дума}\ \}$
     е безконтекстен език.
   \end{problem}  
 \end{framed}
 \begin{proof}
-  \mynote{\cite[стр. 135]{kozen}}
+  \mynote{\cite[стр. 135]{kozen}\\
+    \writedown Докажете, че езикът $L$ не е регулярен! }
   Да разгледаме граматиката $G$ с правила
   \[S \to aSb\ |\ SS\ |\ \varepsilon.\]
   Ще докажем, че $L = \L(G)$.
@@ -95,7 +95,6 @@
   \end{itemize}
   Така доказахме \Property{eq:balanced-completeness}, което ни дава пълнота на граматиката спрямо езика.
 \end{proof}
-
 
 %%% Local Variables:
 %%% mode: latex

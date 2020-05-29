@@ -16,25 +16,34 @@
 имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
 Да повторим дефиницията на релацията $\alpha \derive{\ell}_G \beta$ от Раздел~\ref{sect:unrestricted-grammar} в частния случай, когато граматиката е безконтекстна.
 
-\begin{prooftree}
-  \AxiomC{}
-  \RightLabel{\scriptsize{правило (0)}}
-  \UnaryInfC{$\alpha \derive{0}_G \alpha$}
-\end{prooftree}
+\begin{figure}[H]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{}
+      \RightLabel{\scriptsize{правило (0)}}
+      \UnaryInfC{$\alpha \derive{0}_G \alpha$}
+    \end{prooftree}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$A \to_G \gamma$}
+      \AxiomC{$\gamma \derive{\ell}_G \beta$}
+      \RightLabel{\scriptsize{правило (1)}}
+      \BinaryInfC{$A \derive{\ell+1}_G \beta$}
+    \end{prooftree}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
+      \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
+      \RightLabel{\scriptsize{правило (2)}}
+      \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
+    \end{prooftree}
+  \end{subfigure}
+\end{figure}
 
-\begin{prooftree}
-  \AxiomC{$A \to_G \gamma$}
-  \AxiomC{$\gamma \derive{\ell}_G \beta$}
-  \RightLabel{\scriptsize{правило (1)}}
-  \BinaryInfC{$A \derive{\ell+1}_G \beta$}
-\end{prooftree}
 
-\begin{prooftree}
-  \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
-  \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
-  \RightLabel{\scriptsize{правило (2)}}
-  \BinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
-\end{prooftree}
 
 % \mynote{На практика във всички учебници дефинират $\alpha \derive{1}_G \beta$ точно тогава когато $\alpha$ може да се представи като $\alpha = \rho A \delta$, имаме правило в граматиката $A \to_G \gamma$ и $\beta = \rho \gamma \delta$. }
 

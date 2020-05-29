@@ -31,18 +31,22 @@
 Удобно е да въведем бинарната релация $\vdash_P$ над $Q\times\Sigma^\star\times\Gamma^\star$,
 която ще ни казва как моментното описание на автомата $P$ се променя след изпълнение на една стъпка:
 
-\begin{prooftree}
-  \AxiomC{$\Delta(q,b,A) \ni (p,\beta)$}
-  \AxiomC{$b \in \Sigma$}
-  \BinaryInfC{$(q,b\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$\Delta(q,\varepsilon,A) \ni (p,\beta)$}
-  \UnaryInfC{$(q,\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
-\end{prooftree}
-
-
+\begin{figure}[H]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\Delta(q,b,A) \ni (p,\beta)$}
+      \AxiomC{$b \in \Sigma$}
+      \BinaryInfC{$(q,b\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+    \end{prooftree}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\Delta(q,\varepsilon,A) \ni (p,\beta)$}
+      \UnaryInfC{$(q,\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+    \end{prooftree}
+  \end{subfigure}
+\end{figure}
 
 % \begin{align*}
 %   (p,\varepsilon) \in \Delta(q,x,A) & \implies (q,x\alpha,A\gamma) \vdash_P (p,\alpha,\gamma)\\
@@ -92,7 +96,7 @@
   \end{itemize}
 
   \mynote{Ако $\gamma$ не е празната дума, то $\gamma$ започва с променлива.}
-  Ще докажем, че за всяка променлива $A \in V$, за всяка дума $\alpha \in \Sigma^\star$ и $\gamma \in (V \cdot \Sigma^\star)^\star$, то е изпълнено, че:
+  Ще докажем, че за всяка променлива $A \in V$, за всяка дума $\alpha \in \Sigma^\star$, $\gamma \in (V \cdot \Sigma^\star)^\star$ и $\delta \in (V \cup \Sigma)^\star$, то е изпълнено, че:
   \begin{enumerate}[(a)]
   \item
     ако $S \lderive{\star} \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
@@ -146,9 +150,8 @@
       Нека $\ell = 0$. Тогава е ясно, че единствената възможност $\alpha = \varepsilon$ и $\delta = \varepsilon$.
       Тогава $\varepsilon \derive{\star}_G \varepsilon$.
       % \item
-
       
-      Нека $\ell > 0$ и $(p, \alpha, \gamma \sharp) \vdash^{\ell}_P (p, \varepsilon, \sharp)$.      
+      Нека $\ell > 0$ и $(p, \alpha, \delta \sharp) \vdash^{\ell}_P (p, \varepsilon, \sharp)$.      
       Имаме три избора за първата стъпка в това изчисление.
       
       Започваме със случая, когато $\Delta(p,a,a) \ni (p,\varepsilon)$. Това означава, че $\alpha = a\beta$, $\delta = a\rho$ и
@@ -205,34 +208,36 @@
 \begin{proof}
   Нека е даден стековия автомат
   \[P = \PDA.\]
+  \mynote{Граматиката, която ще получим няма да бъде в нормална форма на Чомски.}
   Ще дефинираме безконтекстна граматика $G$, за която $\L(P) = \L(G)$.
   Променливите на граматика са 
-  \[V = \{[q,A,p] \mid q,p \in Q, A \in \Gamma\}.\]
+  \[V = \{[q,A,p] \mid q,p \in Q\ \&\ A \in \Gamma\}.\]
   Правилата на $G$ са следните:
   \begin{itemize}
   \item
-    Началната променлива е $[\qstart,\sharp,\qaccept]$;
+    Началната променлива е $S \df [\qstart,\sharp,\qaccept]$;
   \item
     Нека имаме $(r,BC) \in \Delta(q, a, A)$, където $a \in \Sigma_\varepsilon$.
-    Тогава добавяме правилата в граматиката:
-    \[[q,A,p] \to_G a[r,B_1,q'][q',B_2,p],\]
-    за всеки две състояние $q'$ и $p$.
+    Тогава добавяме правилата:
+    \[[q,A,p] \to_G a[r,B,q'][q',C,p],\]
+    за всеки две състояния $q'$ и $p$.
   \item
     Нека имаме $(r,B) \in \Delta(q, a, A)$, където $a \in \Sigma_\varepsilon$.
-    Тогава добавяме правилата в граматиката:
+    Тогава добавяме правилата:
     \[[q,A,p] \to_G a[r,B,p],\]
     за всяко състояние $p \in Q$.
   \item
     Нека имаме $(p,\varepsilon) \in \Delta(q,a,A)$, където $a \in \Sigma_\varepsilon$.
-    Тогава добавяме правилата в граматиката:
+    Тогава добавяме правилата:
     \[[q,A,p] \to_G a.\]
   \end{itemize}
-  Трябва да докажем, че за произволна дума $\alpha \in \Sigma^\star$, произволни състояния $q,p \in Q$,
+  След като вече сме обяснили какви правила включва граматиката $G$,
+  трябва да докажем, че за произволна дума $\alpha \in \Sigma^\star$, произволни състояния $q$ и $p$,
   и произволен символ $A \in \Gamma$, е изпълнено, че:
-  \[[q,A,p] \lderive{\star} \alpha\ \Leftrightarrow\ (q,\alpha,A) \vdash^\star_{P} (p,\varepsilon,\varepsilon).\]
+  \[[q,A,p] \lderive{\star} \alpha\ \text{точно тогава, когато}\ (q,\alpha,A) \vdash^\star_{P} (p,\varepsilon,\varepsilon).\]
   \begin{description}
   \item[$(\Rightarrow)$]
-    С пълна индукция по броят на стъпките $\ell$ в изчислението на стековия автомат $P$ ще докажем, че за произволно $\ell$,
+    С пълна индукция по броят на стъпките $\ell$ в изчислението на стековия автомат $P$ ще докажем, че за произволно $\ell \geq 1$,
     \[\text{ако }(q,\alpha,A) \vdash^\ell_P (p,\varepsilon,\varepsilon)\text{, то } [q,A,p] \lderive{\star} \alpha.\]
     Ако $\ell = 1$, то е лесно, защото $\alpha = a \in \Sigma_\varepsilon$.
     Тогава $(p,\varepsilon) \in \Delta(q,a,A)$ и според конструкцията на граматиката $G$ имаме правилото $[q,A,p] \to_G a$.
@@ -291,7 +296,7 @@
       \end{prooftree}
     \end{itemize}
   \item[$(\Leftarrow)$]
-    За тази посока, с пълна индукция по дължината на извода $\ell$ в граматиката $G$ ще докажем, че за произволна дължина на извода $\ell$,
+    За тази посока, с пълна индукция по дължината на извода $\ell$ в граматиката $G$ ще докажем, че за произволна дължина на извода $\ell \geq 1$,
     \[\text{ако }[q,A,p] \lderive{\ell} \alpha\text{, то }(q,\alpha,A) \vdash^\star_P (p,\varepsilon,\varepsilon).\]
     \begin{itemize}
     \item
@@ -307,8 +312,8 @@
         \BinaryInfC{$[q,A,p] \lderive{\ell} \underbrace{a\beta}_{\alpha}$}
       \end{prooftree}
       Тогава директно прилагаме \IndHyp и получаваме, че
-      $(r, \beta, B) \vdash^\star_P (p, \varepsilon, \varepsilon)$ и накрая получаваме, че
-      \[(q, a\beta, A) \vdash^\star_P (p, \varepsilon, \varepsilon).\]
+      $(r, \beta, B) \vdash^\star_P (p, \varepsilon, \varepsilon)$ и накрая получаваме, че $(q, a\beta, A) \vdash^\star_P (p, \varepsilon, \varepsilon)$.
+      
       Сега да разгледаме втория случай:
       \begin{prooftree}
         \AxiomC{$[q,A,p] \lderive{1} a[r,B,q'][q',C,p]$}
@@ -328,8 +333,7 @@
         & [r,B,q'] \lderive{\ell_1} \beta_1 \implies (r,\beta_1,B) \vdash^\star_P (q',\varepsilon,\varepsilon) \\
         & [q',C,p] \lderive{\ell_2} \beta_2 \implies (q',\beta_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon).
       \end{align*}
-      Правилото
-      \[[q,A,p] \rightarrow_G a[r,B,q'][q',C,p]\]
+      Правилото $[q,A,p] \rightarrow_G a[r,B,q'][q',C,p]$ 
       е добавено в граматиката, защото $\Delta(q,a,A) \ni (r, BC)$. 
       Обединявайки всичко, което знаем, получаваме:
       \begin{align*}
@@ -401,16 +405,14 @@
   и детерминиран краен автомат 
   \[\A = \pair{Q'', \Sigma, \qstart'', \delta'', F''}, \text{ където } \L(\A) = R.\]
   \mynote{Сравнете с конструкцията от \Proposition{automata-cap}.}
-  Ще определим нов стеков автомат
-  \[\M = \PDA,\]
-  където
+  Ще определим нов стеков автомат $\M = \PDA$, където:
   \begin{itemize}
   \item 
-    $Q = Q' \times Q''$;
+    $Q \df Q' \times Q''$;
   \item
-    $\qstart = \pair{\qstart',\qstart''}$;
+    $\qstart \df \pair{\qstart',\qstart''}$;
   \item
-    $F = \{\qaccept'\} \times F''$;
+    $F \df \{\qaccept'\} \times F''$;
   \item 
     Функцията на преходите $\Delta$ е дефинирана както следва:
     \begin{itemize}
@@ -432,11 +434,11 @@
   \item
     \mynote{Индукция по броя стъпки в изчислението на $\M$.}
     Докажете, че ако $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$, то
-    $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$.
+    \[(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)\text{ и }(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon).\]
   \item
     \mynote{Индукция по броя стъпки в изчислението на $P$.}
     Докажете, че ако $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$, то
-    $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$.
+    \[(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon).\]
   \end{itemize}
   
 \end{hint}
@@ -444,20 +446,20 @@
 \Theorem{intersection-context-reg} е удобна, когато искаме да докажем, че даден език не е безконтекстен.
 С нейна помощ можем да сведем езика до друг, за който вече знаем, че не е безконтекстен.
 
-\begin{example}
-  Езикът $L = \{\omega \in \{a,b,c\}^\star \mid \card{\omega}{a} = \card{\omega}{b} = \card{\omega}{c}\}$ не е безконтекстен.
-  Да допуснем, че $L$ е безконтекстен език.
-  Тогава \[L^\prime = L \cap \L(a^\star b^\star c^\star)\] също е безконтекстен език.
-  Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от \Example{anbncn}, че {\em не} е безконтекстен.
-  Достигнахме до противоречие. Следователно, $L$ не е безконтекстен език.
-\end{example}
+\begin{extra}
+  \begin{example}
+    Да разгледаме езика $L = \{\omega \in \{a,b,c\}^\star \mid \card{\omega}{a} = \card{\omega}{b} = \card{\omega}{c}\}$.
+    Да допуснем, че $L$ е безконтекстен език. Тогава, според \Theorem{intersection-context-reg}, $L^\prime = L \cap \L(a^\star b^\star c^\star)$ също е безконтекстен език.
+    Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от \Example{anbncn}, че {\em не} е безконтекстен.
+    Достигнахме до противоречие. Следователно, $L$ не е безконтекстен език.
+  \end{example}
+\end{extra}
 
 \begin{important}
   \begin{remark}
     Не е вярно, че сечението на всеки два безконтекстни езика е безконтекстен език.
     Например, $L_1 = \{a^nb^nc^k \mid n,k\in\Nat\}$ и $L_2 = \{a^kb^nc^n \mid n,k\in\Nat\}$
-    са безконтекстни езици, но ние знаем, че
-    \[L_1 \cap L_2 = \{a^nb^nc^n \mid n \in \Nat\}\]
+    са безконтекстни езици, но ние знаем, че $L_1 \cap L_2 = \{a^nb^nc^n \mid n \in \Nat\}$
     не е безконтекстен.
   \end{remark}
 \end{important}

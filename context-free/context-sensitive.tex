@@ -3,9 +3,9 @@
 \mynote{На англ. context-sensitive \cite[стр. 223]{hopcroft1}. Евентуално позволяваме и правилото $S \to \varepsilon$,
 ако искаме да включим $\varepsilon$ в езика, като $S$ не се среща в дясна страна на правило.}
 Казваме, че $G = (V,\Sigma,R,S)$ е {\bf контекстна граматика}, ако правилата на $G$ са от вида
-\[\rho A \delta \to \rho \alpha \delta,\]
-където $\rho,\delta \in (V\cup\Sigma)^\star$ и $\alpha \in (V\cup\Sigma)^+$.
+$\rho A \delta \to \rho \alpha \delta$, където $\rho,\delta \in (V\cup\Sigma)^\star$ и $\alpha \in (V\cup\Sigma)^+$.
 
+\begin{extra}
 \begin{example}
   Езикът $L = \{a^nb^nc^n \mid n > 0\}$ е контекстен.
 \end{example}
@@ -37,7 +37,7 @@
   \end{itemize}
   Оттук лесно можем да докажем, че $L \subseteq \L(G)$.
 \end{hint}
-
+\end{extra}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"

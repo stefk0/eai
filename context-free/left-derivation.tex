@@ -5,18 +5,25 @@
 В някои случаи, за нас ще бъде важно винаги да правим детерминистичен избор на това върху коя променлива прилагаме правило.
 
 За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-ляв извод} в граматиката $G$, $\alpha \lderive{\ell} \beta$, по следния начин:
-\begin{prooftree}
-  \AxiomC{}
-  \RightLabel{\scriptsize{правило (0)}}
-  \UnaryInfC{$\alpha \lderive{0} \alpha$}
-\end{prooftree}
 
-\begin{prooftree}
-  \AxiomC{$A \to_G \alpha$}
-  \AxiomC{$\alpha \lderive{\ell} \beta$}
-  \RightLabel{\scriptsize{правило (1)}}
-  \BinaryInfC{$A \lderive{\ell+1} \beta$}
-\end{prooftree}
+\begin{figure}[H]
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{}
+      \RightLabel{\scriptsize{правило (0)}}
+      \UnaryInfC{$\alpha \lderive{0} \alpha$}
+    \end{prooftree}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$A \to_G \alpha$}
+      \AxiomC{$\alpha \lderive{\ell} \beta$}
+      \RightLabel{\scriptsize{правило (1)}}
+      \BinaryInfC{$A \lderive{\ell+1} \beta$}
+    \end{prooftree}
+  \end{subfigure}
+\end{figure}
 
 \begin{prooftree}
   \AxiomC{$\alpha_1 \lderive{\ell_1} \beta_1$}
@@ -75,19 +82,19 @@
   \end{prooftree}
   Продължаваме последователно за всяко $i < n$ правим да правим извода:
   \begin{prooftree}
-    \AxiomC{$A \to_G \overbrace{\alpha_1\beta_1\cdots\alpha_i}^{\in\Sigma^\star}B_i\cdots\alpha_n B_n\alpha_{n+1}$}
+    \AxiomC{$A \lderive{\star} \overbrace{\alpha_1\beta_1\cdots\alpha_i}^{\in\Sigma^\star}B_i\cdots\alpha_n B_n\alpha_{n+1}$}
     \AxiomC{$B_i \yield{< \ell} \beta_i$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_i \lderive{^\star}\beta_i$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
-    \BinaryInfC{$A \lderive{^\star}\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n B_n \alpha_{n+1}$}
+    \BinaryInfC{$A \lderive{\star}\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n B_n \alpha_{n+1}$}
   \end{prooftree}
   Завършваме със следния извод:
   \begin{prooftree}
-    \AxiomC{$A \to_G \overbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n}^{\in\Sigma^\star} B_n\alpha_{n+1}$}
+    \AxiomC{$A \lderive{\star} \overbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n}^{\in\Sigma^\star} B_n\alpha_{n+1}$}
     \AxiomC{$B_n \yield{< \ell} \beta_n$}
     \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_n \lderive{^\star}\beta_n$}
+    \UnaryInfC{$B_n \lderive{\star}\beta_n$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
     \BinaryInfC{$A \lderive{^\star}\underbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n \beta_n \alpha_{n+1}}_{\alpha}$}
   \end{prooftree}
@@ -98,18 +105,25 @@
 \begin{extra}
   \index{граматика!най-десен извод}
   За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-десен извод} в граматиката $G$, $\alpha \rderive{\ell} \beta$, по следния начин:
-\begin{prooftree}
-  \AxiomC{}
-  \RightLabel{\scriptsize{правило (0)}}
-  \UnaryInfC{$\alpha \rderive{0} \alpha$}
-\end{prooftree}
 
-\begin{prooftree}
-  \AxiomC{$A \to_G \alpha$}
-  \AxiomC{$\alpha \rderive{\ell} \beta$}
-  \RightLabel{\scriptsize{правило (1)}}
-  \BinaryInfC{$A \rderive{\ell+1} \beta$}
-\end{prooftree}
+  \begin{figure}[H]
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{}
+        \RightLabel{\scriptsize{правило (0)}}
+        \UnaryInfC{$\alpha \rderive{0} \alpha$}
+      \end{prooftree}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{$A \to_G \alpha$}
+        \AxiomC{$\alpha \rderive{\ell} \beta$}
+        \RightLabel{\scriptsize{правило (1)}}
+        \BinaryInfC{$A \rderive{\ell+1} \beta$}
+      \end{prooftree}
+    \end{subfigure}
+  \end{figure}
 
 % \mynote{Единствената разлика между дефиницията на $\rderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_2 \in \Sigma^\star$.}
 \begin{prooftree}
@@ -139,6 +153,7 @@
 \end{problem}
 
 \end{extra}
+
 
 %%% Local Variables:
 %%% mode: latex

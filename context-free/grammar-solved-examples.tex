@@ -3,10 +3,10 @@
 \begin{extra}
 
 Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
-Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$.
+Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$ по следния начин:
 \[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
 Ясно е, че $\L(G) = \L_G(S)$.
-Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$ по следния начин:
+Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$ така:
 \[\L^\ell_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\leq \ell} \alpha\}.\]
 Следните свойства са ясни:
 \begin{itemize}
@@ -66,15 +66,14 @@
   \[\L_G(A) = \bigcup\{\{\alpha_1\}\cdot \L_G(A_1) \cdots \{\alpha_n\} \cdot \L_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.\]
 \end{corollary}
 
-
 Като първи пример, нека да видим, че съществува безконтекстен език, който не е регулярен.
-Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.
+\mynote{Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.}
 \begin{example}\label{ex:grammar:anbn}
   Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
   \begin{align*}
     & S \to aSb \mid \varepsilon.
   \end{align*}
-  Тогава
+  Да разгледаме първите няколко члена на редицата от езици $\L^\ell_G(S)$:
   \begin{align*}
     & \L^0_G(S) = \emptyset\\
     & \L^1_G(S) = \{a\} \cdot \emptyset \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon\}\\
@@ -82,7 +81,7 @@
     & \L^{3}_G(S) = \{a\} \cdot \{\varepsilon, ab\} \cdot \{b\} \cup \{\varepsilon\} = \{\varepsilon,ab,aabb\} = \{a^nb^n \mid n < 3\}\\
     & \vdots
   \end{align*}
-  Лесно се съобразява, че
+  Лесно се съобразява, че:
   \[\L^\ell_G(S) = \{a^nb^n \mid n < \ell\}.\]
   Заключаваме, че:
   \[\L(G) = \L_G(S) = \bigcup_{\ell}\L^\ell_G(S) = \{a^nb^n \mid n\in\Nat\}.\]
@@ -154,7 +153,7 @@
       Ясно е, че $\alpha \in \L_G(B)$.
     \item
       Нека $|\alpha| > 0$, т.е. $\alpha = b^{k+1}c^{k+1}$.
-      От \IndHyp за \Property{eq:4} следва, че $\alpha \in \{b\} \cdot \L_G(B) \cdot \{c\} \subseteq \L_G(B)$.
+      От \IndHyp за \Property{eq:4} имаме $\alpha \in \{b\} \cdot \L_G(B) \cdot \{c\} \subseteq \L_G(B)$.
     \end{itemize}
     Вече сме готови да докажем, че:
     \begin{equation}
@@ -174,7 +173,7 @@
         Нека $n = 0$. Тогава $\alpha = b^kc^k$ и $k > 0$. Тогава от \Property{eq:4}
         следва, че $\alpha \in \L_G(B) \subseteq \L_G(S)$.
       \item                   
-        Нека $n > 0$. Тогава от \IndHyp за \Property{eq:9} следва, че
+        Нека $n > 0$. Тогава от \IndHyp за \Property{eq:9} имаме
         $\alpha \in \{a\} \cdot \L_G(S) \cdot \{c\} \subseteq \L_G(S)$.
       \end{itemize}
     \end{itemize}
@@ -348,12 +347,7 @@
     & B \to XBX\ |\ b\\
     & X \to a\ |\ b.
   \end{align*}
-  Лесно се съобразява, че:
-  \begin{align*}
-    & L_a = \L_G(A)\\
-    & L_b = \L_G(B)\\
-    & L = \L_G(S).
-  \end{align*}
+  Лесно се съобразява, че $L_a = \L_G(A)$ и $L_b = \L_G(B)$ и накрая $L = \L_G(S)$.
 \end{hint}
 
 \begin{problem}

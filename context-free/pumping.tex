@@ -3,7 +3,7 @@
 В този раздел ще разгледаме едно твърдение, което ще ни даде критерий за проверка кога един език не е безконтекстен. Ще започнем с няколко помощни твърдения.
 
 \begin{proposition}\label{pr:pumping:ground}
-  За произволни променливи $A$, $B$ и думи $\alpha_1,\alpha_2, \alpha_3$ е изпълнено, че:
+  За произволни променливи $A$, $B$ и думи $\alpha_1,\alpha_2, \alpha_3$ е изпълнено:
   \begin{prooftree}
     \AxiomC{$A \yield{\ell_1}\alpha_1B\alpha_3$}
     \AxiomC{$B \yield{\ell_2} \alpha_2$}
@@ -61,13 +61,12 @@
 \end{hint}
 
 \begin{proposition}\label{pr:pumping:iteration}
-  За произволна променлива $A$ и произволни думи $\beta$ и $\gamma$ е изпълнено, че:
+  За произволна променлива $A$ и произволни думи $\beta$ и $\gamma$ е изпълнено:
   \begin{prooftree}
     \AxiomC{$A \yield{\ell} \beta A \gamma$}
     \AxiomC{$i \in \Nat$}
     \BinaryInfC{$A \yield{\leq i \cdot \ell} \beta^i A \gamma^i$}
   \end{prooftree}
-  
 \end{proposition}
 \begin{hint}
   Формално доказателството трябва да следва индукция по $i$.
@@ -448,7 +447,6 @@
     е безконтекстен, което е противоречие.
   \end{itemize}
 \end{hint}
-
 
 %%% Local Variables:
 %%% mode: latex

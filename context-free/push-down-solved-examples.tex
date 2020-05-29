@@ -147,10 +147,8 @@
   Постройте \emph{детерминистичен} стеков автомат за езика $L = \{\omega \$ \omega^{\rev} \mid \omega \in \{a,b\}^\star \}$.
 \end{problem}
 
-
 \begin{example}
-  Безконтекстният език
-  \[L = \{\ \omega \in \{\texttt{[},\texttt{]}\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\ \}\]
+  Безконтекстният език $L = \{\ \omega \in \{\texttt{[},\texttt{]}\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\ \}$
   се разпознава от стековия автомат $P = \PDA$, където:
   \begin{itemize}
   \item 
@@ -160,9 +158,7 @@
   \item
     $\Gamma = \{\texttt{[}, \texttt{]}, \sharp\}$;
   \item
-    $\qstart = q$;
-  \item
-    $\qaccept = f$;
+    $\qstart = q$ и $\qaccept = f$;
   \item
     Можем да дефинираме релацията на преходите $\Delta$ по следния начин:
     \begin{enumerate}[(1)]
