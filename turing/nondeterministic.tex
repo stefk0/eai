@@ -2,7 +2,8 @@
 \index{машина на Тюринг!недетерминистична}
 
 Една машина на Тюринг $\N$ се нарича недетерминистична, ако функцията на преходите има вида
-\[\Delta: Q'\times \Gamma \to \Ps(Q \times \Gamma\times \{\goleft,\goright,\stay\}). \]
+\[\Delta: Q'\times \Gamma \to \Ps(Q \times \Gamma\times \{\goleft,\goright,\stay\}), \]
+където да напомним, че $Q' = Q \setminus \{\qaccept,\qreject\}$.
 
 Отново можем да дефинираме бинарна релация $\vdash$ над $\Gamma^\star \times Q \times \Gamma^+$,
 която ще казва как моментното описание на машината $\N$ се променя при изпълнение на една стъпка.
@@ -61,7 +62,7 @@
   Възможно е много други изчисления при вход $\omega$ да завършват в $\qreject$ или никога да не завършват.
 \end{remark}
 
-Аналогично, дефинираме една недетерминистична машина на Тюринг $\N$ да бъде {\bf разрешител}, ако за всяка дума и 
+Аналогично, дефинираме една недетерминистична машина на Тюринг $\N$ да бъде {\bf разрешител}, ако за всяка дума $\omega$ и 
 \emph{всяко изчисление} на $\N$ върху $\omega$ завършва в $\qaccept$ или $\qreject$.
 
 % \begin{problem}
@@ -83,7 +84,7 @@
 % \end{problem}
 
 \begin{example}
-  \mynote{Не е ясно защо е разрешим.}
+  \mynote{Не е обяснено защо е разрешим.}
   Нека да видим, че $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\text{ е подниз на }\beta\}$
   е разрешим език като построим недетерминистична машина на Тюринг $\N$,
   която разрешава този език.
@@ -130,18 +131,18 @@
       \end{center}
     \end{figure}
   \end{framed}
-  Да видим, че $\M$ успешно разпознава, че думата $ab\sharp aabb$ принадлежи на езика $L$.
+  Да видим, че $\M$ успешно разпознава думата $ab\sharp aabb$, която принадлежи на $L$.
   \begin{align*}
-    (q_0, \underline{a}b\sharp aabb) & \vdash (q_0, a\underline{b}\sharp aabb) \vdash (q_0, ab\underline{\sharp} aabb) \vdash (q_1, ab\sharp\underline{a}abb) \\
-                                     & \vdash (q_1, ab\sharp\blank\underline{a}bb) \vdash (q_2, ab\sharp\underline{\blank}abb) \vdash (q_2, ab\underline{\sharp}\blank abb)\\
-                                     & \vdash (q_3, a\underline{b}\sharp\blank abb) \vdash (q_3, \underline{a}b\sharp\blank abb) \vdash (q_3, \underline{\blank}ab\sharp\blank abb)\\
-                                     & \vdash (q_4, \underline{a}b\sharp\blank abb) \vdash (q_5, \blank\underline{b}\sharp \blank abb) \vdash (q_5, \blank b\underline{\sharp} \blank abb)\\
-                                     & \vdash (q_6, \blank b \sharp \underline{\blank} abb) \vdash (q_6, \blank b \sharp \blank \underline{a}bb) \vdash (q_2, \blank b \sharp \underline{\blank}\blank bb)\\
-                                     & \vdash (q_2, \blank b \underline{\sharp} \blank\blank bb) \vdash (q_3, \blank \underline{b} \sharp \blank\blank bb) \vdash (q_3, \underline{\blank} b \sharp \blank\blank bb)\\
-                                     & \vdash (q_4,  \blank \underline{b} \sharp \blank\blank bb) \vdash (q_7, \blank \blank \underline{\sharp} \blank\blank bb) \\
-                                     & \vdash (q_8, \blank \blank \sharp \underline{\blank}\blank bb) \vdash (q_8, \blank \blank \sharp \blank \underline{\blank} bb) \\
-                                     & \vdash (q_8, \blank \blank \sharp \blank \blank \underline{b}b) \vdash (q_2, \blank \blank \sharp \blank \underline{\blank} \blank b)\\
-                                     & \vdash \cdots \vdash (q_4, \blank\blank\underline{\sharp}\blank\blank\blank b) \vdash (q_9, \blank\blank\underline{\sharp}\blank\blank\blank b)
+    (q_0, \underline{a}b\sharp aabb\blank) & \vdash (q_0, a\underline{b}\sharp aabb\blank) \vdash (q_0, ab\underline{\sharp} aabb\blank) \vdash (q_1, ab\sharp\underline{a}abb\blank) \\
+                                           & \vdash (q_1, ab\sharp\blank\underline{a}bb\blank) \vdash (q_2, ab\sharp\underline{\blank}abb\blank) \vdash (q_2, ab\underline{\sharp}\blank abb\blank)\\
+                                           & \vdash (q_3, a\underline{b}\sharp\blank abb\blank) \vdash (q_3, \underline{a}b\sharp\blank abb\blank) \vdash (q_3, \underline{\blank}ab\sharp\blank abb\blank)\\
+                                           & \vdash (q_4, \underline{a}b\sharp\blank abb\blank) \vdash (q_5, \blank\underline{b}\sharp \blank abb\blank) \vdash (q_5, \blank b\underline{\sharp} \blank abb\blank)\\
+                                           & \vdash (q_6, \blank b \sharp \underline{\blank} abb\blank) \vdash (q_6, \blank b \sharp \blank \underline{a}bb\blank) \vdash (q_2, \blank b \sharp \underline{\blank}\blank bb\blank)\\
+                                           & \vdash (q_2, \blank b \underline{\sharp} \blank\blank bb\blank) \vdash (q_3, \blank \underline{b} \sharp \blank\blank bb\blank) \vdash (q_3, \underline{\blank} b \sharp \blank\blank bb\blank)\\
+                                           & \vdash (q_4,  \blank \underline{b} \sharp \blank\blank bb\blank) \vdash (q_7, \blank \blank \underline{\sharp} \blank\blank bb\blank) \\
+                                           & \vdash (q_8, \blank \blank \sharp \underline{\blank}\blank bb\blank) \vdash (q_8, \blank \blank \sharp \blank \underline{\blank} bb\blank) \\
+                                           & \vdash (q_8, \blank \blank \sharp \blank \blank \underline{b}b\blank) \vdash (q_2, \blank \blank \sharp \blank \underline{\blank} \blank b\blank)\\
+                                           & \vdash \cdots \vdash (q_4, \blank\blank\underline{\sharp}\blank\blank\blank b\blank) \vdash (q_9, \blank\blank\underline{\sharp}\blank\blank\blank b\blank)
   \end{align*}
 \end{example}
 
@@ -161,7 +162,7 @@
 В този случай, $\omega_0 = \varepsilon$, $\omega_7 = 000$, $\omega_{13} = 110$.
 Обърнете внимание, че тази наредба отговаря на обхождане в широчина на едно пълно наредено двоично дърво.
 Можем да дефинираме и релацията $<_{\text{can}}$ по следния начин:
-\[\alpha <_{\text{can}} \beta \dff |\alpha| < |\beta| \lor \alpha <_{\text{lex}} \beta. \]
+\[\alpha <_{\text{can}} \beta \dff |\alpha| < |\beta| \lor ( |\alpha| = |\beta|\ \&\ \alpha <_{\text{lex}} \beta). \]
 
 \begin{problem}
   \label{prob:canonical:function}
@@ -194,7 +195,7 @@
             (3) edge [bend left=15] node [above] {$\blank;\goright$} (4);
           \end{scope}
         \end{tikzpicture}
-        \caption{}
+        \caption{Генериране на следващата дума в каноничната наредба.}
       \end{center}
     \end{figure}
   \end{framed}
@@ -222,19 +223,19 @@
   Лесно се съобразява, че всяко изчисление на $\N$ може да се представи като 
   крайна редица от елементи на $Q \times \Gamma \times \{\goleft,\goright,\stay\}$.
   Понеже това множество е крайно, то можем на всяка такава тройка да
-  съпоставим число в интервала $[1,r]$, където 
+  съпоставим естествено число $ < r$, където 
   \[r = |Q| \cdot |\Gamma| \cdot 3.\]
   Например, нека $Q = \{q_0,q_1\}$, $\Gamma = \{a,b\}$. Тогава можем да направим следната съпоставка:
   \begin{align*}
-    & (q_0,a,\stay) \to 1,\ (q_0,a,\goleft) \to 2,\ (q_0,a,\goright) \to 3,\\
-    & (q_0,b,\stay) \to 4,\ (q_0,b,\goleft) \to 5, \ (q_0,b,\goright) \to 6,\\
-    & (q_1,a,\stay) \to 7, (q_1,a,\goleft) \to 8, (q_1,a,\goright) \to 9,\\
-    & (q_1,b,\stay) \to 10, (q_1,b,\goleft) \to 11,\ (q_1,b,\goright) \to 12.
+    & (q_0,a,\stay) \to 0,\ (q_0,a,\goleft) \to 1,\ (q_0,a,\goright) \to 2,\\
+    & (q_0,b,\stay) \to 3,\ (q_0,b,\goleft) \to 4, \ (q_0,b,\goright) \to 5,\\
+    & (q_1,a,\stay) \to 6, (q_1,a,\goleft) \to 7, (q_1,a,\goright) \to 8,\\
+    & (q_1,b,\stay) \to 9, (q_1,b,\goleft) \to 10,\ (q_1,b,\goright) \to 11.
   \end{align*}
-  Ясно е, че всяко изчисление на $\N$ може да се представи като дума над азбуката $\Sigma = \{x_1,x_2,\dots,x_r\}$.
+  Ясно е, че всяко изчисление на $\N$ може да се представи като дума над азбуката $\Sigma = \{x_0,x_1,\dots,x_{r-1}\}$.
   Например, изчислението от три стъпки
-  \[(\blank,q_0,aba) \vdash_N (b,q_1,ba) \vdash_\N (b,q_1,aa) \vdash_\N (ba,q_2,a)\]
-  може да се опише като думата $x_{12}x_7x_3$ над азбуката $\Sigma = \{x_1,x_2,\dots,x_{12}\}$.
+  \[(\blank,q_0,aba) \vdash_N (b,q_1,ba) \vdash_\N (b,q_1,aa) \vdash_\N (ba,q_0,a)\]
+  може да се опише като думата $x_{11}x_6x_2$ над азбуката $\Sigma = \{x_0,x_1,\dots,x_{11}\}$.
   
   Детерминистичната машина на Тюринг $\D$ има три ленти.
   \begin{itemize}
@@ -242,16 +243,16 @@
     На първата лента съхраняваме входящия низ и {\em тя никога не се променя}.
   \item
     На втората лента ще записваме последователно думи следвайки каноничната наредба на 
-    думите над азбуката $\{x_1,x_2,\dots,x_r\}$.
+    думите над азбуката $\{x_0,x_1,\dots,x_{r-1}\}$.
     От \Problem{canonical:function} знаем как последователно да генерираме тези думи върху една лента.
   \item
     На третата лента симулираме изчислението на $\N$ върху думата от първата лента, използвайки изчислението, 
-    което е описано на втората лента. Например, ако съдържанието на втората лента е $x_{12}x_7x_3$,
+    което е описано на втората лента. Например, ако съдържанието на втората лента е $x_{11}x_6x_2$,
     това означава, че симулираме изчисление от три стъпки като на първата стъпка избираме дванайсетата
     възможна тройка, на втората стъпка избираме седмата възможна тройка, на третата стъпка избираме третата възможна тройка.
     
     Ако симулацията завърши в състоянието $\qaccept$ на $\N$, то машината $\D$ завършва успешно.
-    В противен случай, на втората лента генерираме чрез функцията от \Problem{canonical:function} следващия низ относно каноничната наредба на $\{x_1,\dots,x_r\}$;
+    В противен случай, на втората лента генерираме чрез функцията от \Problem{canonical:function} следващия низ относно каноничната наредба на $\{x_0,x_1\dots,x_{r-1}\}$;
     изтриваме третата лента, копираме първата лента на третата и започваме нова детерминистична симулация като думата върху втората лента ни ръководи какъв преход да правим на всяка стъпка.
   \end{itemize}
 \end{proof}
@@ -272,7 +273,7 @@
   \item
     Ако $\N$ не приема дадена дума $\omega$, то детерминистичната ни симулация на $\N$ ще покаже, че всяко изчисление, кодирано като път в $T$, завършва в състояние $\qreject$.
     Един начин да направим това е да имаме една допълнителна лента, която използваме за брояч колко от възможните изчисления на $\N$ са завършили.
-    Спираме, когато този брояч достигне $r^h$.
+    Спираме, когато този брояч достигне $r^h$, където $h$ е дължината на думата на втората лента, т.е. дълбочината на дървото на изчисленията на $\N$.
   \end{itemize}
 \end{proof}
 

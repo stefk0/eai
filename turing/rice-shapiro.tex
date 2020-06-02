@@ -1,50 +1,52 @@
 \section{Критерии за полуразрешимост}
 
 \begin{lemma}
-  \mynote{Това означава, че ако $\texttt{Code}(\Ss)$ е полуразрешим език, то ако $L_0 \in \Ss$, всеки краен подезик на $L_0$ също принадлежи на $\Ss$.}
+  \mynote{Това означава, че ако $\texttt{Code}(\Ss)$ е полуразрешим език, то всеки език $L_0 \in \Ss$ притежава краен подезик, който също принадлежи на $\Ss$.}
   Нека $\Ss$ е свойство на полуразрешимите езици.
   Ако съществува безкраен език $L_0 \in \Ss$, който няма крайно подмножество в $\Ss$,
   то $\texttt{Code}(\Ss)$ не е полуразрешим език.  
 \end{lemma}
 \begin{hint}
   Нека $L_0 = \L(\M_0)$ като $L_0 \in \Ss$, но всеки краен подезик на $L_0$ не принадлежи на $\Ss$.
-  Ще опишем алгоритъм, който при вход дума $\code{\M}$,
-  извежда код на машина на Тюринг $\M'$, която работи така:
+  Сега ще дефинираме тотална изчислима функция $f$, която при вход думата $\omega \in \{0,1\}^\star$ работи по следния начин:
   \begin{itemize}
-  \item 
-    вход думата $\alpha$;
   \item
-    $\M'$ симулира $\M$ върху думата $\code{\M}$:
+    Ако $\omega$ не е код на машина на Тюринг, то $f(\omega) \df \omega$.
+  \item
+    Ако $\omega$ е код на машината на Тюринг $\M_\omega$, то тогава $f(\omega) = \code{\M'}$,
+    където $\M'$ работи така:
     \begin{itemize}
     \item 
-      ако $\M$ завърши за по-малко от $|\alpha|$ на брой стъпки като {\em отхвърли} $\code{\M}$, 
-      то $\M'$ симулира $\M_0$ върху $\alpha$;
-    \item 
-      ако $\M$ завърши за по-малко от $|\alpha|$ на брой стъпки като приеме $\code{\M}$, 
-      то $\M'$ завършва като {\em отхвърля} $\alpha$;
+      вход думата $\alpha$;
     \item
-      ако $\M$ не завърши за по-малко от $|\alpha|$ на брой стъпки върху $\code{\M}$,
-      то $\M'$ симулира $\M_0$ върху $\alpha$.
+      $\M'$ симулира работата на $\M_\omega$ върху думата $\omega$:
+      \begin{itemize}
+      \item
+        ако $\M_\omega$ завърши за по-малко от $|\alpha|$ на брой стъпки като \emph{приеме} $\omega$, 
+        то $\M'$ завършва веднага като \emph{отхвърля} $\alpha$;
+      \item
+        в противен случай, $\M'$ симулира работата на $\M_0$ върху $\alpha$.
+      \end{itemize}
     \end{itemize}
+    Така получаваме, че 
+    \begin{align*}
+      \L(\M') = 
+      \begin{cases}
+        \{\alpha \in L_0 \mid \abs{\alpha} < s_0\}, & \text{ако } \M_\omega \text{ приема }\omega\\
+        L_0, & \text{ако }\M_\omega \text{ не приема }\omega,
+      \end{cases}
+    \end{align*}
+    където $s_0$ е минималният брой стъпки необходими на $\M_\omega$ за да приеме думата $\omega$.
   \end{itemize}
-  Така получаваме, че 
-  \begin{align*}
-    \L(\M') = 
-    \begin{cases}
-      \{\alpha \in L_0 \mid \abs{\alpha} < s_0\}, & \text{ако } \M\text{ приема }\code{\M}\\
-      L_0, & \text{ако }\M\text{ не приема }\code{\M},
-    \end{cases}
-  \end{align*}
-  където $s_0$ е минималният брой стъпки необходими на $\M$ за да приеме думата $\code{\M}$.
   
   Заключаваме, че 
   \begin{align*}
-    & \M \text{ не приема }\code{\M} \implies \code{\M} \in L_{\texttt{diag}} \implies \code{\M'} \in \texttt{Code}(\Ss)\\
-    & \M \text{ приема }\code{\M} \implies \code{\M} \not\in L_{\texttt{diag}} \implies \code{\M'} \not\in \texttt{Code}(\Ss).
+    & \M_\omega \text{ не приема }\omega \implies \omega \in L_{\texttt{diag}} \implies \code{\M'} \in \texttt{Code}(\Ss)\\
+    & \M_\omega \text{ приема }\omega \implies \omega \not\in L_{\texttt{diag}} \implies \code{\M'} \not\in \texttt{Code}(\Ss).
   \end{align*}
-  Това означава, че ефективно можем да сведем въпрос за принадлежност в $L_{\texttt{diag}}$
-  към въпрос за принадлежност в $\texttt{Code}(\Ss)$.
-  Следователно, ако $\texttt{Code}(\Ss)$ е полуразрешим език, то $L_{\texttt{diag}}$ е полуразрешим език, което е противоречие.
+  Понеже
+  \[\omega \in L_{\texttt{diag}} \iff f(\omega) \in \texttt{Code}(\Ss),\]
+  то $\texttt{Code}(\Ss)$ не е полуразрешим, защото ние знаем, че $L_{\texttt{diag}}$ не е полуразрешим.
 \end{hint}
 
 \begin{cor}
@@ -70,42 +72,40 @@
 \end{lemma}
 \begin{hint}
   Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$.
-  Ще опишем алгоритъм, който при вход дума $\code{\M}$,
-  извежда код на машина на Тюринг $\M'$, която работи така:
+  Ще дефинираме тотална изчислима функция $f$, която при вход думата $\omega \in \{0,1\}^\star$ работи по следния начин:
   \begin{itemize}
-  \item 
-    вход думата $\alpha$;
   \item
-    $\M'$ симулира едновременно две изчисления - $\M_1$ върху $\alpha$ и $\M$ върху $\code{\M}$
-    докато намери стъпка $s$, такава че:    
+    Ако $\omega$ не е код на машина на Тюринг, то $f(\omega) = \omega$.
+  \item
+    Ако $\omega$ е код на машината на Тюринг $\M_\omega$, тогава $f(\omega)$ ще бъде код на машината на Тюринг $\hat{\M}$,
+    която работи по следния начин:
     \begin{itemize}
     \item 
-      ако $\M_1$ завършва за $s$ на брой стъпки като приема думата $\alpha$, то $\M'$ завършва като приема думата $\alpha$;
+      вход думата $\alpha$;
     \item
-      ако $\M$ завършва за $s$ на брой стъпки като приема думата $\code{\M}$, 
-      то $\M'$ започва да симулира $\M_2$ върху $\alpha$;
+      $\hat{\M}$ симулира едновременно две изчисления - $\M_1$ върху $\alpha$ и $\M_\omega$ върху $\omega$
+      докато намери стъпка $s$, такава че:    
       \begin{itemize}
       \item 
-        Ако $\M_2$ завърши като приеме $\alpha$, то $\M'$ завършва като приема $\alpha$;
-      \item 
-        Ако $\M_2$ завърши като отхвърли $\alpha$, то $\M'$ завършва като отхвърля $\alpha$;
-      \item 
-        Ако $\M_2$ не завършва никога върху $\alpha$, то $\M'$ никога не завършва върху $\alpha$.
+        ако $\M_1$ завършва за $s$ на брой стъпки като приема думата $\alpha$, то $\hat{\M}$ завършва като приема думата $\alpha$;
+      \item
+        ако $\M_\omega$ завършва за $s$ на брой стъпки като приема думата $\omega$, 
+        то $\hat{\M}$ симулира работата $\M_2$ върху $\alpha$.
+      \item
+        ако $\hat{\M}$ не намери такава стъпка, то е ясно, че $\hat{\M}$ никога не завършва върху $\alpha$.
       \end{itemize}
-    \item
-      ако $\M'$ не намери такава стъпка, то $\M'$ никога не завършва върху $\alpha$.
     \end{itemize}
+    Получаваме, че:
+    \begin{align*}
+      \L(\hat{\M}) = 
+      \begin{cases}
+        L_2, & \text{ако $\M_\omega$ приема }\omega\\
+        L_1, & \text{ако $\M_\omega$ не приема }\omega.
+      \end{cases}
+    \end{align*}
   \end{itemize}
-  Получаваме, че:
-  \begin{align*}
-    \L(\M') = 
-    \begin{cases}
-      L_2, & \text{ако $\M$ приема }\code{\M}\\
-      L_1, & \text{ако $\M$ не приема }\code{\M}.
-    \end{cases}
-  \end{align*}
   Заключаваме, че:
-  \[\code{\M} \in L_{\texttt{diag}} \iff \code{\M'} \in \texttt{Code}(\Ss),\]
+  \[\omega \in L_{\texttt{diag}} \iff f(\omega) \in \texttt{Code}(\Ss),\]
   защото $L_2 \not\in \Ss$, а $L_1 \in \Ss$.
   Това означава, че ефективно можем да сведем въпрос за принадлежност в $L_{\texttt{diag}}$
   към въпрос за принадлежност в $\texttt{Code}(\Ss)$.
@@ -130,7 +130,7 @@
 \begin{framed}
   \begin{theorem}[Райс-Шапиро]
     Нека $\texttt{Code}(\Ss)$ е полуразрешим език. Тогава е изпълнено, че:
-    \[L \in \Ss \iff (\forall L_0 \subseteq \Sigma^\star )[L_0\text{ е краен и }L_0 \subseteq L \implies L_0 \in \Ss].\]
+    \[L \in \Ss \iff (\exists L_0 \subseteq \Sigma^\star )[L_0\text{ е краен и }L_0 \subseteq L \implies L_0 \in \Ss].\]
   \end{theorem}
 \end{framed}
 
@@ -201,6 +201,7 @@
 % % \item
 % %   за произволна безконтекстна граматика $G$, проверява дали $\L(G)$ е регулярен език?
 % % \end{itemize}
+
 
 %%% Local Variables:
 %%% mode: latex

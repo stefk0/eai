@@ -16,6 +16,7 @@ $\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}
   От друга страна, съществуват неизброимо много функции от вида $f:\Sigma^\star \to \Sigma^\star$.
 \end{hint}
 
+\begin{extra}
 \begin{example}
   \mynote{При двулентова машина на Тюринг тази задача е много по-лесна и сложността ще бъде $\mathcal{O}(n)$ вместо $\mathcal{O}(n^2)$.}
   Да разгледаме функцията $f:\{1\}^\star \to \{1\}^\star$
@@ -45,8 +46,8 @@ $\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}
             \path
             (1) edge [bend left=15] node [above] {$1;\goleft$} (2)
             (1) edge [bend right=30] node [above] {$\blank;\stay$} (12)
-            (2) edge [bend left=15] node [above] {$1;\goleft$} (3)
-            (2) edge [bend right=15] node [below] {$\blank;\goleft$} (3)
+            % (2) edge [bend left=15] node [above] {$1;\goleft$} (3)
+            (2) edge [bend right=15] node [below] {$\{1,\blank\};\goleft$} (3)
             (3) edge [bend left=15] node [above] {$\blank/1;\goleft$} (4)
             (4) edge [bend left=15] node [above] {$\blank/1;\goright$} (5)
             (5) edge [loop below] node [below] {$1;\goright$} (5)
@@ -69,13 +70,15 @@ $\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}
     \end{figure}
   \end{framed}
 
-\begin{align*}
-  (q_0, \underline{1}1\blank) & \vdash (q_1, \underline{\blank}11\blank) \vdash  (q_2, \underline{\blank} \blank 11 \blank) \vdash  (q_3, \underline{\blank} 1 \blank 11\blank)\\
-                        & \vdash (q_4, 1\underline{1}\blank 11\blank) \vdash (q_4, 11 \underline{\blank} 11\blank) \vdash (q_5, 11\blank \underline{1}1\blank)\\
-                        & \vdash \cdots \vdash (q_7, 11 \blank \underline{1}\blank) \vdash \cdots
-\end{align*}
+% \begin{align*}
+%   (q_0, \underline{1}1\blank) & \vdash (q_1, \underline{\blank}11\blank) \vdash  (q_2, \underline{\blank} \blank 11 \blank) \vdash  (q_3, \underline{\blank} 1 \blank 11\blank)\\
+%                         & \vdash (q_4, 1\underline{1}\blank 11\blank) \vdash (q_4, 11 \underline{\blank} 11\blank) \vdash (q_5, 11\blank \underline{1}1\blank)\\
+%                         & \vdash \cdots \vdash (q_7, 11 \blank \underline{1}\blank) \vdash \cdots
+% \end{align*}
 
 \end{example}
+\end{extra}
+
 
 \begin{example}
   \mynote{Това пак става много по-лесно с двулентова машина на Тюринг и сложността пак ще бъде $\mathcal{O}(n)$ вместо $\mathcal{O}(n^2)$.}
@@ -144,11 +147,10 @@ $\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}
 \end{example}
 
 \begin{example}
-  \mynote{Изискваме $f(\alpha)$ да започва с $1$ за да може $f$ да бъде функция, т.е. $f(\alpha)$ е най-късият двоичен запис на числото $\ov{\alpha}_{(2)}+1$.}
+  \mynote{Изискваме $f(\alpha)$ да започва с $1$ за да може $f$ да бъде функция, т.е. $f(\alpha)$ е най-късият двоичен запис на числото $\bin{\alpha} + 1$.}
   Да разгледаме тоталната функция 
   \[f:\{0,1\}^\star \to 1\cdot\{0,1\}^\star,\]
-  дефинирана като
-  \[\ov{f(\alpha)}_{(2)} = \ov{\alpha}_{(2)} + 1.\]
+  където \[\bin{f(\alpha)} \df \bin{\alpha} + 1.\]
   Нека да видим, че тази функция е изчислима с машина на Тюринг.
 
   \begin{itemize}
@@ -187,7 +189,7 @@ $\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}
         \end{scope}
       \end{tikzpicture}
     \end{center}
-    \caption{Машина на Тюринг изчисляваща $f$, за която $\ov{f(\alpha)}_{(2)}= \ov{\alpha}_{(2)} + 1$.}
+    \caption{Машина на Тюринг изчисляваща $f$, за която $\bin{f(\alpha)} = \bin{\alpha} + 1$.}
   \end{figure}
 \end{framed}
 
