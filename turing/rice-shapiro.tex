@@ -1,6 +1,6 @@
 \section{Критерии за полуразрешимост}
 
-\begin{lemma}
+\begin{lemma}\label{lem:rice-shapiro:finite}
   \mynote{Това означава, че ако $\texttt{Code}(\Ss)$ е полуразрешим език, то всеки език $L_0 \in \Ss$ притежава краен подезик, който също принадлежи на $\Ss$.}
   Нека $\Ss$ е свойство на полуразрешимите езици.
   Ако съществува безкраен език $L_0 \in \Ss$, който няма крайно подмножество в $\Ss$,
@@ -65,7 +65,7 @@
   \end{itemize}
 \end{cor}
 
-\begin{lemma}
+\begin{lemma}\label{lem:rice-shapiro:extension}
   \mynote{Това означава, че ако $\texttt{Code}(\Ss)$ е полуразрешим език, ако $L_0 \in \Ss$ и $L_0 \subseteq L_1$, като $L_1$ е полуразрешим, то $L_1 \in \Ss$.}
   Нека $L_1$ е език в $\Ss$ и нека $L_2$ е полуразрешим език, като $L_1 \subset L_2$ и $L_2 \not\in\Ss$.
   Тогава $\texttt{Code}(\Ss)$ не е полуразрешим език.
@@ -133,6 +133,10 @@
     \[L \in \Ss \iff (\exists L_0 \subseteq \Sigma^\star )[L_0\text{ е краен и }L_0 \subseteq L \implies L_0 \in \Ss].\]
   \end{theorem}
 \end{framed}
+\begin{proof}
+  Посоката $(\Rightarrow)$ следва от \Lemma{rice-shapiro:finite},
+  докато посоката $(\Leftarrow)$ следва от \Lemma{rice-shapiro:extension}.
+\end{proof}
 
 
 % % \section{Проблеми за безконтекстни езици}
