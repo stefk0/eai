@@ -1,0 +1,31 @@
+\section{Линейни автомати}
+\marginpar{На англ. linear bounded automaton}
+\index{линеен автомат}
+
+{\bf Линеен автомат} е машина на Тюринг, на която не се позволява четящата глава да излиза извън частта от лентата, върху която първоначално е записана входната дума.
+
+\begin{theorem}
+  Езикът
+  \[L = \{\code{\M}\sharp \omega \mid \M\text{ е линеен автомат и } \omega \in \L(\M)\}\]
+  е разрешим.
+\end{theorem}
+\begin{proof}
+  Това е лесно, защото изчислението на $\M$ върху входната дума $\omega$
+  може да се намира в една от $|Q|\cdot|\Gamma|^{|\omega|}\cdot |\omega|$ конфигурации.
+\end{proof}
+
+
+\begin{theorem}
+  Езикът
+  \[L = \{\code{\M} \mid \M\text{ е линеен автомат и } \L(\M) = \emptyset\}\]
+  е неразрешим.
+\end{theorem}
+\begin{proof}
+  
+\end{proof}
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
