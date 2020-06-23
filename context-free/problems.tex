@@ -73,9 +73,10 @@
 
 
 
-За всеки две думи с равна дължина, дефинираме функцията $\texttt{diff}$ по следния начин:
+Дефинираме функцията $\texttt{diff}:\Sigma^\star \times \Sigma^\star \to \Sigma^\star$ по следния начин:
 \begin{align*}
-  & \texttt{diff}(\varepsilon,\varepsilon) = 0\\
+  & \texttt{diff}(\alpha,\varepsilon) = 0\\
+  & \texttt{diff}(\varepsilon, \beta) = 0\\
   & \texttt{diff}(a \cdot \alpha, b\cdot \beta) =
     \begin{cases}
       \texttt{diff}(\alpha,\beta), & \text{ако }a = b\\
