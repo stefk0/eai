@@ -8,6 +8,7 @@
 т.е. имаме $k$ на брой четящи глави, по една за всяка лента, които се движат независимо една от друга.
 Приемаме, че входната дума $\alpha$ е записана върху първата лента.
 
+\begin{extra}
 \begin{example}
   \label{ex:multitape:omega:sharp:omega}
   Да видим как двулентова машина на Тюринг разрешава езика 
@@ -52,7 +53,7 @@
         \end{scope}
       \end{tikzpicture}
     \end{center}
-    \caption{Непълно описание на двулентова детерминистична машина на Тюринг $\M$, за която $\L(\M) = \{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$. Всички неописани преходи трябва да сочат към отхвърлящото състояние $q_5$.}
+    \caption{\footnotesize{Непълно описание на двулентова детерминистична машина на Тюринг $\M$, за която $\L(\M) = \{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$. Всички неописани преходи трябва да сочат към отхвърлящото състояние $q_5$.}}
   \end{figure}
 \end{framed}
 
@@ -62,7 +63,6 @@
 Лесно се съобразява, че сега сложността на изчислението е $\mathcal{O}(n)$,
 докато при еднолентова машина на Тюринг то беше $\mathcal{O}(n^2)$.
 Да разгледаме един пример:
-\begin{extra}
   \begin{align*}
     (q_1, \frac{\hat{a}}{\hat{\blank}}\frac{b}{\blank}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) & \vdash (q_1, \frac{a}{a}\frac{\hat{b}}{\hat{\blank}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \vdash (q_1, \frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\hat{\blank}}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \\
                                                                                                              & \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \vdash (q_2, \frac{a}{a}\frac{b}{b}\frac{\sharp}{\hat{\blank}}\frac{\hat{a}}{\blank}\frac{b}{\blank}\frac{\blank}{\blank})\\
@@ -70,8 +70,8 @@
                                                                                                              & \vdash (q_3, \frac{a}{a}\frac{b}{\hat{b}}\frac{\sharp}{\blank}\frac{a}{\blank}\frac{\hat{b}}{\blank}\frac{\blank}{\blank}) \vdash (q_3, \frac{a}{\hat{a}}\frac{b}{b}\frac{\sharp}{\blank}\frac{\hat{a}}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \\
                                                                                                              & \vdash (q_3, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}) \vdash (q_4, \frac{\blank}{\hat{\blank}}\frac{a}{a}\frac{b}{b}\frac{\hat{\sharp}}{\blank}\frac{a}{\blank}\frac{b}{\blank}\frac{\blank}{\blank}).
   \end{align*}
-\end{extra}
 \end{example}
+\end{extra}
 
 \begin{important}
   \begin{proposition}

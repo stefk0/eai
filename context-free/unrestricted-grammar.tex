@@ -1,5 +1,5 @@
 \section{Неограничени граматики}\label{sect:unrestricted-grammar}
-\index{граматика!неограничена}
+\index{Граматика!неограничена}
 
 \mynote{На англ. {\em unrestricted grammar}. Това е тип 0 граматики в йерархията на Чомски \cite[стр. 220]{hopcroft1}.}
 {\bf Неограничена граматика} e наредена четворка от вида
@@ -19,7 +19,7 @@
   $S \in V$ е началната променлива (нетерминал). 
 \end{itemize}
 
-\index{граматика!извод}
+\index{Граматика!извод}
 Удобно е да дефинираме извод на думата $\beta$ от думата $\alpha$ в граматиката $G$ за $\ell$ стъпки, което ще означаваме като $\alpha \derive{\ell}_G \beta$,
 с индукция по броя на стъпките $\ell$ по следния начин:
 \mynote{Обърнете внимание, че имаме недетерминизъм в тази дефиниция на извод. Също така, понякога ,за удобство, ще пишем просто $\derive{\ell}$ вместо $\derive{\ell}_G$,
@@ -44,6 +44,7 @@
     \end{prooftree}
     \vspace*{2mm}
   \end{subfigure}
+
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
       \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
@@ -54,9 +55,6 @@
   \end{subfigure}
 \end{figure}
 
-
-
-
 \mynote{В частност имаме следното:
 \begin{prooftree}
   \AxiomC{$\alpha \to_G \beta$}
@@ -64,22 +62,10 @@
 \end{prooftree}
 }
 
-% Нека дефинираме $\derive{\star}_G$ като рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
 Сега дефинираме релацията $\derive{\star}_G$ като
 \[ \alpha \derive{\star}_G \beta\ \dff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
-
 Езикът, който се поражда от граматиката $G$ дефинираме по следния начин:
 \[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star}_G \omega\}.\]
-
-
-% \begin{proposition}\label{pr:unrestricted-grammar:add}
-%   За произволно естествено число $\ell$ е изпълнено, че:
-%   \begin{prooftree}
-%     \AxiomC{$\alpha \derive{\ell}_G \beta$}
-%     \AxiomC{$\gamma,\rho \in (V \cup \Sigma)^\star$}
-%     \BinaryInfC{$\gamma\alpha\rho \derive{\ell} \gamma \beta \rho$}
-%   \end{prooftree}
-% \end{proposition}
 
 \begin{proposition}\label{pr:unrestricted-grammar:concat}
   За всяко $k$ е изпълнено, че:
@@ -192,8 +178,6 @@
     \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\gamma\delta$}
   \end{prooftree}
 \end{proof}
-
-
 
 \begin{extra}
   \begin{remark}\label{rem:unrestricted-grammar:original-def}

@@ -77,8 +77,6 @@ $\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}
 % \end{align*}
 
 \end{example}
-\end{extra}
-
 
 \begin{example}
   \mynote{Това пак става много по-лесно с двулентова машина на Тюринг и сложността пак ще бъде $\mathcal{O}(n)$ вместо $\mathcal{O}(n^2)$.}
@@ -148,8 +146,7 @@ $\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}
 
 \begin{example}
   \mynote{Изискваме $f(\alpha)$ да започва с $1$ за да може $f$ да бъде функция, т.е. $f(\alpha)$ е най-късият двоичен запис на числото $\bin{\alpha} + 1$.}
-  Да разгледаме тоталната функция 
-  \[f:\{0,1\}^\star \to 1\cdot\{0,1\}^\star,\]
+  Да разгледаме тоталната функция $f:\{0,1\}^\star \to 1\cdot\{0,1\}^\star$, 
   където \[\bin{f(\alpha)} \df \bin{\alpha} + 1.\]
   Нека да видим, че тази функция е изчислима с машина на Тюринг.
 
@@ -212,6 +209,8 @@ $\texttt{Graph}(f) = \{\ \alpha\sharp f(\alpha) \mid \alpha \in \Sigma^\star\ \}
   \[\ov{f(\alpha)}_{(k)} = \ov{\alpha}_{(k)} + 1.\]
   Дефинирайте машина на Тюринг $\M$, която изчислява функцията $f$.
 \end{problem}
+
+\end{extra}
 
 %%% Local Variables:
 %%% mode: latex

@@ -1,23 +1,25 @@
 \section{Азбуки, думи, езици}
 
+\epigraph{Language is an app for converting a web of thoughts into a string of words. [Steven Pinker]}
+
 \subsection*{Основни понятия}
 
 \begin{itemize}
 \item 
-  \index{азбука}
-  \index{буква}
+  \index{Азбука}
+  \index{Буква}
   {\bf Азбука} ще наричаме всяко крайно множество,
   като обикновено ще я означаваме със $\Sigma$.
   \mynote{Често ще използваме буквите $a$, $b$, $c$ за да означаваме букви.}
   Елементите на азбуката $\Sigma$ ще наричаме {\bf букви}.
 \item
-  \index{дума}
+  \index{Дума}
   {\bf Дума} над азбуката $\Sigma$ е произволна крайна редица от елементи на $\Sigma$.
   Например, за $\Sigma = \{a,b\}$, $aababba$ е дума над $\Sigma$ с дължина $7$.
   С $\abs{\alpha}$ ще означаваме дължината на думата $\alpha$.
   \mynote{Обикновено ще означаваме думите с $\alpha$, $\beta$, $\gamma$, $\omega$.}
 \item
-  \index{празна дума}
+  \index{Дума!празна}
   Обърнете внимание, че имаме единствена дума с дължина $0$.
   Тази дума ще означаваме с $\varepsilon$ и ще я наричаме {\bf празната дума},
   т.е. $\abs{\varepsilon} = 0$.
@@ -34,20 +36,17 @@
   \[\Sigma^\star = \{\varepsilon,a,b,aa,ab,ba,bb,aaa,aab,\dots\}.\]
   Обърнете внимание, че $\emptyset^\star = \{\varepsilon\}$.
 \item
-  \index{език}
+  \index{Език}
   {\bf Език} над азбуката $\Sigma$ ще наричаме всяко подмножество на $\Sigma^\star$.
-  Например, за $\Sigma = \{a, b\}$,
-  \[L = \{\alpha \in \{a, b\}^\star \mid \alpha\mbox{ започва с }a\}\]
-  е език над $\Sigma$.
-% \item
-%   {\bf Лексикографска наредба}
+  Например, за азбуката $\Sigma = \{a, b\}$, множоеството от думи $L = \{\alpha \in \{a, b\}^\star \mid \alpha\mbox{ започва с }a\}$ 
+  е пример за език над $\Sigma$.
 \end{itemize}
 
 \subsection*{Операции върху думи}
 
 \begin{itemize}
 \item
-  \index{дума!конкатенация}
+  \index{Дума!конкатенация}
   Операцията {\bf конкатенация} взима две думи $\alpha$ и $\beta$ и образува 
   новата дума $\alpha\cdot\beta$ като слепва двете думи.
   Например $aba\cdot bb = ababb$.
@@ -65,7 +64,7 @@
     Тогава $\alpha\cdot\beta \df (\alpha\cdot\gamma)b$.
   \end{itemize}
 \item
-  \index{дума!обръщане}
+  \index{Дума!обръщане}
   Друга често срещана операция върху думи е {\bf обръщането} на дума.
   Дефинираме думата $\alpha^{\rev}$ като обръщането на $\alpha$ по следния начин.
   \mynote{Например, $reverse^{\rev} = esrever$}
@@ -83,23 +82,25 @@
       & \emptyset\cdot A = A\cdot\emptyset = \emptyset\\
       & \{\varepsilon\}\cdot A = A\cdot\{\varepsilon\} = A.
     \end{align*}}
-  Нека $A$ и $B$ са множества от думи.
-  Дефинираме конкатенацията на $A$ и $B$ като
+  Дефинираме конкатенацията на езиците $A$ и $B$ като
   \[A\cdot B \df \{\alpha\cdot\beta \mid \alpha\in A\ \&\ \beta \in B\}.\]
 \item
-  Сега за едно множество от думи $A$, дефинираме $A^n$ индуктивно:
+  Сега за един език $A$, дефинираме $A^n$ индуктивно:
   \begin{align*}
     A^0 & \df \{\varepsilon\},\\
     A^{n+1} & \df A^n \cdot A.
   \end{align*}
-  Ако $A = \{ab, ba\}$, то
-  $A^0 = \{\varepsilon\}$, $A^1 = A$, $A^2 = \{abab, abba, baba, baab\}$.
-  Ако $A = \{a,b\}$, то 
-  \[A^n = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} = n\}.\]
+  \begin{itemize}
+  \item
+    Ако $A = \{ab, ba\}$, то $A^0 = \{\varepsilon\}$, $A^1 = A$, $A^2 = \{abab, abba, baba, baab\}$.
+  \item
+    Ако $A = \{a,b\}$, то $A^n = \{\alpha \in \{a,b\}^\star \mid \abs{\alpha} = n\}$.
+  \end{itemize}
 \item
-  За едно множеството от думи $A$, дефинираме:
+  За един език $A$, дефинираме:
   \mynote{Операцията $\star$ е известна като звезда на Клини.}
-  \index{звезда на Клини}
+  \index{Език!звезда на Клини}
+  \index{Клини}
   \begin{align*}
     A^{\star} & \df \bigcup_{n\geq 0} A^{n}\\
     & = A^{0} \cup A^{1} \cup A^{2} \cup A^{3} \cup \dots\\
@@ -122,26 +123,18 @@
       $L^3 = L^1\cdot L^2 = \{000,0011,0110,01111,1100,11011,11110,111111\}$.
     \end{itemize}
   \item
-    Нека $L = \emptyset$.
-    Тогава:
-    \begin{itemize}
-    \item 
-      $L^0 = \{\varepsilon\}$,
-    \item
-      $L^1 = \emptyset$,
-    \item
-      $L^2 = L^1 \cdot L^1 = \emptyset$.
-    \end{itemize}    
+    Нека $L = \emptyset$. Тогава $L^0 = \{\varepsilon\}$, $L^1 = \emptyset$ и $L^2 = L^1 \cdot L^1 = \emptyset$.
     Получаваме, че $L^\star = \{\varepsilon\}$, т.е. {\em краен} език
   \item
     Нека $L = \{0^i\mid i \in \Nat\} = \{\varepsilon, 0, 00, 000, \dots\}$.
-    Тогава лесно може да се види, че $L = L^\star$.
+    Лесно се вижда, че $L = L^\star$.
   \end{itemize}
 \end{example}
 
 % \subsection*{Премахване на префикс}
 
 
+\begin{extra}
 \begin{problem}
   Проверете:
   \begin{enumerate}[a)]
@@ -149,12 +142,12 @@
     операцията конкатенация е {\em асоциативна}, т.е. за всеки три думи $\alpha$, $\beta$, $\gamma$,
     \[(\alpha\cdot\beta)\cdot\gamma = \alpha\cdot(\beta\cdot\gamma);\]
   \item
-    за множествата от думи $A$, $B$ и $C$,
+    за произволни езици $A$, $B$ и $C$, 
     \[(A\cdot B)\cdot C = A\cdot (B\cdot C);\]
   \item
     $\{\varepsilon\}^\star = \{\varepsilon\}$;
   \item
-    за произволно множество от думи $A$,
+    за произволен език $A$,
     \[A^\star = A^\star\cdot A^\star\text{ и }(A^\star)^\star = A^\star;\]
   \item
     за произволни букви $a$ и $b$,
@@ -164,7 +157,6 @@
     \[\{a,b\}^\star = (\{a\}^\star\cdot \{b\}^\star)^\star;\]
   \end{enumerate}
 \end{problem}
-
 
 \begin{problem}
   Докажете, че за всеки две думи $\alpha$ и $\beta$ е изпълено:
@@ -179,8 +171,10 @@
     $(\alpha^n)^{\rev} = (\alpha^{\rev})^n$, за всяко $n \geq 0$.
   \end{enumerate}
 \end{problem}
+\end{extra}
 
-\subsection*{Отрези на дума}
+\subsection*{Отрези на дума}\label{sect:intro:slices}
+\index{Дума!отрез}
 
 % https://stackoverflow.com/questions/509211/understanding-slice-notation
 Понякога може да е удобно да вземем назаем от \texttt{python} нотацията за \texttt{slices} на масив и
@@ -201,7 +195,7 @@
 
 \begin{itemize}
 \item 
-  \index{дума!префикс}
+  \index{Дума!префикс}
   Казваме, че думата $\alpha$ е {\bf префикс} на думата $\beta$,
   ако съществува дума $\gamma$, такава че $\beta = \alpha\cdot\gamma$.
   Да обърнем внимание, че позволяваме $\gamma = \varepsilon$. Тогава $\beta$ е префикс на самата себе си.
@@ -210,16 +204,16 @@
   За един език $L$, можем да дефинираме езика от префиксите на думите от $L$, т.е.
   \[\texttt{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \gamma \in \Sigma^\star)[\alpha\cdot \gamma \in L]\}.\]
 \item
-  \index{дума!суфикс}
+  \index{Дума!суфикс}
   $\alpha$ е {\bf суфикс} на $\beta$, ако $\beta = \gamma\cdot\alpha$, за някоя дума $\gamma$.
 \item
   За един език $L$, можем да дефинираме езика от суфиксите на думите от $L$, т.е.
   \[\texttt{Suff}(L) = \{\alpha \in \Sigma^\star \mid (\exists \gamma \in \Sigma^\star)[\gamma\cdot\alpha \in L]\}.\]
 \item
-  \index{наредба!лексикографска}
+  \index{Наредба!лексикографска}
   \mynote{Тук не е съществено, че буквите в азбуката $\Sigma$ са числа. Можем да дефинираме наредба между елементите на произволна крайна азбука.}
   Нека имаме азбука $\Sigma = \{0,1,2,\dots,n\}$.
-  Казваме, че една дума $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако
+  Казваме, че една дума $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако $\alpha$ е префикс на $\beta$ или
   \[(\exists i < \min\{|\alpha|,|\beta|\})[\ \alpha\slice{:i} = \beta\slice{:i}\ \&\ \alpha\slice{i} < \beta\slice{i}\ ].\]
 \end{itemize}
 

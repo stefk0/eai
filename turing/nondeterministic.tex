@@ -83,6 +83,7 @@
 %   Опишете $\L(\N)$.
 % \end{problem}
 
+\begin{extra}
 \begin{example}
   \mynote{Не е обяснено защо е разрешим.}
   Нека да видим, че $L = \{\alpha\sharp\beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\text{ е подниз на }\beta\}$
@@ -145,9 +146,10 @@
                                            & \vdash \cdots \vdash (q_4, \blank\blank\underline{\sharp}\blank\blank\blank b\blank) \vdash (q_9, \blank\blank\underline{\sharp}\blank\blank\blank b\blank)
   \end{align*}
 \end{example}
+\end{extra}
 
 \subsection*{Канонична наредба на $\Sigma^\star$}
-\index{наредба!канонична}
+\index{Наредба!канонична}
 
 \mynote{За доказателството, че всяка НМТ е еквивалентна на ДМТ, е необходимо да фиксираме канонична подредба на думите над дадена азбука}
 Нека $\Sigma = \{a_0,a_1,\dots,a_{k-1}\}$.
@@ -164,6 +166,7 @@
 Можем да дефинираме и релацията $<_{\text{can}}$ по следния начин:
 \[\alpha <_{\text{can}} \beta \dff |\alpha| < |\beta| \lor ( |\alpha| = |\beta|\ \&\ \alpha <_{\text{lex}} \beta). \]
 
+\begin{extra}
 \begin{problem}
   \label{prob:canonical:function}
   Нека $\Sigma = \{a_0,\dots,a_{k-1}\}$.
@@ -200,7 +203,7 @@
     \end{figure}
   \end{framed}
 \end{hint}
-
+\end{extra}
 
 \begin{important}
   \begin{theorem}
@@ -258,10 +261,10 @@
 \end{proof}
 
 
-\begin{cor}
+\begin{corollary}
   Ако $L$ се разпознава от {\em недетерминистичен} разрешител $\N$, то $L$
   също се разпознава от {\em детерминистичен} разрешител $\D$.
-\end{cor}
+\end{corollary}
 \begin{proof}
   Да разгледаме дървото $T$ с крайно разклонение $r$, което представя всички изчисления на разрешителя $\N$ при вход думата $\omega$.
   От \Lemma{konig} следва, че $T$ е крайно дърво, да кажем с височина $h$, защото ако допуснем, че $T$ е безкрайно, то ще има безкрайно дълго изчисление на $\N$,

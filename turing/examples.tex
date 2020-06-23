@@ -34,7 +34,7 @@
   \item
     $\Gamma = \{a,b,c,x,\blank\}$, за някой нов символ $x$;
   \item
-    $Q = \{q_0,q_1,q_2,q_3,q_4,q_5\}$, където $\qstart = q_0$ и $\qaccept = q_5$;
+    $Q = \{q_0,q_1,q_2,q_3,q_4,q_5\}$, като $\qstart = q_0$ и $\qaccept = q_5$;
   \item
     Частичната функция на преходите $\delta:(Q\setminus\{q_5\})\times\Gamma \to Q\times\Gamma\times\{\goleft,\goright,\stay\}$
     е описана на схемата отдолу. Остава да добавим състоянието $\qreject$.
@@ -68,7 +68,7 @@
         \end{scope}
       \end{tikzpicture}
     \end{center}
-    \caption{\footnotesize{Част от детерминистична машина на Тюринг $\M$, за която разрешава езика $\{a^nb^nc^n \mid n \in \Nat\}$. Остава да се добави $\qreject$ и да се попълни $\delta$ функцията до тотална.}}
+    \caption{Част от детерминистична машина на Тюринг $\M$, за която разрешава езика $\{a^nb^nc^n \mid n \in \Nat\}$. Остава да се добави $\qreject$ и да се попълни $\delta$ функцията до тотална.}
   \end{figure}
   \end{framed}
 
@@ -120,7 +120,7 @@
         \end{scope}
       \end{tikzpicture}
     \end{center}
-    \caption{\footnotesize{Детерминистична машина на Тюринг $\M$, която \emph{разрешава} езика $\{a^nb^nc^n \mid n \in \Nat\}$. Отхвърлящото състояние е $q_6$, т.е. $\qreject \df q_6$.}}
+    \caption{Детерминистична машина на Тюринг $\M$, която \emph{разрешава} езика $\{a^nb^nc^n \mid n \in \Nat\}$. Отхвърлящото състояние е $q_6$, т.е. $\qreject \df q_6$.}
   \end{figure}
 \end{framed}
 \end{example}
@@ -160,9 +160,7 @@
   \item
     $\Gamma \df \{a,b,\sharp,x,\blank\}$;
   \item
-    $Q \df \{q_0,q_1,\dots,q_8\}$;
-  \item
-    $\qstart \df q_0$ и $\qaccept \df q_8$;
+    $Q \df \{q_0,q_1,\dots,q_8\}$, като $\qstart \df q_0$ и $\qaccept \df q_8$;
   \end{itemize}
 
   \begin{framed}
@@ -203,7 +201,7 @@
           \end{scope}
         \end{tikzpicture}
       \end{center}
-      \caption{\footnotesize{Част от машина на Тюринг $\M$, която разрешава езика $\{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$.}}
+      \caption{Част от машина на Тюринг $\M$, която разрешава езика $\{\omega\sharp\omega \mid \omega \in \{a,b\}^\star\}$.}
     \end{figure}
   \end{framed}
   

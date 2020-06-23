@@ -1,8 +1,8 @@
 \section{Основни понятия}
 \index{Тюринг}
-\index{машина на Тюринг!детерминирана}
+\index{Машина на Тюринг!детерминистична}
 \mynote{Тук до голяма степен следваме \cite[Глава 3]{sipser3}. Понятието за машина на Тюринг има много еквивалентни дефиниции. }
-{\em Детерминирана} машина на Тюринг ще наричаме осморка от вида 
+{\em Детерминистична} машина на Тюринг ще наричаме осморка от вида 
 \[\M = \TM,\] където:
 \begin{itemize}
 \item 
@@ -136,20 +136,17 @@
 \begin{itemize}
 \item
   С $\vdash^\star$ ще означаваме рефлексивното и транзитивно затваряне на релацията $\vdash$ или с други думи,
-  \[\C \vdash^\star \C' \iff (\exists \ell \in \Nat)[\C \vdash^\ell \C'].\]
+  \[\C \vdash^\star \C' \dff (\exists \ell \in \Nat)[\C \vdash^\ell \C'].\]
 \item
   % \mynote{Аналогично както на си думата \texttt{abc} се представя като \texttt{a,b,c,0}, тук
   % представяме думата $\alpha$ като $\alpha\blank$.}
   \mynote{Важно е да имаме $\blank$ след думата $\alpha$, защото е възможно $\alpha$ да е празната дума.}
-  машината на Тюринг $\M$ {\bf приема} думата $\alpha$, 
-  ако 
-  \[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\gamma_1, \qaccept, \gamma_2),\]
-  за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
+  машината на Тюринг $\M$ {\bf приема} думата $\alpha$, ако за някои $\gamma_1, \gamma_2 \in \Gamma^\star$,
+  \[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\gamma_1, \qaccept, \gamma_2).\]
 \item
-  Машината на Тюринг $\M$ {\bf отхвърля} думата $\alpha$, 
-  ако 
-  \[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2),\]
-  за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
+  Машината на Тюринг $\M$ {\bf отхвърля} думата $\alpha$, ако за  някои $\gamma_1, \gamma_2 \in \Gamma^\star$,
+  \[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2).\]
+  % за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
 \item
   Машината на Тюринг $\M$ {\bf не приема} думата $\alpha$, 
   ако $\M$ отхвърля $\alpha$ или $\M$ никога не завършва при начална конфигурация $(\varepsilon,\qstart,\alpha)$.
@@ -161,7 +158,7 @@
   т.е. достига до $\qaccept$ или $\qreject$.
 \item 
   Езикът, който се {\bf разпознава} от машината $\M$ е:
-  \[\L(\M) = \{\alpha\in\Sigma^\star \mid (\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
+  \[\L(\M) \df \{\alpha\in\Sigma^\star \mid (\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
 \item
   \index{език!полуразрешим}
   \mynote{На англ. {\bf semidecidable language}. В литературата се използва и названието {\bf рекурсивно номеруем език}.}
@@ -190,6 +187,7 @@
 Една от основните ни задачи ще бъде да класифицираме различни езици като (не)раз\-ре\-ши\-ми и (не)полуразрешими.
 За да придобием по-добра интуиция за тези нови понятия, ще разгледаме подробно няколко примера.
 Ще видим също как можем да изобразяваме функцията на преходите на $\M$ графично.
+
 
 %%% Local Variables:
 %%% mode: latex
