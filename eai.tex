@@ -22,19 +22,25 @@
 %\renewcommand{\indexname}{New name}
 
 % вж. 'How to move from makeindex to xindy?.html'
-\usepackage[xindy]{imakeidx}
-\def\xindylangopt{-M lang/bulgarian/utf8-lang.xdy}
-\makeindex[options = \xindylangopt]
-% \makeindex[name=names, title = Именен указател, options = \xindylangopt]
+% \usepackage[xindy]{imakeidx}
+% \def\xindylangopt{-M lang/bulgarian/utf8-lang.xdy}
+% \makeindex[options = \xindylangopt]
+
+
+
+%\makeindex[name=names, title = Именен указател, options = \xindylangopt]
 % \makeindex[name=proglangs, title = Изчислителни машини и програмни езици, options = \xindylangopt]
 % \makeindex[name=organisations, title = Организации и фирми, options = \xindylangopt]
 
 % \makeindex[options = \xindylangopt]
-\makeatletter
-\let\original@index\index
-\renewcommand{\index}[2][\imki@jobname]{%
-  \original@index[#1]{\detokenize{#2}}%
-}
+
+
+
+% \makeatletter
+% \let\original@index\index
+% \renewcommand{\index}[2][\imki@jobname]{%
+%   \original@index[#1]{\detokenize{#2}}%
+% }
 
 
 
@@ -165,7 +171,7 @@
 % \gitAuthorDate}
   % }
 
-% \makeindex
+\makeindex
 \begin{document} 
 \maketitle
 % \layout

@@ -1,5 +1,5 @@
 \section{Извод в безконтекстна граматика}\label{sect:context-free:derive}
-\index{Граматика!безконтекстна}
+\index{граматика!безконтекстна}
 \mynote{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$. На англ. {\em context-free grammar}. Други срещани наименования на български са
   {\em контекстно-свободна}, {\em контекстно-независима}. Тук всички правила са от вида $A \to \alpha$, където $\alpha \in (V\cup\Sigma)^\star$. В частност имаме, че:
   \begin{prooftree}
@@ -49,7 +49,7 @@
 % Нека дефинираме релацията $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$. С други думи,
 % \[ \alpha \derive{\star}_G \beta\ \dff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
 
-\index{Език!безконтекстен}
+\index{език!безконтекстен}
 Нека официално да обявим, че един език $L$ се нарича {\bf безконтекстен}, ако съществува безконтекстна граматика $G$, за която 
 $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
@@ -245,6 +245,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \begin{hint}
   Индукция по построението на регулярните езици.
 \end{hint}
+
 
 
 %%% Local Variables:

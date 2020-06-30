@@ -1,5 +1,5 @@
 \section{Множества, релации, функции}\label{sect:intro:sets}
-\index{Множества}
+\index{множества}
 
 \subsection*{Основни отношения между множества}
 
@@ -20,7 +20,7 @@
 Ще разгледаме няколко операции върху произволни множества $A$ и $B$.
 \begin{itemize}
 \item
-  \index{Множества!сечение}
+  \index{множества!сечение}
   \mynote{На англ. \emph{intersection}}
   {\bf Сечение}
   \[A\cap B = \{x\ \mid\ x\in A\ \wedge\ x\in B\}.\]
@@ -39,7 +39,7 @@
     $\{1,2,\{1,2\}\} \cap \{1,\{1\}\} = \{1\}$.
   \end{itemize}
 \item
-  \index{Множества!обединение}
+  \index{множества!обединение}
   \mynote{На англ. \emph{union}}
   {\bf Обединение}
   \[A\cup B = \{x\ \mid x\in A\ \vee\ x\in B\}.\]
@@ -57,7 +57,7 @@
     $\{1,2,\{1,2\}\} \cup \{1,\{1\}\} = \{1,2,\{1\},\{1,2\}\}$.
   \end{itemize}
 \item
-  \index{Множества!разлика}
+  \index{множества!разлика}
   {\bf Разлика}
   \[A\setminus B = \{x\ \mid\ x\in A\ \wedge\ x\not\in B\}.\]
   $A\setminus B$ е множеството, за което е изпълнено, че:
@@ -75,27 +75,8 @@
   \item
     $\{1,2,\{1,2\}\} \setminus \{1,\{1\}\} = \{2,\{1,2\}\}$.
   \end{itemize}
-% \item
-%   \index{множества!симетрична разлика}
-%   {\bf Симетрична разлика}
-%   \[A\triangle B = (A\backslash B)\cup (B\backslash A).\]
-%   $A\triangle B$ е множеството, за което е изпълнено, че:
-%   \[(\forall x)[x \in A\triangle B \iff [(x\in A\ \land\ x \not\in B) \vee (x \in B\ \land\ x\not\in A)]].\]
-%   Примери:
-%   \begin{itemize}
-%   \item 
-%     $A \triangle \emptyset = A$, за всяко множество $A$.
-%   \item
-%     $A \triangle A = \emptyset$, за всяко множество $A$.
-%   \item
-%     $A\triangle B = B \triangle A$, за всеки две множества $A$ и $B$.
-%   \item
-%     $\{1,2,\emptyset\} \triangle \{1,2,\{\emptyset\}\} = \{\emptyset\} \cup \{\{\emptyset\}\} = \{\emptyset,\{\emptyset\}\}$.
-%   \item
-%     $\{1,2,\{1,2\}\} \triangle \{1,\{1\}\} = \{2,\{1,2\}\} \cup \{\{1\}\} = \{2,\{1\},\{1,2\}\}$.
-%   \end{itemize}
 \item
-  \index{Множества!степенно множество}
+  \index{множества!степенно множество}
   {\bf Степенно множество}
   \[\Ps(A) = \{x\mid x\subseteq A\}.\]
   \mynote{На англ. \emph{power set} }
@@ -114,35 +95,6 @@
     $\Ps(\{1,2\}) = \{\emptyset,\{1\},\{2\},\{1,2\}\}$.
   \end{itemize}
 \end{itemize}
-% Нека имаме редица от множества $\{A_1,A_2,\dots,A_n\}$.
-% Тогава имаме следните операции:
-% \begin{itemize}
-% \item
-%   {\bf Обединение на редица от множества}
-%   \[\bigcup^{n}_{i=1} A_i = \{x \mid \exists i (1\leq i\leq n\ \&\ x\in A_i)\}.\]
-%   % \[(\forall x)[x \in \bigcup^n_{i=1}A_i \iff (\exists i)[1 \leq i \leq n\ \wedge\ x \in A_i]].\]
-% \item
-%   {\bf Сечение на редица от множества}
-%   \[\bigcap^{n}_{i=1} A_i = \{x \mid \forall i (1\leq i\leq n \rightarrow x\in A_i)\}.\]
-%   % \[(\forall x)[x \in \bigcap^n_{i=1}A_i \iff (\forall i)[1 \leq i \leq n\ \rightarrow\ x \in A_i]].\]
-% \end{itemize}
-
-% \begin{example}
-%   Нека $A = \{x\in\Nat\mid x > 1\}$ и $B = \{x\in\Nat\mid x>3\}$. Тогава :
-%   \begin{itemize}
-%     \item
-%       $A\cap B = \{x\in\Nat\mid x > 3\}$,
-%     \item
-%       $A\cup B = \{x\in\Nat\mid x > 1\}$,
-%     \item
-%       $A\setminus B = \{x\in\Nat\mid 1<x\leq 3\}$,
-%     \item
-%       $B\setminus A = \emptyset$,
-%     % \item
-%     %   $A\triangle B = \{x\in\Nat\mid 1<x\leq 3\}$
-%     \end{itemize}
-% \end{example}
-
 
 \begin{problem}
   Проверете верни ли са свойствата:
@@ -189,7 +141,7 @@
 което пък от своя страна се основава на понятието наредена двойка.
 
 \subsection*{Наредена двойка}
-\index{Наредена двойка}
+\index{наредена двойка}
 За два елемента $a$ и $b$ въвеждаме опрецията {\bf наредена двойка} $\pair{a,b}$.
 Наредената двойка $\pair{a,b}$ има следното характеристичното свойство:
 \[a_1 = a_2\ \wedge\ b_1 = b_2\ \iff\ \pair{a_1,b_1} = \pair{a_2,b_2}.\]
@@ -227,7 +179,7 @@
  
 \subsection*{Декартово произведение}
 \mynote{На англ. cartesian product. Считаме, че $(A\times B)\times C = A\times (B\times C) = A\times B \times C$.}
-\index{Декартово произведение}
+\index{декартово произведение}
 
 За две множества $A$ и $B$, определяме тяхното декартово произведение като
 \[A\times B = \{\pair{a,b}\mid a\in A\ \&\ b\in B\}.\]
@@ -259,16 +211,16 @@
 \begin{itemize}
 \item
   \mynote{\comment{или $f$ е {\bf обратима}}}
-  {\bf инекция}\index{Функция!инекция}, ако е изпълнено свойството:
+  {\bf инекция}\index{функция!инекция}, ако е изпълнено свойството:
   \[(\forall a_1,a_2\in A)[\ a_1\neq a_2\ \to\ f(a_1)\neq f(a_2)\ ],\]
   или еквивалентно,
   \[(\forall a_1,a_2\in A)[\ f(a_1) = f(a_2)\ \to\ a_1 = a_2\ ].\]
 \item
   \mynote{\comment{или $f$ е {\bf върху} $B$ }}
-  {\bf сюрекция}\index{Функция!сюрекция}, ако е изпълнено свойството:
+  {\bf сюрекция}\index{функция!сюрекция}, ако е изпълнено свойството:
   \[(\forall b\in B)(\exists a\in A)[\ f(a) = b\ ].\]
 \item
-  {\bf биекция}\index{Функция!биекция}, ако е инекция и сюрекция.
+  {\bf биекция}\index{функция!биекция}, ако е инекция и сюрекция.
 \end{itemize}
 
 \begin{problem}
@@ -277,7 +229,6 @@
   Докажете, че $f: \Nat \times \Nat\rightarrow \Nat$ е биекция, където
   \[f(x, y) = \frac{(x+y)(x+y+1)}{2} + x.\]
 \end{problem}
-
 
 %%% Local Variables:
 %%% mode: latex

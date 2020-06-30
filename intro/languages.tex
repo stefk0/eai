@@ -6,20 +6,20 @@
 
 \begin{itemize}
 \item 
-  \index{Азбука}
-  \index{Буква}
+  \index{азбука}
+  \index{буква}
   {\bf Азбука} ще наричаме всяко крайно множество,
   като обикновено ще я означаваме със $\Sigma$.
   \mynote{Често ще използваме буквите $a$, $b$, $c$ за да означаваме букви.}
   Елементите на азбуката $\Sigma$ ще наричаме {\bf букви}.
 \item
-  \index{Дума}
+  \index{дума}
   {\bf Дума} над азбуката $\Sigma$ е произволна крайна редица от елементи на $\Sigma$.
   Например, за $\Sigma = \{a,b\}$, $aababba$ е дума над $\Sigma$ с дължина $7$.
   С $\abs{\alpha}$ ще означаваме дължината на думата $\alpha$.
   \mynote{Обикновено ще означаваме думите с $\alpha$, $\beta$, $\gamma$, $\omega$.}
 \item
-  \index{Дума!празна}
+  \index{дума!празна}
   Обърнете внимание, че имаме единствена дума с дължина $0$.
   Тази дума ще означаваме с $\varepsilon$ и ще я наричаме {\bf празната дума},
   т.е. $\abs{\varepsilon} = 0$.
@@ -36,7 +36,7 @@
   \[\Sigma^\star = \{\varepsilon,a,b,aa,ab,ba,bb,aaa,aab,\dots\}.\]
   Обърнете внимание, че $\emptyset^\star = \{\varepsilon\}$.
 \item
-  \index{Език}
+  \index{език}
   {\bf Език} над азбуката $\Sigma$ ще наричаме всяко подмножество на $\Sigma^\star$.
   Например, за азбуката $\Sigma = \{a, b\}$, множоеството от думи $L = \{\alpha \in \{a, b\}^\star \mid \alpha\mbox{ започва с }a\}$ 
   е пример за език над $\Sigma$.
@@ -46,7 +46,7 @@
 
 \begin{itemize}
 \item
-  \index{Дума!конкатенация}
+  \index{дума!конкатенация}
   Операцията {\bf конкатенация} взима две думи $\alpha$ и $\beta$ и образува 
   новата дума $\alpha\cdot\beta$ като слепва двете думи.
   Например $aba\cdot bb = ababb$.
@@ -64,7 +64,7 @@
     Тогава $\alpha\cdot\beta \df (\alpha\cdot\gamma)b$.
   \end{itemize}
 \item
-  \index{Дума!обръщане}
+  \index{дума!обръщане}
   Друга често срещана операция върху думи е {\bf обръщането} на дума.
   Дефинираме думата $\alpha^{\rev}$ като обръщането на $\alpha$ по следния начин.
   \mynote{Например, $reverse^{\rev} = esrever$}
@@ -99,7 +99,7 @@
 \item
   За един език $A$, дефинираме:
   \mynote{Операцията $\star$ е известна като звезда на Клини.}
-  \index{Език!звезда на Клини}
+  \index{език!звезда на Клини}
   \index{Клини}
   \begin{align*}
     A^{\star} & \df \bigcup_{n\geq 0} A^{n}\\
@@ -174,7 +174,7 @@
 \end{extra}
 
 \subsection*{Отрези на дума}\label{sect:intro:slices}
-\index{Дума!отрез}
+\index{дума!отрез}
 
 % https://stackoverflow.com/questions/509211/understanding-slice-notation
 Понякога може да е удобно да вземем назаем от \texttt{python} нотацията за \texttt{slices} на масив и
@@ -195,7 +195,7 @@
 
 \begin{itemize}
 \item 
-  \index{Дума!префикс}
+  \index{дума!префикс}
   Казваме, че думата $\alpha$ е {\bf префикс} на думата $\beta$,
   ако съществува дума $\gamma$, такава че $\beta = \alpha\cdot\gamma$.
   Да обърнем внимание, че позволяваме $\gamma = \varepsilon$. Тогава $\beta$ е префикс на самата себе си.
@@ -204,13 +204,13 @@
   За един език $L$, можем да дефинираме езика от префиксите на думите от $L$, т.е.
   \[\texttt{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \gamma \in \Sigma^\star)[\alpha\cdot \gamma \in L]\}.\]
 \item
-  \index{Дума!суфикс}
+  \index{дума!суфикс}
   $\alpha$ е {\bf суфикс} на $\beta$, ако $\beta = \gamma\cdot\alpha$, за някоя дума $\gamma$.
 \item
   За един език $L$, можем да дефинираме езика от суфиксите на думите от $L$, т.е.
   \[\texttt{Suff}(L) = \{\alpha \in \Sigma^\star \mid (\exists \gamma \in \Sigma^\star)[\gamma\cdot\alpha \in L]\}.\]
 \item
-  \index{Наредба!лексикографска}
+  \index{наредба!лексикографска}
   \mynote{Тук не е съществено, че буквите в азбуката $\Sigma$ са числа. Можем да дефинираме наредба между елементите на произволна крайна азбука.}
   Нека имаме азбука $\Sigma = \{0,1,2,\dots,n\}$.
   Казваме, че една дума $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако $\alpha$ е префикс на $\beta$ или

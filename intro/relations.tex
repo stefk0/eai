@@ -6,7 +6,7 @@
 Да разгледаме няколко основни видове релации от този клас:
 \begin{enumerate}[I)]
 \item
-  \index{Релация!рефлексивна}
+  \index{релация!рефлексивна}
   {\bf рефлексивна}, ако
   \[(\forall x\in A)[\pair{x,x}\in R].\]
   Например, бинарната релация $\leq$ над $\Nat$ е рефлексивна, защото
@@ -17,19 +17,19 @@
 %   Например, релацията $<\ \subseteq\ \Nat\times\Nat$ е антирефлексивна, защото
 %   \[(\forall x\in \Nat)[x \not< x].\]
 \item
-  \index{Релация!транзитивна}
+  \index{релация!транзитивна}
   {\bf транзитивна}, ако
   \[(\forall x,y,z\in A)[\ \pair{x,y}\in R\ \&\ \pair{y,z}\in R \rightarrow \pair{x,z}\in R\ ].\]
   Например, бинарната релация $\leq$ над $\Nat$ е транзитивна, защото
   \[(\forall x,y,z\in \Nat)[\ x \leq y\ \&\ y \leq z\ \rightarrow\ x\leq z\ ].\]
 \item
-  \index{Релация!симетрична}
+  \index{релация!симетрична}
   {\bf симетрична}, ако
   \[(\forall x,y\in A)[\ \pair{x,y}\in R \rightarrow \pair{y,x}\in R\ ].\]
   Например, бинарната релация $=$ над $\Nat$ е рефлексивна, защото
   \[(\forall x,y\in \Nat)[\ x = y\ \rightarrow\ y = x\ ].\]
 \item
-  \index{Релация!антисиметрична}
+  \index{релация!антисиметрична}
   {\bf антисиметрична}, ако
   \[(\forall x,y\in A)[\ \pair{x,y}\in R\ \&\ \pair{y,x}\in R \rightarrow x = y\ ].\]
   Например, релацията $\leq\ \subseteq\ \Nat\times\Nat$ е антисиметрична, защото
@@ -85,7 +85,7 @@
 \begin{enumerate}[I)]
 \item
   \mynote{Това е малко объркващо}
-  \index{Релация!композиция}
+  \index{релация!композиция}
   {\bf Композиция} на две релации $R \subseteq B\times C$ и $P \subseteq A\times B$ е релацията $R\circ P \subseteq A\times C$,
   определена като:
   \[R\circ P \df \{\pair{a,c} \in A\times C \mid (\exists b \in B)[\pair{a,b}\in P\ \&\ \pair{b,c} \in R]\}.\]
@@ -95,7 +95,7 @@
 %   \[R^{-1} \df \{\pair{x,y} \in B\times A \mid \pair{y,x} \in R\}.\]
 \item
   \mynote{Очевидно е, че $P$ е рефлексивна релация, дори ако $R$ не е.}
-  \index{Релация!рефлексивно затваряне}
+  \index{релация!рефлексивно затваряне}
   {\bf Рефлексивно затваряне} на релацията $R \subseteq A\times A$ е релацията
   \[P \df R \cup \{\pair{a,a}\mid a \in A\}.\]
 \item
@@ -108,7 +108,7 @@
   \end{align*}
 \item
   \mynote{\writedown Проверете, че $R^+$ е транзитивна релация!}
-  \index{Релация!транзитивно затваряне}
+  \index{релация!транзитивно затваряне}
   {\bf Транзитивно затваряне} на $R \subseteq A\times A$ е релацията
   \[R^+ \df \bigcup_{n\geq 1} R^n.\]
 \end{enumerate}
