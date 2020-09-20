@@ -1,0 +1,63 @@
+\section{Системи от регулярни изрази}
+
+\begin{lemma}[Arden's lemma]
+  Нека $\mathbf{r}$  и $\mathbf{p}$ са регулярни изрази.
+  Тогава регулярният израз $\mathbf{r}^\star \mathbf{p}$ е най-малкото решение на уравнението $X = \mathbf{r} \cdot X + \mathbf{p}$.
+  Ако $\varepsilon  \not \in \L(\mathbf{r})$, то това решение е единствено.
+\end{lemma}
+
+
+Да разгледаме отново автомата от \Figure{a2}.
+
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+      \tikzstyle{every state}=[circle,minimum size=15pt,auto]
+      
+      \node[initial,state]      (1) {$q_0$};
+      \node[state]              (2) [right of=1]{$q_1$};
+      \node[accepting, state]   (3) [right of=2]{$q_2$};
+      
+      \path 
+      (2) edge [loop above]    node [above] {$a$} (2)
+      (1) edge [bend left=15]  node [above] {$a$} (2)
+      (2) edge [bend left=15]  node [above] {$b$} (3)
+      (1) edge [bend right=45] node [below] {$b$} (3)
+      (3) edge [loop above]    node [above] {$a,b$} (3);
+    \end{tikzpicture}
+  \end{center}
+  \caption{$\L(\A) \stackrel{?}{=} \L(\mathbf{a^\star b(a+b)^\star})$.}
+\end{figure}
+
+
+На него съответства следната система:
+\begin{align*}
+  & X_0 = a \cdot X_1 + b \cdot X_2 + \emptyset\\
+  & X_1 = a \cdot X_1 + b \cdot X_2 + \emptyset\\
+  & X_2 = a \cdot X_2 + b \cdot X_2 + \varepsilon.
+\end{align*}
+
+Чрез прилагане на Arden's lemma и заместване получаваме следното:
+
+\begin{align*}
+  & X_0 = a \cdot X_1 + b \cdot (a+b)^\star\\
+  & X_1 = a \cdot X_1 + b \cdot (a+b)^\star\\
+  & X_2 = (a+b)^\star.
+\end{align*}
+
+След това,
+
+\begin{align*}
+  & X_0 = a \cdot a^\star \cdot b \cdot (a+b)^\star + b \cdot (a+b)^\star\\
+  & X_1 = a^\star \cdot b \cdot (a+b)^\star\\
+  & X_2 = (a+b)^\star.
+\end{align*}
+
+Заключаваме, че езикът на автомата е
+\[(a \cdot a^\star + \varepsilon) \cdot b \cdot (a+b)^\star = a^\star \cdot b \cdot (a+b)^\star.\]
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:
