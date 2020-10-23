@@ -342,7 +342,7 @@
   Ние вече знаем от \Example{regular:pumping:an-bn}, че $L$ не е регулярен език.
   Да се опитаме да построим автомат, който го разпознава.
   \begin{multicols}{2}
-    Нека за всяко $k$ положим
+    Нека за всяко $k$ да разгледаме езика
     \[L_k \df \{a^nb^{n+k}\mid n \in \Nat\}.\]
     Да видим какво се получава като приложим процедурата за строене 
     на минимален автомат.
@@ -362,7 +362,7 @@
     \item
       Лесно се вижда, че $b^{-1}(L_{k+1}) = \{b^k\}$, за всяко $k$.
     \item
-      Ясно е, че $b^{-1}(\{b^{k}\}) = \{b^{k-1}\}$, за всяко $k \geq 1$.
+      Ясно е, че $b^{-1}(\{b^{k}\}) = \{b^{k-1}\}$, за $k \geq 1$.
     \end{itemize}    
     Получаваме, че езикът $L$ се разпознава от автомат с {\em безкрайно много състояния}.
   
@@ -405,7 +405,7 @@
       \draw [dashed,->,shorten >=0pt] (BBB) to[bend right=15] node[above] {$b$} (BB);
       \draw [dashed,->,shorten >=0pt] (BBBA) to[bend left=30] node[below] {$a$} (E);
     \end{tikzpicture}
-    \caption{{\em Безкраен} автомат за езика $\{a^nb^n \mid n \in \Nat\}$ построен по метода на Бжозовски.}
+    \caption{{\em Безкраен} автомат за езика $\{a^nb^n~\mid~n~\in~\Nat\}$ построен по метода на Бжозовски.}
   \end{figure}
     \end{multicols}  
 
@@ -413,7 +413,6 @@
 % \end{framed}
 \end{example}
 \end{extra}
-
 
 %%% Local Variables:
 %%% mode: latex

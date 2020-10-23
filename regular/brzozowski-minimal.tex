@@ -21,8 +21,8 @@
   За произволна дума $\gamma$ имаме следните еквивалентности:
   \begin{align*}
     \gamma \in \L_\A(q_\alpha) & \iff \delta^\star(q_\alpha,\gamma) \in F\\
-                               & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F\\
-                               & \iff \delta^\star(\qstart,\alpha\gamma) \in F & \comment\text{свойство на }\delta^\star\\
+                               & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment q_\alpha \df \delta^\star(\qstart,\alpha)\\
+                               & \iff \delta^\star(\qstart,\alpha\gamma) \in F & \comment\text{\Proposition{dfa:delta-star}}\\
                                & \iff \alpha\gamma \in \L(\A)\\
                                & \iff \gamma \in \alpha^{-1}(L). & \comment{L = \L(\A)}
   \end{align*}
@@ -40,6 +40,7 @@
 \begin{hint}
   Понеже $A$ е крайно множество, можем да изброим елементите му в редица.
   Нека $A = \{a_0,a_1, \dots, a_{n-1}\}$. Разгледайте $g:B \to A$, където
+  \mynote{Можем да вземем и $\max$ вместо $\min$.} 
   \[g(b) \df a_m\text{ за }m = \min\{i < n \mid f(a_i) = b\}.\]
   Докажете, че $g$ е инективна.
 \end{hint}
@@ -50,7 +51,7 @@
   а $\B$ е автоматът на Бжозовски за $L$. Тогава $|Q^\B| \leq |Q^\A|$.
 \end{lemma}
 \begin{proof}
-  Да разгледаме функцията $f:Q^\A \to Q^\B$ по следния начин:
+  Да разгледаме функцията $f:Q^\A \to Q^\B$ зададена по следния начин:
   \[f(q) \df \hat{M}, \text{ където } M = \L_\A(q).\]
   Понеже приехме, че $\A$ е свързан автомат, то $f$ е добре дефинирана, защото за произволно състояние $p$,
   нека $\alpha$ е една дума, за която $p = \delta^\star(\qstart,\alpha)$, т.е. $p = q_\alpha$.  

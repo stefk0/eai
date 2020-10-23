@@ -96,9 +96,9 @@
   Горната формула е еквивалентна на:
   \mynote{Използваме, че
     \begin{prooftree}
-      \AxiomC{$\neg P \lor \neg Q \lor R$}
-      \UnaryInfC{$\neg(P\ \land\ Q) \lor R$}
-      \UnaryInfC{$(P \land Q) \to R$}
+      \AxiomC{$\neg P \lor \neg Q \lor \neg S \lor R$}
+      \UnaryInfC{$\neg(P\ \land\ Q \land S) \lor R$}
+      \UnaryInfC{$(P \land Q \land S) \to R$}
     \end{prooftree}}
   \begin{align*}
     (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[\ & (\alpha = xyz \wedge \abs{y} \geq 1\wedge \abs{xy} \leq p)\\
