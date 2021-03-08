@@ -24,8 +24,8 @@
 \item
   % \mynote{Няма нужда да изискваме главата да остава върху същата клетка от лентата}
   \mynote{Това означава, че веднъж достигнем ли заключително състояние, не можем да правим повече преходи. Тук следваме \cite[стр. 169]{sipser3} и \cite[стр. 327]{hopcroft2}.}
-  $\delta:Q'\times\Gamma \to Q\times \Gamma \times \{\goleft,\goright,\stay\}$ - тотална функция на преходите, където
-  $Q' = Q \setminus\{\qaccept, \qreject\}$.
+  $\delta:Q'\times\Gamma \to Q\times \Gamma \times \{\goleft,\goright,\stay\}$ - тотална функция на преходите, където\\
+  $Q'~=~Q~\setminus~\{\qaccept, \qreject\}$.
 \end{itemize}
 
 Всяка машина на Тюринг разполага с неограничено количество памет, която е представена като безкрайна (и в двете посоки) лента, разделена на клетки.
@@ -132,7 +132,7 @@
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
       \AxiomC{$\C \vdash \C''$}
-      \AxiomC{$\C'' \vdash^{\ell} C'$}
+      \AxiomC{$\C'' \vdash^{\ell} \C'$}
       \RightLabel{\scriptsize{(транзитивност)}}
       \BinaryInfC{$\C \vdash^{\ell+1}\C'$}
     \end{prooftree}

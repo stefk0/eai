@@ -32,10 +32,15 @@
 
   Думите в езика $\texttt{Valid}(\M)$ кодират релацията $\vdash_\M$. Това означава, че всяка дума на 
   $\texttt{Valid}(\M)$ има някое от следните представяния:
+  \mynote{Последните два случая не са нужни, ако машината на Тюринг не може да чете по-наляво от най-лявата клетка на входната дума.}    
   \begin{align*}
-    & \alpha_1zqx\alpha_2 \sharp \alpha^{\rev}_2 p y z \alpha^{\rev}_1 & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
+    & \alpha_1qx\alpha_2 \sharp \alpha^{\rev}_2 p y \alpha^{\rev}_1 & \comment{\text{ ако } q \overset{x/y;\goright}{\longrightarrow} p} \\
+    & \alpha_1q \sharp p y \alpha^{\rev}_1 & \comment{\text{ ако } q \overset{\blank/y;\goright}{\longrightarrow} p} \\
     & \alpha_1zqx\alpha_2 \sharp \alpha^{\rev}_2 y z p \alpha^{\rev}_1 & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
-    & \alpha_1zqx\alpha_2 \sharp \alpha^{\rev}_2 y p z\alpha^{\rev}_1 & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}
+    & \alpha_1zq\sharp y z p \alpha^{\rev}_1 & \comment{\text{ ако } q \overset{\blank/y;\goleft}{\longrightarrow} p} \\
+    & \alpha_1qx\alpha_2 \sharp \alpha^{\rev}_2 y p \alpha^{\rev}_1 & \comment{\text{ ако } q \overset{x/y;\stay}{\longrightarrow} p}\\
+    & qx\alpha_2\sharp\alpha_2^{\rev}y\blank p & \comment{\text{ ако } q \overset{x/y;\goleft}{\longrightarrow} p} \\
+    & q\sharp y\blank p & \comment{\text{ ако } q \overset{\blank/y;\goleft}{\longrightarrow} p}
   \end{align*}
 
   Ще опишем неформално стеков автомат $P$ за езика $\texttt{Valid}(\M)$.
@@ -55,24 +60,42 @@
     \[(\forall q \in Q^\M)(\forall z \in \Gamma)[\ \Delta_{P}(r,q,z) = \{(r_q,z)\}\ ].\]
     \begin{itemize}
     \item 
-      \mynote{Стекът представлява $z\alpha^{\rev}_1$}
-      ако $\delta_\M(q,x) = (p,y,\goright)$, то слагаме $yp$ на върха на стека, т.е.
-      \[\Delta_{P}(r_q,x,z) = \{(\hat{r}, pyz)\}.\]
-      \mynote{Трябва да внимаваме, когато имаме $q\sharp$, защото това се интерпретира като четящата глава е върху $\blank$.}
+      \mynote{Стекът представлява $\alpha^{\rev}_1$. Ако $\alpha_1 = \varepsilon$, то $z$ е символа за дъно на стека.}
+      ако $q \overset{x/y;\goright}{\longrightarrow} p$, то слагаме $yp$ на върха на стека, т.е.
+      \[\Delta_{P}(r_q,x,z) \ni (\hat{r}, pyz).\]
     \item
-      ако $\delta_\M(q,x) =(p,y,\goleft)$, то ако $z$ е върха на стека, заменяме $z$ с $pzy$, т.е.
-      \[\Delta_{P}(r_q,x,z) = \{(\hat{r}, yzp)\}.\]
+      Трябва да внимаваме, когато имаме $q\sharp$, защото това се интерпретира като четящата глава да е върху $\blank$.
+      Това означава, че ако $q \overset{\blank/y;\goright}{\longrightarrow} p$, то трябва да имаме и следното:
+      \[\Delta_{P}(r_q,\sharp,z) \ni (e, pyz).\]
     \item
-      ако $\delta_\M(q,x) =(p,y,\stay)$, то ако $z$ е върха на стека, заменяме $z$ с $ypz$, т.е.
-      \[\Delta_{P}(r_q,x,z) = \{(\hat{r}, ypz)\}.\]
+      ако $q \overset{x/y;\goleft}{\longrightarrow} p$, то ако $z$ е върха на стека, заменяме $z$ с $pzy$, т.е.
+      \[\Delta_{P}(r_q,x,z) \ni (\hat{r}, yzp).\]
+    \item
+      Отново трябва да внимаваме, когато имаме $q\sharp$, защото това се интерпретира като четящата глава да е върху $\blank$.
+      Това означава, че ако $q \overset{\blank/y;\goleft}{\longrightarrow} p$, то трябва да имаме и следното:
+      \[\Delta_{P}(r_q,\sharp,z) \ni (e, yzp).\]
+    \item
+      ако $q \overset{x/y;\stay}{\longrightarrow} p$, то ако $z$ е върха на стека, заменяме $z$ с $ypz$, т.е.
+      \[\Delta_{P}(r_q,x,z) \ni (\hat{r}, ypz).\]
+    \item
+      Ако позволяваме машината на Тюринг да се движи по-наляво от най-лявата клетка на лентата, върху която е записана входната дума, то трябва да
+      разгледаме и случая, когато $\alpha_1 = \varepsilon$, т.е. $z$ е символа за дъно на стека. Тогава:
+      \begin{itemize}
+      \item
+        Ако $q \overset{x/y;\goleft}{\longrightarrow} p$, то
+        \[\Delta_{P}(r_q,x,z) \ni (\hat{r},y\blank pz).\]
+      \item
+        Ако $q \overset{\blank/y;\goleft}{\longrightarrow} p$, то
+        \[\Delta_{P}(r_q,\sharp,z) \ni (e,y\blank pz).\]
+      \end{itemize}
     \end{itemize}
   \item
     Сега вече сме в състояние $\hat{r}$ и остава да прочетем $\alpha_2$ и да я запишем в стека като $\alpha^{\rev}_2$:
     \[\Delta_{P}(\hat{r},x,z) = \{(\hat{r}, xz)\}.\]
   \item
     \mynote{За да разпознаем $\texttt{Invalid}(\M)$ трябва само да разменим условията за приемане и отхвърляне на думата.}
-    Разбираме кога сме свършили с $\alpha_2$ когато стигнем до $\sharp$.
-    Сега започваме да четем думата след $\sharp$ и сравняваме с това, което имаме в стека.
+    Разбираме кога сме свършили с $\alpha_2$ когато стигнем до $\sharp$. Преминаваме в състояние $e$ и
+    започваме да четем думата след $\sharp$ и сравняваме с това, което имаме в стека.
     \begin{itemize}
     \item
       Ако намерим разлика, то отхвърляме думата.
@@ -129,18 +152,20 @@
 \end{problem}
 
 \begin{important}
-\begin{theorem}
+\begin{theorem}\label{th:computations:intersect}
   Езикът
-  \[L = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) \cap \L(G_2) = \emptyset\}\]
+  \[\overline{\INTERSECT} = \{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) \cap \L(G_2) = \emptyset\}\]
   не е полуразрешим.
 \end{theorem}  
 \end{important}
+\mynote{Да напомним, че от \Corollary{pcp:grammar-intersect} знаем, че $\INTERSECT$ не е разрешим.}
 \begin{hint}
+  Лесно се вижда, че $L_{\texttt{Empty}} \leq_m \overline{\INTERSECT}$.
   По дадена дума $\code{\M}$, можем ефективно да намерим $G_1$ и $G_2$, за които
   $\L(G_1) \cap \L(G_2) = \texttt{Accept}(\M)$, т.е. съществува тотална изчислима функция $f$, за която
   \[f(\code{\M}) = \code{G_1} \cdot \code{G_2}.\]
   Тогава ако $L$ е полуразрешим език, то $L_{\texttt{Empty}}$ е полуразрешим език, което е противоречие, защото
-  \[\code{\M} \in L_{\texttt{Empty}} \iff f(\code{\M}) \in L.\]
+  \[\code{\M} \in L_{\texttt{Empty}} \iff f(\code{\M}) \in \overline{\INTERSECT}.\]
 \end{hint}
 
 \begin{lemma}
@@ -163,24 +188,24 @@
     \item
       $\omega_n \not\in \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star$, или
     \item
-      \mynote{т.е. $\omega_i \sharp \omega^{\rev}_{i+1} \in \texttt{Invalid}(\M)$}
-      $\omega_i \not\vdash_\M \omega^{\rev}_{i+1}$, за някое нечетно $i < n$, или
+      $\omega_i \not\vdash_\M \omega^{\rev}_{i+1}$, т.е. $\omega_i \sharp \omega^{\rev}_{i+1} \in \texttt{Invalid}(\M)$, за някое нечетно $i < n$, или
     \item
-      \mynote{и $\omega^{\rev}_i \sharp \omega_{i+1} \in \texttt{Invalid'}(\M)$}
-      $\omega^{\rev}_i \not\vdash_\M \omega_{i+1}$, за някое четно $i < n$.
+      $\omega^{\rev}_i \not\vdash_\M \omega_{i+1}$, т.е. $\omega^{\rev}_i \sharp \omega_{i+1} \in \texttt{Invalid'}(\M)$, за някое четно $i < n$.
     \end{itemize}
   \end{itemize}
-  Думите притежаващи някое от тези свойства могат да се опишат като обединение на три регулярни езика и два безконтекстни езика.
+  Думите притежаващи някое от тези свойства могат да се опишат като обединение на три регулярни езика, което е лесно защото регулярните езици са затворени относно допълнение, и двата безконтекстни езика
+  $\texttt{Invalid}(\M)$ и $\texttt{Invalid'}(\M)$.
 \end{hint}
 
 \begin{important}
-  \begin{theorem}
+  \begin{theorem}\label{th:computations:all-cfg}
     За дадена азбука $\Sigma$, езикът 
     \[\texttt{All}_{\texttt{CFG}} = \{\code{G} \mid G\text{ е безконтекстна граматика и }\L(G) = \Sigma^\star\}\]
     не е полуразрешим.
   \end{theorem}
 \end{important}
 \begin{hint}
+  Ще видим, че $\LEmpty \leq_m \texttt{All}_{\texttt{CFG}}$.
   Тук ще използваме, че ако $\L(\M) = \emptyset$, то $\overline{\texttt{Accept}(\M)} = \hat{\Sigma}^\star$,
   където $\hat{\Sigma} = \Gamma \cup Q \cup \{\sharp\}$.
   По даден код на машината на Тюринг $\M$, можем ефективно да намерим код на безконтекстната граматика $G$, за която
@@ -191,7 +216,7 @@
 \end{hint}
 
 \begin{corollary}
-  Следните езици не са разрешими:
+  Следните езици не са полуразрешим:
   \begin{enumerate}[a)]
   \item
     $\{\code{G_1}\cdot\code{G_2} \mid \text{$G_1$ и $G_2$ са безконт. грам. и }\L(G_1) = \L(G_2)\}$;
