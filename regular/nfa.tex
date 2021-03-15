@@ -43,26 +43,26 @@
   \[\L(\N) \df \{\omega \in \Sigma^\star \mid \Delta^\star(Q_{\texttt{start}},\omega) \cap F \neq \emptyset \}.\]
 \end{framed}
 
-Обърнете внимание, че според нашата дефиниция е изпълнено следното:
-\begin{equation}
-  \label{eq:12}
-  \Delta^\star(R,a) = \bigcup\{\Delta(r,a) \mid r \in R\}.
-\end{equation}
+% Обърнете внимание, че според нашата дефиниция е изпълнено следното:
+% \begin{equation}
+%   \label{eq:12}
+%   \Delta^\star(R,a) = \bigcup\{\Delta(r,a) \mid r \in R\}.
+% \end{equation}
 
-Тогава за произволна дума $\alpha$ и буква $b$ имаме, че
-\begin{equation}
-  \label{eq:14}
-  \Delta^\star(R,\alpha b) = \Delta^\star(\Delta^\star(R,\alpha),b),
-\end{equation}
-защото
-\begin{align*}
-  \Delta^\star(R,\alpha b) & = \bigcup\{\Delta(r,b) \mid r \in \Delta^\star(R,\alpha)\} & \comment\text{деф.}\\
-                           & = \bigcup\{\Delta(r,b) \mid r \in U \} & \comment{U \df \Delta^\star(R,\alpha)}\\
-                           & = \Delta^\star(U,b) & \comment\text{от (\ref{eq:12})}\\
-                           & = \Delta^\star(\Delta^\star(R,\alpha),b). & \comment{U \df \Delta^\star(R,\alpha)}
-\end{align*}
+% Тогава за произволна дума $\alpha$ и буква $b$ имаме, че
+% \begin{equation}
+%   \label{eq:14}
+%   \Delta^\star(R,\alpha b) = \Delta^\star(\Delta^\star(R,\alpha),b),
+% \end{equation}
+% защото
+% \begin{align*}
+%   \Delta^\star(R,\alpha b) & = \bigcup\{\Delta(r,b) \mid r \in \Delta^\star(R,\alpha)\} & \comment\text{деф.}\\
+%                            & = \bigcup\{\Delta(r,b) \mid r \in U \} & \comment{U \df \Delta^\star(R,\alpha)}\\
+%                            & = \Delta^\star(U,b) & \comment\text{от (\ref{eq:12})}\\
+%                            & = \Delta^\star(\Delta^\star(R,\alpha),b). & \comment{U \df \Delta^\star(R,\alpha)}
+% \end{align*}
 
-Ще видим, че това свойство е изпълнено и за произволни думи $\beta$ вместо само за букви $b$.
+% Ще видим, че това свойство е изпълнено и за произволни думи $\beta$ вместо само за букви $b$.
 
 \begin{proposition}
   \label{pr:nfa:delta-star}
@@ -71,7 +71,7 @@
   \[ \Delta^\star(R, \alpha\beta) = \Delta^\star( \Delta^\star(R,\alpha),\beta).\]
 \end{proposition}
 \begin{proof}
-  Отново индукция по дължината на $\beta$.
+  Индукция по дължината на $\beta$.
 
   \begin{itemize}
   \item
@@ -85,12 +85,11 @@
   \item
     Нека $|\beta| = n+1$, т.е. $\beta = \gamma b$, където $|\gamma| = n$.
     \begin{align*}
-      \Delta^\star(R, \alpha\gamma b)  & = \Delta^\star(\Delta^\star(R,\alpha\gamma), b) & \comment{\text{от (\ref{eq:14})}}\\% \bigcup \{\Delta(p,b)  \mid p \in \Delta^\star(R,\alpha\gamma)\}& \comment\text{от деф. на }\Delta^\star\\
-                                       & = \Delta^\star(\Delta^\star(\Delta^\star(R,\alpha),\gamma), b) & \comment\text{от И.П. за }\gamma\\
-                                       & = \Delta^\star(\Delta^\star(U,\gamma), b) & \comment{\text{нека }U \df \Delta^\star(R,\alpha)}\\
-                                       & = \Delta^\star(U,\gamma b) & \comment\text{от (\ref{eq:14})}\\
-                                       & = \Delta^\star(U,\beta) & \comment\text{защото }\beta = \gamma b\\
-                                       & = \Delta^\star( \Delta^\star(R,\alpha), \beta). & \comment{\text{защото }U = \Delta^\star(R,\alpha)}
+      \Delta^\star(R, \alpha\gamma b)    & = \bigcup \{\Delta(p,b)  \mid p \in \Delta^\star(R,\alpha\gamma)\}& \comment\text{от деф. на }\Delta^\star\\
+                                         & = \bigcup \{\Delta(p,b)  \mid p \in \Delta^\star(\underbrace{\Delta^\star(R,\alpha)}_{U},\gamma))\}& \comment\text{от И.П. за }\gamma\\
+                                         & = \bigcup \{\Delta(p,b)  \mid p \in \Delta^\star(U,\gamma)\}& \comment\text{нека }U \df \Delta^\star(R,\alpha)\\
+                                         & = \Delta^\star(U,\gamma b) & \comment\text{от деф. на }\Delta^\star\\
+                                         & = \Delta^\star(\Delta^\star(R,\alpha),\gamma b) & \comment U = \Delta^\star(R,\alpha)
     \end{align*}
   \end{itemize}
 \end{proof}

@@ -1,6 +1,6 @@
 \subsection{Примерни задачи}
 
-\mynote{Винаги с удвоени окръжности ще отбелязваме финалните състояния.}
+\mynote{Винаги с удвоени окръжности ще отбелязваме финалните състояния. За момента не е ясно как можем да докажем, че даденият автомат разпознава точно съответния език.}
 
 \begin{extra}
 \begin{example}
@@ -10,7 +10,7 @@
 
   \begin{figure}[H]
     \begin{subfigure}[t]{0.45\textwidth}
-      \centering
+      % \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -32,7 +32,7 @@
     \end{subfigure}
     \qquad
     \begin{subfigure}[t]{0.45\textwidth}
-      \centering
+      % \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -49,8 +49,9 @@
       \end{tikzpicture}
       \subcaption{$\{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \geq 2\}$}
     \end{subfigure}
+    % \vspace*{30pt}
     \begin{subfigure}[t]{0.45\textwidth}
-      \centering
+      % \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -68,8 +69,9 @@
       \subcaption{$\{\omega \in \{a,b\}^\star \mid $ всяко $a$ в $\omega$ веднага се следва от поне едно $b\}$ }
     \end{subfigure}
     \qquad
+    \qquad
     \begin{subfigure}[t]{0.45\textwidth}
-      \centering
+      % \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -324,7 +326,7 @@
     $x = 0$. 
     Тогава, по дефиницията на $\delta$, 
     $\delta(q_1,0) = q_2$ и следователно, $\delta^\star(q_0,\beta) = q_1$.
-    По {\bf И.П.} за (2) с $\beta$,
+    По {\bf И.П.} за (2) с $\beta$ имаме импликацията:
     \[\delta^\star(q_0,\beta) = q_1\ \Rightarrow\ \bin{\beta} \equiv 1 \bmod 3\]
     Тогава, $\bin{\beta0} \equiv 2 \mod 3$. Така доказахме, че
     \[\delta^\star(q_0,\beta 0) = q_2\ \Rightarrow\ \bin{\beta 0} \equiv 2 \bmod 3.\]
@@ -332,7 +334,7 @@
     $x = 1$.
     Тогава, по дефиницията на $\delta$, $\delta(q_2,1) = q_2$ и следователно,
     $\delta^\star(q_0,\beta) = q_2$.
-    По {\bf И.П.} за (3) с $\beta$,
+    По {\bf И.П.} за (3) с $\beta$ имаме импликацията:
     \[\delta^\star(q_0,\beta) = q_2\ \Rightarrow\ \bin{\beta} \equiv 2 \bmod 3.\]
     Тогава, $\bin{\beta1} \equiv 2 \mod 3$. Така доказахме, че
     \[\delta^\star(q_0,\beta 1) = q_2\ \Rightarrow\ \bin{\beta 1} \equiv 2 \bmod 3.\]
@@ -354,7 +356,7 @@
     При $x = 1$, използваме {\bf И.П.} за (1).
   \end{itemize}
   \mynote{\writedown Защо?}
-  От (1), (2) и (3) следва директно, че
+  От (1), (2) и (3) следва директно, че е изпълнено свойството:
   \[(\forall\alpha\in\Sigma^\star)(\forall i < 3)[\ \bin{\alpha} \equiv i\ (\bmod\ 3)\ \Leftrightarrow\ \delta^\star(q_0,\alpha) = q_i\ ],\]
   откъдето получаваме, че $\L(\A) = L$.
 \end{proof}

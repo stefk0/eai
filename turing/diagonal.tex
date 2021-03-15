@@ -8,17 +8,17 @@
 \begin{important}
   \begin{theorem}\label{th:diagonal}
     Диагоналният език
-    \[L_{\texttt{diag}} \df \{\ \omega \in \{0,1\}^\star \mid \omega \text{ е код на машина на Тюринг и }\omega \not\in L(\M_\omega)\ \}\]
-    не се разпознава от машина на Тюринг, т.е. $L_{\texttt{diag}}$ {\bf не} е полуразрешим език.
+    \[\Ldiag \df \{\ \omega \in \{0,1\}^\star \mid \omega \text{ е код на машина на Тюринг и }\omega \not\in L(\M_\omega)\ \}\]
+    не се разпознава от машина на Тюринг, т.е. $\Ldiag$ {\bf не} е полуразрешим език.
   \end{theorem}
 \end{important}
 \begin{proof}
   \mynote{Това е версия на диагоналния метод на Кантор, с чиято помощ се доказва, че реалните числа са неизброимо много, т.е. има повече реални числа отколкото естествените.}
-  Да допуснем, че $L_{\texttt{diag}}$ се разпознава от машина на Тюринг $\D$, т.е. $L_{\texttt{diag}} = \L(\D)$.
+  Да допуснем, че $\Ldiag$ се разпознава от машина на Тюринг $\D$, т.е. $\Ldiag = \L(\D)$.
   Тогава да видим какво имаме за думата $\code{\D}$:
   \begin{align*}
-    & \code{\D} \in L_{\texttt{diag}} \implies \code{\D} \in \L(\D) \implies \code{\D} \not\in L_{\texttt{diag}},\\
-    & \code{\D} \not\in L_{\texttt{diag}} \implies \code{\D} \not\in \L(\code{\D}) \implies \code{\D} \in L_{\texttt{diag}}.
+    & \code{\D} \in \Ldiag \implies \code{\D} \in \L(\D) \implies \code{\D} \not\in \Ldiag,\\
+    & \code{\D} \not\in \Ldiag \implies \code{\D} \not\in \L(\code{\D}) \implies \code{\D} \in \Ldiag.
   \end{align*}
   Достигаме до противоречие.
   \mynote{Тук е добре една безкрайна таблица да се нарисува.}
@@ -64,8 +64,8 @@
   откъдето следва, че $\Laccept$ е полуразрешим език.
 
   Ако допуснем, че $\Laccept$ е разрешим,
-  то езикът $L_{\texttt{code}} \setminus \Laccept = L_{\texttt{diag}}$ би бил разрешим, 
-  което е противоречие, защото $L_{\texttt{diag}}$ не е е дори полуразрешим.
+  то езикът $L_{\texttt{code}} \setminus \Laccept = \Ldiag$ би бил разрешим, 
+  което е противоречие, защото $\Ldiag$ не е е дори полуразрешим.
 \end{hint}
 
 \begin{corollary}

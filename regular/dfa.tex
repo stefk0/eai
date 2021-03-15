@@ -45,7 +45,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \item
   Ако $\alpha = \varepsilon$, то $\delta^\star(q,\varepsilon) \df q$;
 \item
-  Ако $\alpha = \beta $, то $\delta^\star(q,\beta a) \df \delta(\delta^\star(q,\beta), a)$.
+  Ако $\alpha = \beta a$, то $\delta^\star(q,\beta a) \df \delta(\delta^\star(q,\beta), a)$.
 \end{itemize}
 Лесно се съобразява, че една дума $\alpha$ се {\em разпознава} от автомата $\A$ точно тогава, когато $\delta^\star(\qstart,\alpha) \in F$.
 Оттук следва, че
@@ -83,13 +83,13 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 \end{hint}
 
 \begin{remark}
-Формално погледнато, доказателството на \Proposition{dfa:delta-star} протича по следния начин:
+Формално погледнато, доказателството на \Proposition{dfa:delta-star} протича по следната схема:
   \begin{prooftree}
     \AxiomC{$P(0)$}
     \AxiomC{$(\forall n\in\Nat)[P(n) \implies P(n+1)]$}
     \BinaryInfC{$(\forall n \in \Nat)[P(n)]$,}
   \end{prooftree}
-  където
+  където свойството $P$ е дефинирано така:
   \[P(n) \df (\forall \beta\in\Sigma^n)(\forall \alpha\in\Sigma^\star)(\forall q\in Q)[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta)].\]
 \end{remark}
 

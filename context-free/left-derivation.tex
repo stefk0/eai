@@ -6,6 +6,7 @@
 
 За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-ляв извод} в граматиката $G$, $\alpha \lderive{\ell} \beta$, по следния начин:
 
+\begin{framed}
 \begin{figure}[H]
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
@@ -23,8 +24,7 @@
       \BinaryInfC{$A \lderive{\ell+1} \beta$}
     \end{prooftree}
   \end{subfigure}
-\end{figure}
-
+\center
 \begin{prooftree}
   \AxiomC{$\alpha_1 \lderive{\ell_1} \beta_1$}
   \AxiomC{$\beta_1 \in \Sigma^\star$}
@@ -32,6 +32,12 @@
   \RightLabel{\scriptsize{правило (2)}}
   \TrinaryInfC{$\alpha_1\alpha_2 \lderive{\ell_1+\ell_2}\beta_1\beta_2$}
 \end{prooftree}
+\caption{Правила за най-ляв извод в безконтекстна граматика.}
+\end{figure}
+  
+
+\end{framed}
+
 
 \mynote{Единствената разлика между дефиницията на $\lderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_1 \in \Sigma^\star$.
   Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\lderive{\star}$ е аналог на DFS като винаги се избира най-левия необходен клон.}
@@ -103,8 +109,12 @@
 
 \begin{extra}
   \index{граматика!най-десен извод}
+
+  \mynote{Единствената разлика между дефиницията на $\rderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_2 \in \Sigma^\star$.}
+
   За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-десен извод} в граматиката $G$, $\alpha \rderive{\ell} \beta$, по следния начин:
 
+  \begin{framed}
   \begin{figure}[H]
     \begin{subfigure}[b]{0.5\textwidth}
       \begin{prooftree}
@@ -122,9 +132,7 @@
         \BinaryInfC{$A \rderive{\ell+1} \beta$}
       \end{prooftree}
     \end{subfigure}
-  \end{figure}
-
-% \mynote{Единствената разлика между дефиницията на $\rderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_2 \in \Sigma^\star$.}
+    \center
 \begin{prooftree}
   \AxiomC{$\alpha_1 \rderive{\ell_1} \beta_1$}
   \AxiomC{$\alpha_2 \rderive{\ell_2} \beta_2$}
@@ -132,6 +140,9 @@
   \RightLabel{\scriptsize{правило (2)}}
   \TrinaryInfC{$\alpha_1\alpha_2 \rderive{\ell_1+\ell_2}\beta_1\beta_2$}
 \end{prooftree}
+\caption{Правила за най-десен извод в безконтекстна граматика.}
+\end{figure}
+\end{framed}
 
 % \mynote{Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\rderive{\star}$ е аналог на DFS като винаги се избира най-десния необходен клон.}
 

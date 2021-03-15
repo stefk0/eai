@@ -1,6 +1,7 @@
 \section{Извод върху синтактично дърво}
 
 \mynote{Не знам да има учебник, в който формално да е въведена тази релация. Тя е удобна най-вече за решаване на задачи, както и за доказателството на лемата за покачването.}
+\begin{framed}
 За произволна безконтекстна граматика $G$, дефинираме релацията $X \yield{\ell} \alpha$, където $X \in V \cup \Sigma$ и $\alpha \in (V\cup\Sigma)^\star$, по следния начин:
 \begin{prooftree}
   \AxiomC{}
@@ -17,6 +18,8 @@
   \RightLabel{\scriptsize{правило (1)}}
   \QuaternaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
 \end{prooftree}
+\end{framed}
+
 
 \mynote{ Съобразете, че имаме:
 \begin{prooftree}

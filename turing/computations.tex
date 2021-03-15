@@ -66,14 +66,14 @@
     \item
       Трябва да внимаваме, когато имаме $q\sharp$, защото това се интерпретира като четящата глава да е върху $\blank$.
       Това означава, че ако $q \overset{\blank/y;\goright}{\longrightarrow} p$, то трябва да имаме и следното:
-      \[\Delta_{P}(r_q,\sharp,z) \ni (e, pyz).\]
+      \[\Delta_{P}(r_q,\sharp,z) \ni (r_\sharp, pyz).\]
     \item
       ако $q \overset{x/y;\goleft}{\longrightarrow} p$, то ако $z$ е върха на стека, заменяме $z$ с $pzy$, т.е.
       \[\Delta_{P}(r_q,x,z) \ni (\hat{r}, yzp).\]
     \item
       Отново трябва да внимаваме, когато имаме $q\sharp$, защото това се интерпретира като четящата глава да е върху $\blank$.
       Това означава, че ако $q \overset{\blank/y;\goleft}{\longrightarrow} p$, то трябва да имаме и следното:
-      \[\Delta_{P}(r_q,\sharp,z) \ni (e, yzp).\]
+      \[\Delta_{P}(r_q,\sharp,z) \ni (r_\sharp, yzp).\]
     \item
       ако $q \overset{x/y;\stay}{\longrightarrow} p$, то ако $z$ е върха на стека, заменяме $z$ с $ypz$, т.е.
       \[\Delta_{P}(r_q,x,z) \ni (\hat{r}, ypz).\]
@@ -86,7 +86,7 @@
         \[\Delta_{P}(r_q,x,z) \ni (\hat{r},y\blank pz).\]
       \item
         Ако $q \overset{\blank/y;\goleft}{\longrightarrow} p$, то
-        \[\Delta_{P}(r_q,\sharp,z) \ni (e,y\blank pz).\]
+        \[\Delta_{P}(r_q,\sharp,z) \ni (r_\sharp,y\blank pz).\]
       \end{itemize}
     \end{itemize}
   \item
@@ -94,7 +94,7 @@
     \[\Delta_{P}(\hat{r},x,z) = \{(\hat{r}, xz)\}.\]
   \item
     \mynote{За да разпознаем $\texttt{Invalid}(\M)$ трябва само да разменим условията за приемане и отхвърляне на думата.}
-    Разбираме кога сме свършили с $\alpha_2$ когато стигнем до $\sharp$. Преминаваме в състояние $e$ и
+    Разбираме кога сме свършили с $\alpha_2$ когато стигнем до $\sharp$. Преминаваме в състояние $r_\sharp$ и
     започваме да четем думата след $\sharp$ и сравняваме с това, което имаме в стека.
     \begin{itemize}
     \item
@@ -130,12 +130,12 @@
 \item
   За нечетно $i < n$, $\omega_i \vdash_\M \omega^{\rev}_{i+1}$;
 \end{itemize}
-Езикът съставен от всички такива думи ще означаваме с $\texttt{Accept}(\M)$.
+Езикът съставен от всички такива думи ще означаваме с $\texttt{History}(\M)$.
 
 \begin{lemma}
   \mynote{\cite[стр. 201]{hopcroft1}}
   За всяка машина на Тюринг $\M$,
-  \[\texttt{Accept}(\M) = L_1 \cap L_2,\]
+  \[\texttt{History}(\M) = L_1 \cap L_2,\]
   където $L_1$ и $L_2$ са безконтекстни езици.
   Освен това, граматиките на $L_1$ и $L_2$ могат ефективно да бъдат построени по кода на $\M$.
 \end{lemma}
@@ -160,17 +160,17 @@
 \end{important}
 \mynote{Да напомним, че от \Corollary{pcp:grammar-intersect} знаем, че $\INTERSECT$ не е разрешим.}
 \begin{hint}
-  Лесно се вижда, че $L_{\texttt{Empty}} \leq_m \overline{\INTERSECT}$.
+  Лесно се вижда, че $\LEmpty \leq_m \overline{\INTERSECT}$.
   По дадена дума $\code{\M}$, можем ефективно да намерим $G_1$ и $G_2$, за които
   $\L(G_1) \cap \L(G_2) = \texttt{Accept}(\M)$, т.е. съществува тотална изчислима функция $f$, за която
   \[f(\code{\M}) = \code{G_1} \cdot \code{G_2}.\]
-  Тогава ако $L$ е полуразрешим език, то $L_{\texttt{Empty}}$ е полуразрешим език, което е противоречие, защото
+  Тогава ако $L$ е полуразрешим език, то $\LEmpty$ е полуразрешим език, което е противоречие, защото
   \[\code{\M} \in L_{\texttt{Empty}} \iff f(\code{\M}) \in \overline{\INTERSECT}.\]
 \end{hint}
 
 \begin{lemma}
-  За всяка машина на Тюринг $\M$, то допълнението на $\texttt{Accept}(\M)$, което означаваме като $\overline{\texttt{Accept}(\M)}$, е безконтекстен език.
-  Освен това, по кода на $\M$ можем ефективно да намерим код на безконтекстната граматика за $\overline{\texttt{Accept}}(\M)$.
+  За всяка машина на Тюринг $\M$,о допълнението на $\texttt{History}(\M)$, което означаваме като $\overline{\texttt{History}(\M)}$, е безконтекстен език.
+  Освен това, по кода на $\M$ можем ефективно да намерим код на безконтекстната граматика за $\overline{\texttt{History}}(\M)$.
 \end{lemma}
 \begin{hint}
   Една дума $\alpha$ не е история на приемащо изчисление, ако е изпълнено някое от следните условия:
@@ -205,13 +205,14 @@
   \end{theorem}
 \end{important}
 \begin{hint}
-  Ще видим, че $\LEmpty \leq_m \texttt{All}_{\texttt{CFG}}$.
-  Тук ще използваме, че ако $\L(\M) = \emptyset$, то $\overline{\texttt{Accept}(\M)} = \hat{\Sigma}^\star$,
+  Ще видим, че имаме следното свеждане:
+  \[\LEmpty \leq_m \texttt{All}_{\texttt{CFG}}.\]
+  Тук ще използваме, че ако $\L(\M) = \emptyset$, то $\overline{\texttt{History}(\M)} = \hat{\Sigma}^\star$,
   където $\hat{\Sigma} = \Gamma \cup Q \cup \{\sharp\}$.
   По даден код на машината на Тюринг $\M$, можем ефективно да намерим код на безконтекстната граматика $G$, за която
   $\L(G)$ са точно невалидните изчисления на $\M$, т.е. съществува тотална изчислима $f$, за която
-  \[f(\code{\M}) = \code{G}\text{ и }\L(G) = \overline{\texttt{Accept}(\M)}.\]
-  Тогава, ако допуснем, че $\texttt{All}_{\texttt{CFG}}$ е полуразрешим език, то $L_{\texttt{Empty}}$ е полуразрешим, защото
+  \[f(\code{\M}) = \code{G}\text{ и }\L(G) = \overline{\texttt{History}(\M)}.\]
+  Тогава, ако допуснем, че $\texttt{All}_{\texttt{CFG}}$ е полуразрешим език, то $\LEmpty$ е полуразрешим, защото
   \[\code{\M} \in L_{\texttt{Empty}} \iff f(\code{\M}) \in \texttt{All}_{\texttt{CFG}}.\]
 \end{hint}
 

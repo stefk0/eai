@@ -27,23 +27,23 @@
   езикът на този автомат се описва с регулярния израз $\mathbf{r}^2_{0,1}$, защото началното състояние е $q_0$, финалното е $q_1$ и 
   броят на състоянията в автомата е $2$. Подробните сметки са следните:
   \begin{align*}
-    \bm{r}^2_{0,1} & = \underbrace{\bm{r}^{1}_{0,1}}_{\bm{b^\star a}} + \underbrace{\bm{r}^{1}_{0,1}}_{\bm{b^\star a}}\cdot \underbrace{\bm{(r^1_{1,1})^\star}}_{\mathbf{(\bm{\varepsilon}+a+b)^\star}} \cdot \underbrace{\mathbf{r}^1_{1,1}}_{\mathbf{\bm{\varepsilon}+a+b}} & \comment \text{според (\ref{eq:kleene}}) \\
-                   &  = \mathbf{b^\star a + b^\star a (\bm{\varepsilon} + a + b)^\star (\bm{\varepsilon} + a + b)} & \comment{\text{просто заместваме}}\\
-                   & = \mathbf{b^\star a + b^\star a (\bm{\varepsilon} + a + b)^+} & \comment \mathbf{r^+ \df r^\star r}\\
-                   & = \mathbf{b^\star a + b^\star a (a + b)^\star} & \comment \mathbf{r^\star = (\bm{\varepsilon} + r)^+}\\
-                   & = \mathbf{b^\star a (\bm{\varepsilon} + (a + b)^\star)} & \comment \mathbf{r + rq = r(\bm{\varepsilon} + q)}\\
-                   & = \mathbf{b^\star a (a + b)^\star}. & \comment \mathbf{r^\star = \bm{\varepsilon} + r^\star}
+    \bm{r}^2_{0,1} & \equiv \underbrace{\bm{r}^{1}_{0,1}}_{\bm{b^\star a}} + \underbrace{\bm{r}^{1}_{0,1}}_{\bm{b^\star a}}\cdot \underbrace{\bm{(r^1_{1,1})^\star}}_{\mathbf{(\bm{\varepsilon}+a+b)^\star}} \cdot \underbrace{\mathbf{r}^1_{1,1}}_{\mathbf{\bm{\varepsilon}+a+b}} & \comment \text{според (\ref{eq:kleene}}) \\
+                   & \equiv \mathbf{b^\star a + b^\star a (\bm{\varepsilon} + a + b)^\star (\bm{\varepsilon} + a + b)} & \comment{\text{просто заместваме}}\\
+                   & \equiv \mathbf{b^\star a + b^\star a (\bm{\varepsilon} + a + b)^+} & \comment \mathbf{r^+ \df r^\star r}\\
+                   & \equiv \mathbf{b^\star a + b^\star a (a + b)^\star} & \comment \mathbf{r^\star \equiv (\bm{\varepsilon} + r)^+}\\
+                   & \equiv \mathbf{b^\star a (\bm{\varepsilon} + (a + b)^\star)} & \comment \mathbf{r + rq \equiv r(\bm{\varepsilon} + q)}\\
+                   & \equiv \mathbf{b^\star a (a + b)^\star}. & \comment \mathbf{r^\star \equiv \bm{\varepsilon} + r^\star}
 \end{align*}
 Тук използвахме, че:
 \begin{align*}
-  \mathbf{r^1_{0,1}} & = \underbrace{\mathbf{r}^0_{0,1}}_{\mathbf{a}} + \underbrace{\mathbf{r}^0_{0,0}}_{\bm{\varepsilon + b}}\cdot\underbrace{\mathbf{(r^0_{0,0})^\star}}_{\bm{(\varepsilon+b)^\star}} \cdot \underbrace{\mathbf{r^0_{0,1}}}_{\mathbf{b}} & \comment \text{според (\ref{eq:kleene}})\\
-                     & = \bm{a + (\varepsilon + b)(\varepsilon + b)^\star a} & \comment{\text{просто заместваме}}\\
-                     & = \mathbf{a + b^\star a}  & \comment \mathbf{r}^\star = \bm{\varepsilon} + \mathbf{r}^\star \\
-                     & = \mathbf{b^\star a} \\
-  \mathbf{r}^b_{b,b} & = \underbrace{\mathbf{r}^a_{b,b}}_{\bm{\varepsilon+a+b}} + \underbrace{\mathbf{r}^a_{b,a}}_{\bm{\emptyset}} \cdot
+  \mathbf{r^1_{0,1}} & \equiv \underbrace{\mathbf{r}^0_{0,1}}_{\mathbf{a}} + \underbrace{\mathbf{r}^0_{0,0}}_{\bm{\varepsilon + b}}\cdot\underbrace{\mathbf{(r^0_{0,0})^\star}}_{\bm{(\varepsilon+b)^\star}} \cdot \underbrace{\mathbf{r^0_{0,1}}}_{\mathbf{b}} & \comment \text{според (\ref{eq:kleene}})\\
+                     & \equiv \bm{a + (\varepsilon + b)(\varepsilon + b)^\star a} & \comment{\text{просто заместваме}}\\
+                     & \equiv \mathbf{a + b^\star a}  & \comment \mathbf{r}^\star \equiv \bm{\varepsilon} + \mathbf{r}^\star \\
+                     & \equiv \mathbf{b^\star a} \\
+  \mathbf{r}^b_{b,b} & \equiv \underbrace{\mathbf{r}^a_{b,b}}_{\bm{\varepsilon+a+b}} + \underbrace{\mathbf{r}^a_{b,a}}_{\bm{\emptyset}} \cdot
                        \underbrace{(\mathbf{r}^a_{a,a})^\star}_{\bm{\varepsilon+b}} \cdot \underbrace{\mathbf{r}^a_{a,b}}_{\bm{a}}& \comment \text{отново според (\ref{eq:kleene}})\\
-                     & = \bm{\varepsilon + a + b + \emptyset(\varepsilon + b)^\star a} & \comment{\text{просто заместваме}}\\
-                     & = \bm{\varepsilon + a + b}. & \comment \text{защото }\bm{\emptyset \cdot r = \emptyset}
+                     & \equiv \bm{\varepsilon + a + b + \emptyset(\varepsilon + b)^\star a} & \comment{\text{просто заместваме}}\\
+                     & \equiv \bm{\varepsilon + a + b}. & \comment \text{защото }\bm{\emptyset \cdot r} \equiv \bm{\emptyset}
 \end{align*}  
 \end{solution}
 
@@ -74,18 +74,18 @@
   \begin{solution}
     От \hyperref[th:regular:kleene]{теоремата на Клини} знаем, че $\L(\A) = \L(\mathbf{r}^3_{0,2})$, където:
   \begin{align*}
-    \mathbf{r}^3_{0,2} & = \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} + \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} \cdot \underbrace{(\mathbf{r}^2_{2,2})^\star}_{\bm{(\varepsilon+a+b)^\star}} \cdot \underbrace{\mathbf{r}^2_{2,2}}_{\bm{\varepsilon+a+b}} & \comment \text{според (\ref{eq:kleene}})\\
-                       & = \bm{a^\star b + a^\star b \cdot (a+b)^\star \cdot (\varepsilon+a+b)} & \comment{\text{просто заместваме}}\\
-                       & = \bm{a^\star b + a^\star b \cdot (a+b)^\star} & \comment \bm{r^\star} = \bm{r^\star \cdot (\varepsilon + r)}\\
-                       & = \bm{a^\star b (\varepsilon + (a+b)^\star)} & \comment\bm{r_1 + r_1\cdot r_2 = r_1 \cdot (\varepsilon+r_2)}\\
-                       & = \bm{a^\star b (a+b)^\star}. & \comment \bm{r^\star} = \bm{\varepsilon + r^\star}
+    \mathbf{r}^3_{0,2} & \equiv \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} + \underbrace{\mathbf{r}^2_{0,2}}_{\bm{a^\star b}} \cdot \underbrace{(\mathbf{r}^2_{2,2})^\star}_{\bm{(\varepsilon+a+b)^\star}} \cdot \underbrace{\mathbf{r}^2_{2,2}}_{\bm{\varepsilon+a+b}} & \comment \text{според (\ref{eq:kleene}})\\
+                       & \equiv \bm{a^\star b + a^\star b \cdot (a+b)^\star \cdot (\varepsilon+a+b)} & \comment{\text{просто заместваме}}\\
+                       & \equiv \bm{a^\star b + a^\star b \cdot (a+b)^\star} & \comment \bm{r^\star} \equiv \bm{r^\star \cdot (\varepsilon + r)}\\
+                       & \equiv \bm{a^\star b (\varepsilon + (a+b)^\star)} & \comment\bm{r_1 + r_1\cdot r_2 \equiv r_1 \cdot (\varepsilon+r_2)}\\
+                       & \equiv \bm{a^\star b (a+b)^\star}. & \comment \bm{r^\star} \equiv \bm{\varepsilon + r^\star}
   \end{align*}
   Тук използвахме, че:
   \begin{align*}
-    \mathbf{r}^2_{0,2} & = \underbrace{\mathbf{r}^1_{0,2}}_{\bm{b}} + \underbrace{\mathbf{r}^1_{0,1}}_{\bm{a}} \cdot \underbrace{(\mathbf{r}^1_{1,1})^\star}_{\bm{a}} \cdot \underbrace{\mathbf{r}^1_{1,2}}_{\bm{b}} & \comment \text{според (\ref{eq:kleene}}) \\
-                       & = \bm{b + a \cdot a^\star \cdot b} & \comment{\text{просто заместваме}}\\
-                       & = \bm{(\varepsilon + a^+)\cdot b} & \comment \mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star\\
-                       & = \bm{a^\star b}. & \comment \mathbf{r}^\star = \bm{\varepsilon + r^+.г}
+    \mathbf{r}^2_{0,2} & \equiv \underbrace{\mathbf{r}^1_{0,2}}_{\bm{b}} + \underbrace{\mathbf{r}^1_{0,1}}_{\bm{a}} \cdot \underbrace{(\mathbf{r}^1_{1,1})^\star}_{\bm{a}} \cdot \underbrace{\mathbf{r}^1_{1,2}}_{\bm{b}} & \comment \text{според (\ref{eq:kleene}}) \\
+                       & \equiv \bm{b + a \cdot a^\star \cdot b} & \comment{\text{просто заместваме}}\\
+                       & \equiv \bm{(\varepsilon + a^+)\cdot b} & \comment \mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star\\
+                       & \equiv \bm{a^\star b}. & \comment \mathbf{r}^\star \equiv \bm{\varepsilon + r^+.г}
   \end{align*}
   Заключаваме, че $\L(\A) = \L(\mathbf{a^\star b(a+b)^\star})$.
 \end{solution}

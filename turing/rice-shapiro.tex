@@ -1,20 +1,24 @@
 \section{Критерии за полуразрешимост}
 
+Вече знаем, че на практика всички интересни въпроси за машини на Тюринг не са разрешими.
+Сега да видим какво можем да кажем за позитивната част на въпросите за машини на Тюринг.
+
 \begin{lemma}\label{lem:rice-shapiro:finite}
   \mynote{Това означава, че ако $\texttt{Code}(\Ss)$ е полуразрешим език, то всеки език $L_0 \in \Ss$ притежава краен подезик, който също принадлежи на $\Ss$.}
   Нека $\Ss$ е свойство на полуразрешимите езици.
   Ако съществува безкраен език $L_0 \in \Ss$, който няма крайно подмножество в $\Ss$,
-  то $\texttt{Code}(\Ss)$ не е полуразрешим език.  
+  то $\texttt{Code}(\Ss)$ {\em не е} полуразрешим език.  
 \end{lemma}
 \begin{hint}
   Нека $L_0 = \L(\M_0)$ като $L_0 \in \Ss$, но всеки краен подезик на $L_0$ не принадлежи на $\Ss$.
-  Ще докажем, че $L_{\texttt{diag}} \leq_m \texttt{Code}(\Ss)$.
-  Сега ще дефинираме тотална изчислима функция $f$, която при вход думата $\omega \in \{0,1\}^\star$ работи по следния начин:
+  Ще докажем, че:
+  \[\Ldiag \leq_m \texttt{Code}(\Ss).\]
+  Ще дефинираме тотална изчислима функция $f$, която при вход думата $\omega \in \{0,1\}^\star$ работи по следния начин:
   \begin{itemize}
   \item
     Ако $\omega$ не е код на машина на Тюринг, то $f(\omega) \df \omega$.
   \item
-    Ако $\omega$ е код на машината на Тюринг $\M_\omega$, то тогава $f(\omega) = \code{\M'}$,
+    Ако $\omega$ е код на машината на Тюринг $\M_\omega$, то тогава $f(\omega) \df \code{\M'}$,
     където $\M'$ работи така:
     \begin{itemize}
     \item 
@@ -42,27 +46,39 @@
   
   Заключаваме, че 
   \begin{align*}
-    & \M_\omega \text{ не приема }\omega \implies \omega \in L_{\texttt{diag}} \implies \code{\M'} \in \texttt{Code}(\Ss)\\
-    & \M_\omega \text{ приема }\omega \implies \omega \not\in L_{\texttt{diag}} \implies \code{\M'} \not\in \texttt{Code}(\Ss).
+    & \M_\omega \text{ не приема }\omega \implies \omega \in \Ldiag \implies \code{\M'} \in \texttt{Code}(\Ss)\\
+    & \M_\omega \text{ приема }\omega \implies \omega \not\in \Ldiag \implies \code{\M'} \not\in \texttt{Code}(\Ss).
   \end{align*}
   Понеже
-  \[\omega \in L_{\texttt{diag}} \iff f(\omega) \in \texttt{Code}(\Ss),\]
-  то $\texttt{Code}(\Ss)$ не е полуразрешим, защото ние знаем, че $L_{\texttt{diag}}$ не е полуразрешим.
+  \[\omega \in \Ldiag \iff f(\omega) \in \texttt{Code}(\Ss),\]
+  то $\texttt{Code}(\Ss)$ не е полуразрешим, защото от \Theorem{diagonal} ние знаем, че $\Ldiag$ не е полуразрешим.
 \end{hint}
 
 \begin{corollary}
-  Следните езици {\bf не} са полуразрешими:
+  За всяко от следните свойства $\Ss$ на полуразрешимите езици, 
+  $\texttt{Code}(\Ss)$ {\bf не} е полуразрешим език, където:
+  \mynote{Защо не можем да използваме \Lemma{rice-shapiro:finite} за да докажем, че свойството празнота не е полуразрешимо, както и свойството регулярност, разрешимост, полуразрешимост?}
   \begin{itemize}
-  \item 
-    $L = \{\code{\M} \mid \abs{\L(\M)} = \infty\}$;
   \item
-    $L = \{\code{\M} \mid \L(\M) = \Sigma^\star\}$;
+    $\Ss$ е свойството безкрайност, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }|\L(\M)| = \infty\}\]
+    не е полуразрешим;
   \item
-    $L = \{\code{\M} \mid \L(\M)\text{ не е разрешим}\}$;
+    $\Ss$ е свойството за пълнота, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и } \L(\M) = \Sigma^\star\}\]
+    не е полуразрешим;
   \item
-    $L = \{\code{\M} \mid \L(\M)\text{ не е полуразрешим}\}$;
+    $\Ss$ е свойството неразрешимост, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и $\L(\M)$ не е разрешим}\}\]
+    не е полуразрешим;
   \item
-    $L = \{\code{\M} \mid \L(\M)\text{ не е регулярен}\}$.
+    $\Ss$ е свойството неполуразрешимост, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и $\L(\M)$ не е полуразрешим}\}\]
+    не е полуразрешим;
+  \item
+    $\Ss$ е свойството нерегулярност, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и $\L(\M)$ не е регулярен}\}\]
+    не е полуразрешим.
   \end{itemize}
 \end{corollary}
 
@@ -72,13 +88,14 @@
   Тогава $\texttt{Code}(\Ss)$ не е полуразрешим език.
 \end{lemma}
 \begin{hint}
-  Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$.
+  Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$. Ще докажем, че
+  \[\Ldiag \leq_m \texttt{Code}(\Ss).\]
   Ще дефинираме тотална изчислима функция $f$, която при вход думата $\omega \in \{0,1\}^\star$ работи по следния начин:
   \begin{itemize}
   \item
     Ако $\omega$ не е код на машина на Тюринг, то $f(\omega) = \omega$.
   \item
-    Ако $\omega$ е код на машината на Тюринг $\M_\omega$, тогава $f(\omega)$ ще бъде код на машината на Тюринг $\hat{\M}$,
+    Ако $\omega$ е код на машината на Тюринг $\M_\omega$, тогава $f(\omega)$ ще бъде кода на машината на Тюринг $\hat{\M}$,
     която работи по следния начин:
     \begin{itemize}
     \item 
@@ -96,34 +113,47 @@
         ако $\hat{\M}$ не намери такава стъпка, то е ясно, че $\hat{\M}$ никога не завършва върху $\alpha$.
       \end{itemize}
     \end{itemize}
-    Получаваме, че:
-    \begin{align*}
-      \L(\hat{\M}) = 
-      \begin{cases}
-        L_2, & \text{ако $\M_\omega$ приема }\omega\\
-        L_1, & \text{ако $\M_\omega$ не приема }\omega.
-      \end{cases}
-    \end{align*}
   \end{itemize}
+  Съобразете сами, че получаваме следното:
+  \begin{align*}
+    \L(\hat{\M}) = 
+    \begin{cases}
+      L_2, & \text{ако $\M_\omega$ приема }\omega\\
+      L_1, & \text{ако $\M_\omega$ не приема }\omega.
+    \end{cases}
+  \end{align*}
   Заключаваме, че:
-  \[\omega \in L_{\texttt{diag}} \iff f(\omega) \in \texttt{Code}(\Ss),\]
+  \[\omega \in \Ldiag \iff f(\omega) \in \texttt{Code}(\Ss),\]
   защото $L_2 \not\in \Ss$, а $L_1 \in \Ss$.
-  Това означава, че ефективно можем да сведем въпрос за принадлежност в $L_{\texttt{diag}}$
+  Това означава, че ефективно можем да сведем въпрос за принадлежност в $\Ldiag$
   към въпрос за принадлежност в $\texttt{Code}(\Ss)$.
-  Следователно, ако $\texttt{Code}(\Ss)$ е полуразрешим език, то $L_{\texttt{diag}}$ е полуразрешим език, което е противоречие.  
+  Следователно, ако $\texttt{Code}(\Ss)$ е полуразрешим език, то $\Ldiag$ е полуразрешим език, което е противоречие.  
 \end{hint}
 
 \begin{corollary}
-  Следните езици {\bf не} са полуразрешими:
+  За всяко от следните свойства $\Ss$ на полуразрешимите езици, 
+  $\texttt{Code}(\Ss)$ {\bf не} е полуразрешим език, където:
   \begin{itemize}
-  \item 
-    $L = \{\code{\M} \mid \L(\M) \text{ е регулярен} \}$;
   \item
-    $L = \{\code{\M} \mid \L(\M) \text{ е безконтекстен} \}$;
+    $\Ss$ е свойството крайност, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }|\L(\M)| < \infty\}\]
+    не е полуразрешим;
   \item
-    $L = \{\code{\M} \mid \L(\M) \text{ е разрешим} \}$;
+    $\Ss$ е свойството празнота, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }\L(\M) = \emptyset\}\]
+    не е полуразрешим;
   \item
-    $L = \{\code{\M} \mid \abs{\L(\M)} = 42\}$.
+    $\Ss$ е свойството разрешимост, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }\L(\M) \text{ е разрешим} \}\]
+    не е полуразрешим;
+  \item
+    $\Ss$ е свойството безконтекстност, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }\L(\M) \text{ е безконтекстен} \}\]
+    не е полуразрешим;
+  \item
+    $\Ss$ е свойството регулярност, т.е. езикът
+    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }\L(\M) \text{ е регулярен} \}\]
+    не е полуразрешим.
   \end{itemize}
 \end{corollary}
 

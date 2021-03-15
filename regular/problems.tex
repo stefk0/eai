@@ -17,7 +17,7 @@
 
 \begin{problem}
   \mynote{\cite[стр. 84]{papadimitriou}}
-  При дадени езици $L$, $L'$ над азбуката $\Sigma$, да разгледаме:
+  При дадени езици $L$ и $M$ над азбуката $\Sigma$, да разгледаме:
   \begin{enumerate}[a)]
   \item
     $\texttt{Pref}(L) = \{\alpha \in \Sigma^\star \mid (\exists \beta \in \Sigma^\star)[\alpha\beta \in L]\}$;
@@ -35,16 +35,16 @@
     \mynote{right quotient of $L$ by $\omega$}
     $L/_\omega = \{\alpha \in \Sigma^\star \mid \alpha\omega \in L\}$;
   \item
-    $L/_{L'} = \{\alpha \in \Sigma^\star \mid (\exists \beta \in L')[\alpha\beta \in L ] \}$;
+    $L/_{M} = \{\alpha \in \Sigma^\star \mid (\exists \beta \in M)[\alpha\beta \in L ] \}$;
   \item
-    \mynote{right quotient of $L$ by $L'$}
-    $L^{-1}(L') = \{ \beta \mid (\exists \alpha \in L)[ \alpha\beta \in L']\}$;
+    \mynote{right quotient of $L$ by $M$}
+    $L^{-1}(M) = \{ \beta \mid (\exists \alpha \in L)[ \alpha\beta \in M]\}$;
   \item
     $\mbox{Max}(L) = \{\alpha \in \Sigma^\star \mid (\forall \beta\in\Sigma^\star)[\beta \neq \varepsilon\implies \alpha\beta \not\in L]\}$.
   \end{enumerate}
-  За всички тези езици, докажете, че са регулярни при условие, че $L$ и $L'$ са регулярни.
+  За всички тези езици, докажете, че са регулярни при условие, че $L$ и $M$ са регулярни.
   \mynote{Тази конструкция няма да бъде ефективна}
-  Освен това, докажете, че $L/L'$ е регулярен и при условието, че $L$ е регулярен, но $L'$ е произволен език над азбуката $\Sigma$.
+  Освен това, докажете, че $L/_{M}$ е регулярен и при условието, че $L$ е регулярен, но $M$ е произволен език над азбуката $\Sigma$.
 \end{problem}
 \begin{hint}
   \begin{enumerate}[a)]
