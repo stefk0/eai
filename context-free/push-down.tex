@@ -71,7 +71,7 @@
 \end{important}
 \begin{proof}
   % \mynote{Доказателството в \cite[стр. 117]{sipser3} не ми харесва}
-  \mynote{Тук е важно, че дефенирахме най-ляв извод в граматика.}
+  \mynote{Тук е важно, че дефинирахме най-ляв извод в граматика.}
   Нека е дадена безконтекстната граматика $G = \CFG$ в нормална форма на Чомски.
   Нашата цел е да построим стеков автомат
   \[P = \PDA,\] който разпознава $\L(G)$.
@@ -113,9 +113,9 @@
 
   Сега преминаваме към доказателствата на двете твърдения.
 
-  \begin{enumerate}[(a)]
-  \item
-    Индукция по дължината $\ell$ на извода $S \lderive{\ell} \alpha\gamma$.
+  % \begin{enumerate}[(a)]
+  % \item
+  За (а), индукция по дължината $\ell$ на извода $S \lderive{\ell} \alpha\gamma$.
     % \begin{itemize}
     % \item
       Нека $\ell = 0$. Този случай е тривиален, защото тогава $\alpha = \varepsilon$ и $\gamma = S$.
@@ -142,12 +142,11 @@
                                                             & \vdash^\star_P (p, \varepsilon, \underbrace{\gamma_1\gamma_2}_{\gamma}\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
       \end{align*}
     % \end{itemize}
-  \item
-    Индукция по броя на стъпките $\ell$ в изчислението на стековия автомат.
+  За (б), индукция по броя на стъпките $\ell$ в изчислението на стековия автомат.
     % \begin{itemize}
     % \item
     
-      Нека $\ell = 0$. Тогава е ясно, че единствената възможност $\alpha = \varepsilon$ и $\delta = \varepsilon$.
+      Нека $\ell = 0$. Тогава е ясно, че единствената възможност е $\alpha = \varepsilon$ и $\delta = \varepsilon$.
       Тогава $\varepsilon \derive{\star}_G \varepsilon$.
       % \item
       
@@ -197,7 +196,7 @@
       \end{prooftree}
     % \end{itemize}
   % \end{itemize}
-\end{enumerate}
+% \end{enumerate}
 \end{proof}
 
 \begin{important}
