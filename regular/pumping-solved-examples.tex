@@ -146,52 +146,47 @@
 \end{hint}
 \end{extra}
 
-\subsection*{Примери, за които лемата не е  приложима}
+\subsection*{Пример, за който лемата не е  приложима}
 
-\begin{problem}
-  \mynote{Например, $\{c\}^+\cdot\{a^nb^n\mid n\in\Nat\}\cup \{a,b\}^\star$}
-  Да се даде пример за език $L$, който {\bf не} е регулярен, но $P_{\text{reg}}(L)$.
-\end{problem}
+% Добре е да отбележим, че \hyperref[lem:pumping-reg]{Лемата за покачването} не задава пълен критерий за проверка за регулярност на език.
+Да напомним, че условието на \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
+\begin{center}
+  {\em ,,Aко $L$ е регулярен език, то е изпълнено $P_{\text{reg}}(L)$.''}
+\end{center}
+Сега ще видим, че можем да посочим език $L$, който не е регулярен, но въпреки това условието $P_{\text{reg}}(L)$.
+Това означава, че нямаме обратната посока на горната импликация и може да срещнем примери за езици, които макар и нерегулярни,
+да не можем да докажем тяхната нерегулярност с помощта на \hyperref[lem:pumping-reg]{Лемата за покачването}.
+По-късно ще видим един пълен критерий за проверка за регулярност на език.
 
 \begin{example}
-  Езикът $L = \{c^ka^nb^m\mid k,n,m \in \Nat\ \&\ k = 1\implies m = n\}$
-  {\bf не} е регулярен, но $P_{\text{reg}}(L)$.
+  Езикът
+  \[L = \{c\}^+\cdot\{a^nb^n\mid n\in\Nat\}\cup \{a\}^\star \cdot \{b\}^\star\]
+  {\bf не} е регулярен, но условието $P_{\text{reg}}(L)$ е изпълнено.
 \end{example}
 \begin{hint}
-  Да допуснем, че $L$ е регулярен.
-  Тогава ще следва, че 
+  \mynote{
+    За да бъде $P_{\text{reg}}(L)$ изпълнено, то трябва да покажем следното:
+    \begin{description}
+    \item[$(\exists)$]
+      Избираме числото $p \geq 1$.
+    \item[$(\forall)$]
+      Разглеждаме произволна $\alpha \in L$ и $\abs{\alpha} \geq p$.
+    \item[$(\exists)$]
+      Посочваме конкретно разбиване на думата $\alpha$ като $\alpha = xyz$ с $\abs{xy} \leq p$ и $\abs{y} \geq 1$.
+    \item[$(\forall)$]
+      За произволно $i$ трябва да покажем, че $xy^iz \in L$.
+    \end{description}
+  }
+  Ако допуснем, че $L$ е регулярен, то тогава ще следва, че 
   \[L_1 = L\cap \L(\mathbf{ca^\star b^\star}) = \{ca^nb^n \mid n\in\Nat\}\]
-  е регулярен,
-  но с лемата за разрастването лесно се вижда, че $L_1$ не е.
+  е регулярен, но с \hyperref[lem:pumping-reg]{Лемата за покачването} лесно се вижда, че $L_1$ не е.
 
-  Сега да проверим, че условието за покачване от \Lemma{pumping-reg} е изпълнено за $L$.
-  Да изберем константа $p = 2$.
+  Сега да проверим, че $P_{\text{reg}}(L)$ е изпълнено. Да изберем константа $p = 2$.
   Сега трябва да разгледаме всички думи $\alpha \in L$, $\abs{\alpha} \geq 2$
-  и за всяка $\alpha$ да посочим разбиване $xyz = \alpha$, за което са изпълнени трите свойства от лемата.
-  \mynote{Условията за $x,y,z$ са:
-    \begin{align*}
-      & \abs{xy} \leq 2\\
-      & \abs{y} \geq 1\\
-      & (\forall i\in\Nat)(xy^iz \in L)
-    \end{align*}}
-
-  \begin{itemize}
-  \item
-    Ако $\alpha = a^n$ или $\alpha = b^n$, $n\geq 2$, то е  очевидно, че можем да
-    намерим такова разбиване.
-  \item
-    $\alpha = a^nb^m$ и $n+m \geq 2$, $n \geq 1$.
-    Избираме $x = \varepsilon$, $y = a$, $z = a^{n-1}b^m$.
-  \item
-    $\alpha = ca^nb^n$, $n\geq 1$.
-    Избираме $x = \varepsilon$, $y = c$, $z = a^nb^n$.
-  \item
-    $\alpha = c^2a^nb^m$. 
-    Избираме $x = \varepsilon$, $y = c^2$, $z = a^nb^m$.
-  \item
-    $\alpha = c^ka^nb^m$, $k \geq 3$.
-    Избираме $x = \varepsilon$, $y = c$, $z = c^{k-1}a^nb^m$.
-  \end{itemize}
+  и за всяка $\alpha$ да посочим разбиване $xyz = \alpha$, за което $\abs{xy} \leq 2$, $\abs{y} \geq 1$ и $xy^iz \in L$ за всяко $i$.
+  Съобразете, че при всеки избор на думата $\alpha$, разбиването на $\alpha$
+  като $x = \varepsilon$, $y = \alpha\slice{0}$, $z = \alpha\slice{1..}$,
+  е такова, че $xy^iz \in L$ за всяко $i \in \Nat$.
 \end{hint}
 
 
