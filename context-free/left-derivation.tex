@@ -6,37 +6,28 @@
 
 За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-ляв извод} в граматиката $G$, $\alpha \lderive{\ell} \beta$, по следния начин:
 
-\begin{framed}
-\begin{figure}[H]
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{}
-      \RightLabel{\scriptsize{правило (0)}}
-      \UnaryInfC{$\alpha \lderive{0} \alpha$}
-    \end{prooftree}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{$A \to_G \alpha$}
-      \AxiomC{$\alpha \lderive{\ell} \beta$}
-      \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$A \lderive{\ell+1} \beta$}
-    \end{prooftree}
-  \end{subfigure}
-\center
-\begin{prooftree}
-  \AxiomC{$\alpha_1 \lderive{\ell_1} \beta_1$}
-  \AxiomC{$\beta_1 \in \Sigma^\star$}
-  \AxiomC{$\alpha_2 \lderive{\ell_2} \beta_2$}
-  \RightLabel{\scriptsize{правило (2)}}
-  \TrinaryInfC{$\alpha_1\alpha_2 \lderive{\ell_1+\ell_2}\beta_1\beta_2$}
-\end{prooftree}
-\caption{Правила за най-ляв извод в безконтекстна граматика.}
-\end{figure}
-  
-
-\end{framed}
+\begin{important}
+  \begin{figure}[H]
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{}
+        \RightLabel{\scriptsize{(0)}}
+        \UnaryInfC{$\alpha \lderive{0} \alpha$}
+      \end{prooftree}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{$A \to_G \alpha$}
+        \AxiomC{$\lambda \alpha \rho \lderive{\ell} \beta$}
+        \AxiomC{$\lambda \in \Sigma^\star$}
+        \RightLabel{\scriptsize{(1)}}
+        \TrinaryInfC{$\lambda A \rho \lderive{\ell+1} \beta$}
+      \end{prooftree}
+    \end{subfigure}
+    \caption{Правила за най-ляв извод в безконтекстна граматика.}
+  \end{figure}
+\end{important}
 
 
 \mynote{Единствената разлика между дефиницията на $\lderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_1 \in \Sigma^\star$.
@@ -71,15 +62,16 @@
   Имаме следното:
   \begin{prooftree}
     \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_1 \yield{< \ell} \beta_1$}
+    \AxiomC{$B_1 \yield{\ell_1} \beta_1$}
     \AxiomC{$\cdots$}
-    \AxiomC{$B_n \yield{< \ell} \beta_n$}
-    \QuaternaryInfC{$A \yield{\ell} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+    \AxiomC{$B_n \yield{\ell_n} \beta_n$}
+    \QuaternaryInfC{$A \yield{\ell} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$,}
   \end{prooftree}
+  където $\ell = 1+\max\{\ell_1,\dots,\ell_n\}$.
   Започваме така:
   \begin{prooftree}
     \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_1 \yield{< \ell} \beta_1$}
+    \AxiomC{$B_1 \yield{\ell_1} \beta_1$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_1 \lderive{^\star}\beta_1$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
@@ -88,7 +80,7 @@
   Продължаваме последователно за всяко $i < n$ правим да правим извода:
   \begin{prooftree}
     \AxiomC{$A \lderive{\star} \overbrace{\alpha_1\beta_1\cdots\alpha_i}^{\in\Sigma^\star}B_i\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_i \yield{< \ell} \beta_i$}
+    \AxiomC{$B_i \yield{\ell_i} \beta_i$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_i \lderive{^\star}\beta_i$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
@@ -97,7 +89,7 @@
   Завършваме със следния извод:
   \begin{prooftree}
     \AxiomC{$A \lderive{\star} \overbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n}^{\in\Sigma^\star} B_n\alpha_{n+1}$}
-    \AxiomC{$B_n \yield{< \ell} \beta_n$}
+    \AxiomC{$B_n \yield{\ell_n} \beta_n$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_n \lderive{\star}\beta_n$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
@@ -114,35 +106,60 @@
 
   За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-десен извод} в граматиката $G$, $\alpha \rderive{\ell} \beta$, по следния начин:
 
-  \begin{framed}
-  \begin{figure}[H]
-    \begin{subfigure}[b]{0.5\textwidth}
-      \begin{prooftree}
-        \AxiomC{}
-        \RightLabel{\scriptsize{правило (0)}}
-        \UnaryInfC{$\alpha \rderive{0} \alpha$}
-      \end{prooftree}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[b]{0.5\textwidth}
-      \begin{prooftree}
-        \AxiomC{$A \to_G \alpha$}
-        \AxiomC{$\alpha \rderive{\ell} \beta$}
-        \RightLabel{\scriptsize{правило (1)}}
-        \BinaryInfC{$A \rderive{\ell+1} \beta$}
-      \end{prooftree}
-    \end{subfigure}
-    \center
-\begin{prooftree}
-  \AxiomC{$\alpha_1 \rderive{\ell_1} \beta_1$}
-  \AxiomC{$\alpha_2 \rderive{\ell_2} \beta_2$}
-  \AxiomC{$\beta_2 \in \Sigma^\star$}
-  \RightLabel{\scriptsize{правило (2)}}
-  \TrinaryInfC{$\alpha_1\alpha_2 \rderive{\ell_1+\ell_2}\beta_1\beta_2$}
-\end{prooftree}
-\caption{Правила за най-десен извод в безконтекстна граматика.}
-\end{figure}
-\end{framed}
+
+  \begin{important}
+    \begin{figure}[H]
+      \begin{subfigure}[b]{0.5\textwidth}
+        \begin{prooftree}
+          \AxiomC{}
+          \RightLabel{\scriptsize{(0)}}
+          \UnaryInfC{$\alpha \rderive{0} \alpha$}
+        \end{prooftree}
+      \end{subfigure}
+      ~
+      \begin{subfigure}[b]{0.5\textwidth}
+        \begin{prooftree}
+          \AxiomC{$A \to_G \alpha$}
+          \AxiomC{$\lambda \alpha \rho \rderive{\ell} \beta$}
+          \AxiomC{$\rho \in \Sigma^\star$}
+          \RightLabel{\scriptsize{(1)}}
+          \TrinaryInfC{$\lambda A \rho \rderive{\ell+1} \beta$}
+        \end{prooftree}
+      \end{subfigure}
+      \caption{Правила за най-десен извод в безконтекстна граматика.}
+    \end{figure}
+  \end{important}
+
+  
+%   \begin{framed}
+%   \begin{figure}[H]
+%     \begin{subfigure}[b]{0.5\textwidth}
+%       \begin{prooftree}
+%         \AxiomC{}
+%         \RightLabel{\scriptsize{правило (0)}}
+%         \UnaryInfC{$\alpha \rderive{0} \alpha$}
+%       \end{prooftree}
+%     \end{subfigure}
+%     ~
+%     \begin{subfigure}[b]{0.5\textwidth}
+%       \begin{prooftree}
+%         \AxiomC{$A \to_G \alpha$}
+%         \AxiomC{$\alpha \rderive{\ell} \beta$}
+%         \RightLabel{\scriptsize{правило (1)}}
+%         \BinaryInfC{$A \rderive{\ell+1} \beta$}
+%       \end{prooftree}
+%     \end{subfigure}
+%     \center
+% \begin{prooftree}
+%   \AxiomC{$\alpha_1 \rderive{\ell_1} \beta_1$}
+%   \AxiomC{$\alpha_2 \rderive{\ell_2} \beta_2$}
+%   \AxiomC{$\beta_2 \in \Sigma^\star$}
+%   \RightLabel{\scriptsize{правило (2)}}
+%   \TrinaryInfC{$\alpha_1\alpha_2 \rderive{\ell_1+\ell_2}\beta_1\beta_2$}
+% \end{prooftree}
+% \caption{Правила за най-десен извод в безконтекстна граматика.}
+% \end{figure}
+% \end{framed}
 
 % \mynote{Интуитивно, $\yield{\star}$ е аналог на BFS, докато $\rderive{\star}$ е аналог на DFS като винаги се избира най-десния необходен клон.}
 

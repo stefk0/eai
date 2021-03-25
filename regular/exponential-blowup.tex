@@ -1,4 +1,4 @@
-\subsection{Експоненциална експлозия}\label{sect:regular:nfa:exponential-blowup}
+\section{Експоненциална експлозия}\label{sect:regular:nfa:exponential-blowup}
 \mynote{Тук следваме \cite[стр. 66]{khoussainov-nerode} и \cite[стр. 164]{compilers2}. В \cite[стр. 80]{shallit} има друг пример за НКА с $n$ състояния вместо $n+1$, но доказателството изглежда по-сложно.}
 \begin{proposition}
   Съществува НКА $\N$ с $n+1$ състояния, за който не съществува ДКА $\A$ с по-малко от $2^n$ състояния.
@@ -29,7 +29,7 @@
     \label{fig:nfa:exp}
   \end{figure}
   Лесно се съобразява, че за $n > 0$, недетерминирният краен автомат $\N$ на \Figure{nfa:exp} с $n+1$ на брой състояния разпознава езика
-  \[L = \{\beta a \gamma \in \{a,b\}^\star \mid |\gamma| = n-1\}.\]
+  \[L = \{\omega a \delta \in \{a,b\}^\star \mid |\delta| = n-1\}.\]
   Нека да съобразим, че не е възможно да съществува краен детерминиран автомат $\A = \FA$ разпознаващ същия език $L$ с по-малко от $2^n$ състояния.
 
   Да допуснем, че $|Q| < 2^n$. От принципа на Дирихле имаме, че съществуват две различни думи $\alpha$ и $\beta$ с дължина $n$,
@@ -37,25 +37,28 @@
   \mynote{Да напомним, че броят на всички думи с дължина $n$ над азбука с $k$ букви е $k^n$. В нашия случай, $k = 2$.}
   \[\delta^\star(\qstart,\alpha) = q = \delta^\star(\qstart,\beta).\]
 
-  Нека първата разлика в тези две думи е на позиция $i < n$.
+  Нека първата разлика в тези две думи е на позиция $i < n$, т.е. думите $\alpha$ и $\beta$ могат да се представят така:
+  \[\alpha = \omega \cdot \alpha \slice{i} \cdot \rho\ \text{ и } \beta = \omega \cdot \beta\slice{i} \cdot \delta.\]
   Без ограничение на общността, нека $\alpha\slice{i} = a$ и $\beta\slice{i} = b$.
   \begin{itemize}
   \item
+    \mynote{Тук $\omega = \varepsilon$.}
     Ако $i = 0$.
     Това означава, че $\alpha \in L$, но $\beta \not\in L$.
     Следователно състоянието $q$ е едновременно финално и нефинално. Това е противоречие.
   \item
+    \mynote{Съобразете, че тук $\abs{\omega} = i$ и $\abs{\delta} = n - i - 1$. Не е важно как разширяваме $\alpha$ и $\beta$ за да получим $\alpha_0$ и $\beta_0$. Тук за да бъдем конкретни сме избрали просто $a^i$. Важното е това разширение да има дължина $i$.}
     Ако $i > 0$. Да разгледаме следните думи:
     \begin{align*}
       & \alpha_0 = \alpha \cdot a^{i}\\
       & \beta_0 = \beta \cdot a^{i}.
     \end{align*}
-    Тогава $\alpha_0 = \omega \cdot a \cdot \gamma$, където $|\gamma| = n-1$. Аналогично,
-    $\beta_0 = \rho \cdot b \cdot \delta$, където $|\delta| = n-1$.
+    Тогава $\alpha_0 = \omega \cdot a \cdot \delta_0$, където $|\delta_0| = n-1$. Аналогично,
+    $\beta_0 = \rho \cdot b \cdot \delta_1$, където $|\delta_1| = n-1$.
     Така отново получаваме, че $\alpha_0 \in L$, но $\beta_0 \not\in L$.
     И в този случай получаваме противоречие, защото
-    \[\delta^\star(\qstart,\alpha_0) = q = \delta^\star(\qstart,\beta_0)\]
-    и състоянието $q$ трябва да е едновременно финално и нефинално.
+    \[\delta^\star(\qstart,\alpha_0) = p = \delta^\star(\qstart,\beta_0)\]
+    и състоянието $p$ трябва да е едновременно финално и нефинално.
   \end{itemize}  
 \end{hint}
 

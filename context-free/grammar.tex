@@ -1,4 +1,4 @@
-\section{Извод в безконтекстна граматика}\label{sect:context-free:derive}
+\section{Безконтекстни граматики}\label{sect:context-free:derive}
 \index{граматика!безконтекстна}
 \mynote{В \cite{papadimitriou} дефиницията е различна. Там $\Sigma \subseteq V$. На англ. {\em context-free grammar}. Други срещани наименования на български са
   {\em контекстно-свободна}, {\em контекстно-независима}. Тук всички правила са от вида $A \to \alpha$, където $\alpha \in (V\cup\Sigma)^\star$. В частност имаме, че:
@@ -15,34 +15,27 @@
 имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
 Да повторим дефиницията на релацията $\alpha \derive{\ell}_G \beta$ от Раздел~\ref{sect:unrestricted-grammar} в частния случай, когато граматиката е безконтекстна.
 
-\begin{figure}[H]
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{}
-      \RightLabel{\scriptsize{правило (0)}}
-      \UnaryInfC{$\alpha \derive{0}_G \alpha$}
-    \end{prooftree}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{$A \to_G \gamma$}
-      \AxiomC{$\gamma \derive{\ell}_G \beta$}
-      \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$A \derive{\ell+1}_G \beta$}
-    \end{prooftree}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.5\textwidth}
-    \centering
-    \begin{prooftree}
-      \AxiomC{$\alpha_1 \derive{\ell_1}_G \beta_1$}
-      \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
-      \AxiomC{$\alpha_1,\alpha_2 \in (V\cup\Sigma)^+$}
-      \RightLabel{\scriptsize{правило (2)}}
-      \TrinaryInfC{$\alpha_1\cdot\alpha_2 \derive{\ell_1+\ell_2}_G \beta_1\cdot \beta_2$}
-    \end{prooftree}
-  \end{subfigure}
-\end{figure}
+\begin{important}
+  \begin{figure}[H]
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{}
+        \RightLabel{\scriptsize{правило (0)}}
+        \UnaryInfC{$\alpha \derive{0}_G \alpha$}
+      \end{prooftree}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{$(A,\alpha) \in R$}
+        \AxiomC{$\lambda\alpha\rho \derive{\ell}_G \beta$}
+        \RightLabel{\scriptsize{правило (1)}}
+        \BinaryInfC{$\lambda A \rho \derive{\ell+1}_G \beta$}
+      \end{prooftree}
+    \end{subfigure}
+    \caption{Правила за извод в безконтекстна граматика}
+  \end{figure}
+\end{important}
 
 
 
@@ -55,22 +48,22 @@
 Нека официално да обявим, че един език $L$ се нарича {\bf безконтекстен}, ако съществува безконтекстна граматика $G$, за която 
 $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
-\begin{important}
-\begin{remark}
-  Очевидно е, че всяка регулярна граматика е безконтекстна. Следователно, 
-  {\em всеки регулярен език е безконтекстен.}
-\end{remark}
-\end{important}
+% \begin{important}
+% \begin{remark}
+%   Очевидно е, че всяка регулярна граматика е безконтекстна. Следователно, 
+%   {\em всеки регулярен език е безконтекстен.}
+% \end{remark}
+% \end{important}
 
 \begin{remark}
   Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме свойството:
   \begin{prooftree}
     \AxiomC{$\alpha \derive{\ell_1} \rho B \delta$}
     \AxiomC{$B \derive{\ell_2} \beta$}
-    \RightLabel{\scriptsize{правило (3)}}
+    \RightLabel{\scriptsize{правило (2)}}
     \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\beta\delta$,}
   \end{prooftree}
-  което ще означим като правило (3), защото ще го използваме често.
+  което ще означим като правило (2), защото ще го използваме често.
 \end{remark}
 
 \begin{extra}
@@ -90,11 +83,11 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \AxiomC{}
     \RightLabel{\scriptsize{(0)}}
     \UnaryInfC{$\varepsilon \derive{0}_G \varepsilon$}
-    \RightLabel{\scriptsize{(2)}}
+    \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{1}_G \varepsilon$}
-    \RightLabel{\scriptsize{(3)}}
-    \BinaryInfC{$S \derive{2}_G A$}
     \RightLabel{\scriptsize{(2)}}
+    \BinaryInfC{$S \derive{2}_G A$}
+    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat2})}}
     \BinaryInfC{$AS \derive{2}_G AA$}
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{3}_G AA$}
@@ -108,10 +101,10 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \AxiomC{$A \to_G ab$}
     \AxiomC{}
     \RightLabel{\scriptsize{(0)}}
-    \UnaryInfC{$b \derive{0}_G b$}
-    \RightLabel{\scriptsize{(2)}}
+    \UnaryInfC{$abb \derive{0}_G abb$}
+    \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$Ab \derive{1}_G abb$}
-    \RightLabel{\scriptsize{(2)}}
+    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat2}})}
     \BinaryInfC{$aAb \derive{1}_G aabb$}
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{2}_G aabb$}
@@ -129,10 +122,10 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$S \derive{3}_G AA$}
     \AxiomC{$A \derive{2}_G aabb$}
-    \RightLabel{\scriptsize{(3)}}
+    \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$S \derive{5}_G aabbA$}
     \AxiomC{$A \derive{1}_G ab$}
-    \RightLabel{\scriptsize{(3)}}
+    \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
   Можем да приложим правилата за извод в различен ред и пак да получим същия краен резултат.
@@ -140,13 +133,13 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$S \to_G AS$}
     \AxiomC{$A \derive{2} aabb$}
-    \RightLabel{\scriptsize{(3)}}
+    \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$S \derive{3}_G aabbS$}
-    \RightLabel{\scriptsize{(3)}}
+    \RightLabel{\scriptsize{(2)}}
     \AxiomC{$S \derive{2}_G A$}
     \BinaryInfC{$S \derive{5}_G aabbA$}
     \AxiomC{$A \derive{1}_G ab$}
-    \RightLabel{\scriptsize{(3)}}
+    \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
 \end{example}
@@ -165,60 +158,76 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \begin{itemize}
 \item
   Нека $\ell = 0$. Тогава $\beta_1 = \gamma_1$ и $\beta_2 = \gamma_2$.
+% \item
+%   Нека $\ell = 1$. Без ограничение на общността, според \Proposition{grammar:alternative-def}, да предположим, че сме приложили правило в $\gamma_1$.
+%   Получаваме извода
+%   \mynote{Разсъждаваме аналогично, ако $\gamma_2 = \delta A \rho$.}
+%   \begin{prooftree}
+%     \AxiomC{$\overbrace{\delta A \rho}^{\gamma_1} \derive{0} \delta A \rho$}
+%     \AxiomC{$A \to_G \alpha$}
+%     \LeftLabel{\scriptsize{(\Proposition{grammar:alternative-def})}}
+%     \BinaryInfC{$\gamma_1 \derive{1} \delta\alpha\rho$}
+%     \AxiomC{$\gamma_2 \derive{0} \gamma_2$}
+%     \LeftLabel{\scriptsize{правило (2)}}
+%     \BinaryInfC{$\gamma_1\gamma_2 \derive{1} \underbrace{\delta\alpha\rho}_{\beta_1}\underbrace{\gamma_2}_{\beta_2}$}
+%   \end{prooftree}
 \item
-  Нека $\ell = 1$. Без ограничение на общността, според \Proposition{grammar:alternative-def}, да предположим, че сме приложили правило в $\gamma_1$.
-  Получаваме извода
-  \mynote{Разсъждаваме аналогично, ако $\gamma_2 = \delta A \rho$.}
+  Нека $\ell > 0$. Тогава да разгледаме следната ситуация:
+  % \begin{prooftree}
+  %   \AxiomC{$\vdots$}
+  %   \LeftLabel{\scriptsize{$(\ell_1 > 0)$}}
+  %   \UnaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta$}
+  %   \AxiomC{$\vdots$}
+  %   \RightLabel{\scriptsize{$(\ell_2 > 0)$}}
+  %   \UnaryInfC{$\delta \derive{\ell_2} \beta$}
+  %   \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
+  %   \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1+\ell_2} \beta$}
+  % \end{prooftree}
+  % Понеже $\ell_1 < \ell$, то можем да приложим \IndHyp, според което можем да разбием $\delta$ като $\delta = \delta_1\delta_2$ и да получим извода:
   \begin{prooftree}
-    \AxiomC{$\overbrace{\delta A \rho}^{\gamma_1} \derive{0} \delta A \rho$}
-    \AxiomC{$A \to_G \alpha$}
-    \LeftLabel{\scriptsize{(\Proposition{grammar:alternative-def})}}
-    \BinaryInfC{$\gamma_1 \derive{1} \delta\alpha\rho$}
-    \AxiomC{$\gamma_2 \derive{0} \gamma_2$}
-    \LeftLabel{\scriptsize{правило (2)}}
-    \BinaryInfC{$\gamma_1\gamma_2 \derive{1} \underbrace{\delta\alpha\rho}_{\beta_1}\underbrace{\gamma_2}_{\beta_2}$}
+    \AxiomC{$(A,\alpha) \in R$}
+    \AxiomC{$\lambda\alpha\rho \derive{\ell-1}\beta$}
+    \BinaryInfC{$\underbrace{\lambda A \rho}_{\gamma_1\gamma_2} \derive{\ell} \beta$}
   \end{prooftree}
-\item
-  Нека $\ell > 1$. Тогава да разгледаме следната ситуация:
+
+  Без ограничение на общността, нека $A$ е част от $\gamma_1$. Това означава, че
+  $\gamma_1 = \lambda A \rho_1$. Получаваме следния извод:
   \begin{prooftree}
-    \AxiomC{$\vdots$}
-    \LeftLabel{\scriptsize{$(\ell_1 > 0)$}}
-    \UnaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta$}
-    \AxiomC{$\vdots$}
-    \RightLabel{\scriptsize{$(\ell_2 > 0)$}}
-    \UnaryInfC{$\delta \derive{\ell_2} \beta$}
-    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
-    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1+\ell_2} \beta$}
+    \AxiomC{$(A,\alpha) \in R$}
+    \AxiomC{$\overbrace{\lambda\alpha\rho_1}^{\gamma_3}\gamma_2 \derive{\ell-1}\beta$}
+    \UnaryInfC{$\gamma_3 \derive{\ell_1'} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
+    \BinaryInfC{$\underbrace{\lambda A \rho_1}_{\gamma_1} \derive{\ell'_1+1} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
   \end{prooftree}
-  Понеже $\ell_1 < \ell$, то можем да приложим \IndHyp, според което можем да разбием $\delta$ като $\delta = \delta_1\delta_2$ и да получим извода:
-  \begin{prooftree}
-    \AxiomC{$\gamma_1 \derive{\ell'_1} \delta_1$}
-    \AxiomC{$\gamma_2 \derive{\ell''_1} \delta_2$}
-    \LeftLabel{\scriptsize{($\ell'_1+\ell''_1 = \ell_1$)}}
-    \RightLabel{\scriptsize{правило (2)}}
-    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \underbrace{\delta_1\delta_2}_{\delta}$}
-  \end{prooftree}
-  Понеже $\ell_2 < \ell$, то отново можем да приложим \IndHyp и да получим извода:
-  \begin{prooftree}
-    \AxiomC{$\delta_1 \derive{\ell'_2} \beta_1$}
-    \AxiomC{$\delta_2 \derive{\ell''_2} \beta_2$}
-    \LeftLabel{\scriptsize{($\ell'_2+\ell''_2 = \ell_2$)}}
-    \RightLabel{\scriptsize{правило (2)}}
-    \BinaryInfC{$\underbrace{\delta_1\delta_2}_{\delta} \derive{\ell_2} \underbrace{\beta_1\beta_2}_{\beta}$}
-  \end{prooftree}
-  Сега можем да обобщим всичко със следния извод:
-  \begin{prooftree}
-    \AxiomC{$\gamma_1 \derive{\ell'_1} \delta_1$}
-    \AxiomC{$\gamma_2 \derive{\ell''_1} \delta_2$}
-    \LeftLabel{\scriptsize{(2)}}
-    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta_1\delta_2$}
-    \AxiomC{$\delta_1 \derive{\ell'_2} \beta_1$}
-    \AxiomC{$\delta_2 \derive{\ell''_2} \beta_2$}
-    \RightLabel{\scriptsize{(2)}}
-    \BinaryInfC{$\delta_1\delta_2 \derive{\ell_2} \beta_1\beta_2$}
-    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
-    \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1+\ell_2} \beta_1\beta_2$}
-  \end{prooftree}
+  
+  
+  % \begin{prooftree}
+  %   \AxiomC{$\gamma_1 \derive{\ell'_1} \delta_1$}
+  %   \AxiomC{$\gamma_2 \derive{\ell''_1} \delta_2$}
+  %   \LeftLabel{\scriptsize{($\ell'_1+\ell''_1 = \ell_1$)}}
+  %   \RightLabel{\scriptsize{правило (2)}}
+  %   \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \underbrace{\delta_1\delta_2}_{\delta}$}
+  % \end{prooftree}
+  % Понеже $\ell_2 < \ell$, то отново можем да приложим \IndHyp и да получим извода:
+  % \begin{prooftree}
+  %   \AxiomC{$\delta_1 \derive{\ell'_2} \beta_1$}
+  %   \AxiomC{$\delta_2 \derive{\ell''_2} \beta_2$}
+  %   \LeftLabel{\scriptsize{($\ell'_2+\ell''_2 = \ell_2$)}}
+  %   \RightLabel{\scriptsize{правило (2)}}
+  %   \BinaryInfC{$\underbrace{\delta_1\delta_2}_{\delta} \derive{\ell_2} \underbrace{\beta_1\beta_2}_{\beta}$}
+  % \end{prooftree}
+  % Сега можем да обобщим всичко със следния извод:
+  % \begin{prooftree}
+  %   \AxiomC{$\gamma_1 \derive{\ell'_1} \delta_1$}
+  %   \AxiomC{$\gamma_2 \derive{\ell''_1} \delta_2$}
+  %   \LeftLabel{\scriptsize{(2)}}
+  %   \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta_1\delta_2$}
+  %   \AxiomC{$\delta_1 \derive{\ell'_2} \beta_1$}
+  %   \AxiomC{$\delta_2 \derive{\ell''_2} \beta_2$}
+  %   \RightLabel{\scriptsize{(2)}}
+  %   \BinaryInfC{$\delta_1\delta_2 \derive{\ell_2} \beta_1\beta_2$}
+  %   \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
+  %   \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1+\ell_2} \beta_1\beta_2$}
+  % \end{prooftree}
 \end{itemize}
 \end{proof}
 
@@ -245,7 +254,13 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   Всеки регулярен език е безконтекстен.
 \end{proposition}
 \begin{hint}
-  Индукция по построението на регулярните езици.
+  Можем да подходим поне по два начина.
+  \begin{itemize}
+  \item
+    Да проведем индукция по построението на регулярните езици и да докажем така, че всеки регулярен език е безконтекстен.
+  \item
+    Просто да съобразим, че всяка регулярна граматика е всъщност и безконтекстна.
+  \end{itemize} 
 \end{hint}
 
 

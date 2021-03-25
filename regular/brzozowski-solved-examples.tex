@@ -1,19 +1,23 @@
 \subsection{Примерни задачи}
 
-\mynote{Тук $\mathbf{r}^+ \df \mathbf{r} \cdot \mathbf{r}^\star$.}
+\mynote{Тук $\bm{r}^+ \df \bm{r} \cdot \bm{r}^\star$.}
 \begin{extra}
 \begin{problem}
   Постройте автомат $\B$ по метода на Бжозовски за регулярния език
-  \[L = \L(\mathbf{((a+b)^+\cdot a)^\star}).\]
+  \[L = \L(\bm{((a+b)^+\cdot a)^\star}).\]
 \end{problem}  
 \begin{solution}
   \begin{multicols}{2}
-  \begin{itemize}
+    \begin{itemize}
+      
 \item
   Ясно е, че ще започнем от началното състояние $\hat{L}$.
   Удобно е да имаме предвид следното представяне
+  \mynote{Очевидно е, че $\bm{r}^\star = \bm{\varepsilon} + \bm{r}^+$. Веднага се вижда, че $\hat{L}$ ще бъде и финално състояние, защото $\varepsilon \in L$.}
   \begin{align*}
-    L & = \{\varepsilon\} \cup \{a,b\}^+ a L\\
+    L & = (\{a,b\}^+ \cdot \{a\})^\star \\
+      & = \{\varepsilon\} \cup (\{a,b\}^+ \cdot \{a\})^+\\
+      & = \{\varepsilon\} \cup \{a,b\}^+ a L\\
       & = \{\varepsilon\} \cup \{a,b\} \cdot \{a,b\}^\star a L\\
       & = \{\varepsilon\} \cup a\{a,b\}^\star aL \cup b\{a,b\}^\star aL
   \end{align*}
@@ -28,6 +32,7 @@
     & \delta(\hat{L},b) \df \hat{M}. & \comment\text{ защото }b^{-1}(L) = M
   \end{align*}
 \item
+  \mynote{Веднага се вижда, че $\hat{M}$ няма да бъде финално състояние.}
   За следващата стъпка е удобно да представим езика $M$ по следния начин:
   \begin{align*}
     M & = \{a,b\}^\star aL\\
@@ -41,13 +46,14 @@
     & a^{-1}(M) = L \cup M\\
     & b^{-1}(M) = M.
   \end{align*}
+  \mynote{Обърнете внимание, че $L \subset N$, но $\hat{L}$ и $\hat{N}$ са различни състояния.}
   Нека да положим $N \df L \cup M$.
   Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
   Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
   Това означава, че имаме ново състояние $\hat{N}$ и тогава
   \begin{align*}
     & \delta(\hat{M},a) \df \hat{N} & \comment\text{ защото }a^{-1}(M) = N\\
-    & \delta(\hat{M},b) \df \hat{N} & \comment\text{ защото }b^{-1}(M) = M.
+    & \delta(\hat{M},b) \df \hat{M} & \comment\text{ защото }b^{-1}(M) = M.
   \end{align*}
 \item
   Да разгледаме следното представяне:
@@ -102,11 +108,11 @@
     Постройте автомат $\B$ по метода на Бжозовски, който рапознава регулярния език
     \[L = \L(\mathbf{a\cdot(a+b)^\star\cdot b}).\]
   \end{problem}  
-\end{extra}
-\ExtraMaterial{
 \begin{solution}
   \begin{multicols}{2}
-  \begin{itemize}
+    \begin{itemize}
+    \item
+      Започваме с началното състояние $\hat{L}$, за което е ясно, че няма да бъде финално.
   \item 
     $a^{-1}(L) = \{a,b\}^\star b \df M$.
     Имаме, че $M \neq L$, защото $b \in M$, но $b \not\in L$.
@@ -115,13 +121,20 @@
       & \delta(\hat{L}, a) \df \hat{M} & \comment\text{ защото }a^{-1}(L) = M\\
       & \delta(\hat{L},b) \df \hat{\emptyset} & \comment\text{ защото }b^{-1}(L) = \emptyset\\
     \end{align*}
+    $\emptyset$ е съвсем нормален език и напълно нормално да имаме състояние $\hat{\emptyset}$.
   \item    
     За по-нататък ще е удобно да представим $M$ по следния начин:
     \begin{align*}
-      M & = a\cdot \{a,b\}^\star \cdot b \cup b\cdot \{a,b\}^\star \cdot b \cup \{b\}\\
+      M & = \{a,b\}^\star b \\
+        & = \{a,b\}^+ b \cup \{b\}\\
+        & = a\cdot \{a,b\}^\star \cdot b \cup b\cdot \{a,b\}^\star \cdot b \cup \{b\}\\
         & = aM \cup bM \cup \{b\}.
     \end{align*}
-    Сега е ясно, че $a^{-1}(M) = M$, а $b^{-1}(M) = \{\varepsilon\} \cup M$.
+    Сега е ясно, че
+    \begin{align*}
+      & a^{-1}(M) = M\\
+      & b^{-1}(M) = \{\varepsilon\} \cup M.
+    \end{align*}
     Нека да положим $N \df \{\varepsilon\} \cup M$.
     Имаме, че $N \neq L$ и $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in L$ и $\varepsilon \not\in M$.
     Тогава
@@ -165,30 +178,29 @@
       (N) edge [bend right=30] node [above] {$a$} (M)
       (N) edge [loop above]    node [above] {$b$} (N);
     \end{tikzpicture}
-    \caption{Автомат за езика $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$ по метода на Бжозовски.}
+    \caption{\scriptsize{Автомат за езика $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$ по метода на Бжозовски.}}
   \end{figure}
   \end{multicols}
 \end{solution}
-}
+\end{extra}
 
 \begin{extra}
-\begin{problem}
-  Постройте автомат по метода на Бжозовски за регулярния език
-  \[L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно и }\card{\omega}{b} = 1\}.\]
-\end{problem}
-\end{extra}
-\ExtraMaterial{
-    \begin{multicols}{2}
+  \begin{problem}
+    Постройте автомат по метода на Бжозовски за регулярния език
+    \[L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно и }\card{\omega}{b} = 1\}.\]
+  \end{problem}
   \begin{solution}
-    \begin{align*}
-        a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и }\card{\omega}{b} = 1\}\\
-                  & \df M.
-      \end{align*}
-      Ясно е, че $M \neq L$, защото например $aab \in L$, но $aab \not\in M$.
-      \begin{align*}
-        b^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е четно и } \card{\omega}{b} = 0\}\\
-                  & \df N.
-      \end{align*}
+    \begin{multicols}{2}
+        Да видим какви преходи можем да направим от началното състояние $\hat{L}$.
+        \begin{align*}
+          a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и }\card{\omega}{b} = 1\}\\
+                    & \df M.
+        \end{align*}
+        Ясно е, че $M \neq L$, защото например $aab \in L$, но $aab \not\in M$.
+        \begin{align*}
+          b^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е четно и } \card{\omega}{b} = 0\}\\
+                    & \df N.
+        \end{align*}        
       Ясно е, че $N \neq M$ и $N \neq L$, защото $aa \in N$, но $aa \notin M$ и $aa \notin L$.
       \begin{align*}
         a^{-1}(M) & = L;\\
@@ -225,10 +237,9 @@
     \end{tikzpicture}
     \caption{Автомат, който приема думи с четен брой $a$ и точно едно $b$, получен чрез метода на Бжозовски.}
   \end{figure}
-  \end{solution}
-
-  \end{multicols}
-}
+\end{multicols}
+\end{solution}
+\end{extra}
 
 
 \begin{extra}

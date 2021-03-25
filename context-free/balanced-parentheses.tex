@@ -43,8 +43,8 @@
   \item
     Нека $\omega = \varepsilon$. Тогава е ясно, че $\omega$ е балансирана дума.
   \item
-    Нека $\omega \in \{a\} \cdot \L^\ell_G(S) \cdot \{b\}$. Тогава $\omega = a \omega_1 b$ и от \IndHyp имаме, че
-    $\omega_1$ е балансирана.
+    Нека $\omega \in \{a\} \cdot \L^\ell_G(S) \cdot \{b\}$. Тогава $\omega = a \omega_1 b$ и $\omega_1 \in \L^\ell_G(S)$.
+    От \IndHyp имаме, че $\omega_1$ е балансирана.
     Лесно се съобразява, че $\omega$ също е балансирана.
   \item
     Нека $\omega \in \L^\ell_G(S) \cdot \L^\ell_G(S)$. Тогава $\omega = \omega_1 \omega_2$, такива че $\omega_1,\omega_2 \in \L^\ell_G(S)$.
@@ -71,13 +71,14 @@
     Поради тази причина, трябва да сме по-внимателни и да разгледаме два допълнителни случая.
     \begin{itemize}
     \item 
-      \mynote{Тук $\omega_1 \neq \varepsilon$ и $\omega_1 \neq \alpha$.}
+      \mynote{Тук $\omega_1 \neq \varepsilon$ и $\omega_1 \neq \alpha$. Например, $ab$ е същински префикс на $abab$, който е балансирана дума.}
       Нека $\omega$ има {\em същински} префикс $\omega_1$, който да е балансирана дума.
       Понеже $\omega$ е балансирана дума, лесно се съобразява, че $\omega = \omega_1\omega_2$, $\omega_2$ също е балансирана дума.
       Сега можем да приложим \IndHyp за $\omega_1$ и $\omega_2$ и да получим, че 
       $\omega_1 \in \L_G(S)$ и $\omega_2 \in \L_G(S)$.
       Ясно е, че $\omega \in \L_G(S)$.
     \item
+      \mynote{Например, $aabb$ няма същински префикс, който да е балансирана дума.}
       Нека $\omega$ да няма същински префикс $\omega_1$, който е балансирана дума.
       Ясно е, че тогава $\omega = a\beta b$, за някое $\beta$. Да видим защо $\beta$ е балансирана дума.
       Ако $\beta$ е балансирана, то ще можем да приложим \IndHyp за $\beta$ и ще сме готови.

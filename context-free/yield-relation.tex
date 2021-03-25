@@ -64,7 +64,7 @@
     \item
       $\ell-1 = \sum^k_{i=1} \ell_i$.
     \end{itemize}
-    Получаваме следното:
+    Понеже $\ell_i < \ell$ за всяко $i = 1,\dots,k$, получаваме следното:
     \begin{prooftree}
       \AxiomC{$X \to_G X_0\cdots X_k$}
       \AxiomC{$X_0 \derive{\ell_0} \beta_0$}
@@ -99,7 +99,7 @@
       \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_0,\dots,\ell_n\})$}}
       \QuaternaryInfC{$X \yield{\ell} \underbrace{\gamma_0\cdots\gamma_n}_{\gamma}$}
     \end{prooftree}
-    Понеже $\ell_0 < \ell, \dots, \ell_n < \ell$, получаваме, че:
+    Понеже $\ell_i < \ell$ за всяко $i = 0,\dots,n$, получаваме следното:
     \begin{prooftree}
       \AxiomC{$X \to_G X_0 \cdots X_{n}$}
       \AxiomC{$X_0 \yield{\ell_0} \gamma_0$}
@@ -147,7 +147,7 @@
   \begin{example}
     Да разгледаме граматика $G_0$ с правила
     \begin{align*}
-      & S \to S + S\ |\ S * S\ |\ (S)\ |\ V\\
+      & S \to S + S\ |\ S * S\ |\ (S)\\
       & N \to 0\ |\ 1\ |\ \dots\ |\ 9
     \end{align*}
 
@@ -161,7 +161,7 @@
       \Tree [.$S$ [.$S$ [.$N$ $5$ ] ] $*$ [.$S$ [.$S$ [.$N$ $6$ ] ] $+$ [.$S$ [.$N$ $2$ ] ] ] ]
       \hskip 0.6in
       \Tree [.$S$ [.$S$ [.$S$ [.$N$ $5$ ] ] $*$ [.$S$ [.$N$ $6$ ] ] ]  $+$  [.$S$ [.$N$ $2$ ] ] ]
-      \caption{Две синтактични в граматиката $G_0$ за думата $5 * 6 + 2$.}
+      \caption{Две синтактични дървета в граматиката $G_0$ за думата $5 * 6 + 2$.}
     \end{figure}
 
     Искаме да модифицираме $G_0$, така че $*$ да има по-висок приоритет спрямо $+$.
@@ -172,6 +172,7 @@
       & N \to 0\ |\ 1\ |\ \dots\ |\ 9
     \end{align*}
     Сега думата $5 * 6 + 2$ има само едно дърво на извод.
+    \mynote{$*$ има по-висок приоритет от $+$, защото $*$ се среща по-близо до листата.}
     Тук операцията $*$ е с по-висок приоритет в сравнение с операцията $+$.
     \begin{figure}[H]
       \centering

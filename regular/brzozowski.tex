@@ -109,8 +109,8 @@
 \end{hint}
 
 \mynote{Тук е важно да отбележим, че все още не знаем, че $\B$ е краен.}
-\begin{proposition}\label{pro:brzozowski:language}
-  За даден език $L$, нека $\B$ е детерменираният автомат построен по метода на Бжозовски.
+\begin{proposition}\label{pr:brzozowski:language}
+  За даден език $L$, нека $\B$ е детерминираният автомат построен по метода на Бжозовски.
   Тогава $L = \L(\B)$.
 \end{proposition}
 \begin{hint}
@@ -118,7 +118,8 @@
   \begin{align*}
     \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L) & \comment\text{от \Problem{language-pullback}}\\
     & \iff \varepsilon\in M\ \&\ \hat{M} = \delta^\star(\hat{L},\alpha) & \comment{M \df \alpha^{-1}(L)\text{ от \Proposition{regular:brzozowski:delta}}}\\
-                 & \iff \delta^\star(\qstart,\alpha) \in F. & \comment \qstart \df \hat{L} \text{ и }\varepsilon \in \alpha^{-1}(L)
+                 & \iff \delta^\star(\qstart,\alpha) \in F & \comment \qstart \df \hat{L} \text{ и }\varepsilon \in \alpha^{-1}(L)\\
+                 & \iff \alpha \in \L(\B).
   \end{align*}
 \end{hint}
 
