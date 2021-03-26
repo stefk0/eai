@@ -8,6 +8,10 @@
 % \usepackage{gitinfo2}
 % \usepackage{todonotes}
 \usepackage{marginnote}
+% \usepackage{changepage}
+
+\usepackage{titlesec}
+\newcommand{\sectionbreak}{\clearpage}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ИНДЕКСИ
@@ -144,7 +148,7 @@
 \newcommand{\Algorithm}[1]{{\em Алгоритъм~(\ref{alg:#1})}}
 \newcommand{\Remark}[1]{{\em Забележка~(\ref{rem:#1})}}
 
-\newcommand{\ExtraMaterial}[1]{{\scriptsize #1}}
+% \newcommand{\ExtraMaterial}[1]{{\scriptsize #1}}
 
 \newif\ifhints
 \newif\ifcode                   % Използва се само за един пример на си++

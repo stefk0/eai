@@ -72,8 +72,7 @@
                                                                                                             & \abs{y} \geq 1\ \land\\
                                                                                                             & \abs{xy} \leq p\ \land\\
                                                                                                             & (\forall i\in\Nat)[xy^iz \in L]]].
-  \end{align*}
-  
+  \end{align*}  
   Така условието на \hyperref[lem:pumping-reg]{Лемата за покачването} представлява твърдението:
   \begin{center}
     {\em ,,Aко $L$ е регулярен език, то е изпълнено $P_{\text{reg}}(L)$.''}
@@ -85,8 +84,12 @@
   \begin{center}
     {\em ,,Ако $P_{\text{reg}}(L)$ не е изпълнено, то $L$ не е регулярен език.''}
   \end{center}
+  Или еквивалентно,
+  \begin{center}
+    {\em ,,Ако $\neg P_{\text{reg}}(L)$ е изпълнено, то $L$ не е регулярен език.''}
+  \end{center}
   \mynote{Използваме, че $\neg \exists \forall \exists \forall (\dots) \equiv \forall \exists \forall \exists \neg(\dots)$}
-  Отрицанието на $P_{\text{reg}}(L)$ преставлява формулата
+  Сега $\neg P_{\text{reg}}(L)$ преставлява формулата
   \begin{align*}
     (\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[\ & \alpha \neq xyz\ \lor\\
                                                                                                             & \abs{y} \not\geq 1\ \lor\\
@@ -110,12 +113,12 @@
   \item[($\forall$)]
     вземем произволна константа $p \geq 1$,
   \item[($\exists$)]
-    за нея намерим дума $\alpha \in L$, такава че $\abs{\alpha} \geq p$ и 
+    за нея намерим конкретна дума $\alpha \in L$, такава че $\abs{\alpha} \geq p$ и 
   \item[($\forall$)]
     докажем, че за всяко нейно разбиване на три части $x,y,z$, със свойствата
     $\abs{y} \geq 1$ и $\abs{xy} \leq p$,
   \item[($\exists$)]
-    можем да намерим естествено число $i$, за което $xy^iz \not\in L$,
+    можем да посочим естествено число $i$, за което $xy^iz \not\in L$,
   \end{description}
   то можем да заключим, че езикът $L$ не е регулярен.
 \end{proof}
@@ -123,9 +126,11 @@
 \begin{example}\label{ex:regular:pumping:an-bn}
   Да видим защо езикът $L = \{a^nb^n \mid n\in \Nat\}$ не е регулярен.
   \mynote{Това е важен пример. По-късно ще видим, че този език е безконтекстен.}
-  Формално трябва докажем верността на следната формула:
-  {\small
-    \[(\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \land \abs{y} \geq 1 \land \abs{xy} \leq p) \to (\exists i\in\Nat)[xy^iz \not\in L]\ ].\]}
+  За да направим това като използваме \hyperref[cor:pumping-reg]{контрапозицията на лемата за покачването}, то трябва да докажем, че
+  $\neg P_{\text{reg}}(L)$ е изпълнено.
+  % Формално трябва докажем верността на следната формула:
+  % {\small
+  %   \[(\forall p \geq 1)(\exists \alpha \in L)[\ \abs{\alpha} \geq p\ \land\ (\forall x,y,z\in\Sigma^\star)[(\alpha = xyz \land \abs{y} \geq 1 \land \abs{xy} \leq p) \to (\exists i\in\Nat)[xy^iz \not\in L]\ ].\]}
   Както обяснихме по-горе, доказателството следва стъпките:
   \mynote{    
     \begin{description}

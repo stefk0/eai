@@ -103,6 +103,8 @@
   \end{solution}
 \end{extra}
 
+\clearpage
+
 \begin{extra}
   \begin{problem}
     Постройте автомат $\B$ по метода на Бжозовски, който рапознава регулярния език
@@ -185,6 +187,7 @@
 \end{extra}
 
 \begin{extra}
+
   \begin{problem}
     Постройте автомат по метода на Бжозовски за регулярния език
     \[L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно и }\card{\omega}{b} = 1\}.\]
@@ -201,6 +204,7 @@
           b^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е четно и } \card{\omega}{b} = 0\}\\
                     & \df N.
         \end{align*}        
+
       Ясно е, че $N \neq M$ и $N \neq L$, защото $aa \in N$, но $aa \notin M$ и $aa \notin L$.
       \begin{align*}
         a^{-1}(M) & = L;\\
@@ -238,7 +242,7 @@
     \caption{Автомат, който приема думи с четен брой $a$ и точно едно $b$, получен чрез метода на Бжозовски.}
   \end{figure}
 \end{multicols}
-\end{solution}
+  \end{solution}
 \end{extra}
 
 
@@ -250,8 +254,6 @@
     Ние направихме това като построихме автомат за $L$ и доказахме, че той разпознава $L$.
     Сега пък постройте автомат за $L$ по метода на Бжозовски.
   \end{problem}  
-\end{extra}
-\ExtraMaterial{
   \begin{solution}
     \begin{multicols}{2}
       За целта ще ни трябва алтернативна дефиниция на $\bin{\alpha}$.
@@ -345,7 +347,7 @@
 \end{figure}
 \end{multicols}
 \end{solution}
-}
+\end{extra}
 
 \begin{extra}
 \begin{example}\label{ex:regular:brzozowski:an-bn}
