@@ -187,23 +187,21 @@
 \end{extra}
 
 \begin{extra}
-
-  \begin{problem}
-    Постройте автомат по метода на Бжозовски за регулярния език
-    \[L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно и }\card{\omega}{b} = 1\}.\]
-  \end{problem}
+\begin{problem}
+  Постройте автомат по метода на Бжозовски за регулярния език
+  \[L = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a}\text{ е четно и }\card{\omega}{b} = 1\}.\]
+\end{problem}
   \begin{solution}
     \begin{multicols}{2}
-        Да видим какви преходи можем да направим от началното състояние $\hat{L}$.
-        \begin{align*}
-          a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и }\card{\omega}{b} = 1\}\\
-                    & \df M.
-        \end{align*}
-        Ясно е, че $M \neq L$, защото например $aab \in L$, но $aab \not\in M$.
-        \begin{align*}
-          b^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е четно и } \card{\omega}{b} = 0\}\\
-                    & \df N.
-        \end{align*}        
+\begin{align*}
+        a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и }\card{\omega}{b} = 1\}\\
+                  & \df M.
+      \end{align*}
+      Ясно е, че $M \neq L$, защото например $aab \in L$, но $aab \not\in M$.
+      \begin{align*}
+        b^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е четно и } \card{\omega}{b} = 0\}\\
+                  & \df N.
+      \end{align*}
 
       Ясно е, че $N \neq M$ и $N \neq L$, защото $aa \in N$, но $aa \notin M$ и $aa \notin L$.
       \begin{align*}
@@ -243,8 +241,8 @@
   \end{figure}
 \end{multicols}
   \end{solution}
-\end{extra}
 
+\end{extra}
 
 \begin{extra}
   \begin{problem}
