@@ -4,15 +4,14 @@
 Накратко, $\B$ има най-малкия възможен брой състояния измежду всички детерминирани крайни автомати, които разпознават $L$. За да успеем да видим това, първо трябва да се подготвим.
 
 Нека $\A$ е ДКА. За всяко състояние $q$ на $\A$ да разгледаме езика
-\[\L_\A(q) \df \{\omega \in \Sigma^\star \mid \delta^\star_\A(q,\alpha) \in F^\A\}.\]
-В частност имаме, че:
-\[\L(\A) = \L_\A(\qstart).\]
+\[\L_\A(q) \df \{\omega \in \Sigma^\star \mid \delta^\star(q,\alpha) \in F\}.\]
+В частност имаме, че $\L(\A) = \L_\A(\qstart)$.
 Без ограничение на общността, нека приемем, че винаги разглеждаме само свързани ДКА $\A$, т.е.
 всяко състояние е достижимо от началното.
-\mynote{Тук използваме, че $\delta_\A$ е тотална функция.}
-Нека за всяка дума $\alpha$ да положим $q_\alpha \df \delta^\star_\A(\qstart,\alpha)$.
+\mynote{Тук използваме, че $\delta$ е тотална функция. За някои състояния $p$ може да съществуват безкрайно много думи $\alpha$, за които $q_\alpha = p$.}
+Нека за всяка дума $\alpha$ да положим $q_\alpha \df \delta^\star(\qstart,\alpha)$.
 Понеже $\A$ е свързан, то всяко състояние на $\A$ може да се разглежда като $q_\alpha$ за някоя дума $\alpha$.
-\mynote{Ясно е, че за някои състояния $p$ съществуват безкрайно много думи $\alpha$, за които $q_\alpha = p$.}
+
 \begin{proposition}\label{pr:well-defined-pullback}
   Нека $L = \L(\A)$. Тогава за всяка дума $\alpha$ е изпълнено, че:
   \[\L_\A(q_\alpha) = \alpha^{-1}(L).\]
@@ -20,18 +19,28 @@
 \begin{proof}
   За произволна дума $\gamma$ имаме следните еквивалентности:
   \begin{align*}
-    \gamma \in \L_\A(q_\alpha) & \iff \delta^\star(q_\alpha,\gamma) \in F\\
+    \gamma \in \L_\A(q_\alpha) & \iff \delta^\star(q_\alpha,\gamma) \in F & \comment \text{от деф. на }\L_\A(q_\alpha)\\
                                & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment q_\alpha \df \delta^\star(\qstart,\alpha)\\
                                & \iff \delta^\star(\qstart,\alpha\gamma) \in F & \comment\text{\Proposition{dfa:delta-star}}\\
-                               & \iff \alpha\gamma \in \L(\A)\\
+                               & \iff \alpha\gamma \in \L(\A) & \comment \text{деф. на }\L(\A)\\
                                & \iff \gamma \in \alpha^{-1}(L). & \comment{L = \L(\A)}
   \end{align*}
 \end{proof}
 
-\begin{problem}
-  Нека $\B$ е автомат на Бжозовски за език $L$. Докажете, че за произволно състояние $\hat{M}$ на $\B$,
+\begin{proposition}
+  Нека $\B$ е автомат на Бжозовски за езика $L$. Тогава за произволно състояние $\hat{M}$ на $\B$,
   \[\L_\B(\hat{M}) = M.\]
-\end{problem}
+\end{proposition}
+\begin{proof}
+  Понеже за произволна дума $\alpha$ имаме еквивалентностите
+  \begin{align*}
+    \alpha \in \L_\B(\hat{M}) & \iff \delta^\star_\B(\hat{M},\alpha) \in F^\B\\
+                              & \iff \varepsilon \in \alpha^{-1}(M)\\
+                              & \iff \alpha \in M
+  \end{align*}
+  заключаваме, че $\L_\B(\hat{M}) = M$.
+\end{proof}
+
 
 \begin{proposition}\label{pr:surjective-cardinality}
   Нека $A$ и $B$ са множества, като $A$ е крайно, за които съществува \emph{сюрективна} функция $f: A \to B$.
@@ -45,7 +54,7 @@
   Докажете, че $g$ е инективна.
 \end{hint}
 
-\mynote{Тази лема ни казва, че автоматът на Бжозовски има възможно най-малкия брой състояния.}
+\mynote{Тази лема ни казва, че автоматът на Бжозовски има възможно най-малкия брой състояния измежду всички ДКА за $L$.}
 \begin{lemma}\label{lem:brzozowski:surjective}
   Нека $L$ е регулярен език и $\A$ е ДКА, който разпознава $L$,
   а $\B$ е автоматът на Бжозовски за $L$. Тогава $|Q^\B| \leq |Q^\A|$.
@@ -103,19 +112,21 @@
   \end{theorem}  
 \end{framed}
 \begin{proof}
+  \mynote{С други думи, ако имаме два минимални ДКА за $L$, то можем да получим единия автомат от други чрез внимателно преименуване на състоянията.}
   Вече знаем, че автоматът $\B$, построен по метода на Бжозовски за $L$, има минималния възможен брой състояния.
   Нека $\A$ е друг ДКА разпознаващ $L$ и $|Q^\A| = |Q^\B|$. Трябва да докажем, че $\A \cong \B$.
-  
-  Ясно е, $\A$ е свързан.
-  Понеже функцията $f:Q^\A \to Q^\B$, дефинирана като $f(q) = \L_\A(q)$ е сюрективна и $|Q^\A| = |Q^\B|$, то от \Proposition{surjection-bijection}
-  имаме, че $f$ е всъщност биекция.
+  Ясно е, че $\A$ е свързан автомат, т.е. всяко състояние $p$ на $\A$ е от вида $p = q_\alpha$.
+  Да разгледаме функцията $f:Q^\A \to Q^\B$, където
+  \[f(p) \df \L_\A(p).\]
+  От \Proposition{well-defined-pullback} знаем, че $f(q_\alpha) = \L_\A(q_\alpha) = \alpha^{-1}(L)$ следва, че $f$ е сюрективна.
+  Понеже $|Q^\A| = |Q^\B|$, то от \Proposition{surjection-bijection} имаме, че $f$ е всъщност биекция.
   Остава да видим защо $\A \cong_f \B$.
   Да напомним, че състоянията на $Q^\A$ можем да ги разглеждаме като $q_\alpha$ и тогава $\L_\A(q_\alpha) = \alpha^{-1}(L)$ от \Proposition{well-defined-pullback}.
   \begin{itemize}
   \item
     За началното състояние имаме, че:
     \begin{align*}
-      f(\qstart) & = f(q_\varepsilon) & \comment{\qstart = q_\varepsilon}\\
+      f(\qstart^\A) & = f(q_\varepsilon) & \comment{\qstart^\A = q_\varepsilon}\\
                  & = \hat{L}. & \comment{\varepsilon^{-1}(L) = L}
     \end{align*}    
   \item
