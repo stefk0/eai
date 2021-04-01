@@ -18,7 +18,7 @@
     ~
     \begin{subfigure}[b]{0.5\textwidth}
       \begin{prooftree}
-        \AxiomC{$A \to_G \alpha$}
+        \AxiomC{$(A,\alpha) \in R$}
         \AxiomC{$\lambda \alpha \rho \lderive{\ell} \beta$}
         \AxiomC{$\lambda \in \Sigma^\star$}
         \RightLabel{\scriptsize{(1)}}
@@ -106,7 +106,6 @@
 
   За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-десен извод} в граматиката $G$, $\alpha \rderive{\ell} \beta$, по следния начин:
 
-
   \begin{important}
     \begin{figure}[H]
       \begin{subfigure}[b]{0.5\textwidth}
@@ -119,7 +118,7 @@
       ~
       \begin{subfigure}[b]{0.5\textwidth}
         \begin{prooftree}
-          \AxiomC{$A \to_G \alpha$}
+          \AxiomC{$(A,\alpha) \in R$}
           \AxiomC{$\lambda \alpha \rho \rderive{\ell} \beta$}
           \AxiomC{$\rho \in \Sigma^\star$}
           \RightLabel{\scriptsize{(1)}}

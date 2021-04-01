@@ -86,8 +86,10 @@
 \begin{hint}
   Индукция по дължината на думата $\alpha$, като използвате, че
   \[(\alpha b)^{-1}(L) = b^{-1}(\alpha^{-1}(L)).\]
+\end{hint}
+\begin{proof}
   Твърдението очевидно е изпълнено за $\alpha = \varepsilon$.
-  Да примем, че за думи $\alpha$ с дължина $n$ е изпълено, че
+  Да примем, че за думи $\alpha$ с дължина $n$ е изпълена еквивалентността:
   \begin{equation}
     \label{eq:13}
     N = \alpha^{-1}(L) \iff \delta^\star(\hat{L},\alpha) = \hat{N}.
@@ -95,7 +97,7 @@
   Да разгледаме дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
   \begin{align*}
     \delta^\star(\hat{L},\beta a) & = \delta(\delta^\star(\hat{L},\beta),a) & \comment{\text{от деф.}}\\
-                                  & =\delta(\hat{M},a) & \comment{\text{нека }\hat{M} = \delta^\star(\hat{L},\beta)}\\
+                                  & =\delta(\hat{M},a) & \comment{\text{нека }\hat{M} \df \delta^\star(\hat{L},\beta)}\\
                                   & = \hat{N}.
   \end{align*}
   Свойство (\ref{eq:13}) приложено за $\beta$ ни казва, че
@@ -106,14 +108,14 @@
   \begin{align*}
     \delta^\star(\hat{L},\beta a) = \hat{N} \iff N = a^{-1}(\beta^{-1}(L)) = \alpha^{-1}(L).
   \end{align*}
-  
-\end{hint}
+\end{proof}
 
-\mynote{Тук е важно да отбележим, че все още не знаем, че $\B$ е краен. В \Example{regular:brzozowski:an-bn} ще видим един детерминиран безкраен автомат за език, който не е регулярен.}
+
 \begin{proposition}\label{pr:brzozowski:language}
   За даден език $L$, нека $\B$ е детерминираният автомат построен по метода на Бжозовски.
   Тогава $L = \L(\B)$.
 \end{proposition}
+\mynote{Тук е важно да отбележим, че все още не знаем дали $\B$ има крайно много състояния. В \Example{regular:brzozowski:an-bn} ще видим един детерминиран безкраен автомат за език, който не е регулярен.}
 \begin{hint}
   Съобразете, че имаме следните еквивалентности:
   \begin{align*}
