@@ -14,7 +14,7 @@
   \item
     $a^{-1}(\emptyset) = \emptyset$;
   \item
-    $a^{-1}(\{\varepsilon\}) = \{\varepsilon\}$;
+    $a^{-1}(\{\varepsilon\}) = \emptyset$;
   \item
     $a^{-1}(\{b\}) =
     \begin{cases}
@@ -62,10 +62,10 @@
 който разпознава $L$. Ако $L$ е регулярен, то $\B$ ще бъде детерминиран краен автомат,
 но ако $L$ не е регулярен, то $\B$ ще бъде детерминиран \emph{безкраен} автомат.
 Конструкцията на автомата $\B$ е следната:
-\mynote{Да напомним, че имаме свойството
-  \[\alpha \in L \iff \varepsilon \in \alpha^{-1}(L).\]
-  Все още не ясно, че ако $L$ е регулярен, то $Q$ е крайно множество. Това ще видим след малко.
-}
+% \mynote{Да напомним, че имаме свойството
+%   \[\alpha \in L \iff \varepsilon \in \alpha^{-1}(L).\]
+%   Все още не ясно, че ако $L$ е регулярен, то $Q$ е крайно множество. Това ще видим след малко.
+% }
 \begin{itemize}
 \item
   Състоянията $Q$ ще бъдат от вида $\hat{M}$, за $M \subseteq \Sigma^\star$, където:
@@ -80,33 +80,34 @@
 \end{itemize}
 
 \begin{proposition}\label{pr:regular:brzozowski:delta}
-  За всяка дума $\alpha$ е изпълнено, че:
-  \[N = \alpha^{-1}(L) \iff \delta^\star(\hat{L},\alpha) = \hat{N}.\]
+  Нека $\B$ е автомата на Бжозовски за езика $L$.
+  За всяка дума $\alpha$ и всяко състояние $\hat{M} \in Q^\B$ е изпъленено:
+  \[N = \alpha^{-1}(M) \iff \delta^\star(\hat{M},\alpha) = \hat{N}.\]
 \end{proposition}
 \begin{hint}
   Индукция по дължината на думата $\alpha$, като използвате, че
-  \[(\alpha b)^{-1}(L) = b^{-1}(\alpha^{-1}(L)).\]
+  \[(\alpha b)^{-1}(M) = b^{-1}(\alpha^{-1}(M)).\]
 \end{hint}
 \begin{proof}
   Твърдението очевидно е изпълнено за $\alpha = \varepsilon$.
   Да примем, че за думи $\alpha$ с дължина $n$ е изпълена еквивалентността:
   \begin{equation}
     \label{eq:13}
-    N = \alpha^{-1}(L) \iff \delta^\star(\hat{L},\alpha) = \hat{N}.
+    N = \alpha^{-1}(M) \iff \delta^\star(\hat{M},\alpha) = \hat{N}.
   \end{equation}
   Да разгледаме дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
   \begin{align*}
-    \delta^\star(\hat{L},\beta a) & = \delta(\delta^\star(\hat{L},\beta),a) & \comment{\text{от деф.}}\\
-                                  & =\delta(\hat{M},a) & \comment{\text{нека }\hat{M} \df \delta^\star(\hat{L},\beta)}\\
-                                  & = \hat{N}.
+    \delta^\star(\hat{M},\beta a) & = \delta(\delta^\star(\hat{M},\beta),a) & \comment{\text{от деф.}}\\
+                                  & =\delta(\hat{K},a) & \comment{\text{нека }\hat{K} \df \delta^\star(\hat{M},\beta)}\\
+                                  & = \hat{N}. & \comment N = a^{-1}(K)
   \end{align*}
   Свойство (\ref{eq:13}) приложено за $\beta$ ни казва, че
-  \[\delta^\star(\hat{L},\beta) = \hat{M} \iff \beta^{-1}(L) = M.\]
+  \[\delta^\star(\hat{M},\beta) = \hat{K} \iff \beta^{-1}(M) = K.\]
   От дефиницията на $\delta$ имаме, че
-  \[\delta(\hat{M},a) = \hat{N} \iff N = a^{-1}(M).\]
+  \[\delta(\hat{K},a) = \hat{N} \iff N = a^{-1}(K).\]
   Накрая заключаваме, че
   \begin{align*}
-    \delta^\star(\hat{L},\beta a) = \hat{N} \iff N = a^{-1}(\beta^{-1}(L)) = \alpha^{-1}(L).
+    \delta^\star(\hat{M},\beta a) = \hat{N} \iff N = a^{-1}(\beta^{-1}(M)) = \alpha^{-1}(M).
   \end{align*}
 \end{proof}
 
@@ -125,6 +126,7 @@
                  & \iff \alpha \in \L(\B).
   \end{align*}
 \end{hint}
+
 
 %%% Local Variables:
 %%% mode: latex
