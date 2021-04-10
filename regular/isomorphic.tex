@@ -5,45 +5,93 @@
 Нека са дадени автоматите
 $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', \delta_2, F_2)$.
 Казваме, че $\A_1$ и $\A_2$ са {\bf изоморфни}, което означаваме с $\A_1 \cong \A_2$, ако
-съществува функция $f: Q_1\to Q_2$, за която:
+съществува {\em биективна} функция $f: Q_1\to Q_2$, за която:
+% \mynote{С други думи, автоматът $\A_2$ може да се получи от автомата $\A_1$ с преименуване на състоянията, като внимаваме да запазим свойствата на автомата, т.е. начално отива в начално, финални отиват във финални и }
+\mynote{
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=60pt,scale=0.8,every node/.style={scale=0.8}]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[state]                  (1)              {$q$};
+        \node[state]                  (2) [right of=1] {$p$};
+
+        \node[state]                  (3) [below of=1] {\scriptsize{$f(q)$}};
+        \node[state]                  (4) [below of=2] {\scriptsize{$f(p)$}};
+        
+        \path 
+        (1) edge [bend left=15]  node [above] {$a$} (2)
+        (3) edge [bend right=15] node [below] {$a$} (4)
+        (1) edge [dashed, bend right=15] node [left]  {$f$} (3)
+        (2) edge [dashed, bend left=15]  node [right] {$f$} (4);
+      \end{tikzpicture}
+}
 \begin{enumerate}[(1)]
-\item
-  $f$ е биекция;
 \item
   $f(\qstart') = \qstart''$;
 \item
   $q \in F_1 \iff f(q) \in F_2$;
 \item
-  $(\forall a\in\Sigma)(\forall q\in Q_1)[\ f(\delta_1(q,a)) = \delta_2(f(q),a)\ ]$.
+  $\delta_1(q,a) = p\ \iff\ \delta_2(f(q),a) = f(p)$.
 \end{enumerate}
 Ще казваме, че $f$ задава изоморфизъм на $\A_1$ върху $\A_2$ и ще означаваме $\A_1 \cong_f \A_2$ или $f:\A_1 \cong \A_2$.
 
 \begin{proposition}
-  Нека $\A_1 \cong_f \A_2$. Тогава за всяка дума $\alpha$ и произволно състояние $q \in Q_1$ е изпъленено, че
+  Нека $\A_1 \cong_f \A_2$. Тогава
+  % за всяка дума $\alpha$ и произволно състояние $q \in Q_1$ е изпъленено, че
+  % \begin{equation}
+  %   \label{eq:3}
+  %   f(\delta^\star_1(q,\alpha)) = \delta^\star_2(f(q), \alpha).
+  % \end{equation}
   \begin{equation}
     \label{eq:3}
-    f(\delta^\star_1(q,\alpha)) = \delta^\star_2(f(q), \alpha).
+    \delta^\star_1(q,\alpha) = p\ \iff\ \delta^\star_2(f(q), \alpha) = f(p).
   \end{equation}
 \end{proposition}
+\begin{hint}
+  \mynote{Опитайте се сами да докажете това твърдение!}
+  Индукция по дължината на думата $\alpha$.
+\end{hint}
 \begin{proof}
-  Както винаги, ще докажем Свойство (\ref{eq:3}) с индукция по дължината на думата $\alpha$.
+  % Както винаги, ще докажем Свойство (\ref{eq:3}) с индукция по дължината на думата $\alpha$.
   \begin{itemize}
   \item 
-    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Тогава:
-    \begin{align*}
-      f(\delta^\star_1(q,\varepsilon)) & = f(q) & \comment{\text{от деф. на }\delta^\star_1}\\
-                                           & = \delta^\star_2(f(q), \varepsilon). & \comment{\text{от деф. на }\delta^\star_2}
-    \end{align*}
+    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Ясно е, че Свойство (\ref{eq:3})
+    е изпълнено за $\varepsilon$ защото $\delta^\star_1(q,\varepsilon) = q$ и съответно
+    $\delta^\star_2(f(q),\varepsilon) = f(q)$ за произволно състояние $q \in Q_1$.
+    % \[\delta^\star_1(q,\varepsilon) = q \]
+    % \begin{align*}
+    %   \delta^\star_1(q,\varepsilon)) & = f(q) & \comment{\text{от деф. на }\delta^\star_1}\\
+    %                                        & = \delta^\star_2(f(q), \varepsilon). & \comment{\text{от деф. на }\delta^\star_2}
+    % \end{align*}
   \item
-    Да приемем, че (\ref{eq:3}) е изпълнено за думи с дължина $n$.
+    Да приемем, че Свойство (\ref{eq:3}) е изпълнено за думи с дължина $n$.
   \item
     Да разгледаме произволна дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta c$ и $|\beta| = n$. Тогава:
+    \[\delta^\star_1(q,\beta c) = p \iff \delta_1(\underbrace{\delta^\star_1(q,\beta)}_{r}, c) = p.\]
+    Понеже $f$ е изоморфизъм, то
+    \[\delta_1(r,c) = p\ \iff\ \delta_2(f(r),c) = f(p).\]
+    От \IndHyp за Свойство (\ref{eq:3}) имаме, че:
+    \[\delta^\star_1(q,\beta) = r \iff \delta^\star_2(f(q),\beta) = f(r).\]
+    Комбинираме тези две еквивалентности и получаваме следното:
     \begin{align*}
-      f(\delta^\star_1(q,\beta c)) & = f(\delta_1(\delta^\star_1(q,\beta), c)) & \comment{\text{от деф. на }\delta^\star_1}\\
-                                   & = \delta_2( f(\delta^\star_1(q,\beta)), c) & \comment{f\text{ е изоморфизъм}}\\
-                                   & = \delta_2( \delta^\star_2(f(q),\beta), c) & \comment{\text{от И.П. за }\beta}\\
-                                   & = \delta^\star_2(f(q), \beta c) & \comment{\text{от деф. на }\delta^\star_2}.
+      \delta^\star_1(q,\beta c) = p & \iff \delta_1(\underbrace{\delta^\star_1(q,\beta)}_{r}, c) = p\\
+                                    & \iff \delta_1(r,c) = p\\
+                                    & \iff \delta_2(f(r),c) = f(p)\\
+                                    & \iff \delta_2(\delta^\star_2(f(q),\beta),c) = f(p)\\
+                                    & \iff \delta^\star(f(q),\beta c) = f(p).
     \end{align*}
+    
+    % \begin{align*}
+    %   \delta^\star_1(q,\beta c) = p & \iff \delta_1(\delta^\star_1(q,\beta), c) = p\\
+    %                                 & \iff 
+    % \end{align*}
+
+    
+    % \begin{align*}
+    %   f(\delta^\star_1(q,\beta c)) & = f(\delta_1(\delta^\star_1(q,\beta), c)) & \comment{\text{от деф. на }\delta^\star_1}\\
+    %                                & = \delta_2( f(\delta^\star_1(q,\beta)), c) & \comment{f\text{ е изоморфизъм}}\\
+    %                                & = \delta_2( \delta^\star_2(f(q),\beta), c) & \comment{\text{от И.П. за }\beta}\\
+    %                                & = \delta^\star_2(f(q), \beta c) & \comment{\text{от деф. на }\delta^\star_2}.
+    % \end{align*}
   \end{itemize}
 \end{proof}
 
@@ -56,9 +104,9 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
   \mynote{Лесно можем да съобразим, че в общия случай нямаме обратната посока на това твърдение.}
   Нека $\A_1 \cong_f \A_2$. Тогава имаме следните еквивалентности:
   \begin{align*}
-    \alpha \in \L(\A_1) & \iff \delta^\star_1(\qstart',\alpha) \in F_1 & \comment\text{деф. на }\L(\A_1)\\
-                       & \iff f(\delta^\star_1(\qstart',\alpha)) \in F_2 & \comment{f\text{ е изоморфизъм}}\\
-                       & \iff \delta^\star_2(f(\qstart'),\alpha) \in F_2 & \comment{\text{от (\ref{eq:3})}}\\
+    \alpha \in \L(\A_1) & \iff \delta^\star_1(\qstart',\alpha) = p \in F_1 & \comment\text{деф. на }\L(\A_1)\\
+                       & \iff \delta^\star_2(f(\qstart'),\alpha)) = f(p) \in F_2 & \comment{\text{Свойство ref{eq:3}}}\\
+                       % & \iff \delta^\star_2(f(\qstart'),\alpha) \in F_2 & \comment{\text{от (\ref{eq:3})}}\\
                        & \iff \delta^\star_2(\qstart'',\alpha) \in F_2 & \comment{f(\qstart') \df \qstart''}\\
                        & \iff \alpha \in \L(\A_2). & \comment\text{деф. на }\L(\A_2)
   \end{align*}

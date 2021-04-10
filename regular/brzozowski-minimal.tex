@@ -102,6 +102,7 @@
   \[A_i \df \{a_j \in A \mid g(a_j) = b_i\}.\]
   Щом $g$ е сюрекция, то $A_i \neq \emptyset$ за всеки индекс $i < n$.
   Понеже $g$ е функция, то $A_i \cap A_j = \emptyset$ за всеки два различни индекса $i$ и $j$.
+  \mynote{Да напомним формулата $|A\cup B| = |A| + |B| + |A \cap B|$. Просто в нашия случай $|A \cap B| = 0$.}
   Това означава, че
   \[n = |A| = |\bigcup_{i<n} A_i| = \sum_{i<n}|A_i|.\]
   Оттук следва, че щом за всяко $i$ имаме, че $|A_i| \neq 0$, то $|A_i| = 1$.
@@ -141,22 +142,55 @@
                         & \iff \hat{M} \in F^\B. & \comment\text{ за }M = \alpha^{-1}(L)
     \end{align*}
   \item
-    Остава да докажем, че за произволна буква $b$ е изпълнено, че:
-    \[f(\delta_\A(q_\alpha,b)) = \delta_\B(f(q_\alpha),b).\]
+    Остава да докажем, че за произволна буква $b$ и произволни състояния $q,p \in Q_1$ е изпълнено, че:
+    \[\delta_\A(q,b) = p\ \iff\ \delta_\B(f(q),b) = f(p).\]
+    Понеже всяко състояние на $\A$ може да се запише като $q_\alpha$ за някое $\alpha$, то можем да запишем горния ред и така:
+    \[\delta_\A(q_\alpha,b) = q_{\alpha b}\ \iff\ \delta_\B(f(q_{\alpha}),b) = f(q_{\alpha b}).\]
     Да разгледаме следните езици:
     \begin{align*}
       & N \df \alpha^{-1}(L)\\
       & M \df b^{-1}(N) = (\alpha b)^{-1}(L).
-    \end{align*}    
-    Да напомним, че от конструкцията на автомата $\B$ знаем, че:
-    \[\delta_\B(\hat{N},b) = \hat{M}.\]
-    От \Proposition{well-defined-pullback} имаме, че $f(q_\alpha) = \hat{N}$. Също така имаме равенствата:
-    \begin{align*}
-      f(\delta_\A(q_\alpha,b)) & = f(q_{\alpha b}) & \comment{q_{\alpha b} = \delta_\A(q_\alpha,b)}\\
-                               & = \hat{M}. & \comment{M = (\alpha b)^{-1}(L)}
     \end{align*}
-    Заключаваме, че
-    \[\underbrace{f(\delta_\A(q_\alpha,b))}_{\hat{M}} = \delta_\B(\underbrace{f(q_\alpha)}_{\hat{N}},b).\]
+    От \Proposition{well-defined-pullback} имаме, че:
+    \begin{align*}
+      & N = \L_\A(q_\alpha)\\
+      & M = \L_\A(q_{\alpha b}).
+    \end{align*}
+    Остава единствено да отбележим, че от конструкцията на автомата $\B$ знаем, че:
+    \[\delta_\B(\underbrace{\hat{N}}_{f(q_{\alpha})},b) = \underbrace{\hat{M}}_{f(q_{\alpha b})}.\]
+    % От \Proposition{well-defined-pullback} имаме, че $f(q_\alpha) = \hat{N}$. Също така имаме равенствата:
+    % \begin{align*}
+    %   f(\delta_\A(q_\alpha,b)) & = f(q_{\alpha b}) & \comment{q_{\alpha b} = \delta_\A(q_\alpha,b)}\\
+    %                            & = \hat{M}. & \comment{M = (\alpha b)^{-1}(L)}
+    % \end{align*}
+    % Заключаваме, че
+    % \[\underbrace{f(\delta_\A(q_\alpha,b))}_{\hat{M}} = \delta_\B(\underbrace{f(q_\alpha)}_{\hat{N}},b).\]
+    \begin{figure}[H]
+      \centering
+     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=60pt]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[state,initial]                  (1)              {$q_\varepsilon$};
+        \node[state]                  (2) [right of=1] {$q_\alpha$};
+        \node[state]                  (3) [right of=2] {$q_{\alpha b}$};
+
+        \node[state,initial]                  (4) [below of=1] {$\hat{L}$};
+        \node[state]                  (5) [below of=2] {$\hat{M}$};
+        \node[state]                  (6) [below of=3] {$\hat{N}$};
+        
+        \path
+        (2) edge [bend left=15]  node [above] {$b$} (3)
+        (5) edge [bend right=15] node [below] {$b$} (6)
+        (1) edge [dashed, bend right=15] node [left]  {$f$} (4)
+        (2) edge [dashed, bend right=15]  node [right] {$f$} (5)
+        (3) edge [dashed, bend left=15]  node [right] {$f$} (6);
+
+        \draw [photon] (1) -- node [above] {$\alpha$} (2);
+        \draw [photon] (4) -- node [below] {$\alpha$} (5);
+      \end{tikzpicture}
+      \caption{Визуализация на последното свойство за $\A \cong_f \B$.}
+    \end{figure}
+    
   \end{itemize}
 \end{proof}
 

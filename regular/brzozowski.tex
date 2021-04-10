@@ -82,33 +82,38 @@
 \begin{proposition}\label{pr:regular:brzozowski:delta}
   Нека $\B$ е автомата на Бжозовски за езика $L$.
   За всяка дума $\alpha$ и всяко състояние $\hat{M} \in Q^\B$ е изпъленено:
-  \[N = \alpha^{-1}(M) \iff \delta^\star(\hat{M},\alpha) = \hat{N}.\]
-\end{proposition}
-\begin{hint}
-  Индукция по дължината на думата $\alpha$, като използвате, че
-  \[(\alpha b)^{-1}(M) = b^{-1}(\alpha^{-1}(M)).\]
-\end{hint}
-\begin{proof}
-  Твърдението очевидно е изпълнено за $\alpha = \varepsilon$.
-  Да примем, че за думи $\alpha$ с дължина $n$ е изпълена еквивалентността:
   \begin{equation}
     \label{eq:13}
     N = \alpha^{-1}(M) \iff \delta^\star(\hat{M},\alpha) = \hat{N}.
   \end{equation}
-  Да разгледаме дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
-  \begin{align*}
-    \delta^\star(\hat{M},\beta a) & = \delta(\delta^\star(\hat{M},\beta),a) & \comment{\text{от деф.}}\\
-                                  & =\delta(\hat{K},a) & \comment{\text{нека }\hat{K} \df \delta^\star(\hat{M},\beta)}\\
-                                  & = \hat{N}. & \comment N = a^{-1}(K)
-  \end{align*}
-  Свойство (\ref{eq:13}) приложено за $\beta$ ни казва, че
-  \[\delta^\star(\hat{M},\beta) = \hat{K} \iff \beta^{-1}(M) = K.\]
-  От дефиницията на $\delta$ имаме, че
-  \[\delta(\hat{K},a) = \hat{N} \iff N = a^{-1}(K).\]
-  Накрая заключаваме, че
-  \begin{align*}
-    \delta^\star(\hat{M},\beta a) = \hat{N} \iff N = a^{-1}(\beta^{-1}(M)) = \alpha^{-1}(M).
-  \end{align*}
+\end{proposition}
+\begin{hint}
+  \mynote{Опитайте се сами да докажете това твърдение!}
+  Индукция по дължината на думата $\alpha$, като използвате, че
+  \[(\alpha b)^{-1}(M) = b^{-1}(\alpha^{-1}(M)).\]
+\end{hint}
+\begin{proof}
+  \begin{itemize}
+  \item
+    Твърдението очевидно е изпълнено за $\alpha = \varepsilon$.
+  \item
+    Да примем, че за думи $\alpha$ с дължина $n$ е изпълнено Свойство (\ref{eq:13}).    
+  \item
+    Сега да разгледаме дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
+    \begin{align*}
+      \delta^\star(\hat{M},\beta a) & = \delta(\delta^\star(\hat{M},\beta),a) & \comment{\text{от деф.}}\\
+                                    & =\delta(\hat{K},a) & \comment{\text{нека }\hat{K} \df \delta^\star(\hat{M},\beta)}\\
+                                    & = \hat{N}. & \comment N = a^{-1}(K)
+    \end{align*}
+    Свойство (\ref{eq:13}) приложено за $\beta$ ни казва, че
+    \[\delta^\star(\hat{M},\beta) = \hat{K} \iff \beta^{-1}(M) = K.\]
+    От дефиницията на $\delta$ имаме, че
+    \[\delta(\hat{K},a) = \hat{N} \iff N = a^{-1}(K).\]
+    Накрая заключаваме, че
+    \begin{align*}
+      \delta^\star(\hat{M},\beta a) = \hat{N} \iff N = a^{-1}(\beta^{-1}(M)) = \alpha^{-1}(M).
+    \end{align*}    
+  \end{itemize}
 \end{proof}
 
 

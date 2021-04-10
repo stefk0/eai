@@ -106,7 +106,7 @@
 \clearpage
 
 \begin{extra}
-  \begin{problem}
+  \begin{problem}\label{ex:brzozowski-solved-examples-2}
     Постройте автомат $\B$ по метода на Бжозовски, който рапознава регулярния език
     \[L = \L(\mathbf{a\cdot(a+b)^\star\cdot b}).\]
   \end{problem}  
@@ -114,7 +114,8 @@
   \begin{multicols}{2}
     \begin{itemize}
     \item
-      Започваме с началното състояние $\hat{L}$, за което е ясно, че няма да бъде финално.
+      Започваме с началното състояние $\hat{L}$, за което е ясно, че няма да бъде финално,
+      защото $\varepsilon \not\in L$.
   \item 
     $a^{-1}(L) = \{a,b\}^\star b \df M$.
     Имаме, че $M \neq L$, защото $b \in M$, но $b \not\in L$.
@@ -186,6 +187,111 @@
 \end{solution}
 \end{extra}
 
+\newpage
+
+\begin{extra}
+  \begin{problem}
+    Да припомним, че в \Problem{regular:dfa:binary} се искаше да се докаже, че езикът 
+    \[L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\]
+    е регулярен.
+    Ние направихме това като построихме автомат за $L$ и доказахме, че той разпознава $L$.
+    Сега пък постройте автомат за $L$ по метода на Бжозовски.
+  \end{problem}  
+  \begin{solution}
+    \begin{multicols}{2}
+      За целта ще ни трябва алтернативна дефиниция на $\bin{\alpha}$.
+      За една дума $\alpha \in \{0,1\}^\star$, можем да дадем следната дефиниция на $\bin{\alpha}$:
+      \begin{itemize}
+      \item
+        $\bin\varepsilon = 0$,
+      \item
+        $\bin{0\alpha} = \bin{\alpha}$,
+      \item
+        $\bin{1\alpha} = 2^{|\alpha|} + \bin{\alpha}$.
+      \end{itemize}
+      Лесно се съобразява, че началното състояние $\hat{L}$ на автомата на Бжозовски не е финално, защото $\varepsilon \not\in L$.
+      Да започнем с преходите от началното състояние:
+      \begin{align*}
+        0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
+                  & = \{\alpha \in \{0,1\}^\star \mid \bin{0\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = L.\\
+        1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
+                  & = \{\alpha \in \{0,1\}^\star \mid \bin{1\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & \df M.
+      \end{align*}
+      Лесно се съобразява, че езикът $M$ е различен от $L$,
+      защото например думата $10 \in L$, но $10 \not\in M$.
+      Също така, понеже $2^{|\varepsilon|} + \bin{\varepsilon} = 1$,
+      то $\varepsilon \not \in M$ и следователно $\hat{M}$ няма да бъде
+      финално състояние в автомата на Бжозовски.
+      Продължаваме нататък:
+      % \begin{multicols}{2}
+      \begin{align*}
+        0^{-1}(M) & = \{\alpha \mid 0\alpha \in M\}\\
+                  & = \{\alpha \mid 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & \df N.
+      \end{align*}
+      \begin{align*}
+        1^{-1}(M) & = \{\alpha \mid 1\alpha \in M\}\\
+                  & = \{\alpha \mid 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 3\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = L.
+      \end{align*}
+      Сега трябва да се уверим, че езикът $N$ е различен от $L$ и $M$.
+      Това отново е лесно. Непосредствено се проверява, че думата $11 \in N$,
+      но $11 \not\in L$ и $11 \not\in M$.
+      Също така да отбележим, че понеже $2.2^{|\varepsilon|} + \bin{\varepsilon} = 2$,
+      то $\hat{N}$ ще бъде финално състояние в автомата на Бжозовски, защото
+      $\varepsilon \in N$.
+      Продължаваме нататък с преходите от $\hat{N}$:
+      \begin{align*}
+        0^{-1}(N) & = \{\alpha \mid 0\alpha \in N\}\\
+                  & = \{\alpha \mid 2\cdot 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 4\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = M\\
+                  % \end{align*}
+                  % \begin{align*}
+        1^{-1}(N) & = \{\alpha \mid 1\alpha \in N\}\\
+                  & = \{\alpha \mid 2\cdot 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = \{\alpha \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
+                  & = N.
+      \end{align*}
+      % Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
+\begin{figure}[H]
+  \begin{center}
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt,scale=0.8, every node/.style={scale=0.8}]
+      \tikzstyle{every state}=[circle]
+      
+      \node[initial below,state] (0) {$\hat{L}$};
+      \node[state]               (1) [right of=0]{$\hat{M}$};
+      \node[accepting, state]    (2) [right of=1]{$\hat{N}$};
+      
+      \path 
+      (0) edge  [loop above]    node [above]  {$0$} (0)
+      (0) edge  [bend left=15]  node [above]  {$1$} (1)
+      (2) edge  [bend left=15]  node [below]  {$0$} (1)
+      (1) edge  [bend left=15]  node [below]  {$1$} (0)
+      (1) edge  [bend left=15]  node [above]  {$0$} (2)
+      (2) edge  [loop above]    node [above]  {$1$} (2);
+    \end{tikzpicture}
+  \end{center}
+  \caption{Автомат, получен чрез метода на Бжозовски за езика $L$.}
+\end{figure}
+\end{multicols}
+\end{solution}
+\end{extra}
+
+% \newpage
+
 \begin{extra}
 \begin{problem}
   Постройте автомат по метода на Бжозовски за регулярния език
@@ -193,23 +299,24 @@
 \end{problem}
   \begin{solution}
     \begin{multicols}{2}
-\begin{align*}
-        a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и }\card{\omega}{b} = 1\}\\
-                  & \df M.
-      \end{align*}
-      Ясно е, че $M \neq L$, защото например $aab \in L$, но $aab \not\in M$.
+      Да започнем с преходите от началното състояние $\hat{L}$:
       \begin{align*}
+        a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и }\card{\omega}{b} = 1\}\\
+                  & \df M\\
         b^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е четно и } \card{\omega}{b} = 0\}\\
                   & \df N.
       \end{align*}
-
-      Ясно е, че $N \neq M$ и $N \neq L$, защото $aa \in N$, но $aa \notin M$ и $aa \notin L$.
+      Лесно се вижда, че $M$ и $N$ са различни езици от $L$.
+      Например, $aab \in L$, но $aab \not\in M$;
+      $aa \in N$, но $aa \not \in L$ и $aa \not\in M$.
+      Сега да видим какви преходи имаме от състоянието $\hat{M}$:
       \begin{align*}
         a^{-1}(M) & = L;\\
         b^{-1}(M) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и } \card{\omega}{b} = 0\}\\
                   & \df P.
       \end{align*}
       Ясно е, че $P \neq M,L,N$, защото $a \in P$, но $a \notin M,L,N$.
+      Завършваме с преходите от състоянията $\hat{N}$ и $\hat{P}$:
       \begin{align*}
         a^{-1}(N) & = P \quad\text{и}\quad b^{-1}(N) = \emptyset\\
         a^{-1}(P) & = N \quad\text{и}\quad b^{-1}(P) = \emptyset.
@@ -244,108 +351,6 @@
 
 \end{extra}
 
-\begin{extra}
-  \begin{problem}
-    Да припомним, че в \Problem{regular:dfa:binary} се искаше да се докаже, че езикът 
-    \[L = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\]
-    е регулярен.
-    Ние направихме това като построихме автомат за $L$ и доказахме, че той разпознава $L$.
-    Сега пък постройте автомат за $L$ по метода на Бжозовски.
-  \end{problem}  
-  \begin{solution}
-    \begin{multicols}{2}
-      За целта ще ни трябва алтернативна дефиниция на $\bin{\alpha}$.
-  За една дума $\alpha \in \{0,1\}^\star$, можем да дадем следната дефиниция на $\bin{\alpha}$:
-  \begin{itemize}
-  \item
-    $\bin\varepsilon = 0$,
-  \item
-    $\bin{0\alpha} = \bin{\alpha}$,
-  \item
-    $\bin{1\alpha} = 2^{|\alpha|} + \bin{\alpha}$.
-  \end{itemize}
-  Тогава имаме, че:
-    \begin{align*}
-      0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
-                & = \{\alpha \in \{0,1\}^\star \mid \bin{0\alpha} \equiv 2 \bmod 3\}\\
-                & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
-                & = L.
-    \end{align*}    
-    % % \columnbreak
-    \begin{align*}
-      1^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in L\}\\
-                & = \{\alpha \in \{0,1\}^\star \mid \bin{1\alpha} \equiv 2 \bmod 3\}\\
-                & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-                & \df M.
-    \end{align*}
-  % \end{multicols}
-Лесно се съобразява, че $L \neq M$, защото например за думата $\alpha = 10$
-имаме, че $\alpha \in L$, но $\alpha \not\in M$.
-Продължаваме нататък:
-% \begin{multicols}{2}
-\begin{align*}
-  0^{-1}(M) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in M\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
-              & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-              & \df N.
-\end{align*}
-% \vfill
-% \columnbreak
-\begin{align*}
-  1^{-1}(M) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in M\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = L.
-\end{align*}
-% \end{multicols}
-Да проверим, че $N \neq L$ и $N \neq M$.
-Това отново е лесно. Нека например да разгледаме $\alpha = 11$.
-Непосредствено се проверява, че $\alpha \in N$, $\alpha \not\in L$, $\alpha \not\in M$.
-Продължаваме нататък:
-% \begin{multicols}{2}
-\begin{align*}
-  0^{-1}(N) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in N\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = M\\
-% \end{align*}
-% \begin{align*}
-  1^{-1}(N) & = \{\alpha \in \{0,1\}^\star \mid 1\alpha \in N\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|1\alpha|} + \bin{1\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 4\cdot 2^{|\alpha|} + 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 3\cdot 2^{|\alpha|} + 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = \{\alpha \in \{0,1\}^\star \mid 2\cdot 2^{|\alpha|} + \bin{\alpha} \equiv 2 \bmod 3\}\\
-            & = N.
-\end{align*}
-% Така можем да получим автомат за езика $L$, където всяко състояние е свързано с език.
-
-\begin{figure}[H]
-  \begin{center}
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt,scale=0.8, every node/.style={scale=0.8}]
-      \tikzstyle{every state}=[circle]
-      
-      \node[initial below,state] (0) {$\hat{L}$};
-      \node[state]               (1) [right of=0]{$\hat{M}$};
-      \node[accepting, state]    (2) [right of=1]{$\hat{N}$};
-      
-      \path 
-      (0) edge  [loop above]    node [above]  {$0$} (0)
-      (0) edge  [bend left=15]  node [above]  {$1$} (1)
-      (2) edge  [bend left=15]  node [below]  {$0$} (1)
-      (1) edge  [bend left=15]  node [below]  {$1$} (0)
-      (1) edge  [bend left=15]  node [above]  {$0$} (2)
-      (2) edge  [loop above]    node [above]  {$1$} (2);
-    \end{tikzpicture}
-  \end{center}
-  \caption{Автомат, получен чрез метода на Бжозовски за езика $L$.}
-\end{figure}
-\end{multicols}
-\end{solution}
-\end{extra}
 
 \begin{extra}
 \begin{example}\label{ex:regular:brzozowski:an-bn}

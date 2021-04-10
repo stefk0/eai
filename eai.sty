@@ -16,9 +16,11 @@
 \newcommand{\leaves}{\texttt{leaves}}
 \newcommand{\successor}{\texttt{succ}}
 \tikzset{
-  photon/.style={decorate, decoration={snake}, draw=black}
+  photon/.style={decorate, decoration={snake,segment length=5mm, amplitude=2pt}, draw=black}
 }
-
+\tikzset{
+  photon2/.style={decorate, decoration={snake,segment length=4mm, amplitude=3pt}, draw=black}
+}
 
 % Words
 \newcommand*{\slice}[1]{\texttt{[}{#1}\texttt{]}}

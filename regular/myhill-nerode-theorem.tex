@@ -67,6 +67,101 @@
   Освен това, докажете, че $\M$ е минимален ДКА за $L$.
 \end{problem}
 
+
+\begin{example}
+  Да разгледаме езика 
+  \[L = \L(\mathbf{a\cdot(a+b)^\star\cdot b}).\]
+  Да напомним, че в \Example{brzozowski-solved-examples-2} вече видяхме автоматът на Бжозовски за $L$.
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+      \tikzstyle{every state}=[circle]
+      
+      \node[initial, state]                   (L) {$\hat{L}$};
+      \node[state]                            (M) [above right of=L]{$\hat{M}$};
+      \node[state]                            (E) [below right of=L]{$\hat{\emptyset}$};
+      \node[state,accepting]                  (N) [right of=M]{$\hat{N}$};
+      
+      \path 
+      (L) edge [bend left=15]  node [left] {$a$} (M)
+      (L) edge [bend right=15] node [left] {$b$} (E)
+      (E) edge [loop right]    node [right] {$a,b$} (E) 
+      (M) edge [bend right=15] node [below] {$b$} (N)
+      (M) edge [loop above]    node [above] {$a$} (M)
+      (N) edge [bend right=30] node [above] {$a$} (M)
+      (N) edge [loop above]    node [above] {$b$} (N);
+    \end{tikzpicture}
+    \caption{Автомат за езика $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$ по метода на Бжозовски.}
+  \end{figure}
+
+  Вече знаем, че този автомат е минимален за езика $L$.
+  Да видим сега как директно можем да построим автомата на Майхил-Нероуд $\M$ за езика $L$ като използваме, че $\B \cong \M$.
+
+
+    \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+      \tikzstyle{every state}=[circle]
+      
+      \node[initial, state]                   (L) {$[\varepsilon]_L$};
+      \node[state]                            (M) [above right of=L]{$[a]_L$};
+      \node[state]                            (E) [below right of=L]{$[b]_L$};
+      \node[state,accepting]                  (N) [right of=M]{$[ab]_L$};
+      
+      \path 
+      (L) edge [bend left=15]  node [left] {$a$} (M)
+      (L) edge [bend right=15] node [left] {$b$} (E)
+      (E) edge [loop right]    node [right] {$a,b$} (E) 
+      (M) edge [bend right=15] node [below] {$b$} (N)
+      (M) edge [loop above]    node [above] {$a$} (M)
+      (N) edge [bend right=30] node [above] {$a$} (M)
+      (N) edge [loop above]    node [above] {$b$} (N);
+    \end{tikzpicture}
+    \caption{Автомат за езика $\L(\mathbf{a\cdot (a+b)^\star\cdot b})$ по метода на Майхил-Нероуд.}
+  \end{figure}
+\end{example}
+
+
+\begin{example}
+  Нека сега да приемем, че не знаем минималния автомат за езика $L$, а имаме следния автомат $\A$ за $L$:
+  
+      \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+      \tikzstyle{every state}=[circle]
+      
+      \node[initial, state]                   (L) {$q_0$};
+      \node[state]                            (M) [above right of=L]{$q_1$};
+      \node[state]                            (MM) [above right of=M]{$q_2$};
+      \node[state]                            (E) [below right of=L]{$q_3$};
+      \node[state]                            (EE)[right of=E]{$q_4$};
+      \node[state,accepting]                  (N) [below right of=MM]{$q_5$};
+      
+      \path 
+      (L) edge [bend left=15]  node [left] {$a$} (M)
+      (L) edge [bend right=15] node [left] {$b$} (E)
+      (E) edge [loop below]    node [below] {$a$} (E) 
+      (M) edge [bend right=15] node [below] {$b$} (N)
+      (M) edge [bend left=15] node [above] {$a$} (MM)
+      (MM) edge [loop above]    node [above] {$a$} (MM)
+      (MM) edge [bend right=15] node [left] {$b$} (N)
+      (N) edge [bend right=30] node [above] {$a$} (MM)
+      (N) edge [loop right]    node [right] {$b$} (N)
+      (E) edge [bend left=15] node [above] {$b$} (EE)
+      (EE) edge [bend left=15] node [below] {$a$} (E)
+      (EE) edge [loop right]    node [right] {$b$} (EE); 
+    \end{tikzpicture}
+
+  \end{figure}
+  
+
+  Веднага се вижда, че $\L_\A(q_3) = \L_\A(q_4)$.
+
+\end{example}
+
+
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"
