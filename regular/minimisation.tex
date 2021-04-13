@@ -29,6 +29,7 @@
   За произволно състояние $q$ е изпълнено, че:
   \[{[q]}_{\equiv_\A} \cap F \neq \emptyset \iff {[q]}_{\equiv_\A} \subseteq F.\]
 \end{proposition}
+\mynote{Сравнете с \Problem{myhill-nerode-theorem-final}.}
 \begin{proof}
   Посоката $(\Leftarrow)$ е очевидна. За $(\Rightarrow)$, нека $p \in [q]_{\equiv_\A} \cap F$. Достатъчно е да докажем, че $q \in F$.
   Щом $p \in F$, то $\varepsilon \in \L_\A(p)$.
@@ -52,7 +53,7 @@
   \end{align*}
 \end{proof}
 
-За автомата $\A = \FA$, дефинираме автомата $\A' = (\Sigma,Q',\qstart',\delta',F')$ по следния начин:
+За автомата $\A = \FA$, дефинираме автомата $\A' = \pair{\Sigma,Q',\qstart',\delta',F'}$ по следния начин:
 \begin{itemize}
 \item
   $Q' \df \{[q]_{\equiv_\A} \mid q\in Q\}$;
@@ -64,9 +65,14 @@
   $F' \df \{[q]_{\equiv_\A}\mid [q]_{\equiv_\A} \cap F \neq \emptyset\}$;
 \end{itemize}
 
-Да отбележим, че от \Proposition{equiv-delta} имаме, че
-\[[p]_{\equiv_\A} = [q]_{\equiv_\A} \implies \delta'([p]_{\equiv_\A},a) = \delta'([q]_{\equiv_\A},a).\]
-С други думи, $\delta'$ наистина е функция.
+\begin{problem}
+  Докажете, че $\delta':Q'\times\Sigma\to \Sigma$ е добре дефинирана функция.
+\end{problem}
+\mynote{С други думи, дефиницията на $\delta'$ не зависи от избора на представител от класа $[q]_{\equiv_\A}$, който сме направили. Сравнете с \Problem{myhill-nerode-theorem-delta}.}
+\begin{hint}
+  От \Proposition{equiv-delta} имаме, че
+  \[[p]_{\equiv_\A} = [q]_{\equiv_\A} \implies \delta'([p]_{\equiv_\A},a) = \delta'([q]_{\equiv_\A},a).\]
+\end{hint}
 
 \begin{proposition}
   \label{pr:minimisation-delta-1}
@@ -114,7 +120,6 @@
 
 Остава да докажем, че автоматът $\A'$ е минимален за езика $\L(\A)$.
 За да направим това ни трябва едно помощно твърдение.
-\mynote{Това твърдение го формулираме в общия случай, но ние ще го използваме, когато $\equiv$ е релацията $\equiv_\A$.}
 
 \begin{proposition}\label{pr:quotient-bijection}
   Нека $A$ и $B$ са множества и $f: A \to B$ е сюрекция.
@@ -125,6 +130,7 @@
   Нека $A' \df \{[a]_\equiv \mid a \in A\}$.
   Тогава $f' : A' \to B$, където $f'([a]_\equiv) \df f(a)$ е биекция.
 \end{proposition}
+\mynote{Това твърдение го формулираме в общия случай, но ние ще го използваме, когато $\equiv$ е релацията $\equiv_\A$. Сравнете с \Proposition{surjection-bijection}.}
 \begin{proof}
   Достатъчно е да направим следните проверки:
   \begin{itemize}
@@ -132,7 +138,7 @@
     Ако $[a_0]_\equiv = [a_1]_\equiv$, то $f(a_0) = f(a_1)$ и следователно
     $f'([a_0]_\equiv) = f'([a_1]_\equiv)$. Това означава, че $f'$ е функция.
   \item 
-    За произволен елемент $b \in B$, съществува $a \in A$, за който $f(a) = b$.
+    Понеже $f$ е сюрекция, за произволен елемент $b \in B$, съществува $a \in A$, за който $f(a) = b$.
     По дефиниция, $f'([a]_\equiv) = b$. Това означава, че $f'$ е сюрекция.
   \item 
     Нека сега $[a_0]_\equiv \neq [a_1]_\equiv$, т.е. $f(a_0) \neq f(a_1)$.

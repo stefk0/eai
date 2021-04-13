@@ -52,10 +52,10 @@
   \begin{align*}
     p \equiv^{n+1}_\A q \iff & (\forall \alpha\in\Sigma^{\leq n+1})[\delta^\star(p,\alpha) \in F \iff \delta^\star(q,\alpha) \in F] \\
     \iff & (\forall \alpha\in\Sigma^{\leq n})[\delta^\star(p,\alpha) \in F \iff \delta^\star(q,\alpha) \in F]\ \&\\
-                             & (\forall a \in \Sigma)(\forall \beta\in\Sigma^n)[\delta^\star(p,a\beta) \in F \iff \delta^\star(q,a\beta) \in F]\\
-    \iff & (\forall \alpha\in\Sigma^{\leq n})[\delta^\star(p,\alpha) \in F \iff \delta^\star(q,\alpha) \in F]\ \&\\
-                              & (\forall a\in\Sigma)(\forall \beta\in\Sigma^{< n})[\delta^\star(\delta(p,a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F]\ \&\\
-                             & (\forall a \in \Sigma)(\forall \beta\in\Sigma^n)[\delta^\star(\delta(p,a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F]\\
+                             & (\forall a \in \Sigma)(\forall \beta\in\Sigma^{\leq n})[\delta^\star(p,a\beta) \in F \iff \delta^\star(q,a\beta) \in F]\\
+    % \iff & (\forall \alpha\in\Sigma^{\leq n})[\delta^\star(p,\alpha) \in F \iff \delta^\star(q,\alpha) \in F]\ \&\\
+    %                           & (\forall a\in\Sigma)(\forall \beta\in\Sigma^{< n})[\delta^\star(\delta(p,a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F]\ \&\\
+    %                          & (\forall a \in \Sigma)(\forall \beta\in\Sigma^n)[\delta^\star(\delta(p,a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F]\\
     \iff & (\forall \alpha\in\Sigma^{\leq n})[\delta^\star(p,\alpha) \in F \iff \delta^\star(q,\alpha) \in F]\ \&\\
                              & (\forall a\in\Sigma)(\forall \beta\in\Sigma^{\leq n})[\delta^\star(\delta(p,a),\beta) \in F \iff \delta^\star(\delta(q,a),\beta) \in F]\ \&\\
     \iff & p \equiv^n_\A q\ \&\ (\forall a \in \Sigma)[ \delta(p,a) \equiv^n_\A \delta(q,a)].
@@ -121,6 +121,16 @@
   За всеки ДКА $\A$ е изпълнено, че 
   $\equiv^{|Q|-1}_\A\ =\ \equiv_\A$.
 \end{proposition}
+\mynote{
+  \begin{itemize}
+  \item
+    $\equiv^0_\A$ има точно два класа на еквивалентност.
+  \item
+    $\equiv^1_\A$ има не повече от три класа на еквивалентност
+  \item
+    $\equiv^{|Q|-2}_\A$ има не повече от $|Q|$ класа на еквивалентност. 
+  \end{itemize}
+}
 \begin{proof}
   Имаме два случая, които трябва да разгледаме.
   \begin{itemize}

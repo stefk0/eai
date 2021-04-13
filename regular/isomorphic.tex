@@ -8,6 +8,7 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
 съществува {\em биективна} функция $f: Q_1\to Q_2$, за която:
 % \mynote{С други думи, автоматът $\A_2$ може да се получи от автомата $\A_1$ с преименуване на състоянията, като внимаваме да запазим свойствата на автомата, т.е. начално отива в начално, финални отиват във финални и }
 \mynote{
+  % \begin{figure}[H]
       \begin{tikzpicture}[->,>=stealth,thick,node distance=60pt,scale=0.8,every node/.style={scale=0.8}]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -23,6 +24,8 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
         (1) edge [dashed, bend right=15] node [left]  {$f$} (3)
         (2) edge [dashed, bend left=15]  node [right] {$f$} (4);
       \end{tikzpicture}
+      % \caption{Свойство (3)}
+      % \end{figure}
 }
 \begin{enumerate}[(1)]
 \item
@@ -47,7 +50,7 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
   \end{equation}
 \end{proposition}
 \begin{hint}
-  \mynote{Опитайте се сами да докажете това твърдение!}
+  \mynote{\todo Опитайте се да докажете това твърдение сами!}
   Индукция по дължината на думата $\alpha$.
 \end{hint}
 \begin{proof}
@@ -105,7 +108,7 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
   Нека $\A_1 \cong_f \A_2$. Тогава имаме следните еквивалентности:
   \begin{align*}
     \alpha \in \L(\A_1) & \iff \delta^\star_1(\qstart',\alpha) = p \in F_1 & \comment\text{деф. на }\L(\A_1)\\
-                       & \iff \delta^\star_2(f(\qstart'),\alpha)) = f(p) \in F_2 & \comment{\text{Свойство ref{eq:3}}}\\
+                       & \iff \delta^\star_2(f(\qstart'),\alpha)) = f(p) \in F_2 & \comment{\text{Свойство \ref{eq:3}}}\\
                        % & \iff \delta^\star_2(f(\qstart'),\alpha) \in F_2 & \comment{\text{от (\ref{eq:3})}}\\
                        & \iff \delta^\star_2(\qstart'',\alpha) \in F_2 & \comment{f(\qstart') \df \qstart''}\\
                        & \iff \alpha \in \L(\A_2). & \comment\text{деф. на }\L(\A_2)

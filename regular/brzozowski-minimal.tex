@@ -121,7 +121,7 @@
   Ясно е, че $\A$ е свързан автомат, т.е. всяко състояние $p$ на $\A$ е от вида $p = q_\alpha$.
   В противен случай, $\A$ нямаше да бъде минимален.
   Да разгледаме функцията $f:Q^\A \to Q^\B$, където
-  \[f(p) \df \L_\A(p).\]
+  \[f(p) = \hat{M}\ \dff\ M = \L_\A(p).\]
   От \Proposition{well-defined-pullback} знаем, че $f(q_\alpha) = \L_\A(q_\alpha) = \alpha^{-1}(L)$ следва, че $f$ е сюрективна.
   Понеже $|Q^\A| = |Q^\B|$, то от \Proposition{surjection-bijection} имаме, че $f$ е всъщност биекция.
   Остава да видим защо $\A \cong_f \B$.
@@ -145,26 +145,24 @@
     Остава да докажем, че за произволна буква $b$ и произволни състояния $q,p \in Q_1$ е изпълнено, че:
     \[\delta_\A(q,b) = p\ \iff\ \delta_\B(f(q),b) = f(p).\]
     Понеже всяко състояние на $\A$ може да се запише като $q_\alpha$ за някое $\alpha$, то можем да запишем горния ред и така:
-    \[\delta_\A(q_\alpha,b) = q_{\alpha b}\ \iff\ \delta_\B(f(q_{\alpha}),b) = f(q_{\alpha b}).\]
-    Да разгледаме следните езици:
+    \[\delta_\A(q_\alpha,b) = p\ \iff\ \delta_\B(f(q_{\alpha}),b) = f(p).\]
+    Нека положим
     \begin{align*}
-      & N \df \alpha^{-1}(L)\\
-      & M \df b^{-1}(N) = (\alpha b)^{-1}(L).
+      M & \df \alpha^{-1}(L)\\
+      N & \df (\alpha b)^{-1}(L) = b^{-1}(M).    
     \end{align*}
-    От \Proposition{well-defined-pullback} имаме, че:
-    \begin{align*}
-      & N = \L_\A(q_\alpha)\\
-      & M = \L_\A(q_{\alpha b}).
-    \end{align*}
+    От \Proposition{well-defined-pullback} знаем, че $\hat{M} = f(q_\alpha)$, защото
+    $\L_\A(q_\alpha) = \alpha^{-1}(L)$.
+    
+    За посоката $(\Rightarrow)$ имаме, че $p = q_{\alpha b}$. 
+    Тогава $f(q_{\alpha b}) = \hat{N}$, защото $(\alpha b)^{-1}(L) = \L_\A(q_{\alpha b})$.
     Остава единствено да отбележим, че от конструкцията на автомата $\B$ знаем, че:
-    \[\delta_\B(\underbrace{\hat{N}}_{f(q_{\alpha})},b) = \underbrace{\hat{M}}_{f(q_{\alpha b})}.\]
-    % От \Proposition{well-defined-pullback} имаме, че $f(q_\alpha) = \hat{N}$. Също така имаме равенствата:
-    % \begin{align*}
-    %   f(\delta_\A(q_\alpha,b)) & = f(q_{\alpha b}) & \comment{q_{\alpha b} = \delta_\A(q_\alpha,b)}\\
-    %                            & = \hat{M}. & \comment{M = (\alpha b)^{-1}(L)}
-    % \end{align*}
-    % Заключаваме, че
-    % \[\underbrace{f(\delta_\A(q_\alpha,b))}_{\hat{M}} = \delta_\B(\underbrace{f(q_\alpha)}_{\hat{N}},b).\]
+    \[\delta_\B(\underbrace{\hat{M}}_{f(q_{\alpha})},b) = \underbrace{\hat{N}}_{f(p)}.\]
+    За посоката $(\Leftarrow)$, знаем, че $\delta_\B(\hat{M},b) = \hat{N} = f(p)$.
+    Знаем, че $N = \L_\A(p) = (\alpha b)^{-1}(L) = \L_\A(q_{\alpha b})$.
+    Понеже $f$ е биекция, то $p = q_{\alpha b}$.
+    Заключаваме, че \[\delta_\A(q_\alpha,b) = p.\]
+
     \begin{figure}[H]
       \centering
      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=60pt]

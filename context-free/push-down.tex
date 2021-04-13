@@ -176,7 +176,7 @@
         \AxiomC{$(p,\alpha,a\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$}
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$a\rho \lderive{\star} \alpha$}
-        \LeftLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
+        \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
         \BinaryInfC{$\underbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
       \end{prooftree}
     % \item
@@ -191,7 +191,7 @@
         \AxiomC{$(p,\alpha, BC\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$}
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$BC\rho \lderive{\star} \alpha$}
-        \LeftLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
+        \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
         \BinaryInfC{$\underbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
       \end{prooftree}
     % \end{itemize}
@@ -348,7 +348,7 @@
 \begin{important}
   \begin{theorem}
     \label{th:push-down-context-free}
-    Класът на езиците, които се разпознават от краен стеков автомат съвпада с
+    Класът на езиците, които се разпознават от недетерминиран стеков автомат съвпада с
     класа на безконтекстните езици.
   \end{theorem}
 \end{important}

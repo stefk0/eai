@@ -19,7 +19,6 @@
   \[\begin{bmatrix}ab\cdot ab \cdot aba \cdot b \cdot b \cdot aa \cdot aa\\abab \cdot abab \cdot b \cdot a \cdot a \cdot a \cdot a\end{bmatrix}\]
 \end{solution}
 
-
 \subsection*{Модифициран проблем за съответствието }
 
 \mynote{Тук искаме винаги да започваме с първото домино.}
@@ -29,7 +28,7 @@
 \begin{lemma}
   Съществува алгоритъм, който свежда \MPCP към \PCP.
 \end{lemma}
-\begin{proof}
+\begin{hint}
   Нека имаме пример за \MPCP:
   \[\begin{bmatrix} \alpha_1\\ \beta_1\end{bmatrix},\begin{bmatrix} \alpha_2\\ \beta_2\end{bmatrix},\dots,\begin{bmatrix} \alpha_k\\ \beta_k\end{bmatrix} .\]
   Нека символите $\star,\$$ не са от $\Sigma$.
@@ -43,7 +42,7 @@
   \[\begin{bmatrix*}[l] \star\alpha_1\star\\ \star\beta_1\end{bmatrix*},\begin{bmatrix} \alpha_1\star\\ \star \beta_1\end{bmatrix},\dots,\begin{bmatrix} \alpha_k\star\\ \star\beta_k\end{bmatrix},\begin{bmatrix*}[r] \$\\ \star\$\end{bmatrix*}.\]
   Така ние показахме, че
   \[\MPCP \leq_m \PCP.\]
-\end{proof}
+\end{hint}
 
 \begin{corollary}
   Ако $\PCP$ е разрешим, то $\MPCP$ също е разрешим.
