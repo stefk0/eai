@@ -165,16 +165,16 @@
 
     \begin{figure}[H]
       \centering
-     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=60pt]
+     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=60pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
-        \node[state,initial]                  (1)              {$q_\varepsilon$};
+        \node[state,initial]          (1)              {$q_\varepsilon$};
         \node[state]                  (2) [right of=1] {$q_\alpha$};
-        \node[state]                  (3) [right of=2] {$q_{\alpha b}$};
+        \node[state, inner sep=2pt]                  (3) [right of=2] {$q_{\alpha b}$};
 
-        \node[state,initial]                  (4) [below of=1] {$\hat{L}$};
-        \node[state]                  (5) [below of=2] {$\hat{M}$};
-        \node[state]                  (6) [below of=3] {$\hat{N}$};
+        \node[state, initial, inner sep=2pt]          (4) [below of=1] {$\hat{L}$};
+        \node[state, inner sep=2pt]                  (5) [below of=2] {$\hat{M}$};
+        \node[state, inner sep=2pt]                  (6) [below of=3] {$\hat{N}$};
         
         \path
         (2) edge [bend left=15]  node [above] {$b$} (3)

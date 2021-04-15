@@ -1,6 +1,6 @@
 \subsection{Примерни задачи}
 
-\mynote{Винаги с удвоени окръжности ще отбелязваме финалните състояния. За момента не е ясно как можем да докажем, че даденият автомат разпознава точно съответния език.}
+\mynote{Винаги с удвоени окръжности ще отбелязваме финалните състояния. За момента нямаме общ метод, с който да докажем, че даденият автомат разпознава точно съответния език.}
 
 \begin{extra}
 \begin{example}
@@ -11,7 +11,7 @@
   \begin{figure}[H]
     \begin{subfigure}[t]{0.45\textwidth}
       % \centering
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial below, state]   (0) {$q_0$};
@@ -33,7 +33,7 @@
     \qquad
     \begin{subfigure}[t]{0.45\textwidth}
       % \centering
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial below, state]   (0) {$q_0$};
@@ -52,7 +52,7 @@
     % \vspace*{30pt}
     \begin{subfigure}[t]{0.45\textwidth}
       % \centering
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial below, accepting, state] (0) {$q_0$};
@@ -72,7 +72,7 @@
     \qquad
     \begin{subfigure}[t]{0.45\textwidth}
       % \centering
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial below, state, accepting]   (0) {$q_0$};
@@ -108,7 +108,7 @@
   Да разгледаме $\A = \FA$ с функция на преходите описана на \Figure{dfa:not-two-a}.
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt]
+      \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[initial, accepting, state] (0) {$q_0$};
@@ -200,7 +200,7 @@
   Разгледайте автомата $\A$:
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         
         \node[initial,state]      (00) {$q_{00}$};
@@ -285,7 +285,7 @@
   Ето и картинка на автомата $\A$:
   \begin{figure}[H]
     \begin{center}
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=15pt,auto]
         
         \node[initial,state]      (0) {$q_0$};

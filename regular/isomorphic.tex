@@ -15,8 +15,8 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
         \node[state]                  (1)              {$q$};
         \node[state]                  (2) [right of=1] {$p$};
 
-        \node[state]                  (3) [below of=1] {\scriptsize{$f(q)$}};
-        \node[state]                  (4) [below of=2] {\scriptsize{$f(p)$}};
+        \node[state,inner sep=1pt]    (3) [below of=1] {\scriptsize{$f(q)$}};
+        \node[state,inner sep=1pt]    (4) [below of=2] {\scriptsize{$f(p)$}};
         
         \path 
         (1) edge [bend left=15]  node [above] {$a$} (2)

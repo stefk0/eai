@@ -5,7 +5,7 @@
     Да простроим минимален автомат $\M$ разпознаващ езика на детерминирания краен автомат $\A$.
     \begin{figure}[H]
       \centering
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=20pt,scale=0.8, every node/.style={scale=0.8}]
         
         \node[initial, state]   (0) {$0$};
@@ -97,7 +97,7 @@
   
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
       \tikzstyle{every state}=[circle,minimum size=20pt,scale=0.8, every node/.style={scale=0.8}]
       
       \node[initial above, state]   (0) {$B_0$};
@@ -121,7 +121,7 @@
   Да построим минимален автомат $\M$ разпознаващ езика на следния детерминиран краен автомат $\A$.
   \begin{figure}[H]
     \centering
-      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
+      \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
         \tikzstyle{every state}=[circle,minimum size=20pt,scale=0.8, every node/.style={scale=0.8}]
         
         \node[initial, state]         (0) {$0$};
@@ -265,7 +265,7 @@
     \begin{figure}[H]
       \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt]
-        \tikzstyle{every state}=[circle,minimum size=20pt,scale=0.8, every node/.style={scale=0.8}]
+        \tikzstyle{every state}=[circle,minimum size=20pt,scale=0.8, every node/.style={scale=0.8}, initial text=начало]
         
         \node[initial above, state]   (0) {$C_0$};
         \node[state,accepting]  (1) [right of=0]{$C_1$};

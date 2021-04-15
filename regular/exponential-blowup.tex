@@ -7,7 +7,7 @@
   Да разгледаме следния недетерминиран автомат $\N$.
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt]
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=45pt,initial text=начало]
       \tikzstyle{every state}=[circle,minimum size=20pt,auto]
       \node[initial below,state]              (0) {$q_0$};
       \node[state]                [right of=0] (1) {$q_1$};
@@ -29,7 +29,7 @@
     \label{fig:nfa:exp}
   \end{figure}
   Лесно се съобразява, че за $n > 0$, недетерминирният краен автомат $\N$ на \Figure{nfa:exp} с $n+1$ на брой състояния разпознава езика
-  \[L = \{\omega a \delta \in \{a,b\}^\star \mid |\delta| = n-1\}.\]
+  \[L = \{\omega \cdot a \cdot \delta \in \{a,b\}^\star \mid |\delta| = n-1\}.\]
   Нека да съобразим, че не е възможно да съществува краен детерминиран автомат $\A = \FA$ разпознаващ същия език $L$ с по-малко от $2^n$ състояния.
 
   Да допуснем, че $|Q| < 2^n$. От принципа на Дирихле имаме, че съществуват две различни думи $\alpha$ и $\beta$ с дължина $n$,
