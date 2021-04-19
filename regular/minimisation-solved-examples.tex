@@ -42,12 +42,26 @@
   \item
     Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv^0_\A$.
     
+    % \begin{tabular}{|c|c|c|c|c|c|c|}
+    %   \hline
+    %   $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
+    %   \hline
+    %   \hline
+    %   $\equiv^0_\A$ & $A_0$ & $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
+    %   \hline
+    %   $a$ & $A_0$& $A_1$ & $A_1$ & $A_1$ & $A_1$ & $A_1$\\
+    %   \hline
+    %   $b$ & $A_0$& $A_1$ & $A_1$ & $A_1$ & $A_1$ & $A_1$\\
+    %   \hline
+    % \end{tabular}
+
+    
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
+      $\equiv^0_\A$ & \multicolumn{3}{|c|}{$A_0$} & \multicolumn{3}{|c|}{$A_1$}\\
+      \hline
+      \hline
       $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
-      \hline
-      \hline
-      $\equiv^0_\A$ & $A_0$ & $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
       \hline
       $a$ & $A_0$& $A_1$ & $A_1$ & $A_1$ & $A_1$ & $A_1$\\
       \hline
@@ -65,18 +79,32 @@
   \item
     Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv^1_\A$.
     
+    % \begin{tabular}{|c|c|c|c|c|c|c|}
+    %   \hline
+    %   $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
+    %   \hline
+    %   \hline
+    %   $\equiv^1_\A$ & $B_0$ & $B_1$ & $B_1$ & $B_2$ & $B_2$ & $B_2$\\
+    %   \hline
+    %   $a$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
+    %   \hline
+    %   $b$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
+    %   \hline
+    % \end{tabular}
+
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
+      $\equiv^1_\A$ & $B_0$ & \multicolumn{2}{|c|}{$B_1$} & \multicolumn{3}{|c|}{$B_2$}\\
+      \hline
+      \hline
       $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
-      \hline
-      \hline
-      $\equiv^1_\A$ & $B_0$ & $B_1$ & $B_1$ & $B_2$ & $B_2$ & $B_2$\\
       \hline
       $a$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
       \hline
       $b$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
       \hline
     \end{tabular}
+
     
     Виждаме, че $\equiv^1_\A\ =\ \equiv^2_\A$,
     което означава, че $\equiv_\A\ =\ \equiv^1_\A$.
@@ -115,6 +143,7 @@
 \end{example}
 \end{extra2}
 
+\vspace*{1cm}
 
 \begin{extra2}
 \begin{example}
@@ -184,18 +213,33 @@
   \item
     Разбиваме класовете на еквивалентност на $\equiv^0_\A$ като използваме \Proposition{one-letter-test}.
 
+    % \begin{tabular}{|c|c|c|c|c|c|c|}
+    %   \hline
+    %   $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+    %   \hline
+    %   \hline
+    %   $\equiv^0_\A$ & $A_0$ & $A_1$ & $A_1$ & $A_0$ & $A_0$ & $A_1$\\
+    %   \hline
+    %   $a$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
+    %   \hline
+    %   $b$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
+    %   \hline
+    % \end{tabular}
+
+
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
-      $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+      $\equiv^0_\A$ & \multicolumn{3}{|c|}{$A_0$} & \multicolumn{3}{|c|}{$A_1$}\\
       \hline
       \hline
-      $\equiv^0_\A$ & $A_0$ & $A_1$ & $A_1$ & $A_0$ & $A_0$ & $A_1$\\
+      $Q$ & $0$ & $3$ & $4$ & $1^\star$ & $2^\star$ & $5^\star$ \\
       \hline
-      $a$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
+      $a$ & $A_1$& $A_1$ & $A_1$ & $A_0$ & $A_0$ & $A_1$\\
       \hline
-      $b$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
+      $b$ & $A_1$& $A_1$ & $A_1$ & $A_0$ & $A_0$ & $A_1$\\
       \hline
     \end{tabular}
+
     
     Виждаме, че $1 \not\equiv^1_\A 5$ и $1 \equiv^0_\A 5$.
     Следователно, $\equiv^0_\A\ \neq\ \equiv^1_\A$.
@@ -208,16 +252,31 @@
   \item
     Сега се опитваме да разбием класовете на еквивалентност на $\equiv^1_\A$.
     
+    % \begin{tabular}{|c|c|c|c|c|c|c|}
+    %   \hline
+    %   $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+    %   \hline
+    %   \hline
+    %   $\equiv^1_\A$ & $B_0$ & $B_1$ & $B_1$ & $B_0$ & $B_0$ & $B_2$\\
+    %   \hline
+    %   $a$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
+    %   \hline
+    %   $b$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
+    %   \hline
+    % \end{tabular}
+
+
+
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
-      $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+      $\equiv^1_\A$ & \multicolumn{3}{|c|}{$B_0$} & \multicolumn{2}{|c|}{$B_1$} & $B_2$\\
       \hline
       \hline
-      $\equiv^1_\A$ & $B_0$ & $B_1$ & $B_1$ & $B_0$ & $B_0$ & $B_2$\\
+      $Q$ & $0$ & $3$ & $4$ & $1^\star$ & $2^\star$ & $5^\star$ \\
       \hline
-      $a$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
+      $a$ & $B_1$& $B_2$ & $B_2$ & $B_0$ & $B_0$ & $B_2$\\
       \hline
-      $b$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
+      $b$ & $B_1$& $B_2$ & $B_2$ & $B_0$ & $B_0$ & $B_2$\\
       \hline
     \end{tabular}
     
@@ -232,18 +291,32 @@
   \item
     Отново опитваме да разбием класовете на релацията $\equiv^2_\A$.
 
+      % \begin{tabular}{|c|c|c|c|c|c|c|}
+      %   \hline
+      %   $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+      %   \hline
+      %   \hline
+      %   $\equiv^2_\A$ & $C_0$ & $C_1$ & $C_1$ & $C_2$ & $C_2$ & $C_3$\\
+      %   \hline
+      %   $a$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
+      %   \hline
+      %   $b$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
+      %   \hline
+      % \end{tabular}
+
       \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
-        $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
+        $\equiv^2_\A$ & $C_0$ & \multicolumn{2}{|c|}{$C_1$} & \multicolumn{2}{|c|}{$C_2$} & $C_3$\\
         \hline
         \hline
-        $\equiv^2_\A$ & $C_0$ & $C_1$ & $C_1$ & $C_2$ & $C_2$ & $C_3$\\
+        $Q$ & $0$ & $3$ & $4$ & $1^\star$ & $2^\star$ & $5^\star$ \\
         \hline
-        $a$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
+        $a$ & $C_1$& $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
         \hline
-        $b$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
+        $b$ & $C_1$& $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
         \hline
       \end{tabular}
+      
       
       Виждаме, че не можем да разбием $C_1$ или $C_2$.
       Следователно, $\equiv^2_\A\ =\ \equiv^3_\A$.

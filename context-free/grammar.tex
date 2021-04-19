@@ -191,11 +191,13 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \end{prooftree}
 
   Без ограничение на общността, нека $A$ е част от $\gamma_1$. Това означава, че
-  $\gamma_1 = \lambda A \rho_1$. Получаваме следния извод:
+  $\gamma_1 = \lambda A \rho_1$ и $\rho = \rho_1\gamma_2$. Получаваме следния извод:
   \begin{prooftree}
     \AxiomC{$(A,\alpha) \in R$}
+    \RightLabel{\scriptsize{\IndHyp}}
     \AxiomC{$\overbrace{\lambda\alpha\rho_1}^{\gamma_3}\gamma_2 \derive{\ell-1}\beta$}
     \UnaryInfC{$\gamma_3 \derive{\ell_1'} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
+    \LeftLabel{\scriptsize{правило (1)}}
     \BinaryInfC{$\underbrace{\lambda A \rho_1}_{\gamma_1} \derive{\ell'_1+1} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
   \end{prooftree}
   

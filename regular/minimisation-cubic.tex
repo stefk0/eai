@@ -156,7 +156,7 @@
   \label{alg:minimisation-cube}
   \begin{algorithmic}[1]
     \ForAll{$p < |Q|$}\Comment{състоянията са индексирани от $0$ до $|Q|-1$}
-    \ForAll{$q < p$} 
+    \ForAll{$q < |Q|$} 
     \If{$(p \in F \iff q \not\in F)$}
     \State E[p][q] = false \Comment{Имаме, че $p \not\equiv^0_\A q$}
     \Else
@@ -167,7 +167,7 @@
     \Repeat
     \State ready = true
     \ForAll{$p < |Q|$}
-    \ForAll{$q < p$}
+    \ForAll{$q < |Q|$}
     \If{E[p][q]}
     \ForAll{$a \in \Sigma$} \Comment{Прилагаме \Proposition{one-letter-test}}
     \If{! E[$\delta(p,a)$][$\delta(q,a)$]}  \Comment{$p \equiv^n_\A q$, но $\delta(p,a) \not\equiv^n_\A \delta(q,a)$}
@@ -183,8 +183,8 @@
 \end{algorithm}
 
 \begin{problem}
-  Докажете, че за всеки две състояния $q_i$ и $q_j$, където $i > j$,
-  \[q_i \equiv_\A q_j \iff \texttt{E[i][j] == true}.\]
+  Докажете, че за всеки две състояния $p$ и $q$,
+  \[p \equiv_\A q \iff \texttt{E[p][q] == true}.\]
 \end{problem}
 
 \begin{problem}

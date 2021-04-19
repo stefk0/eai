@@ -46,17 +46,19 @@
 \end{important}
 
 \mynote{Обърнете внимание, че имаме недетерминизъм в тази дефиниция на извод. Също така, понякога ,за удобство, ще пишем просто $\derive{\ell}$ вместо $\derive{\ell}_G$,
-  когато се знае за коя граматика говорим.}
+  когато се знае за коя граматика говорим.
+
+  С други думи, $\derive{\star}_G$ е рефлексивното и транзитивно затваряне на релацията $\derive{1}_G$.
+}
 Сега дефинираме релацията $\derive{\star}_G$ като
 \[ \alpha \derive{\star}_G \beta\ \dff\ (\exists \ell\in\Nat)[\ \alpha \derive{\ell}_G \beta\ ].\]
 Езикът, който се поражда от граматиката $G$ дефинираме по следния начин:
 \[\L(G) \df \{\omega \in \Sigma^\star \mid S \derive{\star}_G \omega\}.\]
 
-
 За да можем да работим по-удобно с релацията за извод в граматика, ще започнем с няколко свойства.
 
 \begin{proposition}\label{pr:unrestricted-grammar:padding}
-  За проиволно естествено число $\ell$,
+  За проиволно естествено число $\ell$ имаме извода:
   \begin{prooftree}
     \AxiomC{$\alpha \derive{\ell} \beta$}
     \AxiomC{$\lambda,\rho \in (V\cup\Sigma)^\star$}
@@ -90,7 +92,7 @@
 
 
 \begin{proposition}\label{pr:unrestricted-grammar:concat2}
-  За произволни $\ell_1$ и $\ell_2$,
+  За произволни $\ell_1$ и $\ell_2$ имаме извода:
   \begin{prooftree}
     \AxiomC{$\alpha_1 \derive{\ell_1} \beta_1$}
     \AxiomC{$\alpha_2 \derive{\ell_2} \beta_2$}
@@ -231,7 +233,7 @@
   Сега ще докажем твърдението с индукция по $\ell_1$.
   \begin{itemize}
   \item
-    $\ell_1 = 0$. Тогава всичко е ясно, защото $\alpha = \gamma\alpha_1\delta$.
+    $\ell_1 = 0$. Тогава всичко е ясно, защото $\alpha = \lambda\beta\rho$.
   \item
     $\ell_1 > 0$. От правилата за извод следва, че имаме следната ситуация:
     \begin{prooftree}
@@ -256,22 +258,22 @@
   
 \end{proof}
 
-\begin{extra}
-  \begin{remark}\label{rem:unrestricted-grammar:original-def}
-    В повечето учебници авторите дефинират релацията $\derive{\star}_G$ като
-    рефлексивното и транзитивното затваряне на релацията $\derive{}_G$, където
-    \[\alpha \derive{}_G \beta \dff \alpha = \lambda\alpha'\rho\ \&\ (\alpha',\alpha'') \in R\ \&\ \beta = \lambda\alpha''\rho\text{, за някои $\lambda, \rho \in (V\cup\Sigma)^\star$}.\]
-    % Както се вижда от следващото твърдение, релацията $\derive{1}_G$, която дефинирахме по-горе, е точно релацията $\derive{}_G$.
-  \end{remark}
+% \begin{extra}
+%   \begin{remark}\label{rem:unrestricted-grammar:original-def}
+%     В повечето учебници авторите дефинират релацията $\derive{\star}_G$ като
+%     рефлексивното и транзитивното затваряне на релацията $\derive{}_G$, където
+%     \[\alpha \derive{}_G \beta \dff \alpha = \lambda\alpha'\rho\ \&\ (\alpha',\alpha'') \in R\ \&\ \beta = \lambda\alpha''\rho\text{, за някои $\lambda, \rho \in (V\cup\Sigma)^\star$}.\]
+%     % Както се вижда от следващото твърдение, релацията $\derive{1}_G$, която дефинирахме по-горе, е точно релацията $\derive{}_G$.
+%   \end{remark}
   
   % Както отбелязахме в \Remark{unrestricted-grammar:original-def}, в повечето учебници дават следната дефиниция на релацията $\derive{1}$, която тук ще формулираме като твърдение, което следва от нашите правила за извод.
-  \begin{problem}\label{prob:grammar:alternative-def}
-    Докажете, че $\alpha \derive{1}_G \beta$ точно тогава, когато $\alpha \derive{}_G \beta$.
-  \end{problem}
+  % \begin{problem}\label{prob:grammar:alternative-def}
+  %   Докажете, че $\alpha \derive{1}_G \beta$ точно тогава, когато $\alpha \derive{}_G \beta$.
+  % \end{problem}
 
-  \begin{problem}
-    Докажете, че $\derive{\star}_G$ е транзитивното и рефлексивно затваряне на релацията $\derive{}_G$.
-  \end{problem}
+  % \begin{problem}
+  %   Докажете, че $\derive{\star}_G$ е транзитивното и рефлексивно затваряне на релацията $\derive{}_G$.
+  % \end{problem}
 
   % \begin{hint}
   %   За посоката $(\leftarrow)$, нека $\alpha \derive{}_G \beta$, т.е. $\alpha = \lambda \gamma \rho$, $(\gamma,\gamma') \in R$ и $\beta = \lambda \gamma' \rho$. Тогава
@@ -290,7 +292,7 @@
   %     \BinaryInfC{$\underbrace{\lambda\alpha'\rho}_{\alpha} \derive{1} \underbrace{\lambda\alpha''\rho}_{\beta}$}
   %   \end{prooftree}
   % \end{hint}
-\end{extra}
+% \end{extra}
 
 
 %%% Local Variables:
