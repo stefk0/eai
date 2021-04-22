@@ -70,24 +70,28 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \begin{example}
   Да разгледаме безконтекстната граматика $G$, която има следните правила:
   \begin{align*}
-    & S \to AS\ |\ \varepsilon\\
-    & A \to aAb\ |\ ab.
+    & S \to_G AS\ |\ \varepsilon\\
+    & A \to_G aAb\ |\ ab.
   \end{align*}
   \mynote{За момента не е ясно как можем да проверим, че примерно думата $abbba \not\in \L(G)$. Този въпрос ще разгледаме по-нататък.}
   Да видим защо думата $aabbab \in \L(G)$. Ако следваме формално правилата за извод, получаваме следното:
   \begin{prooftree}
     \AxiomC{$S \to_G AS$}
-    \AxiomC{$A \derive{0}_G A$}
-    \AxiomC{$S \to_G AS$}
+    \AxiomC{}
+    \UnaryInfC{$A \derive{0}_G A$}
     \AxiomC{$S \to_G \varepsilon$}
     \AxiomC{}
-    \RightLabel{\scriptsize{(0)}}
+    \UnaryInfC{$\varepsilon \derive{0}_G \varepsilon$}
+    \LeftLabel{\scriptsize{(1)}}
+    \BinaryInfC{$S \derive{1}_G \varepsilon$}
+    \AxiomC{$S \to_G AS$}
+    \AxiomC{}
     \UnaryInfC{$\varepsilon \derive{0}_G \varepsilon$}
     \RightLabel{\scriptsize{(1)}}
-    \BinaryInfC{$S \derive{1}_G \varepsilon$}
+    \BinaryInfC{$S \derive{1}_G AS$}
     \RightLabel{\scriptsize{(2)}}
     \BinaryInfC{$S \derive{2}_G A$}
-    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat2})}}
+    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat2}})}
     \BinaryInfC{$AS \derive{2}_G AA$}
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{3}_G AA$}
@@ -101,10 +105,10 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \AxiomC{$A \to_G ab$}
     \AxiomC{}
     \RightLabel{\scriptsize{(0)}}
-    \UnaryInfC{$abb \derive{0}_G abb$}
+    \UnaryInfC{$aabb \derive{0}_G aabb$}
     \RightLabel{\scriptsize{(1)}}
-    \BinaryInfC{$Ab \derive{1}_G abb$}
-    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat2}})}
+    \BinaryInfC{$aAb \derive{1}_G aabb$}
+    \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$aAb \derive{1}_G aabb$}
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{2}_G aabb$}
