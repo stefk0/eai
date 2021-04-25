@@ -68,15 +68,6 @@
 % }
 
 
-\newenvironment{extra}
-{% This is the begin code
-  % \hrulefill
-  \footnotesize
-}
-{% This is the end code
-  % \hrulefill
-}
-
 \newenvironment{important}
 {% This is the begin code
   \begin{framed}
@@ -87,10 +78,21 @@
 
 
 
+\newenvironment{extra}
+{% This is the begin code
+  % \hrulefill
+  \footnotesize
+}
+{% This is the end code
+  % \hrulefill
+}
+
+
 \newenvironment{extra2}
 {% This is the begin code
   \begin{multicols}{2}
-  \scriptsize
+    % \scriptsize
+    \footnotesize
 }
 {% This is the end code
 \end{multicols}

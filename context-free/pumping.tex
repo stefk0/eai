@@ -144,6 +144,7 @@
 
 \begin{proposition}\label{pr:pumping:lower-bound}
   Нека $G$ е безконтекстна граматика и 
+  \mynote{Числото $b$ е максималната разклоненост, която можем да получим за синтактично дърво на извод в граматикта $G$.}
   \[b \df \max\{\ |\gamma| \mid A \to \gamma \text{ е правило в }G\ \}.\]
   Тогава:
   \begin{itemize}
@@ -153,6 +154,7 @@
     Ако $\alpha \in \L(G)$ и $|\alpha| > b^\ell$, то $S \yield{\geq \ell+1} \alpha$.
   \end{itemize}
 \end{proposition}
+
 \begin{proof}
 
 %   \begin{proposition}
@@ -173,7 +175,7 @@
     Да разгледаме синтактично дърво $P = (T,\lambda)$ за извода $A \yield{\leq\ell} \alpha$.
     Според \Problem{tree:leaves-upper-bound} имаме, че $\abs{\alpha} = \abs{\leaves(T)}\leq b^{\high(T)} = b^{\ell}$.
   \item
-    Нека $\alpha \in \L(G)$. Това означава, че $S \yield{\star} \alpha$.
+    Нека $\alpha \in \L(G)$ и $\abs{\alpha} > b^\ell$. Това означава, че $S \yield{\star} \alpha$.
     Ако допуснем, че $S \yield{\leq \ell} \alpha$, то бихме имали, че $\abs{\alpha} \leq b^\ell$, което е противоречие.
     Заключаваме, че $S \yield{\geq \ell+1} \alpha$.
   \end{itemize}

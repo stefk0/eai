@@ -7,21 +7,21 @@
 За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-ляв извод} в граматиката $G$, $\alpha \lderive{\ell} \beta$, по следния начин:
 \mynote{Новото е, че имаме изискването $\lambda \in \Sigma^\star$. Това на практика означава, че на всяка стъпка заместваме най-лявата променлива в думата.}
 \begin{important}
-  \begin{figure}[H]
-    \begin{subfigure}[b]{0.5\textwidth}
+\begin{figure}[H]
+  \begin{subfigure}[b]{0.4\textwidth}
       \begin{prooftree}
         \AxiomC{}
-        % \LeftLabel{\scriptsize{(0)}}
+        \RightLabel{\scriptsize{правило (0)}}
         \UnaryInfC{$\alpha \lderive{0} \alpha$}
       \end{prooftree}
     \end{subfigure}
     ~
-    \begin{subfigure}[b]{0.5\textwidth}
+    \begin{subfigure}[b]{0.4\textwidth}
       \begin{prooftree}
         \AxiomC{$(A,\alpha) \in R$}
         \AxiomC{$\lambda \alpha \rho \lderive{\ell} \beta$}
         \AxiomC{$\lambda \in \Sigma^\star$}
-        % \LeftLabel{\scriptsize{(1)}}
+        \RightLabel{\scriptsize{правило (1)}}
         \TrinaryInfC{$\lambda A \rho \lderive{\ell+1} \beta$}
       \end{prooftree}
     \end{subfigure}
@@ -102,26 +102,26 @@
 \begin{extra}
   \index{граматика!най-десен извод}
 
-  \mynote{Единствената разлика между дефиницията на $\rderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\beta_2 \in \Sigma^\star$.}
+  \mynote{Единствената разлика между дефиницията на $\rderive{\star}$ и тази на $\derive{\star}$ е, че тук изискваме $\rho \in \Sigma^\star$.}
 
   За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-десен извод} в граматиката $G$, $\alpha \rderive{\ell} \beta$, по следния начин:
 
   \begin{important}
     \begin{figure}[H]
-      \begin{subfigure}[b]{0.5\textwidth}
+      \begin{subfigure}[b]{0.4\textwidth}
         \begin{prooftree}
           \AxiomC{}
-          % \RightLabel{\scriptsize{(0)}}
+          \RightLabel{\scriptsize{правило (0)}}
           \UnaryInfC{$\alpha \rderive{0} \alpha$}
         \end{prooftree}
       \end{subfigure}
       ~
-      \begin{subfigure}[b]{0.5\textwidth}
+      \begin{subfigure}[b]{0.4\textwidth}
         \begin{prooftree}
           \AxiomC{$(A,\alpha) \in R$}
           \AxiomC{$\lambda \alpha \rho \rderive{\ell} \beta$}
           \AxiomC{$\rho \in \Sigma^\star$}
-          % \RightLabel{\scriptsize{(1)}}
+          \RightLabel{\scriptsize{правило (1)}}
           \TrinaryInfC{$\lambda A \rho \rderive{\ell+1} \beta$}
         \end{prooftree}
       \end{subfigure}

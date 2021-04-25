@@ -7,38 +7,40 @@
 Казваме, че $G = (V,\Sigma,R,S)$ е {\bf контекстна граматика}, ако правилата на $G$ са от вида
 $\lambda A \rho \to \lambda \alpha \rho$, където $\lambda,\rho \in (V\cup\Sigma)^\star$ и $\alpha \in (V\cup\Sigma)^+$.
 
-\begin{extra}
 \begin{example}
   Езикът $L = \{a^nb^nc^n \mid n > 0\}$ е контекстен.
 \end{example}
-\begin{hint}
-  Разгледайте контекстната граматика $G$ зададена със следните правила:
-  \begin{align*}
-    & S \to aSBC\ |\ aBC\\
-    & CB \to CZ\\
-    & CZ \to WZ\\
-    & WZ \to WC\\
-    & WC \to BC\\
-    & aB \to ab\\
-    & bB \to bb\\
-    & bC \to bc\\
-    & cC \to cc.
-  \end{align*}
-  \mynote{Съобразете, че имаме извода $CB \derive{4}_G BC$.}
-  Докажете, че за всяко $n > 0$ е изпълено следното:
-  \begin{itemize}
-  \item
-    $S \derive{n} a^n(BC)^n$;
-  \item
-    $(BC)^n \derive{n-1} B^nC^n$;
-  \item
-    $aB^n \derive{n} ab^n$;
-  \item
-    $bC^n \derive{n} bc^n$.
-  \end{itemize}
-  Оттук лесно можем да докажем, че $L \subseteq \L(G)$.
-\end{hint}
-\end{extra}
+\begin{extra2}
+  \begin{hint}
+    Разгледайте контекстната граматика $G$ зададена със следните правила:
+    \begin{align*}
+      & S \to aSBC\ |\ aBC\\
+      & CB \to CZ\\
+      & CZ \to WZ\\
+      & WZ \to WC\\
+      & WC \to BC\\
+      & aB \to ab\\
+      & bB \to bb\\
+      & bC \to bc\\
+      & cC \to cc.
+    \end{align*}
+    Докажете, че за всяко $n > 0$ е изпълено следното:
+    \begin{itemize}
+    \item
+      $S \derive{n} a^n(BC)^n$;
+    \item
+      $CB \derive{4}_G BC$.
+    \item
+      $(BC)^n \derive{4(n-1)} B^nC^n$;
+    \item
+      $aB^n \derive{n} ab^n$;
+    \item
+      $bC^n \derive{n} bc^n$.
+    \end{itemize}
+    Оттук лесно можем да докажем, че $L \subseteq \L(G)$.    
+  \end{hint}
+\end{extra2}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../eai"

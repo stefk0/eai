@@ -48,23 +48,15 @@
 Нека официално да обявим, че един език $L$ се нарича {\bf безконтекстен}, ако съществува безконтекстна граматика $G$, за която 
 $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
-% \begin{important}
-% \begin{remark}
-%   Очевидно е, че всяка регулярна граматика е безконтекстна. Следователно, 
-%   {\em всеки регулярен език е безконтекстен.}
-% \end{remark}
-% \end{important}
-
-\begin{remark}
-  Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме свойството:
+Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме следното свойство.
+\begin{proposition}\label{pr:context-free-grammar:context-general-step}
+  За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
   \begin{prooftree}
     \AxiomC{$\alpha \derive{\ell_1} \rho B \delta$}
     \AxiomC{$B \derive{\ell_2} \beta$}
-    \RightLabel{\scriptsize{правило (2)}}
     \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\beta\delta$,}
-  \end{prooftree}
-  което ще означим като правило (2), защото ще го използваме често.
-\end{remark}
+  \end{prooftree}  
+\end{proposition}
 
 \begin{extra}
 \begin{example}
@@ -78,18 +70,21 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$S \to_G AS$}
     \AxiomC{}
+    \RightLabel{\scriptsize{(0)}}
     \UnaryInfC{$A \derive{0}_G A$}
     \AxiomC{$S \to_G \varepsilon$}
     \AxiomC{}
+    \LeftLabel{\scriptsize{(0)}}
     \UnaryInfC{$\varepsilon \derive{0}_G \varepsilon$}
     \LeftLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{1}_G \varepsilon$}
     \AxiomC{$S \to_G AS$}
     \AxiomC{}
-    \UnaryInfC{$\varepsilon \derive{0}_G \varepsilon$}
+    \RightLabel{\scriptsize{(0)}}
+    \UnaryInfC{$AS \derive{0}_G AS$}
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{1}_G AS$}
-    \RightLabel{\scriptsize{(2)}}
+    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{2}_G A$}
     \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat2}})}
     \BinaryInfC{$AS \derive{2}_G AA$}
@@ -99,17 +94,17 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   Освен това имаме и следния формален извод:
   \begin{prooftree}
     \AxiomC{$A \to_G aAb$}
-    \AxiomC{}
-    \LeftLabel{\scriptsize{(0)}}
-    \UnaryInfC{$a \derive{0}_G a$}
+    % \AxiomC{}
+    % \LeftLabel{\scriptsize{(0)}}
+    % \UnaryInfC{$a \derive{0}_G a$}
     \AxiomC{$A \to_G ab$}
     \AxiomC{}
     \RightLabel{\scriptsize{(0)}}
     \UnaryInfC{$aabb \derive{0}_G aabb$}
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$aAb \derive{1}_G aabb$}
-    \RightLabel{\scriptsize{(1)}}
-    \BinaryInfC{$aAb \derive{1}_G aabb$}
+    % \RightLabel{\scriptsize{(1)}}
+    % \BinaryInfC{$aAb \derive{1}_G aabb$}
     \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{2}_G aabb$}
   \end{prooftree}
@@ -126,10 +121,10 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$S \derive{3}_G AA$}
     \AxiomC{$A \derive{2}_G aabb$}
-    \RightLabel{\scriptsize{(2)}}
+    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{5}_G aabbA$}
     \AxiomC{$A \derive{1}_G ab$}
-    \RightLabel{\scriptsize{(2)}}
+    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
   Можем да приложим правилата за извод в различен ред и пак да получим същия краен резултат.
@@ -137,13 +132,15 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$S \to_G AS$}
     \AxiomC{$A \derive{2} aabb$}
-    \RightLabel{\scriptsize{(2)}}
+    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:padding})}}
+    \UnaryInfC{$AS \derive{2} aabbS$}
+    \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{3}_G aabbS$}
-    \RightLabel{\scriptsize{(2)}}
+    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
     \AxiomC{$S \derive{2}_G A$}
     \BinaryInfC{$S \derive{5}_G aabbA$}
     \AxiomC{$A \derive{1}_G ab$}
-    \RightLabel{\scriptsize{(2)}}
+    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
 \end{example}
@@ -153,7 +150,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 Следващото твърдение ни дава едно свойство, което е вярно за безконтекстни граматики, но не и за неограничени граматики.
 \begin{proposition}\label{pr:grammar:divide-2}
   \mynote{Тук $\gamma_1,\gamma_2,\beta \in (V\cup\Sigma)^\star$.}
-  Нека $\gamma_1$ и $\gamma_2$ са непразни думи, за които $\gamma_1\gamma_2 \derive{\ell} \beta$. Тогава
+  Нека $G$ е безконтекстна граматика и нека $\gamma_1$ и $\gamma_2$ са непразни думи, за които $\gamma_1\gamma_2 \derive{\ell} \beta$. Тогава
   съществуват числа $\ell_1$, $\ell_2$ и думи $\beta_1$ и $\beta_2$, за които:
   $\gamma_1 \derive{\ell_1} \beta_1$ и $\gamma_2 \derive{\ell_2} \beta_2$ и $\beta = \beta_1\beta_2$ и $\ell = \ell_1 + \ell_2$.
 \end{proposition}
