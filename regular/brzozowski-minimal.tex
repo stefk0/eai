@@ -142,6 +142,29 @@
                         & \iff \hat{M} \in F^\B. & \comment\text{ за }M = \alpha^{-1}(L)
     \end{align*}
   \item
+    \mynote{
+     \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt,initial text=начало,scale=0.8,every node/.style={scale=0.8}]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[state,initial above]          (1)              {$q_\varepsilon$};
+        \node[state]                  (2) [right of=1] {$q_\alpha$};
+        \node[state, inner sep=2pt]                  (3) [right of=2] {$q_{\alpha b}$};
+
+        \node[state, initial below, inner sep=2pt]   (4) [below of=1] {$\hat{L}$};
+        \node[state, inner sep=2pt]                  (5) [below of=2] {$\hat{M}$};
+        \node[state, inner sep=2pt]                  (6) [below of=3] {$\hat{N}$};
+        
+        \path
+        (2) edge [bend left=15]  node [above] {$b$} (3)
+        (5) edge [bend right=15] node [below] {$b$} (6)
+        (1) edge [dashed, bend right=15] node [left]  {$f$} (4)
+        (2) edge [dashed, bend right=15]  node [right] {$f$} (5)
+        (3) edge [dashed, bend left=15]  node [right] {$f$} (6);
+
+        \draw [photon] (1) -- node [above] {$\alpha$} (2);
+        \draw [photon] (4) -- node [above] {$\alpha$} (5);
+      \end{tikzpicture}
+    }
     Остава да докажем, че за произволна буква $b$ и произволни състояния $q,p \in Q_1$ е изпълнено, че:
     \[\delta_\A(q,b) = p\ \iff\ \delta_\B(f(q),b) = f(p).\]
     Понеже всяко състояние на $\A$ може да се запише като $q_\alpha$ за някое $\alpha$, то можем да запишем горния ред и така:
@@ -162,33 +185,6 @@
     Знаем, че $N = \L_\A(p) = (\alpha b)^{-1}(L) = \L_\A(q_{\alpha b})$.
     Понеже $f$ е биекция, то $p = q_{\alpha b}$.
     Заключаваме, че \[\delta_\A(q_\alpha,b) = p.\]
-
-    \begin{figure}[H]
-      \centering
-     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=60pt,initial text=начало]
-        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
-        
-        \node[state,initial]          (1)              {$q_\varepsilon$};
-        \node[state]                  (2) [right of=1] {$q_\alpha$};
-        \node[state, inner sep=2pt]                  (3) [right of=2] {$q_{\alpha b}$};
-
-        \node[state, initial, inner sep=2pt]          (4) [below of=1] {$\hat{L}$};
-        \node[state, inner sep=2pt]                  (5) [below of=2] {$\hat{M}$};
-        \node[state, inner sep=2pt]                  (6) [below of=3] {$\hat{N}$};
-        
-        \path
-        (2) edge [bend left=15]  node [above] {$b$} (3)
-        (5) edge [bend right=15] node [below] {$b$} (6)
-        (1) edge [dashed, bend right=15] node [left]  {$f$} (4)
-        (2) edge [dashed, bend right=15]  node [right] {$f$} (5)
-        (3) edge [dashed, bend left=15]  node [right] {$f$} (6);
-
-        \draw [photon] (1) -- node [above] {$\alpha$} (2);
-        \draw [photon] (4) -- node [below] {$\alpha$} (5);
-      \end{tikzpicture}
-      \caption{Визуализация на последното свойство за $\A \cong_f \B$.}
-    \end{figure}
-    
   \end{itemize}
 \end{proof}
 

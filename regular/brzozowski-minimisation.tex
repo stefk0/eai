@@ -1,6 +1,53 @@
 \subsection{Експоненциален алгоритъм за минимизация}
 
-Нека имаме ДКА $\A$.
+
+
+\begin{itemize}
+\item
+  Нека имаме ДКА $\A = \FA$. Да приемем, че $\A$ не е минимален автомат за езика $\L(\A)$.
+  Това означава, че съществуват различни състояния $q_\alpha$ и $q_\beta$, за които $\L_\A(q_\alpha) = \L_\A(q_\beta)$.
+  С други думи,
+  \begin{equation}
+    \label{eq:brzozowski-minimisation:equiv-states}
+    (\forall \omega)[\delta^\star(q_\alpha,\omega) \in F \iff \delta^\star(q_\beta,\omega) \in F].
+  \end{equation}
+\item
+  Нека $\N_1 = (\Sigma, Q, F, \Delta_1, \{\qstart\})$, където
+  $\Delta_1(q,x) \df \{p \in Q\mid \delta(p,x) = q\}$
+  и следователно
+  \[\Delta^\star_1(U,\alpha) \df \bigcup\{p \in Q\mid \delta^\star(p,\alpha) \in U\}.\]
+  \begin{equation}
+    \label{eq:equiv-states:rev1}
+    (\forall \omega)[\Delta_1^\star(F,\omega) \ni q_\alpha \iff \Delta_1^\star(F,\omega) \ni q_\beta].
+  \end{equation}
+\item
+  Нека $\D_2 = (\Sigma, Q_2, \code{F}, \delta_2, F_2)$, където
+  \begin{itemize}
+  \item
+    $Q_2 = \{\code{U} \mid (\exists \omega)[\Delta^\star_1(F,\omega) = U]\}$;
+  \item
+    $F_2 = \{\code{U} \in Q_2 \mid \qstart \in U\}$;
+  \item
+    $\delta_2(\code{U},x) = \code{\Delta^\star_1(U,x)}$.
+  \end{itemize}
+  Получаваме, че за едно състояние $\code{U}$,
+  \begin{align*}
+    q_\alpha \in U & \iff \delta^\star_2(\code{U},\alpha) \in F_2\\
+                   & \iff \delta^\star_2(\code{U},\alpha) \ni \qstart.
+  \end{align*}
+\item
+  Нека $\N_3 = (\Sigma, Q_2, F_2, \Delta_3, \{\code{F}\})$, където
+  \[\Delta_3(\code{U},x) = \{\code{V} \mid \delta_2(\code{V},x) = \code{U}\}).\]
+  Сега имаме, че
+  \begin{align*}
+    \Delta^\star_3(F_2,\alpha) & = \{\code{U} \mid \delta^\star_2(\code{U},\alpha) = \code{K}\ \&\ \code{K} \in F_2\}\\
+                               & = \{\code{U} \mid \delta^\star_2(\code{U},\alpha) = \code{K}\ \&\ \qstart \in K\}\\
+                               & = \{\code{U} \mid q_\alpha \in U\}\\
+                               & = \{\code{U} \mid q_\beta \in U\}\\
+                               & = \Delta^\star_3(F_2,\beta).
+  \end{align*}
+\end{itemize}
+
 Дефинираме $\B = \rev(\A)$ да бъде ДКА по следния начин:
 \begin{itemize}
 \item
@@ -54,3 +101,8 @@
   \end{theorem}
 \end{framed}
 
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../eai"
+%%% End:

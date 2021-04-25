@@ -1,8 +1,9 @@
+\newpage
 \subsection{Примерни задачи}
 \begin{extra2}
   \begin{example}
     \mynote{\cite[стр. 79]{kozen}}
-    Да простроим минимален автомат $\M$ разпознаващ езика на детерминирания краен автомат $\A$.
+    Да простроим минимален автомат $\A'$ разпознаващ езика на детерминирания краен автомат $\A$.
     \begin{figure}[H]
       \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
@@ -26,12 +27,15 @@
         (3) edge [bend left=15]  node [right] {$a,b$}  (5)
         (5) edge [loop right]    node [above] {$a,b$}  (5);
       \end{tikzpicture}
-      \caption{Аавтоматът $\A$.}
+      \caption{Автоматът $\A$.}
     \end{figure}
-  \mynote{\writedown Съобразете, че езикът на автомата $\A$ е \[\{\omega \in \{a,b\}^\star \mid \abs{\omega} \geq 2\}.\]}
+    \mynote{В процедурата, която следваме тук, изобщо не се интересуваме какъв е езика на автомата $\A$.
+      
+      \writedown Взе пак съобразете, че езикът на автомата $\A$ е \[\{\omega \in \{a,b\}^\star \mid \abs{\omega} \geq 2\}.\]}
   Ще приложим алгоритъма за минимизация за да получим минималния автомат за езика $L$.
   За всяко $n = 0,1,2,\dots$, ще намерим класовете на еквивалентност на $\equiv^n_\A$,
   докато не намерим $n$, за което $\equiv^n_\A\ =\ \equiv^{n+1}_\A$.
+  За първото такова $n$, според \Proposition{minimisation-cubic:equiv-approx}, знаем, че $\equiv^n_\A = \equiv_\A$.
   \begin{itemize}
   \item 
     Класовете на еквивалентност на $\equiv^0_\A$ са два. Те са
@@ -41,21 +45,6 @@
     \end{align*}
   \item
     Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv^0_\A$.
-    
-    % \begin{tabular}{|c|c|c|c|c|c|c|}
-    %   \hline
-    %   $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
-    %   \hline
-    %   \hline
-    %   $\equiv^0_\A$ & $A_0$ & $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
-    %   \hline
-    %   $a$ & $A_0$& $A_1$ & $A_1$ & $A_1$ & $A_1$ & $A_1$\\
-    %   \hline
-    %   $b$ & $A_0$& $A_1$ & $A_1$ & $A_1$ & $A_1$ & $A_1$\\
-    %   \hline
-    % \end{tabular}
-
-    
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       $\equiv^0_\A$ & \multicolumn{3}{|c|}{$A_0$} & \multicolumn{3}{|c|}{$A_1$}\\
@@ -69,7 +58,8 @@
       \hline
     \end{tabular}
     
-    Виждаме, че $0 \not\equiv^1_\A 1$ и $1 \equiv^1_\A 2$.
+    Като използваме \Proposition{one-letter-test}, виждаме, че $0 \not\equiv^1_\A 1$, защото $\delta(0,a) \not\equiv^0_\A \delta(1,a)$.
+    От друга страна, $1 \equiv^1_\A 2$.
     Класовете на еквивалентност на $\equiv^1_\A$ са следните множества:
     \begin{align*}
       & B_0 = \{0\},\\
@@ -79,19 +69,6 @@
   \item
     Сега да видим дали можем да разбием някои от класовете на еквивалентност на $\equiv^1_\A$.
     
-    % \begin{tabular}{|c|c|c|c|c|c|c|}
-    %   \hline
-    %   $Q$ & $0$ & $1$ & $2$ & $3^\star$ & $4^\star$ & $5^\star$ \\
-    %   \hline
-    %   \hline
-    %   $\equiv^1_\A$ & $B_0$ & $B_1$ & $B_1$ & $B_2$ & $B_2$ & $B_2$\\
-    %   \hline
-    %   $a$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
-    %   \hline
-    %   $b$ & $B_1$ & $B_2$ & $B_2$ & $B_2$ & $B_2$ & $B_2$\\
-    %   \hline
-    % \end{tabular}
-
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       $\equiv^1_\A$ & $B_0$ & \multicolumn{2}{|c|}{$B_1$} & \multicolumn{3}{|c|}{$B_2$}\\
@@ -111,10 +88,10 @@
     Следователно, минималният автомат $\M$ има три състояния.
     Той е изобразен на \Figure{min1}.  
     Минималният автомат може да се представи и таблично:
-  
+
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
-      $\delta_\M$ & $B_0$ & $B_1$ & $B_2$ \\
+      $\delta'$ & $B_0$ & $B_1$ & $B_2$ \\
       \hline
       $a$ & $B_1$ & $B_2$ & $B_2$ \\
       \hline
@@ -137,7 +114,7 @@
       (1) edge [bend left=15] node [above] {$a,b$}   (2)
       (2) edge [loop above] node [above] {$a,b$}   (2);
     \end{tikzpicture}
-  \caption{Минимален автомат $\M$ за $\L(\A)$.}
+  \caption{Минимален автомат $\A'$ за $\L(\A)$.}
   \label{fig:min1}
 \end{figure}
 \end{example}
@@ -147,7 +124,7 @@
 
 \begin{extra2}
 \begin{example}
-  Да построим минимален автомат $\M$ разпознаващ езика на следния детерминиран краен автомат $\A$.
+  Да построим минимален автомат $\A'$ разпознаващ $\L(\A)$.
   \begin{figure}[H]
     \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
@@ -213,20 +190,6 @@
   \item
     Разбиваме класовете на еквивалентност на $\equiv^0_\A$ като използваме \Proposition{one-letter-test}.
 
-    % \begin{tabular}{|c|c|c|c|c|c|c|}
-    %   \hline
-    %   $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
-    %   \hline
-    %   \hline
-    %   $\equiv^0_\A$ & $A_0$ & $A_1$ & $A_1$ & $A_0$ & $A_0$ & $A_1$\\
-    %   \hline
-    %   $a$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
-    %   \hline
-    %   $b$ & $A_1$& $A_0$ & $A_0$ & $A_1$ & $A_1$ & $A_1$\\
-    %   \hline
-    % \end{tabular}
-
-
     \begin{tabular}{|c|c|c|c|c|c|c|}
       \hline
       $\equiv^0_\A$ & \multicolumn{3}{|c|}{$A_0$} & \multicolumn{3}{|c|}{$A_1$}\\
@@ -251,20 +214,6 @@
     \end{align*}
   \item
     Сега се опитваме да разбием класовете на еквивалентност на $\equiv^1_\A$.
-    
-    % \begin{tabular}{|c|c|c|c|c|c|c|}
-    %   \hline
-    %   $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
-    %   \hline
-    %   \hline
-    %   $\equiv^1_\A$ & $B_0$ & $B_1$ & $B_1$ & $B_0$ & $B_0$ & $B_2$\\
-    %   \hline
-    %   $a$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
-    %   \hline
-    %   $b$ & $B_1$ & $B_0$ & $B_0$ & $B_2$ & $B_2$ & $B_2$\\
-    %   \hline
-    % \end{tabular}
-
 
 
     \begin{tabular}{|c|c|c|c|c|c|c|}
@@ -291,25 +240,12 @@
   \item
     Отново опитваме да разбием класовете на релацията $\equiv^2_\A$.
 
-      % \begin{tabular}{|c|c|c|c|c|c|c|}
-      %   \hline
-      %   $Q$ & 0 & $1^\star$ & $2^\star$ & 3 & 4 & $5^\star$ \\
-      %   \hline
-      %   \hline
-      %   $\equiv^2_\A$ & $C_0$ & $C_1$ & $C_1$ & $C_2$ & $C_2$ & $C_3$\\
-      %   \hline
-      %   $a$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
-      %   \hline
-      %   $b$ & $C_1$ & $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
-      %   \hline
-      % \end{tabular}
-
       \begin{tabular}{|c|c|c|c|c|c|c|}
         \hline
         $\equiv^2_\A$ & $C_0$ & \multicolumn{2}{|c|}{$C_1$} & \multicolumn{2}{|c|}{$C_2$} & $C_3$\\
         \hline
         \hline
-        $Q$ & $0$ & $3$ & $4$ & $1^\star$ & $2^\star$ & $5^\star$ \\
+        $Q$ & $0$ & $1^\star$ & $2^\star$ & $3$ & $4$ & $5^\star$ \\
         \hline
         $a$ & $C_1$& $C_2$ & $C_2$ & $C_3$ & $C_3$ & $C_3$\\
         \hline
@@ -351,7 +287,7 @@
         (2) edge [bend left=15] node [above] {$a,b$}   (3)
         (3) edge [loop above]   node [above] {$a,b$}   (3);
       \end{tikzpicture}
-      \caption{Получаваме минималния автомат $\M$ за $\L(\A)$.}
+      \caption{Получаваме минималния автомат $\A'$ за езика на $\A$.}
       \label{fig:min2}
     \end{figure}
   \end{example}
