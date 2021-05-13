@@ -13,14 +13,15 @@
 \end{itemize}
 
 \begin{framed}
-  \begin{problem}
+  \begin{problem}\label{prob:balanced-parentheses}
     Докажете, че $L = \{\ \alpha \in \{a,b\}^\star \mid \alpha\text{ е балансирана дума}\ \}$
     е безконтекстен език.
   \end{problem}  
 \end{framed}
 \begin{proof}
   \mynote{\cite[стр. 135]{kozen}\\
-    \writedown Докажете, че езикът $L$ не е регулярен! }
+    \writedown Докажете, че езикът $L$ не е регулярен! Алтернативна граматика е
+  \[S \to aSbS\ |\ \varepsilon.\]}
   Да разгледаме граматиката $G$ с правила
   \[S \to aSb\ |\ SS\ |\ \varepsilon.\]
   Ще докажем, че $L = \L(G)$.

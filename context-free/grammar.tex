@@ -174,31 +174,24 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 %   \end{prooftree}
 \item
   Нека $\ell > 0$. Тогава да разгледаме следната ситуация:
-  % \begin{prooftree}
-  %   \AxiomC{$\vdots$}
-  %   \LeftLabel{\scriptsize{$(\ell_1 > 0)$}}
-  %   \UnaryInfC{$\gamma_1\gamma_2 \derive{\ell_1} \delta$}
-  %   \AxiomC{$\vdots$}
-  %   \RightLabel{\scriptsize{$(\ell_2 > 0)$}}
-  %   \UnaryInfC{$\delta \derive{\ell_2} \beta$}
-  %   \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:general-step})}}
-  %   \BinaryInfC{$\gamma_1\gamma_2 \derive{\ell_1+\ell_2} \beta$}
-  % \end{prooftree}
-  % Понеже $\ell_1 < \ell$, то можем да приложим \IndHyp, според което можем да разбием $\delta$ като $\delta = \delta_1\delta_2$ и да получим извода:
   \begin{prooftree}
     \AxiomC{$(A,\alpha) \in R$}
     \AxiomC{$\lambda\alpha\rho \derive{\ell-1}\beta$}
+    \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$\underbrace{\lambda A \rho}_{\gamma_1\gamma_2} \derive{\ell} \beta$}
   \end{prooftree}
 
-  Без ограничение на общността, нека $A$ е част от $\gamma_1$. Това означава, че
-  $\gamma_1 = \lambda A \rho_1$ и $\rho = \rho_1\gamma_2$. Получаваме следния извод:
+  \mynote{Случаят, когато $A$ е част от $\gamma_2$ е аналогичен.}
+  Без ограничение на общността, нека променливата $A$ е част от $\gamma_1$. Това означава, че
+  $\gamma_1 = \lambda A \rho_1$ и $\rho = \rho_1\gamma_2$.
+  Сега можем да приложим индукционното предположение и да заключим, че съществува представяне на $\beta$
+  като $\beta = \beta_1 \beta_2$ със следния извод:
   \begin{prooftree}
     \AxiomC{$(A,\alpha) \in R$}
     \RightLabel{\scriptsize{\IndHyp}}
     \AxiomC{$\overbrace{\lambda\alpha\rho_1}^{\gamma_3}\gamma_2 \derive{\ell-1}\beta$}
     \UnaryInfC{$\gamma_3 \derive{\ell_1'} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
-    \LeftLabel{\scriptsize{правило (1)}}
+    \LeftLabel{\scriptsize{(1)}}
     \BinaryInfC{$\underbrace{\lambda A \rho_1}_{\gamma_1} \derive{\ell'_1+1} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
   \end{prooftree}
   

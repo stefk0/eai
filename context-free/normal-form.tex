@@ -58,19 +58,20 @@
 \end{theorem}
 
 \begin{theorem}
-  \mynote{\cite[стр. 137]{hopcroft1}. Важно е, че алгоритмите са полиномиални. От \Lemma{pumping-context} имаме експоненциални алгоритми.}
-  Съществуват \emph{полиномиални} алгоритми, които определят по дадена безконтекстна граматика $G$ дали $\abs{\L(G)} = \infty$.
+  \mynote{\cite[стр. 137]{hopcroft1}. Важно е, че алгоритмът е полиномиален.
+    \writedown Защо от \Lemma{pumping-context} имаме експоненциален алгоритъм за проверка дали езикът на една граматика е безкраен?}
+  Съществува \emph{полиномиален} алгоритъм, който определя по дадена безконтекстна граматика $G$ дали $\L(G)$ е безкраен език.
 \end{theorem}
 \begin{proof}
   Нека е дадена една безконтекстна граматика $G$.
   Нека да разгледаме граматиката $G'$ в НФЧ {\em без безполезни променливи}, за която $\L(G) = \L(G')$.
   От граматиката $G' = \pair{V',\Sigma,S,R'}$ строим граф с възли променливите от $V'$ като
-  за $A,B \in V'$ имаме ребро $A \to B$ точно тогава, когато съществува $C \in V'$,
-  за което $A \to BC$ или $A \to CB$ е правило в $R'$.
+  за $A,B \in V'$ имаме ребро $A \to B$ в графа точно тогава, когато съществува $C \in V'$,
+  за което $A \to_{G'} BC$ или $A \to_{G'} CB$ е правило в граматиката $G$.
   Сега ще съобразим, че ако в получения граф имаме цикъл, то $\L(G') = \infty$.
   Да разгледаме един такъв цикъл в графа:
   \[A_0 \to A_1 \to A_2 \to \cdots \to A_n \to A_0.\]
-  Това означава, че $A_0 \yield{n+1} \delta A_0 \rho$ и поради избора на граматика, $\abs{\delta\rho} = n+1$
+  Понеже граматикат е в нормална форма на Чомски, то същестуват думи $\lambda,\rho \in (V\cup\Sigma)^\star$, за които $A_0 \yield{n+1} \lambda A_0 \rho$ и $\abs{\lambda\rho} = n+1$
 
   \begin{figure}[H]
     \begin{subfigure}[t]{0.5\textwidth}
@@ -90,7 +91,7 @@
       \draw (A) -- node[above left]{$P = $} (B) -- node[below]{$A_0$}(C) -- (A);
       \draw [photon] (A) -- (D) -- (E) -- (F);
     \end{tikzpicture}
-    \caption{$A_0 \yield{n+1} \delta A_0 \rho$, където $\delta, \rho \in (V\cup\Sigma)^\star$.}
+    \caption{$A_0 \yield{n+1} \lambda A_0 \rho$, където $\lambda, \rho \in (V\cup\Sigma)^\star$.}
     \end{subfigure}
     ~ 
     \begin{subfigure}[t]{0.5\textwidth}
@@ -108,11 +109,11 @@
     \end{subfigure}
   \end{figure}
 
-  Понеже в $G$ няма безполезни променливи, то $\delta \derive{\star} \alpha$, където $\alpha \in \Sigma^\star$ и $\abs{\delta} \leq \abs{\alpha}$ и $\rho \derive{\star} \gamma$,
+  Понеже в $G$ няма безполезни променливи, то $\lambda \derive{\star} \alpha$, където $\alpha \in \Sigma^\star$ и $\abs{\delta} \leq \abs{\alpha}$ и $\rho \derive{\star} \gamma$,
   където $\gamma \in \Sigma^\star$ и $\abs{\rho} \leq \abs{\gamma}$.
   Оттук заключаваме, че $A_0 \yield{\star} \alpha A_0 \gamma$ и $\abs{\alpha\gamma} \geq 1$.
   Понеже $A_0$ не е безполезна променлива, то $A_0 \yield{\star} \beta$, за някоя дума $\beta \in \Sigma^\star$.
-  Сега комбинираме \Proposition{pumping:ground} и \Proposition{pumping:iteration} за да получим следния извод.
+  Сега комбинираме \Proposition{pumping:ground} и \Proposition{pumping:iteration} за да получим следния извод:
   \begin{prooftree}
     \AxiomC{$A_0 \yield{\star} \alpha A_0 \gamma$}
     \AxiomC{$A_0 \yield{\star} \beta$}
@@ -120,14 +121,20 @@
     \TrinaryInfC{$A_0 \yield{\star} \alpha^i \beta \gamma^i$}
   \end{prooftree}
   Понеже $\abs{\alpha\beta} \geq 1$, заключаваме, че $\L(G)$ е безкраен език.
+  Така доказахме, че ако в графът има цикли, то $\L(G)$ е безкраен език.
   
-  Ако в графът няма цикли, то езикът $\L(G)$ е краен, защото ако от променливата $A$ най-дългият път има дължина $k+1$,
-  то за променливите $B$ и $C$, за които имаме правилото $A\to BC$, най-дългият път от $B$ и $C$ има дължина най-много $k$.
-  Ако най-дългият път от $A$ има дължина $k$, то ако $A \yield{\star} \alpha$, за някоя дума $\alpha \in \Sigma^\star$,
-  то $A \yield{\leq k} \alpha$. Оттук следва, че всички думи, които се извеждат от $A$ са най-много $2^{k-1}$ на брой,
-  защото граматиката е в нормална форма на Чомски.
+  За обратната посока, нека в графът няма цикли.
+  Да разгледаме една променлива $A$, от която най-дългият път има $k$ на брой възли.
+  Това означава, че ако $A \yield{\star} \alpha$, за някоя $\alpha \in \Sigma^\star$,
+  то $A \yield{\leq k} \alpha$ и понеже граматиката е в нормална форма на Чомски,
+  то $\abs{\alpha} \leq 2^{k-1}$.
+  Оттук следва, че всички думи, които се извеждат от променливата $A$ са най-много $2^{k-1}$ на брой.
+  Заключаваме, че ако в графът няма цикли, то $\L(G)$ е краен.
 \end{proof}
 
+\begin{theorem}
+  Съществува \emph{полиномиален} алгоритъм, който определя по дадена безконтекстна граматика $G$ дали $\L(G)$ е краен език.
+\end{theorem}
 
 %%% Local Variables:
 %%% mode: latex

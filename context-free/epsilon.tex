@@ -6,7 +6,10 @@
   и $\L(G') = \L(G) \setminus \{\varepsilon\}$.
 \end{lemma}
 \begin{hint}
-  За да премахнем правилата от вида $A \to \varepsilon$ от граматиката, следваме процедурата:
+  За да премахнем правилата от вида $A \to \varepsilon$ от граматиката, първо трябва да намерим множеството
+  от променливи
+  \[\texttt{E} = \{A \in V \mid A \yield{\star} \varepsilon\}.\]
+  За да направим това, следваме процедурата:
   \begin{enumerate}[1)]
   \item 
     \mynote{На всяка стъпка трябва да обходим цялата граматика, следователно всяка итерация отнема $\mathcal{O}(|G|)$ време.}
@@ -56,8 +59,7 @@
   \end{enumerate}
 \end{hint}
 
-{\scriptsize
-\begin{multicols}{2}
+\begin{extra2}
   \begin{example}
   Нека е дадена граматиката $G$ с правила
   \begin{align*}
@@ -81,7 +83,7 @@
     $\texttt{E[3]} = \{C,U,B,A\}$;
   \item
     $\texttt{E[4]} = \texttt{E[3]}$. Следователно,
-    \[\texttt{E} = \{X \in V \mid X \derive{\star} \varepsilon\} = \{C,U,B,A\}.\]
+    \[\texttt{E} = \{X \in V \mid X \yield{\star} \varepsilon\} = \{C,U,B,A\}.\]
   \end{itemize}
   
   Това означава, че $\varepsilon \not\in \L(G)$.
@@ -94,10 +96,8 @@
     & C \to C\ |\ A\ |\ CA\ |\ a\\
     & U \to aUb\ |\ ab.
   \end{align*}
-\end{example}
-\end{multicols}
-
-}
+\end{example}  
+\end{extra2}
 
 %%% Local Variables:
 %%% mode: latex

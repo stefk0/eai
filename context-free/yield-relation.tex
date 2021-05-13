@@ -1,25 +1,26 @@
 \section{Извод върху синтактично дърво}
 
 \mynote{Не знам да има учебник, в който формално да е въведена тази релация. Тя е удобна най-вече за решаване на задачи, както и за доказателството на лемата за покачването.}
-\begin{framed}
-За произволна безконтекстна граматика $G$, дефинираме релацията $X \yield{\ell} \alpha$, където $X \in V \cup \Sigma$ и $\alpha \in (V\cup\Sigma)^\star$, по следния начин:
-\begin{prooftree}
-  \AxiomC{}
-  \RightLabel{\scriptsize{правило (0)}}
-  \UnaryInfC{$X \yield{0} X$}
-\end{prooftree}
-
-\begin{prooftree}
-  \AxiomC{$X \to_G X_1\cdots X_n$}
-  \AxiomC{$X_1 \yield{\ell_1} \gamma_1$}
-  \AxiomC{$\cdots$}
-  \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
-  \LeftLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
-  \RightLabel{\scriptsize{правило (1)}}
-  \QuaternaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
-\end{prooftree}
-\end{framed}
-
+\begin{definition}
+  За произволна безконтекстна граматика $G$, дефинираме релацията $X \yield{\ell} \alpha$, където $X \in V \cup \Sigma$ и $\alpha \in (V\cup\Sigma)^\star$, по следния начин:
+  \begin{important}
+    \begin{prooftree}
+      \AxiomC{}
+      \RightLabel{\scriptsize{правило (0)}}
+      \UnaryInfC{$X \yield{0} X$}
+    \end{prooftree}
+    
+    \begin{prooftree}
+      \AxiomC{$X \to_G X_1\cdots X_n$}
+      \AxiomC{$X_1 \yield{\ell_1} \gamma_1$}
+      \AxiomC{$\cdots$}
+      \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
+      \LeftLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
+      \RightLabel{\scriptsize{правило (1)}}
+      \QuaternaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
+    \end{prooftree}
+  \end{important}
+\end{definition}
 
 \mynote{ Съобразете, че имаме:
 \begin{prooftree}
@@ -30,9 +31,6 @@
 
 Да дефинираме $\yield{\star}$ по следния начин:
 \[X \yield{\star} \gamma \dff (\exists \ell\in\Nat)[X \yield{\ell} \gamma].\]
-
-
-
 
 \begin{lemma}
   Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.

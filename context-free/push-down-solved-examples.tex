@@ -148,15 +148,16 @@
 \end{problem}
 
 \begin{example}
-  Безконтекстният език $L = \{\ \omega \in \{\texttt{[},\texttt{]}\}^\star \mid \texttt{left}(\omega) = \texttt{right}(\omega)\ \}$
+  \mynote{От \Problem{equal-number-parentheses} знаем, че този език е безконтекстен.}
+  Езикът $L = \{\ \omega \in \{a,b\}^\star \mid \abs{\omega}_a = \abs{\omega}_b\}$
   се разпознава от стековия автомат $P = \PDA$, където:
   \begin{itemize}
   \item 
     $Q = \{q,f\}$;
   \item
-    $\Sigma = \{\texttt{[},\texttt{]}\}$;
+    $\Sigma = \{a,b\}$;
   \item
-    $\Gamma = \{\texttt{[}, \texttt{]}, \sharp\}$;
+    $\Gamma = \{a, b, \sharp\}$;
   \item
     $\qstart = q$ и $\qaccept = f$;
   \item
@@ -165,59 +166,61 @@
     \item 
       $\Delta(q, \varepsilon, \sharp) = \{(f, \varepsilon)\}$;
     \item
-      $\Delta(q, \texttt{[}, \sharp) = \{(q, \texttt{[}\sharp)\}$;
+      $\Delta(q, a, \sharp) = \{(q, a\sharp)\}$;
     \item
-      $\Delta(q, \texttt{]}, \sharp) = \{(q, \texttt{]}\sharp)\}$;
+      $\Delta(q, b, \sharp) = \{(q, b\sharp)\}$;
     \item
-      $\Delta(q, \texttt{[}, \texttt{[}) = \{(q, \texttt{[[})\}$;
+      $\Delta(q, a, a) = \{(q, aa)\}$;
     \item
-      $\Delta(q, \texttt{[}, \texttt{]}) = \{(q, \varepsilon)\}$;
+      $\Delta(q, a, b) = \{(q, \varepsilon)\}$;
     \item
-      $\Delta(q, \texttt{]}, \texttt{[}) = \{(q, \varepsilon)\}$;
+      $\Delta(q, b, a) = \{(q, \varepsilon)\}$;
     \item
-      $\Delta(q, \texttt{]}, \texttt{]}) = \{(q, \texttt{]]})\}$.
+      $\Delta(q, b, b) = \{(q, bb)\}$.
     \end{enumerate}
   \end{itemize}
-  Да видим защо думата $\texttt{[]]][[} \in \L(P)$.
+  Да видим защо думата $abbbaa \in \L(P)$.
   \begin{align*}
-    (q, \texttt{[]]][[}, \sharp) & \vdash_P (q,\ \texttt{]]][[},\ \texttt{[}\sharp) & \comment{\text{правило }(2)}\\
-                                 & \vdash_P (q,\ \texttt{]][[},\ \sharp) & \comment{\text{правило }(6)}\\
-                                 & \vdash_P (q,\ \texttt{][[},\ \texttt{]}\sharp) & \comment{\text{правило }(3)}\\
-                                 & \vdash_P (q,\ \texttt{[[},\ \texttt{]]}\sharp) & \comment{\text{правило }(7)}\\
-                                 & \vdash_P (q,\ \texttt{[},\ \texttt{]}\sharp) & \comment{\text{правило }(5)}\\
-                                 & \vdash_P (q,\ \varepsilon,\ \sharp) & \comment{\text{правило }(5)}\\
-                                 & \vdash_P (f,\ \varepsilon,\ \varepsilon). & \comment{\text{правило }(1)}
+    (q, abbbaa, \sharp) & \vdash_P (q, bbbaa,\ a\sharp) & \comment{\text{правило }(2)}\\
+                        & \vdash_P (q, bbaa,\ \sharp) & \comment{\text{правило }(6)}\\
+                        & \vdash_P (q, baa,\ b\sharp) & \comment{\text{правило }(3)}\\
+                        & \vdash_P (q, aa, bb\sharp) & \comment{\text{правило }(7)}\\
+                        & \vdash_P (q, a,\ b\sharp) & \comment{\text{правило }(5)}\\
+                        & \vdash_P (q, \varepsilon,\ \sharp) & \comment{\text{правило }(5)}\\
+                        & \vdash_P (f, \varepsilon,\ \varepsilon). & \comment{\text{правило }(1)}
   \end{align*}
 
   \begin{enumerate}[a)]
   \item
-    \mynote{Индукция по дължината на думата $\alpha$}
-    Докажете, че за произволно естествено число $n$ и произволна дума $\alpha \in \{\texttt{[}, \texttt{]}\}^\star$, е изпълнено, че:
+    \mynote{Индукция по дължината на думата $\gamma$.}
+    Докажете, че за произволно естествено число $n$ и произволна дума $\gamma \in \{a, b\}^\star$, е изпълнено, че:
     \begin{align*}
-      \texttt{[}^n\alpha \in L & \implies (q, \alpha, \texttt{[}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)\\
-      \texttt{]}^n\alpha \in L & \implies (q, \alpha, \texttt{]}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp).
+      a^n\gamma \in L & \implies (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)\\
+      b^n\gamma \in L & \implies (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp).
     \end{align*}
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
-    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат }
-    Докажете, че за произволно естествено число $n$ и произволна дума $\alpha \in \{\texttt{[}, \texttt{]}\}^\star$ е изпълнено, че:
+    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат.}
+    Докажете, че за произволно естествено число $n$ и произволна дума $\gamma \in \{a, b\}^\star$ е изпълнено, че:
     \begin{align*}
-      (q, \alpha, \texttt{[}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies \texttt{[}^n\alpha \in L\\
-      (q, \alpha, \texttt{]}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies \texttt{]}^n\alpha \in L.
+      (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies a^n\gamma \in L\\
+      (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies b^n\gamma \in L.
     \end{align*}
     Оттук заключете, че $\L(P) \subseteq L$.
   \end{enumerate}
 \end{example}
 
 \begin{example}
-  Езикът $L = \{\ \omega \in \{\texttt{[},\texttt{]}\}^\star \mid \omega\text{ е балансирана дума}\ \}$ се разпознава от стековия автомат $P = \PDA$, където:
+  \mynote{От \Problem{balanced-parentheses} знаем, че този език е безконтекстен.}
+  Езикът $L = \{\ \omega \in \{a,b\}^\star \mid \omega\text{ е балансирана дума}\ \}$
+  се разпознава от стековия автомат $P = \PDA$, където:
   \begin{itemize}
   \item 
     $Q = \{q,f\}$;
   \item
     $\qstart = q$ и $\qaccept = f$;
   \item
-    $\Sigma = \{\texttt{[},\texttt{]}\}$ и $\Gamma = \{\texttt{[}, \sharp\}$;
+    $\Sigma = \{a,b\}$ и $\Gamma = \{a, \sharp\}$;
   \item
     Можем да дефинираме релацията на преходите $\Delta$ по следния начин:
     \mynote{\writedown Докажете, че $L = \L(P)$!}
@@ -225,24 +228,24 @@
     \item 
       $\Delta(q, \varepsilon, \sharp) = \{(f, \varepsilon)\}$;
     \item
-      $\Delta(q, \texttt{[}, \sharp) = \{(q, \texttt{[}\sharp)\}$;
+      $\Delta(q, a, \sharp) = \{(q, a\sharp)\}$;
     \item
-      $\Delta(q, \texttt{[}, \texttt{[}) = \{(q, \texttt{[[})\}$;
+      $\Delta(q, a, a) = \{(q, aa)\}$;
     \item
-      $\Delta(q, \texttt{]}, \texttt{[}) = \{(q, \varepsilon)\}$;
+      $\Delta(q, b, a) = \{(q, \varepsilon)\}$;
     \end{enumerate}
   \end{itemize}  
   \begin{enumerate}[(a)]
   \item
-    \mynote{Индукция по дължината на думата $\alpha$}
-    Докажете, че за произволно естествено число $n$ и произволна дума $\alpha \in \{\texttt{[}, \texttt{]}\}^\star$, 
+    \mynote{Индукция по дължината на думата $\beta$.}
+    Докажете, че за произволно естествено число $n$ и произволна дума $\beta \in \{a, b\}^\star$, 
     е изпълнено, че:
-    \[\texttt{[}^n\alpha \in L\ \implies (q, \alpha, \texttt{[}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp).\]
+    \[a^n\beta \in L\ \implies (q, \beta, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp).\]
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
     \mynote{Индукция по броя на стъпките в изчислението на стековия автомат.}
-    Докажете, че за произволно естествено число $n$ и произволна дума $\alpha \in \{\texttt{[}, \texttt{]}\}^\star$, е изпълнено, че:
-    \[(q,\alpha,\texttt{[}^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)\ \implies\ \texttt{[}^n\alpha \in L.\]
+    Докажете, че за произволно естествено число $n$ и произволна дума $\beta \in \{a, b\}^\star$, е изпълнено, че:
+    \[(q,\beta,a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)\ \implies\ a^n\beta \in L.\]
     Оттук заключете, че $\L(P) \subseteq L$.
   \end{enumerate}
 \end{example}

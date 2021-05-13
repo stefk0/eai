@@ -4,8 +4,9 @@
 В нашата дефиниция на извод, изборът върху коя променлива да приложим правило от граматиката е недетерминистичен.
 В някои случаи, за нас ще бъде важно винаги да правим детерминистичен избор на това върху коя променлива прилагаме правило.
 
+\begin{definition}
 За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-ляв извод} в граматиката $G$, $\alpha \lderive{\ell} \beta$, по следния начин:
-\mynote{Новото е, че имаме изискването $\lambda \in \Sigma^\star$. Това на практика означава, че на всяка стъпка заместваме най-лявата променлива в думата.}
+\mynote{Новото е, че имаме изискването $\lambda \in \Sigma^\star$. Това на практика означава, че на всяка стъпка заместваме възможно най-лявата променлива.}
 \begin{important}
 \begin{figure}[H]
   \begin{subfigure}[b]{0.4\textwidth}
@@ -26,15 +27,59 @@
       \end{prooftree}
     \end{subfigure}
     \caption{Правила за най-ляв извод в безконтекстна граматика.}
-  \end{figure}
+  \end{figure}  
 \end{important}
+\end{definition}
+
+
+
 
 
 \mynote{Интуитивно, $A \yield{\star} \alpha$ ни казва, че при обхождане на синтактичното дърво в широчина ние получаваме като листа думата $\alpha$. Ако
   $A\lderive{\star}\alpha$, то обхождаме синтактичното дърво с корен $A$ в дълбочина, като винаги избираме най-левия необходен клон.  Ако $A\derive{\star}\alpha$, то обхождаме синтактичното дърво в дълбочина без да имаме детерминистичен избор с кой необходен клон да продължим.}
 
+\begin{proposition}\label{pr:left-derivation:padding}
+  За проиволно естествено число $\ell$ имаме извода:
+  \begin{prooftree}
+    \AxiomC{$\alpha \lderive{\ell} \beta$}
+    \AxiomC{$\lambda \in \Sigma^\star$}
+    \AxiomC{$\rho \in (V\cup\Sigma)^\star$}
+    \TrinaryInfC{$\lambda \alpha \rho \lderive{\ell} \lambda \beta \rho$}
+  \end{prooftree}
+\end{proposition}
+\begin{proof}
+  Индукция по $\ell$.
+  \begin{itemize}
+  \item
+    $\ell = 0$. Директно следва от правило $(0)$.
+  \item
+    $\ell > 0$. Според правилата за извод имаме следния случай:
+    \begin{prooftree}
+      \AxiomC{$(A,\alpha') \in R$}
+      \AxiomC{$\gamma\alpha'\delta \lderive{\ell-1} \beta$}
+      \AxiomC{$\gamma \in \Sigma^\star$}
+      \RightLabel{\scriptsize{правило (1)}}
+      \TrinaryInfC{$\underbrace{\gamma A \delta}_{\alpha} \lderive{\ell} \beta$}
+    \end{prooftree}
+    Сега като използваме \IndHyp получаваме следния извод:
+    \begin{prooftree}
+      \AxiomC{$(A,\alpha') \in R$}
+      \AxiomC{$\gamma\alpha'\delta \lderive{\ell-1} \beta$}
+      \AxiomC{$\lambda \in \Sigma^\star$}
+      \AxiomC{$\rho \in (V\cup\Sigma)^\star$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \TrinaryInfC{$\lambda\gamma\alpha'\delta\rho \lderive{\ell-1} \lambda\beta\rho$}
+      \AxiomC{$\lambda\gamma \in \Sigma^\star$}
+      \RightLabel{\scriptsize{правило (1)}}
+      \TrinaryInfC{$\lambda\underbrace{\gamma A \delta}_{\alpha}\rho \lderive{\ell} \lambda\beta\rho$}
+    \end{prooftree}
+  \end{itemize}
+\end{proof}
+
+
+
 Удобно ще бъде да разгледаме следния аналог на \Proposition{unrestricted-grammar:context-general-step}.
-\begin{proposition}\label{pr:grammar:context-left-step}
+\begin{proposition}\label{pr:left-derivation:context-step}
   Имаме извода:
   \begin{prooftree}
     \AxiomC{$\delta \lderive{\ell_1} \alpha B \gamma$}
@@ -43,9 +88,57 @@
     \TrinaryInfC{$\delta \lderive{\ell_1+\ell_2}\alpha\beta\gamma$}
   \end{prooftree}
 \end{proposition}
+\begin{proof}
+  Сега ще докажем твърдението с индукция по $\ell_1$.
+  \begin{itemize}
+  \item
+    Нека $\ell_1 = 0$. Тук нещата са ясни, защото $\delta = \alpha B \gamma$ и имаме извода:
+    \begin{prooftree}
+      \AxiomC{$B \lderive{\ell_2} \beta$}
+      \AxiomC{$\alpha \in \Sigma^\star$}
+      \AxiomC{$\gamma \in (V \cup \Sigma)^\star$}
+      \RightLabel{\scriptsize{(\Proposition{left-derivation:padding})}}
+      \TrinaryInfC{$\underbrace{\alpha B \gamma}_{\delta} \lderive{\ell_2} \alpha\beta\gamma$}
+    \end{prooftree}
+  \item
+    Нека $\ell_1 > 0$. Трябва да разбием извода с дължина $\ell_1$ за да можем да приложим индукционното предположение. От правилата за извод следва, че имаме следната ситуация:
+    \begin{prooftree}
+      \AxiomC{$(A,\alpha') \in R$}
+      \AxiomC{$\lambda \alpha' \rho \lderive{\ell_1-1} \alpha B \gamma$}
+      \AxiomC{$\lambda \in \Sigma^\star$}
+      \RightLabel{\scriptsize{(1)}}
+      \TrinaryInfC{$\underbrace{\lambda A \rho}_{\delta} \lderive{\ell_1} \alpha B \gamma$}
+    \end{prooftree}
+
+    Използвайки \IndHyp получаваме следния извод:
+    \begin{prooftree}
+      \AxiomC{$\lambda \in \Sigma^\star$}
+      \AxiomC{$(A,\alpha') \in R$}
+      \AxiomC{$\lambda\alpha'\rho \lderive{\ell_1-1} \alpha B \gamma$}
+      \AxiomC{$B \lderive{\ell_2} \beta$}
+      \AxiomC{$\alpha \in \Sigma^\star$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \TrinaryInfC{$\lambda\alpha'\rho \lderive{\ell_1+\ell_2-1} \alpha\beta\gamma$}
+      \RightLabel{\scriptsize{(1)}}
+      \TrinaryInfC{$\underbrace{\lambda A \rho}_{\delta} \lderive{\ell_1+\ell_2} \alpha\beta\gamma$}
+    \end{prooftree}
+  \end{itemize}  
+\end{proof}
+
+\begin{proposition}\label{pr:left-derivation:concat2}
+  За произволни $\ell_1$ и $\ell_2$ имаме извода:
+  \begin{prooftree}
+    \AxiomC{$\alpha_1 \lderive{\ell_1} \beta_1$}
+    \AxiomC{$\alpha_2 \lderive{\ell_2} \beta_2$}
+    \BinaryInfC{$\alpha_1\alpha_2 \lderive{\ell_1+\ell_2} \beta_1\beta_2$}
+  \end{prooftree}
+\end{proposition}
+
+
+Следваща \Lemma{left-derivation-equivalence} е важна, защото тя на практика ни казва, че няма значение в какъв ред ще заместваме променливите в един извод на безконтекстна граматика.
 
 \begin{important}
-  \begin{lemma}
+  \begin{lemma}\label{lem:left-derivation-equivalence}
 % \mynote{Важно е да отбележим, че имаме горната еквивалентност само когато $\alpha \in \Sigma^\star$. Съобразете сами защо тази лема не е вярна в общия случай, когато позволим $\alpha$ да съдържа променливи.}
     За всяка безконтекстна граматика $G$, променлива $A$ и дума $\alpha \in \Sigma^\star$,
     \[A \lderive{\star} \alpha\text{ точно тогава, когато } A \derive{\star} \alpha.\]
@@ -53,51 +146,54 @@
   \end{lemma}
 \end{important}
 \begin{proof}
+  \mynote{Правило $(1)$ за $\lderive{\ell}$ е частен случай на правило $(1)$ за $\derive{\ell}$} 
   От правилата за извод е видно, че ако $A \lderive{\star} \alpha$, то $A \derive{\star} \alpha$.
-  За другата посока, достатъчно е да се докаже, че ако $A \yield{\star} \alpha$ то $A \lderive{\star} \alpha$.
 
-  Това ще направим като използваме \Theorem{grammar:yield-derive-equivalent},
-  а именно ще докажем с пълна индукция по $\ell$, че за произволно число $\ell$, ако $A \yield{\ell}\alpha$, то $A \lderive{\star}\alpha$.
+  За другата посока, според \Theorem{grammar:yield-derive-equivalent} е достатъчно да се докаже, че ако $A \yield{\star} \alpha$ то $A \lderive{\star} \alpha$. С пълна индукция по $\ell$ ще докажем, че за произволно число $\ell$, ако $A \yield{\ell}\alpha$, то $A \lderive{\star}\alpha$.
   Да отбележим, че щом $A \in V$, а $\alpha \in \Sigma^\star$ е ясно, че $\ell > 0$.
-  Имаме следното:
+  Това означава, че $A \yield{\ell}\alpha$ е получен чрез правило $(1)$ от дефиницията на релацията $\yield{\ell}$, т.е.
   \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_1 \yield{\ell_1} \beta_1$}
+    % \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
+    \AxiomC{$A \to_G X_1X_2\cdots X_n$}
+    \AxiomC{$X_1 \yield{\ell_1} \alpha_1$}
     \AxiomC{$\cdots$}
-    \AxiomC{$B_n \yield{\ell_n} \beta_n$}
-    \QuaternaryInfC{$A \yield{\ell} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$,}
+    \AxiomC{$X_n \yield{\ell_n} \alpha_n$}
+    \RightLabel{\scriptsize{(1)}}
+    \QuaternaryInfC{$A \yield{\ell} \underbrace{\alpha_1\cdots\alpha_n}_{\alpha}$,}
   \end{prooftree}
-  където $\ell = 1+\max\{\ell_1,\dots,\ell_n\}$.
+  където $X_i \in V \cup \Sigma$ и $\ell = 1+\max\{\ell_1,\dots,\ell_n\}$.
   Започваме така:
   \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_1 \yield{\ell_1} \beta_1$}
+    \AxiomC{$A \to_G X_1X_2\cdots X_n$}
+    \AxiomC{$X_1 \yield{\ell_1} \alpha_1$}
     \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_1 \lderive{^\star}\beta_1$}
+    \UnaryInfC{$X_1 \lderive{^\star}\alpha_1$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
-    \BinaryInfC{$A \lderive{^\star}\alpha_1\beta_1\alpha_2B_2\cdots\alpha_n B_n \alpha_{n+1}$}
+    \BinaryInfC{$A \lderive{^\star}\alpha_1 X_2 \cdots X_n$}
   \end{prooftree}
   Продължаваме последователно за всяко $i < n$ правим да правим извода:
   \begin{prooftree}
-    \AxiomC{$A \lderive{\star} \overbrace{\alpha_1\beta_1\cdots\alpha_i}^{\in\Sigma^\star}B_i\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_i \yield{\ell_i} \beta_i$}
+    \AxiomC{$A \lderive{\star} \overbrace{\alpha_1\cdots\alpha_{i-1}}^{\in\Sigma^\star}X_{i}X_{i+1}\cdots X_n$}
+    \AxiomC{$X_i \yield{\ell_{i+1}} \alpha_i$}
     \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_i \lderive{^\star}\beta_i$}
+    \UnaryInfC{$X_i \lderive{^\star}\beta_i$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
-    \BinaryInfC{$A \lderive{\star}\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n B_n \alpha_{n+1}$}
+    \BinaryInfC{$A \lderive{\star}\alpha_1\cdots\alpha_{i-1}\alpha_i X_{i+1} \cdots X_n$}
   \end{prooftree}
   Завършваме със следния извод:
   \begin{prooftree}
-    \AxiomC{$A \lderive{\star} \overbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n}^{\in\Sigma^\star} B_n\alpha_{n+1}$}
-    \AxiomC{$B_n \yield{\ell_n} \beta_n$}
+    \AxiomC{$A \lderive{\star} \overbrace{\alpha_1\alpha_2\cdots \alpha_{n-1}}^{\in\Sigma^\star} X_n$}
+    \AxiomC{$X_n \yield{\ell_n} \alpha_n$}
     \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_n \lderive{\star}\beta_n$}
+    \UnaryInfC{$X_n \lderive{\star}\alpha_n$}
     \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
-    \BinaryInfC{$A \lderive{^\star}\underbrace{\alpha_1\beta_1\cdots\alpha_i\beta_i\cdots\alpha_n \beta_n \alpha_{n+1}}_{\alpha}$}
+    \BinaryInfC{$A \lderive{^\star}\underbrace{\alpha_1\alpha_2\cdots\alpha_{n-1}\alpha_n}_{\alpha}$}
   \end{prooftree}
 \end{proof}
 
-\subsection{Допълнителни задачи}
+
+
+\subsection*{Най-десен извод}
 
 \begin{extra}
   \index{граматика!най-десен извод}
