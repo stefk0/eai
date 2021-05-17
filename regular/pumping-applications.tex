@@ -11,7 +11,7 @@
     Нека $L$ е непразен език и нека $m = \min\{\abs{\alpha} \mid \alpha \in L\}$.
     Ще докажем, че $m < \abs{Q}$.    
     За целта, да допуснем, че $m \geq \abs{Q}$ и да изберем $\alpha \in L$, за която $\abs{\alpha} = m$.
-    Според доказателството на \Lemma{pumping-reg}, съществува разбиване $xyz = \alpha$, 
+    Според доказателството на \Lemma{regular:pumping}, съществува разбиване $xyz = \alpha$, 
     такова че $xz \in L$.
     При положение, че $\abs{y} \geq 1$, то $\abs{xz} < m$, което 
     е противоречие с минималността на думата $\alpha$.
@@ -43,14 +43,14 @@
   \begin{description}
   \item[$(\Leftarrow)$]
     Нека $L$ е регулярен език, за който съществува дума $\alpha$, такава че $\abs{Q} \leq \abs{\alpha} < 2\abs{Q}$.
-    Тогава от \Lemma{pumping-reg} следва, че съществува разбиване $\alpha = xyz$ със свойството, че
+    Тогава от \Lemma{regular:pumping} следва, че съществува разбиване $\alpha = xyz$ със свойството, че
     за всяко $i \in \Nat$, $xy^iz \in L$. Следователно, $L$ е безкраен, защото $\abs{y} \geq 1$.
   \item[$(\Rightarrow)$]
     Нека $L$ е безкраен език и % да приемем, че няма думи $\alpha$ със
     % свойството $\abs{Q} \leq \abs{\alpha} <  2\abs{Q}$.
     да вземем {\em най-късата} дума $\alpha \in L$, за която $\abs{\alpha} \geq 2\abs{Q}$.
     Понеже $L$ е безкраен, знаем, че такава дума съществува.
-    Тогава отново по \Lemma{pumping-reg}, имаме следното разбиване на $\alpha$:
+    Тогава отново по \Lemma{regular:pumping}, имаме следното разбиване на $\alpha$:
     \[\alpha = xyz,\ \abs{xy} \leq \abs{Q},\ 1\leq \abs{y},\ xz \in L.\]
     Но понеже $\abs{xyz} \geq 2\abs{Q}$, а $1 \leq \abs{y} \leq \abs{Q}$, то $\abs{xyz} > \abs{xz} \geq \abs{Q}$ и понеже избрахме $\alpha = xyz$
     да бъде най-късата дума с дължина поне $2\abs{Q}$, заключаваме, че $\abs{Q} \leq \abs{xz} < 2\abs{Q}$ и $xz \in L$.

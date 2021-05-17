@@ -184,7 +184,7 @@
 \begin{important}
   \begin{lemma}[за покачването (безконтекстни езици)]
     \index{лема за покачването!безконтекстни езици}
-    \label{lem:pumping-context} 
+    \label{lem:context-free:pumping} 
     \mynote{\cite[стр. 125]{sipser3}, \cite[стр. 125]{hopcroft1}, \cite[стр. 275]{hopcroft2}, \cite[стр. 148]{kozen}.}
     За всеки безконтекстен език $L$ съществува $p>0$, такова
     че ако $\alpha\in L$, за която $\abs{\alpha} \geq p$, то съществува разбиване на думата на пет части, $\alpha=xyuvw$,
@@ -224,7 +224,7 @@
   \item
     $S \yield{\star} x A w$, 
   \item
-    $A \yield{\leq \abs{V}+1} y A v$, защото в $P$ можем да изберем това срещане на повтаряща се променлива по пътя $\pi$, което е възможно най-близо до листото.
+    $A \yield{\leq \abs{V}+1} y u v$, защото в $P$ можем да изберем това срещане на повтаряща се променлива по пътя $\pi$, което е възможно най-близо до листото.
   \item
     $A \yield{\leq \abs{V}} u$, като тук вече няма повтарящи се променливи по останалата част от пътя $\pi$.
   \end{enumerate}
@@ -338,8 +338,7 @@
   \end{itemize}
 \end{proof}
 
-Както и при \Lemma{pumping-reg}, ние ще използваме \emph{контрапозицията} на условието на \Lemma{pumping-context}
-при проверка, че даден език не е безконтекстен.
+Както и при \hyperref[lem:regular:pumping]{Лема за покачването за регулярни езици}, ние ще използваме \emph{контрапозицията} на условието на \hyperref[lem:context-free:pumping]{Лема за покачването за безконтекстни езици} при проверка, че даден език не е безконтекстен.
 
 \begin{corollary}
   \label{cor:pumping-context-free}
@@ -355,7 +354,7 @@
   \item[($\exists$)]
     можем да намерим $i \in \Nat$, за което е изпълнено, че $xy^iuv^iw \not\in L$.
   \end{description}  
-  \mynote{\writedown Докажете! Аналогично е на \Corollary{pumping-reg}}
+  \mynote{\writedown Докажете! Аналогично е на \Corollary{regular:pumping}}
   Тогава $L$ {\bf не} е безконтекстен език.
 \end{corollary}
 
@@ -390,7 +389,7 @@
 \end{remark}
 
 \begin{example}
-  \label{ex:anbncn}
+  \label{ex:context-free:pumping:anbncn}
   Да видим защо езикът $L = \{a^nb^nc^n\ \mid\ n\in\Nat\}$ не е безконтекстен.
   \begin{description}
   \item[$(\forall)$]
@@ -399,9 +398,10 @@
     Избираме дума $\alpha \in L$, $\abs{\alpha} \geq p$.
     В случая, нека $\alpha = a^pb^pc^p$.
   \item[$(\forall)$]
-    Разглеждаме произволно разбиване $xyuvw = \alpha$, за което $\abs{yuv} \leq p$ и $1 \leq \abs{yv}$.
+    Разглеждаме произволно разбиване на $\alpha$ на пет части $\alpha = xyuvw$, за което $\abs{yuv} \leq p$ и $1 \leq \abs{yv}$.
   \item[$(\exists)$]
-    Ще изберем $i$, за което $xy^iuv^iw \not\in L$.
+    \mynote{\writedown Съобразете, че може да изберете и $i = 0$. В този пример може да вземете едно и също $i$ за всяко разбиване на думата $\alpha$ от предишната стъпка. В други примери ще видим, че изборът на $i$ зависи от разглежданото разбиване на думата.}
+    За всяко такова разбиване ще посочим $i$, за което $xy^iuv^iw \not\in L$.
     Знаем, че поне едно от $y$ и $v$ не е празната дума.
     Имаме няколко случая за $y$ и $v$.
     \begin{itemize}
@@ -410,8 +410,7 @@
       В този случай получаваме, че $xy^2uv^2w$ има различен брой букви $a$, $b$ и $c$.
     \item
       $y$ или $v$ е съставена от две букви.
-      Тогава е възможно да се окаже, че $xy^2uv^2w$ да има равен брой $a$, $b$ и $c$,
-      но тогава редът на буквите е нарушен.
+      В този случай получаваме, че в $xy^2uv^2w$ редът на буквите е нарушен.
     \item
       понеже $\abs{yuv} \leq p$, то не е възможно в $y$ или $v$ да се срещат и трите букви.
     \end{itemize}  
@@ -427,7 +426,7 @@
   \end{proposition}
 \end{framed}
 \begin{hint}
-  Да разгледаме езика $L_0 = \{a^nb^nc^n\mid n\in\Nat\}$, за който вече знаем от \Example{anbncn}, че не е безконтекстен.
+  Да разгледаме езика $L_0 = \{a^nb^nc^n\mid n\in\Nat\}$, за който вече знаем от \Example{context-free:pumping:anbncn}, че не е безконтекстен.
   Да вземем също така и безконтекстните езици 
   \mynote{\writedown Защо $L_1$ и $L_2$ са безконтекстни?}
   \[L_1 = \{a^nb^nc^m\mid n,m\in\Nat\},\ L_2 = \{a^mb^nc^n\mid n,m\in\Nat\}.\]
