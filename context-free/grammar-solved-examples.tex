@@ -6,50 +6,63 @@
 Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$ по следния начин:
 \[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
 Ясно е, че $\L(G) = \L_G(S)$.
-Също така, да дефинираме апроксимациите $\L^\ell_G(A)$ на $\L_G(A)$ така:
+Нека да дефинираме и \emph{апроксимациите} $\L^\ell_G(A)$ на езика $\L_G(A)$ по следния начин:
 \[\L^\ell_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\leq \ell} \alpha\}.\]
-Следните свойства са ясни:
-\begin{itemize}
-\item
-  $\L^0_G(A) = \emptyset$;
-\item
-  $\L^\ell_G(A)$ е краен език за всяко $\ell$;
-\item
-  $\L^\ell_G(A) \subseteq \L^{\ell+1}_G(A)$ за всяко $\ell$;
-\item
-  $\L_G(A) = \bigcup_{\ell\geq 0}\L^\ell_G(A)$.  
-\end{itemize}
+
+\begin{problem}
+  Нека $G$ е безконтекстна граматика и $A$ е променлива в $G$.
+  Докажете, че следните свойства са изпълнени:
+  \begin{itemize}
+  \item
+    $\L^0_G(A) = \emptyset$;
+  \item
+    $\L^\ell_G(A)$ е краен език за всяко $\ell$;
+  \item
+    $\L^\ell_G(A) \subseteq \L^{\ell+1}_G(A)$ за всяко $\ell$;
+  \item
+    $\L_G(A) = \bigcup_{\ell\geq 0}\L^\ell_G(A)$.  
+  \end{itemize}
+\end{problem}
 
 Следната характеризация на езиците $\L^\ell_G(A)$ ще е удобна за нас, когато искаме да докажем,
 че една безконтекстна граматика разпознава даден език.
 
+\mynote{Нека да напомним, че
+  \begin{align*}
+    \bigcup\{\{1,2\},\{3\}\} & = \{1,2\} \cup \{3\}\\
+                             & = \{1,2,3\}.
+  \end{align*}
+}
 \begin{proposition}\label{pr:grammar:yield-approximation}
-  Нека $G$ е произволна безконтекстна граматика и $A$ е променлива в $G$.
+  Нека $G$ е безконтекстна граматика и $A$ е променлива в $G$.
   Тогава имаме следното:
   \begin{align*}
-    \L^0_G(A) & = \emptyset\\
-    \L^{\ell+1}_G(A) & = \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.
+    & \L^0_G(A) = \emptyset\\
+    & \L^{\ell+1}_G(A) = \bigcup\{\{\alpha_0\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_{n-1}\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n}\} \mid & A \to_G \alpha_0A_1\cdots\alpha_{n-1}A_n\alpha_{n} \text{ е правило }\\
+    & & \text{в $G$, където }\alpha_i \in \Sigma^\star\text{ за }i\leq n\}.
   \end{align*}
 \end{proposition}
 \begin{proof}
-  Пълна индукция по $\ell$. Твърдението очевидно е изпълнено за $\ell = 0$.
-  Нека $\alpha \in \L^{\ell+1}_G(A)$, т.е. $A \yield{\leq \ell+1} \alpha$. Имаме следния извод:
+  Доказателството протича с индукция по $\ell$.
+  Твърдението очевидно е изпълнено за $\ell = 0$.
+  За индукционната стъпка, първо ще докажем включването $\subseteq$.Нека сега да разгледаме дума $\alpha \in \L^{\ell+1}_G(A)$, т.е. $A \yield{\leq \ell+1} \alpha$.
+  Тогава имаме следния извод:
   \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_n B_n\alpha_{n+1}$}
-    \AxiomC{$B_1 \yield{\leq\ell} \beta_1$}
+    \AxiomC{$A \to_G \alpha_0B_1\cdots\alpha_{n-1} B_n\alpha_{n}$}
+    \AxiomC{$B_1 \yield{\leq \ell} \beta_1$}
     \AxiomC{$\cdots$}
     \AxiomC{$B_n \yield{\leq \ell} \beta_n$}
-    \QuaternaryInfC{$A \yield{\leq\ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+    \QuaternaryInfC{$A \yield{\leq\ell+1} \underbrace{\alpha_0\beta_1\cdots\alpha_{n-1}\beta_n\alpha_{n}}_{\alpha}$}
   \end{prooftree}
-  Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$.
+  Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$ за всяко $i = 1,2,\dots,n$.
   Тогава 
   \[\alpha \in \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}\]
 
-  Обратно, нека сега $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$, където $A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$,
-  $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}$.
+  Сега преминаваме към доказателството на включването $\supseteq$. Нека вземем дума $\alpha$ принадлежаща на дясното множество. Това означава, че можем да представим $\alpha$ като $\alpha = \alpha_0\beta_1\cdots\alpha_{n-1}\beta_n\alpha_{n}$, където $A \to_G \alpha_0B_1\cdots\alpha_{n-1}B_n\alpha_{n}$,
+  $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_0\beta_1\cdots\alpha_{n-1}\beta_n\alpha_{n}$.
   Получаваме следния извод:
   \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_1B_1\cdots\alpha_nB_n\alpha_{n+1}$}
+    \AxiomC{$A \to_G \alpha_0B_1\cdots\alpha_{n-1}B_n\alpha_{n}$}
     \AxiomC{$\beta_1 \in \L^\ell_G(B_1)$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_1 \yield{\leq \ell }\beta_1 $}
@@ -57,14 +70,17 @@
     \AxiomC{$\beta_n \in \L^\ell_G(B_n)$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$B_n \yield{\leq \ell }\beta_n$}
-    \QuaternaryInfC{$A \yield{\leq \ell+1} \underbrace{\alpha_1\beta_1\cdots\alpha_n\beta_n\alpha_{n+1}}_{\alpha}$}
+    \QuaternaryInfC{$A \yield{\leq \ell+1} \underbrace{\alpha_0\beta_1\cdots\alpha_{n-1}\beta_n\alpha_{n}}_{\alpha}$}
   \end{prooftree}
 \end{proof}
 
 \begin{corollary}\label{cor:grammar:yield-approximation}
-  Нека $G$ е произволна безконтекстна граматика и $A$ е променлива в $G$. Тогава
+  Нека $G$ е безконтекстна граматика и $A$ е променлива в $G$. Тогава
   \[\L_G(A) = \bigcup\{\{\alpha_1\}\cdot \L_G(A_1) \cdots \{\alpha_n\} \cdot \L_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.\]
 \end{corollary}
+\begin{hint}
+  Използвайте, че $\L_G(A) = \bigcup_\ell \L^\ell_G(A)$.
+\end{hint}
 
 Като първи пример, нека да видим, че съществува безконтекстен език, който не е регулярен.
 \mynote{Да напомним, че вече видяхме, че езикът $L = \{a^nb^n \mid n\in\Nat\}$ не е регулярен.}
@@ -296,7 +312,7 @@
   \item
     Ако $n \leq \ell$, тогава имаме еквивалентността: $\omega \in L \iff k = m + (\ell- n)$.
   \end{itemize}
-  Това наблюдение ни подсказва, че трябва да разгледаме следните езици:
+  Това наблюдение ни подсказва, че е полезно да разгледаме следните езици:
   \begin{align*}
     & L_1 = \{a^nb^mc^k \mid m = n+k\},\\
     & L_2 = \{b^mc^kd^\ell \mid k = m+\ell\}.
@@ -305,7 +321,7 @@
   \[L = \{a^n \cdot \omega \cdot d^n \mid n\in\Nat\ \&\ \omega \in L_1 \cup L_2\}.\]
   $L_1$ е безконтекстен език, защото може да се опише с безконтекстната граматика $G_1$ със следните правила:
   \[S_1 \to AC,\quad  A \to aAb\ |\ \varepsilon,\quad C \to bCc\ |\ \varepsilon.\]
-  $L_1$ също е безконтекстен език, защото може да се опише с безконтекстната граматика $G_2$ със следните правила:
+  $L_2$ също е безконтекстен език, защото може да се опише с безконтекстната граматика $G_2$ със следните правила:
   \[S_2 \to BD,\quad B \to bBc\ |\ \varepsilon,\quad D \to cCd\ |\ \varepsilon.\]
   Тогава безконтекстната граматика $G$ за $L$ 
   съдържа правилата на граматиките $G_1$ и $G_2$, а също и правилата

@@ -411,6 +411,12 @@
 \end{example}
 \end{extra}
 
+
+От \Proposition{context-free:pumping:non-closure} знаем, че безконтекстните езици не
+са затворени относно операцията сечение, т.е. възможно е $L_1$ и $L_2$ да са безконтекстни
+езици, но $L_1 \cap L_2$ да не е безконтекстен.
+Оказва се обаче, че безконтекстните езици са затворени относно сечение с регулярен език.
+
 \begin{important}
   \begin{theorem}\label{th:intersection-context-reg}
     Нека $L$ e безконтекстен език и $R$ е регулярен език.
@@ -469,19 +475,10 @@
   \begin{example}
     Да разгледаме езика $L = \{\omega \in \{a,b,c\}^\star \mid \card{\omega}{a} = \card{\omega}{b} = \card{\omega}{c}\}$.
     Да допуснем, че $L$ е безконтекстен език. Тогава, според \Theorem{intersection-context-reg}, $L^\prime = L \cap \L(a^\star b^\star c^\star)$ също е безконтекстен език.
-    Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от \Example{anbncn}, че {\em не} е безконтекстен.
+    Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от \Example{context-free:pumping:anbncn}, че {\em не} е безконтекстен.
     Достигнахме до противоречие. Следователно, $L$ не е безконтекстен език.
   \end{example}
 \end{extra}
-
-\begin{important}
-  \begin{remark}
-    Не е вярно, че сечението на всеки два безконтекстни езика е безконтекстен език.
-    Например, $L_1 = \{a^nb^nc^k \mid n,k\in\Nat\}$ и $L_2 = \{a^kb^nc^n \mid n,k\in\Nat\}$
-    са безконтекстни езици, но ние знаем, че $L_1 \cap L_2 = \{a^nb^nc^n \mid n \in \Nat\}$
-    не е безконтекстен.
-  \end{remark}
-\end{important}
 
 
 %%% Local Variables:

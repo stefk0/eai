@@ -119,7 +119,7 @@
 Комбинирайки предишните две леми получаваме следната теорема.
 \begin{framed}
   \begin{theorem}\label{th:grammar:yield-derive-equivalent}
-    Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
+    Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\gamma \in (V \cup \Sigma)^\star$.
     Тогава $X \yield{\star} \gamma$ точно тогава, когато $X \derive{\star} \gamma$.
     В частност,
     \[\L(G) = \{\alpha \in \Sigma^\star \mid S \yield{\star}\alpha\}.\]
@@ -132,7 +132,7 @@
   \begin{proposition}\label{pr:yield-relation:parse-tree}
     Нека $G$ е безконтекстна граматика. Тогава
     $X \yield{\ell} \gamma$ точно тогава, когато съществува дърво на извод $P$ съвместимо с $G$, за което
-    $\texttt{root}(P) = X$, $\texttt{yield}(P) = \alpha$ и $\texttt{height}(P) = \ell$.
+    $\texttt{root}(P) = X$, $\texttt{yield}(P) = \gamma$ и $\texttt{height}(P) = \ell$.
   \end{proposition}
 \end{important}
 \begin{hint}

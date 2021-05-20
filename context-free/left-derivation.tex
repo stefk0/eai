@@ -168,7 +168,7 @@
     \AxiomC{$X_1 \yield{\ell_1} \alpha_1$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$X_1 \lderive{^\star}\alpha_1$}
-    \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
+    \LeftLabel{\scriptsize{(\Proposition{left-derivation:context-step})}}
     \BinaryInfC{$A \lderive{^\star}\alpha_1 X_2 \cdots X_n$}
   \end{prooftree}
   Продължаваме последователно за всяко $i < n$ правим да правим извода:
@@ -177,7 +177,7 @@
     \AxiomC{$X_i \yield{\ell_{i+1}} \alpha_i$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$X_i \lderive{^\star}\beta_i$}
-    \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
+    \LeftLabel{\scriptsize{(\Proposition{left-derivation:context-step})}}
     \BinaryInfC{$A \lderive{\star}\alpha_1\cdots\alpha_{i-1}\alpha_i X_{i+1} \cdots X_n$}
   \end{prooftree}
   Завършваме със следния извод:
@@ -186,7 +186,7 @@
     \AxiomC{$X_n \yield{\ell_n} \alpha_n$}
     \RightLabel{\scriptsize{\IndHyp}}
     \UnaryInfC{$X_n \lderive{\star}\alpha_n$}
-    \LeftLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
+    \LeftLabel{\scriptsize{(\Proposition{left-derivation:context-step})}}
     \BinaryInfC{$A \lderive{^\star}\underbrace{\alpha_1\alpha_2\cdots\alpha_{n-1}\alpha_n}_{\alpha}$}
   \end{prooftree}
 \end{proof}
@@ -262,10 +262,10 @@
 \begin{problem}\label{prob:grammar:context-right-step}
   Докажете, че имаме извода:
   \begin{prooftree}
-    \AxiomC{$\delta \rderive{\ell_1} \alpha B \gamma$}
+    \AxiomC{$\delta \rderive{\ell_1} \lambda B \rho$}
     \AxiomC{$B \rderive{\ell_2}\beta$}
-    \AxiomC{$\gamma \in \Sigma^\star$}
-    \TrinaryInfC{$\delta \rderive{\ell_1+\ell_2}\alpha\beta\gamma$}
+    \AxiomC{$\rho \in \Sigma^\star$}
+    \TrinaryInfC{$\delta \rderive{\ell_1+\ell_2}\lambda\beta\rho$}
   \end{prooftree}
 \end{problem}
 

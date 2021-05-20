@@ -6,8 +6,8 @@
 всяко правило е от вида
 \[A \rightarrow BC\mbox{ и }A \rightarrow a,\]
 където $A, B, C$ са произволни променливи и $a$ е произволна буква.
-Ако искаме $\varepsilon$ да бъде в езика на граматиката, то позволяваме от началната променлива $S$ да имаме правилото $S \to_G \varepsilon$,
-но тогава забраняваме $S$ да се среща в дясна страна на правило.
+\mynote{Ако искаме $\varepsilon$ да бъде в езика на граматиката, то позволяваме от началната променлива $S$ да имаме правилото $S \to_G \varepsilon$,
+но тогава забраняваме $S$ да се среща в дясна страна на правило.}
 % Освен това, позволяваме правилото $S\to\varepsilon$.
 % \footnote{В \cite[стр. 151]{papadimitriou} дефиницията е малко по-различна.
 % Там дефинират $G$ да бъде в нормална форма на Чомски ако $R \subseteq V\times(V\cup\Sigma)^2$.
@@ -71,7 +71,7 @@
   Сега ще съобразим, че ако в получения граф имаме цикъл, то $\L(G') = \infty$.
   Да разгледаме един такъв цикъл в графа:
   \[A_0 \to A_1 \to A_2 \to \cdots \to A_n \to A_0.\]
-  Понеже граматикат е в нормална форма на Чомски, то същестуват думи $\lambda,\rho \in (V\cup\Sigma)^\star$, за които $A_0 \yield{n+1} \lambda A_0 \rho$ и $\abs{\lambda\rho} = n+1$
+  Понеже граматиката е в нормална форма на Чомски, то същестуват думи $\lambda,\rho \in (V\cup\Sigma)^\star$, за които $A_0 \yield{n+1} \lambda A_0 \rho$ и $\abs{\lambda\rho} = n+1$
 
   \begin{figure}[H]
     \begin{subfigure}[t]{0.5\textwidth}
@@ -109,7 +109,7 @@
     \end{subfigure}
   \end{figure}
 
-  Понеже в $G$ няма безполезни променливи, то $\lambda \derive{\star} \alpha$, където $\alpha \in \Sigma^\star$ и $\abs{\delta} \leq \abs{\alpha}$ и $\rho \derive{\star} \gamma$,
+  Понеже в $G$ няма безполезни променливи, то $\lambda \derive{\star} \alpha$, където $\alpha \in \Sigma^\star$ и $\abs{\lambda} \leq \abs{\alpha}$ и $\rho \derive{\star} \gamma$,
   където $\gamma \in \Sigma^\star$ и $\abs{\rho} \leq \abs{\gamma}$.
   Оттук заключаваме, че $A_0 \yield{\star} \alpha A_0 \gamma$ и $\abs{\alpha\gamma} \geq 1$.
   Понеже $A_0$ не е безполезна променлива, то $A_0 \yield{\star} \beta$, за някоя дума $\beta \in \Sigma^\star$.
@@ -125,6 +125,7 @@
   
   За обратната посока, нека в графът няма цикли.
   Да разгледаме една променлива $A$, от която най-дългият път има $k$ на брой възли.
+  От принципа на Дирихле знаем, че $k \leq \abs{V}$.
   Това означава, че ако $A \yield{\star} \alpha$, за някоя $\alpha \in \Sigma^\star$,
   то $A \yield{\leq k} \alpha$ и понеже граматиката е в нормална форма на Чомски,
   то $\abs{\alpha} \leq 2^{k-1}$.

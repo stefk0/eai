@@ -38,49 +38,6 @@
   Дефинираме $G'$ като $V' = \texttt{Gen[n]}$ и правилата на $G'$ са само тези правила на $G$, в които участват променливи от $V'$ и букви от $\Sigma$.
 \end{hint}
 
-
-
-\begin{extra2}
-  
-
-% {\scriptsize
-%   \begin{multicols}{2}
-\begin{example}
-  Да разгледаме следната граматика $G$:
-  \begin{align*}
-    & S \to AB\ |\ aA\\
-    & A \to a\ |\ aAa\\
-    & B \to SB\ |\ BC\\
-    & C \to \varepsilon\ |\ cC.
-  \end{align*}
-  Първо да намерим променливите, от които се извеждат думи.
-  \begin{itemize}
-  \item
-    $\texttt{Gen[0]} = \emptyset$
-  \item 
-    $\texttt{Gen[1]} = \{A, C\}$, защото $A \to a$ и $C \to \varepsilon$;
-  \item
-    $\texttt{Gen[2]} = \{A, C, S\}$, защото $S \to aA$;
-  \item
-    не можем да добавим $B$ към $\texttt{Gen[3]}$, следователно $\texttt{Gen[3]} = \texttt{Gen[2]}$.
-  \end{itemize}
-  Получаваме граматиката $G'$:
-  \begin{align*}
-    & S \to aA\\
-    & A \to a\ |\ aAa\\
-    & C \to \varepsilon\ |\ cC.
-  \end{align*}
-  Сега премахваме променливите и буквите, които не са достижими от началната промелива $S$. Така получаваме граматиката $G''$:
-  \begin{align*}
-    & S \to aA\\
-    & A \to a\ |\ aAa.
-  \end{align*}
-\end{example}
-\end{extra2}
-% \end{multicols}
-% }
-
-
 \begin{framed}
   \begin{corollary}
     Съществува {\em полиномиален} алгоритъм, който определя за всяка безконтекстна граматика $G$ дали $\L(G) = \emptyset$.
@@ -119,11 +76,55 @@
   \end{align*}
   Докажете, че за всяко $i$,
   \[\texttt{Reach[i]} = \{B \in V \mid S \yield{\leq i} \alpha B \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
-  \mynote{Защо сме сигурни, че ще достигнем такава стъпка?}
-  Спираме да строим тези множества, когато достигнем до стъпка $n$, за която $\texttt{Reach[n]} = \texttt{Reach[n+1]}$.
+  \mynote{\writedown Защо сме сигурни, че ще достигнем такава стъпка?}
+  Спираме да строим тези множества, когато достигнем до стъпка $n$, за която
+  \[\texttt{Reach[n]} = \texttt{Reach[n+1]}.\]
   Съобразете, че за това $n$ е изпълнено, че $\texttt{Reach[n]} = \texttt{Reach}$, т.е.
   \[\texttt{Reach[n]} = \{B \in V \mid S \yield{\star} \alpha B \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
 \end{hint}
+
+\begin{extra2}
+  \begin{example}
+    Да разгледаме безконтекстната граматика $G$ с правила:
+    \begin{align*}
+      & S \to AB\ |\ aA\\
+      & A \to a\ |\ aAa\\
+      & B \to SB\ |\ BC\\
+      & C \to \varepsilon\ |\ cC.
+    \end{align*}
+    Първо да намерим променливите, от които се извеждат думи.
+    \begin{itemize}
+    \item
+      $\texttt{Gen[0]} = \emptyset$;
+    \item 
+      $\texttt{Gen[1]} = \{A, C\}$, защото $A \to a$ и $C \to \varepsilon$;
+    \item
+      $\texttt{Gen[2]} = \{A, C, S\}$, защото $S \to aA$;
+    \item
+      не можем да добавим $B$ към $\texttt{Gen[3]}$, следователно $\texttt{Gen[3]} = \texttt{Gen[2]}$.
+    \end{itemize}
+    Получаваме граматиката $G'$:
+    \begin{align*}
+      & S \to aA\\
+      & A \to a\ |\ aAa\\
+      & C \to \varepsilon\ |\ cC.
+    \end{align*}
+    Сега премахваме променливите и буквите, които не са достижими от началната промелива $S$.
+    \begin{itemize}
+    \item
+      $\texttt{Reach[0]} = \{S\}$;
+    \item
+      $\texttt{Reach[1]} = \{S,A\}$, защото $S \to aAa$;
+    \item
+      $\texttt{Reach[2]} = \{S,A\}$.
+    \end{itemize}
+    Така получаваме граматиката $G''$:
+    \begin{align*}
+      & S \to aA\\
+      & A \to a\ |\ aAa.
+    \end{align*}
+  \end{example}
+\end{extra2}
 
 \begin{theorem}
   За всяка безконтекстна граматика $G$, за която $\L(G) \neq \emptyset$, съществува еквивалетнтна на нея безконтекстна граматика $G'$ без безполезни правила.
