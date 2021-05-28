@@ -23,9 +23,9 @@
     % \EndIf
     \EndFor
     \EndFor
-    \ForAll{$s \in [1, n)$} \Comment{Дължина на интервала} \label{alg:cyk:first-loop}
+    \ForAll{$s := 1,\dots,n-1$} \Comment{Дължина на интервала} \label{alg:cyk:first-loop}
     \ForAll{$i < n-s$}\Comment{Начало на интервала}
-    \ForAll{$k \in [i, i + s)$}\Comment{Разделяне на интервала}
+    \ForAll{$k := i,\dots,i+s-1$}\Comment{Разделяне на интервала}
     \If{$\exists (A,BC) \in R\ \&\ B \in \texttt{V[i][k]}\ \&\ C\in \texttt{V[k+1][i+s]}$}
     \State $\texttt{V[i][i+s]} := \texttt{V[i][i+s]} \cup \{A\}$ \label{alg:cyk:add-variable}
     \EndIf
@@ -44,7 +44,7 @@
   % \mynote{Да напомним, че според нашата нотация,
   % \[\alpha\slice{i:j} = a_i\cdots a_{j-1}.\]}
   Нека е дадена безконтекстната граматика $G$ в нормална форма на Чомски и думата $\alpha$.
-  Всеки път, точно преди да изпълни ред (\ref{alg:cyk:first-loop}) от програмата описана в Алгоритъм \ref{alg:belongs-to-grammar},
+  Всеки път, точно преди да се изпълни ред (\ref{alg:cyk:first-loop}) от програмата описана в Алгоритъм \ref{alg:belongs-to-grammar},
   е изпълнено, че за всяко $i < n-s$,
   % \[\texttt{V[i][i+s]} = \{A \in V \mid A \derive{\star}_G \alpha\slice{i:i+s+1}\}.\]
   \[\texttt{V[i][i+s]} = \{A \in V \mid A \derive{\star}_G a_ia_{i+1}\cdots a_{i+s}\}.\]

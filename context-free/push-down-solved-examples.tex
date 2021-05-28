@@ -125,20 +125,20 @@
   \mynote{\writedown Докажете, че $L = \L(P)$!}
   \begin{enumerate}[a)]
   \item
-    \mynote{Индукция по дължината на думата $\alpha$}
+    \mynote{За (\ref{eq:omega-omega-r:1}) приложете индукция по дължината на думата $\alpha$. За индукционната стъпка разгледайте $\alpha$ като $\alpha = \alpha' x$.}
     Докажете, че за всеки две думи $\alpha, \beta \in \{a,b\}^\star$ е изпълнено, че:
-    \begin{align*}
-      & |\alpha| = n\ \implies\ (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \alpha^{\texttt{rev}}\sharp)\\
-      & |\beta| = n\ \implies\ (p, \beta, \beta\sharp) \vdash^n_P (p, \varepsilon, \sharp).
-    \end{align*}
+    \begin{align}
+      & |\alpha| = n\ \implies\ (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \alpha^{\texttt{rev}}\sharp) \label{eq:omega-omega-r:1}\\
+      & |\beta| = n\ \implies\ (p, \beta, \beta\sharp) \vdash^n_P (p, \varepsilon, \sharp). \label{eq:omega-omega-r:2}
+    \end{align}
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
     \mynote{Индукция по броя на стъпките в изчислението на стековия автомат}
     Докажете, че за всеки три думи $\alpha,\beta, \gamma \in \{a,b\}^\star$ е изпълнено, че:
-    \begin{align*}
-      (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \gamma\sharp) & \implies \gamma = \alpha^{\rev}\ \&\ |\alpha| = n\\
-      (p, \beta, \gamma\sharp) \vdash^n_P (p, \varepsilon, \sharp) & \implies \gamma = \beta\ \&\ |\beta| = n.
-    \end{align*}
+    \begin{align}
+      (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \gamma\sharp) & \implies \gamma = \alpha^{\rev}\ \&\ |\alpha| = n \label{eq:omega-omega-r:3}\\
+      (p, \beta, \gamma\sharp) \vdash^n_P (p, \varepsilon, \sharp) & \implies \gamma = \beta\ \&\ |\beta| = n. \label{eq:omega-omega-r:4}
+    \end{align}
     Оттук заключете, че $\L(P) \subseteq L$.
   \end{enumerate}
 \end{example}
