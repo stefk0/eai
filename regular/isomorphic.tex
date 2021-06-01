@@ -9,6 +9,7 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
 % \mynote{С други думи, автоматът $\A_2$ може да се получи от автомата $\A_1$ с преименуване на състоянията, като внимаваме да запазим свойствата на автомата, т.е. начално отива в начално, финални отиват във финални и }
 \mynote{
   % \begin{figure}[H]
+  Условие (3) може да се представи графично така:
       \begin{tikzpicture}[->,>=stealth,thick,node distance=60pt,scale=0.8,every node/.style={scale=0.8}]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -49,12 +50,27 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
     \delta^\star_1(q,\alpha) = p\ \iff\ \delta^\star_2(f(q), \alpha) = f(p).
   \end{equation}
 \end{proposition}
-\begin{hint}
-  \mynote{\todo Опитайте се да докажете това твърдение сами!}
-  Индукция по дължината на думата $\alpha$.
-\end{hint}
+\mynote{
+  Свойство (\ref{eq:3}) може да се представи графично така:
+     \begin{tikzpicture}[->,>=stealth,thick,node distance=56pt,initial text=начало,scale=0.8,every node/.style={scale=0.8}]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[state]          (1)              {$q$};
+        \node[state]          (2) [right of=1] {$p$};
+
+        \node[state, inner sep=1pt]   (3) [below of=1] {$f(q)$};
+        \node[state, inner sep=1pt]   (4) [below of=2] {$f(p)$};
+        
+        \path
+        (1) edge [dashed, bend right=15] node [left]  {$f$} (3)
+        (2) edge [dashed, bend left=15] node [right] {$f$} (4);
+
+        \draw [photon] (1) -- node [above] {$\alpha$} (2);
+        \draw [photon] (3) -- node [above] {$\alpha$} (4);
+      \end{tikzpicture}
+    }
 \begin{proof}
-  % Както винаги, ще докажем Свойство (\ref{eq:3}) с индукция по дължината на думата $\alpha$.
+  Както винаги, ще докажем Свойство (\ref{eq:3}) с индукция по дължината на думата $\alpha$.
   \begin{itemize}
   \item 
     Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Ясно е, че Свойство (\ref{eq:3})
@@ -68,6 +84,30 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
   \item
     Да приемем, че Свойство (\ref{eq:3}) е изпълнено за думи с дължина $n$.
   \item
+    \mynote{Индукционната стъпка може да се представи така:
+     \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt,initial text=начало,scale=0.8,every node/.style={scale=0.8}]
+        \tikzstyle{every state}=[circle,minimum size=20pt,auto]
+        
+        \node[state]          (1)              {$q$};
+        \node[state]          (2) [right of=1] {$r$};
+        \node[state]          (3) [right of=2] {$p$};
+
+        \node[state, inner sep=1pt]   (4) [below of=1] {$f(q)$};
+        \node[state, inner sep=1pt]   (5) [below of=2] {$f(r)$};
+        \node[state, inner sep=1pt]   (6) [below of=3] {$f(p)$};
+        
+        \path
+        (1) edge [dashed, bend right=15] node [left]  {$f$} (4)
+        (2) edge [dashed, bend right=15] node [left]  {$f$} (5)
+        (3) edge [dashed, bend left=15] node [right] {$f$} (6)
+        (2) edge [bend left=15] node [above] {$c$} (3)
+        (5) edge [bend right=15] node [below] {$c$} (6);
+        
+
+        \draw [photon] (1) -- node [above] {$\beta$} (2);
+        \draw [photon] (4) -- node [above] {$\beta$} (5);
+      \end{tikzpicture}      
+    }
     Да разгледаме произволна дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta c$ и $|\beta| = n$. Тогава:
     \[\delta^\star_1(q,\beta c) = p \iff \delta_1(\underbrace{\delta^\star_1(q,\beta)}_{r}, c) = p.\]
     Понеже $f$ е изоморфизъм, то

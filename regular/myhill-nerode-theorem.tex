@@ -102,8 +102,8 @@
         \node[state,accepting]                  (N) [right of=M]{$\hat{N}$};
         
         \path 
-        (L) edge [bend left=15]  node [above] {$a$} (M)
-        (L) edge [bend right=15] node [below] {$b$} (E)
+        (L) edge [bend left=15]  node [above left] {$a$} (M)
+        (L) edge [bend right=15] node [below left] {$b$} (E)
         (E) edge [loop right]    node [right] {$a,b$} (E) 
         (M) edge [bend right=15] node [below] {$b$} (N)
         (M) edge [loop above]    node [above] {$a$} (M)
@@ -123,8 +123,8 @@
         \node[state,accepting]                  (N) [right of=M]{$[ab]_L$};
         
         \path 
-        (L) edge [bend left=15]  node [left] {$a$} (M)
-        (L) edge [bend right=15] node [left] {$b$} (E)
+        (L) edge [bend left=15]  node [above left] {$a$} (M)
+        (L) edge [bend right=15] node [below left] {$b$} (E)
         (E) edge [loop right]    node [right] {$a,b$} (E) 
         (M) edge [bend right=15] node [below] {$b$} (N)
         (M) edge [loop above]    node [above] {$a$} (M)

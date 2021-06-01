@@ -142,8 +142,8 @@
                         & \iff \hat{M} \in F^\B. & \comment\text{ за }M = \alpha^{-1}(L)
     \end{align*}
   \item
-    \mynote{
-     \begin{tikzpicture}[->,>=stealth,thick,node distance=50pt,initial text=начало,scale=0.8,every node/.style={scale=0.8}]
+        \mynote{
+     \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt,initial text=начало,scale=0.8,every node/.style={scale=0.8}]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
         \node[state,initial above]          (1)              {$q_\varepsilon$};
@@ -158,13 +158,14 @@
         (2) edge [bend left=15]  node [above] {$b$} (3)
         (5) edge [bend right=15] node [below] {$b$} (6)
         (1) edge [dashed, bend right=15] node [left]  {$f$} (4)
-        (2) edge [dashed, bend right=15]  node [right] {$f$} (5)
+        (2) edge [dashed, bend right=15]  node [left] {$f$} (5)
         (3) edge [dashed, bend left=15]  node [right] {$f$} (6);
 
         \draw [photon] (1) -- node [above] {$\alpha$} (2);
         \draw [photon] (4) -- node [above] {$\alpha$} (5);
       \end{tikzpicture}
     }
+
     Остава да докажем, че за произволна буква $b$ и произволни състояния $q,p \in Q_1$ е изпълнено, че:
     \[\delta_\A(q,b) = p\ \iff\ \delta_\B(f(q),b) = f(p).\]
     Понеже всяко състояние на $\A$ може да се запише като $q_\alpha$ за някое $\alpha$, то можем да запишем горния ред и така:
