@@ -18,13 +18,13 @@
     \item
       $\Delta(q,a,\sharp) \df \{(q, a\sharp)\}$;
     \item
-      $\Delta(q,a,a) \df \{(q, aa)\}$;
+      $\Delta(q,a,a) \df \{(q, aa)\}$; \quad \comment{трупаме $a$-та в стека}
     \item 
       $\Delta(q,\varepsilon,\sharp) \df \{(f,\varepsilon)\}$;\quad \comment{трябва да разпознаем и думата $\varepsilon$}
     \item 
       $\Delta(q, b, a) \df \{(p,\varepsilon)\}$; \quad \comment{Започваме да четем само $b$-та}
     \item 
-      $\Delta(p, b, a) \df \{(p,\varepsilon)\}$;
+      $\Delta(p, b, a) \df \{(p,\varepsilon)\}$; \quad \comment{Чистим $a$-тата от стека}
     \item
       $\Delta(p, \varepsilon, \sharp) \df \{(f, \varepsilon)\}$.
     \item
@@ -40,24 +40,23 @@
                         & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(5)}\\
                         & \vdash_P (f, \varepsilon, \varepsilon) & \comment{\text{правило }(6)}
   \end{align*}
-  \mynote{\writedown Докажете, че $L = \L(P)$!}
+  % \mynote{\writedown Докажете, че $L = \L(P)$!}
   Получихме, че $(\qstart, a^2b^2, \sharp) \vdash^\star_P (\qaccept, \varepsilon, \varepsilon)$, откъдето следва, че $a^2b^2 \in \L(P)$.
 
   \begin{enumerate}[a)]
   \item
-    Докажете с индукция по $n$, че за всяко естествено число $n$,
-    \begin{align*}
-      & (q, a^n\beta, \sharp) \vdash^n_P (q, \beta, a^n\sharp)\\
-      & (p, b^n, a^n\sharp) \vdash^n_P (p, \varepsilon,\sharp).
-    \end{align*}
+    Докажете с индукция по $n$, че за всяко естествено число $n$ са изпълнени свойствата:
+    \begin{align}
+      & (q, a^n\beta, \sharp) \vdash^n_P (q, \beta, a^n\sharp) \label{eq:anbn:1}\\
+      & (p, b^n, a^n\sharp) \vdash^n_P (p, \varepsilon,\sharp). \label{eq:anbn:2}
+    \end{align}
     Заключете, че $L \subseteq \L(P)$.
   \item
-    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат}
-    Докажете, че за всеки три думи $\alpha,\beta, \gamma \in \{a,b\}^\star$ е изпълнено, че:
-    \begin{align*}
-      (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \gamma\sharp)  & \implies \alpha = \gamma = a^n\\
-      (p, \beta, \gamma\sharp) \vdash^n_P (p, \varepsilon, \sharp) & \implies \beta = b^n\ \&\ \gamma = a^n,
-    \end{align*}
+    Докажете, че с индукция по $n$, че за всяко естествено число $n$ са изпълнени свойствата:
+    \begin{align}
+      (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \gamma\sharp)  & \implies \alpha = \gamma = a^n \label{eq:anbn:3}\\
+      (p, \beta, \gamma\sharp) \vdash^n_P (p, \varepsilon, \sharp) & \implies \beta = b^n\ \&\ \gamma = a^n. \label{eq:anbn:4}
+    \end{align}
     Оттук заключете, че $\L(P) \subseteq L$.    
   \end{enumerate}
 \end{example}
@@ -75,24 +74,26 @@
     Функцията на преходите $\Delta$ има следната дефиниция:
     \mynote{За всички липсващи твойки  в дефиницията на $\Delta$ приемаме, че $\Delta$ връща $\emptyset$}
     \begin{enumerate}[(1)]
-    \item 
-      $\Delta(q, a, \sharp) \df \{(q, a\sharp)\}$;
-    \item 
-      $\Delta(q, b, \sharp) \df \{(q, b\sharp)\}$;
+    \item
+     $\Delta(q, x, \sharp) \df \{(q, x\sharp)\}$, където $x \in \{a,b\}$;
+    % \item 
+    %   $\Delta(q, a, \sharp) \df \{(q, a\sharp)\}$;
+    % \item 
+    %   $\Delta(q, b, \sharp) \df \{(q, b\sharp)\}$;
     \item
       $\Delta(q, \varepsilon, \sharp) \df \{(q,\varepsilon)\}$;
     \item
-      $\Delta(q, a, a) \df \{(q, aa), (p, \varepsilon)\}$;
+      $\Delta(q, x, x) \df \{(q, xx), (p, \varepsilon)\}$, където $x \in \{a,b\}$;
     \item
       $\Delta(q, a, b) \df \{(q, ab)\}$;
     \item
       $\Delta(q, b, a) \df \{(q, ba)\}$;
+    % \item
+      % $\Delta(q, b, b) \df \{(q, bb), (p, \varepsilon)\}$;
     \item
-      $\Delta(q, b, b) \df \{(q, bb), (p, \varepsilon)\}$;
-    \item
-      $\Delta(p, a, a) \df \{(p,\varepsilon)\}$;
-    \item
-      $\Delta(p, b, b) \df \{(p,\varepsilon)\}$;
+      $\Delta(p, x, x) \df \{(p,\varepsilon)\}$, където $x \in \{a,b\}$;
+    % \item
+    %   $\Delta(p, b, b) \df \{(p,\varepsilon)\}$;
     \item
       $\Delta(p, \varepsilon, \sharp) \df \{(f,\varepsilon)\}$;
     \end{enumerate}
@@ -103,22 +104,22 @@
   Започваме по следния начин:
   \begin{align*}
     (q, abaaba,\sharp) & \vdash_P (q, baaba, a\sharp)   & \comment{\text{правило }(1)}\\
-                       & \vdash_P (q, aaba, ba\sharp)   & \comment{\text{правило }(6)}\\
-                       & \vdash_P (q, aba,  aba\sharp). & \comment{\text{правило }(5)}
+                       & \vdash_P (q, aaba, ba\sharp)   & \comment{\text{правило }(5)}\\
+                       & \vdash_P (q, aba,  aba\sharp). & \comment{\text{правило }(4)}
   \end{align*}
   Сега можем да направим два избора как да продължим. Състоянието $p$ служи за маркер, което ни казва, че вече сме започнали 
   да четем $\omega^{\texttt{rev}}$. Поради тази причина, продължаваме така:
   \begin{align*}
-    (q, aba, aba\sharp) & \vdash_P (p, ba, ba\sharp) & \comment{\text{правило }(4)}\\
-                        & \vdash_P (p, a, a\sharp) & \comment{\text{правило }(9)}\\
-                        & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(8)}\\
-                        & \vdash_P (f,\varepsilon,\varepsilon). & \comment{\text{правило }(10)}
+    (q, aba, aba\sharp) & \vdash_P (p, ba, ba\sharp) & \comment{\text{правило }(3)}\\
+                        & \vdash_P (p, a, a\sharp) & \comment{\text{правило }(6)}\\
+                        & \vdash_P (p, \varepsilon, \sharp) & \comment{\text{правило }(6)}\\
+                        & \vdash_P (f,\varepsilon,\varepsilon). & \comment{\text{правило }(7)}
   \end{align*}
   Да проиграем още един пример. Да видим защо думата $aba$ не се извежда от автомата.
   \begin{align*}
     (q, aba, \sharp) & \vdash_P (q, ba, a\sharp) & \comment{\text{правило }(1)}\\
-                     & \vdash_P (q, a, ba\sharp) & \comment{\text{правило }(6)}\\
-                     & \vdash_P (q, \varepsilon, aba\sharp). & \comment{\text{правило }(5)}
+                     & \vdash_P (q, a, ba\sharp) & \comment{\text{правило }(5)}\\
+                     & \vdash_P (q, \varepsilon, aba\sharp). & \comment{\text{правило }(4)}
   \end{align*}
   От последното моментно описание на автомата нямаме нито един преход, следователно
   думата $aba$ не се разпознава от $P$.
@@ -126,15 +127,14 @@
   \begin{enumerate}[a)]
   \item
     \mynote{За (\ref{eq:omega-omega-r:1}) приложете индукция по дължината на думата $\alpha$. За индукционната стъпка разгледайте $\alpha$ като $\alpha = \alpha' x$.}
-    Докажете, че за всеки две думи $\alpha, \beta \in \{a,b\}^\star$ е изпълнено, че:
+    Докажете с индукция пo $n$, за всяко естествено число $n$ са изпълнени свойствата:
     \begin{align}
       & |\alpha| = n\ \implies\ (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \alpha^{\texttt{rev}}\sharp) \label{eq:omega-omega-r:1}\\
       & |\beta| = n\ \implies\ (p, \beta, \beta\sharp) \vdash^n_P (p, \varepsilon, \sharp). \label{eq:omega-omega-r:2}
     \end{align}
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
-    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат}
-    Докажете, че за всеки три думи $\alpha,\beta, \gamma \in \{a,b\}^\star$ е изпълнено, че:
+    Докажете с индукця по $n$, че за всяко естествено число $n$ са изпълнени свойствата:
     \begin{align}
       (q, \alpha\beta, \sharp) \vdash^n_P (q, \beta, \gamma\sharp) & \implies \gamma = \alpha^{\rev}\ \&\ |\alpha| = n \label{eq:omega-omega-r:3}\\
       (p, \beta, \gamma\sharp) \vdash^n_P (p, \varepsilon, \sharp) & \implies \gamma = \beta\ \&\ |\beta| = n. \label{eq:omega-omega-r:4}
@@ -194,18 +194,18 @@
   \item
     \mynote{Индукция по дължината на думата $\gamma$.}
     Докажете, че за произволно естествено число $n$ и произволна дума $\gamma \in \{a, b\}^\star$, е изпълнено, че:
-    \begin{align*}
-      a^n\gamma \in L & \implies (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)\\
-      b^n\gamma \in L & \implies (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp).
-    \end{align*}
+    \begin{align}
+      a^n\gamma \in L & \implies (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) \label{eq:omega-ab:1}\\
+      b^n\gamma \in L & \implies (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp). \label{eq:omega-ab:2}
+    \end{align}
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
     \mynote{Индукция по броя на стъпките в изчислението на стековия автомат.}
     Докажете, че за произволно естествено число $n$ и произволна дума $\gamma \in \{a, b\}^\star$ е изпълнено, че:
-    \begin{align*}
-      (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies a^n\gamma \in L\\
-      (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies b^n\gamma \in L.
-    \end{align*}
+    \begin{align}
+      (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies a^n\gamma \in L \label{eq:omega-ab:3}\\
+      (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies b^n\gamma \in L. \label{eq:omega-ab:4}
+    \end{align}
     Оттук заключете, че $\L(P) \subseteq L$.
   \end{enumerate}
 \end{example}
