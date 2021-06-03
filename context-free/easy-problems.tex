@@ -17,7 +17,19 @@
   \mynote{
     \begin{enumerate}[a)]
     \item
-      $S \to aSa\ \vert\ bSb\ \vert\ a\vert\ b\ \vert\ \varepsilon$
+      $S \to aSa\ |\ bSb\ |\ a\ |\ b\ |\ \varepsilon$;
+    \item[г)]
+      Обединение на два езика;
+    \item[д)]
+      $S \rightarrow aSb\ |\ aS\ |\ a$;
+    \item[ж)]
+      $S \rightarrow aSc\ |\ aS\ |\ aB\ |\ bB$, \\$B\rightarrow\ bBc\ |\ bB\ |\ \varepsilon$;
+    \item[и)]
+      $S \rightarrow aSc\ |\ aS\ |\ B\ |\ Bc$, \\$B\rightarrow\ bBc\ |\ bB\ |\ \varepsilon$;
+    \item[н)]
+      Обединение на три езика;
+    \item[п)]
+      $S\to EaE$, \\$E \to aEbE\ |\ bEaE\ |\ \varepsilon$;
     \end{enumerate}}
   \begin{enumerate}[a)]
   \item
@@ -27,20 +39,16 @@
   \item
     $L = \{a^nb^{m}c^{m}d^n \mid m,n \in \Nat\}$;
   \item
-    \mynote{Обединение на два езика}
     $L = \{a^nb^{2k} \mid n,k \in \Nat\ \&\ n \neq k\}$;
   \item
-    \mynote{$S \rightarrow aSb | aS | a$}
     $L = \{a^nb^k \mid n > k\}$;
   \item
     $L = \{a^nb^k \mid n \geq 2k\}$;
   \item
-    \mynote{$S \rightarrow aSc | aS | aB | bB$,\\$B\rightarrow bBc | bB | \varepsilon$}
     $L = \{a^nb^kc^m \mid n + k \geq m+1\}$;
   \item
     $L = \{a^nb^kc^m \mid n + k \geq m+2\}$;
   \item
-    \mynote{$S \rightarrow aSc | aS | B | Bc$,\\$B\rightarrow bBc | bB | \varepsilon$}
     $L = \{a^nb^kc^m \mid n + k + 1 \geq m\}$;
   \item
     $L = \{a^nb^mc^{2k} \mid n \neq 2m\ \&\ k \geq 1\}$;
@@ -49,12 +57,10 @@
   \item
     $L = \{a^nb^kc^m \mid n + k \leq m+1\}$;
   \item
-    \mynote{Обединение на три езика}
     $L = \{a^nb^mc^k \mid n, m, k \text{ не са страни на триъгълник}\}$;
   \item
     $L = \{a,b\}^\star \setminus \{a^{2n}b^n \mid n\in\Nat\}$;
   \item
-    \mynote{$S\to EaE$, $E \to aEbE\ |\ bEaE\ |\ \varepsilon$}
     $L = \{\omega \in \{a,b\}^\star\mid \card{\omega}{a} = \card{\omega}{b} + 1\}$;
   \item
     $L = \{\omega \in \{a,b\}^\star\mid \card{\omega}{a} \geq \card{\omega}{b}\}$;
@@ -106,7 +112,7 @@
   \item
     $\{\omega^n \mid \omega \in \{a,b\}^\star\ \&\ \card{\omega}{b} = 2\ \&\ n \in \Nat\}$;
   \item
-    $\{\omega c^n \omega^R \mid \omega \in \{a,b\}^\star\ \&\ n = \abs{\omega}\}$;
+    $\{\omega c^n \omega^{\rev} \mid \omega \in \{a,b\}^\star\ \&\ n = \abs{\omega}\}$;
   \item
     % Дефиниция на подниз
     $\{\alpha c \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ \alpha\mbox{ е подниз на }\beta\}$;

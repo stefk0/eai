@@ -129,8 +129,9 @@
   За произволни $\ell_1$ и $\ell_2$ имаме извода:
   \begin{prooftree}
     \AxiomC{$\alpha_1 \lderive{\ell_1} \beta_1$}
+    \AxiomC{$\beta_1 \in \Sigma^\star$}
     \AxiomC{$\alpha_2 \lderive{\ell_2} \beta_2$}
-    \BinaryInfC{$\alpha_1\alpha_2 \lderive{\ell_1+\ell_2} \beta_1\beta_2$}
+    \TrinaryInfC{$\alpha_1\alpha_2 \lderive{\ell_1+\ell_2} \beta_1\beta_2$}
   \end{prooftree}
 \end{proposition}
 

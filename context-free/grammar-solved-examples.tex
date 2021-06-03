@@ -352,8 +352,8 @@
   \[L = L_a \cdot L_b \cup L_b \cdot L_a,\]
   където:
   \begin{align*}
-    & L_a = \{\alpha a \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}\\
-    & L_b = \{\alpha b \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}.
+    & L_a = \{\alpha \cdot a \cdot \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}\\
+    & L_b = \{\alpha \cdot b \cdot \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| = |\beta|\}.
   \end{align*}
   Сега разгледайте безконтекстната граматика $G$ със следните правила:
   \begin{align*}
@@ -390,13 +390,13 @@
   Докажете, че езикът $L = \{a^nb^mc^kd^\ell \mid n+k \geq m + \ell\}$ е безконтекстен.
 \end{problem}
 
-\begin{problem}
-  \mynote{
-    $S \to aS \mid aSc \mid aB \mid bB$\\
-    $B \to bB \mid bBc \mid \varepsilon$
-  }
-  Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k + 1\}$ е безконтекстен.  
-\end{problem}
+% \begin{problem}
+%   \mynote{
+%     $S \to aS \mid aSc \mid aB \mid bB$\\
+%     $B \to bB \mid bBc \mid \varepsilon$
+%   }
+%   Докажете, че езикът $L = \{a^mb^nc^k\mid m+n \geq k + 1\}$ е безконтекстен.  
+% \end{problem}
 
 \begin{problem}
   Докажете, че езикът $L = \{\alpha \sharp \beta \mid \alpha,\beta \in \{a,b\}^\star\ \&\ |\alpha| \neq |\beta| \}$ е безконтекстен.

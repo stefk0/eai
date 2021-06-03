@@ -233,7 +233,12 @@
   Сега ще докажем твърдението с индукция по $\ell_1$.
   \begin{itemize}
   \item
-    $\ell_1 = 0$. Тогава всичко е ясно, защото $\alpha = \lambda\beta\rho$.
+    $\ell_1 = 0$. Тогава всичко е ясно, защото тогава $\alpha = \lambda\beta\rho$ и получаваме извода:
+    \begin{prooftree}
+      \AxiomC{$\beta \derive{\ell_2} \gamma$}
+      \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:padding})}}
+      \UnaryInfC{$\underbrace{\lambda\beta\rho}_{\alpha} \derive{\ell_2} \lambda\gamma\rho$}
+    \end{prooftree}
   \item
     $\ell_1 > 0$. От правилата за извод следва, че имаме следната ситуация:
     \begin{prooftree}
@@ -250,13 +255,19 @@
       \RightLabel{\scriptsize{\IndHyp}}
       \BinaryInfC{$\lambda'\alpha''\rho' \derive{\ell_1+\ell_2-1} \lambda\gamma\rho$}
       \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$\underbrace{\lambda'\alpha'\rho'}_{\alpha} \derive{\ell_1+\ell_2} \lambda\beta\rho$}
+      \BinaryInfC{$\underbrace{\lambda'\alpha'\rho'}_{\alpha} \derive{\ell_1+\ell_2} \lambda\gamma\rho$}
     \end{prooftree}
-    
-    
   \end{itemize}
-  
 \end{proof}
+
+\begin{corollary}\label{cor:unrestricted-grammar:context-general-step}
+  За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$\alpha \derive{\ell_1} \beta$}
+    \AxiomC{$\beta \derive{\ell_2} \gamma$}
+    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \gamma$}
+  \end{prooftree}  
+\end{corollary}
 
 % \begin{extra}
 %   \begin{remark}\label{rem:unrestricted-grammar:original-def}
