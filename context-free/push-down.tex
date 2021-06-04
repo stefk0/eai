@@ -133,26 +133,47 @@
     \AxiomC{$A \to_G \alpha_2\gamma_1$}
     % \RightLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
     \TrinaryInfC{$S \lderive{\ell} \underbrace{\alpha_1\alpha_2}_{\alpha}\underbrace{\gamma_1\gamma_2}_{\gamma}$}
-      \end{prooftree}
-      От индукционното предположение имаме импликацията:
-      \begin{equation*}
-        S\lderive{\ell-1} \alpha_1A\gamma_2\ \implies\ (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp).
-      \end{equation*}
-      Вече видяхме, че имаме $S\lderive{\ell-1} \alpha_1A\gamma_2$.
-      Следователно можем да заключим, че
-      \begin{equation}
-        \label{eq:5}
-        (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp).
-      \end{equation}
-      Получаваме следното изчисление на стековия автомат:
-      \begin{align*}
-        (p, \overbrace{\alpha_1\alpha_2}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2, A\gamma_2\sharp) & \comment{\text{от (\ref{eq:5})}}\\
-                                                            & \vdash_P (p, \alpha_2, \alpha_2\gamma_1\gamma_2\sharp) & \comment{\text{ред (2) от деф. на }\Delta}\\
-                                                            & \vdash^\star_P (p, \varepsilon, \underbrace{\gamma_1\gamma_2}_{\gamma}\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
-      \end{align*}
-    % \end{itemize}
+  \end{prooftree}
+  или
+  \begin{prooftree}
+    \AxiomC{$S\lderive{\ell-1} \alpha_1A\alpha_3\gamma$}
+    \AxiomC{$\alpha_1 \in \Sigma^\star$}
+    \AxiomC{$A \to_G \alpha_2$}
+    % \RightLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
+    \TrinaryInfC{$S \lderive{\ell} \underbrace{\alpha_1\alpha_2\alpha_3}_{\alpha}\gamma$}
+  \end{prooftree}
+  От индукционното предположение имаме импликациите:
+  \begin{align*}
+    & S\lderive{\ell-1} \alpha_1A\gamma_2\ \implies\ (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp)\\
+    & S\lderive{\ell-1} \alpha_1A\alpha_3\gamma\ \implies\ (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\alpha_3\gamma\sharp)\\
+  \end{align*}
+  Вече видяхме, че имаме $S\lderive{\ell-1} \alpha_1A\gamma_2$ или $S\lderive{\ell-1} \alpha_1A\alpha_3\gamma$.
+  Следователно можем да заключим, че
+  \begin{equation}
+    \label{eq:5}
+    (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp)
+  \end{equation}
+  или
+  \begin{equation}
+    \label{eq:6}
+    (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\alpha_3\gamma\sharp).
+  \end{equation}
+  Така получаваме изчислението:
+  \begin{align*}
+    (p, \underbrace{\alpha_1\alpha_2}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2, A\gamma_2\sharp) & \comment{\text{от (\ref{eq:5})}}\\
+                                                        & \vdash_P (p, \alpha_2, \alpha_2\gamma_1\gamma_2\sharp) & \comment{\text{понеже } A \to_G \alpha_2\gamma}\\
+                                                        & \vdash^\star_P (p, \varepsilon, \underbrace{\gamma_1\gamma_2}_{\gamma}\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
+  \end{align*}
+  или
+  \begin{align*}
+    (p, \overbrace{\alpha_1\alpha_2\alpha_3}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2\alpha_3, A\alpha_3\gamma\sharp) & \comment{\text{от (\ref{eq:6})}}\\
+                                                        & \vdash_P (p, \alpha_2\alpha_3, \alpha_2\alpha_3\gamma\sharp) & \comment{\text{понеже } A \to_G \alpha_2}\\
+                                                        & \vdash^\star_P (p, \varepsilon, \gamma\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
+  \end{align*}  
+  
+  % \end{itemize}
   За (б), индукция по броя на стъпките $\ell$ в изчислението на стековия автомат.
-    % \begin{itemize}
+  % \begin{itemize}
     % \item
     
       Нека $\ell = 0$. Тогава е ясно, че единствената възможност е $\alpha = \varepsilon$ и $\delta = \varepsilon$.
@@ -160,7 +181,7 @@
       % \item
       
       Нека $\ell > 0$ и $(p, \alpha, \delta \sharp) \vdash^{\ell}_P (p, \varepsilon, \sharp)$.      
-      \mynote{Да напомним, че правилата в една граматика в НФЧ са от вида $A \to a$ и $A \to BC$.}
+      % \mynote{Да напомним, че правилата в една граматика в НФЧ са от вида $A \to a$ и $A \to BC$.}
       Имаме два варианта за първата стъпка в това изчисление.
       
       Започваме със случая, който не зависи от граматиката. Това означава, че първата стъпка от изчислението $(p, \alpha, \delta\sharp) \vdash^\ell_P (p, \varepsilon, \sharp)$ е направена защото $\Delta(p,a,a) \ni (p,\varepsilon)$, за някоя бука $a$. Тогава със сигурност можем да представим думите $\alpha$ и $\delta$ като
@@ -183,18 +204,19 @@
       Сега прилагаме индукционното предположение и получаваме извода:
       \begin{prooftree}
         \AxiomC{$A \to_G \gamma$}
-        \AxiomC{}
-        \LeftLabel{\scriptsize{(0)}}
-        \UnaryInfC{$\gamma \lderive{0} \gamma$}
-        \LeftLabel{\scriptsize{(1)}}
-        \BinaryInfC{$A \lderive{1} \gamma$}
-        \AxiomC{$\rho \in (V\cup\Sigma)^\star$}
-        \LeftLabel{\scriptsize{(\Proposition{left-derivation:padding})}}
-        \BinaryInfC{$A\rho \lderive{1} \gamma\rho$}
+        % \AxiomC{}
+        % \LeftLabel{\scriptsize{(0)}}
+        % \UnaryInfC{$\gamma \lderive{0} \gamma$}
+        % \LeftLabel{\scriptsize{(1)}}
+        % \BinaryInfC{$A \lderive{1} \gamma$}
+        % \AxiomC{$\rho \in (V\cup\Sigma)^\star$}
+        % \LeftLabel{\scriptsize{(\Proposition{left-derivation:padding})}}
+        % \BinaryInfC{$A\rho \lderive{1} \gamma\rho$}
         \AxiomC{$(p,\alpha,\gamma\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$}
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$\gamma\rho \lderive{\star} \alpha$}
-        \LeftLabel{\scriptsize{(\Proposition{left-derivation:context-step})}}
+        % \LeftLabel{\scriptsize{(\Proposition{left-derivation:context-step})}}
+        \RightLabel{\scriptsize{правило (1)}}
         \BinaryInfC{$\underbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
       \end{prooftree}
     % \item
@@ -223,6 +245,44 @@
   % \end{itemize}
 % \end{enumerate}
 \end{proof}
+
+\begin{extra}
+\begin{example}
+  Нека е дадена граматиката $G$ с правила 
+  \begin{align*}
+    & S \to AS\ |\ BS\ |\ \varepsilon\\
+    & A \to aA\ |\ a\\
+    & B \to Bb\ |\ b.
+  \end{align*}
+  Ще построим стеков автомат $P = \PDA$, такъв че $\L(P) = \L(G)$.
+  \begin{itemize}
+  \item
+    $\Sigma = \{a,b\}$;
+  \item 
+    $\Gamma = \{A,S,B,a,b,\sharp\}$;
+  \item
+    $Q = \{\qstart,q,\qaccept\}$;
+  \item
+    Дефинираме релацията на преходите, следвайки конструкцията от \Theorem{push-down-context-free}:
+    \begin{itemize}
+    \item
+      $\Delta(\qstart, \varepsilon, \sharp) = \{(q, S\sharp)\}$;
+    \item 
+      $\Delta(q, \varepsilon, S) = \{(q, AS), (q, BS), (q, \varepsilon)\}$;
+    \item
+      $\Delta(q, \varepsilon, A) = \{(q, aA), (q, a)\}$;
+    \item
+      $\Delta(q, \varepsilon, B) = \{(q, Bb), (q, b)\}$;
+    \item
+      $\Delta(q, a, a) = \{(q, \varepsilon)\}$;
+    \item
+      $\Delta(q, b, b) = \{(q, \varepsilon)\}$;
+    \item
+      $\Delta(q, \varepsilon, \sharp) = \{(\qaccept,\varepsilon)\}$;
+    \end{itemize}
+  \end{itemize}
+\end{example}
+\end{extra}
 
 \begin{important}
   \begin{lemma}
@@ -399,43 +459,6 @@
   \end{theorem}
 \end{important}
 
-\begin{extra}
-\begin{example}
-  Нека е дадена граматиката $G$ с правила 
-  \begin{align*}
-    & S \to AS\ |\ BS\ |\ \varepsilon\\
-    & A \to aA\ |\ a\\
-    & B \to Bb\ |\ b.
-  \end{align*}
-  Ще построим стеков автомат $P = \PDA$, такъв че $\L(P) = \L(G)$.
-  \begin{itemize}
-  \item
-    $\Sigma = \{a,b\}$;
-  \item 
-    $\Gamma = \{A,S,B,a,b,\sharp\}$;
-  \item
-    $Q = \{\qstart,q,\qaccept\}$;
-  \item
-    Дефинираме релацията на преходите, следвайки конструкцията от \Theorem{push-down-context-free}:
-    \begin{itemize}
-    \item
-      $\Delta(\qstart, \varepsilon, \sharp) = \{(q, S\sharp)\}$;
-    \item 
-      $\Delta(q, \varepsilon, S) = \{(q, AS), (q, BS), (q, \varepsilon)\}$;
-    \item
-      $\Delta(q, \varepsilon, A) = \{(q, aA), (q, a)\}$;
-    \item
-      $\Delta(q, \varepsilon, B) = \{(q, Bb), (q, b)\}$;
-    \item
-      $\Delta(q, a, a) = \{(q, \varepsilon)\}$;
-    \item
-      $\Delta(q, b, b) = \{(q, \varepsilon)\}$;
-    \item
-      $\Delta(q, \varepsilon, \sharp) = \{(\qaccept,\varepsilon)\}$;
-    \end{itemize}
-  \end{itemize}
-\end{example}
-\end{extra}
 
 
 От \Proposition{context-free:pumping:non-closure} знаем, че безконтекстните езици не
@@ -469,12 +492,12 @@
     \begin{itemize}
     \item 
       \mynote{Симулираме едновременно изчислението и на двата автомата.}
-      Ако $(r_1,Z) \in \Delta'(q_1, a, Y)$, то
-      \[ \Delta(\pair{q_1,q_2},a,Y) \ni (\pair{r_1,\delta''(q_2,a)}, Z).\]
+      Ако $(r_1,\gamma) \in \Delta'(q_1, a, Y)$, то
+      \[ \Delta(\pair{q_1,q_2},a,Y) \ni (\pair{r_1,\delta''(q_2,a)}, \gamma).\]
     \item
       \mynote{Нищо не четем от входната дума, следователно правим празен ход на $\A$}
-      Ако $(r_1,Z) \in \Delta'(q_1,\varepsilon,Y)$ и всяко $q_2 \in Q''$, то
-      \[ \Delta(\pair{q_1,q_2},\varepsilon,Y) \ni (\pair{r_1,q_2}, Z).\]
+      Ако $(r_1,\gamma) \in \Delta'(q_1,\varepsilon,Y)$ и всяко $q_2 \in Q''$, то
+      \[ \Delta(\pair{q_1,q_2},\varepsilon,Y) \ni (\pair{r_1,q_2}, \gamma).\]
     \item
       \mynote{\writedown Докажете, че $\L(\M) = \L(P) \cap \L(\A)$ !}
       $\Delta$ не съдържа други преходи;
