@@ -95,7 +95,7 @@
     \end{enumerate}
   \end{itemize}
 
-  \mynote{Обърнете внимание, че думата $\gamma$ има малко странен вид. Ако $\gamma$ не е празната дума, то $\gamma$ започва с променлива.}
+  % \mynote{Обърнете внимание, че думата $\gamma$ има малко странен вид. Ако $\gamma$ не е празната дума, то $\gamma$ започва с променлива.}
   Ще докажем, че за всяка променлива $A \in V$, за всяка дума $\alpha \in \Sigma^\star$,
   % $\gamma \in (V \cdot \Sigma^\star)^\star$
   и $\delta \in (V \cup \Sigma)^\star$, то е изпълнено, че:
@@ -104,13 +104,13 @@
     % ако $S \lderive{\star} \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
     ако $A \lderive{\star} \alpha$, то $(p, \alpha, A) \vdash^\star_P (p, \varepsilon, \varepsilon)$;
   \item
-    ако $(p, \alpha, \delta\sharp) \vdash^\star_P (p, \varepsilon, \sharp)$, то $\delta \lderive{\star} \alpha$.
+    ако $(p, \alpha, \delta) \vdash^\star_P (p, \varepsilon, \varepsilon)$, то $\delta \lderive{\star} \alpha$.
   \end{enumerate}
   
   Ако приемем, че (а) и (б) са изпълнени, тогава, ако вземем $\delta = S$ и $A = S$, то ще получим, че
   \begin{align*}
     \alpha \in \L(G) & \iff S \lderive{\star} \alpha\\
-                     & \iff (p,\alpha,S\sharp) \vdash^\star_P (p, \varepsilon, \sharp) & \comment{\text{от (а) и (б)}}\\
+                     & \iff (p,\alpha,S) \vdash^\star_P (p, \varepsilon, \varepsilon) & \comment{\text{от (а) и (б)}}\\
                      & \iff (\qstart,\alpha,\sharp) \vdash^\star_P (\qaccept, \varepsilon, \varepsilon) & \comment{\text{от деф. на }P}\\
                      & \iff \alpha \in \L(P).
   \end{align*}
@@ -119,89 +119,134 @@
 
   % \begin{enumerate}[(a)]
   % \item
-  За (а), индукция по дължината $\ell$ на извода $A \lderive{\ell} \alpha$.
-  \begin{itemize}
-  \item
-    Нека $\ell = 1$. Този случай е лесен.
-  \item
-    Нека $\ell > 1$.
-  \end{itemize}
+  \mynote{Очевидно е, че не е възможно да имаме $A \lderive{0} \alpha$.}
+  Доказателството на (а) ще проведем с пълна индукция по дължината $\ell$ на извода $A \lderive{\ell} \alpha$ за $\ell \geq 1$.
+  
+  Нека $\ell = 1$. Този случай е лесен. Тук единствената възможност е да имаме извод $A \lderive{1} a$,
+  за някоя $a \in \Sigma$. Тогава, според дефиницията на стековия автомат $P$, имаме следното изчисление:
+  \[(p,a,A) \vdash_P (p,a,a) \vdash_P (p,\varepsilon,\varepsilon).\]
+
+  Нека $\ell > 1$. Тогава изводът може да се разбие така:
+  \begin{prooftree}
+    \AxiomC{$A \to_G BC$}
+    \AxiomC{$BC \lderive{\ell-1} \alpha$}
+    \LeftLabel{\scriptsize{правило (1)}}
+    \BinaryInfC{$A \lderive{\ell} \alpha$}
+  \end{prooftree}
+  Сега прилагаме \Proposition{grammar:divide-2} и \Lemma{left-derivation-equivalence} и получаваме, че можем да разбием извода $BC \lderive{\ell-1}\alpha$ така:
+  \begin{align*}
+    & B \lderive{\ell_1} \alpha_1\\
+    & C \lderive{\ell_2} \alpha_2,
+  \end{align*}
+  където $\alpha = \alpha_1\cdot \alpha_2$ и $\ell-1 = \ell_1+\ell_2$.
+    Понеже $\ell_1 < \ell$ и $\ell_2 < \ell$, от индукционното предположение получаваме изчислението:
+    \begin{prooftree}
+      \AxiomC{$B \lderive{\ell_1} \alpha_1$}
+      \LeftLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$(p,\alpha_1,B) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+      \AxiomC{$C \lderive{\ell_2} \alpha_2$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \UnaryInfC{$(p,\alpha_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+      \BinaryInfC{$(p,\alpha_1\alpha_2,BC) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+      \AxiomC{$A \to_G BC$}
+      \UnaryInfC{$\Delta(p,\varepsilon,A) \ni (p,BC)$}
+      \BinaryInfC{$(p,\underbrace{\alpha_1\alpha_2}_{\alpha},A) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+    \end{prooftree}
+
+    
+    % \begin{align*}
+    %   & B \lderive{\ell_1} \alpha_1 \implies (p,\alpha_1,B) \vdash^\star_P (p,\varepsilon,\varepsilon)\\
+    %   & C \lderive{\ell_2} \alpha_2 \implies (p,\alpha_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon).
+    % \end{align*}
+    % Щом вече сме установили, че имаме левите страни на тези импликации, то можем да заключим, че имаме и десните страни:
+    % \begin{align}
+    %   & (p,\alpha_1,B) \vdash^\star_P (p,\varepsilon,\varepsilon) \label{eq:push-down:1}\\
+    %   & (p,\alpha_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon). \label{eq:push-down:2}
+    % \end{align}
+
+    % Сега комбинираме всичко, което знаем дотук в едно ,,дълго'' изчисление:
+    % \begin{align*}
+    %   (p,\overbrace{\alpha_1\alpha_2}^{\alpha},A) & \vdash_P (p,\alpha_1\alpha_2,BC) & \comment\text{от деф. на }P\\
+    %                                               & \vdash^\star_P (p,\alpha_2,C) & \comment\text{от (\ref{eq:push-down:1})}\\
+    %                                               & \vdash^\star_P(p,\varepsilon,\varepsilon). & \comment\text{от (\ref{eq:push-down:2})}
+    % \end{align*}
+
 
   
     % \begin{itemize}
     % \item
 
-  Нека $\ell = 0$. Този случай е тривиален, защото тогава $\alpha = \varepsilon$ и $\gamma = S$.
-  Ясно е, че $(p,\varepsilon,S\sharp) \vdash^0_P (p,\varepsilon,S\sharp)$.
-      % \item
+  % Нека $\ell = 0$. Този случай е тривиален, защото тогава $\alpha = \varepsilon$ и $\gamma = S$.
+  % Ясно е, че $(p,\varepsilon,S\sharp) \vdash^0_P (p,\varepsilon,S\sharp)$.
+  %     % \item
       
-  Нека $\ell > 0$ и $S \lderive{\ell} \alpha\gamma$.
-  Понеже $\gamma$ ако не е празната дума започва с променлива, това означава, че този извод може да се запише по следния начин:
-  \mynote{\todo Съобразете сами защо можем да разбием извода по този начин!}
-  \begin{prooftree}
-    \AxiomC{$S\lderive{\ell-1} \alpha_1A\gamma_2$}
-    \AxiomC{$\alpha_1 \in \Sigma^\star$}
-    \AxiomC{$A \to_G \alpha_2\gamma_1$}
-    % \RightLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
-    \TrinaryInfC{$S \lderive{\ell} \underbrace{\alpha_1\alpha_2}_{\alpha}\underbrace{\gamma_1\gamma_2}_{\gamma}$}
-  \end{prooftree}
-  или
-  \begin{prooftree}
-    \AxiomC{$S\lderive{\ell-1} \alpha_1A\alpha_3\gamma$}
-    \AxiomC{$\alpha_1 \in \Sigma^\star$}
-    \AxiomC{$A \to_G \alpha_2$}
-    % \RightLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
-    \TrinaryInfC{$S \lderive{\ell} \underbrace{\alpha_1\alpha_2\alpha_3}_{\alpha}\gamma$}
-  \end{prooftree}
-  От индукционното предположение имаме импликациите:
-  \begin{align*}
-    & S\lderive{\ell-1} \alpha_1A\gamma_2\ \implies\ (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp)\\
-    & S\lderive{\ell-1} \alpha_1A\alpha_3\gamma\ \implies\ (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\alpha_3\gamma\sharp)\\
-  \end{align*}
-  Вече видяхме, че имаме $S\lderive{\ell-1} \alpha_1A\gamma_2$ или $S\lderive{\ell-1} \alpha_1A\alpha_3\gamma$.
-  Следователно можем да заключим, че
-  \begin{equation}
-    \label{eq:5}
-    (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp)
-  \end{equation}
-  или
-  \begin{equation}
-    \label{eq:6}
-    (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\alpha_3\gamma\sharp).
-  \end{equation}
-  Така получаваме изчислението:
-  \begin{align*}
-    (p, \overbrace{\alpha_1\alpha_2}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2, A\gamma_2\sharp) & \comment{\text{от (\ref{eq:5})}}\\
-                                                        & \vdash_P (p, \alpha_2, \alpha_2\gamma_1\gamma_2\sharp) & \comment{\text{понеже } A \to_G \alpha_2\gamma}\\
-                                                        & \vdash^\star_P (p, \varepsilon, \underbrace{\gamma_1\gamma_2}_{\gamma}\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
-  \end{align*}
-  или
-  \begin{align*}
-    (p, \overbrace{\alpha_1\alpha_2\alpha_3}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2\alpha_3, A\alpha_3\gamma\sharp) & \comment{\text{от (\ref{eq:6})}}\\
-                                                        & \vdash_P (p, \alpha_2\alpha_3, \alpha_2\alpha_3\gamma\sharp) & \comment{\text{понеже } A \to_G \alpha_2}\\
-                                                        & \vdash^\star_P (p, \varepsilon, \gamma\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
-  \end{align*}  
+  % Нека $\ell > 0$ и $S \lderive{\ell} \alpha\gamma$.
+  % Понеже $\gamma$ ако не е празната дума започва с променлива, това означава, че този извод може да се запише по следния начин:
+  % \mynote{\todo Съобразете сами защо можем да разбием извода по този начин!}
+  % \begin{prooftree}
+  %   \AxiomC{$S\lderive{\ell-1} \alpha_1A\gamma_2$}
+  %   \AxiomC{$\alpha_1 \in \Sigma^\star$}
+  %   \AxiomC{$A \to_G \alpha_2\gamma_1$}
+  %   % \RightLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
+  %   \TrinaryInfC{$S \lderive{\ell} \underbrace{\alpha_1\alpha_2}_{\alpha}\underbrace{\gamma_1\gamma_2}_{\gamma}$}
+  % \end{prooftree}
+  % или
+  % \begin{prooftree}
+  %   \AxiomC{$S\lderive{\ell-1} \alpha_1A\alpha_3\gamma$}
+  %   \AxiomC{$\alpha_1 \in \Sigma^\star$}
+  %   \AxiomC{$A \to_G \alpha_2$}
+  %   % \RightLabel{\scriptsize{(\Proposition{grammar:context-left-step})}}
+  %   \TrinaryInfC{$S \lderive{\ell} \underbrace{\alpha_1\alpha_2\alpha_3}_{\alpha}\gamma$}
+  % \end{prooftree}
+  % От индукционното предположение имаме импликациите:
+  % \begin{align*}
+  %   & S\lderive{\ell-1} \alpha_1A\gamma_2\ \implies\ (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp)\\
+  %   & S\lderive{\ell-1} \alpha_1A\alpha_3\gamma\ \implies\ (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\alpha_3\gamma\sharp)\\
+  % \end{align*}
+  % Вече видяхме, че имаме $S\lderive{\ell-1} \alpha_1A\gamma_2$ или $S\lderive{\ell-1} \alpha_1A\alpha_3\gamma$.
+  % Следователно можем да заключим, че
+  % \begin{equation}
+  %   \label{eq:5}
+  %   (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\gamma_2\sharp)
+  % \end{equation}
+  % или
+  % \begin{equation}
+  %   \label{eq:6}
+  %   (p, \alpha_1, S\sharp) \vdash^\star_P (p, \varepsilon, A\alpha_3\gamma\sharp).
+  % \end{equation}
+  % Така получаваме изчислението:
+  % \begin{align*}
+  %   (p, \overbrace{\alpha_1\alpha_2}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2, A\gamma_2\sharp) & \comment{\text{от (\ref{eq:5})}}\\
+  %                                                       & \vdash_P (p, \alpha_2, \alpha_2\gamma_1\gamma_2\sharp) & \comment{\text{понеже } A \to_G \alpha_2\gamma}\\
+  %                                                       & \vdash^\star_P (p, \varepsilon, \underbrace{\gamma_1\gamma_2}_{\gamma}\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
+  % \end{align*}
+  % или
+  % \begin{align*}
+  %   (p, \overbrace{\alpha_1\alpha_2\alpha_3}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2\alpha_3, A\alpha_3\gamma\sharp) & \comment{\text{от (\ref{eq:6})}}\\
+  %                                                       & \vdash_P (p, \alpha_2\alpha_3, \alpha_2\alpha_3\gamma\sharp) & \comment{\text{понеже } A \to_G \alpha_2}\\
+  %                                                       & \vdash^\star_P (p, \varepsilon, \gamma\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
+  % \end{align*}  
   
   % \end{itemize}
   За (б), индукция по броя на стъпките $\ell$ в изчислението на стековия автомат.
   % \begin{itemize}
     % \item
     
-      Нека $\ell = 0$. Тогава е ясно, че единствената възможност е $\alpha = \varepsilon$ и $\delta = \varepsilon$.
+      Нека $\ell = 0$ и $(p, \alpha, \delta) \vdash^{0}_P (p, \varepsilon, \varepsilon)$. Тогава е ясно, че единствената възможност е $\alpha = \varepsilon$ и $\delta = \varepsilon$.
       Тогава $\varepsilon \derive{\star}_G \varepsilon$.
       % \item
       
-      Нека $\ell > 0$ и $(p, \alpha, \delta \sharp) \vdash^{\ell}_P (p, \varepsilon, \sharp)$.      
+      Нека $\ell > 0$ и $(p, \alpha, \delta) \vdash^{\ell}_P (p, \varepsilon, \varepsilon)$.      
       % \mynote{Да напомним, че правилата в една граматика в НФЧ са от вида $A \to a$ и $A \to BC$.}
       Имаме два варианта за първата стъпка в това изчисление.
       
-      Започваме със случая, който не зависи от граматиката. Това означава, че първата стъпка от изчислението $(p, \alpha, \delta\sharp) \vdash^\ell_P (p, \varepsilon, \sharp)$ е направена защото $\Delta(p,a,a) \ni (p,\varepsilon)$, за някоя бука $a$. Тогава със сигурност можем да представим думите $\alpha$ и $\delta$ като
+      Започваме със случая, който не зависи от правилата на граматиката. Това означава, че първата стъпка от изчислението $(p, \alpha, \delta) \vdash^\ell_P (p, \varepsilon, \varepsilon)$ е направена защото $\Delta(p,a,a) \ni (p,\varepsilon)$, за някоя буква $a$. Тогава със сигурност можем да представим думите $\alpha$ и $\delta$ като
       $\alpha = a\beta$ и $\delta = a\rho$, за някои $\beta$ и $\rho$, и да разбием изчислението по следния начин:
-      \[(p, \underbrace{a\beta}_{\alpha}, \underbrace{a\rho}_{\delta} \sharp) \vdash_P (p,\beta,\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
+      \[(p, \underbrace{a\beta}_{\alpha}, \underbrace{a\rho}_{\delta}) \vdash_P (p,\beta,\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
       Сега можем да приложим индукционното предположение и да получим извода:
       \begin{prooftree}
         \AxiomC{$a \in \Sigma$}
-        \AxiomC{$(p,\beta,\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$}
+        \AxiomC{$(p,\beta,\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$\rho \lderive{\star} \beta$}
         \RightLabel{\scriptsize{(\Proposition{left-derivation:padding})}}
@@ -209,9 +254,9 @@
       \end{prooftree}
       % \item
       \mynote{Понеже граматиката е в нормална форма на Чомски, то $1 \leq |\gamma| \leq 2$.}
-      Вторият случай зависи от правилата на граматиката. Това означава, че първата стъпка от изчислението $(p, \alpha, \delta\sharp) \vdash^\ell_P (p, \varepsilon, \sharp)$ е направена защото $\Delta(p,\varepsilon,A) \ni (p,\gamma)$. Според конструкцията на стековия автомат, това означава, че със сигурност имаме правилото $A \to_G \gamma$, а думата $\delta$
+      Вторият случай зависи от правилата на граматиката. Това означава, че първата стъпка от изчислението $(p, \alpha, \delta) \vdash^\ell_P (p, \varepsilon, \varepsilon)$ е направена защото $\Delta(p,\varepsilon,A) \ni (p,\gamma)$. Според конструкцията на стековия автомат, това означава, че със сигурност имаме правилото $A \to_G \gamma$, а думата $\delta$
       може да се представи като $\delta = A\rho$, за някое $\rho$, и изчислението може да се разбие по следния начин:
-      \[(p, \alpha, \underbrace{A\rho}_{\delta} \sharp) \vdash_P (p,\alpha,\gamma\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp).\]
+      \[(p, \alpha, \underbrace{A\rho}_{\delta}) \vdash_P (p,\alpha,\gamma\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
       Сега прилагаме индукционното предположение и получаваме извода:
       \begin{prooftree}
         \AxiomC{$A \to_G \gamma$}
@@ -223,7 +268,7 @@
         % \AxiomC{$\rho \in (V\cup\Sigma)^\star$}
         % \LeftLabel{\scriptsize{(\Proposition{left-derivation:padding})}}
         % \BinaryInfC{$A\rho \lderive{1} \gamma\rho$}
-        \AxiomC{$(p,\alpha,\gamma\rho\sharp ) \vdash^{\ell-1}_P (p, \varepsilon, \sharp)$}
+        \AxiomC{$(p,\alpha,\gamma\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$\gamma\rho \lderive{\star} \alpha$}
         % \LeftLabel{\scriptsize{(\Proposition{left-derivation:context-step})}}
@@ -382,13 +427,13 @@
       \begin{extra}
       \begin{prooftree}
         \AxiomC{$\Delta(q,a,A) \ni (r,BC)$}
-        \RightLabel{\scriptsize{(деф.)}}
+%        \RightLabel{\scriptsize{(деф.)}}
         \UnaryInfC{$[q,A,p] \to_G a[r,B,q'][q',C,p]$}
         \AxiomC{$(r, \beta_1, B) \vdash^{\ell_1}_P (q', \varepsilon, \varepsilon)$}
-%        \LeftLabel{\scriptsize{\IndHyp}}
+        \LeftLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$[r, B, q'] \lderive{\star} \beta_1$}
         \AxiomC{$(q', \beta_2, C) \vdash^{\ell_2}_P (p, \varepsilon, \varepsilon)$}
- %       \LeftLabel{\scriptsize{\IndHyp}}
+        \LeftLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$[q', C, p] \lderive{\star} \beta_2$}
         \LeftLabel{\scriptsize{(Тв. \ref{pr:left-derivation:concat2})}}
         \BinaryInfC{$[r,B,q'][q',C,p] \lderive{\star} \beta_1\beta_2$}
