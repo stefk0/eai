@@ -74,7 +74,7 @@
     \texttt{Reach[i+1]} = & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
                             & \cup \texttt{Reach[i]}.    
   \end{align*}
-  Докажете, че за всяко $i$,
+  Докажете, че за всяко $i$ е изпълнено:
   \[\texttt{Reach[i]} = \{B \in V \mid S \yield{\leq i} \alpha B \beta\text{, за някои }\alpha,\beta \in (\Sigma \cup V)^\star\}.\]
   \mynote{\writedown Защо сме сигурни, че ще достигнем такава стъпка?}
   Спираме да строим тези множества, когато достигнем до стъпка $n$, за която

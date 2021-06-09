@@ -166,46 +166,86 @@
     \item 
       $\Delta(q, \varepsilon, \sharp) = \{(f, \varepsilon)\}$;
     \item
-      $\Delta(q, a, \sharp) = \{(q, a\sharp)\}$;
+      $\Delta(q, x, \sharp) = \{(q, x\sharp)\}$, където $x \in \{a,b\}$;
     \item
-      $\Delta(q, b, \sharp) = \{(q, b\sharp)\}$;
-    \item
-      $\Delta(q, a, a) = \{(q, aa)\}$;
+      $\Delta(q, x, x) = \{(q, xx)\}$, където $x \in \{a,b\}$;
     \item
       $\Delta(q, a, b) = \{(q, \varepsilon)\}$;
     \item
-      $\Delta(q, b, a) = \{(q, \varepsilon)\}$;
-    \item
-      $\Delta(q, b, b) = \{(q, bb)\}$.
+      $\Delta(q, b, a) = \{(q, \varepsilon)\}$.
     \end{enumerate}
   \end{itemize}
   Да видим защо думата $abbbaa \in \L(P)$.
   \begin{align*}
     (q, abbbaa, \sharp) & \vdash_P (q, bbbaa,\ a\sharp) & \comment{\text{правило }(2)}\\
-                        & \vdash_P (q, bbaa,\ \sharp) & \comment{\text{правило }(6)}\\
-                        & \vdash_P (q, baa,\ b\sharp) & \comment{\text{правило }(3)}\\
-                        & \vdash_P (q, aa, bb\sharp) & \comment{\text{правило }(7)}\\
-                        & \vdash_P (q, a,\ b\sharp) & \comment{\text{правило }(5)}\\
-                        & \vdash_P (q, \varepsilon,\ \sharp) & \comment{\text{правило }(5)}\\
+                        & \vdash_P (q, bbaa,\ \sharp) & \comment{\text{правило }(5)}\\
+                        & \vdash_P (q, baa,\ b\sharp) & \comment{\text{правило }(2)}\\
+                        & \vdash_P (q, aa, bb\sharp) & \comment{\text{правило }(3)}\\
+                        & \vdash_P (q, a,\ b\sharp) & \comment{\text{правило }(4)}\\
+                        & \vdash_P (q, \varepsilon,\ \sharp) & \comment{\text{правило }(4)}\\
                         & \vdash_P (f, \varepsilon,\ \varepsilon). & \comment{\text{правило }(1)}
   \end{align*}
 
   \begin{enumerate}[a)]
   \item
-    \mynote{Индукция по дължината на думата $\gamma$.}
-    Докажете, че за произволно естествено число $n$ и произволна дума $\gamma \in \{a, b\}^\star$, е изпълнено, че:
+    Докажете с пълна индукция по дължината на думата $\gamma$, че за произволна дума $\gamma \in \{a, b\}^\star$, е изпълнено, че:
     \begin{align}
-      a^n\gamma \in L & \implies (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) \label{eq:omega-ab:1}\\
-      b^n\gamma \in L & \implies (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp). \label{eq:omega-ab:2}
+      (\forall n)[a^n\gamma \in L & \implies (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)] \label{eq:omega-ab:1}\\
+      (\forall n)[b^n\gamma \in L & \implies (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)]. \label{eq:omega-ab:2}
     \end{align}
+    % Ще докажем едновременно \Property{eq:omega-ab:1} и \Property{eq:omega-ab:2} с пълна индукция по дължината на думата $\gamma$.
+
+    % Да разгледаме произволна дума $\gamma$. Случаят, когато $\abs{\gamma} = 0$ е тривиален. 
+    % Нека $\abs{\gamma} > 0$ и да приемем, че $a^n\gamma \in L$.
+    % Ясно е, че можем да представим $\gamma$ като $\gamma = a^kb\gamma'$, за някое $k$.
+    % \begin{itemize}
+    % \item
+    %   Ако $n+k = 0$, то $a^n\gamma = b\gamma' \in L$ и прилагаме \IndHyp за \Property{eq:omega-ab:2} с думата $\gamma'$ и получаваме, че:
+    %   \begin{align*}
+    %     (q, \overbrace{b\gamma'}^{\gamma},\sharp) & \vdash (q,\gamma',b\sharp) & \comment{\text{правило (2)}}\\
+    %                          & \vdash^\star (q, \varepsilon,\sharp) & \comment\text{\IndHyp}
+    %   \end{align*}
+    % \item
+    %   Ако $n+k>0$, то $a^{n+k-1}\gamma' \in L$ и прилагаме \IndHyp за \Property{eq:omega-ab:1} с думата $\gamma'$ и получаваме, че:
+    %   \begin{align*}
+    %     (q, \overbrace{a^{k}b\gamma'}^{\gamma}, a^n\sharp) & \vdash^\star_P (q, b\gamma', a^{n+k}\sharp) & \comment{\text{правило (3)}}\\
+    %                                                         & \vdash^\star_P (q, \gamma', a^{n+k-1}\sharp) & \comment\text{правило (5)}\\
+    %                                                         & \vdash^\star_P (q, \varepsilon, \sharp). & \comment\text{\IndHyp}
+    %   \end{align*}
+    % \end{itemize}
+    % Аналогично се доказва и \Property{eq:omega-ab:2}.
+    
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
-    \mynote{Индукция по броя на стъпките в изчислението на стековия автомат.}
-    Докажете, че за произволно естествено число $n$ и произволна дума $\gamma \in \{a, b\}^\star$ е изпълнено, че:
+    Докажете с пълна индукция по дължината на думата $\gamma$, че за произволна дума $\gamma \in \{a, b\}^\star$ е изпълнено, че:
     \begin{align}
-      (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies a^n\gamma \in L \label{eq:omega-ab:3}\\
-      (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies b^n\gamma \in L. \label{eq:omega-ab:4}
+      (\forall n)[(q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies a^n\gamma \in L] \label{eq:omega-ab:3}\\
+      (\forall n)[(q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies b^n\gamma \in L]. \label{eq:omega-ab:4}
     \end{align}
+
+    % Нека имаме изчислението $(q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)$.
+    % Да представим думата $\gamma$ като $\gamma = a^kb\gamma'$.
+    
+    % \begin{itemize}
+    % \item
+    %   Ако $n+k = 0$, то можем да разбием изчислението по следния начин:
+    %   \begin{align*}
+    %     (q, b\gamma', \sharp) & \vdash_P (q, \gamma',b\sharp) \\
+    %                           & \vdash^{\star} (q,\varepsilon,\sharp).
+    %   \end{align*}
+    %   Тогава от \IndHyp за \Property{eq:omega-ab:4} следва, че $a^n\gamma = b\gamma' \in L$.
+    % \item
+    %   Ако $n+k > 0$, то можем да разбием изчислението по следния начин:
+    %   \begin{align*}
+    %     (q, a^kb\gamma', a^n\sharp) & \vdash^\star_P (q, b\gamma',a^{n+k}\sharp) \\
+    %                                 & \vdash_P (q, \gamma',a^{n+k-1}\sharp) \\
+    %                                 & \vdash^{\star} (q,\varepsilon,\sharp).
+    %   \end{align*}
+    %   Тогава от \IndHyp за \Property{eq:omega-ab:3} следва, че $a^{n+k-1}\gamma' \in L$, но оттук
+    %   веднага получаваме, че $a^na^kb\gamma' \in L$.
+    % \end{itemize}
+    % Аналогично се доказва и \Property{eq:omega-ab:4}.
+    
     Оттук заключете, че $\L(P) \subseteq L$.
   \end{enumerate}
 \end{example}

@@ -1,6 +1,6 @@
 \section{Проблемът за съответствието на Пост}\label{sect:turing:pcp}
 
-\mynote{На англ. Post's correspondence problem \cite[стр. 392]{hopcroft2}, но по-добре е обяснено в \cite[стр. 227]{sipser3}. Тези двойки от думи се наричат домино.}
+\mynote{На англ. \emph{Post's correspondence problem} \cite[стр. 392]{hopcroft2}, но по-добре е обяснено в \cite[стр. 227]{sipser3}. Тези двойки от думи се наричат домино.}
 
 Пример за проблема за съответствието на Пост се нарича всяка крайна редица от елементи на $\Sigma^\star \times \Sigma^\star$,
 които ние ще означаваме така:
@@ -99,11 +99,12 @@
 \end{hint}
 
 \begin{corollary}
-  Проблемът за еднозначност на безконтекстна граматика е неразрешим.
+  \mynote{Ясно е, че $\texttt{AMBIG}$ е полуразрешим език, нали?}
+  Езикът 
+  \[\texttt{AMBIG} = \{\code{G} \mid G \text{ е нееднозначна безконтекстна граматика}\}\]
+  е неразрешим.
 \end{corollary}
 \begin{hint}
-  Нека да означим
-  \[\texttt{AMBIG} = \{\code{G} \mid G \text{ е нееднозначна безконтекстна граматика}\}.\]
   Да разгледаме един пример за $\PCP$ над азбуката $\Sigma$:
   \[\begin{bmatrix} \alpha_1\\ \beta_1\end{bmatrix},\begin{bmatrix} \alpha_2\\ \beta_2\end{bmatrix},\dots,\begin{bmatrix} \alpha_n\\ \beta_n\end{bmatrix}.\]
   По него можем ефективно да построим следната безконтекстна граматика:
@@ -113,17 +114,18 @@
     & B \to \beta_1B c_1\ |\ \beta_2 B c_2\ |\ \cdots\ |\ \beta_n B c_n\ |\ \beta_1c_1\ |\ \beta_2c_2\ |\ \cdots\ |\ \beta_nc_n,
   \end{align*}
   където $c_1,\dots,c_n \not \in \Sigma$.
-  Лесно се съобразява, че горния пример за $\PCP$ има решение точно тогава, когато безконтекстната граматика е нееднозначна.
+  Лесно се съобразява, че горният пример за $\PCP$ има решение точно тогава, когато безконтекстната граматика е нееднозначна.
   С други думи, показахме, че
   \[\PCP \leq_m \texttt{AMBIG}.\]
 \end{hint}
 
 \begin{corollary}\label{cor:pcp:grammar-intersect}
-  Проблемът за сечение на две безконтекстни граматики е неразрешим.
+  \mynote{Ясно е, че $\INTERSECT$ е полуразрешим език, нали? За момента не е ясно дали допълнението на $\INTERSECT$ е полуразрешим език. Това ще разберем по-късно в \Theorem{computations:intersect}.}
+  Езикът 
+  \[\INTERSECT = \{\code{G_1}\sharp\code{G_2} \mid \L(G_1) \cap \L(G_2) \neq \emptyset \}\]
+  е неразрешим.
 \end{corollary}
 \begin{hint}
-  Нека да означим
-  \[\INTERSECT = \{\code{G_1}\sharp\code{G_2} \mid \L(G_1) \cap \L(G_2) \neq \emptyset \}.\]
   Да разгледаме един пример за $\PCP$ над азбуката $\Sigma$:
   \[\begin{bmatrix} \alpha_1\\ \beta_1\end{bmatrix},\begin{bmatrix} \alpha_2\\ \beta_2\end{bmatrix},\dots,\begin{bmatrix} \alpha_n\\ \beta_n\end{bmatrix}.\]
   По него можем ефективно да построим следните две безконтекстни граматика с правила:

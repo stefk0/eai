@@ -130,12 +130,12 @@
 \item
   За нечетно $i < n$, $\omega_i \vdash_\M \omega^{\rev}_{i+1}$;
 \end{itemize}
-Езикът съставен от всички такива думи ще означаваме с $\texttt{History}(\M)$.
+Езикът съставен от всички такива думи ще означаваме с $\HISTORY(\M)$.
 
 \begin{lemma}
   \mynote{\cite[стр. 201]{hopcroft1}}
   За всяка машина на Тюринг $\M$ е изпълнено, че:
-  \[\texttt{History}(\M) = L_1 \cap L_2,\]
+  \[\HISTORY(\M) = L_1 \cap L_2,\]
   където $L_1$ и $L_2$ са безконтекстни езици.
   Освен това, граматиките на $L_1$ и $L_2$ могат ефективно да бъдат построени по кода на $\M$.
 \end{lemma}
@@ -146,6 +146,17 @@
     & L_2 \df \{\qstart\}\cdot\Sigma^\star \cdot \{\sharp\} \cdot (\texttt{Valid'}(\M) \cdot \{\sharp\})^\star \cdot (\{\varepsilon\}\cup \Gamma^\star \cdot \{\qaccept\} \cdot \Gamma^\star\cdot\{\sharp\}),
   \end{align*}
 \end{hint}
+
+\begin{lemma}
+  Нека $\M$ е детерминистична машина на Тюринг, която за всеки вход прави поне две стъпки преди да спре.
+  Тогава $\HISTORY(\M)$ е безконтекстен (регулярен) точно тогава, когато $\L(\M)$ е краен.
+\end{lemma}
+\begin{hint}
+  Ясно е, че ако $\L(\M)$ е краен, то $\HISTORY(\M)$ е краен и следователно безконтекстен (регулярен).
+
+  Нека сега $\L(\M)$ е безкраен. Тогава за всяко $p \geq 1$ има думи $\omega \in \L(\M)$, за които $|\omega| \geq p$. Тогава може да приложите лемата за покачването за да докажете, че $\HISTORY(\M)$ не е безконтекстен (регулярен).
+\end{hint}
+
 
 \begin{problem}
   Обяснете как може ефективно да се кодира всяка безконтекстна граматика $G$ като дума $\code{G}$ над азбуката $\{0,1\}$.
@@ -158,7 +169,7 @@
   не е полуразрешим.
 \end{theorem}  
 \end{important}
-\mynote{Да напомним, че от \Corollary{pcp:grammar-intersect} знаем, че $\INTERSECT$ не е разрешим.}
+\mynote{Да напомним, че от \Corollary{pcp:grammar-intersect} знаем, че $\INTERSECT$ не е разрешим, но е полуразрешим.}
 \begin{hint}
   Лесно се вижда, че $\LEmpty \leq_m \overline{\INTERSECT}$.
   По дадена дума $\code{\M}$, можем ефективно да намерим $G_1$ и $G_2$, за които
@@ -169,8 +180,8 @@
 \end{hint}
 
 \begin{lemma}
-  За всяка машина на Тюринг $\M$,о допълнението на $\texttt{History}(\M)$, което означаваме като $\overline{\texttt{History}(\M)}$, е безконтекстен език.
-  Освен това, по кода на $\M$ можем ефективно да намерим код на безконтекстната граматика за $\overline{\texttt{History}}(\M)$.
+  За всяка машина на Тюринг $\M$, допълнението на $\HISTORY(\M)$, което означаваме като $\overline{\HISTORY}(\M)$, е безконтекстен език.
+  Освен това, по кода на $\M$ можем ефективно да намерим код на безконтекстната граматика за $\overline{\HISTORY}(\M)$.
 \end{lemma}
 \begin{hint}
   Една дума $\alpha$ не е история на приемащо изчисление, ако е изпълнено някое от следните условия:
@@ -207,11 +218,11 @@
 \begin{hint}
   Ще видим, че имаме следното свеждане:
   \[\LEmpty \leq_m \texttt{All}_{\texttt{CFG}}.\]
-  Тук ще използваме, че ако $\L(\M) = \emptyset$, то $\overline{\texttt{History}(\M)} = \hat{\Sigma}^\star$,
+  Тук ще използваме, че ако $\L(\M) = \emptyset$, то $\overline{\HISTORY}(\M) = \hat{\Sigma}^\star$,
   където $\hat{\Sigma} = \Gamma \cup Q \cup \{\sharp\}$.
   По даден код на машината на Тюринг $\M$, можем ефективно да намерим код на безконтекстната граматика $G$, за която
   $\L(G)$ са точно невалидните изчисления на $\M$, т.е. съществува тотална изчислима $f$, за която
-  \[f(\code{\M}) = \code{G}\text{ и }\L(G) = \overline{\texttt{History}(\M)}.\]
+  \[f(\code{\M}) = \code{G}\text{ и }\L(G) = \overline{\HISTORY}(\M).\]
   Тогава, ако допуснем, че $\texttt{All}_{\texttt{CFG}}$ е полуразрешим език, то $\LEmpty$ е полуразрешим, защото
   \[\code{\M} \in L_{\texttt{Empty}} \iff f(\code{\M}) \in \texttt{All}_{\texttt{CFG}}.\]
 \end{hint}

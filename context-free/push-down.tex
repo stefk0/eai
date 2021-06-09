@@ -64,14 +64,14 @@
 
 \begin{important}
   \begin{lemma}
-    \mynote{\cite[стр. 136]{papadimitriou}}
+    \mynote{Доказателството на лемата следва до голяма степен \cite[стр. 136]{papadimitriou}.}
     За всяка безконтекстна граматика $G$,
     съществува стеков автомат $P$, такъв че $\L(G) = \L(P)$.
   \end{lemma}
 \end{important}
 \begin{proof}
   % \mynote{Доказателството в \cite[стр. 117]{sipser3} не ми харесва}
-  \mynote{Тук е важно, че дефинирахме най-ляв извод в граматика.}
+  \mynote{Тук е важно да използваме най-ляв извод в граматика.}
   Нека е дадена безконтекстната граматика $G = \CFG$ в нормална форма на Чомски.
   Нашата цел е да построим стеков автомат
   \[P = \PDA,\] който разпознава езика $\L(G)$.
@@ -96,15 +96,18 @@
   \end{itemize}
 
   \mynote{Обърнете внимание, че думата $\gamma$ има малко странен вид. Ако $\gamma$ не е празната дума, то $\gamma$ започва с променлива.}
-  Ще докажем, че за всяка променлива $A \in V$, за всяка дума $\alpha \in \Sigma^\star$, $\gamma \in (V \cdot \Sigma^\star)^\star$ и $\delta \in (V \cup \Sigma)^\star$, то е изпълнено, че:
+  Ще докажем, че за всяка променлива $A \in V$, за всяка дума $\alpha \in \Sigma^\star$,
+  % $\gamma \in (V \cdot \Sigma^\star)^\star$
+  и $\delta \in (V \cup \Sigma)^\star$, то е изпълнено, че:
   \begin{enumerate}[(a)]
   \item
-    ако $S \lderive{\star} \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
+    % ако $S \lderive{\star} \alpha \gamma$, то $(p, \alpha, S\sharp) \vdash^\star_P (p, \varepsilon, \gamma\sharp)$;
+    ако $A \lderive{\star} \alpha$, то $(p, \alpha, A) \vdash^\star_P (p, \varepsilon, \varepsilon)$;
   \item
     ако $(p, \alpha, \delta\sharp) \vdash^\star_P (p, \varepsilon, \sharp)$, то $\delta \lderive{\star} \alpha$.
   \end{enumerate}
-
-  Ако приемем, че (а) и (б) са изпълнени, тогава, ако вземем $\delta = S$ и $\gamma = \varepsilon$, то ще получим, че
+  
+  Ако приемем, че (а) и (б) са изпълнени, тогава, ако вземем $\delta = S$ и $A = S$, то ще получим, че
   \begin{align*}
     \alpha \in \L(G) & \iff S \lderive{\star} \alpha\\
                      & \iff (p,\alpha,S\sharp) \vdash^\star_P (p, \varepsilon, \sharp) & \comment{\text{от (а) и (б)}}\\
@@ -116,7 +119,15 @@
 
   % \begin{enumerate}[(a)]
   % \item
-  За (а), индукция по дължината $\ell$ на извода $S \lderive{\ell} \alpha\gamma$.
+  За (а), индукция по дължината $\ell$ на извода $A \lderive{\ell} \alpha$.
+  \begin{itemize}
+  \item
+    Нека $\ell = 1$. Този случай е лесен.
+  \item
+    Нека $\ell > 1$.
+  \end{itemize}
+
+  
     % \begin{itemize}
     % \item
 
@@ -160,7 +171,7 @@
   \end{equation}
   Така получаваме изчислението:
   \begin{align*}
-    (p, \underbrace{\alpha_1\alpha_2}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2, A\gamma_2\sharp) & \comment{\text{от (\ref{eq:5})}}\\
+    (p, \overbrace{\alpha_1\alpha_2}^{\alpha}, S\sharp) & \vdash^\star_P (p, \alpha_2, A\gamma_2\sharp) & \comment{\text{от (\ref{eq:5})}}\\
                                                         & \vdash_P (p, \alpha_2, \alpha_2\gamma_1\gamma_2\sharp) & \comment{\text{понеже } A \to_G \alpha_2\gamma}\\
                                                         & \vdash^\star_P (p, \varepsilon, \underbrace{\gamma_1\gamma_2}_{\gamma}\sharp) & \comment{\text{ред (3) от деф. на }\Delta}.
   \end{align*}
@@ -368,15 +379,16 @@
       Понеже имаме, че $\Delta(q,a,A) \ni (r,BC)$, то според дефиницията на стековия автомат, в граматиката имаме правилото
       \[[q,A,p] \to_G a[r,B,q'][q',C,p].\]
       Обединявайки всичко, получаваме извода в граматиката:
+      \begin{extra}
       \begin{prooftree}
         \AxiomC{$\Delta(q,a,A) \ni (r,BC)$}
         \RightLabel{\scriptsize{(деф.)}}
         \UnaryInfC{$[q,A,p] \to_G a[r,B,q'][q',C,p]$}
         \AxiomC{$(r, \beta_1, B) \vdash^{\ell_1}_P (q', \varepsilon, \varepsilon)$}
-        \LeftLabel{\scriptsize{\IndHyp}}
+%        \LeftLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$[r, B, q'] \lderive{\star} \beta_1$}
         \AxiomC{$(q', \beta_2, C) \vdash^{\ell_2}_P (p, \varepsilon, \varepsilon)$}
-        \LeftLabel{\scriptsize{\IndHyp}}
+ %       \LeftLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$[q', C, p] \lderive{\star} \beta_2$}
         \LeftLabel{\scriptsize{(Тв. \ref{pr:left-derivation:concat2})}}
         \BinaryInfC{$[r,B,q'][q',C,p] \lderive{\star} \beta_1\beta_2$}
@@ -384,6 +396,7 @@
         \UnaryInfC{$a[r,B,q'][q',C,p] \lderive{\star} a\beta_1\beta_2$}
         \BinaryInfC{$[q,A,p] \lderive{\star} \underbrace{a\beta_1\beta_2}_{\alpha}$}
       \end{prooftree}
+      \end{extra}
     \end{itemize}
   \item[$(\Leftarrow)$]
     За тази посока, с пълна индукция по дължината на извода $\ell$ в граматиката $G$ ще докажем, че за произволна дължина на извода $\ell \geq 1$,
@@ -473,7 +486,7 @@
   \end{theorem}
 \end{important}
 \begin{hint}
-  \mynote{\cite[стр. 144]{papadimitriou}}
+  \mynote{Тук адаптираме доказателството от \cite[стр. 144]{papadimitriou}.}
   Нека имаме стеков автомат
   \[P = \pair{Q',\Sigma,\Gamma,\sharp, \Delta', \qstart', \qaccept'}, \text{ където } \L(P) = L,\]
   и детерминиран краен автомат 

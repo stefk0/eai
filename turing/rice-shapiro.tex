@@ -83,7 +83,7 @@
 \end{corollary}
 
 \begin{lemma}\label{lem:rice-shapiro:extension}
-  \mynote{Това означава, че ако $\texttt{Code}(\Ss)$ е полуразрешим език, ако $L_0 \in \Ss$ и $L_0 \subseteq L_1$, като $L_1$ е полуразрешим, то $L_1 \in \Ss$.}
+  \mynote{Това означава, че за полуразрешим език $\texttt{Code}(\Ss)$, ако $L_1 \in \Ss$ и $L_1 \subseteq L_2$, като $L_2$ е полуразрешим, то $L_2 \in \Ss$.}
   Нека $L_1$ е език в $\Ss$ и нека $L_2$ е полуразрешим език, като $L_1 \subset L_2$ и $L_2 \not\in\Ss$.
   Тогава $\texttt{Code}(\Ss)$ не е полуразрешим език.
 \end{lemma}
@@ -161,7 +161,7 @@
 \begin{framed}
   \begin{theorem}[Райс-Шапиро]
     Нека $\texttt{Code}(\Ss)$ е полуразрешим език. Тогава е изпълнено, че:
-    \[L \in \Ss \iff (\exists L_0 \subseteq \Sigma^\star )[L_0\text{ е краен и }L_0 \subseteq L \implies L_0 \in \Ss].\]
+    \[L \in \Ss \iff (\exists L_0 \subseteq \Sigma^\star )[L_0\text{ е краен и }L_0 \subseteq L\ \&\ L_0 \in \Ss].\]
   \end{theorem}
 \end{framed}
 \begin{proof}
