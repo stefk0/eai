@@ -72,7 +72,9 @@
 която ще казва как моментната конфигурация на машината $\M$ се променя при изпълнение на една стъпка.
 
 \mynote{Ако има опасност да се заблудим за коя точно машина на Тюринг $\M$ говорим, то е възможно да пишем $\delta_\M$ и $\vdash_\M$.}
- 
+
+
+\begin{important}
 \begin{figure}[H]
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
@@ -116,42 +118,51 @@
   \UnaryInfC{$(\alpha, q, z\beta) \vdash (\alpha , p, y\beta)$}
 \end{prooftree}
 \end{figure}
+  
+\end{important}
 
-Сега за всяко естествено число $\ell$, ще дефинираме релацията $\ell^{\ell}$,
-която ще казва, че от конфигурацията $\C$ можем да достигнем до конфигурацията $\C'$ за $\ell$ на брой стъпки.
+
+Сега за всяко естествено число $\ell$, ще дефинираме релацията $\vdash^{\ell}$,
+която ще казва, че от конфигурацията $\kappa$ можем да достигнем до конфигурацията $\kappa'$ за $\ell$ на брой стъпки.
 
 \begin{figure}[H]
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
       \AxiomC{}
       \RightLabel{\scriptsize{(рефлексивност)}}
-      \UnaryInfC{$\C \vdash^0 \C$}
+      \UnaryInfC{$\kappa \vdash^0 \kappa$}
     \end{prooftree}
   \end{subfigure}
   ~
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
-      \AxiomC{$\C \vdash \C''$}
-      \AxiomC{$\C'' \vdash^{\ell} \C'$}
+      \AxiomC{$\kappa \vdash \kappa''$}
+      \AxiomC{$\kappa'' \vdash^{\ell} \kappa'$}
       \RightLabel{\scriptsize{(транзитивност)}}
-      \BinaryInfC{$\C \vdash^{\ell+1}\C'$}
+      \BinaryInfC{$\kappa \vdash^{\ell+1}\kappa'$}
     \end{prooftree}
   \end{subfigure}
 \end{figure}
 
 \begin{itemize}
+% \item
+%   $(\lambda, q, \rho) \vdash^\star (\lambda',q',\rho') \dff (\exists \ell)[(\lambda, q, \rho) \vdash^\ell (\lambda', q',\rho')]$.
 \item
   С $\vdash^\star$ ще означаваме рефлексивното и транзитивно затваряне на релацията $\vdash$ или с други думи,
-  \[\C \vdash^\star \C' \dff (\exists \ell \in \Nat)[\C \vdash^\ell \C'].\]
+  \[\kappa \vdash^\star \kappa' \dff (\exists \ell \in \Nat)[\kappa \vdash^\ell \kappa'].\]
+\item
+  Макар и една конфигурация $\kappa$ да преставлява тройка, то често ще бъде удобно да гледаме на $\kappa$ като на дума от $\Gamma^\star Q \Gamma^+$.
+\item
+  Важно свойство е, че ако $\kappa \vdash^\star \kappa'$, то $\abs{\kappa} \leq \abs{\kappa'}$.
 \item
   % \mynote{Аналогично както на си думата \texttt{abc} се представя като \texttt{a,b,c,0}, тук
   % представяме думата $\alpha$ като $\alpha\blank$.}
   \mynote{Важно е да имаме $\blank$ след думата $\alpha$, защото е възможно $\alpha$ да е празната дума.}
-  машината на Тюринг $\M$ {\bf приема} думата $\alpha$, ако за някои $\gamma_1, \gamma_2 \in \Gamma^\star$,
-  \[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\gamma_1, \qaccept, \gamma_2).\]
+  машината на Тюринг $\M$ {\bf приема} думата $\alpha$, ако за някои $\lambda, \rho \in \Gamma^\star$,
+  \[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\lambda, \qaccept, \rho).\]
 \item
-  Машината на Тюринг $\M$ {\bf отхвърля} думата $\alpha$, ако за  някои $\gamma_1, \gamma_2 \in \Gamma^\star$,
-  \[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\gamma_1, \qreject, \gamma_2).\]
+  Машината на Тюринг $\M$ {\bf отхвърля} думата $\alpha$, ако за  някои $\lambda, \rho \in \Gamma^\star$,
+  \[(\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\lambda, \qreject, \rho).\]
   % за някои $\gamma_1, \gamma_2 \in \Gamma^\star$.
 \item
   Машината на Тюринг $\M$ {\bf не приема} думата $\alpha$, 
@@ -164,7 +175,7 @@
   т.е. достига до $\qaccept$ или $\qreject$.
 \item 
   Езикът, който се {\bf разпознава} от машината $\M$ е:
-  \[\L(\M) \df \{\alpha\in\Sigma^\star \mid (\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\beta, \qaccept, \gamma), \text{ за някои }\beta,\gamma\in\Gamma^\star\}.\]
+  \[\L(\M) \df \{\alpha\in\Sigma^\star \mid (\varepsilon, \qstart, \alpha\blank) \vdash^\star_\M (\lambda, \qaccept, \rho), \text{ за някои }\lambda,\rho\in\Gamma^\star\}.\]
 \item
   \index{език!полуразрешим}
   \mynote{На англ. {\bf semidecidable language}. В литературата се използва и названието {\bf рекурсивно номеруем език}.}

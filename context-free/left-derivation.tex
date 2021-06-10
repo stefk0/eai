@@ -7,6 +7,14 @@
 \begin{definition}
 За две думи $\alpha,\beta \in (V\cup\Sigma)^\star$, дефинираме {\bf най-ляв извод} в граматиката $G$, $\alpha \lderive{\ell} \beta$, по следния начин:
 \mynote{Новото е, че имаме изискването $\lambda \in \Sigma^\star$. Това на практика означава, че на всяка стъпка заместваме възможно най-лявата променлива.}
+
+% \begin{prooftree}
+%   \AxiomC{$(A,\alpha) \in R$}
+%   \AxiomC{$\lambda \in \Sigma^\star$}
+%   \BinaryInfC{$\lambda A \rho \lderive{} \lambda\alpha\rho$}
+% \end{prooftree}
+
+
 \begin{important}
 \begin{figure}[H]
   \begin{subfigure}[b]{0.4\textwidth}
@@ -32,7 +40,17 @@
 \end{definition}
 
 
+% Като използваме релацията $\lderive{}$ можем да дефинираме и релацията $\lderive{\ell}$, която описва извод от $\ell$ стъпки по следния начин:
+% \begin{prooftree}
+%   \AxiomC{}
+%   \UnaryInfC{$\alpha \lderive{0} \alpha$}
+% \end{prooftree}
 
+% \begin{prooftree}
+%   \AxiomC{$\alpha \lderive{} \gamma$}
+%   \AxiomC{$\gamma \lderive{\ell} \beta$}
+%   \BinaryInfC{$\alpha \lderive{\ell+1} \beta$}
+% \end{prooftree}
 
 
 \mynote{Интуитивно, $A \yield{\star} \alpha$ ни казва, че при обхождане на синтактичното дърво в широчина ние получаваме като листа думата $\alpha$. Ако

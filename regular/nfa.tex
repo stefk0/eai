@@ -101,42 +101,48 @@
 
 И тук е удобно да въведем бинарната релация $\vdash_\N$ над $Q\times\Sigma^\star$,
 която ще ни казва как моментното описание на автомата $\N$ се променя след изпълнение на една стъпка:
+% \begin{important}
+%   \begin{prooftree}
+%     \AxiomC{$p \in \Delta(q,a)$}
+%     \UnaryInfC{$(q,a\beta) \vdash_\N (p,\beta)$}
+%   \end{prooftree}
+% \end{important}
+
 \[(q,a\beta) \vdash_\N (p,\beta), \text{ ако } p \in \Delta(q,a).\]
-\mynote{Рефл. и транз. затваряне на една релация е разгледано в Глава~\ref{ch:intro}}
-Рефлексивното и транзитивно затваряне на $\vdash_\N$ ще означаваме с $\vdash^\star_\N$.
-За да дадем по-ясна дефиниция на $\vdash^\star_\N$, първо ще дефинираме релацията $\vdash^n_\N$, която
-определя работата на автомата $\N$ за $n$ на брой стъпки.
+\mynote{Рефл. и транз. затваряне на една релация е разгледано в Глава~\ref{ch:intro}. Тук $\vdash^\star_\N$ е рефлексивното и транзитивно затваряне на релацията $\vdash_\N$.}
+% Рефлексивното и транзитивно затваряне на $\vdash_\N$ ще означаваме с $\vdash^\star_\N$.
+Ще дефинираме релацията $\vdash^\ell_\N$, която определя работата на автомата $\N$ за $\ell$ на брой стъпки.
 
 \begin{figure}[H]
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
       \AxiomC{}
-      \UnaryInfC{$(q,\alpha) \vdash^0_\N (q,\alpha)$}
+      \UnaryInfC{$\kappa \vdash^0_\N \kappa$}
     \end{prooftree}    
   \end{subfigure}
   ~
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
-      \AxiomC{$(q,\alpha) \vdash^n_\N (r, b \beta)$}
-      \AxiomC{$p \in \Delta(r,b)$}
-      \BinaryInfC{$(q,\alpha) \vdash^{n+1}_\N (p,\beta)$}
+      \AxiomC{$\kappa \vdash^\ell_\N \kappa''$}
+      \AxiomC{$\kappa'' \vdash^\ell_\N \kappa'$}
+      \BinaryInfC{$\kappa \vdash^{\ell+1}_\N \kappa'$}
     \end{prooftree}
   \end{subfigure}
 \end{figure}
 
-\mynote{Добре е дефиницията на $\vdash^n_\N$ да е съгласувана с дефиницията на $\Delta^\star$. Алтернативна дефиниция в този случай е следната:
-  \begin{prooftree}
-    \def\defaultHypSeparation{\hskip .0in}
-  \AxiomC{$(r,\alpha) \vdash^n_\N (p, \beta)$}
-  \AxiomC{$r \in \Delta(q,b)$}
-  \BinaryInfC{$(q,b\alpha) \vdash^{n+1}_\N (p,\beta)$}
-\end{prooftree}
-}
+% \mynote{Добре е дефиницията на $\vdash^n_\N$ да е съгласувана с дефиницията на $\Delta^\star$. Алтернативна дефиниция в този случай е следната:
+%   \begin{prooftree}
+%     \def\defaultHypSeparation{\hskip .0in}
+%   \AxiomC{$(r,\alpha) \vdash^n_\N (p, \beta)$}
+%   \AxiomC{$r \in \Delta(q,b)$}
+%   \BinaryInfC{$(q,b\alpha) \vdash^{n+1}_\N (p,\beta)$}
+% \end{prooftree}
+% }
 
 Сега можем да дефинираме $\vdash^\star_\N$ като:
-\[(q,\alpha) \vdash^\star_\N (p,\beta) \dff (\exists n\in\Nat)[(q,\alpha) \vdash^n_\N (p,\beta)].\]
-Друг начин да дефинираме релацията $\vdash^\star_\N$ е следния:
-\[(q,\alpha\beta) \vdash^\star_\N (p, \beta) \iff p \in \Delta^\star(\{q\},\alpha).\]
+\[(q,\alpha) \vdash^\star_\N (p,\beta) \dff (\exists \ell\in\Nat)[(q,\alpha) \vdash^\ell_\N (p,\beta)].\]
+\mynote{Друг начин да дефинираме релацията $\vdash^\star_\N$ е следния:
+$(q,\alpha\beta) \vdash^\star_\N (p, \beta)$ точно тогава, когато $p \in \Delta^\star(\{q\},\alpha)$.}
 Получаваме, че 
 \[\L(\N) = \{\alpha\in\Sigma^\star \mid (\exists q\in Q_{\texttt{start}})(\exists f \in F)[(q,\alpha) \vdash^\star_\N (f,\varepsilon)]\}.\]
 

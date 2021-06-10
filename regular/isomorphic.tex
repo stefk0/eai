@@ -70,10 +70,10 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
       \end{tikzpicture}
     }
 \begin{proof}
-  Както винаги, ще докажем Свойство (\ref{eq:3}) с индукция по дължината на думата $\alpha$.
+  Както винаги, ще докажем \Property{eq:3} с индукция по дължината на думата $\alpha$.
   \begin{itemize}
   \item 
-    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Ясно е, че Свойство (\ref{eq:3})
+    Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$. Ясно е, че \Property{eq:3}
     е изпълнено за $\varepsilon$ защото $\delta^\star_1(q,\varepsilon) = q$ и съответно
     $\delta^\star_2(f(q),\varepsilon) = f(q)$ за произволно състояние $q \in Q_1$.
     % \[\delta^\star_1(q,\varepsilon) = q \]
@@ -82,7 +82,7 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
     %                                        & = \delta^\star_2(f(q), \varepsilon). & \comment{\text{от деф. на }\delta^\star_2}
     % \end{align*}
   \item
-    Да приемем, че Свойство (\ref{eq:3}) е изпълнено за думи с дължина $n$.
+    Да приемем, че \Property{eq:3} е изпълнено за думи с дължина $n$.
   \item
     \mynote{Индукционната стъпка може да се представи така:
      \begin{tikzpicture}[->,>=stealth,thick,node distance=45pt,initial text=начало,scale=0.8,every node/.style={scale=0.8}]
@@ -112,7 +112,7 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
     \[\delta^\star_1(q,\beta c) = p \iff \delta_1(\underbrace{\delta^\star_1(q,\beta)}_{r}, c) = p.\]
     Понеже $f$ е изоморфизъм, то
     \[\delta_1(r,c) = p\ \iff\ \delta_2(f(r),c) = f(p).\]
-    От \IndHyp за Свойство (\ref{eq:3}) имаме, че:
+    От \IndHyp за \Property{eq:3} имаме, че:
     \[\delta^\star_1(q,\beta) = r \iff \delta^\star_2(f(q),\beta) = f(r).\]
     Комбинираме тези две еквивалентности и получаваме следното:
     \begin{align*}
@@ -148,7 +148,7 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
   Нека $\A_1 \cong_f \A_2$. Тогава имаме следните еквивалентности:
   \begin{align*}
     \alpha \in \L(\A_1) & \iff \delta^\star_1(\qstart',\alpha) = p \in F_1 & \comment\text{деф. на }\L(\A_1)\\
-                       & \iff \delta^\star_2(f(\qstart'),\alpha)) = f(p) \in F_2 & \comment{\text{Свойство \ref{eq:3}}}\\
+                       & \iff \delta^\star_2(f(\qstart'),\alpha)) = f(p) \in F_2 & \comment{\text{\Property{eq:3}}}\\
                        % & \iff \delta^\star_2(f(\qstart'),\alpha) \in F_2 & \comment{\text{от (\ref{eq:3})}}\\
                        & \iff \delta^\star_2(\qstart'',\alpha) \in F_2 & \comment{f(\qstart') \df \qstart''}\\
                        & \iff \alpha \in \L(\A_2). & \comment\text{деф. на }\L(\A_2)

@@ -15,7 +15,9 @@
 \item
   $\sharp \in \Gamma$ е символ за дъно на стека;
 \item
-  \mynote{Дефиницията на стеков автомат има много вариации, всички еквивалентни помежду си.}
+  \mynote{Обикновено се взима $\Delta$ функцията да има сигнатура
+    $\Delta:Q\times\Sigma_\varepsilon\times \Gamma \rightarrow \Ps(Q\times\Gamma^{\star})$.
+    Дефиницията на стеков автомат има много вариации, всички еквивалентни помежду си.}
   $\Delta:Q\times\Sigma_\varepsilon\times \Gamma \rightarrow \Ps(Q\times\Gamma^{\leq 2})$ 
   е функция на преходите;    
 \item
@@ -31,32 +33,75 @@
 Удобно е да въведем бинарната релация $\vdash_P$ над $Q\times\Sigma^\star\times\Gamma^\star$,
 която ще ни казва как моментното описание на автомата $P$ се променя след изпълнение на една стъпка:
 
+% \begin{prooftree}
+%   \AxiomC{}
+%   \RightLabel{\scriptsize{правило (0)}}
+%   \UnaryInfC{$(p,\alpha,\gamma) \vdash^0_P (p,\alpha,\gamma)$}
+% \end{prooftree}
+
+% \begin{prooftree}
+%   \AxiomC{$\Delta(q,b,A) \ni (p,\beta)$}
+%   \AxiomC{$(p,\alpha,\beta\gamma) \vdash^\ell_P (r,\alpha',\delta)$}
+%   \RightLabel{\scriptsize{правило (1)}}
+%   \BinaryInfC{$(q,b\alpha,A\gamma) \vdash^{\ell+1}_P (r,\alpha',\delta)$}
+% \end{prooftree}
+
+% \begin{prooftree}
+%   \AxiomC{$\Delta(q,\varepsilon,A) \ni (p,\beta)$}
+%   \AxiomC{$(p,\alpha,\beta\gamma) \vdash^\ell_P (r,\alpha',\delta)$}
+%   \RightLabel{\scriptsize{правило (2)}}
+%   \BinaryInfC{$(q,\alpha,A\gamma) \vdash^{\ell+1}_P (r,\alpha',\delta)$}
+% \end{prooftree}
+
+
+\begin{important}
+  \begin{figure}[H]
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{$\Delta(q,b,A) \ni (p,\beta)$}
+        \AxiomC{$b \in \Sigma$}
+        \BinaryInfC{$(q,b\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+      \end{prooftree}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{$\Delta(q,\varepsilon,A) \ni (p,\beta)$}
+        \UnaryInfC{$(q,\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+      \end{prooftree}
+    \end{subfigure}
+    \caption{Правила за едностъпков преход в стеков автомат}
+  \end{figure}
+\end{important}
+
+
+Сега можем дефинираме бинарната релация $\vdash^\ell_P$ над $Q\times\Sigma^\star\times\Gamma^\star$, която ни казва как една конфигурация се променя след изчисление от $\ell$ стъпки на стековия автомат:
+
 \begin{figure}[H]
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
-      \AxiomC{$\Delta(q,b,A) \ni (p,\beta)$}
-      \AxiomC{$b \in \Sigma$}
-      \BinaryInfC{$(q,b\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+      \AxiomC{}
+      \UnaryInfC{$\kappa \vdash^0_P \kappa$}
     \end{prooftree}
   \end{subfigure}
   ~
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
-      \AxiomC{$\Delta(q,\varepsilon,A) \ni (p,\beta)$}
-      \UnaryInfC{$(q,\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
+      \AxiomC{$\kappa \vdash_P \kappa''$}
+      \AxiomC{$\kappa'' \vdash^\ell_P \kappa'$}
+      \BinaryInfC{$\kappa \vdash^{\ell+1}_P \kappa'$}
     \end{prooftree}
   \end{subfigure}
 \end{figure}
 
-% \begin{align*}
-%   (p,\varepsilon) \in \Delta(q,x,A) & \implies (q,x\alpha,A\gamma) \vdash_P (p,\alpha,\gamma)\\
-%   (p,\beta) \in \Delta(q,\varepsilon,Y) & \implies (q,\alpha,Y\gamma) \vdash_P (p,\alpha,\beta\gamma).
-% \end{align*}
-Рефлексивното и транзитивно затваряне на $\vdash_P$ ще означаваме с $\vdash^\star_P$.
+\mynote{С други думи, $\vdash^\star_P$ е рефлексивното и транзитивно затваряне на $\vdash_P$.}
+Дефинираме релацията $\vdash^\star_P$ като
+\[(q,\alpha,\beta) \vdash^\star_P (p,\alpha',\beta') \dff (\exists \ell)[(q,\alpha,\beta) \vdash^\ell_P (p,\alpha',\beta')].\]
+% Рефлексивното и транзитивно затваряне на $\vdash_P$ ще означаваме с $\vdash^\star_P$.
 Сега вече можем да дадем дефиниция на език, разпознаван от стеков автомат $P$.
-\mynote{Възможно е да се даде и друга еквивалентна дефиниция - разпознаване с празен стек.}
+\mynote{Възможно е да се дадат и други еквивалентни дефиниции.}
 Езикът $\L(P)$, който се разпознава от $P$, има следната дефиниция:
-\[\L(P) = \{\ \omega \in \Sigma^\star \mid (\qstart,\omega,\sharp) \vdash^\star_P (\qaccept,\varepsilon,\varepsilon)\ \}.\]
+\[\L(P) \df \{\ \omega \in \Sigma^\star \mid (\qstart,\omega,\sharp) \vdash^\star_P (\qaccept,\varepsilon,\varepsilon)\ \}.\]
 
 \input{context-free/push-down-solved-examples}
 
@@ -122,7 +167,7 @@
   \mynote{Очевидно е, че не е възможно да имаме $A \lderive{0} \alpha$.}
   Доказателството на (а) ще проведем с пълна индукция по дължината $\ell$ на извода $A \lderive{\ell} \alpha$ за $\ell \geq 1$.
   
-  Нека $\ell = 1$. Този случай е лесен. Тук единствената възможност е да имаме извод $A \lderive{1} a$,
+  Нека $\ell = 1$. Този случай е лесен. Понеже граматиката е в нормална форма на Чомски, тук единствената възможност е да имаме извод $A \lderive{1} a$,
   за някоя $a \in \Sigma$. Тогава, според дефиницията на стековия автомат $P$, имаме следното изчисление:
   \[(p,a,A) \vdash_P (p,a,a) \vdash_P (p,\varepsilon,\varepsilon).\]
 
@@ -232,8 +277,8 @@
   % \begin{itemize}
     % \item
     
-      Нека $\ell = 0$ и $(p, \alpha, \delta) \vdash^{0}_P (p, \varepsilon, \varepsilon)$. Тогава е ясно, че единствената възможност е $\alpha = \varepsilon$ и $\delta = \varepsilon$.
-      Тогава $\varepsilon \derive{\star}_G \varepsilon$.
+      Нека $\ell = 0$ и $(p, \alpha, \delta) \vdash^{0}_P (p, \varepsilon, \varepsilon)$. Ясно е, че единствената възможност е $\alpha = \varepsilon$ и $\delta = \varepsilon$.
+      Тогава $\varepsilon \lderive{\star} \varepsilon$.
       % \item
       
       Нека $\ell > 0$ и $(p, \alpha, \delta) \vdash^{\ell}_P (p, \varepsilon, \varepsilon)$.      
@@ -242,7 +287,12 @@
       
       Започваме със случая, който не зависи от правилата на граматиката. Това означава, че първата стъпка от изчислението $(p, \alpha, \delta) \vdash^\ell_P (p, \varepsilon, \varepsilon)$ е направена защото $\Delta(p,a,a) \ni (p,\varepsilon)$, за някоя буква $a$. Тогава със сигурност можем да представим думите $\alpha$ и $\delta$ като
       $\alpha = a\beta$ и $\delta = a\rho$, за някои $\beta$ и $\rho$, и да разбием изчислението по следния начин:
-      \[(p, \underbrace{a\beta}_{\alpha}, \underbrace{a\rho}_{\delta}) \vdash_P (p,\beta,\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
+      \begin{prooftree}
+        \AxiomC{$\Delta(p,a,a) \ni (p,\varepsilon)$}
+        \AxiomC{$(p,\beta,\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
+        \BinaryInfC{$(p, \underbrace{a\beta}_{\alpha}, \underbrace{a\rho}_{\delta}) \vdash^\ell_P (p, \varepsilon, \varepsilon)$}
+      \end{prooftree}
+      % \[(p, \underbrace{a\beta}_{\alpha}, \underbrace{a\rho}_{\delta}) \vdash_P (p,\beta,\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
       Сега можем да приложим индукционното предположение и да получим извода:
       \begin{prooftree}
         \AxiomC{$a \in \Sigma$}
@@ -256,7 +306,13 @@
       \mynote{Понеже граматиката е в нормална форма на Чомски, то $1 \leq |\gamma| \leq 2$.}
       Вторият случай зависи от правилата на граматиката. Това означава, че първата стъпка от изчислението $(p, \alpha, \delta) \vdash^\ell_P (p, \varepsilon, \varepsilon)$ е направена защото $\Delta(p,\varepsilon,A) \ni (p,\gamma)$. Според конструкцията на стековия автомат, това означава, че със сигурност имаме правилото $A \to_G \gamma$, а думата $\delta$
       може да се представи като $\delta = A\rho$, за някое $\rho$, и изчислението може да се разбие по следния начин:
-      \[(p, \alpha, \underbrace{A\rho}_{\delta}) \vdash_P (p,\alpha,\gamma\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
+      \begin{prooftree}
+        \AxiomC{$\Delta(p,\varepsilon,A) \ni (p,\gamma)$}
+        \AxiomC{$(p,\alpha,\gamma\rho) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
+        \BinaryInfC{$(p, \alpha, \underbrace{A\rho}_{\delta}) \vdash^\ell_P(p, \varepsilon, \varepsilon)$}
+      \end{prooftree}
+      
+      % \[(p, \alpha, \underbrace{A\rho}_{\delta}) \vdash_P (p,\alpha,\gamma\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
       Сега прилагаме индукционното предположение и получаваме извода:
       \begin{prooftree}
         \AxiomC{$A \to_G \gamma$}
@@ -358,14 +414,12 @@
     Началната променлива е $S \df [\qstart,\sharp,\qaccept]$;
   \item
     Нека имаме $(r,BC) \in \Delta(q, a, A)$, където $a \in \Sigma_\varepsilon$.
-    Тогава добавяме правилата:
-    \[[q,A,p] \to_G a[r,B,q'][q',C,p],\]
-    за всеки две състояния $q'$ и $p$.
+    Тогава за всеки две състояния $q'$ и $p$ добавяме правилата:
+    \[[q,A,p] \to_G a[r,B,q'][q',C,p].\]
   \item
     Нека имаме $(r,B) \in \Delta(q, a, A)$, където $a \in \Sigma_\varepsilon$.
-    Тогава добавяме правилата:
-    \[[q,A,p] \to_G a[r,B,p],\]
-    за всяко състояние $p \in Q$.
+    Тогава за всяко състояние $p \in Q$ добавяме правилата:
+    \[[q,A,p] \to_G a[r,B,p].\]
   \item
     Нека имаме $(p,\varepsilon) \in \Delta(q,a,A)$, където $a \in \Sigma_\varepsilon$.
     Тогава добавяме правилата:
@@ -388,7 +442,13 @@
     \begin{itemize}
     \item 
       Ако $\Delta(q,a,A) \ni (r,B)$, то можем да разбием изчислението по следния начин:
-      \[(q,\underbrace{a\beta}_{\alpha},A) \vdash_P (r,\beta,B) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
+      \begin{prooftree}
+        \AxiomC{$\Delta(q,a,A) \ni (r,B)$}
+        \AxiomC{$(r,\beta,B) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
+        \BinaryInfC{$(q,\underbrace{a\beta}_{\alpha},A) \vdash^\ell_P (p, \varepsilon, \varepsilon)$}
+      \end{prooftree}
+      
+      % \[(q,\underbrace{a\beta}_{\alpha},A) \vdash_P (r,\beta,B) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
       Сега можем да приложим индукционното предположение и да получим извода:
       \begin{prooftree}
         \AxiomC{$\Delta(q,a,A) \ni (r,B)$}
@@ -400,15 +460,19 @@
         \AxiomC{$a \in \Sigma$}
         \RightLabel{\scriptsize{(\Proposition{left-derivation:padding})}}
         \BinaryInfC{$a[r,B,p] \lderive{\star} a\beta$}
-        \RightLabel{\scriptsize{(1)}}
+        \RightLabel{\scriptsize{правило (1)}}
         \BinaryInfC{$[q,A,p] \lderive{\star} \underbrace{a\beta}_{\alpha}$}
       \end{prooftree}
     \item
       Ако $\Delta(q, a, A) \ni (r, BC)$, то можем да разбием изчислението по следния начин:
-      \[(q, \underbrace{a\beta}_{\alpha}, A) \vdash_P (r, \beta, BC) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]      
-      За $\ell-1$ стъпки трябва да стигнем от стек с големина $2$ до празен стек.
-      Това означава, че можем да разбием думата $\beta$ на две части, $\beta = \beta_1\beta_2$, със свойството, че след като прочетем $\beta_1$,
-      то стекът има големина $1$ и след като прочетем $\beta_2$, то стекът е празен.
+      \begin{prooftree}
+        \AxiomC{$\Delta(q, a, A) \ni (r, BC)$}
+        \AxiomC{$(r, \beta, BC) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
+        \BinaryInfC{$(q, \underbrace{a\beta}_{\alpha}, A) \vdash^{\ell}_P (p, \varepsilon, \varepsilon)$}
+      \end{prooftree}
+      
+      % \[(q, \underbrace{a\beta}_{\alpha}, A) \vdash_P (r, \beta, BC) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
+      Сега да видим как още можем разбием изчислението $(r, \beta, BC) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$. Щом за $\ell-1$ стъпки достигаме от стек с големина $2$ до празен стек, това означава, че можем да разбием думата $\beta$ на две части като $\beta = \beta_1\beta_2$ със свойството, че след като прочетем $\beta_1$, то стекът има големина $1$ и след като прочетем $\beta_2$, стекът вече е празен.
       \mynote{Да обърнем внимание, че в междинните стъпки от двете изчисления, стекът може да расте.}
       Това означава, че съществува състояние $q'$, за което можем да разбием изчислението на две части по следния начин:
       \begin{align*}
@@ -454,7 +518,8 @@
     \item
       Нека $\ell > 1$. Тогава думата $\alpha$ може да се представи като $\alpha = a \beta$, където $a \in \Sigma_\varepsilon$, и според правилата на граматиката $G$ имаме два случая.
       \mynote{Тук отново е възможно $a = \varepsilon$. Това не е проблем, защото правим индукция по дължината на извода, а не по дължината на думата $\alpha$.}
-      Да приемем, че имаме следния извод:
+
+      Първо, да приемем, че имаме следния извод:
       \begin{prooftree}
         \AxiomC{$[q,A,p] \to_G a[r,B,p]$}
         \AxiomC{$a[r,B,p] \lderive{\ell-1} a\beta$}
@@ -483,7 +548,7 @@
         \BinaryInfC{$[q,A,p] \lderive{\ell} \underbrace{a\beta}_{\alpha}$}
       \end{prooftree}
       \mynote{Важно е, че $\beta \in \Sigma^\star$. Иначе няма да можем да приложим \Proposition{grammar:divide-2}.}
-      Понеже $\beta \in \Sigma^\star$, можем да приложим \Proposition{grammar:divide-2} за $\lderive{\star}$ и оттам следва,
+      Понеже $\beta \in \Sigma^\star$, можем да приложим \Proposition{grammar:divide-2} заедно с \Lemma{left-derivation-equivalence}, откъдето следва,
       че имаме разбиване на думата $\beta$ като $\beta = \beta_1\beta_2$, където 
       \begin{align*}
         & [r,B,q'] \lderive{\ell_1} \beta_1\\
@@ -498,12 +563,28 @@
       
       Правилото $[q,A,p] \rightarrow_G a[r,B,q'][q',C,p]$ 
       е добавено в граматиката, защото $\Delta(q,a,A) \ni (r, BC)$. 
-      Обединявайки всичко, което знаем, получаваме:
-      \begin{align*}
-        (q, a\beta, A) & \vdash_P (r, \beta_1\beta_2, BC) & \comment{\text{От }\Delta(q,a,A) \ni (r, BC)}\\
-                       & \vdash^\star_P (q', \beta_2, C) & \comment{\text{\IndHyp}}\\
-                       & \vdash^\star_P (p, \varepsilon, \varepsilon). & \comment{\text{\IndHyp}}
-      \end{align*}    
+      Обединявайки всичко, което знаем, получаваме изчислението:
+      \begin{extra}
+      \begin{prooftree}
+        \AxiomC{$[q,A,p] \rightarrow_G a[r,B,q'][q',C,p]$}
+        \LeftLabel{\scriptsize{(деф.)}}
+        \UnaryInfC{$\Delta(q,a,A) \ni (r, BC)$}
+        \AxiomC{$[r,B,q'] \lderive{\ell_1} \beta_1$}
+        \LeftLabel{\scriptsize{\IndHyp}}
+        \UnaryInfC{$(r,\beta_1,B) \vdash^\star_P (q',\varepsilon,\varepsilon)$}
+        \AxiomC{$[q',C,p] \lderive{\ell_2} \beta_2$}
+        \RightLabel{\scriptsize{\IndHyp}}
+        \UnaryInfC{$(q',\beta_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+        \BinaryInfC{$(r,\beta_1\beta_2,BC) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+        \BinaryInfC{$(q,\underbrace{a\beta_1\beta_2}_{\alpha},A) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+      \end{prooftree}
+\end{extra}
+      
+      % \begin{align*}
+      %   (q, a\beta, A) & \vdash_P (r, \beta_1\beta_2, BC) & \comment{\text{От }\Delta(q,a,A) \ni (r, BC)}\\
+      %                  & \vdash^\star_P (q', \beta_2, C) & \comment{\text{\IndHyp}}\\
+      %                  & \vdash^\star_P (p, \varepsilon, \varepsilon). & \comment{\text{\IndHyp}}
+      % \end{align*}    
     \end{itemize}
   \end{description}
 \end{proof}

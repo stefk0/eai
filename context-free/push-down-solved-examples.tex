@@ -1,4 +1,4 @@
-\subsection{Примери}
+\subsection*{Примери}
 
 \begin{extra}
 \begin{example}
@@ -193,28 +193,29 @@
       (\forall n)[a^n\gamma \in L & \implies (q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)] \label{eq:omega-ab:1}\\
       (\forall n)[b^n\gamma \in L & \implies (q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)]. \label{eq:omega-ab:2}
     \end{align}
-    % Ще докажем едновременно \Property{eq:omega-ab:1} и \Property{eq:omega-ab:2} с пълна индукция по дължината на думата $\gamma$.
+    \ifhints
+    Ще докажем едновременно \Property{eq:omega-ab:1} и \Property{eq:omega-ab:2} с пълна индукция по дължината на думата $\gamma$.
 
-    % Да разгледаме произволна дума $\gamma$. Случаят, когато $\abs{\gamma} = 0$ е тривиален. 
-    % Нека $\abs{\gamma} > 0$ и да приемем, че $a^n\gamma \in L$.
-    % Ясно е, че можем да представим $\gamma$ като $\gamma = a^kb\gamma'$, за някое $k$.
-    % \begin{itemize}
-    % \item
-    %   Ако $n+k = 0$, то $a^n\gamma = b\gamma' \in L$ и прилагаме \IndHyp за \Property{eq:omega-ab:2} с думата $\gamma'$ и получаваме, че:
-    %   \begin{align*}
-    %     (q, \overbrace{b\gamma'}^{\gamma},\sharp) & \vdash (q,\gamma',b\sharp) & \comment{\text{правило (2)}}\\
-    %                          & \vdash^\star (q, \varepsilon,\sharp) & \comment\text{\IndHyp}
-    %   \end{align*}
-    % \item
-    %   Ако $n+k>0$, то $a^{n+k-1}\gamma' \in L$ и прилагаме \IndHyp за \Property{eq:omega-ab:1} с думата $\gamma'$ и получаваме, че:
-    %   \begin{align*}
-    %     (q, \overbrace{a^{k}b\gamma'}^{\gamma}, a^n\sharp) & \vdash^\star_P (q, b\gamma', a^{n+k}\sharp) & \comment{\text{правило (3)}}\\
-    %                                                         & \vdash^\star_P (q, \gamma', a^{n+k-1}\sharp) & \comment\text{правило (5)}\\
-    %                                                         & \vdash^\star_P (q, \varepsilon, \sharp). & \comment\text{\IndHyp}
-    %   \end{align*}
-    % \end{itemize}
-    % Аналогично се доказва и \Property{eq:omega-ab:2}.
-    
+    Да разгледаме произволна дума $\gamma$. Случаят, когато $\abs{\gamma} = 0$ е тривиален. 
+    Нека $\abs{\gamma} > 0$ и да приемем, че $a^n\gamma \in L$.
+    Ясно е, че можем да представим $\gamma$ като $\gamma = a^kb\gamma'$, за някое $k$.
+    \begin{itemize}
+    \item
+      Ако $n+k = 0$, то $a^n\gamma = b\gamma' \in L$ и прилагаме \IndHyp за \Property{eq:omega-ab:2} с думата $\gamma'$ и получаваме, че:
+      \begin{align*}
+        (q, \overbrace{b\gamma'}^{\gamma},\sharp) & \vdash (q,\gamma',b\sharp) & \comment{\text{правило (2)}}\\
+                             & \vdash^\star (q, \varepsilon,\sharp) & \comment\text{\IndHyp}
+      \end{align*}
+    \item
+      Ако $n+k>0$, то $a^{n+k-1}\gamma' \in L$ и прилагаме \IndHyp за \Property{eq:omega-ab:1} с думата $\gamma'$ и получаваме, че:
+      \begin{align*}
+        (q, \overbrace{a^{k}b\gamma'}^{\gamma}, a^n\sharp) & \vdash^\star_P (q, b\gamma', a^{n+k}\sharp) & \comment{\text{правило (3)}}\\
+                                                            & \vdash^\star_P (q, \gamma', a^{n+k-1}\sharp) & \comment\text{правило (5)}\\
+                                                            & \vdash^\star_P (q, \varepsilon, \sharp). & \comment\text{\IndHyp}
+      \end{align*}
+    \end{itemize}
+    Аналогично се доказва и \Property{eq:omega-ab:2}.
+    \fi
     Оттук заключете, че $L \subseteq \L(P)$.
   \item
     Докажете с пълна индукция по дължината на думата $\gamma$, че за произволна дума $\gamma \in \{a, b\}^\star$ е изпълнено, че:
@@ -222,30 +223,30 @@
       (\forall n)[(q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies a^n\gamma \in L] \label{eq:omega-ab:3}\\
       (\forall n)[(q, \gamma, b^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp) & \implies b^n\gamma \in L]. \label{eq:omega-ab:4}
     \end{align}
-
-    % Нека имаме изчислението $(q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)$.
-    % Да представим думата $\gamma$ като $\gamma = a^kb\gamma'$.
+    \ifhints
+    Нека имаме изчислението $(q, \gamma, a^n\sharp) \vdash^\star_P (q, \varepsilon, \sharp)$.
+    Да представим думата $\gamma$ като $\gamma = a^kb\gamma'$.
     
-    % \begin{itemize}
-    % \item
-    %   Ако $n+k = 0$, то можем да разбием изчислението по следния начин:
-    %   \begin{align*}
-    %     (q, b\gamma', \sharp) & \vdash_P (q, \gamma',b\sharp) \\
-    %                           & \vdash^{\star} (q,\varepsilon,\sharp).
-    %   \end{align*}
-    %   Тогава от \IndHyp за \Property{eq:omega-ab:4} следва, че $a^n\gamma = b\gamma' \in L$.
-    % \item
-    %   Ако $n+k > 0$, то можем да разбием изчислението по следния начин:
-    %   \begin{align*}
-    %     (q, a^kb\gamma', a^n\sharp) & \vdash^\star_P (q, b\gamma',a^{n+k}\sharp) \\
-    %                                 & \vdash_P (q, \gamma',a^{n+k-1}\sharp) \\
-    %                                 & \vdash^{\star} (q,\varepsilon,\sharp).
-    %   \end{align*}
-    %   Тогава от \IndHyp за \Property{eq:omega-ab:3} следва, че $a^{n+k-1}\gamma' \in L$, но оттук
-    %   веднага получаваме, че $a^na^kb\gamma' \in L$.
-    % \end{itemize}
-    % Аналогично се доказва и \Property{eq:omega-ab:4}.
-    
+    \begin{itemize}
+    \item
+      Ако $n+k = 0$, то можем да разбием изчислението по следния начин:
+      \begin{align*}
+        (q, b\gamma', \sharp) & \vdash_P (q, \gamma',b\sharp) \\
+                              & \vdash^{\star} (q,\varepsilon,\sharp).
+      \end{align*}
+      Тогава от \IndHyp за \Property{eq:omega-ab:4} следва, че $a^n\gamma = b\gamma' \in L$.
+    \item
+      Ако $n+k > 0$, то можем да разбием изчислението по следния начин:
+      \begin{align*}
+        (q, a^kb\gamma', a^n\sharp) & \vdash^\star_P (q, b\gamma',a^{n+k}\sharp) \\
+                                    & \vdash_P (q, \gamma',a^{n+k-1}\sharp) \\
+                                    & \vdash^{\star} (q,\varepsilon,\sharp).
+      \end{align*}
+      Тогава от \IndHyp за \Property{eq:omega-ab:3} следва, че $a^{n+k-1}\gamma' \in L$, но оттук
+      веднага получаваме, че $a^na^kb\gamma' \in L$.
+    \end{itemize}
+    Аналогично се доказва и \Property{eq:omega-ab:4}.
+    \fi
     Оттук заключете, че $\L(P) \subseteq L$.
   \end{enumerate}
 \end{example}
