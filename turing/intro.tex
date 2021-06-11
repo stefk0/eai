@@ -71,7 +71,7 @@
 Както за автомати, удобно е да дефинираме бинарна релация $\vdash$ над $\Gamma^\star~\times~Q~\times~\Gamma^+$,
 която ще казва как моментната конфигурация на машината $\M$ се променя при изпълнение на една стъпка.
 
-\mynote{Ако има опасност да се заблудим за коя точно машина на Тюринг $\M$ говорим, то е възможно да пишем $\delta_\M$ и $\vdash_\M$.}
+\mynote{Ако няма опасност да се заблудим за коя точно машина на Тюринг $\M$ говорим, то е възможно да пишем просто $\vdash$.}
 
 
 \begin{important}
@@ -80,45 +80,45 @@
     \begin{prooftree}
       \AxiomC{$\delta(q,x) = (p,y,\goright)$}
       \RightLabel{\scriptsize{(right-1)}}
-      \UnaryInfC{$(\alpha, q, xz\beta) \vdash (\alpha y, p, z\beta)$}
+      \UnaryInfC{$(\alpha, q, xz\beta) \vdash_\M (\alpha y, p, z\beta)$}
     \end{prooftree}
     \vspace*{2mm}
   \end{subfigure}
   ~
-\begin{subfigure}[b]{0.5\textwidth}
-\begin{prooftree}
-  \AxiomC{$\delta(q,x) = (p,y,\goleft)$}
-  \RightLabel{\scriptsize{(left-1)}}
-  \UnaryInfC{$(\alpha z, q, x\beta) \vdash (\alpha,p,zy\beta)$}
-\end{prooftree}
-\vspace*{2mm}
-\end{subfigure}
-
-\begin{subfigure}[b]{0.5\textwidth}
-\begin{prooftree}
-  \AxiomC{$\delta(q,x) = (p,y,\goright)$}
-  \RightLabel{\scriptsize{(right-2)}}
-  \UnaryInfC{$(\alpha, q, x) \vdash (\alpha y, p, \blank)$}
-\end{prooftree}
-\vspace*{2mm}
-\end{subfigure}
-~
-\begin{subfigure}[b]{0.5\textwidth}
-  \begin{prooftree}
-    \AxiomC{$\delta(q,x) = (p,y,\goleft)$}
-    \RightLabel{\scriptsize{(left-2)}}
-    \UnaryInfC{$(\varepsilon,q,x\beta) \vdash (\varepsilon,p,\blank y\beta)$}
-  \end{prooftree}
-  \vspace*{2mm}
-\end{subfigure}
-
-\begin{prooftree}
-  \AxiomC{$\delta(q, z) = (p, y, \stay)$}
-  \RightLabel{\scriptsize{(stay)}}
-  \UnaryInfC{$(\alpha, q, z\beta) \vdash (\alpha , p, y\beta)$}
-\end{prooftree}
-\end{figure}
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\delta(q,x) = (p,y,\goleft)$}
+      \RightLabel{\scriptsize{(left-1)}}
+      \UnaryInfC{$(\alpha z, q, x\beta) \vdash_\M (\alpha,p,zy\beta)$}
+    \end{prooftree}
+    \vspace*{2mm}
+  \end{subfigure}
   
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\delta(q,x) = (p,y,\goright)$}
+      \RightLabel{\scriptsize{(right-2)}}
+      \UnaryInfC{$(\alpha, q, x) \vdash_\M (\alpha y, p, \blank)$}
+    \end{prooftree}
+    \vspace*{2mm}
+  \end{subfigure}
+  ~
+  \begin{subfigure}[b]{0.5\textwidth}
+    \begin{prooftree}
+      \AxiomC{$\delta(q,x) = (p,y,\goleft)$}
+      \RightLabel{\scriptsize{(left-2)}}
+      \UnaryInfC{$(\varepsilon,q,x\beta) \vdash_\M (\varepsilon,p,\blank y\beta)$}
+    \end{prooftree}
+    \vspace*{2mm}
+  \end{subfigure}
+
+  \begin{prooftree}
+    \AxiomC{$\delta(q, z) = (p, y, \stay)$}
+    \RightLabel{\scriptsize{(stay)}}
+    \UnaryInfC{$(\alpha, q, z\beta) \vdash_\M (\alpha , p, y\beta)$}
+  \end{prooftree}
+  \caption{Едностъпков преход в детерминистична машина на Тюринг}
+\end{figure}
 \end{important}
 
 

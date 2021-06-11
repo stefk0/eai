@@ -95,45 +95,59 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 
 \index{моментно описание}
-\mynote{(На англ. {\em instantaneous description}). В случая въвеждането на това понятие не е напълно необходимо, но по-късно, когато въведем стекови автомати и машини на Тюринг, ще работим с такива моментни описания на изчисления и затова е добре още отначало да свикнем с него.}
-{\bf Моментното описание} на изчисление с краен автомат представлява двойка от вида $(q,\alpha) \in Q\times\Sigma^\star$,
+\index{конфигурация}
+\mynote{(На англ. {\em instantaneous description}). В случая въвеждането на това понятие не е напълно необходимо, но по-късно, когато въведем стекови автомати и машини на Тюринг, ще работим с такива конфигурации на изчисления и затова е добре още отначало да свикнем с това понятие.}
+\emph{Конфигурация} (или моментното описание) представлява описание на текущото състояние на едно изчисление с краен автомат. То представлява двойка от вида $(q,\alpha) \in Q\times\Sigma^\star$,
 т.е. автоматът се намира в състояние $q$, а думата, която остава да се прочете е $\alpha$.
 Удобно е да въведем бинарната релация $\vdash_\A$ над $Q\times\Sigma^\star$,
-която ще ни казва как моментното описание на автомата $\A$ се променя след изпълнение на една стъпка:
-\[(q,b\alpha) \vdash_\A (p,\alpha) \stackrel{\text{деф}}{\iff} \delta(q,b) = p.\]
-Рефлексивното и транзитивно затваряне на $\vdash_\A$ ще означаваме с $\vdash^\star_\A$.
-За да дадем по-удобна дефиниция на $\vdash^\star_\A$, първо ще дефинираме релацията $\vdash^n_\A$, която
-определя работата на автомата $\A$ върху моментни описания за $n$ стъпки.
-\mynote{Рефл. и транз. затваряне на една релация е разгледано в Глава \ref{ch:intro}.}
+която ще ни казва как моментното описание на автомата $\A$ се променя след изпълнение на една стъпка.
+\begin{important}
+  \begin{figure}[H]
+    \begin{prooftree}
+      \AxiomC{$\delta(q,b) = p$}
+      \UnaryInfC{$(q,b\alpha) \vdash_\A (p,\alpha)$}
+    \end{prooftree}
+    \caption{Едностъпков преход в краен автомат}
+  \end{figure}
+\end{important}
 
+Удобно е също така да дефинираме бинарната релация $\vdash^\ell_\A$ върху $Q\times\Sigma^\star$, която ни казва, че
+конфигурацията $\kappa$ се променя до конфигурация $\kappa'$ след $\ell$ стъпки от изчислението на автомата $\A$.
+
+% \[(q,b\alpha) \vdash_\A (p,\alpha) \stackrel{\text{деф}}{\iff} \delta(q,b) = p.\]
+% \mynote{С други думи, $\vdash^\star_\A$ е рефлексивното и транзитивно затваряне на $\vdash_\A$.}
 \begin{figure}[H]
 \begin{subfigure}[b]{0.5\textwidth}
 \begin{prooftree}
   \AxiomC{}
   \RightLabel{\scriptsize{(рефлексивност)}}
-  \UnaryInfC{$(q,\alpha) \vdash^0 (q,\alpha)$}
+  \UnaryInfC{$\kappa \vdash^0 \kappa$}
 \end{prooftree}
 \end{subfigure}
 ~
 \begin{subfigure}[b]{0.5\textwidth}
 \begin{prooftree}
-  \AxiomC{$(q,\alpha) \vdash^n (r, b\beta)$}
-  \AxiomC{$\delta(r,b) = p$}
+  \AxiomC{$\kappa \vdash_\A \kappa''$}
+  \AxiomC{$\kappa'' \vdash^\ell_\A \kappa'$}
   \RightLabel{\scriptsize{(транзитивност)}}
-  \BinaryInfC{$(q,\alpha) \vdash^{n+1} (p,\beta)$}
+  \BinaryInfC{$\kappa \vdash^{\ell+1}_\A \kappa'$}
 \end{prooftree}  
 \end{subfigure}
 \end{figure}
 
+% За да дадем по-удобна дефиниция на $\vdash^\star_\A$, първо ще дефинираме релацията $\vdash^n_\A$, която
+% определя работата на автомата $\A$ върху моментни описания за $n$ стъпки.
+% \mynote{Рефл. и транз. затваряне на една релация е разгледано в Глава \ref{ch:intro}.}
+
 Дефинираме релацията $\vdash^\star_\A$ като рефлексивното и транзитивно затваряне на релацията $\vdash_A$, или с други думи:
-\[(q,\alpha) \vdash^\star_\A (p,\beta) \dff (\exists \ell\in\Nat)[(q,\alpha) \vdash^\ell_\A (p,\beta)].\]
+\[\kappa \vdash^\star_\A \kappa' \dff (\exists \ell\in\Nat)[\kappa \vdash^\ell_\A \kappa'].\]
 
 \begin{problem}
   Докажете, че за произволна дума $\beta \in \Sigma^\star$,
   \[(q,\alpha\beta) \vdash^\star_\A (p, \beta) \iff \delta^\star(q,\alpha) = p.\]  
 \end{problem}
 Можем да заключим, че имаме следното преставяне:
-\[\L(\A) = \{\alpha\in\Sigma^\star \mid (\exists q \in F)[(\qstart,\alpha) \vdash^\star_\A(q,\varepsilon)]\}.\]
+\[\L(\A) = \{\alpha\in\Sigma^\star \mid (\exists f \in F)[(\qstart,\alpha) \vdash^\star_\A(f,\varepsilon)]\}.\]
 
 
 %%% Local Variables:

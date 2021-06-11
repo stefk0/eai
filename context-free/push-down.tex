@@ -27,11 +27,11 @@
 \end{itemize}
 
 \mynote{На англ. Instanteneous description}
-{\em Моментно описание} (или конфигурация) на изчислението със стеков автомат представлява тройка от вида $(q,\alpha,\gamma) \in Q\times\Sigma^\star\times\Gamma^\star$,
+\emph{Конфигурация} (или моментно описание) на изчислението със стеков автомат представлява тройка от вида $(q,\alpha,\gamma) \in Q\times\Sigma^\star\times\Gamma^\star$,
 т.е. автоматът се намира в състояние $q$, думата, която остава да се прочете е $\alpha$,
 а съдържанието на стека е думата $\gamma$.
 Удобно е да въведем бинарната релация $\vdash_P$ над $Q\times\Sigma^\star\times\Gamma^\star$,
-която ще ни казва как моментното описание на автомата $P$ се променя след изпълнение на една стъпка:
+която ще ни казва как моментното описание на автомата $P$ се променя след изпълнение на една стъпка.
 
 % \begin{prooftree}
 %   \AxiomC{}
@@ -75,12 +75,13 @@
 \end{important}
 
 
-Сега можем дефинираме бинарната релация $\vdash^\ell_P$ над $Q\times\Sigma^\star\times\Gamma^\star$, която ни казва как една конфигурация се променя след изчисление от $\ell$ стъпки на стековия автомат:
+Сега можем дефинираме бинарната релация $\vdash^\ell_P$ над $Q\times\Sigma^\star\times\Gamma^\star$, която ни казва, че конфигурацията $\kappa$ се променя до конфигурация $\kappa'$ след изчисление от $\ell$ стъпки на стековия автомат:
 
 \begin{figure}[H]
   \begin{subfigure}[b]{0.5\textwidth}
     \begin{prooftree}
       \AxiomC{}
+      \RightLabel{\scriptsize{(рефлексивност)}}
       \UnaryInfC{$\kappa \vdash^0_P \kappa$}
     \end{prooftree}
   \end{subfigure}
@@ -89,6 +90,7 @@
     \begin{prooftree}
       \AxiomC{$\kappa \vdash_P \kappa''$}
       \AxiomC{$\kappa'' \vdash^\ell_P \kappa'$}
+      \RightLabel{\scriptsize{(транзитивност)}}
       \BinaryInfC{$\kappa \vdash^{\ell+1}_P \kappa'$}
     \end{prooftree}
   \end{subfigure}
@@ -97,10 +99,9 @@
 \mynote{С други думи, $\vdash^\star_P$ е рефлексивното и транзитивно затваряне на $\vdash_P$.}
 Дефинираме релацията $\vdash^\star_P$ като
 \[(q,\alpha,\beta) \vdash^\star_P (p,\alpha',\beta') \dff (\exists \ell)[(q,\alpha,\beta) \vdash^\ell_P (p,\alpha',\beta')].\]
-% Рефлексивното и транзитивно затваряне на $\vdash_P$ ще означаваме с $\vdash^\star_P$.
-Сега вече можем да дадем дефиниция на език, разпознаван от стеков автомат $P$.
+
+Езикът $\L(P)$, който се разпознава от стековия автомат $P$ дефинираме по следния начин:
 \mynote{Възможно е да се дадат и други еквивалентни дефиниции.}
-Езикът $\L(P)$, който се разпознава от $P$, има следната дефиниция:
 \[\L(P) \df \{\ \omega \in \Sigma^\star \mid (\qstart,\omega,\sharp) \vdash^\star_P (\qaccept,\varepsilon,\varepsilon)\ \}.\]
 
 \input{context-free/push-down-solved-examples}
@@ -567,7 +568,7 @@
       \begin{extra}
       \begin{prooftree}
         \AxiomC{$[q,A,p] \rightarrow_G a[r,B,q'][q',C,p]$}
-        \LeftLabel{\scriptsize{(деф.)}}
+        % \LeftLabel{\scriptsize{(деф.)}}
         \UnaryInfC{$\Delta(q,a,A) \ni (r, BC)$}
         \AxiomC{$[r,B,q'] \lderive{\ell_1} \beta_1$}
         \LeftLabel{\scriptsize{\IndHyp}}
