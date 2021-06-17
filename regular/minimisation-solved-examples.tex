@@ -17,14 +17,14 @@
         \node[state,accepting]  (5) [below right of=3]{$5$};
         
         \path 
-        (0) edge [bend left=15]  node [above] {$a$}   (1)
-        (0) edge [bend right=15] node [below] {$b$}   (2)
+        (0) edge [bend left=15]  node [above left] {$a$}   (1)
+        (0) edge [bend right=15] node [below left] {$b$}   (2)
         (1) edge [bend left=15]  node [above] {$a$}    (3)
         (1) edge [bend left=15]  node [below] {$b$}    (4)
         (2) edge [bend left=15]  node [left] {$b$}    (3)
         (2) edge [bend right=15] node [below] {$a$}   (4)
-        (4) edge [bend right=15] node [right] {$a,b$} (5)
-        (3) edge [bend left=15]  node [right] {$a,b$}  (5)
+        (4) edge [bend right=15] node [below right] {$a,b$} (5)
+        (3) edge [bend left=15]  node [above right] {$a,b$}  (5)
         (5) edge [loop right]    node [above] {$a,b$}  (5);
       \end{tikzpicture}
       \caption{Автоматът $\A$.}
@@ -138,14 +138,14 @@
         \node[state,accepting]        (5) [below right of=3]{$5$};
         
         \path 
-        (0) edge [bend left=15]  node [above] {$a$}   (1)
-            edge [bend right=15] node [below] {$b$}   (2)
+        (0) edge [bend left=15]  node [above left] {$a$}   (1)
+            edge [bend right=15] node [below left] {$b$}   (2)
         (1) edge [bend left=15]  node [above] {$a$}   (3)
-            edge [bend left=15]  node [below] {$b$}   (4)
+            edge [bend left=15]  node [right] {$b$}   (4)
         (2) edge [bend left=15]  node [left] {$b$}    (3)
             edge [bend right=15] node [below] {$a$}   (4)
-        (4) edge [bend right=15] node [below] {$a,b$} (5)
-        (3) edge [bend left=15]  node [right] {$a,b$} (5)
+        (4) edge [bend right=15] node [below right] {$a,b$} (5)
+        (3) edge [bend left=15]  node [above right] {$a,b$} (5)
         (5) edge [loop right]    node [above] {$a,b$} (5);
       \end{tikzpicture}
       \caption{Автоматът $\A$.}
