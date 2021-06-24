@@ -19,8 +19,26 @@
   $S \in V$ е началната променлива (нетерминал). 
 \end{itemize}
 
-\index{граматика!извод}
-Удобно е да дефинираме извод на думата $\beta$ от думата $\alpha$ в граматиката $G$ за $\ell$ стъпки, което ще означаваме като $\alpha \derive{\ell}_G \beta$,
+\mynote{Тук отново, когато е ясно за коя граматика говорим, ще пишем просто $\derive{}$ вместо $\derive{}_G$.}
+Ще дефинираме релация $\derive{}_G$, която казва, че от думата $\gamma$ се получава думата $\gamma'$ чрез прилагане на правилото $\alpha \to_G \beta$ в граматиката $G$.
+
+\begin{important}
+  \begin{prooftree}
+    \AxiomC{$(\alpha,\beta) \in R$}
+    \AxiomC{$\lambda,\rho \in (V\cup\Sigma)^\star$}
+    \BinaryInfC{$\lambda\alpha\rho \derive{}_G \lambda\beta\rho$}
+  \end{prooftree}
+\end{important}
+
+Съобразете, че имаме свойството:
+  \begin{prooftree}
+    \AxiomC{$\alpha \derive{}_G \beta$}
+    \AxiomC{$\lambda,\rho \in (V\cup\Sigma)^\star$}
+    \BinaryInfC{$\lambda\alpha\rho \derive{}_G \lambda\beta\rho$}
+  \end{prooftree}
+
+\index{извод}
+Сега е удобно е да дефинираме {\bf извод} на думата $\beta$ от думата $\alpha$ в граматиката $G$ за $\ell$ стъпки, което ще означаваме като $\alpha \derive{\ell}_G \beta$,
 с индукция по броя на стъпките $\ell$ по следния начин:
 \mynote{В правило (1), нямаме никакви ограничения за $\lambda$ и $\rho$. Те са произволни елементи на $(V\cup\Sigma)^\star$, което означава, че може и да са празните думи.}
 \begin{important}
@@ -28,17 +46,17 @@
     \begin{subfigure}[b]{0.5\textwidth}
       \begin{prooftree}
         \AxiomC{$\alpha \in (V\cup\Sigma)^\star$}
-        \RightLabel{\scriptsize{правило (0)}}
+        \RightLabel{\scriptsize{(рефлексивност)}}
         \UnaryInfC{$\alpha \derive{0}_G \alpha$}
       \end{prooftree}
     \end{subfigure}
     ~
     \begin{subfigure}[b]{0.5\textwidth}
       \begin{prooftree}
-        \AxiomC{$(\alpha,\beta)\in R$}
-        \AxiomC{$\lambda\beta\rho \derive{\ell} \gamma$}
-        \RightLabel{\scriptsize{правило (1)}}
-        \BinaryInfC{$\lambda\alpha\rho \derive{\ell+1}_G \gamma$}
+        \AxiomC{$\alpha\derive{}_G\beta$}
+        \AxiomC{$\beta \derive{\ell}_G \gamma$}
+        \RightLabel{\scriptsize{(транзитивност)}}
+        \BinaryInfC{$\alpha\derive{\ell+1}_G \gamma$}
       \end{prooftree}
     \end{subfigure}
     \caption{Правила за извод в неограничена граматика}
@@ -69,22 +87,23 @@
   Индукция по $\ell$.
   \begin{itemize}
   \item
-    $\ell = 0$. Директно следва от правило $(0)$, защото тогава $\alpha = \beta$.
+    $\ell = 0$. Тук всичк е ясно, защото тогава $\alpha = \beta$.
   \item
-    $\ell > 0$. Според правилата за извод имаме следния случай:
+    $\ell > 0$. Според правилата за извод, можем да разбием извода $\alpha \derive{\ell} \beta$ по следния начин:
     \begin{prooftree}
-      \AxiomC{$(\alpha',\alpha'') \in R$}
-      \AxiomC{$\gamma\alpha''\delta \derive{\ell-1} \beta$}
-      \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$\underbrace{\gamma \alpha' \delta}_{\alpha} \derive{\ell} \beta$}
+      \AxiomC{$\alpha \derive{} \gamma$}
+      \AxiomC{$\gamma \derive{\ell-1} \beta$}
+      \RightLabel{\scriptsize{(транзитивност)}}
+      \BinaryInfC{$\alpha \derive{\ell} \beta$}
     \end{prooftree}
     Сега като използваме \IndHyp получаваме следния извод:
     \begin{prooftree}
-      \AxiomC{$(\alpha',\alpha'') \in R$}
-      \AxiomC{$\gamma\alpha''\delta \derive{\ell-1} \beta$}
+      \AxiomC{$\alpha \derive{} \gamma$}
+      \UnaryInfC{$\lambda\alpha\rho \derive{} \lambda\gamma\rho$}
+      \AxiomC{$\gamma \derive{\ell-1} \beta$}
       \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$\lambda\gamma\alpha''\delta\rho \derive{\ell-1} \lambda\beta\rho$}
-      \RightLabel{\scriptsize{правило (1)}}
+      \UnaryInfC{$\lambda\gamma\rho \derive{\ell-1} \lambda\beta\rho$}
+      \RightLabel{\scriptsize{(транзитивност)}}
       \BinaryInfC{$\lambda\underbrace{\gamma \alpha' \delta}_{\alpha}\rho \derive{\ell} \lambda\beta\rho$}
     \end{prooftree}
   \end{itemize}
@@ -105,22 +124,31 @@
   \item
     Ако $\ell_1 = 0$, то $\alpha_1 = \beta_1$ и тогава прилагаме \Proposition{unrestricted-grammar:padding}.
   \item
-    Ако $\ell_1 > 0$, то имаме следното:
+    Ако $\ell_1 > 0$, то разбиваме извода $\alpha_1 \derive{\ell_1} \beta_1$ по следния начин:
     \begin{prooftree}
-      \AxiomC{$(\alpha'_1,\alpha''_1) \in R$}
-      \AxiomC{$\lambda'\alpha''_1\rho' \derive{\ell_1-1} \beta_1$}
-      \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$\underbrace{\lambda' \alpha'_1 \rho'}_{\alpha_1} \derive{\ell_1} \beta_1$}
+      \AxiomC{$\alpha_1 \derive{} \gamma_1$}
+      \AxiomC{$\gamma_1 \derive{\ell_1-1} \beta_1$}
+      \RightLabel{\scriptsize{(транзитивност)}}
+      \BinaryInfC{$\alpha \derive{\ell_1} \beta_1$}
     \end{prooftree}
+
+    
+    % \begin{prooftree}
+    %   \AxiomC{$(\alpha'_1,\alpha''_1) \in R$}
+    %   \AxiomC{$\lambda'\alpha''_1\rho' \derive{\ell_1-1} \beta_1$}
+    %   \RightLabel{\scriptsize{правило (1)}}
+    %   \BinaryInfC{$\underbrace{\lambda' \alpha'_1 \rho'}_{\alpha_1} \derive{\ell_1} \beta_1$}
+    % \end{prooftree}
     Сега прилагаме \IndHyp и получаваме следния извод:
     \begin{prooftree}
-      \AxiomC{$(\alpha'_1,\alpha''_1) \in R$}
-      \AxiomC{$\lambda'\alpha''_1\rho' \derive{\ell_1-1} \beta_1$}
+      \AxiomC{$\alpha_1 \derive{} \gamma_1$}
+      \UnaryInfC{$\alpha_1\alpha_2\derive{} \gamma_1\alpha_2$}
+      \AxiomC{$\gamma_1 \derive{\ell_1-1} \beta_1$}
       \AxiomC{$\alpha_2 \derive{\ell_2} \beta_2$}
       \RightLabel{\scriptsize\IndHyp}
-      \BinaryInfC{$\lambda' \alpha''_1 \rho' \alpha_2 \derive{\ell_1-1+\ell_2} \beta_1\beta_2$}
-      \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$\underbrace{\lambda'\alpha'_1\rho'}_{\alpha_1}\alpha_2 \derive{\ell_1+\ell_2} \beta_1\beta_2$}
+      \BinaryInfC{$\gamma_1\alpha_2 \derive{\ell_1-1+\ell_2} \beta_1\beta_2$}
+      \RightLabel{\scriptsize{(транзитивност)}}
+      \BinaryInfC{$\alpha_1\alpha_2 \derive{\ell_1+\ell_2} \beta_1\beta_2$}
     \end{prooftree}
   \end{itemize}
   
@@ -221,53 +249,84 @@
 %   \end{itemize}
 % \end{hint}
 
+% \begin{proof}
+%   Сега ще докажем твърдението с индукция по $\ell_1$.
+%   \begin{itemize}
+%   \item
+%     $\ell_1 = 0$. Тогава всичко е ясно, защото тогава $\alpha = \lambda\beta\rho$ и получаваме извода:
+%     \begin{prooftree}
+%       \AxiomC{$\beta \derive{\ell_2} \gamma$}
+%       \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:padding})}}
+%       \UnaryInfC{$\underbrace{\lambda\beta\rho}_{\alpha} \derive{\ell_2} \lambda\gamma\rho$}
+%     \end{prooftree}
+%   \item
+%     $\ell_1 > 0$. От правилата за извод следва, че имаме следната ситуация:
+%     \begin{prooftree}
+%       \AxiomC{$(\alpha',\alpha'') \in R$}
+%       \AxiomC{$\lambda'\alpha''\rho' \derive{\ell_1-1} \lambda\beta\rho$}
+%       \BinaryInfC{$\underbrace{\lambda'\alpha'\rho'}_{\alpha} \derive{\ell_1} \lambda\beta\rho$}
+%     \end{prooftree}
+
+%     Използвайки \IndHyp получаваме следния извод:
+%     \begin{prooftree}
+%       \AxiomC{$(\alpha',\alpha'') \in R$}
+%       \AxiomC{$\lambda'\alpha''\rho' \derive{\ell_1-1} \lambda\beta\rho$}
+%       \AxiomC{$\beta \derive{\ell_2} \gamma$}
+%       \RightLabel{\scriptsize{\IndHyp}}
+%       \BinaryInfC{$\lambda'\alpha''\rho' \derive{\ell_1+\ell_2-1} \lambda\gamma\rho$}
+%       \RightLabel{\scriptsize{правило (1)}}
+%       \BinaryInfC{$\underbrace{\lambda'\alpha'\rho'}_{\alpha} \derive{\ell_1+\ell_2} \lambda\gamma\rho$}
+%     \end{prooftree}
+%   \end{itemize}
+% \end{proof}
+
 \begin{proposition}\label{pr:unrestricted-grammar:context-general-step}
-  За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
-  \begin{prooftree}
-    \AxiomC{$\alpha \derive{\ell_1} \lambda\beta\rho$}
-    \AxiomC{$\beta \derive{\ell_2} \gamma$}
-    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \lambda\gamma\rho$}
-  \end{prooftree}  
-\end{proposition}
-\begin{proof}
-  Сега ще докажем твърдението с индукция по $\ell_1$.
-  \begin{itemize}
-  \item
-    $\ell_1 = 0$. Тогава всичко е ясно, защото тогава $\alpha = \lambda\beta\rho$ и получаваме извода:
-    \begin{prooftree}
-      \AxiomC{$\beta \derive{\ell_2} \gamma$}
-      \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:padding})}}
-      \UnaryInfC{$\underbrace{\lambda\beta\rho}_{\alpha} \derive{\ell_2} \lambda\gamma\rho$}
-    \end{prooftree}
-  \item
-    $\ell_1 > 0$. От правилата за извод следва, че имаме следната ситуация:
-    \begin{prooftree}
-      \AxiomC{$(\alpha',\alpha'') \in R$}
-      \AxiomC{$\lambda'\alpha''\rho' \derive{\ell_1-1} \lambda\beta\rho$}
-      \BinaryInfC{$\underbrace{\lambda'\alpha'\rho'}_{\alpha} \derive{\ell_1} \lambda\beta\rho$}
-    \end{prooftree}
-
-    Използвайки \IndHyp получаваме следния извод:
-    \begin{prooftree}
-      \AxiomC{$(\alpha',\alpha'') \in R$}
-      \AxiomC{$\lambda'\alpha''\rho' \derive{\ell_1-1} \lambda\beta\rho$}
-      \AxiomC{$\beta \derive{\ell_2} \gamma$}
-      \RightLabel{\scriptsize{\IndHyp}}
-      \BinaryInfC{$\lambda'\alpha''\rho' \derive{\ell_1+\ell_2-1} \lambda\gamma\rho$}
-      \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$\underbrace{\lambda'\alpha'\rho'}_{\alpha} \derive{\ell_1+\ell_2} \lambda\gamma\rho$}
-    \end{prooftree}
-  \end{itemize}
-\end{proof}
-
-\begin{corollary}\label{cor:unrestricted-grammar:context-general-step}
   За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
   \begin{prooftree}
     \AxiomC{$\alpha \derive{\ell_1} \beta$}
     \AxiomC{$\beta \derive{\ell_2} \gamma$}
     \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \gamma$}
   \end{prooftree}  
+\end{proposition}
+\begin{proof}
+  Индукция по $\ell_1$.
+  \begin{itemize}
+  \item
+    $\ell_1 = 0$. Този случай е ясен.
+  \item
+    $\ell_1 > 0$. Да разбием извода $\alpha \derive{\ell_1} \beta$ така:
+    \begin{prooftree}
+      \AxiomC{$\alpha \derive{} \alpha'$}
+      \AxiomC{$\alpha' \derive{\ell_1-1} \beta$}
+      \RightLabel{\scriptsize{(транзитивност)}}
+      \BinaryInfC{$\alpha \derive{\ell_1} \beta$}
+    \end{prooftree}
+
+    Сега можем да приложим индукционното предположение и да получим извода:
+
+    \begin{prooftree}
+      \AxiomC{$\alpha \derive{} \alpha'$}
+      \AxiomC{$\alpha' \derive{\ell_1-1} \beta$}
+      \AxiomC{$\beta \derive{\ell_2} \gamma$}
+      \RightLabel{\scriptsize{\IndHyp}}
+      \BinaryInfC{$\alpha' \derive{\ell_1-1+\ell_2} \gamma$}
+      \RightLabel{\scriptsize{(транзитивност)}}
+      \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \gamma$}
+    \end{prooftree}
+    
+    
+  \end{itemize}
+\end{proof}
+
+\begin{corollary}\label{cor:unrestricted-grammar:context-general-step}
+  За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$\alpha \derive{\ell_1} \lambda\beta\rho$}
+    \AxiomC{$\beta \derive{\ell_2} \gamma$}
+    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \lambda\gamma\rho$}
+  \end{prooftree}  
 \end{corollary}
+
 
 % \begin{extra}
 %   \begin{remark}\label{rem:unrestricted-grammar:original-def}
@@ -304,6 +363,8 @@
   %   \end{prooftree}
   % \end{hint}
 % \end{extra}
+
+
 
 
 %%% Local Variables:
