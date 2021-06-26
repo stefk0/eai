@@ -104,6 +104,22 @@
 \mynote{Възможно е да се дадат и други еквивалентни дефиниции.}
 \[\L(P) \df \{\ \omega \in \Sigma^\star \mid (\qstart,\omega,\sharp) \vdash^\star_P (\qaccept,\varepsilon,\varepsilon)\ \}.\]
 
+
+\begin{proposition}
+  За произволни $\ell_1$ и $\ell_2$ е изпълнено, че:
+  \begin{prooftree}
+    \AxiomC{$(p,\alpha_1,\gamma_1) \vdash^{\ell_1} (q,\varepsilon,\varepsilon)$}
+    \AxiomC{$(q,\alpha_2,\gamma_2) \vdash^{\ell_2} (r,\varepsilon,\varepsilon)$}
+    \BinaryInfC{$(p,\alpha_1\alpha_2,\gamma_1\gamma_2) \vdash^{\ell_1+\ell_2} (r,\varepsilon,\varepsilon)$}  \end{prooftree}
+\end{proposition}
+
+\begin{proposition}
+  Ако $(q,\alpha,AB) \vdash^\ell (p,\varepsilon,\varepsilon)$, то съществуват $\ell_1$, $\ell_2$,
+  състояние $r$ и разбиване на $\alpha$ като $\alpha = \alpha_1\alpha_2$, така че:
+  \[(q,\alpha_1\alpha_2,AB) \vdash^{\ell_1} (r, \alpha_2, B) \vdash^{\ell_2} (p,\varepsilon,\varepsilon).\]
+\end{proposition}
+
+
 \input{context-free/push-down-solved-examples}
 
 \subsection{Теорема за еквивалентност}

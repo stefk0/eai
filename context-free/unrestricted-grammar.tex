@@ -87,7 +87,7 @@
   Индукция по $\ell$.
   \begin{itemize}
   \item
-    $\ell = 0$. Тук всичк е ясно, защото тогава $\alpha = \beta$.
+    $\ell = 0$. Тук всичко е ясно, защото тогава $\alpha = \beta$.
   \item
     $\ell > 0$. Според правилата за извод, можем да разбием извода $\alpha \derive{\ell} \beta$ по следния начин:
     \begin{prooftree}
@@ -122,7 +122,15 @@
   Индукция по $\ell_1$.
   \begin{itemize}
   \item
-    Ако $\ell_1 = 0$, то $\alpha_1 = \beta_1$ и тогава прилагаме \Proposition{unrestricted-grammar:padding}.
+    Ако $\ell_1 = 0$, то $\alpha_1 = \beta_1$ и тогава:
+    \begin{prooftree}
+      \AxiomC{$\alpha_1 = \beta_1$}
+      \AxiomC{$\alpha_2 \derive{\ell_2}_G \beta_2$}
+      \LeftLabel{\scriptsize{(\Proposition{unrestricted-grammar:padding})}}
+      \BinaryInfC{$\alpha_1\alpha_2 \derive{\ell_2}_G \beta_1\beta_2$}
+    \end{prooftree}
+
+    % прилагаме \Proposition{unrestricted-grammar:padding}.
   \item
     Ако $\ell_1 > 0$, то разбиваме извода $\alpha_1 \derive{\ell_1} \beta_1$ по следния начин:
     \begin{prooftree}
@@ -292,7 +300,14 @@
   Индукция по $\ell_1$.
   \begin{itemize}
   \item
-    $\ell_1 = 0$. Този случай е ясен.
+    $\ell_1 = 0$. Този случай е ясен, защото тогава $\alpha = \beta$ и имаме извода:
+    \begin{prooftree}
+      \AxiomC{$\alpha = \beta$}
+      \LeftLabel{\scriptsize{(рефлексивност)}}
+      \UnaryInfC{$\alpha \derive{0} \beta$}
+      \AxiomC{$\beta \derive{\ell_2} \gamma$}
+      \BinaryInfC{$\alpha \derive{0+\ell_2} \gamma$}
+    \end{prooftree}
   \item
     $\ell_1 > 0$. Да разбием извода $\alpha \derive{\ell_1} \beta$ така:
     \begin{prooftree}

@@ -4,7 +4,7 @@
   {\em контекстносвободна}, {\em контекстнонезависима}. Тук всички правила са от вида $A \to \alpha$, където $\alpha \in (V\cup\Sigma)^\star$. В частност имаме, че:
   \begin{prooftree}
     \AxiomC{$(A,\beta) \in R$}
-    \UnaryInfC{$A \derive{1}_G \beta$}
+    \UnaryInfC{$A \derive{}_G \beta$}
   \end{prooftree}}
 
 В Раздел \ref{sect:unrestricted-grammar} въведохме понятието неограничена граматика. След това видяхме как можем да опишем регулярните езици
@@ -13,29 +13,39 @@
 
 Една граматика $G = (V, \Sigma, R, S)$ се нарича {\bf безконтекстна}, ако 
 имаме ограничението, че $R \subseteq V\times (V\cup\Sigma)^\star$.
-Да повторим дефиницията на релацията $\alpha \derive{\ell}_G \beta$ от Раздел~\ref{sect:unrestricted-grammar} в частния случай, когато граматиката е безконтекстна.
+Да повторим дефиницията на релацията $\alpha \derive{}_G \beta$ от Раздел~\ref{sect:unrestricted-grammar} в частния случай, когато граматиката е безконтекстна.
 
 \begin{important}
-  \begin{figure}[H]
-    \begin{subfigure}[b]{0.5\textwidth}
-      \begin{prooftree}
-        \AxiomC{}
-        \RightLabel{\scriptsize{правило (0)}}
-        \UnaryInfC{$\alpha \derive{0}_G \alpha$}
-      \end{prooftree}
-    \end{subfigure}
-    ~
-    \begin{subfigure}[b]{0.5\textwidth}
-      \begin{prooftree}
-        \AxiomC{$(A,\alpha) \in R$}
-        \AxiomC{$\lambda\alpha\rho \derive{\ell}_G \beta$}
-        \RightLabel{\scriptsize{правило (1)}}
-        \BinaryInfC{$\lambda A \rho \derive{\ell+1}_G \beta$}
-      \end{prooftree}
-    \end{subfigure}
-    \caption{Правила за извод в безконтекстна граматика}
-  \end{figure}
+  \begin{prooftree}
+    \AxiomC{$(A,\alpha) \in R$}
+    \AxiomC{$\lambda,\rho \in (V\cup\Sigma)^\star$}
+    \BinaryInfC{$\lambda A \rho \derive{}_G \lambda\alpha\rho$}
+  \end{prooftree}
 \end{important}
+
+
+% \index{извод}
+% \begin{important}
+%   \begin{figure}[H]
+%     \begin{subfigure}[b]{0.5\textwidth}
+%       \begin{prooftree}
+%         \AxiomC{}
+%         \RightLabel{\scriptsize{правило (0)}}
+%         \UnaryInfC{$\alpha \derive{0}_G \alpha$}
+%       \end{prooftree}
+%     \end{subfigure}
+%     ~
+%     \begin{subfigure}[b]{0.5\textwidth}
+%       \begin{prooftree}
+%         \AxiomC{$(A,\alpha) \in R$}
+%         \AxiomC{$\lambda\alpha\rho \derive{\ell}_G \beta$}
+%         \RightLabel{\scriptsize{правило (1)}}
+%         \BinaryInfC{$\lambda A \rho \derive{\ell+1}_G \beta$}
+%       \end{prooftree}
+%     \end{subfigure}
+%     \caption{Правила за извод в безконтекстна граматика}
+%   \end{figure}
+% \end{important}
 
 
 
@@ -68,53 +78,58 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \mynote{За момента не е ясно как можем да проверим, че примерно думата $abbba \not\in \L(G)$. Този въпрос ще разгледаме по-нататък.}
   Да видим защо думата $aabbab \in \L(G)$. Ако следваме формално правилата за извод, получаваме следното:
   \begin{prooftree}
-    \AxiomC{$S \to_G AS$}
+    \AxiomC{$(S,AS)\in R$}
+    \UnaryInfC{$S \derive{}_G AS$}
     \AxiomC{}
-    \RightLabel{\scriptsize{(0)}}
+    % \RightLabel{\scriptsize{(0)}}
     \UnaryInfC{$A \derive{0}_G A$}
-    \AxiomC{$S \to_G \varepsilon$}
+    \AxiomC{$(S,\varepsilon) \in R$}
+    \UnaryInfC{$S \derive{}_G \varepsilon$}
     \AxiomC{}
-    \LeftLabel{\scriptsize{(0)}}
+    % \LeftLabel{\scriptsize{(0)}}
     \UnaryInfC{$\varepsilon \derive{0}_G \varepsilon$}
-    \LeftLabel{\scriptsize{(1)}}
+    % \LeftLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{1}_G \varepsilon$}
-    \AxiomC{$S \to_G AS$}
+    \AxiomC{$(S,AS)\in R$}
+    \UnaryInfC{$S \derive{}_G AS$}
     \AxiomC{}
-    \RightLabel{\scriptsize{(0)}}
+    % \RightLabel{\scriptsize{(0)}}
     \UnaryInfC{$AS \derive{0}_G AS$}
-    \RightLabel{\scriptsize{(1)}}
+    % \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{1}_G AS$}
     \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{2}_G A$}
     \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat2}})}
     \BinaryInfC{$AS \derive{2}_G AA$}
-    \RightLabel{\scriptsize{(1)}}
+    \RightLabel{\scriptsize{(транзитивност)}}
     \BinaryInfC{$S \derive{3}_G AA$}
   \end{prooftree}
   Освен това имаме и следния формален извод:
   \begin{prooftree}
-    \AxiomC{$A \to_G aAb$}
+    \AxiomC{$(A,aAb) \in R$}
+    \UnaryInfC{$A \derive{}_G aAb$}
     % \AxiomC{}
     % \LeftLabel{\scriptsize{(0)}}
     % \UnaryInfC{$a \derive{0}_G a$}
-    \AxiomC{$A \to_G ab$}
-    \AxiomC{}
-    \RightLabel{\scriptsize{(0)}}
-    \UnaryInfC{$aabb \derive{0}_G aabb$}
-    \RightLabel{\scriptsize{(1)}}
-    \BinaryInfC{$aAb \derive{1}_G aabb$}
+    \AxiomC{$(A,ab) \in R$}
+    % \AxiomC{}
+    % \RightLabel{\scriptsize{(0)}}
+    % \UnaryInfC{$aabb \derive{0}_G aabb$}
+    % \RightLabel{\scriptsize{(1)}}
+    \UnaryInfC{$aAb \derive{1}_G aabb$}
     % \RightLabel{\scriptsize{(1)}}
     % \BinaryInfC{$aAb \derive{1}_G aabb$}
-    \RightLabel{\scriptsize{(1)}}
+    % \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{2}_G aabb$}
   \end{prooftree}
   Аналогично,
   \begin{prooftree}
-    \AxiomC{$A \to_G ab$}
+    \AxiomC{$(A,ab) \in R$}
+    \UnaryInfC{$A \derive{}_G ab$}
     \AxiomC{}
-    \RightLabel{\scriptsize{(0)}}
+    % \RightLabel{\scriptsize{(0)}}
     \UnaryInfC{$ab \derive{0}_G ab$}
-    \RightLabel{\scriptsize{(1)}}
+    % \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$A \derive{1}_G ab$}
   \end{prooftree}
   Обединявайки всичко, получаваме:
@@ -130,11 +145,12 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   Можем да приложим правилата за извод в различен ред и пак да получим същия краен резултат.
   Например:
   \begin{prooftree}
-    \AxiomC{$S \to_G AS$}
+    \AxiomC{$(S,AS) \in R$}
+    \UnaryInfC{$S \derive{}_G AS$}
     \AxiomC{$A \derive{2} aabb$}
     \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:padding})}}
     \UnaryInfC{$AS \derive{2} aabbS$}
-    \RightLabel{\scriptsize{(1)}}
+    % \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{3}_G aabbS$}
     \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
     \AxiomC{$S \derive{2}_G A$}
@@ -176,8 +192,9 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   Нека $\ell > 0$. Тогава да разгледаме следната ситуация:
   \begin{prooftree}
     \AxiomC{$(A,\alpha) \in R$}
+    \UnaryInfC{$\lambda A \rho \derive{}_G \lambda \alpha \rho$}
     \AxiomC{$\lambda\alpha\rho \derive{\ell-1}\beta$}
-    \RightLabel{\scriptsize{(1)}}
+    % \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$\underbrace{\lambda A \rho}_{\gamma_1\gamma_2} \derive{\ell} \beta$}
   \end{prooftree}
 
@@ -188,10 +205,11 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   като $\beta = \beta_1 \beta_2$ със следния извод:
   \begin{prooftree}
     \AxiomC{$(A,\alpha) \in R$}
+    \UnaryInfC{$\lambda A \rho_1 \derive{}_G \lambda \alpha \rho_1$}
     \RightLabel{\scriptsize{\IndHyp}}
-    \AxiomC{$\overbrace{\lambda\alpha\rho_1}^{\gamma_3}\gamma_2 \derive{\ell-1}\beta$}
-    \UnaryInfC{$\gamma_3 \derive{\ell_1'} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
-    \LeftLabel{\scriptsize{(1)}}
+    \AxiomC{$\overbrace{\lambda\alpha\rho_1}^{\gamma'_1}\gamma_2 \derive{\ell-1}\beta$}
+    \UnaryInfC{$\lambda\alpha\rho_1 \derive{\ell_1'} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
+    % \LeftLabel{\scriptsize{(\{})}}
     \BinaryInfC{$\underbrace{\lambda A \rho_1}_{\gamma_1} \derive{\ell'_1+1} \beta_1\ \&\ \gamma_2 \derive{\ell_2} \beta_2$}
   \end{prooftree}
   
