@@ -16,6 +16,7 @@
   \end{itemize}
   също са регулярни.
 \end{problem}
+\ifhints
 \begin{hint}
   Лесно се вижда, че $L_1 = \Sigma^\star \cdot L \cdot \Sigma^\star$, както и $L_2 = \ov{\Sigma^\star \cdot \ov{L} \cdot \Sigma^\star}$.
   Да обърнем внимание, че
@@ -45,6 +46,7 @@
   Сега лесно можем да съобразим, че
   \[ L_4 = \ov{ \ov{(\Sigma^\star \cdot L)} \cdot \Sigma^\star}.\]
 \end{hint}
+\fi
 
 \begin{problem}
   Нека $L$ е регулярен език над азбуката $\Sigma$.
@@ -53,6 +55,7 @@
   е регулярен.
   С други думи, $L_k$ съдържа тези думи, за които от всяка позиция, с изключение на последните $k$, започва дума в езика $L$.
 \end{problem}
+\ifhints
 \begin{hint}
   Да разпишем по-подробно дефиницията на езика $L_k$.
   \begin{align*}
@@ -73,7 +76,7 @@
   Тогава
   \[L_k = \ov{\Sigma^\star \cdot (\Sigma^{\geq k} \cap \ov{L \cdot \Sigma^\star})}.\]
 \end{hint}
-
+\fi
 \end{extra}
 
 
