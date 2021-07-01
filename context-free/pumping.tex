@@ -311,10 +311,10 @@
   \item
     Да допуснем, че $\abs{yv} = 0$. Това означава, че $\alpha = xuw$ и имаме извода:
     \begin{prooftree}
-      \AxiomC{$S \yield{\star} xAu$}
+      \AxiomC{$S \yield{\star} xAw$}
       \AxiomC{$A \yield{\star} u$}
       \RightLabel{\scriptsize{(\Proposition{pumping:ground})}}
-      \BinaryInfC{$S \yield{\star} \underbrace{xuv}_{\alpha}$,}
+      \BinaryInfC{$S \yield{\star} \underbrace{xuw}_{\alpha}$,}
     \end{prooftree}
     за който съществува дърво на извод с по-малко на брой възли отколкото $P$, защото махаме средната част, която съдържа поне един възел.
     Това е противоречие с избора на $P$ като синтактично дърво за $S \yield{\star}\alpha$ с минимален брой възли.

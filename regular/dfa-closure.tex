@@ -10,12 +10,12 @@
   \end{proposition}  
 \end{framed}
 \begin{proof}
-  Да разгледаме два автомата \[\A' = \langle{\Sigma,Q',\qstart',\delta',F'}\rangle\text{ и } \A'' = \langle{\Sigma, Q'', \qstart'', \delta'', F''}\rangle.\]
+  Да разгледаме два автомата \[\A_1 = \langle{\Sigma,Q_1,\qstart',\delta_1,F_2}\rangle\text{ и } \A_2 = \langle{\Sigma, Q_2, \qstart'', \delta_2, F_2}\rangle.\]
   Определяме автомата $\A = \FA$, по следния начин:
-  \mynote{Изчислението на автомата $\A$ върху думата $\alpha$ едновременно симулира изчислението на $\A'$ и $\A''$ върху $\alpha$.}
+  \mynote{Изчислението на автомата $\A$ върху думата $\alpha$ едновременно симулира изчислението на $\A_1$ и $\A_2$ върху $\alpha$.}
   \begin{itemize}
   \item
-    $Q \df Q'\times Q''$;
+    $Q \df Q_1\times Q_2$;
   \item
     \mynote{Съобразете, че $\delta$ е тотална функция.}
     За всяко $\pair{r_1,r_2} \in Q$ и всяко $a \in \Sigma$,
@@ -23,12 +23,12 @@
   \item
     $\qstart \df \pair{\qstart',\qstart''}$;
   \item
-    $F \df \{\pair{r_1,r_2}\mid r_1\in F'\ \&\ r_2 \in F''\} = F' \times F''$
+    $F \df \{\pair{r_1,r_2}\mid r_1\in F_1\ \&\ r_2 \in F_2\} = F_1 \times F_2$
   \end{itemize}
   Трябва да докажем, че за всяка дума $\alpha \in \Sigma^\star$ е изпълнено, че:
   \begin{equation}
     \label{eq:7}
-    (\forall p\in Q')(\forall q\in Q'')[\ \delta^\star(\pair{p,q},\alpha) = \pair{ \delta^\star_1(p,\alpha), \delta^\star_2(q,\alpha) }\ ].
+    (\forall p\in Q_1)(\forall q\in Q_2)[\ \delta^\star(\pair{p,q},\alpha) = \pair{ \delta^\star_1(p,\alpha), \delta^\star_2(q,\alpha) }\ ].
   \end{equation}
   Ще докажем \Property{eq:7} с индукция по дължината на думата $\alpha$.
   \begin{itemize}
@@ -50,15 +50,15 @@
     \end{align*}
   \end{itemize}
   Използвайки \Property{eq:7} лесно можем да докажем, че
-  \[\L(\A) = \L(\A') \cap \L(\A'').\]
+  \[\L(\A) = \L(\A_1) \cap \L(\A_2).\]
   Имаме следните еквивалентности:
   \begin{align*}
     \omega \in \L(\A) & \iff \delta^\star(\qstart, \omega) \in F & \comment\text{деф. на }\L(\A)\\
-                      & \iff \delta^\star(\pair{\qstart',\qstart''}, \omega) \in F' \times F'' & \comment\text{деф. на }\A\\
-                      & \iff \pair{\delta^\star_1(\qstart',\omega), \delta^\star_2(\qstart'',\omega)} \in F' \times F'' & \comment{\text{от (\ref{eq:7})}}\\
-                      & \iff \delta^\star_1(\qstart',\omega) \in F'\ \&\ \delta^\star_2(\qstart'',\omega) \in F''\\
-                      & \iff \omega \in \L(\A')\ \&\ \omega\in\L(\A'') \\
-                      & \iff \omega \in \L(\A') \cap \L(\A'').
+                      & \iff \delta^\star(\pair{\qstart',\qstart''}, \omega) \in F_1 \times F_2 & \comment\text{деф. на }\A\\
+                      & \iff \pair{\delta^\star_1(\qstart',\omega), \delta^\star_2(\qstart'',\omega)} \in F_1 \times F_2 & \comment{\text{от (\ref{eq:7})}}\\
+                      & \iff \delta^\star_1(\qstart',\omega) \in F_1\ \&\ \delta^\star_2(\qstart'',\omega) \in F_2\\
+                      & \iff \omega \in \L(\A_1)\ \&\ \omega\in\L(\A_2) \\
+                      & \iff \omega \in \L(\A_1) \cap \L(\A_2).
   \end{align*}
   
 \end{proof}
@@ -95,8 +95,8 @@
   Първият подход е да използвайте конструкцията на автомата $\A$ от \Proposition{automata-cap},
   с единствената разлика, че тук избираме финалните състояния да бъдат елементите на множеството
   \begin{align*}
-    F & \df \{\pair{q',q''} \in Q' \times Q'' \mid q' \in F'\ \lor\ q'' \in F''\}\\
-      & = F'\times Q'' \cup Q'\times F''.
+    F & \df \{\pair{q_1,q_2} \in Q_1 \times Q_2 \mid q_1 \in F_1\ \lor\ q_2 \in F_2\}\\
+      & = F_1\times Q_2 \cup Q_1\times F_2.
   \end{align*}
   Друг подход е да се използва правилото на Де Морган, а именно:
   \[L_1 \cup L_2 = \ov{\ov{L_1} \cap \ov{L_2}}.\]
