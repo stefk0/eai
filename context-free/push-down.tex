@@ -70,7 +70,7 @@
         \UnaryInfC{$(q,\alpha,A\gamma) \vdash_P (p,\alpha,\beta\gamma)$}
       \end{prooftree}
     \end{subfigure}
-    \caption{Правила за едностъпков преход в стеков автомат}
+    \caption{Правила за извършване на една стъпка в изчисление на стеков автомат}
   \end{figure}
 \end{important}
 
@@ -96,14 +96,12 @@
   \end{subfigure}
 \end{figure}
 
-\mynote{С други думи, $\vdash^\star_P$ е рефлексивното и транзитивно затваряне на $\vdash_P$.}
-Дефинираме релацията $\vdash^\star_P$ като
-\[(q,\alpha,\beta) \vdash^\star_P (p,\alpha',\beta') \dff (\exists \ell)[(q,\alpha,\beta) \vdash^\ell_P (p,\alpha',\beta')].\]
-
+\mynote{Казано по-дискретно, $\vdash^\star_P$ е рефлексивното и транзитивно затваряне на релацията $\vdash_P$.}
+Дефинираме релацията $\vdash^\star_P$ като $\kappa \vdash^\star_P \kappa' \dff (\exists \ell)[\kappa \vdash^\ell_P \kappa']$.
+% \[(q,\alpha,\beta) \vdash^\star_P (p,\alpha',\beta') \dff (\exists \ell)[(q,\alpha,\beta) \vdash^\ell_P (p,\alpha',\beta')].\]
 Езикът $\L(P)$, който се разпознава от стековия автомат $P$ дефинираме по следния начин:
-\mynote{Възможно е да се дадат и други еквивалентни дефиниции.}
 \[\L(P) \df \{\ \omega \in \Sigma^\star \mid (\qstart,\omega,\sharp) \vdash^\star_P (\qaccept,\varepsilon,\varepsilon)\ \}.\]
-
+\mynote{Възможно е да се дадат и други еквивалентни дефиниции на $\L(P)$.}
 
 \begin{proposition}
   За произволни $\ell_1$ и $\ell_2$ е изпълнено, че:
@@ -191,8 +189,9 @@
   Нека $\ell > 1$. Тогава изводът може да се разбие така:
   \begin{prooftree}
     \AxiomC{$A \to_G BC$}
+    \UnaryInfC{$A \lderive{} BC$}
     \AxiomC{$BC \lderive{\ell-1} \alpha$}
-    \LeftLabel{\scriptsize{правило (1)}}
+    % \LeftLabel{\scriptsize{правило (1)}}
     \BinaryInfC{$A \lderive{\ell} \alpha$}
   \end{prooftree}
   Сега прилагаме \Proposition{grammar:divide-2} и \Lemma{left-derivation-equivalence} и получаваме, че можем да разбием извода $BC \lderive{\ell-1}\alpha$ така:
@@ -203,15 +202,16 @@
   където $\alpha = \alpha_1\cdot \alpha_2$ и $\ell-1 = \ell_1+\ell_2$.
     Понеже $\ell_1 < \ell$ и $\ell_2 < \ell$, от индукционното предположение получаваме изчислението:
     \begin{prooftree}
+      \AxiomC{$A \to_G BC$}
+      \UnaryInfC{$\Delta(p,\varepsilon,A) \ni (p,BC)$}
+      \UnaryInfC{$(p,\alpha_1\alpha_2,A) \vdash_P (p,\alpha_1\alpha_2,BC)$}
       \AxiomC{$B \lderive{\ell_1} \alpha_1$}
       \LeftLabel{\scriptsize{\IndHyp}}
       \UnaryInfC{$(p,\alpha_1,B) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
       \AxiomC{$C \lderive{\ell_2} \alpha_2$}
-      \RightLabel{\scriptsize{\IndHyp}}
+      % \RightLabel{\scriptsize{\IndHyp}}
       \UnaryInfC{$(p,\alpha_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
       \BinaryInfC{$(p,\alpha_1\alpha_2,BC) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
-      \AxiomC{$A \to_G BC$}
-      \UnaryInfC{$\Delta(p,\varepsilon,A) \ni (p,BC)$}
       \BinaryInfC{$(p,\underbrace{\alpha_1\alpha_2}_{\alpha},A) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
     \end{prooftree}
 
@@ -306,6 +306,7 @@
       $\alpha = a\beta$ и $\delta = a\rho$, за някои $\beta$ и $\rho$, и да разбием изчислението по следния начин:
       \begin{prooftree}
         \AxiomC{$\Delta(p,a,a) \ni (p,\varepsilon)$}
+        \UnaryInfC{$(p,a\beta,a\rho)\vdash_P(p,\beta,\rho)$}
         \AxiomC{$(p,\beta,\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
         \BinaryInfC{$(p, \underbrace{a\beta}_{\alpha}, \underbrace{a\rho}_{\delta}) \vdash^\ell_P (p, \varepsilon, \varepsilon)$}
       \end{prooftree}
@@ -325,6 +326,7 @@
       може да се представи като $\delta = A\rho$, за някое $\rho$, и изчислението може да се разбие по следния начин:
       \begin{prooftree}
         \AxiomC{$\Delta(p,\varepsilon,A) \ni (p,\gamma)$}
+        \UnaryInfC{$(p,\alpha,A\rho)\vdash_P(p,\alpha,\gamma\rho)$}
         \AxiomC{$(p,\alpha,\gamma\rho) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
         \BinaryInfC{$(p, \alpha, \underbrace{A\rho}_{\delta}) \vdash^\ell_P(p, \varepsilon, \varepsilon)$}
       \end{prooftree}
@@ -333,6 +335,7 @@
       Сега прилагаме индукционното предположение и получаваме извода:
       \begin{prooftree}
         \AxiomC{$A \to_G \gamma$}
+        \UnaryInfC{$A\rho\lderive{}\gamma\rho$}
         % \AxiomC{}
         % \LeftLabel{\scriptsize{(0)}}
         % \UnaryInfC{$\gamma \lderive{0} \gamma$}
@@ -345,7 +348,7 @@
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$\gamma\rho \lderive{\star} \alpha$}
         % \LeftLabel{\scriptsize{(\Proposition{left-derivation:context-step})}}
-        \RightLabel{\scriptsize{правило (1)}}
+        % \RightLabel{\scriptsize{правило (1)}}
         \BinaryInfC{$\underbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
       \end{prooftree}
     % \item
@@ -461,6 +464,7 @@
       Ако $\Delta(q,a,A) \ni (r,B)$, то можем да разбием изчислението по следния начин:
       \begin{prooftree}
         \AxiomC{$\Delta(q,a,A) \ni (r,B)$}
+        \UnaryInfC{$(q,a\beta,A)\vdash_P(r,\beta,B)$}
         \AxiomC{$(r,\beta,B) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
         \BinaryInfC{$(q,\underbrace{a\beta}_{\alpha},A) \vdash^\ell_P (p, \varepsilon, \varepsilon)$}
       \end{prooftree}
@@ -471,19 +475,21 @@
         \AxiomC{$\Delta(q,a,A) \ni (r,B)$}
         \LeftLabel{\scriptsize{(деф.)}}
         \UnaryInfC{$[q,A,p] \to_G a[r,B,p]$}
+        \UnaryInfC{$[q,A,p] \lderive{} a[r,B,p]$}
         \AxiomC{$(r,\beta,B) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$[r,B,p] \lderive{\star} \beta$}
         \AxiomC{$a \in \Sigma$}
-        \RightLabel{\scriptsize{(\Proposition{left-derivation:padding})}}
+        \RightLabel{\scriptsize{(\ShortProposition{left-derivation:padding})}}
         \BinaryInfC{$a[r,B,p] \lderive{\star} a\beta$}
-        \RightLabel{\scriptsize{правило (1)}}
+        % \RightLabel{\scriptsize{правило (1)}}
         \BinaryInfC{$[q,A,p] \lderive{\star} \underbrace{a\beta}_{\alpha}$}
       \end{prooftree}
     \item
       Ако $\Delta(q, a, A) \ni (r, BC)$, то можем да разбием изчислението по следния начин:
       \begin{prooftree}
         \AxiomC{$\Delta(q, a, A) \ni (r, BC)$}
+        \UnaryInfC{$(q,a\beta,A)\vdash_P(r,\beta,BC)$}
         \AxiomC{$(r, \beta, BC) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
         \BinaryInfC{$(q, \underbrace{a\beta}_{\alpha}, A) \vdash^{\ell}_P (p, \varepsilon, \varepsilon)$}
       \end{prooftree}
@@ -510,15 +516,16 @@
         \AxiomC{$\Delta(q,a,A) \ni (r,BC)$}
 %        \RightLabel{\scriptsize{(деф.)}}
         \UnaryInfC{$[q,A,p] \to_G a[r,B,q'][q',C,p]$}
+        \UnaryInfC{$[q,A,p] \lderive{} a[r,B,q'][q',C,p]$}
         \AxiomC{$(r, \beta_1, B) \vdash^{\ell_1}_P (q', \varepsilon, \varepsilon)$}
         \LeftLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$[r, B, q'] \lderive{\star} \beta_1$}
         \AxiomC{$(q', \beta_2, C) \vdash^{\ell_2}_P (p, \varepsilon, \varepsilon)$}
         \LeftLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$[q', C, p] \lderive{\star} \beta_2$}
-        \LeftLabel{\scriptsize{(Тв. \ref{pr:left-derivation:concat2})}}
+        \LeftLabel{\scriptsize{(\ShortProposition{left-derivation:concat2})}}
         \BinaryInfC{$[r,B,q'][q',C,p] \lderive{\star} \beta_1\beta_2$}
-        \LeftLabel{\scriptsize{(Тв. \ref{pr:left-derivation:padding})}}
+        \LeftLabel{\scriptsize{(\ShortProposition{left-derivation:padding})}}
         \UnaryInfC{$a[r,B,q'][q',C,p] \lderive{\star} a\beta_1\beta_2$}
         \BinaryInfC{$[q,A,p] \lderive{\star} \underbrace{a\beta_1\beta_2}_{\alpha}$}
       \end{prooftree}
@@ -539,8 +546,9 @@
       Първо, да приемем, че имаме следния извод:
       \begin{prooftree}
         \AxiomC{$[q,A,p] \to_G a[r,B,p]$}
+        \UnaryInfC{$[q,A,p] \lderive{} a[r,B,p]$}
         \AxiomC{$a[r,B,p] \lderive{\ell-1} a\beta$}
-        \LeftLabel{\scriptsize{правило (1)}}
+        % \LeftLabel{\scriptsize{правило (1)}}
         \BinaryInfC{$[q,A,p] \lderive{\ell} \underbrace{a\beta}_{\alpha}$}
       \end{prooftree}
       Сега можем да приложим индукционното предположение и да сглобим изчислението:
@@ -548,6 +556,7 @@
         \AxiomC{$[q,A,p] \to_G a[r,B,p]$}
         \LeftLabel{\scriptsize{(деф. на $G$)}}
         \UnaryInfC{$\Delta(q,a,A) \ni (r,B)$}
+        \UnaryInfC{$(q,a\beta,A)\vdash_P(r,\beta,B)$}
         \AxiomC{$a[r,B,p] \lderive{\ell-1} a\beta$}
         \UnaryInfC{$[r,B,p] \lderive{\ell-1} \beta$}
         \RightLabel{\scriptsize{\IndHyp}}
@@ -560,8 +569,9 @@
       Сега да разгледаме втория случай:
       \begin{prooftree}
         \AxiomC{$[q,A,p] \to_G a[r,B,q'][q',C,p]$}
+        \UnaryInfC{$[q,A,p] \lderive{} a[r,B,q'][q',C,p]$}
         \AxiomC{$a[r,B,q'][q',C,p] \lderive{\ell-1} a\beta$}
-        \LeftLabel{\scriptsize{правило (1)}}
+        % \LeftLabel{\scriptsize{правило (1)}}
         \BinaryInfC{$[q,A,p] \lderive{\ell} \underbrace{a\beta}_{\alpha}$}
       \end{prooftree}
       \mynote{Важно е, че $\beta \in \Sigma^\star$. Иначе няма да можем да приложим \Proposition{grammar:divide-2}.}
@@ -584,15 +594,17 @@
       \begin{extra}
       \begin{prooftree}
         \AxiomC{$[q,A,p] \rightarrow_G a[r,B,q'][q',C,p]$}
-        % \LeftLabel{\scriptsize{(деф.)}}
+        \LeftLabel{\scriptsize{(деф.)}}
         \UnaryInfC{$\Delta(q,a,A) \ni (r, BC)$}
+        \UnaryInfC{$(q,a\beta_1\beta_2,A)\vdash_P(r,\beta_1\beta_2,BC)$}
         \AxiomC{$[r,B,q'] \lderive{\ell_1} \beta_1$}
         \LeftLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$(r,\beta_1,B) \vdash^\star_P (q',\varepsilon,\varepsilon)$}
         \AxiomC{$[q',C,p] \lderive{\ell_2} \beta_2$}
-        \RightLabel{\scriptsize{\IndHyp}}
+        % \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$(q',\beta_2,C) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
         \BinaryInfC{$(r,\beta_1\beta_2,BC) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+        \LeftLabel{\scriptsize{(транз.)}}
         \BinaryInfC{$(q,\underbrace{a\beta_1\beta_2}_{\alpha},A) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
       \end{prooftree}
 \end{extra}
