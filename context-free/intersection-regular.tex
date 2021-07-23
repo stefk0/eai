@@ -1,0 +1,66 @@
+\subsection*{Сечение с регулярен език}
+От \Proposition{context-free:pumping:non-closure} знаем, че безконтекстните езици не
+са затворени относно операцията сечение, т.е. възможно е $L_1$ и $L_2$ да са безконтекстни
+езици, но $L_1 \cap L_2$ да не е безконтекстен.
+Оказва се обаче, че безконтекстните езици са затворени относно сечение с регулярен език.
+
+\begin{important}
+  \begin{theorem}\label{th:intersection-context-reg}
+    Нека $L$ e безконтекстен език и $R$ е регулярен език.
+    Тогава тяхното сечение $L \cap R$ е безконтекстен език.
+  \end{theorem}
+\end{important}
+\begin{hint}
+  \mynote{Тук адаптираме доказателството от \cite[стр. 144]{papadimitriou}.}
+  Нека имаме стеков автомат
+  \[P = \pair{Q',\Sigma,\Gamma,\sharp, \Delta', \qstart', \qaccept'}, \text{ където } \L(P) = L,\]
+  и детерминиран краен автомат 
+  \[\A = \pair{Q'', \Sigma, \qstart'', \delta'', F''}, \text{ където } \L(\A) = R.\]
+  \mynote{Сравнете с конструкцията от \Proposition{automata-cap}.}
+  Ще определим нов стеков автомат $\M = \PDA$, където:
+  \begin{itemize}
+  \item 
+    $Q \df Q' \times Q''$;
+  \item
+    $\qstart \df \pair{\qstart',\qstart''}$;
+  \item
+    $F \df \{\qaccept'\} \times F''$;
+  \item 
+    Функцията на преходите $\Delta$ е дефинирана както следва:
+    \begin{itemize}
+    \item 
+      \mynote{Симулираме едновременно изчислението и на двата автомата.}
+      Ако $(r_1,\gamma) \in \Delta'(q_1, a, Y)$, то
+      \[ \Delta(\pair{q_1,q_2},a,Y) \ni (\pair{r_1,\delta''(q_2,a)}, \gamma).\]
+    \item
+      \mynote{Нищо не четем от входната дума, следователно правим празен ход на $\A$}
+      Ако $(r_1,\gamma) \in \Delta'(q_1,\varepsilon,Y)$ и всяко $q_2 \in Q''$, то
+      \[ \Delta(\pair{q_1,q_2},\varepsilon,Y) \ni (\pair{r_1,q_2}, \gamma).\]
+    \item
+      \mynote{\writedown Докажете, че $\L(\M) = \L(P) \cap \L(\A)$ !}
+      $\Delta$ не съдържа други преходи;
+    \end{itemize}
+  \end{itemize}
+
+  \begin{itemize}
+  \item
+    Докажете, че ако $(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon)$, то
+    \[(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)\text{ и }(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon).\]
+  \item
+    Докажете, че ако $(q_1,\alpha,\gamma) \vdash^\star_P (p_1,\varepsilon,\varepsilon)$ и $(q_2,\alpha) \vdash^\star_\A (p_2,\varepsilon)$, то
+    \[(\pair{q_1,q_2},\alpha,\gamma) \vdash^\star_\M (\pair{p_1,p_2},\varepsilon,\varepsilon).\]
+  \end{itemize}
+  
+\end{hint}
+
+\begin{extra}
+  \Theorem{intersection-context-reg} е удобна, когато искаме да докажем, че даден език не е безконтекстен.
+С нейна помощ можем да сведем езика до друг, за който вече знаем, че не е безконтекстен.
+
+  \begin{example}
+    Да разгледаме езика $L = \{\omega \in \{a,b,c\}^\star \mid \card{\omega}{a} = \card{\omega}{b} = \card{\omega}{c}\}$.
+    Да допуснем, че $L$ е безконтекстен език. Тогава, според \Theorem{intersection-context-reg}, $L^\prime = L \cap \L(a^\star b^\star c^\star)$ също е безконтекстен език.
+    Но $L^\prime = \{a^nb^nc^n \mid n \in \Nat\}$, за който знаем от \Example{context-free:pumping:anbncn}, че {\em не} е безконтекстен.
+    Достигнахме до противоречие. Следователно, $L$ не е безконтекстен език.
+  \end{example}
+\end{extra}
