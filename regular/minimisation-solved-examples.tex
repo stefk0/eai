@@ -1,9 +1,9 @@
 \newpage
 \subsection*{Примерни задачи}
 \begin{extra2}
-  \begin{example}
+  \begin{problem}
     \mynote{\cite[стр. 79]{kozen}}
-    Да простроим минимален автомат $\A'$ разпознаващ езика на детерминирания краен автомат $\A$.
+    Постройте минимален автомат $\A'$ разпознаващ езика на детерминирания краен автомат $\A$.
     \begin{figure}[H]
       \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
@@ -29,6 +29,9 @@
       \end{tikzpicture}
       \caption{Автоматът $\A$.}
     \end{figure}
+  \end{problem}
+
+  \begin{solution}
     \mynote{В процедурата, която следваме тук, изобщо не се интересуваме какъв е езика на автомата $\A$.
       
       \writedown Взе пак съобразете, че езикът на автомата $\A$ е \[\{\omega \in \{a,b\}^\star \mid \abs{\omega} \geq 2\}.\]}
@@ -86,23 +89,11 @@
     Виждаме, че $\equiv^1_\A\ =\ \equiv^2_\A$,
     което означава, че $\equiv_\A\ =\ \equiv^1_\A$.
     Следователно, минималният автомат $\M$ има три състояния.
-    Той е изобразен на \Figure{min1}.  
-    Минималният автомат може да се представи и таблично:
+    % Той е изобразен на фигурата.
 
-    \begin{tabular}{|c|c|c|c|c|c|c|}
-      \hline
-      $\delta'$ & $B_0$ & $B_1$ & $B_2$ \\
-      \hline
-      $a$ & $B_1$ & $B_2$ & $B_2$ \\
-      \hline
-      $b$ & $B_1$ & $B_2$ & $B_2$ \\
-      \hline
-    \end{tabular}
-  \end{itemize}
-  
   \begin{figure}[H]
     \centering
-    \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
+    \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt,initial text=начало]
       \tikzstyle{every state}=[circle,minimum size=20pt,scale=0.8, every node/.style={scale=0.8}]
       
       \node[initial above, state]   (0) {$B_0$};
@@ -117,14 +108,52 @@
   \caption{Минимален автомат $\A'$ за $\L(\A)$.}
   \label{fig:min1}
 \end{figure}
-\end{example}
+    
+    Минималният автомат $\A'$ може да се представи и таблично като опишем действието на функцията на преходите $\delta'$ по следния начин:
+
+    \begin{tabular}{|c|c|c|c|c|c|c|}
+      \hline
+      $\delta'$ & $B_0$ & $B_1$ & $B_2$ \\
+      \hline
+      $a$ & $B_1$ & $B_2$ & $B_2$ \\
+      \hline
+      $b$ & $B_1$ & $B_2$ & $B_2$ \\
+      \hline
+    \end{tabular}
+  \end{itemize}
+  
+
+\end{solution}
+
+\begin{remark}
+  За този пример можем директно да съобразим кои състояния можем да ,,слеем'' за да получим минималния автомат.
+  Първо, очевидно е, че $\L_\A(5) = \{a,b\}^\star$.
+  Тогава лесно се вижда, че
+  \begin{align*}
+    \L_\A(3) & = \{\varepsilon\} \cup \{a,b\}\cdot\L_\A(5)\\
+             & = \{\varepsilon\} \cup \{a,b\}\cdot\{a,b\}^\star\\
+             & = \{a,b\}^\star\\
+    \L_\A(4) & = \{\varepsilon\} \cup \{a,b\}\cdot\L_\A(5)\\
+             & = \{a,b\}^\star.
+  \end{align*}
+  Така получаваме, че $\L_\A(3) = \L_\A(4) = \L_\A(5)$.
+  
+  Сега, щом $\L_\A(3) = \L_\A(4)$, то имаме и че $\L_\A(1) = \L_\A(2)$, защото
+  \begin{align*}
+    & \L_\A(1) = \{a\}\cdot\L_\A(3) \cup \{b\} \cdot \L_\A(4)\\
+    & \L_\A(2) = \{a\}\cdot\L_\A(4) \cup \{b\} \cdot \L_\A(3).
+  \end{align*}
+  
+  Естествено, при по-сложни примери би ни било трудно да съобразим кои състояния можем да ,,слеем'',
+  защото проверката дали два регулярни израза описват един и същ език не е лека задача.
+\end{remark}
 \end{extra2}
 
 \vspace*{1cm}
 
 \begin{extra2}
-\begin{example}
-  Да построим минимален автомат $\A'$ разпознаващ $\L(\A)$.
+\begin{problem}
+  Постройте минимален автомат $\A'$ разпознаващ $\L(\A)$.
   \begin{figure}[H]
     \centering
       \begin{tikzpicture}[->,>=stealth,thick,node distance=55pt,initial text=начало]
@@ -173,8 +202,8 @@
   % \end{figure}
   % \end{framed}
 % \end{problem}
-
-  % \begin{solution}
+\end{problem}
+\begin{solution}
     \mynote{\writedown Съобразете, че езикът на автомата $\A$ е $\{\omega \in \{a,b\}^\star \mid \abs{\omega} \neq 0,2\}$.}
     Отново следваме същата процедура за минимизация.
     Ще намерим класовете на еквивалентност на $\equiv^n_\A$,
@@ -290,7 +319,14 @@
       \caption{Получаваме минималния автомат $\A'$ за езика на $\A$.}
       \label{fig:min2}
     \end{figure}
-  \end{example}
+
+  \end{solution}
+  
+  \begin{remark}
+    Както в предишния пример, тук също може директно да се съобрази, че $\L_\A(3) = \L_\A(4)$.
+    Също така и $\L_\A(1) = \L_\A(2)$.
+  \end{remark}
+
 \end{extra2}
 
 
