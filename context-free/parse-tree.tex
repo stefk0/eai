@@ -1,6 +1,10 @@
 \section{Синтактични дървета}
 
-\mynote{ На английски се нарича parse tree, syntax tree, derivation tree. Обикновено, например в \cite[стр. 123]{papadimitriou},  дават рекурсивна дефиниция на синтактично дърво.}
+\mynote{ На английски се нарича parse tree, syntax tree, derivation tree. Обикновено, например в \cite[стр. 123]{papadimitriou},  дават рекурсивна дефиниция на синтактично дърво.
+  A parse tree is a graphical representation of a derivation thet filters out the order in which productions are applied to replace nonterminals. \cite{compilers2}
+}
+
+
 
 \begin{itemize}
 % \item
@@ -53,16 +57,20 @@
   Двойката $P = (T,\lambda)$ се нарича {\bf дърво на извод} съвместимо с $G$, ако са изпълнени свойствата:
   \begin{itemize}
   \item
-    $T$ е крайно \emph{оптимално} дърво и $T \subseteq \{0,1,\dots,b-1\}^\star$.
+    $T$ е непразно крайно \emph{оптимално} дърво и $T \subseteq \{0,1,\dots,b-1\}^\star$.
   \item
-    Имаме функция $\lambda: T \to V \cup \Sigma \cup \{\varepsilon\}$.
-    Нека положим $X_\alpha \df \lambda(\alpha)$.
+    Фукцията $\lambda: T \to V \cup \Sigma \cup \{\varepsilon\}$ асоциира етикет с всеки елемент на дървото. Нека означим тези етикети с $X_\alpha \df \lambda(\alpha)$.
+  \item
+    Коренът на дървото винаги има етикет елемент на $V$ или $\Sigma$, т.е. $\lambda(\varepsilon) \in V \cup \Sigma$.
   \item
     \mynote{С други думи,
       \[\lambda(\alpha)\to_G\lambda(\alpha 0)\cdots\lambda(\alpha k).\] Това свойство е ключово, защото то ни казва, че дървото е съвместимо с правилата на граматиката $G$.}
-    Ако $\alpha \in T$ и $|\successor_T(\alpha)| = k+1$, за някое $k \in \Nat$, то $X_\alpha \in V$,
-    като имаме и 
-    \[X_\alpha \to_G X_{\alpha 0} X_{\alpha 1} \cdots X_{\alpha k}.\]
+    Ако $\alpha \in T$ и $|\successor_T(\alpha)| = k+1$, за някое $k \in \Nat$, то
+    има правило в граматиката 
+    \[X_\alpha \to_G X_{\alpha 0} X_{\alpha 1} \cdots X_{\alpha k},\]
+    където $X_{\alpha i} \in V \cup \Sigma$.
+  \item
+    Имаме частен случай за $\alpha \in T$ и $|\successor_T(\alpha)| = 1$. Тогава позволяваме да имаме $X_{\alpha 0} = \varepsilon$, ако имаме правилото в граматиката \[X_\alpha \to_G \varepsilon.\]
   \end{itemize}
 \item
   За дървото на извод $P$, нека $\texttt{root}(P) \df X_\varepsilon$.

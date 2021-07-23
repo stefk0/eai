@@ -15,12 +15,17 @@
       \AxiomC{$X_1 \yield{\ell_1} \gamma_1$}
       \AxiomC{$\cdots$}
       \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
-      \LeftLabel{\scriptsize{($\ell = \max\{\ell_1,\dots,\ell_n\})$}}
+      \LeftLabel{\scriptsize{($\ell = \sup\{\ell_1,\dots,\ell_n\})$}}
       \RightLabel{\scriptsize{правило (1)}}
       \QuaternaryInfC{$X \yield{\ell+1} \gamma_1\cdots\gamma_n$}
     \end{prooftree}
   \end{important}
 \end{definition}
+
+Да напомним, че по дефиниция, ако $n = 0$, то $X_1\cdots X_n = \varepsilon$.
+Освен това, понеже $\sup(A)$ означава най-малкото естествено число по-голямо от всички елементи на $A$, то $\sup(\emptyset) = 0$.
+Това означава, че ако в граматиката имаме правилото $A \to_G \varepsilon$, то според правило (1)
+получаваме, че $A \yield{1} \varepsilon$.
 
 \mynote{ Съобразете, че имаме:
 \begin{prooftree}
@@ -31,6 +36,8 @@
 
 Да дефинираме $\yield{\star}$ по следния начин:
 \[X \yield{\star} \gamma \dff (\exists \ell\in\Nat)[X \yield{\ell} \gamma].\]
+
+Релацията $\yield{\star}$ е удобна, когато не се интересуваме от реда, по който прилагаме правилата за извод в една безконтекстна граматика.
 
 \begin{lemma}
   Нека $G$ е безконтекстна граматика, $X \in V \cup \Sigma$ и $\beta \in (V \cup \Sigma)^\star$.
@@ -47,34 +54,34 @@
     Според правилата на извод в граматика имаме извода
 
     \begin{prooftree}
-      \AxiomC{$X \to_G X_0X_1\cdots X_k$}
-      \AxiomC{$X_0X_1\cdots X_k \derive{\ell-1} \beta$}
-      \RightLabel{\scriptsize{правило (1)}}
+      \AxiomC{$X \to_G X_1\cdots X_k$}
+      \AxiomC{$X_1\cdots X_k \derive{\ell-1} \beta$}
+      % \RightLabel{\scriptsize{правило (1)}}
       \BinaryInfC{$X \derive{\ell} \beta$}
     \end{prooftree}
 
     \mynote{Естествено, че е възможно някои $X_i$ да са букви от $\Sigma$. Тогава $\beta_i = X_i$ и $X_i \derive{0}_G \beta_i$.}
-    Щом имаме, че $X_0X_1\cdots X_k \derive{\ell-1} \beta$, от \Proposition{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
+    Щом имаме, че $X_1\cdots X_k \derive{\ell-1} \beta$, от \Proposition{grammar:divide} знаем, че съществува разбиване на $\beta$ на $k+1$ части, така че:
     \begin{itemize}
     \item
-      $\beta = \beta_0 \cdots \beta_{k}$;
+      $\beta = \beta_1 \cdots \beta_{k}$;
     \item
-      $X_i \derive{\ell_i} \beta_i$, за всяко $i = 0,\dots,k$;
+      $X_i \derive{\ell_i} \beta_i$, за всяко $i = 1,\dots,k$;
     \item
       $\ell-1 = \sum^k_{i=1} \ell_i$.
     \end{itemize}
     Понеже $\ell_i < \ell$ за всяко $i = 1,\dots,k$, получаваме следното:
     \begin{prooftree}
-      \AxiomC{$X \to_G X_0\cdots X_k$}
-      \AxiomC{$X_0 \derive{\ell_0} \beta_0$}
+      \AxiomC{$X \to_G X_1\cdots X_k$}
+      \AxiomC{$X_1 \derive{\ell_1} \beta_1$}
       \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_0 \yield{\star} \beta_0$}
+      \UnaryInfC{$X_1 \yield{\star} \beta_1$}
       \AxiomC{$\cdots$}
       \AxiomC{$X_k \derive{\ell_k} \beta_k$}
       \RightLabel{\scriptsize{\IndHyp}}
       \UnaryInfC{$X_k \yield{\star} \beta_k$}
       \RightLabel{\scriptsize{правило (1)}}
-      \QuaternaryInfC{$X \yield{\star} \underbrace{\beta_0\cdots\beta_k}_{\beta}$}
+      \QuaternaryInfC{$X \yield{\star} \underbrace{\beta_1\cdots\beta_k}_{\beta}$}
     \end{prooftree}
   \end{itemize}
 \end{proof}
@@ -91,27 +98,27 @@
   \item
     Нека $\ell > 0$. Тогава имаме следното:
     \begin{prooftree}
-      \AxiomC{$X \to_G X_0\cdots X_n$}
-      \AxiomC{$X_0 \yield{\ell_0} \gamma_0$}
+      \AxiomC{$X \to_G X_1\cdots X_n$}
+      \AxiomC{$X_1 \yield{\ell_1} \gamma_1$}
       \AxiomC{$\cdots$}
       \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
-      \RightLabel{\scriptsize{($\ell = 1 + \max\{\ell_0,\dots,\ell_n\})$}}
-      \QuaternaryInfC{$X \yield{\ell} \underbrace{\gamma_0\cdots\gamma_n}_{\gamma}$}
+      \RightLabel{\scriptsize{($\ell = 1 + \sup\{\ell_1,\dots,\ell_n\})$}}
+      \QuaternaryInfC{$X \yield{\ell} \underbrace{\gamma_1\cdots\gamma_n}_{\gamma}$}
     \end{prooftree}
-    Понеже $\ell_i < \ell$ за всяко $i = 0,\dots,n$, получаваме следното:
+    Понеже $\ell_i < \ell$ за всяко $i = 1,\dots,n$, получаваме следното:
     \begin{prooftree}
-      \AxiomC{$X \to_G X_0 \cdots X_{n}$}
-      \AxiomC{$X_0 \yield{\ell_0} \gamma_0$}
+      \AxiomC{$X \to_G X_1 \cdots X_{n}$}
+      \AxiomC{$X_1 \yield{\ell_1} \gamma_1$}
       \RightLabel{\scriptsize{\IndHyp}}
-      \UnaryInfC{$X_0 \derive{\star} \gamma_0$}
+      \UnaryInfC{$X_1 \derive{\star} \gamma_1$}
       \AxiomC{$\cdots$}
       \AxiomC{$X_n \yield{\ell_n} \gamma_n$}
       \RightLabel{\scriptsize{\IndHyp}}
       \UnaryInfC{$X_n \derive{\star} \gamma_n$}
       \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat})}}
-      \TrinaryInfC{$X_0 \cdots X_{n} \derive{\star} \gamma_0\cdots\gamma_{n}$}
-      \RightLabel{\scriptsize{правило (1)}}
-      \BinaryInfC{$X \derive{\star} \underbrace{\gamma_0\cdots\gamma_{n}}_{\gamma}$}
+      \TrinaryInfC{$X_1 \cdots X_{n} \derive{\star} \gamma_1\cdots\gamma_{n}$}
+      % \RightLabel{\scriptsize{правило (1)}}
+      \BinaryInfC{$X \derive{\star} \underbrace{\gamma_1\cdots\gamma_{n}}_{\gamma}$}
     \end{prooftree}
   \end{itemize}
 \end{proof}
