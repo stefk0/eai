@@ -4,8 +4,8 @@
 
 \begin{itemize}
 \item
-  Нека отново да приемем, че сме фиксирали един ДКА $\A = \FA$ като всяко състояние е достижимо от началното.
-  Да напомним, че с $\L_\A(p)$ означаваме езикът, който се разпознава от автомата $\A$,
+  Нека отново да приемем, че сме фиксирали един детерминиран краен автомат $\A = \FA$ като всяко състояние е достижимо от началното.
+  Да напомним, че в началото на Раздел~\ref{sect:regular:brzozowski-minimal} с $\L_\A(p)$ означаваме езикът, който се разпознава от автомата $\A$,
   ако приемем, че $p$ е началното състояние, т.е. $\L_\A(p) \df \{\omega \in \Sigma^\star \mid \delta^\star(p,\omega) \in F\}$.
   В частност, $\L(\A) = \L_\A(\qstart)$.
 \item
@@ -31,7 +31,7 @@
 \end{proposition}
 \mynote{Сравнете с \Problem{myhill-nerode-theorem-final}.}
 \begin{proof}
-  Посоката $(\Leftarrow)$ е очевидна. За $(\Rightarrow)$, нека $p \in [q]_{\equiv_\A} \cap F$. Достатъчно е да докажем, че $q \in F$.
+  Посоката $(\Leftarrow)$ е очевидна.
   Щом $p \in F$, то $\varepsilon \in \L_\A(p)$.
   Щом $p \equiv_\A q$, то $\L_\A(p) = \L_\A(q)$ и следователно $\varepsilon \in \L_\A(q)$.
   С други думи, $\delta^\star_\A(q,\varepsilon) \in F$, откъдето получаваме, че $q \in F$.
@@ -77,7 +77,7 @@
 
 \begin{proposition}
   \label{pr:minimisation-delta-1}
-  За всяко състояние $q$ и дума $\alpha$ е изпълнено, че
+  За всяко състояние $q$ на автомата $\A$ и дума $\alpha$ е изпълнено, че
   \begin{equation}
     \label{eq:15}
     \delta'^\star([q]_{\equiv_\A}, \alpha) = [\delta^\star(q,\alpha)]_{\equiv_\A}.

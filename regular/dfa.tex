@@ -41,6 +41,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 често е удобно да разглеждаме функция $\delta^\star:Q\times\Sigma^\star \to Q$, която е дефинирана за всяко $q\in Q$ и $\alpha \in \Sigma^\star$ по следния начин:
 \index{$\delta^\star$}
 % \mynote{Това е пример за индуктивна (рекурсивна) дефиниция по дължината на думата $\alpha$}
+\mynote{Дали не е по-добре да се дефинира като $\delta^\star(q,\varepsilon) = q$ и $\delta^\star(q,a\beta) = \delta^\star(\delta(q,a),\beta)$ ?}
 \begin{itemize}
 \item
   Ако $\alpha = \varepsilon$, то $\delta^\star(q,\varepsilon) \df q$;
@@ -107,7 +108,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
       \AxiomC{$\delta(q,b) = p$}
       \UnaryInfC{$(q,b\alpha) \vdash_\A (p,\alpha)$}
     \end{prooftree}
-    \caption{Едностъпков преход в краен автомат}
+    \caption{Едностъпков преход в детерминиран краен автомат $\A$}
   \end{figure}
 \end{important}
 
