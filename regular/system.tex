@@ -1,15 +1,72 @@
 \section{Системи от регулярни изрази}
 
-\mynote{Тази част трябва да се разшири или да се премахне \cite[стр. 100]{sakarovitch-book}.}
+\mynote{Тук се описва един по-алгебричен подход за описание на регулярните езици \cite[стр. 100]{sakarovitch-book}.}
 \begin{important}
-  \begin{lemma}[Ардън]
+  \begin{lemma}[Ардън \cite{arden}]
     \label{lem:regular:system:arden}
     Нека $\mathbf{r}$  и $\mathbf{p}$ са регулярни изрази.
     Тогава регулярният израз $\mathbf{r}^\star \mathbf{p}$ е най-малкото решение на уравнението $X = \mathbf{r} \cdot X + \mathbf{p}$.
-    Ако $\varepsilon  \not \in \L(\mathbf{r})$, то това решение е единствено.
+    Ако $\varepsilon  \not \in \L(\mathbf{r})$, то това решение е и единствено.
   \end{lemma}
 \end{important}
+\begin{hint}
+  Първо, да видим защо $\mathbf{r}^\star \mathbf{p}$ е решение. Но това е лесно.
+  Просто заместваме $X$ с $\mathbf{r}^\star \mathbf{p}$ и получаваме равенствата:
+  \begin{align*}
+    \mathbf{r}^\star \mathbf{p} & = \mathbf{r} \cdot \mathbf{r}^\star \mathbf{p} + \mathbf{p}\\
+                                & = \mathbf{r}^+ \cdot \mathbf{p} + \mathbf{\varepsilon} \cdot \mathbf{p}\\
+                                & = (\mathbf{r}^+ + \mathbf{\varepsilon}) \cdot \mathbf{p}\\
+                                & = \mathbf{r}^\star \cdot \mathbf{p}.
+  \end{align*}
+  Второ, да видим защо $\mathbf{r}^\star \cdot \mathbf{p}$ е най-малкото решение.
+  И така, нека приемем, че $\mathbf{y}$ е друго решение на системата, т.е.
+  \[\mathbf{y} = \mathbf{r} \cdot \mathbf{y} + \mathbf{p}.\]
+  Трябва да проверим, че $\L(\mathbf{r}^\star \cdot \mathbf{p}) \subseteq \L(\mathbf{y})$.
+  Тук ще използваме представянето
+  \[\L(\mathbf{r}^\star \cdot \mathbf{p}) = \bigcup_n \L(\mathbf{r}^n \cdot \mathbf{r}).\]
+  Ще докажем с индукция по $n$, че за всяко $n$ е изпълнено:
+  \[\L(\mathbf{r}^n \cdot \mathbf{p}) \subseteq \L(\mathbf{y}).\]           
+  \begin{itemize}
+  \item
+    Нека $n = 0$. Понеже $\mathbf{y} = \mathbf{r} \cdot \mathbf{y} + \mathbf{p}$ е ясно, че $\L(\mathbf{p}) \subseteq \L(\mathbf{y})$.
+  \item
+    Нека сега $n > 0$. От \IndHyp имаме, че $\L(\mathbf{r}^{n-1} \cdot \mathbf{p}) \subseteq \L(\mathbf{y})$. Тогава получаваме, че
+    \begin{align*}
+      \L(\mathbf{r} \cdot \mathbf{r}^{n-1} \cdot \mathbf{p}) & \subseteq \L(\mathbf{r} \cdot \mathbf{y})\\
+                                                             & \subseteq \L(\mathbf{r}\cdot\mathbf{y}+\mathbf{p})\\
+                                                             & = \L(\mathbf{y}).
+    \end{align*}
+    Така заключаваме, че за всяко $n$, $\L(\mathbf{r}^n \cdot p) \subseteq \L(\mathbf{y})$.
+  \end{itemize}
 
+  \mynote{Да отбележим, че ако $\varepsilon \in \L(\mathbf{r})$, то $\Sigma^\star$ е решение на системата.}
+  Сега остана да докажем третата част. Нека $\varepsilon \not\in \L(\mathbf{r})$.
+  Ще докажем, че ако $\mathbf{y}$ е решение на системата, то $\mathbf{y} = \mathbf{r}^\star \cdot \mathbf{p}$. Понеже вече знаем, че $\mathbf{r}^\star \cdot \mathbf{p}$ е най-малкото решение на системата, то е достатъчно да докажем, че за всяко решение $\mathbf{y}$ на системата е изпълнено, че $\L(\mathbf{y}) \subseteq \L(\mathbf{r}^\star \cdot \mathbf{p})$.
+
+  Ще докажем с индукция по дължината на думата $\alpha$, че
+  \[(\forall \alpha \in \Sigma^\star)[\alpha \in \L(\mathbf{y}) \implies \alpha \in \L(\mathbf{r}^\star \cdot \mathbf{p})].\]
+  Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$.
+  Да приемем, че $\varepsilon \in \L(\mathbf{y})$.
+  Щом $\mathbf{y}$ е решение, то $\varepsilon \in \L(\mathbf{r} \cdot \mathbf{y} + \mathbf{p})$,
+  но понеже $\varepsilon \not \in \L(\mathbf{r})$, то със сигурност $\varepsilon \in \L(\mathbf{p})$.
+  Така получаваме, че
+  \[\varepsilon \in \L(\mathbf{y}) \implies \varepsilon\in\L(\mathbf{r}^\star \cdot \mathbf{p}).\]
+  Нека приемем като индукционно предположение, че 
+  \[(\forall \alpha \in \Sigma^{\leq n})[\alpha \in \L(\mathbf{y}) \implies \alpha \in \L(\mathbf{r}^\star \cdot \mathbf{p})].\]
+  Да вземем сега дума $\alpha \in \L(\mathbf{y})$ с $|\alpha| = n+1$. Ако такива думи няма, то импликацията е изпълнена по тривиални причини.
+  Отново, щом $\alpha \in \L(\mathbf{r} \cdot \mathbf{y} + \mathbf{p})$, то имаме два случая.
+  Ако $\alpha \in \L(\mathbf{p})$, то всичко е ясно.
+  Нека $\alpha\in\L(\mathbf{r}\cdot \mathbf{y})$. Тогава $\alpha = \alpha_1 \cdot \alpha_2 $ и
+  $\alpha_1 \in \L(\mathbf{r})$ и $\alpha_2 \in \L(\mathbf{y})$.
+  Понеже $\varepsilon \not\in\L(\mathbf{r})$, то $|\alpha_1| \geq 1$ и следователно $|\alpha_2| < |\alpha|$.
+  Това означава, че от \IndHyp за $\alpha_2$ получаваме, че $\alpha_2 \in \L(\mathbf{r}^\star\cdot \mathbf{p})$,
+  откъдето заключаваме, че $\alpha = \alpha_1 \cdot \alpha_2 \in \L(\mathbf{r}^\star \cdot \mathbf{p})$.
+\end{hint}
+
+Тази лема ни дава един нов начин за намиране на регулярен израз за автоматен език.
+
+
+\begin{example}
 Да разгледаме отново автомата от \Figure{a2}.
 
 \begin{figure}[H]
@@ -39,7 +96,7 @@
   & X_2 = a \cdot X_2 + b \cdot X_2 + \varepsilon.
 \end{align*}
 
-Чрез прилагане на \hyperref[lem:regular:system:arden]{лемата на Ардън} и заместване получаваме следното:
+Чрез прилагане на \hyperref[lem:regular:system:arden]{лемата на Ардън} само за последното уравнение и заместване получаваме следното:
 
 \begin{align*}
   & X_0 = a \cdot X_1 + b \cdot (a+b)^\star\\
@@ -47,7 +104,7 @@
   & X_2 = (a+b)^\star.
 \end{align*}
 
-След това,
+След това, прилагаме \hyperref[lem:regular:system:arden]{лемата на Ардън} за второто уравнение. Така получаваме, след заместване, следните уравнения:
 
 \begin{align*}
   & X_0 = a \cdot a^\star \cdot b \cdot (a+b)^\star + b \cdot (a+b)^\star\\
@@ -57,6 +114,9 @@
 
 Заключаваме, че езикът на автомата е
 \[(a \cdot a^\star + \varepsilon) \cdot b \cdot (a+b)^\star = a^\star \cdot b \cdot (a+b)^\star.\]
+  
+\end{example}
+
 
 
 %%% Local Variables:
