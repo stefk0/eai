@@ -2,28 +2,30 @@
 \label{sect:regular:minimisation}
 \index{минимизация}
 
-\begin{itemize}
-\item
-  Нека отново да приемем, че сме фиксирали един детерминиран краен автомат $\A = \FA$ като всяко състояние е достижимо от началното.
-  Да напомним, че в началото на Раздел~\ref{sect:regular:brzozowski-minimal} с $\L_\A(p)$ означаваме езикът, който се разпознава от автомата $\A$,
-  ако приемем, че $p$ е началното състояние, т.е. $\L_\A(p) \df \{\omega \in \Sigma^\star \mid \delta^\star(p,\omega) \in F\}$.
-  В частност, $\L(\A) = \L_\A(\qstart)$.
-\item
-  \index{$\equiv_\A$}
-  Сега дефинираме следната релация между състояния на автомата $\A$:
-  \[p \equiv_\A q\ \dff\ \L_\A(p) = \L_\A(q).\]
-  Това означава, че $p \equiv_\A q$ точно тогава, когато
-  \begin{equation}
-    \label{eq:1}
-    (\forall \omega\in \Sigma^\star)[\ \delta^\star(p,\omega) \in F\ \iff\ \delta^\star(q,\omega) \in F\ ].
-  \end{equation}
-\item
-  \mynote{\writedown Защо?}
-  Релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност. 
+Нека отново да приемем, че сме фиксирали един детерминиран краен автомат $\A = \FA$ като всяко състояние е достижимо от началното.
+Да напомним, че в началото на Раздел~\ref{sect:regular:brzozowski-minimal} с $\L_\A(p)$ означаваме езикът, който се разпознава от автомата $\A$,
+ако приемем, че $p$ е началното състояние, т.е.
+\[\L_\A(p) \df \{\omega \in \Sigma^\star \mid \delta^\star(p,\omega) \in F\}.\]
+В частност имаме, че
+\[\L(\A) = \L_\A(\qstart).\]
+
+\index{$\equiv_\A$}
+Сега дефинираме следната релация между състояния на автомата $\A$:
+\[p \equiv_\A q\ \dff\ \L_\A(p) = \L_\A(q).\]
+Това означава, че $p \equiv_\A q$ точно тогава, когато
+\begin{equation}
+  \label{eq:1}
+  (\forall \omega\in \Sigma^\star)[\ \delta^\star(p,\omega) \in F\ \iff\ \delta^\star(q,\omega) \in F\ ].
+\end{equation}
+
+\begin{problem}
+  Докажете, че релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност.     
+\end{problem}
+
 % \item
 %   Да означим
 %   \[Q/_{\equiv_\A} \df \{\ [q]_{\equiv_\A} \mid q \in Q\ \}.\]
-\end{itemize}
+% \end{itemize}
 
 \begin{proposition}
   За произволно състояние $q$ е изпълнено, че:
@@ -32,9 +34,11 @@
 \mynote{Сравнете с \Problem{myhill-nerode-theorem-final}.}
 \begin{proof}
   Посоката $(\Leftarrow)$ е очевидна.
+  Да разгледаме посоката $(\Rightarrow)$. Да разгледаме $p \in [q]_{\equiv_\A} \cap F$.
   Щом $p \in F$, то $\varepsilon \in \L_\A(p)$.
   Щом $p \equiv_\A q$, то $\L_\A(p) = \L_\A(q)$ и следователно $\varepsilon \in \L_\A(q)$.
-  С други думи, $\delta^\star_\A(q,\varepsilon) \in F$, откъдето получаваме, че $q \in F$.
+  С други думи, $\delta^\star_\A(q,\varepsilon) \in F$, откъдето получаваме, че $q \in F$,
+  защото според дефиницията на $\delta^\star_\A$, $\delta^\star_\A(q,\varepsilon) = q$.
 \end{proof}
 
 \begin{proposition}\label{pr:equiv-delta}
@@ -53,7 +57,7 @@
   \end{align*}
 \end{proof}
 
-За автомата $\A = \FA$, дефинираме автомата
+За детерминирания краен автомат $\A = \FA$, дефинираме автомата
 \[\A' = \pair{\Sigma,Q',\qstart',\delta',F'}\] по следния начин:
 \begin{itemize}
 \item
@@ -95,7 +99,7 @@
     Нека $|\alpha| = n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
     \begin{align*}
       \delta'^\star([q]_{\equiv_\A},\beta a) & = \delta'(\delta'^\star([q]_{\equiv_\A},\beta),a) & \comment\text{деф. на }\delta'^\star\\
-                                              & = \delta'([\underbrace{\delta^\star(q,\beta)}_{p}]_{\equiv_\A},a) & \comment\text{И.П. за }\beta\\
+                                              & = \delta'([\underbrace{\delta^\star(q,\beta)}_{p}]_{\equiv_\A},a) & \comment\text{\IndHyp за }\beta\\
                                               & = \delta'([p]_{\equiv_\A},a) \\
                                               & = [\delta(p,a)]_{\equiv_\A} & \comment\text{деф. на }\delta'\\
                                              & = [\delta(\delta^\star(q,\beta),a)]_{\equiv_\A} & \comment{p = \delta'^\star(q,\beta)}\\
@@ -104,9 +108,16 @@
   \end{itemize}
 \end{proof}
 
-\begin{lemma}\label{lem:minimisation:quotient-automaton}
-  $\L(\A') = \L(\A)$.   
-\end{lemma}
+Сега ще видим, че новата конструкция на автомата $\A'$ запазва езика на първоначалния автомат $\A$.
+Автоматът на Бжозовски (\Proposition{brzozowski:language}) и автоматът на Майхил-Нероуд (\Problem{myhill-nerode-theorem:language}) са други конструкции с това свойство.
+Разликата е, че конструкцията на $\A'$ работи върху автомата $\A$ вместо върху езика на $\A$.
+
+\begin{important}
+  \begin{lemma}
+    \label{lem:minimisation:quotient-automaton}
+    За всеки детерминиран краен автомат $\A$ имаме, че $\L(\A') = \L(\A)$.   
+  \end{lemma}  
+\end{important}
 \begin{proof}
   Достатъчно е да проследим следните еквивалентности за произволна дума $\alpha$:
   \begin{align*}
@@ -158,7 +169,7 @@
   Нека $\B$ е автоматът на Бжозовски за езика $\L(\A)$.
   За да докажем, че $\A'$ е минимален ДКА за $\L(\A)$, според \Lemma{minimisation:quotient-automaton} и \Theorem{brzozowski-minimal:unique}, достатъчно е да докажем, че $|Q'| = |Q^\B|$.
   От доказателството на \Lemma{brzozowski:surjective} знаем, че функцията $f:Q^\A \to Q^\B$ е сюрекция, където
-  \[f(q) = \hat{M} \dff M = \L_\A(q).\]
+  \[f(q) \df \L_\A(q).\]
   Нека дефинираме $f':Q' \to Q^\B$ като
   \[f'([q]_{\equiv_\A}) \df f(q).\]
   От \Proposition{quotient-bijection} имаме, че $f'$ е биекция.

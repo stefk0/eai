@@ -30,6 +30,8 @@
   \end{prooftree}
 \end{important}
 
+
+
 Съобразете, че имаме свойството:
   \begin{prooftree}
     \AxiomC{$\alpha \derive{}_G \beta$}
@@ -62,6 +64,14 @@
     \caption{Правила за извод в неограничена граматика}
   \end{figure}
 \end{important}
+
+\begin{example}
+  Да разгледаме граматиката $G$ зададена с правила $S \to_G SA\ |\ aSA\ |\ ASb\varepsilon$.
+  Тогава $aSbSb \derive{}_G aaSbbSb$, защото имаме правилото $S \to_G aSb$.
+  Също така, $aSSb \not\derive{}_G ab$, но $aSSb \derive{2}_G ab$ като приложим два
+  пъти правилото $S \to_G \varepsilon$.
+\end{example}
+
 
 \mynote{Обърнете внимание, че в тази дефиниция на извод не определяме реда, в който прилагаме правилата на граматиката. Също така, понякога ,за удобство, ще пишем просто $\derive{\ell}$ вместо $\derive{\ell}_G$,
   когато се знае за коя граматика говорим.
@@ -300,16 +310,16 @@
   Индукция по $\ell_1$.
   \begin{itemize}
   \item
-    $\ell_1 = 0$. Този случай е ясен, защото тогава $\alpha = \beta$ и имаме извода:
+    Нека $\ell_1 = 0$. Този случай е ясен, защото тогава $\alpha = \beta$ и имаме извода:
     \begin{prooftree}
-      \AxiomC{$\alpha = \beta$}
+      \AxiomC{$\alpha \derive{0} \beta$}
       \LeftLabel{\scriptsize{(рефлексивност)}}
-      \UnaryInfC{$\alpha \derive{0} \beta$}
+      \UnaryInfC{$\alpha = \beta$}
       \AxiomC{$\beta \derive{\ell_2} \gamma$}
       \BinaryInfC{$\alpha \derive{0+\ell_2} \gamma$}
     \end{prooftree}
   \item
-    $\ell_1 > 0$. Да разбием извода $\alpha \derive{\ell_1} \beta$ така:
+    Нека $\ell_1 > 0$. Да разбием извода $\alpha \derive{\ell_1} \beta$ така:
     \begin{prooftree}
       \AxiomC{$\alpha \derive{} \alpha'$}
       \AxiomC{$\alpha' \derive{\ell_1-1} \beta$}

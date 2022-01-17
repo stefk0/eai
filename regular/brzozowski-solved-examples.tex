@@ -11,9 +11,9 @@
     \begin{itemize}
       
 \item
-  Ясно е, че ще започнем от началното състояние $\hat{L}$.
+  Ясно е, че ще започнем от началното състояние $L$.
   Удобно е да имаме предвид следното представяне
-  \mynote{Очевидно е, че $\bm{r}^\star = \bm{\varepsilon} + \bm{r}^+$. Веднага се вижда, че $\hat{L}$ ще бъде и финално състояние, защото $\varepsilon \in L$.}
+  \mynote{Очевидно е, че $\bm{r}^\star = \bm{\varepsilon} + \bm{r}^+$. Веднага се вижда, че $L$ ще бъде и финално състояние, защото $\varepsilon \in L$.}
   \begin{align*}
     L & = (\{a,b\}^+ \cdot \{a\})^\star \\
       & = \{\varepsilon\} \cup (\{a,b\}^+ \cdot \{a\})^+\\
@@ -26,13 +26,13 @@
   \[a^{-1}(L) = b^{-1}(L) = \{a,b\}^\star aL.\]
   Нека положим $M \df \{a,b\}^\star aL$.
   Лесно се съобразява, че $M \neq L$, защото $\varepsilon \in L$, но $\varepsilon \not\in M$.
-  Това означава, че имаме ново състояние $\hat{M}$ и
+  Това означава, че имаме ново състояние $M$ и
   \begin{align*}
-    & \delta(\hat{L},a) \df \hat{M} & \comment\text{ защото }a^{-1}(L) = M\\
-    & \delta(\hat{L},b) \df \hat{M}. & \comment\text{ защото }b^{-1}(L) = M
+    & \delta(L,a) \df M & \comment\text{ защото }a^{-1}(L) = M\\
+    & \delta(L,b) \df M. & \comment\text{ защото }b^{-1}(L) = M
   \end{align*}
 \item
-  \mynote{Веднага се вижда, че $\hat{M}$ няма да бъде финално състояние.}
+  \mynote{Веднага се вижда, че $M$ няма да бъде финално състояние.}
   За следващата стъпка е удобно да представим езика $M$ по следния начин:
   \begin{align*}
     M & = \{a,b\}^\star aL\\
@@ -46,14 +46,14 @@
     & a^{-1}(M) = L \cup M\\
     & b^{-1}(M) = M.
   \end{align*}
-  \mynote{Обърнете внимание, че $L \subset N$, но $\hat{L}$ и $\hat{N}$ са различни състояния.}
+  \mynote{Обърнете внимание, че $L \subset N$, но $L$ и $N$ са различни състояния.}
   Нека да положим $N \df L \cup M$.
   Имаме, че $N \neq L$, защото $a\in N$, но $a \not\in L$.
   Освен това, $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in M$.
-  Това означава, че имаме ново състояние $\hat{N}$ и тогава
+  Това означава, че имаме ново състояние $N$ и тогава
   \begin{align*}
-    & \delta(\hat{M},a) \df \hat{N} & \comment\text{ защото }a^{-1}(M) = N\\
-    & \delta(\hat{M},b) \df \hat{M} & \comment\text{ защото }b^{-1}(M) = M.
+    & \delta(M,a) \df N & \comment\text{ защото }a^{-1}(M) = N\\
+    & \delta(M,b) \df M & \comment\text{ защото }b^{-1}(M) = M.
   \end{align*}
 \item
   Да разгледаме следното представяне:
@@ -70,15 +70,15 @@
   \end{align*}
   Сега полагаме:
   \begin{align*}
-    & \delta(\hat{N},a) \df \hat{N} & \comment\text{ защото }a^{-1}(N) = N\\
-    & \delta(\hat{N},b) \df \hat{M} & \comment\text{ защото }b^{-1}(N) = M.
+    & \delta(N,a) \df N & \comment\text{ защото }a^{-1}(N) = N\\
+    & \delta(N,b) \df M & \comment\text{ защото }b^{-1}(N) = M.
   \end{align*}
 \item
   Нямаме повече нови състояния. Следователно,
-  \[Q \df \{\hat{L}, \hat{M}, \hat{N}\}.\]
+  \[Q \df \{L, M, N\}.\]
 \item
   Понеже $\varepsilon \in L$ и $\varepsilon \in N$ е ясно, че
-  \[F = \{\hat{L},\hat{N}\}.\]
+  \[F = \{L,N\}.\]
   Сега вече сме готови да нарисуваме картинка на автомата.
 \end{itemize}
 
@@ -86,9 +86,9 @@
   \centering
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=70pt,scale=0.8, every node/.style={scale=0.8},initial text=начало]
       \tikzstyle{every state}=[circle,font=\small]
-      \node[initial above, state,accepting]   (L) {$\hat{L}$};
-      \node[state]                            (M) [right of=L]{$\hat{M}$};
-      \node[state,accepting]                  (N) [right of=M]{$\hat{N}$};
+      \node[initial above, state,accepting]   (L) {$L$};
+      \node[state]                            (M) [right of=L]{$M$};
+      \node[state,accepting]                  (N) [right of=M]{$N$};
       
       \path 
       (L) edge [bend left=15] node [above] {$a,b$} (M)
@@ -97,7 +97,7 @@
       (N) edge [bend left=15] node [below] {$b$}   (M)
       (N) edge [loop above] node [above]   {$a$}   (N);
     \end{tikzpicture}
-    \caption{\scriptsize{Автомат за езика $L$ по метода на Бжозовски.}}
+    \caption{\scriptsize{Автомат на Бжозовски за езика $L$.}}
   \end{figure}
 \end{multicols}
   \end{solution}
@@ -114,17 +114,17 @@
   \begin{multicols}{2}
     \begin{itemize}
     \item
-      Започваме с началното състояние $\hat{L}$, за което е ясно, че няма да бъде финално,
+      Започваме с началното състояние $L$, за което е ясно, че няма да бъде финално,
       защото $\varepsilon \not\in L$.
   \item 
     $a^{-1}(L) = \{a,b\}^\star b \df M$.
     Имаме, че $M \neq L$, защото $b \in M$, но $b \not\in L$.
     Тогава
     \begin{align*}
-      & \delta(\hat{L}, a) \df \hat{M} & \comment\text{ защото }a^{-1}(L) = M\\
-      & \delta(\hat{L},b) \df \hat{\emptyset} & \comment\text{ защото }b^{-1}(L) = \emptyset\\
+      & \delta(L, a) \df M & \comment\text{ защото }a^{-1}(L) = M\\
+      & \delta(L,b) \df \emptyset & \comment\text{ защото }b^{-1}(L) = \emptyset\\
     \end{align*}
-    $\emptyset$ е съвсем нормален език и напълно нормално да имаме състояние $\hat{\emptyset}$.
+    $\emptyset$ е съвсем нормален език и напълно нормално да имаме състояние $\emptyset$.
   \item    
     За по-нататък ще е удобно да представим $M$ по следния начин:
     \begin{align*}
@@ -142,35 +142,35 @@
     Имаме, че $N \neq L$ и $N \neq M$, защото $\varepsilon \in N$, но $\varepsilon \not\in L$ и $\varepsilon \not\in M$.
     Тогава
     \begin{align*}
-      & \delta(\hat{M},a) \df \hat{M} & \comment\text{ защото }a^{-1}(M) = M\\
-      & \delta(\hat{M},b) \df \hat{N} & \comment\text{ защото }b^{-1}(M) = N
+      & \delta(M,a) \df M & \comment\text{ защото }a^{-1}(M) = M\\
+      & \delta(M,b) \df N & \comment\text{ защото }b^{-1}(M) = N
     \end{align*}
   \item
     Можем да представим езика $N$ по следния начин:
     \[N = \{\varepsilon\} \cup aM \cup bM \cup \{b\}.\]
     Тогава имаме, че:
     \begin{align*}
-      & \delta(\hat{N},a) \df \hat{M} & \comment\text{ защото } a^{-1}(N) = M\\
-      & \delta(\hat{N},b) \df \hat{N} & \comment\text{ защото } b^{-1}(N) = M.
+      & \delta(N,a) \df M & \comment\text{ защото } a^{-1}(N) = M\\
+      & \delta(N,b) \df N & \comment\text{ защото } b^{-1}(N) = M.
     \end{align*}
   \item
     Завършваме с дефиницията на функцията на преходите като:
     \begin{align*}
-      & \delta(\hat{\emptyset},a) \df \hat{\emptyset} & \comment\text{ защото }a^{-1}(\emptyset) = \emptyset\\
-      & \delta(\hat{\emptyset},b) \df \hat{\emptyset} & \comment\text{ защото }b^{-1}(\emptyset) = \emptyset.
+      & \delta(\emptyset,a) \df \emptyset & \comment\text{ защото }a^{-1}(\emptyset) = \emptyset\\
+      & \delta(\emptyset,b) \df \emptyset & \comment\text{ защото }b^{-1}(\emptyset) = \emptyset.
     \end{align*}
   \item
-    Съобразете сами, че $F = \{\hat{N}\}$.
+    Съобразете сами, че $F = \{N\}$.
   \end{itemize}    
   \begin{figure}[H]
     \centering
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt,scale=0.8, every node/.style={scale=0.8},initial text=начало]
       \tikzstyle{every state}=[circle]
       
-      \node[initial, state]                   (L) {$\hat{L}$};
-      \node[state]                            (M) [above right of=L]{$\hat{M}$};
-      \node[state]                            (E) [below right of=L]{$\hat{\emptyset}$};
-      \node[state,accepting]                  (N) [right of=M]{$\hat{N}$};
+      \node[initial, state]                   (L) {$L$};
+      \node[state]                            (M) [above right of=L]{$M$};
+      \node[state]                            (E) [below right of=L]{$\emptyset$};
+      \node[state,accepting]                  (N) [right of=M]{$N$};
       
       \path 
       (L) edge [bend left=15]  node [left] {$a$} (M)
@@ -209,7 +209,7 @@
       \item
         $\bin{1\alpha} = 2^{|\alpha|} + \bin{\alpha}$.
       \end{itemize}
-      Лесно се съобразява, че началното състояние $\hat{L}$ на автомата на Бжозовски не е финално, защото $\varepsilon \not\in L$.
+      Лесно се съобразява, че началното състояние $L$ на автомата на Бжозовски не е финално, защото $\varepsilon \not\in L$.
       Да започнем с преходите от началното състояние:
       \begin{align*}
         0^{-1}(L) & = \{\alpha \in \{0,1\}^\star \mid 0\alpha \in L\}\\
@@ -224,7 +224,7 @@
       Лесно се съобразява, че езикът $M$ е различен от $L$,
       защото например думата $10 \in L$, но $10 \not\in M$.
       Също така, понеже $2^{|\varepsilon|} + \bin{\varepsilon} = 1$,
-      то $\varepsilon \not \in M$ и следователно $\hat{M}$ няма да бъде
+      то $\varepsilon \not \in M$ и следователно $M$ няма да бъде
       финално състояние в автомата на Бжозовски.
       Продължаваме нататък:
       % \begin{multicols}{2}
@@ -246,9 +246,9 @@
       Това отново е лесно. Непосредствено се проверява, че думата $11 \in N$,
       но $11 \not\in L$ и $11 \not\in M$.
       Също така да отбележим, че понеже $2.2^{|\varepsilon|} + \bin{\varepsilon} = 2$,
-      то $\hat{N}$ ще бъде финално състояние в автомата на Бжозовски, защото
+      то $N$ ще бъде финално състояние в автомата на Бжозовски, защото
       $\varepsilon \in N$.
-      Продължаваме нататък с преходите от $\hat{N}$:
+      Продължаваме нататък с преходите от $N$:
       \begin{align*}
         0^{-1}(N) & = \{\alpha \mid 0\alpha \in N\}\\
                   & = \{\alpha \mid 2\cdot 2^{|0\alpha|} + \bin{0\alpha} \equiv 2 \bmod 3\}\\
@@ -271,9 +271,9 @@
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=55pt,scale=0.8, every node/.style={scale=0.8},initial text=начало]
       \tikzstyle{every state}=[circle]
       
-      \node[initial below,state] (0) {$\hat{L}$};
-      \node[state]               (1) [right of=0]{$\hat{M}$};
-      \node[accepting, state]    (2) [right of=1]{$\hat{N}$};
+      \node[initial below,state] (0) {$L$};
+      \node[state]               (1) [right of=0]{$M$};
+      \node[accepting, state]    (2) [right of=1]{$N$};
       
       \path 
       (0) edge  [loop above]    node [above]  {$0$} (0)
@@ -284,7 +284,7 @@
       (2) edge  [loop above]    node [above]  {$1$} (2);
     \end{tikzpicture}
   \end{center}
-  \caption{Автомат, получен чрез метода на Бжозовски за езика $L$.}
+  \caption{Автомат на Бжозовски за езика $L$.}
 \end{figure}
 \end{multicols}
 \end{solution}
@@ -299,7 +299,7 @@
 \end{problem}
   \begin{solution}
     \begin{multicols}{2}
-      Да започнем с преходите от началното състояние $\hat{L}$:
+      Да започнем с преходите от началното състояние $L$:
       \begin{align*}
         a^{-1}(L) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и }\card{\omega}{b} = 1\}\\
                   & \df M\\
@@ -309,14 +309,14 @@
       Лесно се вижда, че $M$ и $N$ са различни езици от $L$.
       Например, $aab \in L$, но $aab \not\in M$;
       $aa \in N$, но $aa \not \in L$ и $aa \not\in M$.
-      Сега да видим какви преходи имаме от състоянието $\hat{M}$:
+      Сега да видим какви преходи имаме от състоянието $M$:
       \begin{align*}
         a^{-1}(M) & = L;\\
         b^{-1}(M) & = \{\omega \in \{a,b\}^\star \mid \card{\omega}{a} \text{ е нечет. и } \card{\omega}{b} = 0\}\\
                   & \df P.
       \end{align*}
       Ясно е, че $P \neq M,L,N$, защото $a \in P$, но $a \notin M,L,N$.
-      Завършваме с преходите от състоянията $\hat{N}$ и $\hat{P}$:
+      Завършваме с преходите от състоянията $N$ и $P$:
       \begin{align*}
         a^{-1}(N) & = P \quad\text{и}\quad b^{-1}(N) = \emptyset\\
         a^{-1}(P) & = N \quad\text{и}\quad b^{-1}(P) = \emptyset.
@@ -327,11 +327,11 @@
     \begin{tikzpicture}[framed,->,>=stealth,thick,node distance=65pt,scale=0.8, every node/.style={scale=0.8},initial text=начало]
       \tikzstyle{every state}=[circle]
       
-      \node[initial below, state]  (L) {$\hat{L}$};
-      \node[state]                 (M) [above of=L]{$\hat{M}$};
-      \node[state]                 (P) [right of=M]{$\hat{P}$};
-      \node[state, accepting]      (N) [below of=P]{$\hat{N}$};
-      \node[state]                 (E) [above right of=N]{$\hat{\emptyset}$};
+      \node[initial below, state]  (L) {$L$};
+      \node[state]                 (M) [above of=L]{$M$};
+      \node[state]                 (P) [right of=M]{$P$};
+      \node[state, accepting]      (N) [below of=P]{$N$};
+      \node[state]                 (E) [above right of=N]{$\emptyset$};
             
       \path 
       (L) edge [bend right=15]  node [right] {$a$} (M)
@@ -390,14 +390,14 @@
       % \pgftransformscale{.4}
       \tikzstyle{every state}=[circle]% ,minimum size=15pt,auto]
       
-      \node[state, initial above, accepting]  (0) {$\hat{L}$};
-      \node[state]                            (1) [right of=0]{$\hat{L}_1$};
-      \node[state]                            (2) [right of=1]{$\hat{L}_2$};
-      \node[state]                            (3) [right of=2]{$\hat{L}_3$};
-      \node[state,accepting]                  (A) [below of=1]{$\hat{\{\varepsilon\}}$};
-      \node[state]                            (B) [below right of=1]{$\hat{\{b\}}$};
-      \node[state]                            (BB) [below right of=2]{$\hat{\{bb\}}$};
-      \node[state]                            (E) [below of=A]{$\hat{\emptyset}$};
+      \node[state, initial above, accepting]  (0) {$L$};
+      \node[state]                            (1) [right of=0]{$L_1$};
+      \node[state]                            (2) [right of=1]{$L_2$};
+      \node[state]                            (3) [right of=2]{$L_3$};
+      \node[state,accepting]                  (A) [below of=1]{$\{\varepsilon\}$};
+      \node[state]                            (B) [below right of=1]{$\{b\}$};
+      \node[state]                            (BB) [below right of=2]{$\{bb\}$};
+      \node[state]                            (E) [below of=A]{$\emptyset$};
       
       \coordinate[right of=3] (4);
       \coordinate[below right of=3] (BBB);

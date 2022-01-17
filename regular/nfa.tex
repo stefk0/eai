@@ -164,43 +164,43 @@ $(q,\alpha\beta) \vdash^\star_\N (p, \beta)$ точно тогава, когат
   \item
     \mynote{Да отбележим, че детерминираният автомат $\D$ има не повече от $2^{\abs{Q}}$ на брой състояния. Реално на нас ни трябват само тези множества
       $R$, за които съществува дума $\alpha$ и $\Delta^\star(Q_{\texttt{start}},\alpha) = R$.}
-    $Q' = \{\code{R} \mid R \subseteq Q\}$;
+    $Q' = \{R \mid R \subseteq Q\}$;
   \item
     За произволна буква $a\in\Sigma$ и произволно $R \subseteq Q$,
     \begin{align*}
-      \delta(\code{R},a) & \df \code{\Delta^\star(R,a)}.
+      \delta(R,a) & \df \Delta^\star(R,a).
     \end{align*}
   \item
-    $\qstart = \code{Q_{\texttt{start}}}$;
+    $\qstart = Q_{\texttt{start}}$;
   \item
-    $F' \df \{\code{R} \in Q' \mid R\cap F \neq \emptyset\}$.
+    $F' \df \{R \in Q' \mid R\cap F \neq \emptyset\}$.
   \end{itemize}
-  \mynote{Тук използваме $\code{R}$ за да покажем в явен вид, че в новия автомат кодираме множества от състояния на стария.}
+  % \mynote{Тук използваме $\code{R}$ за да покажем в явен вид, че в новия автомат кодираме множества от състояния на стария.}
   Ще докажем, че за произволна дума $\alpha$ и произволно множество $R \subseteq Q$
   е изпълнено, че:
   \begin{equation}
     \label{eq:6}
-    \code{\Delta^\star(R,\alpha)} = \delta^\star(\code{R},\alpha).
+    \Delta^\star(\underbrace{R}_{\text{множество}},\alpha) = \delta^\star(\underbrace{R}_{\text{състояние}},\alpha).
   \end{equation}
   Това ще направим с индукция по дължината на думата $\alpha$.
   \begin{itemize}
   \item
     Ако $|\alpha| = 0$, т.е. $\alpha = \varepsilon$, то е ясно от дефиницията на $\Delta^\star$ и $\delta^\star$, т.е.
     за всяко $R \subseteq Q$ е изпълнено, че:
-    \[\code{\Delta^\star(R,\varepsilon)} = \code{R} = \delta^\star(\code{R},\varepsilon).\]
+    \[\Delta^\star(R,\varepsilon) = R = \delta^\star(R,\varepsilon).\]
   \item
     Да приемем, че (\ref{eq:6}) е изпълнено за думи $\alpha$ с дължина $n$, т.е.
-    \[(\forall \alpha\in\Sigma^{n})(\forall R \subseteq Q)[\ \code{\Delta^\star(R,\alpha)} = \delta^\star(\code{R},\alpha)\ ].\]
+    \[(\forall \alpha\in\Sigma^{n})(\forall R \subseteq Q)[\ \Delta^\star(R,\alpha) = \delta^\star(R,\alpha)\ ].\]
   \item
     Нека сега $\alpha$ има дължина $n+1$, т.е. $\alpha = \beta a$, където $|\beta| = n$ и $a \in \Sigma$.
     \begin{align*}
-      \delta^\star( \code{R}, \beta a) & = \delta(\delta^\star(\code{R}, \beta a)) & \comment\text{деф. на }\delta^\star\\
-                                       & = \delta(\code{\Delta^\star(R,\beta)},a) & \comment\text{от И.П. за }\beta\\
-                                       & = \code{\Delta^\star(\Delta^\star(R,\beta),a)} & \comment\text{от деф. на }\delta\\
-                                       & = \code{\Delta^\star(R,\beta a)}. & \comment\text{от \Proposition{nfa:delta-star}}
+      \delta^\star( R, \beta a) & = \delta(\delta^\star(R, \beta a)) & \comment\text{деф. на }\delta^\star\\
+                                & = \delta(\Delta^\star(R,\beta),a) & \comment\text{от \IndHyp за }\beta\\
+                                & = \Delta^\star(\Delta^\star(R,\beta),a) & \comment\text{от деф. на }\delta\\
+                                & = \Delta^\star(R,\beta a). & \comment\text{от \Proposition{nfa:delta-star}}
     \end{align*}
     Така доказахме, че
-    \[(\forall \alpha\in\Sigma^{n+1})(\forall R \subseteq Q)[\ \code{\Delta^\star(R,\alpha)} = \delta^\star(\code{R},\alpha)\ ].\]
+    \[(\forall \alpha\in\Sigma^{n+1})(\forall R \subseteq Q)[\ \Delta^\star(R,\alpha) = \delta^\star(R,\alpha)\ ].\]
     Това означава, че според принципа на математическата индукция имаме Свойство~(\ref{eq:6}).
   \end{itemize}
   Сега вече е лесно да съобразим, че

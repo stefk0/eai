@@ -36,7 +36,8 @@
 Аналогично, за произволна дума $\alpha$, нека
 \[\alpha^{-1}(L) \df \{\omega \in \Sigma^\star \mid \alpha\omega \in L\}.\]
 
-\begin{proposition}\label{pr:pullback}
+\begin{proposition}
+  \label{pr:pullback}
   За всеки две думи $\alpha$ и $\beta$ е изпълнено, че:
   \[(\alpha\cdot\beta)^{-1}(L) = \beta^{-1}(\alpha^{-1}(L)).\]
 \end{proposition}
@@ -53,13 +54,16 @@
   Докажете, че ако $L$ е регулярен език, то $\alpha^{-1}(L)$ е регулярен език.
 \end{problem}
 
-\begin{problem}\label{prob:language-pullback}
+\begin{problem}
+  \label{prob:language-pullback}
   Докажете, че $L = \{\omega \in \Sigma^\star \mid \varepsilon \in \omega^{-1}(L)\}$.
 \end{problem}
 
 
-Нека е даден езикът $L$. Ще покажем конструкция на детерминиран автомат $\B = \FA$,
-който разпознава $L$. Ако $L$ е регулярен, то $\B$ ще бъде детерминиран краен автомат,
+Нека е даден произволен език $L$. Ще покажем конструкция на детерминиран автомат
+\[\B = \FA,\]
+който разпознава $L$. Този автомат ще наречем \emph{автомат на Бжозовски}.
+Ако $L$ е регулярен, то $\B$ ще бъде детерминиран краен автомат,
 но ако $L$ не е регулярен, то $\B$ ще бъде детерминиран \emph{безкраен} автомат.
 Конструкцията на автомата $\B$ е следната:
 % \mynote{Да напомним, че имаме свойството
@@ -68,23 +72,25 @@
 % }
 \begin{itemize}
 \item
-  Състоянията $Q$ ще бъдат от вида $\hat{M}$, за $M \subseteq \Sigma^\star$, където:
-  \[Q \df \{\hat{M} \mid (\exists \alpha\in\Sigma^\star)[M = \alpha^{-1}(L)]\}.\]
+  Състоянията $Q$ на автомата на Бжозовски ще бъдат езици над азбуката $\Sigma$, където:
+  \[Q^\B \df \{\alpha^{-1}(L) \mid \alpha\in\Sigma^\star\}.\]
 \item
-  $\qstart \df \hat{L}$.
+  Началното състояние $\qstart$ на автомата на Бжозовски е дефинирано като:
+  \[\qstart^\B \df L\hspace*{20pt} \comment{L = \varepsilon^{-1}(L)}.\]
 \item
-  За произволни състояния $\hat{M}$ и $\hat{N}$ и буква $a$,
-  \[\delta(\hat{M},a) = \hat{N} \stackrel{\text{деф}}{\iff} N = a^{-1}(M).\]
+  За произволно състояние (език) $M$ и буква $a$, дефинираме функцията на преходите ето така:
+  \[\delta_\B(M,a) \df a^{-1}(M).\]
 \item
-  $F \df \{ \hat{M} \in Q\mid \varepsilon \in M\}$.
+  Финалните състояния на автомата на Бжозовски са следните:
+  \[F^\B \df \{ M \in Q^\B\mid \varepsilon \in M\}.\]
 \end{itemize}
 
 \begin{proposition}\label{pr:regular:brzozowski:delta}
   Нека $\B$ е автоматът на Бжозовски за езика $L$.
-  За всяка дума $\alpha$ и всяко състояние $\hat{M} \in Q^\B$ е изпъленена еквивалентността:
+  За всяка дума $\alpha$ и всяко състояние $M \in Q^\B$ е изпъленена еквивалентността:
   \begin{equation}
     \label{eq:13}
-    N = \alpha^{-1}(M) \iff \delta^\star(\hat{M},\alpha) = \hat{N}.
+    \delta^\star(M,\alpha) = \alpha^{-1}(M).
   \end{equation}
 \end{proposition}
 \begin{hint}
@@ -95,40 +101,37 @@
 \begin{proof}
   \begin{itemize}
   \item
-    Твърдението очевидно е изпълнено за $\alpha = \varepsilon$.
+    Твърдението очевидно е изпълнено за $\alpha = \varepsilon$, защото
+    \[\delta^\star(M,\varepsilon) \df M = \varepsilon^{-1}(M).\]
   \item
     Да примем, че за думи $\alpha$ с дължина $n$ е изпълнено Свойство (\ref{eq:13}).    
   \item
     Сега да разгледаме дума $\alpha$ с дължина $n+1$, т.е. $\alpha = \beta a$ и $|\beta| = n$. Тогава
     \begin{align*}
-      \delta^\star(\hat{M},\beta a) & = \delta(\delta^\star(\hat{M},\beta),a) & \comment{\text{от деф.}}\\
-                                    & =\delta(\hat{K},a) & \comment{\text{нека }\hat{K} \df \delta^\star(\hat{M},\beta)}\\
-                                    & = \hat{N}. & \comment N = a^{-1}(K)
+      \delta^\star(M,\beta a) & = \delta(\delta^\star(M,\beta),a) & \comment\text{от деф. на }\delta^\star\\
+                              & =\delta(\beta^{-1}(M),a) & \comment\text{от \IndHyp}\\
+                              & = a^{-1}(\beta^{-1}(M)) & \comment\text{от деф. на }\delta\\
+                              & = (\beta a)^{-1}(M). & \comment\text{от \Proposition{pullback}}
     \end{align*}
-    Свойство (\ref{eq:13}) приложено за $\beta$ ни казва, че
-    \[\delta^\star(\hat{M},\beta) = \hat{K} \iff \beta^{-1}(M) = K.\]
-    От дефиницията на $\delta$ имаме, че
-    \[\delta(\hat{K},a) = \hat{N} \iff N = a^{-1}(K).\]
-    Накрая заключаваме, че
-    \begin{align*}
-      \delta^\star(\hat{M},\beta a) = \hat{N} \iff N = a^{-1}(\beta^{-1}(M)) = \alpha^{-1}(M).
-    \end{align*}    
   \end{itemize}
 \end{proof}
 
 
-\begin{proposition}\label{pr:brzozowski:language}
-  За даден език $L$, нека $\B$ е детерминираният автомат построен по метода на Бжозовски.
-  Тогава $L = \L(\B)$.
-\end{proposition}
+\begin{important}
+  \begin{proposition}
+    \label{pr:brzozowski:language}
+    За даден език $L$, нека $\B$ е детерминираният автомат построен по метода на Бжозовски.
+    Тогава $L = \L(\B)$.
+  \end{proposition}  
+\end{important}
 \mynote{Тук е важно да отбележим, че все още не знаем дали $\B$ има крайно много състояния. В \Example{regular:brzozowski:an-bn} ще видим един детерминиран безкраен автомат за език, който не е регулярен.}
 \begin{hint}
   Съобразете, че имаме следните еквивалентности:
   \begin{align*}
     \alpha \in L & \iff \varepsilon\in\alpha^{-1}(L) & \comment\text{от \Problem{language-pullback}}\\
-    & \iff \varepsilon\in M\ \&\ \hat{M} = \delta^\star(\hat{L},\alpha) & \comment{M \df \alpha^{-1}(L)\text{ от \Proposition{regular:brzozowski:delta}}}\\
-                 & \iff \delta^\star(\qstart,\alpha) \in F & \comment \qstart \df \hat{L} \text{ и }\varepsilon \in \alpha^{-1}(L)\\
-                 & \iff \alpha \in \L(\B).
+                 & \iff \varepsilon \in \delta^\star_\B(L,\alpha) & \comment\text{ от \Proposition{regular:brzozowski:delta}}\\
+                 & \iff \delta^\star_\B(\qstart^\B,\alpha) \in F^\B & \comment \varepsilon \in \alpha^{-1}(L)\\
+                 & \iff \alpha \in \L(\B). & \comment\text{деф. на език на автомат}
   \end{align*}
 \end{hint}
 

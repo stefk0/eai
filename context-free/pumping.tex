@@ -325,13 +325,13 @@
     За произволно $i\in\Nat$ имаме извода:
     \begin{prooftree}
       \AxiomC{$A \yield{\star}yAv$}
-      \LeftLabel{\scriptsize{(\Proposition{pumping:iteration})}}
+      \LeftLabel{\scriptsize{(\ShortProposition{pumping:iteration})}}
       \UnaryInfC{$A \yield{\star}y^iAv^i$}
       \AxiomC{$A \yield{\star} u$}
-      \LeftLabel{\scriptsize{(\Proposition{pumping:ground})}}
+      \LeftLabel{\scriptsize{(\ShortProposition{pumping:ground})}}
       \BinaryInfC{$A \yield{\star} y^iuv^i$}
       \AxiomC{$S \yield{\star}xAw$}
-      \LeftLabel{\scriptsize{(\Proposition{pumping:ground})}}
+      \LeftLabel{\scriptsize{(\ShortProposition{pumping:ground})}}
       \BinaryInfC{$S \yield{\star} xy^iuv^iw$}
     \end{prooftree}
     Оттук заключаваме, че $(\forall i \in \Nat)[xy^iuv^iw \in \L(G)]$.

@@ -33,7 +33,7 @@
   \end{itemize}
   Трябва да докажем, че $\texttt{Gen} = \texttt{Gen[n]}$.
   \mynote{\writedown Докажете сами!}
-  Това ще направим като докажем, че за всяко $k$,
+  Това ще направим като докажем, че за всяко $k$, е изпълнена еквивалентността:
   \[A \in \texttt{Gen[k]} \iff (\exists \alpha\in\Sigma^\star)[A \yield{\leq k} \alpha]\]
   Дефинираме $G'$ като $V' = \texttt{Gen[n]}$ и правилата на $G'$ са само тези правила на $G$, в които участват променливи от $V'$ и букви от $\Sigma$.
 \end{hint}
@@ -65,13 +65,14 @@
   За да постигнем тази цел, ще започнем да строим множествата $\texttt{Reach[i]} \subseteq V$ по следния начин:
   \begin{align*}
     \texttt{Reach[0]} \df & \{S\}\\
-    \texttt{Reach[i+1]} % \df & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
+    % \texttt{Reach[i+1]}
+    % \df & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
                         %   & \cup \texttt{Reach[i]}\\
-                         \df & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \yield{\leq 1} \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\},
-  \end{align*}
-  което може да се запише и така:
-  \begin{align*}
-    \texttt{Reach[i+1]} = & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
+                         % \df & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \yield{\leq 1} \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\},
+  % \end{align*}
+  % което може да се запише и така:
+  % \begin{align*}
+    \texttt{Reach[i+1]} \df & \{ B \in V \mid (\exists A \in \texttt{Reach[i]})[ A \to_G \alpha B \beta\text{, за някои }\alpha,\beta \in (V \cup \Sigma)^\star]\}\\
                             & \cup \texttt{Reach[i]}.    
   \end{align*}
   Докажете, че за всяко $i$ е изпълнено:

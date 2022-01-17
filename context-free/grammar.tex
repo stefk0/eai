@@ -97,9 +97,9 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \UnaryInfC{$AS \derive{0}_G AS$}
     % \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{1}_G AS$}
-    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
+    \RightLabel{\scriptsize{(\ShortProposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{2}_G A$}
-    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:concat2}})}
+    \RightLabel{\scriptsize{(\ShortProposition{unrestricted-grammar:concat2}})}
     \BinaryInfC{$AS \derive{2}_G AA$}
     \RightLabel{\scriptsize{(транзитивност)}}
     \BinaryInfC{$S \derive{3}_G AA$}
@@ -136,10 +136,10 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$S \derive{3}_G AA$}
     \AxiomC{$A \derive{2}_G aabb$}
-    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
+    \RightLabel{\scriptsize{(\ShortProposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{5}_G aabbA$}
     \AxiomC{$A \derive{1}_G ab$}
-    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
+    \RightLabel{\scriptsize{(\ShortProposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
   Можем да приложим правилата за извод в различен ред и пак да получим същия краен резултат.
@@ -148,15 +148,15 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
     \AxiomC{$(S,AS) \in R$}
     \UnaryInfC{$S \derive{}_G AS$}
     \AxiomC{$A \derive{2} aabb$}
-    \RightLabel{\scriptsize{(\Proposition{unrestricted-grammar:padding})}}
+    \RightLabel{\scriptsize{(\ShortProposition{unrestricted-grammar:padding})}}
     \UnaryInfC{$AS \derive{2} aabbS$}
     % \RightLabel{\scriptsize{(1)}}
     \BinaryInfC{$S \derive{3}_G aabbS$}
-    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
+    \RightLabel{\scriptsize{(\ShortProposition{context-free-grammar:context-general-step})}}
     \AxiomC{$S \derive{2}_G A$}
     \BinaryInfC{$S \derive{5}_G aabbA$}
     \AxiomC{$A \derive{1}_G ab$}
-    \RightLabel{\scriptsize{(\Proposition{context-free-grammar:context-general-step})}}
+    \RightLabel{\scriptsize{(\ShortProposition{context-free-grammar:context-general-step})}}
     \BinaryInfC{$S \derive{6}_G aabbab$}
   \end{prooftree}
 \end{example}

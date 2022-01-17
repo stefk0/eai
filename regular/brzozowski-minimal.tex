@@ -18,28 +18,31 @@
   \[\L_\A(q_\alpha) = \alpha^{-1}(L).\]
 \end{proposition}
 \begin{proof}
-  За произволна дума $\gamma$ имаме следните еквивалентности:
+  За произволна дума $\omega$ имаме следните еквивалентности:
   \begin{align*}
-    \gamma \in \L_\A(q_\alpha) & \iff \delta^\star(q_\alpha,\gamma) \in F & \comment \text{от деф. на }\L_\A(q_\alpha)\\
-                               & \iff \delta^\star(\delta^\star(\qstart,\alpha),\gamma) \in F & \comment q_\alpha \df \delta^\star(\qstart,\alpha)\\
-                               & \iff \delta^\star(\qstart,\alpha\gamma) \in F & \comment\text{\Proposition{dfa:delta-star}}\\
-                               & \iff \alpha\gamma \in \L(\A) & \comment \text{деф. на }\L(\A)\\
-                               & \iff \gamma \in \alpha^{-1}(L). & \comment{L = \L(\A)}
+    \omega \in \L_\A(q_\alpha) & \iff \delta^\star(q_\alpha,\omega) \in F & \comment \text{от деф. на }\L_\A(q_\alpha)\\
+                               & \iff \delta^\star(\delta^\star(\qstart,\alpha),\omega) \in F & \comment q_\alpha \df \delta^\star(\qstart,\alpha)\\
+                               & \iff \delta^\star(\qstart,\alpha\omega) \in F & \comment\text{\Proposition{dfa:delta-star}}\\
+                               & \iff \alpha\omega \in \L(\A) & \comment \text{деф. на }\L(\A)\\
+                               & \iff \alpha\omega \in L & \comment{L = \L(\A)}\\
+                               & \iff \omega \in \alpha^{-1}(L). & \comment\text{деф. на }\alpha^{-1}(L)
   \end{align*}
 \end{proof}
 
-\begin{proposition}
-  Нека $\B$ е автомат на Бжозовски за езика $L$. Тогава за произволно състояние $\hat{M}$ на $\B$,
-  \[\L_\B(\hat{M}) = M.\]
-\end{proposition}
+\begin{important}
+  \begin{proposition}
+    Нека $\B$ е автомат на Бжозовски за езика $L$. Тогава за произволно състояние $M$ на $\B$ имаме равенството:
+    \[\L_\B(\underbrace{M}_{\text{състояние}}) = \underbrace{M}_{\text{език}}.\]
+  \end{proposition}  
+\end{important}
 \begin{proof}
   Понеже за произволна дума $\alpha$ имаме еквивалентностите
   \begin{align*}
-    \alpha \in \L_\B(\hat{M}) & \iff \delta^\star_\B(\hat{M},\alpha) \in F^\B\\
-                              & \iff \varepsilon \in \alpha^{-1}(M)\\
-                              & \iff \alpha \in M,
+    \alpha \in \L_\B(M) & \iff \delta^\star_\B(M,\alpha) \in F^\B\\
+                        & \iff \varepsilon \in \alpha^{-1}(M) & \comment\text{деф. на }F^\B\\
+                        & \iff \alpha \in M, & \comment\text{от \Problem{language-pullback}}
   \end{align*}
-  заключаваме, че $\L_\B(\hat{M}) = M$.
+  заключаваме, че $\L_\B(M) = M$.
 \end{proof}
 
 
@@ -56,22 +59,32 @@
   Докажете, че $g$ е инективна.
 \end{hint}
 
-\begin{lemma}\label{lem:brzozowski:surjective}
+\begin{lemma}
+  \label{lem:brzozowski:surjective}
   Нека $L$ е регулярен език и $\A$ е ДКА, който разпознава $L$,
   а $\B$ е автоматът на Бжозовски за $L$. Тогава $|Q^\B| \leq |Q^\A|$.
 \end{lemma}
 \mynote{Тази лема ни казва, че автоматът на Бжозовски има възможно най-малкия брой състояния измежду всички ДКА разпознаващи $L$.}
 \begin{proof}
   Да разгледаме функцията $f:Q^\A \to Q^\B$ зададена по следния начин:
-  \[f(q) \df \hat{M}, \text{ където } M = \L_\A(q).\]
-  Нека първо да съобразим защо $f$ е добре дефинирана функция.
-  Да напомним, че приехме, че $\A$ е свързан автомат. Тогава за произволно състояние $p$,
-  нека $\alpha$ е една дума, за която $p = \delta^\star(\qstart,\alpha)$, т.е. $p = q_\alpha$
-  според означението, което въведохме в началото на \Section{regular:brzozowski-minimal}.
-  Тогава от \Proposition{well-defined-pullback} следва, че $f(q_\alpha) = \hat{M}$, където $M = \alpha^{-1}(L)$, защото $\alpha^{-1}(L) = \L_\A(q_\alpha)$.
+  \begin{equation}
+    \label{eq:reg:brzozowski-minimal:f}
+    f(q) \df \L_\A(q).
+  \end{equation}
+  Първо, да видим защо за всяко състояние $q \in Q^\A$, то $f(q) \in Q^\B$.
+  Да напомним, че приехме още в началото на раздела приехме, че $\A$ е свързан автомат.
+  Това означава, че за всяко състояние $p$, съществува дума $\alpha$, за която $p = \delta^\star_\A(\qstart^\A,\alpha)$,
+  т.е. $p = q_\alpha$ според означението, което въведохме в началото на \Section{regular:brzozowski-minimal}.
+  Тогава от \Proposition{well-defined-pullback} следва, че $f(q_\alpha) = \alpha^{-1}(L) \in Q^\B$, защото $\alpha^{-1}(L) = \L_\A(q_\alpha)$.
   
-  Освен това, $f$ е сюрективна, защото, според дефиницията на автомат на Бжозовски, за произволно състояние $\hat{M} \in Q^\B$ има дума $\alpha$,
-  за която $M = \alpha^{-1}(L)$. Тогава $f(q_\alpha) = \hat{M}$.
+  % нека първо да съобразим защо $f$ е добре дефинирана.% , т.е. защо дефиницията (\ref{eq:reg:brzozowski-minimal:f}) задава функция.
+  % Да напомним, че приехме, че $\A$ е свързан автомат. Тогава за произволно състояние $p$,
+  % нека $\alpha$ е една дума, за която $p = \delta^\star(\qstart,\alpha)$, т.е. $p = q_\alpha$
+  % според означението, което въведохме в началото на \Section{regular:brzozowski-minimal}.
+  % Тогава от \Proposition{well-defined-pullback} следва, че $f(q_\alpha) = \alpha^{-1}(L)$, защото $\alpha^{-1}(L) = \L_\A(q_\alpha)$.
+
+  Второ, да видим, че $f$ е сюрективна функция. За тази цел, да разгледаме произволно състояние $M \in Q^\B$, което означава, че има дума $\alpha$, за която $M = \alpha^{-1}(L)$.
+  Отново според \Proposition{well-defined-pullback}, $f(q_\alpha) = \L_\A(q_\alpha) = \alpha^{-1} = M$.
   Сега от \Proposition{surjective-cardinality} можем да заключим, че
   \[|Q^\B| \leq |Q^\A|.\]
 \end{proof}
@@ -124,8 +137,12 @@
   Ясно е, че $\A$ е свързан автомат, т.е. всяко състояние $p$ на $\A$ е от вида $p = q_\alpha$.
   В противен случай, $\A$ нямаше да бъде минимален.
   Да разгледаме функцията $f:Q^\A \to Q^\B$, където
-  \[f(p) = \hat{M}\ \dff\ M = \L_\A(p).\]
-  От \Proposition{well-defined-pullback} знаем, че $f(q_\alpha) = \L_\A(q_\alpha) = \alpha^{-1}(L)$ следва, че $f$ е сюрективна.
+  \begin{equation}
+    \label{eq:reg:brzozowski-minimal:f:2}
+    f(p) \df \L_\A(p).
+  \end{equation}
+  От \Lemma{brzozowski:surjective} знаем, че $f$ е сюрективна.
+  % От \Proposition{well-defined-pullback} знаем, че $f(q_\alpha) = \L_\A(q_\alpha) = \alpha^{-1}(L)$ следва, че $f$ е сюрективна.
   Понеже $|Q^\A| = |Q^\B|$, то от \Proposition{surjection-bijection} имаме, че $f$ е всъщност биекция.
   Остава да видим защо $\A \cong_f \B$.
   Да напомним, че състоянията на $Q^\A$ можем да ги разглеждаме като $q_\alpha$ и тогава $\L_\A(q_\alpha) = \alpha^{-1}(L)$ от \Proposition{well-defined-pullback}.
@@ -134,7 +151,9 @@
     За началното състояние имаме, че:
     \begin{align*}
       f(\qstart^\A) & = f(q_\varepsilon) & \comment{\qstart^\A = q_\varepsilon}\\
-                 & = \hat{L}. & \comment{\varepsilon^{-1}(L) = L}
+                    & = \L_\A(q_\varepsilon) & \comment\text{от деф. на }f\\
+                    & = \varepsilon^{-1}(L) & \comment\text{\Proposition{well-defined-pullback}}\\
+                    & = L.
     \end{align*}    
   \item
     За финалните състояния имаме, че:
@@ -142,7 +161,7 @@
       q_\alpha \in F^\A & \iff \delta^\star_\A(\qstart,\alpha) \in F^\A & \comment q_\alpha = \delta^\star_\A(\qstart,\alpha)\\
                         & \iff \alpha \in \L(\A) & \comment\text{деф. на }\L(\A)\\
                         & \iff \varepsilon \in \alpha^{-1}(L) & \comment{L = \L(\A)}\\
-                        & \iff \hat{M} \in F^\B. & \comment\text{ за }M = \alpha^{-1}(L)
+                        & \iff \alpha^{-1}(L) \in F^\B. & \comment\text{деф. на }F^\B
     \end{align*}
   \item
     \mynote{
@@ -153,9 +172,9 @@
         \node[state]                  (2) [right of=1] {$q_\alpha$};
         \node[state, inner sep=2pt]                  (3) [right of=2] {$q_{\alpha b}$};
 
-        \node[state, initial below, inner sep=2pt]   (4) [below of=1] {$\hat{L}$};
-        \node[state, inner sep=2pt]                  (5) [below of=2] {$\hat{M}$};
-        \node[state, inner sep=2pt]                  (6) [below of=3] {$\hat{N}$};
+        \node[state, initial below, inner sep=2pt]   (4) [below of=1] {$L$};
+        \node[state, inner sep=2pt]                  (5) [below of=2] {$L_\alpha$};
+        \node[state, inner sep=2pt]                  (6) [below of=3] {$L_{\alpha b}$};
         
         \path
         (2) edge [bend left=15]  node [above] {$b$} (3)
@@ -167,6 +186,12 @@
         \draw [photon] (1) -- node [above] {$\alpha$} (2);
         \draw [photon] (4) -- node [above] {$\alpha$} (5);
       \end{tikzpicture}
+
+      Тук сме означили
+      \begin{align*}
+        & L_{\alpha} = \alpha^{-1}(L)\\
+        & L_{\alpha b} = (\alpha b)^{-1}(L).
+      \end{align*}
     }
     Остава да докажем, че за произволна буква $b$ и произволни състояния $q,p \in Q_1$ е изпълнено, че:
     \begin{equation}
@@ -175,26 +200,43 @@
     \end{equation}
     Понеже всяко състояние на $\A$ може да се запише като $q_\alpha$ за някоя дума $\alpha$, то можем да запишем горния ред и така:
     \[\delta_\A(q_\alpha,b) = p\ \iff\ \delta_\B(f(q_{\alpha}),b) = f(p).\]
-    Нека положим
-    \begin{align*}
-      M & \df \alpha^{-1}(L)\\
-      N & \df (\alpha b)^{-1}(L) = b^{-1}(\alpha^{-1}(L)) = b^{-1}(M).    
-    \end{align*}
-    От \Proposition{well-defined-pullback} знаем, че $\hat{M} = f(q_\alpha)$, защото
+    % Нека положим
+    % \begin{align*}
+    %   M & \df \alpha^{-1}(L)\\
+    %   N & \df (\alpha b)^{-1}(L) = b^{-1}(\alpha^{-1}(L)) = b^{-1}(M).    
+    % \end{align*}
+    От \Proposition{well-defined-pullback} знаем, че $M = f(q_\alpha)$, защото
     $\L_\A(q_\alpha) = \alpha^{-1}(L)$. 
-    За посоката $(\Rightarrow)$, нека разгледаме състоянието $p$, за което $\delta_\A(q_\alpha,b) = p$.
-    Ясно е, че $p = q_{\alpha b}$, защото
-    \[p = \delta_\A(q_\alpha,b) = \delta_\A(\delta^\star_\A(\qstart^\A,\alpha),b) = \delta^\star_\A(\qstart^\A,\alpha b).\]
-    Тогава имаме, че $f(p) = f(q_{\alpha b}) = \hat{N}$, защото $(\alpha b)^{-1}(L) = \L_\A(q_{\alpha b})$ отново според \Proposition{well-defined-pullback}.
+
+    За посоката $(\Rightarrow)$, нека $p$ е състояние, за което имаме лявата страна на (\ref{eq:brzozowski-minimal:eq}), т.е.
+    \[\delta_\A(q_\alpha,b) = p.\]
+    Оттук веднага е ясно, че според нашите означения, $p = q_{\alpha b}$.
+    Според дефиницията на $f$ имаме следното:
+    \begin{align*}
+      & f(q_{\alpha}) = \L_\A(q_\alpha) = \alpha^{-1}(L)\\
+      & f(q_{\alpha b}) = \L_\A(q_{\alpha b}) = (\alpha b)^{-1}(L) = b^{-1}(\alpha^{-1}(L)).
+    \end{align*}
+
+    % $f(q_{\alpha b}) = \L_\A(q_{\alpha b}) = (\alpha b)^{-1}(L)$
+
+
+
+    % разгледаме състоянието $p$, за което $\delta_\A(q_\alpha,b) = p$.
+    % Ясно е, че $p = q_{\alpha b}$, защото
+    % \[p = \delta_\A(q_\alpha,b) = \delta_\A(\delta^\star_\A(\qstart^\A,\alpha),b) = \delta^\star_\A(\qstart^\A,\alpha b).\]
+    % Тогава имаме, че $f(p) = f(q_{\alpha b}) = N$, защото $(\alpha b)^{-1}(L) = \L_\A(q_{\alpha b})$ отново според \Proposition{well-defined-pullback}.
     Остава единствено да отбележим, че от конструкцията на автомата $\B$ знаем, че:
-    \[\delta_\B(\underbrace{\hat{M}}_{f(q_{\alpha})},b) = \underbrace{\hat{N}}_{f(p)}.\]
+    \[\delta_\B(\underbrace{\alpha^{-1}(L)}_{f(q_{\alpha})},b) = \underbrace{(\alpha b)^{-1}(L)}_{f(p)}.\]
     Така получихме дясната страна на еквивалентността в Свойство~\ref{eq:brzozowski-minimal:eq}.
     
-    За посоката $(\Leftarrow)$, нека $p$ е състояние, за което $\delta_\B(f(q_{\alpha}),b) = f(p)$.
-    Според конструкцията на автомата $\B$, $\delta_\B(\hat{M},b) = \hat{N} = f(p)$.
-    Знаем също, че $N = \L_\A(p) = (\alpha b)^{-1}(L) = \L_\A(q_{\alpha b})$.
-    Понеже $f$ е биекция, то $p = q_{\alpha b}$, защото $\L_\A(p) = \L_\A(q_{\alpha b})$.
-    Заключаваме, че \[\delta_\A(q_\alpha,b) = p.\]
+    За посоката $(\Leftarrow)$, нека $p$ е състояние, за което имаме дясната страна на (\ref{eq:brzozowski-minimal:eq}), т.е.
+    \[\delta_\B(f(q_{\alpha}),b) = f(p).\]
+    Според конструкцията на автомата $\B$,
+    \[\delta_\B(\underbrace{\alpha^{-1}(L)}_{f(q_\alpha)},b) = \underbrace{(\alpha b)^{-1}(L)}_{f(p)}.\]
+    Сега на помощ ни идва фактът, че $f$ е биекция.
+    Понеже $f(p) = (\alpha b)^{-1}(L)$ и $f(q_{\alpha b}) = (\alpha b)^{-1}(L)$ и $f$ е биекция, то
+    $p = q_{\alpha b}$ и следователно, $\delta_\A(q_\alpha, b) = p$.
+    Така получихме дясната страна на еквивалентността (\ref{eq:brzozowski-minimal:eq}).
   \end{itemize}
 \end{proof}
 
