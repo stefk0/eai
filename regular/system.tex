@@ -1,66 +1,95 @@
 \section{Системи от регулярни изрази}
 
-\mynote{Тук се описва един по-алгебричен подход за описание на регулярните езици \cite[стр. 100]{sakarovitch-book}.}
+\mynote{\cite[стр. 100]{sakarovitch-book}}
+В този раздел ще опишем един алгебричен поглед към регулярните езици, с чиято помощ можем да построим регулярен израз по даден краен автомат.
+
 \begin{important}
   \begin{lemma}[Ардън \cite{arden}]
     \label{lem:regular:system:arden}
-    Нека $\mathbf{r}$  и $\mathbf{p}$ са регулярни изрази.
-    Тогава регулярният израз $\mathbf{r}^\star \mathbf{p}$ е най-малкото решение на уравнението $X = \mathbf{r} \cdot X + \mathbf{p}$.
-    Ако $\varepsilon  \not \in \L(\mathbf{r})$, то това решение е и единствено.
+    Нека $\bm{r}$  и $\bm{p}$ са регулярни изрази.
+    Тогава регулярният израз $\bm{r}^\star \bm{p}$ е най-малкото решение на уравнението
+    \begin{equation}
+      \label{eq:system:arden}
+      X = \bm{r} \cdot X + \bm{p}.
+    \end{equation}
+    Ако $\varepsilon  \not \in \L(\bm{r})$, то това решение е и единствено.
   \end{lemma}
 \end{important}
 \begin{hint}
-  Първо, да видим защо $\mathbf{r}^\star \mathbf{p}$ е решение. Но това е лесно.
-  Просто заместваме $X$ с $\mathbf{r}^\star \mathbf{p}$ и получаваме равенствата:
+  Първо, да видим защо $\bm{r}^\star \bm{p}$ е решение на уравнението (\ref{eq:system:arden}).
+  Това е лесно. Просто заместваме променливата $X$ с $\bm{r}^\star \bm{p}$ и получаваме равенствата:
   \begin{align*}
-    \mathbf{r}^\star \mathbf{p} & = \mathbf{r} \cdot \mathbf{r}^\star \mathbf{p} + \mathbf{p}\\
-                                & = \mathbf{r}^+ \cdot \mathbf{p} + \mathbf{\varepsilon} \cdot \mathbf{p}\\
-                                & = (\mathbf{r}^+ + \mathbf{\varepsilon}) \cdot \mathbf{p}\\
-                                & = \mathbf{r}^\star \cdot \mathbf{p}.
+    \bm{r}^\star \bm{p} & = \bm{r} \cdot \bm{r}^\star \bm{p} + \bm{p}\\
+                                & = \bm{r}^+ \cdot \bm{p} + \bm{\varepsilon} \cdot \bm{p}\\
+                                & = (\bm{r}^+ + \bm{\varepsilon}) \cdot \bm{p}\\
+                                & = \bm{r}^\star \cdot \bm{p}.
   \end{align*}
-  Второ, да видим защо $\mathbf{r}^\star \cdot \mathbf{p}$ е най-малкото решение.
-  И така, нека приемем, че $\mathbf{y}$ е друго решение на системата, т.е.
-  \[\mathbf{y} = \mathbf{r} \cdot \mathbf{y} + \mathbf{p}.\]
-  Трябва да проверим, че $\L(\mathbf{r}^\star \cdot \mathbf{p}) \subseteq \L(\mathbf{y})$.
+  Второ, да видим защо $\bm{r}^\star \cdot \bm{p}$ е най-малкото решение на уравнението (\ref{eq:system:arden}).
+  За целта, нека приемем, че $\bm{y}$ е друго решение, т.е.
+  \[\bm{y} = \bm{r} \cdot \bm{y} + \bm{p}.\]
+  Трябва да проверим, че $\L(\bm{r}^\star \cdot \bm{p}) \subseteq \L(\bm{y})$.
   Тук ще използваме представянето
-  \[\L(\mathbf{r}^\star \cdot \mathbf{p}) = \bigcup_n \L(\mathbf{r}^n \cdot \mathbf{r}).\]
-  Ще докажем с индукция по $n$, че за всяко $n$ е изпълнено:
-  \[\L(\mathbf{r}^n \cdot \mathbf{p}) \subseteq \L(\mathbf{y}).\]           
+  \[\L(\bm{r}^\star \cdot \bm{p}) = \bigcup_n \L(\bm{r}^n \cdot \bm{r}).\]
+  Ще докажем с индукция по $n$, че за всяко $n$ е изпълнено включването:
+  \[\L(\bm{r}^n \cdot \bm{p}) \subseteq \L(\bm{y}).\]           
   \begin{itemize}
   \item
-    Нека $n = 0$. Понеже $\mathbf{y} = \mathbf{r} \cdot \mathbf{y} + \mathbf{p}$ е ясно, че $\L(\mathbf{p}) \subseteq \L(\mathbf{y})$.
+    Нека $n = 0$. Понеже $\bm{y} = \bm{r} \cdot \bm{y} + \bm{p}$ е ясно, че $\L(\bm{p}) \subseteq \L(\bm{y})$
+    или с други думи, $\L(\bm{r}^0 \cdot \bm{p}) \subseteq \L(\bm{y})$.
   \item
-    Нека сега $n > 0$. От \IndHyp имаме, че $\L(\mathbf{r}^{n-1} \cdot \mathbf{p}) \subseteq \L(\mathbf{y})$. Тогава получаваме, че
+    Нека сега $n > 0$. От \IndHyp имаме, че $\L(\bm{r}^{n-1} \cdot \bm{p}) \subseteq \L(\bm{y})$. Тогава,
+    като конкатенираме с $\L(\bm{r})$ от двете страни, получаваме:
     \begin{align*}
-      \L(\mathbf{r} \cdot \mathbf{r}^{n-1} \cdot \mathbf{p}) & \subseteq \L(\mathbf{r} \cdot \mathbf{y})\\
-                                                             & \subseteq \L(\mathbf{r}\cdot\mathbf{y}+\mathbf{p})\\
-                                                             & = \L(\mathbf{y}).
+      \L(\bm{r} \cdot \bm{r}^{n-1} \cdot \bm{p}) & \subseteq \L(\bm{r} \cdot \bm{y})\\
+                                                             & \subseteq \L(\bm{r}\cdot\bm{y}+\bm{p})\\
+                                                             & = \L(\bm{y}).
     \end{align*}
-    Така заключаваме, че за всяко $n$, $\L(\mathbf{r}^n \cdot p) \subseteq \L(\mathbf{y})$.
+    Така заключаваме, че за всяко $n$, е изпълнено включването $\L(\bm{r}^n \cdot p) \subseteq \L(\bm{y})$ и следователно $\L(\bm{r}^\star \cdot \bm{p}) \subseteq \L(\bm{y})$.
   \end{itemize}
 
-  \mynote{Да отбележим, че ако $\varepsilon \in \L(\mathbf{r})$, то $\Sigma^\star$ е решение на системата.}
-  Сега остана да докажем третата част. Нека $\varepsilon \not\in \L(\mathbf{r})$.
-  Ще докажем, че ако $\mathbf{y}$ е решение на системата, то $\mathbf{y} = \mathbf{r}^\star \cdot \mathbf{p}$. Понеже вече знаем, че $\mathbf{r}^\star \cdot \mathbf{p}$ е най-малкото решение на системата, то е достатъчно да докажем, че за всяко решение $\mathbf{y}$ на системата е изпълнено, че $\L(\mathbf{y}) \subseteq \L(\mathbf{r}^\star \cdot \mathbf{p})$.
+  \mynote{Да отбележим, че ако $\varepsilon \in \L(\bm{r})$, то $\Sigma^\star$ е решение на системата.}
+  Остана да докажем, че ако $\varepsilon \not\in \L(\bm{r})$, to $\bm{r}^\star \cdot \bm{p}$ е единственото решение на уравнението (\ref{eq:system:arden}).
+  Ще направим това като докажем, че всяко
+  решение $\bm{y}$ на уравнението (\ref{eq:system:arden}) е такова, че $\bm{y} = \bm{r}^\star \cdot \bm{p}$.
+  Понеже вече знаем, че $\bm{r}^\star \cdot \bm{p}$ е най-малкото решение на (\ref{eq:system:arden}), то е достатъчно да докажем, че за всяко решение $\bm{y}$ на (\ref{eq:system:arden}) е изпълнено, че
+  $\L(\bm{y}) \subseteq \L(\bm{r}^\star \cdot \bm{p})$, защото включването $\L(\bm{r}^\star \cdot \bm{p}) \subseteq \L(\bm{y})$ следва от факта, че $\bm{r}^\star \cdot \bm{p}$ е най-малкото решение.
 
-  Ще докажем с индукция по дължината на думата $\alpha$, че
-  \[(\forall \alpha \in \Sigma^\star)[\alpha \in \L(\mathbf{y}) \implies \alpha \in \L(\mathbf{r}^\star \cdot \mathbf{p})].\]
-  Нека $|\alpha| = 0$, т.е. $\alpha = \varepsilon$.
-  Да приемем, че $\varepsilon \in \L(\mathbf{y})$.
-  Щом $\mathbf{y}$ е решение, то $\varepsilon \in \L(\mathbf{r} \cdot \mathbf{y} + \mathbf{p})$,
-  но понеже $\varepsilon \not \in \L(\mathbf{r})$, то със сигурност $\varepsilon \in \L(\mathbf{p})$.
-  Така получаваме, че
-  \[\varepsilon \in \L(\mathbf{y}) \implies \varepsilon\in\L(\mathbf{r}^\star \cdot \mathbf{p}).\]
-  Нека приемем като индукционно предположение, че 
-  \[(\forall \alpha \in \Sigma^{\leq n})[\alpha \in \L(\mathbf{y}) \implies \alpha \in \L(\mathbf{r}^\star \cdot \mathbf{p})].\]
-  Да вземем сега дума $\alpha \in \L(\mathbf{y})$ с $|\alpha| = n+1$. Ако такива думи няма, то импликацията е изпълнена по тривиални причини.
-  Отново, щом $\alpha \in \L(\mathbf{r} \cdot \mathbf{y} + \mathbf{p})$, то имаме два случая.
-  Ако $\alpha \in \L(\mathbf{p})$, то всичко е ясно.
-  Нека $\alpha\in\L(\mathbf{r}\cdot \mathbf{y})$. Тогава $\alpha = \alpha_1 \cdot \alpha_2 $ и
-  $\alpha_1 \in \L(\mathbf{r})$ и $\alpha_2 \in \L(\mathbf{y})$.
-  Понеже $\varepsilon \not\in\L(\mathbf{r})$, то $|\alpha_1| \geq 1$ и следователно $|\alpha_2| < |\alpha|$.
-  Това означава, че от \IndHyp за $\alpha_2$ получаваме, че $\alpha_2 \in \L(\mathbf{r}^\star\cdot \mathbf{p})$,
-  откъдето заключаваме, че $\alpha = \alpha_1 \cdot \alpha_2 \in \L(\mathbf{r}^\star \cdot \mathbf{p})$.
+  Щом трябва да докажем, че $\L(\bm{y}) \subseteq \L(\bm{r}^\star \cdot \bm{p})$,
+  то това означава да докажем
+  \[(\forall \alpha \in \Sigma^\star)[\alpha \in \L(\bm{y}) \implies \alpha \in \L(\bm{r}^\star \cdot \bm{p})].\]
+  И така, ще докажем с индукция по $n$, че
+  \[(\forall n)(\forall \alpha \in \Sigma^{\leq n})[\alpha \in \L(\bm{y}) \implies \alpha \in \L(\bm{r}^\star \cdot \bm{p})].\]
+  \begin{itemize}
+  \item
+    Нека $n = 0$ и да вземем дума $\alpha \in \Sigma^{\leq 0}$, което означава, че $\alpha = \varepsilon$.
+    Да приемем, че $\varepsilon \in \L(\bm{y})$, защото в противен случай импликацията е автоматично изпълнена.
+    Щом $\bm{y}$ е решение, то $\varepsilon \in \L(\bm{r} \cdot \bm{y} + \bm{p})$,
+    но понеже $\varepsilon \not \in \L(\bm{r})$, то със сигурност $\varepsilon \in \L(\bm{p})$.
+    Така получаваме, че
+    \[\varepsilon \in \L(\bm{y}) \implies \varepsilon\in\L(\bm{r}^\star \cdot \bm{p}),\]
+    откъдето веднага следва, че
+    \[(\forall \alpha \in \Sigma^{\leq 0})[\alpha \in \L(\bm{y}) \implies \alpha \in \L(\bm{r}^\star \cdot \bm{p})].\]
+  \item
+    Нека сега $n > 0$, като приемем, че имаме индукционно предположение, т.е.
+    \[(\forall \alpha \in \Sigma^{\leq n-1})[\alpha \in \L(\bm{y}) \implies \alpha \in \L(\bm{r}^\star \cdot \bm{p})].\]
+    Ще докажем, че
+    \[(\forall \alpha \in \Sigma^{\leq n})[\alpha \in \L(\bm{y}) \implies \alpha \in \L(\bm{r}^\star \cdot \bm{p})].\]
+    За целта, да вземем произволна дума $\alpha \in \Sigma^{\leq n}$.
+    Ако всъщност $|\alpha| < n$, то от \IndHyp веднага следва, че импликацията е изпълнена за $\alpha$.
+
+    Нека $|\alpha| = n$. Ако $\alpha \not\in \L(\bm{y})$, то отново импликацията е изпълнена по
+    тривиални причини.
+    Интересният случай е когато $|\alpha| = n$ и $\alpha \in \L(\bm{y})$.
+    Понеже $\bm{y}$ е решение на (\ref{eq:system:arden}), то $\alpha \in \L(\bm{r} \cdot \bm{y} + \bm{p})$. Сега имаме два случая.
+    \begin{itemize}
+    \item
+      Ако $\alpha \in \L(\bm{p})$, то всичко е ясно, защото тогава $\alpha \in \L(\bm{r}^\star \cdot \bm{p})$.
+    \item
+      Ако $\alpha\in\L(\bm{r}\cdot \bm{y})$, то $\alpha = \alpha_1 \cdot \alpha_2 $, за някои думи $\alpha_1$ и $\alpha_2$, и $\alpha_1 \in \L(\bm{r})$ и $\alpha_2 \in \L(\bm{y})$.
+      Понеже $\varepsilon \not\in\L(\bm{r})$, то $|\alpha_1| \geq 1$ и следователно $|\alpha_2| < |\alpha| = n$. Това означава, че от \IndHyp получаваме, че $\alpha_2 \in \L(\bm{r}^\star\cdot \bm{p})$,
+    откъдето заключаваме, че $\alpha = \alpha_1 \cdot \alpha_2 \in \L(\bm{r} \cdot \bm{r}^\star \cdot \bm{p}) \subseteq \L(\bm{r}^\star \cdot \bm{p})$.
+    \end{itemize}
+  \end{itemize}
 \end{hint}
 
 Тази лема ни дава един нов начин за намиране на регулярен израз за автоматен език.
@@ -86,7 +115,7 @@
       (3) edge [loop above]    node [above] {$a,b$} (3);
     \end{tikzpicture}
   \end{center}
-  \caption{$\L(\A) \stackrel{?}{=} \L(\mathbf{a^\star b(a+b)^\star})$.}
+  \caption{$\L(\A) \stackrel{?}{=} \L(\bm{a^\star b(a+b)^\star})$.}
 \end{figure}
 
 На него съответства следната система:
