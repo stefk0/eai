@@ -85,14 +85,16 @@
   \[F^\B \df \{ M \in Q^\B\mid \varepsilon \in M\}.\]
 \end{itemize}
 
-\begin{proposition}\label{pr:regular:brzozowski:delta}
-  Нека $\B$ е автоматът на Бжозовски за езика $L$.
-  За всяка дума $\alpha$ и всяко състояние $M \in Q^\B$ е изпъленена еквивалентността:
-  \begin{equation}
-    \label{eq:13}
-    \delta^\star(M,\alpha) = \alpha^{-1}(M).
-  \end{equation}
-\end{proposition}
+\begin{important}
+  \begin{proposition}\label{pr:regular:brzozowski:delta}
+    Нека $\B$ е автоматът на Бжозовски за езика $L$.
+    За всяка дума $\alpha$ и всяко състояние $M \in Q^\B$ е изпъленено равеството:
+    \begin{equation}
+      \label{eq:13}
+      \delta^\star(M,\alpha) = \alpha^{-1}(M).
+    \end{equation}
+  \end{proposition}  
+\end{important}
 \begin{hint}
   \mynote{\todo Опитайте се да докажете това твърдение сами!}
   Индукция по дължината на думата $\alpha$, като използвате, че

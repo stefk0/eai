@@ -5,9 +5,10 @@
 
 \begin{important}
   \begin{lemma}[Ардън \cite{arden}]
+    \index{Ардън}
     \label{lem:regular:system:arden}
     Нека $\bm{r}$  и $\bm{p}$ са регулярни изрази.
-    Тогава регулярният израз $\bm{r}^\star \bm{p}$ е най-малкото решение на уравнението
+    Тогава регулярният израз $\bm{r}^\star \cdot \bm{p}$ е най-малкото решение на уравнението
     \begin{equation}
       \label{eq:system:arden}
       X = \bm{r} \cdot X + \bm{p}.
@@ -92,8 +93,14 @@
   \end{itemize}
 \end{hint}
 
-Тази лема ни дава един нов начин за намиране на регулярен израз за автоматен език.
+\begin{problem}
+  Нека $\bm{r}$  и $\bm{p}$ са регулярни изрази.
+  Тогава регулярният израз $\bm{p} \cdot \bm{r}^\star$ е най-малкото решение на уравнението
+  \[X = X \cdot \bm{r} + \bm{p}.\]
+  Ако $\varepsilon  \not \in \L(\bm{r})$, то това решение е и единствено.
+\end{problem}
 
+\hyperref[lem:regular:system:arden]{Лемата на Ардън} ни дава един нов начин за намиране на регулярен израз описващ езика на даден автомат.
 
 \begin{example}
 Да разгледаме отново автомата от \Figure{a2}.
@@ -120,32 +127,69 @@
 
 На него съответства следната система:
 \begin{align*}
-  & X_0 = a \cdot X_1 + b \cdot X_2 + \emptyset\\
-  & X_1 = a \cdot X_1 + b \cdot X_2 + \emptyset\\
-  & X_2 = a \cdot X_2 + b \cdot X_2 + \varepsilon.
+  & L_0 = a \cdot L_1 + b \cdot L_2 + \emptyset\\
+  & L_1 = a \cdot L_1 + b \cdot L_2 + \emptyset\\
+  & L_2 = a \cdot L_2 + b \cdot L_2 + \varepsilon.
 \end{align*}
 
-Чрез прилагане на \hyperref[lem:regular:system:arden]{лемата на Ардън} само за последното уравнение и заместване получаваме следното:
+
+Да разгледаме само последния ред на системата:
+\[L_2 = (a+b) \cdot L_2 + \varepsilon.\]
+Чрез прилагане на \hyperref[lem:regular:system:arden]{лемата на Ардън} получаваме, че
+единственото решение на това уравнение е $(a+b)^\star$.
+В първите два реда на системата заместваме $L_2$ с $(a+b)^\star$ и получаваме системата:
+\begin{align*}
+  & L_0 = a \cdot L_1 + b \cdot (a+b)^\star\\
+  & L_1 = a \cdot L_1 + b \cdot (a+b)^\star\\
+  & L_2 = (a+b)^\star.
+\end{align*}
+
+Сега вече би трябвало да е ясно как продължаваме. Разглеждаме само втория ред на системата и 
+прилагаме \hyperref[lem:regular:system:arden]{лемата на Ардън} за него и получаваме, че единственото
+решение на втория ред от системата е $a^\star \cdot b \cdot (a+b)^\star$.
+Така получаваме, след заместване, следните уравнения:
 
 \begin{align*}
-  & X_0 = a \cdot X_1 + b \cdot (a+b)^\star\\
-  & X_1 = a \cdot X_1 + b \cdot (a+b)^\star\\
-  & X_2 = (a+b)^\star.
+  & L_0 = a \cdot a^\star \cdot b \cdot (a+b)^\star + b \cdot (a+b)^\star\\
+  & L_1 = a^\star \cdot b \cdot (a+b)^\star\\
+  & L_2 = (a+b)^\star.
 \end{align*}
 
-След това, прилагаме \hyperref[lem:regular:system:arden]{лемата на Ардън} за второто уравнение. Така получаваме, след заместване, следните уравнения:
-
-\begin{align*}
-  & X_0 = a \cdot a^\star \cdot b \cdot (a+b)^\star + b \cdot (a+b)^\star\\
-  & X_1 = a^\star \cdot b \cdot (a+b)^\star\\
-  & X_2 = (a+b)^\star.
-\end{align*}
-
-Заключаваме, че езикът на автомата е
-\[(a \cdot a^\star + \varepsilon) \cdot b \cdot (a+b)^\star = a^\star \cdot b \cdot (a+b)^\star.\]
-  
+Заключаваме, че езикът на автомата $\A$ е
+\[\L_\A(q_0) = L_0 = (a \cdot a^\star + \varepsilon) \cdot b \cdot (a+b)^\star = a^\star \cdot b \cdot (a+b)^\star.\]
 \end{example}
 
+
+Този пример ни подсказва какво да правим в общия случай.
+Нека имаме ДКА $\A$. Да индексираме състоянията на $\A$ така:
+\[Q = \{q_0,q_1,\dots,q_n\}.\]
+За произволни $i,j \leq n$, за удобство да положим:
+\begin{align*}
+  & K_{ij} \df \{a \in \Sigma \mid \delta(q_i,a) = q_j\}\\
+  & L_i \df \L_\A(q_i)\\
+  & E_i \df
+    \begin{cases}
+      \{\varepsilon\}, & q_i \in F\\
+      \emptyset, & q_i \not\in F.
+    \end{cases}
+\end{align*}
+
+Лесно е да се убедим в правотата на следващото твърдение.
+
+\begin{proposition}
+  За всяко $i \leq n$ е изпълнено равенството:
+  \[L_i = K_{i0}\cdot L_{0} \cup K_{i1} \cdot L_{1} \cup \cdots K_{in}\cdot L_{n} \cup E_{i}.\]
+\end{proposition}
+
+Понеже $\varepsilon \not\in K_{ij}$, то тази система има едиствено решение, което знаем
+как да намерим по лемата на Ардън. Това решение представлява една редица от регулярни езици.
+Така ние дадохме второ доказателство на теоремата на Клини.
+
+\begin{important}
+  \begin{theorem}[Клини]
+    Всеки автоматен език е регулярен.
+  \end{theorem}
+\end{important}
 
 
 %%% Local Variables:

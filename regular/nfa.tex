@@ -68,11 +68,15 @@
   \label{pr:nfa:delta-star}
   \mynote{Сравенете с \Proposition{dfa:delta-star}.}
   За всеки две думи $\alpha,\beta \in \Sigma^\star$ и всяко $R \subseteq Q$,
-  \[ \Delta^\star(R, \alpha\beta) = \Delta^\star( \Delta^\star(R,\alpha),\beta).\]
+  \[\Delta^\star(R, \alpha\beta) = \Delta^\star( \Delta^\star(R,\alpha),\beta).\]
 \end{proposition}
+\begin{hint}
+  \mynote{\todo Трябва да може да докажете това твърдение сами!}
+  Индукция по дължината на $\beta$.  
+\end{hint}
 \begin{proof}
-  Индукция по дължината на $\beta$.
-
+  Ще докажем, че $(\forall n)P(n)$ с индукция по $n$, където
+  \[P(n) \df (\forall \beta \in \Sigma^n)(\forall \alpha\in\Sigma^\star)[\Delta^\star(R, \alpha\beta) = \Delta^\star( \Delta^\star(R,\alpha),\beta)].\]
   \begin{itemize}
   \item
     Нека $|\beta| = 0$, т.е. $\beta = \varepsilon$. Тогава:
@@ -150,14 +154,15 @@ $(q,\alpha\beta) \vdash^\star_\N (p, \beta)$ точно тогава, когат
 \[\L(\N) = \{\alpha\in\Sigma^\star \mid (\exists q\in Q_{\texttt{start}})(\exists f \in F)[(q,\alpha) \vdash^\star_\N (f,\varepsilon)]\}.\]
 
 \begin{important}
-\begin{theorem}[Рабин-Скот \cite{rabin-scott}]
-  За всеки недетерминиран краен автомат $\N$ съществува еквивалентен на него детерминиран краен автомат $\D$, т.е.
-  \[\L(\N) = \L(\D).\]
-\end{theorem}
+  \begin{theorem}[Рабин-Скот \cite{rabin-scott}]
+    \label{th:regular:nfa:construction}
+    За всеки недетерминиран краен автомат $\N$ съществува еквивалентен на него детерминиран краен автомат $\D$, т.е.
+    \[\L(\N) = \L(\D).\]
+  \end{theorem}
 \end{important}
 \begin{hint}
   Нека $\N = \NFA$. Ще построим детерминиран автомат
-  \[\D = (Q',\Sigma,\delta,\qstart,F'),\]
+  \[\D = (\Sigma,Q',\qstart,\delta,F'),\]
   за който $\L(\N) = \L(\D)$.
   Конструкцията е следната:
   \begin{itemize}
@@ -168,7 +173,7 @@ $(q,\alpha\beta) \vdash^\star_\N (p, \beta)$ точно тогава, когат
   \item
     За произволна буква $a\in\Sigma$ и произволно $R \subseteq Q$,
     \begin{align*}
-      \delta(R,a) & \df \Delta^\star(R,a).
+      \delta(\smallunderbrace{R}_{\text{\clap{състояние}}},a) & \df \Delta^\star(\smallunderbrace{R}_{\text{\clap{множество}}},a).
     \end{align*}
   \item
     $\qstart = Q_{\texttt{start}}$;
@@ -177,10 +182,10 @@ $(q,\alpha\beta) \vdash^\star_\N (p, \beta)$ точно тогава, когат
   \end{itemize}
   % \mynote{Тук използваме $\code{R}$ за да покажем в явен вид, че в новия автомат кодираме множества от състояния на стария.}
   Ще докажем, че за произволна дума $\alpha$ и произволно множество $R \subseteq Q$
-  е изпълнено, че:
+  е изпълнено следното равенство:
   \begin{equation}
     \label{eq:6}
-    \Delta^\star(\underbrace{R}_{\text{множество}},\alpha) = \delta^\star(\underbrace{R}_{\text{състояние}},\alpha).
+    \Delta^\star(\smallunderbrace{R}_{\text{\clap{множество}}},\alpha) = \delta^\star(\smallunderbrace{R}_{\text{\clap{състояние}}},\alpha).
   \end{equation}
   Това ще направим с индукция по дължината на думата $\alpha$.
   \begin{itemize}
@@ -261,8 +266,9 @@ $(q,\alpha\beta) \vdash^\star_\N (p, \beta)$ точно тогава, когат
 % Обърнете внимание, че примерът показва, че е възможно $\N$ да е детерминиран автомат, но полученият $\N'$ да бъде недетерминиран.
 % \end{hint}
 
-\begin{extra}
+
 \begin{problem}
+  \label{prob:regular:nfa:rev}
   \mynote{По-късно ще видим, че можем да дадем и друго доказателство на това твърдение, като направим индукция по построението на регулярните езици.}
   Докажете, че автоматните езици са затворени относно операцията $\rev$.
   С други думи, докажете, че ако $L$ е автоматен език, то $L^{\rev} \df \{\omega^{\rev} \mid \omega \in L\}$ също е автоматен.
@@ -282,7 +288,6 @@ $(q,\alpha\beta) \vdash^\star_\N (p, \beta)$ точно тогава, когат
   \end{itemize}
   Достатъчно е да се докаже, че $\Delta^\star_\N(Q_{\texttt{start}},\alpha) = \{ q \in Q^\A \mid \delta^\star_\A(q,\alpha^\rev) \in F^\A\}$.
 \end{hint}
-\end{extra}
 
 \begin{lemma}
   \label{lem:automata-basic}

@@ -10,6 +10,7 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
 \mynote{
   % \begin{figure}[H]
   Условие (3) може да се представи графично така:
+  
       \begin{tikzpicture}[->,>=stealth,thick,node distance=60pt,scale=0.8,every node/.style={scale=0.8}]
         \tikzstyle{every state}=[circle,minimum size=20pt,auto]
         
@@ -36,15 +37,14 @@ $\A_1 = (\Sigma,Q_1,\qstart',\delta_1,F_1)$ и $\A_2 = (\Sigma, Q_2, \qstart'', 
 \item
   $\delta_1(q,a) = p\ \iff\ \delta_2(f(q),a) = f(p)$.
 \end{enumerate}
+С други думи, два автомата са изоморфни точно тогава, когато те са идентични с точност до
+преименуване на състоянията.  
+
 Ще казваме, че $f$ задава изоморфизъм на $\A_1$ върху $\A_2$ и ще означаваме $\A_1 \cong_f \A_2$ или $f:\A_1 \cong \A_2$.
 
 \begin{proposition}
-  Нека $\A_1 \cong_f \A_2$. Тогава
-  % за всяка дума $\alpha$ и произволно състояние $q \in Q_1$ е изпъленено, че
-  % \begin{equation}
-  %   \label{eq:3}
-  %   f(\delta^\star_1(q,\alpha)) = \delta^\star_2(f(q), \alpha).
-  % \end{equation}
+  Нека $\A_1 \cong_f \A_2$. Тогава за всяка дума $\alpha$ и състояние $q \in Q_1$
+  е изпъленена импликацията:
   \begin{equation}
     \label{eq:3}
     \delta^\star_1(q,\alpha) = p\ \iff\ \delta^\star_2(f(q), \alpha) = f(p).
