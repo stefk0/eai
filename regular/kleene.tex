@@ -79,7 +79,7 @@
     Включването в другата посока следва директно от дефиницията на езиците $L(i,j,k)$.
     От направените по-горе разсъждения следва, че можем да изразим $L(i,j,k+1)$ по следния начин:
     \[L(i,j,k+1) = \underbrace{L(i,j,k)}_{\L(\mathbf{r}^{k}_{i,j})}\ \cup\ \underbrace{L(i,k,k)}_{\L(\mathbf{r}^{k}_{i,k})}\cdot (\underbrace{L(k,k,k)}_{\L(\mathbf{r}^{k}_{k,k})})^\star \cdot \underbrace{L(k,j,k)}_{\L(\mathbf{r}^{k}_{k,j})}.\]
-    Тогава по {\bf И.П.} следва, че $L(i,j,k+1)$ може да се опише с регулярния израз
+    Тогава по \IndHyp следва, че $L(i,j,k+1)$ може да се опише с регулярния израз
     \begin{equation}
       \label{eq:kleene}
       \mathbf{r}^{k+1}_{i,j} = \mathbf{r}^{k}_{i,j} + \mathbf{r}^{k}_{i,k}\cdot (\mathbf{r}^{k}_{k,k})^\star\cdot \mathbf{r}^{k}_{k,j}.

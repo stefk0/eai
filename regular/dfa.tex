@@ -56,9 +56,28 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
 
 \mynote{Обърнете внимание, че $\delta(q,a) = \delta^\star(q,a)$ за $a\in\Sigma$}
 
+\begin{algorithm}[H]
+  \caption{Проблемът за принадлежност за автоматни езици}
+  \label{alg:regular:dfa:belong}
+  \begin{algorithmic}[1]
+    \Procedure{\texttt{belong}}{$\A, \omega$}
+    \State $q := \qstart$
+    \ForAll{$i < |\omega|$}
+    \State $q := \delta(q,\omega\slice{i})$
+    \EndFor
+    \If{$q \in F$}
+    \State \Return \texttt{True}
+    \Else
+    \State \Return \texttt{False}
+    \EndIf
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+  
+
 \begin{proposition}
   \label{pr:dfa:delta-star}
-  Нека $\A$ е ДКА. Тогава за всяко състояние $q$ и произволни думи $\alpha$ и $\beta$ е изпълнено, че
+  Нека $\A$ е ДКА. Тогава за всяко състояние $q$ и произволни думи $\alpha$ и $\beta$ е изпълнено равенството:
   \[\delta^\star(q,\alpha\beta) = \delta^\star(\delta^\star(q,\alpha),\beta).\]
 \end{proposition}
 \begin{hint}
@@ -75,7 +94,7 @@ $L = \{\alpha \in \Sigma^\star \mid \A\mbox{ разпознава }\alpha\}$.
     \begin{align*}
       \delta^\star(q, \alpha\beta) & = \delta^\star(q, \alpha \gamma b)\\
                                    & = \delta( \delta^\star(q, \alpha\gamma),b) & \comment\text{от деф. на }\delta^\star\\
-                                   & = \delta(\delta^\star(\underbrace{\delta^\star(q,\alpha)}_{p}, \gamma), b) & \comment{\text{от И.П. приложено за }\gamma}\\
+                                   & = \delta(\delta^\star(\underbrace{\delta^\star(q,\alpha)}_{p}, \gamma), b) & \comment{\text{от \IndHyp приложено за }\gamma}\\
                                    & = \delta( \delta^\star(p, \gamma), b) \\
                                    & = \delta^\star( p, \gamma b) & \comment\text{от деф. на }\delta^\star\\
                                    & = \delta^\star(\delta^\star(q, \alpha), \beta). & \comment{p = \delta^\star(q,\alpha)}

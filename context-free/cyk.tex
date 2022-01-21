@@ -9,10 +9,11 @@
 \mynote{Това е алгоритъм на Cocke, Younger и Kasami (CYK), които откриват идеята за този алгоритъм независимо един от друг. Той е пример за динамично
   програмиране \cite[стр. 192]{kozen}, \cite[стр. 141]{shallit}. При вход дума $\alpha$, алгоритъмът работи за време $\mathcal{O}(\abs{\alpha}^3)$.}
 \begin{algorithm}[H]
-  \caption{Проверка дали $\alpha \in \L(G)$}
+  \caption{Проблемът за принадлежност за безконтекстни езици}
   \label{alg:belongs-to-grammar}
   \begin{algorithmic}[1]
-    \State $n = \texttt{len}(\alpha)$ \Comment{Вход дума $\alpha = a_0a_1\cdots a_{n-1}$}
+    \Procedure{\texttt{belong}}{$G, \alpha$}
+    \State $n := \texttt{len}(\alpha)$ \Comment{Вход дума $\alpha = a_0a_1\cdots a_{n-1}$}
     \ForAll{$i < n$}
     \State $\texttt{V[i][i]} := \{A \in V \mid A\to_G \alpha\slice{i}\}$ \label{alg:cyk:initial}
     \ForAll{$j := i+1,\dots,n-1$}
@@ -37,6 +38,7 @@
     \Else
     \State \Return \texttt{False}
     \EndIf
+    \EndProcedure
   \end{algorithmic}
 \end{algorithm}
 

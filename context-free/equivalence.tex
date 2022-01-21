@@ -186,7 +186,7 @@
         \AxiomC{$\Delta(p,a,a) \ni (p,\varepsilon)$}
         \UnaryInfC{$(p,a\beta,a\rho)\vdash_P(p,\beta,\rho)$}
         \AxiomC{$(p,\beta,\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
-        \BinaryInfC{$(p, \underbrace{a\beta}_{\alpha}, \underbrace{a\rho}_{\delta}) \vdash^\ell_P (p, \varepsilon, \varepsilon)$}
+        \BinaryInfC{$(p, \smallunderbrace{a\beta}_{\alpha}, \smallunderbrace{a\rho}_{\delta}) \vdash^\ell_P (p, \varepsilon, \varepsilon)$}
       \end{prooftree}
       % \[(p, \underbrace{a\beta}_{\alpha}, \underbrace{a\rho}_{\delta}) \vdash_P (p,\beta,\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
       Сега можем да приложим индукционното предположение и да получим извода:
@@ -196,7 +196,7 @@
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$\rho \lderive{\star} \beta$}
         \RightLabel{\scriptsize{(\Proposition{left-derivation:padding})}}
-        \BinaryInfC{$\underbrace{a \rho}_{\delta} \lderive{\star} \underbrace{a\beta}_{\alpha}$}
+        \BinaryInfC{$\smallunderbrace{a \rho}_{\delta} \lderive{\star} \smallunderbrace{a\beta}_{\alpha}$}
       \end{prooftree}
       % \item
       \mynote{Понеже граматиката е в нормална форма на Чомски, то $1 \leq |\gamma| \leq 2$.}
@@ -206,7 +206,7 @@
         \AxiomC{$\Delta(p,\varepsilon,A) \ni (p,\gamma)$}
         \UnaryInfC{$(p,\alpha,A\rho)\vdash_P(p,\alpha,\gamma\rho)$}
         \AxiomC{$(p,\alpha,\gamma\rho) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
-        \BinaryInfC{$(p, \alpha, \underbrace{A\rho}_{\delta}) \vdash^\ell_P(p, \varepsilon, \varepsilon)$}
+        \BinaryInfC{$(p, \alpha, \smallunderbrace{A\rho}_{\delta}) \vdash^\ell_P(p, \varepsilon, \varepsilon)$}
       \end{prooftree}
       
       % \[(p, \alpha, \underbrace{A\rho}_{\delta}) \vdash_P (p,\alpha,\gamma\rho ) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
@@ -227,7 +227,7 @@
         \UnaryInfC{$\gamma\rho \lderive{\star} \alpha$}
         % \LeftLabel{\scriptsize{(\Proposition{left-derivation:context-step})}}
         % \RightLabel{\scriptsize{правило (1)}}
-        \BinaryInfC{$\underbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
+        \BinaryInfC{$\smallunderbrace{A\rho}_{\delta} \lderive{\star} \alpha$}
       \end{prooftree}
     % \item
       % \mynote{Доказателствта на втория и третия случай са на практика едни и същи. Може да се разгледат и заедно за да спестим място.}
@@ -342,7 +342,7 @@
         \AxiomC{$\Delta(q,a,A) \ni (r,B)$}
         \UnaryInfC{$(q,a\beta,A)\vdash_P(r,\beta,B)$}
         \AxiomC{$(r,\beta,B) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
-        \BinaryInfC{$(q,\underbrace{a\beta}_{\alpha},A) \vdash^\ell_P (p, \varepsilon, \varepsilon)$}
+        \BinaryInfC{$(q,\smallunderbrace{a\beta}_{\alpha},A) \vdash^\ell_P (p, \varepsilon, \varepsilon)$}
       \end{prooftree}
       
       % \[(q,\underbrace{a\beta}_{\alpha},A) \vdash_P (r,\beta,B) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
@@ -359,7 +359,7 @@
         \RightLabel{\scriptsize{(\ShortProposition{left-derivation:padding})}}
         \BinaryInfC{$a[r,B,p] \lderive{\star} a\beta$}
         % \RightLabel{\scriptsize{правило (1)}}
-        \BinaryInfC{$[q,A,p] \lderive{\star} \underbrace{a\beta}_{\alpha}$}
+        \BinaryInfC{$[q,A,p] \lderive{\star} \smallunderbrace{a\beta}_{\alpha}$}
       \end{prooftree}
     \item
       Ако $\Delta(q, a, A) \ni (r, BC)$, то можем да разбием изчислението по следния начин:
@@ -367,7 +367,7 @@
         \AxiomC{$\Delta(q, a, A) \ni (r, BC)$}
         \UnaryInfC{$(q,a\beta,A)\vdash_P(r,\beta,BC)$}
         \AxiomC{$(r, \beta, BC) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon)$}
-        \BinaryInfC{$(q, \underbrace{a\beta}_{\alpha}, A) \vdash^{\ell}_P (p, \varepsilon, \varepsilon)$}
+        \BinaryInfC{$(q, \smallunderbrace{a\beta}_{\alpha}, A) \vdash^{\ell}_P (p, \varepsilon, \varepsilon)$}
       \end{prooftree}
       
       % \[(q, \underbrace{a\beta}_{\alpha}, A) \vdash_P (r, \beta, BC) \vdash^{\ell-1}_P (p, \varepsilon, \varepsilon).\]
@@ -425,7 +425,7 @@
         \UnaryInfC{$[q,A,p] \lderive{} a[r,B,p]$}
         \AxiomC{$a[r,B,p] \lderive{\ell-1} a\beta$}
         % \LeftLabel{\scriptsize{правило (1)}}
-        \BinaryInfC{$[q,A,p] \lderive{\ell} \underbrace{a\beta}_{\alpha}$}
+        \BinaryInfC{$[q,A,p] \lderive{\ell} \smallunderbrace{a\beta}_{\alpha}$}
       \end{prooftree}
       Сега можем да приложим индукционното предположение и да сглобим изчислението:
       \begin{prooftree}
@@ -437,7 +437,7 @@
         \UnaryInfC{$[r,B,p] \lderive{\ell-1} \beta$}
         \RightLabel{\scriptsize{\IndHyp}}
         \UnaryInfC{$(r,\beta,B) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
-        \BinaryInfC{$(q,\underbrace{a\beta}_{\alpha},A) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
+        \BinaryInfC{$(q,\smallunderbrace{a\beta}_{\alpha},A) \vdash^\star_P (p,\varepsilon,\varepsilon)$}
       \end{prooftree}
 
       % Ясно е, че имаме $[r,B,p] \lderive{\ell-1} \beta$. Тогава директно прилагаме \IndHyp и получаваме, че $(r, \beta, B) \vdash^\star_P (p, \varepsilon, \varepsilon)$ и накрая получаваме, че $(q, a\beta, A) \vdash^\star_P (p, \varepsilon, \varepsilon)$.
@@ -448,7 +448,7 @@
         \UnaryInfC{$[q,A,p] \lderive{} a[r,B,q'][q',C,p]$}
         \AxiomC{$a[r,B,q'][q',C,p] \lderive{\ell-1} a\beta$}
         % \LeftLabel{\scriptsize{правило (1)}}
-        \BinaryInfC{$[q,A,p] \lderive{\ell} \underbrace{a\beta}_{\alpha}$}
+        \BinaryInfC{$[q,A,p] \lderive{\ell} \smallunderbrace{a\beta}_{\alpha}$}
       \end{prooftree}
       \mynote{Важно е, че $\beta \in \Sigma^\star$. Иначе няма да можем да приложим \Proposition{grammar:divide-2}.}
       Понеже $\beta \in \Sigma^\star$, можем да приложим \Proposition{grammar:divide-2} заедно с \Lemma{left-derivation-equivalence}, откъдето следва,

@@ -2,7 +2,7 @@
 
 \epigraph{Language is an app for converting a web of thoughts into a string of words. [Steven Pinker]}
 
-\subsection*{Основни понятия}
+\subsubsection*{Основни понятия}
 
 \begin{itemize}
 \item 
@@ -72,8 +72,8 @@
   \item 
     Ако $\abs{\alpha} = 0$, то $\alpha = \varepsilon$ и $\alpha^{\rev} \df \varepsilon$.
   \item
-    Ако $\abs{\alpha} = n+1$, то $\alpha = a\beta$, където $\abs{\beta} = n$.
-    Тогава $\alpha^{\rev} \df (\beta^{\rev})a$.
+    Ако $\abs{\alpha} = n+1$, то $\alpha = a\beta$, където $\abs{\beta} = n$. Тогава
+    \[\alpha^{\rev} \df (\beta^{\rev})a.\]
   \end{itemize}
 
 \item
@@ -173,7 +173,7 @@
 \end{problem}
 \end{extra}
 
-\subsection*{Отрези на дума}\label{sect:intro:slices}
+\subsubsection*{Отрези на дума}\label{sect:intro:slices}
 \index{дума!отрез}
 
 % https://stackoverflow.com/questions/509211/understanding-slice-notation
@@ -191,7 +191,7 @@
 \end{align*}
 
 
-\subsection*{Релации между думи}
+\subsubsection*{Релации между думи}
 
 \begin{itemize}
 \item 
@@ -216,21 +216,6 @@
   Казваме, че една дума $\alpha$ е лексикографски по-малка от $\beta$, което ще означаваме като $\alpha <_{\texttt{lex}} \beta$, ако $\alpha$ е префикс на $\beta$ или
   \[(\exists i < \min\{|\alpha|,|\beta|\})[\ \alpha\slice{:i} = \beta\slice{:i}\ \&\ \alpha\slice{i} < \beta\slice{i}\ ].\]
 \end{itemize}
-
-
-% \begin{problem}
-%   \mynote{С други думи, ако $\varepsilon \not\in X$, то $X^\star Y$ е най-малкото решение на уравнението $Z = XZ \cup Y$, където неизвестната променлива е $Z$.}
-%   За фиксирани езици $X,Y \subseteq \Sigma^\star$,
-%   да разгледаме езиците $Z$, които удовлетворяват свойството, че $Z = XZ \cup Y$.
-%   \begin{enumerate}[a)]
-%   \item 
-%     Докажете, че за всяко $n \in \Nat$, $X^nY \subseteq Z$.
-%     Заключете, че $X^\star Y \subseteq Z$.
-%   \item
-%     Да предположим, че $\varepsilon \not\in X$.
-%     Докажете, че за всяка дума $\omega \in Z$ е изпълнено, че $\omega \in X^\star Y$.
-%   \end{enumerate}
-% \end{problem}
 
 
 %%% Local Variables:

@@ -71,23 +71,28 @@
     & U \to \varepsilon\ |\ aUb.
   \end{align*}
 
-  Тогава
+  Тогава можем да намерим множеството от променливи $E$, от които
+  се извежда $\varepsilon$ в граматиката $G$ като започнем да
+  намираме неговите апроксимации:
   \begin{itemize}[-]
   \item
-    $\texttt{E[0]} = \emptyset$;
+    $\texttt{E[0]} \df \emptyset$;
   \item
-    $\texttt{E[1]} = \{C,U\}$;
+    $\texttt{E[1]} = \{C,U\}$, защото $C \to \varepsilon$ и $U \to \varepsilon$;
   \item
-    $\texttt{E[2]} = \{C,U,B\}$;
+    $\texttt{E[2]} = \{C,U,B\}$, защото $B \to UC$;
   \item
-    $\texttt{E[3]} = \{C,U,B,A\}$;
+    $\texttt{E[3]} = \{C,U,B,A\}$, защото $A \to BC$;
   \item
-    $\texttt{E[4]} = \texttt{E[3]}$. Следователно,
+    $\texttt{E[4]} = \texttt{E[3]}$.
+  \item
+    Оттук е ясно, че $(\forall n \geq 3)[\texttt{E[n]} = \texttt{E[3]}]$.
+    Заключаваме, че
     \[\texttt{E} = \{X \in V \mid X \yield{\star} \varepsilon\} = \{C,U,B,A\}.\]
   \end{itemize}
   
-  Това означава, че $\varepsilon \not\in \L(G)$.
-  Граматиката $G'$ без $\varepsilon$-правила, за която $\L(G') = \L(G)$ има следните правила
+  Това означава, че $\varepsilon \not\in \L(G)$, защото $S \not\in \texttt{E}$.
+  Граматиката $G'$ без $\varepsilon$-правила, за която $\L(G') = \L(G)$ има следните правила:
   \begin{align*}
     & S \to D \\
     & D\to AD\ |\ D\ |\ b \\
