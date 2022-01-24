@@ -9,11 +9,11 @@
 Нека $\A = (\Sigma,Q,\delta,\qstart,F)$ е детерминиран краен автомат. Тогава полагаме
 \[\A_q \df (\Sigma,Q,\delta,q,F).\]
 Нека $\A = (\Sigma,Q,\Delta,Q_{\texttt{start}},F)$ е недетерминиран краен автомат. Тогава полагаме
-\[\A_q \df (\Sigma,Q,\delta,\{q\},F).\]
+\[\A_q \df (\Sigma,Q,\Delta,\{q\},F).\]
 За произволен краен автомат $\A$, за да не пишем много индекси, полагаме
 \[\L_\A(q) \df \L(\A_q).\]
 
-Нека да започнем с един твърдение, което ни дава критерий, макар и доста силен, кога
+Нека да започнем с едно твърдение, което ни дава критерий, макар и доста силен, кога
 детерминизацията ни дава автомат с минимален брой състояния.
 
 \begin{proposition}
@@ -33,7 +33,7 @@
       \L_\A(q) \cap \L_\A(p) = \emptyset.
     \end{equation}
   \end{itemize}
-  Тогава $\M = \texttt{det}(\A)$ е минимален автомат за езика на $\A$.
+  Тогава $\M = \texttt{det}(\A)$, получен по \hyperref[th:regular:nfa:construction]{метода на Рабин-Скот}, е минимален автомат за езика на $\A$.
 \end{proposition}
 \mynote{$\M$ е получен чрез конструкцията от \Theorem{regular:nfa:construction}.
   \newline
@@ -41,8 +41,9 @@
   то $\L_\A(p) \neq \L_\A(q)$. Понеже тук $\A$ е недетерминирам, искаме по-силното свойство, а именно
   $\L_\A(p) \cap \L_\A(q) = \emptyset$.}
 \begin{hint}
-  Знаем, че $\M$ е свързан автомат. Според ..., за да докажем, че $\M$ е минимален е достатъчно да
-  покажем, че за произволни състояния $P$ и $U$ на $\M$ е изпълнена импликацията
+  От контрукцията на $\M$ в \hyperref[th:regular:nfa:construction]{теоремата на Рабин-Скот}, знаем, че $\M$ е свързан автомат.
+  Според \hyperref[cr:regular:brzozowski-minimal:criterion]{критерият за минималност}, за да докажем, че $\M$ е минимален е достатъчно да
+  покажем, че за произволни състояния $P$ и $U$ на $\M$ е изпълнена импликацията:
   \[\L_\M(P) = \L_\M(U) \implies P = U.\]
 
   И така, да вземем две такива състояния $P$ и $U$, за които $\L_\M(P) = \L_\M(U)$.
@@ -62,7 +63,9 @@
 \begin{proposition}
   \label{pr:regular:brzozowski-minimal:rev}
   Нека $\D$ е ДКА, за който всяко състояние е достижимо от началното.
-  Да разгледаме $\A \df \texttt{rev}(\D)$. Тогава
+  Да разгледаме $\A \df \texttt{rev}(\D)$.
+  Тогава са изпълнени двете свойства от условието на \Proposition{regular:brzozowski-minimal:det},
+  а именно:
   \begin{itemize}
   \item
     За всяко състояние $q \in Q$ е изпълнено, че:
@@ -74,13 +77,13 @@
 \end{proposition}
 \begin{hint}
   Да напомним, че според \Problem{regular:nfa:rev}, $\A = (\Sigma,Q,\Delta,F,\{\qstart\})$, където
-  \[\Delta(q,a) = \{p \in Q \mid \delta(p,a) = q\}.\]
+  \[\Delta_\A(q,a) \df \{p \in Q \mid \delta_\D(p,a) = q\}.\]
   Щом в $\D$ всяко състояние $q$ е достижимо от началното, то е ясно,
   че $\L_\A(q) \neq \emptyset$, което ни дава първото свойство.
   За второто свойство, нека сега приемем, че $\omega \in \L_\A(p) \cap \L_\A(q)$.
-  Ще докажем, че $p = q$. И така, щом $\omega \in \L_\A(p)$, то $\Delta^\star(\{p\},\omega) \ni \qstart$.
-  Това означава, че $\delta^\star(\qstart,\omega) = p$.
-  От друга страна, имаме също, че $\delta^\star(\qstart,\omega) = q$.
+  Ще докажем, че $p = q$. И така, щом $\omega \in \L_\A(p)$, то $\Delta^\star_\A(\{p\},\omega) \ni \qstart$.
+  Това означава, че $\delta^\star_\D(\qstart,\omega) = p$.
+  От друга страна, имаме също, че $\delta^\star_\D(\qstart,\omega) = q$.
   Ясно е, че $p = q$, защото $\D$ е детерминиран автомат.
 \end{hint}
 
@@ -97,6 +100,8 @@
   за приложението на \Proposition{regular:brzozowski-minimal:det}. Така получаваме, че
   $\M \df \texttt{det}(\A)$ е минимален детерминиран автомат за езика $\L(\A)$.
 \end{hint}
+
+По този начин получаваме алгоритъм за минимизация на автомат.
 
 \begin{important}
   \begin{theorem}[Бжозовски]

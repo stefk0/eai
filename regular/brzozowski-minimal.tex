@@ -89,9 +89,14 @@
   \[|Q^\B| \leq |Q^\A|.\]
 \end{proof}
 
-Така получаваме следния критерий за проверка дали даден език е регулярен.
+% Така получаваме следния критерий за проверка дали даден автомат е минимален.
+
+
+От \Lemma{brzozowski:surjective} получаваме следния критерий за проверка дали даден език е регулярен.
+
 \begin{framed}
-  \begin{corollary}\label{cor:brzozowski:finite}
+  \begin{corollary}[Критерий за регулярност на език]
+    \label{cor:brzozowski:finite}
     Един език $L$ е регулярен точно тогава, когато автоматът $\B$ на Бжозовски за $L$, има крайно много състояния.
   \end{corollary}
 \end{framed}
@@ -100,6 +105,7 @@
   Понеже $|Q^\B| \leq |Q^\A|$, то $\B$ има краен брой състояния.
   Обратно, ако $\B$ има крайно много състояния, то тогава $\B$ е ДКА. Понеже $\L(\B) = L$, то $L$ е автоматен и следователно регулярен.
 \end{proof}
+
 
 \begin{important}
   \begin{corollary}
@@ -240,6 +246,31 @@
     Така получихме дясната страна на еквивалентността (\ref{eq:brzozowski-minimal:eq}).
   \end{itemize}
 \end{proof}
+
+
+\begin{framed}
+  \begin{corollary}[Критерий за минималност]
+    \label{cr:regular:brzozowski-minimal:criterion}
+    Нека $\A$ е свързан детерминиран краен автомат за езика $L$.
+    Тогава $\A$ е минимален автомат за езика $L$ точно тогава, когато е изпълнена импликацията:
+    \begin{equation}
+      \label{eq:regular:brzozowski-minimal:criterion}
+      (\forall p\in Q)(\forall q\in Q)[p \neq q \implies \L_\A(p) \neq \L_\A(q)].
+    \end{equation}
+  \end{corollary}
+\end{framed}
+\begin{proof}
+  Нека $\B$ е автоматът на Бжозовски за $L$
+  и да разгледаме функцията $f : Q^\A \to Q^\B$ дефинирана като $f(q) = \L_\A(q)$.
+  
+  Първо, нека $\A$ е минимален автомат за $L$. Тогава знаем от \Theorem{brzozowski-minimal:unique}, че
+  $f$ е биекция. От инективността на $f$ следва, че имаме импликцията (\ref{eq:regular:brzozowski-minimal:criterion}).
+  Второ, нека импликацията (\ref{eq:regular:brzozowski-minimal:criterion}) е изпълнена.
+  Това означава, че $f$ е инективна функция, откъдето имаме, че $|Q^\A| \leq |Q^\B|$.
+  Понеже $\B$ е минимален автомат, то $\A$ също е минимален автомат.  
+\end{proof}
+
+
 
 %%% Local Variables:
 %%% mode: latex
