@@ -10,8 +10,11 @@
 \[\L(\A) = \L_\A(\qstart).\]
 
 \index{$\equiv_\A$}
-Сега дефинираме следната релация между състояния на автомата $\A$:
-\[p \equiv_\A q\ \dff\ \L_\A(p) = \L_\A(q).\]
+\begin{important}
+  Сега дефинираме следната релация между състояния на автомата $\A$:
+  \[p \equiv_\A q\ \dff\ \L_\A(p) = \L_\A(q).\]  
+\end{important}
+
 Това означава, че $p \equiv_\A q$ точно тогава, когато
 \begin{equation}
   \label{eq:1}
@@ -22,11 +25,6 @@
   Докажете, че релацията $\equiv_\A$ между състояния на автомата $\A$ е релация на еквивалентност.     
 \end{problem}
 
-% \item
-%   Да означим
-%   \[Q/_{\equiv_\A} \df \{\ [q]_{\equiv_\A} \mid q \in Q\ \}.\]
-% \end{itemize}
-
 \begin{proposition}
   За произволно състояние $q$ е изпълнено, че:
   \[{[q]}_{\equiv_\A} \cap F \neq \emptyset \iff {[q]}_{\equiv_\A} \subseteq F.\]
@@ -34,11 +32,14 @@
 \mynote{Сравнете с \Problem{myhill-nerode-theorem-final}.}
 \begin{proof}
   Посоката $(\Leftarrow)$ е очевидна.
-  Да разгледаме посоката $(\Rightarrow)$. Да разгледаме $p \in [q]_{\equiv_\A} \cap F$.
-  Щом $p \in F$, то $\varepsilon \in \L_\A(p)$.
-  Щом $p \equiv_\A q$, то $\L_\A(p) = \L_\A(q)$ и следователно $\varepsilon \in \L_\A(q)$.
-  С други думи, $\delta^\star_\A(q,\varepsilon) \in F$, откъдето получаваме, че $q \in F$,
-  защото според дефиницията на $\delta^\star_\A$, $\delta^\star_\A(q,\varepsilon) = q$.
+  Да разгледаме посоката $(\Rightarrow)$.
+  Трябва да докажем, че всяко състояние $r \in [q]_{\equiv_\A}$ принадлежи на $F$.
+  Да фиксираме едно състояние $p \in [q]_{\equiv_\A} \cap F$.
+  Щом $p \in F$, то $\varepsilon \in \L_\A(p)$. Щом $p \in [q]_{\equiv_\A}$ и $r \in [q]_{\equiv_\A}$,
+  то $p \equiv_\A r$ и следователно $\L_\A(p) = \L_\A(r)$. Вече знаем, че $\varepsilon \in \L_\A(p)$.
+  Тогава е ясно, че $\varepsilon \in \L_\A(r)$.
+  С други думи, $\delta^\star_\A(r,\varepsilon) \in F$, откъдето получаваме, че $r \in F$,
+  защото, според дефиницията на $\delta^\star_\A$, имаме $\delta^\star_\A(r,\varepsilon) = r$.
 \end{proof}
 
 \begin{proposition}\label{pr:equiv-delta}
