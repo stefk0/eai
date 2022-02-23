@@ -58,13 +58,13 @@
 Нека официално да обявим, че един език $L$ се нарича {\bf безконтекстен}, ако съществува безконтекстна граматика $G$, за която 
 $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
-Като частен случай на \Proposition{unrestricted-grammar:context-general-step} получаваме следното свойство.
+Като частен случай на \Corollary{unrestricted-grammar:context-general-step} получаваме следното свойство.
 \begin{proposition}\label{pr:context-free-grammar:context-general-step}
   За произволни естествени числа $\ell_1$ и $\ell_2$ е изпълнено, че:
   \begin{prooftree}
-    \AxiomC{$\alpha \derive{\ell_1} \rho B \delta$}
+    \AxiomC{$\alpha \derive{\ell_1} \lambda B \rho$}
     \AxiomC{$B \derive{\ell_2} \beta$}
-    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \rho\beta\delta$,}
+    \BinaryInfC{$\alpha \derive{\ell_1+\ell_2} \lambda\beta\rho$,}
   \end{prooftree}  
 \end{proposition}
 
@@ -108,18 +108,9 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
   \begin{prooftree}
     \AxiomC{$(A,aAb) \in R$}
     \UnaryInfC{$A \derive{}_G aAb$}
-    % \AxiomC{}
-    % \LeftLabel{\scriptsize{(0)}}
-    % \UnaryInfC{$a \derive{0}_G a$}
     \AxiomC{$(A,ab) \in R$}
-    % \AxiomC{}
-    % \RightLabel{\scriptsize{(0)}}
-    % \UnaryInfC{$aabb \derive{0}_G aabb$}
-    % \RightLabel{\scriptsize{(1)}}
     \UnaryInfC{$aAb \derive{1}_G aabb$}
-    % \RightLabel{\scriptsize{(1)}}
-    % \BinaryInfC{$aAb \derive{1}_G aabb$}
-    % \RightLabel{\scriptsize{(1)}}
+    \RightLabel{\scriptsize{(транзитивност)}}
     \BinaryInfC{$A \derive{2}_G aabb$}
   \end{prooftree}
   Аналогично,
@@ -162,7 +153,8 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 \end{example}
 \end{extra}
 
-
+Естествено, ние няма да правим на ръка такива формални изводи в граматика, но е важно да придобием опит с
+механиката, чрез която се извършва един извод.
 Следващото твърдение ни дава едно свойство, което е вярно за безконтекстни граматики, но не и за неограничени граматики.
 \begin{proposition}\label{pr:grammar:divide-2}
   \mynote{Тук $\gamma_1,\gamma_2,\beta \in (V\cup\Sigma)^\star$.}
@@ -174,7 +166,7 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 Индукция по дължината на извода $\ell$.
 \begin{itemize}
 \item
-  Нека $\ell = 0$. Тогава $\beta_1 = \gamma_1$ и $\beta_2 = \gamma_2$.
+  Нека $\ell = 0$. Тогава $\beta_1 = \gamma_1$ и $\beta_2 = \gamma_2$ и очевидно $\ell_1 = \ell_2 = 0$.
 % \item
 %   Нека $\ell = 1$. Без ограничение на общността, според \Proposition{grammar:alternative-def}, да предположим, че сме приложили правило в $\gamma_1$.
 %   Получаваме извода
@@ -200,7 +192,9 @@ $L = \L(G) = \{\omega \in \Sigma^\star \mid S \derive{\star} \omega\}$.
 
   \mynote{Случаят, когато $A$ е част от $\gamma_2$ е аналогичен.}
   Без ограничение на общността, нека променливата $A$ е част от $\gamma_1$. Това означава, че
+  можем да запишем думите $\gamma_1$ и $\gamma_2$ като
   $\gamma_1 = \lambda A \rho_1$ и $\rho = \rho_1\gamma_2$.
+  
   Сега можем да приложим индукционното предположение и да заключим, че съществува представяне на $\beta$
   като $\beta = \beta_1 \beta_2$ със следния извод:
   \begin{prooftree}

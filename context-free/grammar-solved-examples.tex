@@ -1,13 +1,17 @@
-\subsection*{Примерни задачи}
+\subsection{Апроксимации на безконтекстен език}
 
-\begin{extra}
+  \begin{definition}
+    Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
+    По подобен начин, сега ще дефинираме език $\L_G(X)$, за произволно $X \in \Sigma \cup V$ в граматиката $G$, по следния начин:
+    \[\L_G(X) \df \{\alpha \in \Sigma^\star \mid X \yield{\star}\alpha\}.\]
+    Ясно е, че $\L(G) = \L_G(S)$.
+    Нека да дефинираме и \emph{апроксимациите} $\L^\ell_G(X)$ на езика $\L_G(X)$ по следния начин:
+    \[\L^\ell_G(X) \df \{\alpha \in \Sigma^\star \mid X \yield{\leq \ell} \alpha\}.\]
+  \end{definition}
 
-Да напомним, че в Раздел~\ref{sect:regular:minimisation} дефинирахме език $\L_\A(q)$.
-Сега ще дефинираме език $\L_G(A)$, за произволна променлива $A$ по следния начин:
-\[\L_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\star}\alpha\}.\]
-Ясно е, че $\L(G) = \L_G(S)$.
-Нека да дефинираме и \emph{апроксимациите} $\L^\ell_G(A)$ на езика $\L_G(A)$ по следния начин:
-\[\L^\ell_G(A) \df \{\alpha \in \Sigma^\star \mid A \yield{\leq \ell} \alpha\}.\]
+След един бърз поглед върху дефиницията на релацията $\yield{}$ веднага съобразяваме,
+че ако $X \in \Sigma$, то $\L^\ell_G(X) = \{X\}$ за всяко $\ell$.
+Да видим сега какво става, когато $X \in V$.
 
 \begin{problem}
   Нека $G$ е безконтекстна граматика и $A$ е променлива в $G$.
@@ -33,50 +37,56 @@
                              & = \{1,2,3\}.
   \end{align*}
 }
-\begin{proposition}\label{pr:grammar:yield-approximation}
+
+\begin{framed}
+\begin{proposition}
+  \label{pr:grammar:yield-approximation}
   Нека $G$ е безконтекстна граматика и $A$ е променлива в $G$.
-  Тогава имаме следното:
+  Тогава имаме следните зависимости:
   \begin{align*}
     & \L^0_G(A) = \emptyset\\
-    & \L^{\ell+1}_G(A) = \bigcup\{\{\alpha_0\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_{n-1}\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n}\} \mid & A \to_G \alpha_0A_1\cdots\alpha_{n-1}A_n\alpha_{n} \text{ е правило }\\
-    & & \text{в $G$, където }\alpha_i \in \Sigma^\star\text{ за }i\leq n\}.
+    & \L^{\ell+1}_G(A) = \bigcup\{\L^\ell_G(X_1) \cdots \L^\ell_G(X_{n}) \mid A \to_G X_1\cdots X_{n} \text{ е правило } G\}.
   \end{align*}
-\end{proposition}
+\end{proposition}  
+\end{framed}
 \begin{proof}
   Доказателството протича с индукция по $\ell$.
   Твърдението очевидно е изпълнено за $\ell = 0$.
-  За индукционната стъпка, първо ще докажем включването $\subseteq$.Нека сега да разгледаме дума $\alpha \in \L^{\ell+1}_G(A)$, т.е. $A \yield{\leq \ell+1} \alpha$.
-  Тогава имаме следния извод:
+  За индукционната стъпка, първо ще докажем включването $\subseteq$. Нека сега да разгледаме произволна дума $\alpha$, за която $\alpha \in \L^{\ell+1}_G(A)$, т.е. $A \yield{\leq \ell+1} \alpha$.
+  Ясно е, че е невъзможно да имаме $A \yield{0} \alpha$.
+  Тогава, според правилата на релацията $\yield{}$, имаме следния извод:
   \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_0B_1\cdots\alpha_{n-1} B_n\alpha_{n}$}
-    \AxiomC{$B_1 \yield{\leq \ell} \beta_1$}
+    \AxiomC{$A \to_G X_1\cdots X_n$}
+    \AxiomC{$X_1 \yield{\leq \ell} \alpha_1$}
     \AxiomC{$\cdots$}
-    \AxiomC{$B_n \yield{\leq \ell} \beta_n$}
-    \QuaternaryInfC{$A \yield{\leq\ell+1} \underbrace{\alpha_0\beta_1\cdots\alpha_{n-1}\beta_n\alpha_{n}}_{\alpha}$}
+    \AxiomC{$X_n \yield{\leq \ell} \alpha_n$}
+    \QuaternaryInfC{$A \yield{\leq\ell+1} \underbrace{\alpha_1\cdots\alpha_{n}}_{\alpha}$}
   \end{prooftree}
-  Понеже $B_i \yield{\leq \ell} \beta_i$, то от \IndHyp имаме, че $\beta_i \in \L^\ell_G(B_i)$ за всяко $i = 1,2,\dots,n$.
+  Понеже $X_i \yield{\leq \ell} \alpha_i$, то от \IndHyp имаме, че $\alpha_i \in \L^\ell_G(X_i)$ за всяко $i = 1,2,\dots,n$.
   Тогава 
-  \[\alpha \in \bigcup\{\{\alpha_1\}\cdot \L^\ell_G(A_1) \cdots \{\alpha_n\} \cdot \L^\ell_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}\]
-
-  Сега преминаваме към доказателството на включването $\supseteq$. Нека вземем дума $\alpha$ принадлежаща на дясното множество. Това означава, че можем да представим $\alpha$ като $\alpha = \alpha_0\beta_1\cdots\alpha_{n-1}\beta_n\alpha_{n}$, където $A \to_G \alpha_0B_1\cdots\alpha_{n-1}B_n\alpha_{n}$,
-  $\beta_i \in \L^\ell_G(B_i)$ и $\alpha = \alpha_0\beta_1\cdots\alpha_{n-1}\beta_n\alpha_{n}$.
+  \[\alpha \in \bigcup\{\L^\ell_G(X_1) \cdots \L^\ell_G(X_n) \mid A \to_G X_1\cdots X_n\}.\]
+  Така доказахме включването $\subseteq$.  
+  Сега преминаваме към доказателството на включването $\supseteq$. Нека вземем произволна дума $\alpha$ принадлежаща на дясното множество.
+  Това означава, че можем да представим $\alpha$ като $\alpha = \alpha_1\cdots\alpha_{n}$, където $A \to_G X_1\cdots X_n$ и $\alpha_i \in \L^\ell_G(X_i)$.
   Получаваме следния извод:
   \begin{prooftree}
-    \AxiomC{$A \to_G \alpha_0B_1\cdots\alpha_{n-1}B_n\alpha_{n}$}
-    \AxiomC{$\beta_1 \in \L^\ell_G(B_1)$}
-    \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_1 \yield{\leq \ell }\beta_1 $}
+    \AxiomC{$A \to_G X_1\cdots X_n$}
+    \AxiomC{$\alpha_1 \in \L^\ell_G(X_1)$}
+    \RightLabel{\scriptsize{(деф.)}}
+    \UnaryInfC{$X_1 \yield{\leq \ell }\alpha_1 $}
     \AxiomC{$\cdots$}
-    \AxiomC{$\beta_n \in \L^\ell_G(B_n)$}
-    \RightLabel{\scriptsize{\IndHyp}}
-    \UnaryInfC{$B_n \yield{\leq \ell }\beta_n$}
-    \QuaternaryInfC{$A \yield{\leq \ell+1} \underbrace{\alpha_0\beta_1\cdots\alpha_{n-1}\beta_n\alpha_{n}}_{\alpha}$}
+    \AxiomC{$\alpha_n \in \L^\ell_G(X_n)$}
+    \RightLabel{\scriptsize{(деф.)}}
+    \UnaryInfC{$X_n \yield{\leq \ell }\alpha_n$}
+    \QuaternaryInfC{$A \yield{\leq \ell+1} \alpha_1\cdots \alpha_n$}
   \end{prooftree}
+  Заключаваме, че думата $\alpha$ принадлежи на $\L^{\ell+1}(A)$.
+  Така доказахме и включването $\supseteq$.  
 \end{proof}
 
 \begin{corollary}\label{cor:grammar:yield-approximation}
   Нека $G$ е безконтекстна граматика и $A$ е променлива в $G$. Тогава
-  \[\L_G(A) = \bigcup\{\{\alpha_1\}\cdot \L_G(A_1) \cdots \{\alpha_n\} \cdot \L_G(A_n) \cdot \{\alpha_{n+1}\} \mid A \to_G \alpha_1A_1\cdots\alpha_nA_n\alpha_{n+1}\}.\]
+  \[\L_G(A) = \bigcup\{\L_G(X_1) \cdots \L_G(X_n)  \mid A \to_G X_1 \cdots X_n\}.\]
 \end{corollary}
 \begin{hint}
   Използвайте, че $\L_G(A) = \bigcup_\ell \L^\ell_G(A)$.
@@ -102,6 +112,11 @@
   \[\L(G) = \L_G(S) = \bigcup_{\ell}\L^\ell_G(S) = \{a^nb^n \mid n\in\Nat\}.\]
 \end{example}
 
+
+\subsection*{Примерни задачи}
+
+\begin{extra}
+
 \begin{example}
   Да разгледаме безконтекстната граматика $G$ зададена със следните правила:
   \begin{align*}
@@ -109,7 +124,7 @@
     & B \to bBc\ |\ \varepsilon.
   \end{align*}
   Да видим защо $\L(G) = \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
-  Първо ще докажем \emph{коректност} на граматиката. Това означава, че $G$ не генерира думи извън езика, т.е.
+  Първо ще докажем \emph{коректността} на граматиката. Това означава, че $G$ не генерира думи извън желания език, т.е.
   $\L_G(S) \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$. За да направим това обаче, трябва да знаем също така и $\L_G(B)$.
   Формално казано, трябва да докажем, че за всяко $\ell$ е изпълнено следното:
   \begin{align}
@@ -153,7 +168,7 @@
   \end{itemize}
   Оттук заключаваме, че $\L_G(S) \subseteq \{a^nb^kc^{n+k} \mid n,k\in\Nat\}$.
   
-  Сега да разгледаме пълнота на граматиката, което означава, че
+  Сега да разгледаме \emph{пълнотата} на граматиката, което означава, че
   всяка дума от езика се генерира от $G$. С други думи, $\{a^nb^kc^{n+k} \mid n,k\in\Nat\} \subseteq \L_G(S)$.
   Първо ще докажем, че
   \begin{equation}
@@ -170,6 +185,7 @@
       Нека $|\alpha| > 0$, т.е. $\alpha = b^{k+1}c^{k+1}$.
       От \IndHyp за \Property{eq:4} имаме $\alpha \in \{b\} \cdot \L_G(B) \cdot \{c\} \subseteq \L_G(B)$.
     \end{itemize}
+    Така доказахме \Property{eq:4}.
     Вече сме готови да докажем, че:
     \begin{equation}
       \label{eq:9}
