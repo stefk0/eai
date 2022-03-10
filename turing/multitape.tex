@@ -1,14 +1,59 @@
-\section{Многолентови детерминирани машини на Тюринг}
+\section{Многолентови машини на Тюринг}
 \index{машина на Тюринг!многолентова}
 
+
+\subsubsection*{Многолентови детерминистични машини на Тюринг}
+
 Детерминирана машина на Тюринг с $k$ ленти има същата дефиниция като еднолентова машина на Тюринг
-с единствената разлика, че
+с единствената разлика, че функцията на преходите $\delta$ приема следния вид:
 \[\delta: Q' \times \Gamma^k\to Q \times \Gamma^k \times \{\goleft,\goright,\stay\}^k,\]
-където $Q' = Q \setminus\{\qaccept, \qreject\}$, 
-т.е. имаме $k$ на брой четящи глави, по една за всяка лента, които се движат независимо една от друга.
-Приемаме, че входната дума $\alpha$ е записана върху първата лента.
+където $Q' = Q \setminus\{\qaccept, \qreject\}$.
+Това означава, че имаме $k$ на брой ленти, всяка с отделна четяща глава, която се движи независимо от другите.
+Приемаме, че първоначално входната дума $\alpha$ е записана върху първата лента, а всички останали ленти са празни, т.е. запълнени са със символа $\blank$.
+
+\mynote{Тук означаваме
+  \[\vec{a} = (a_0,\dots,a_{k-1}).\]
+}
+
+Сега дефинираме релацията $\vdash_\M$ по следния начин:
+
+\begin{important}
+  \begin{figure}[H]
+    \centering
+    \begin{prooftree}
+      \AxiomC{$\delta(q,\vec{x}) = (q',\vec{y},\vec{d})$}
+      \AxiomC{$\forall i < k : (\lambda_i, q, x_i\rho_i) \vdash_{y_i,d_i} (\lambda'_i, q', \rho'_i)$}
+      \BinaryInfC{$(\vec\lambda, q, \vec{x}\vec\rho) \vdash_\M (\vec\lambda', q', \vec{\rho'})$}
+    \end{prooftree}
+    \caption{Едностъпков преход в $k$-лентова детерминистична машина на Тюринг}
+  \end{figure}
+\end{important}
+
+
+\subsubsection*{Многолентови недетерминистични машини на Тюринг}
+
+
+Аналогично, тук разликата е в дефиницията на функцита $\Delta$. Сега тя е следната:
+\[\Delta: Q' \times \Gamma^k\to \mathcal{P}(Q \times \Gamma^k \times \{\goleft,\goright,\stay\}^k),\]
+където $Q' = Q \setminus\{\qaccept, \qreject\}$.
+
+
+\begin{important}
+  \begin{figure}[H]
+    \begin{prooftree}
+      \AxiomC{$\exists \vec{y}\ \exists\vec{d} : \Delta(q,\vec{x}) \ni (q',\vec{y},\vec{d})$}
+      \AxiomC{$\forall i < k : (\lambda_i, q, x_i \rho_i) \vdash_{y_i,d_i} (\lambda'_i, q', \rho'_i)$}
+      \BinaryInfC{$(\vec{\lambda}, q, \vec{x}\vec{\rho}) \vdash_\N (\vec{\lambda}', q', \vec{\rho'})$}
+    \end{prooftree}
+    \caption{Едностъпков преход в $k$-лентова недетерминистична машина на Тюринг}
+  \end{figure}
+\end{important}
+
 
 \begin{extra}
+
+\subsubsection*{Примери}
+  
 \begin{example}
   \label{ex:multitape:omega:sharp:omega}
   Да видим как двулентова машина на Тюринг разрешава езика 

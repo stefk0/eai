@@ -1,158 +1,159 @@
 \section{Критерии за полуразрешимост}
 
-Вече знаем, че на практика всички интересни въпроси за машини на Тюринг не са разрешими.
-Сега да видим какво можем да кажем за позитивната част на въпросите за машини на Тюринг.
+Вече знаем, че на практика всички интересни въпроси за полуразрешими езици не са разрешими.
+Сега да видим какво можем да кажем, ако се ограничим само до позитивната част на тези въпроси.
 
-\begin{lemma}\label{lem:rice-shapiro:finite}
-  \mynote{Това означава, че ако $\texttt{Code}(\Ss)$ е полуразрешим език, то всеки език $L_0 \in \Ss$ притежава краен подезик, който също принадлежи на $\Ss$.}
-  Нека $\Ss$ е свойство на полуразрешимите езици.
-  Ако съществува безкраен език $L_0 \in \Ss$, който няма крайно подмножество в $\Ss$,
-  то $\texttt{Code}(\Ss)$ {\em не е} полуразрешим език.  
-\end{lemma}
+\begin{important}
+  \begin{lemma}
+    \label{lem:rice-shapiro:finite}
+    Нека $\Ss$ е свойство на полуразрешимите езици.
+    Ако съществува безкраен език $L_0 \in \Ss$, който няма краен подезик в $\Ss$,
+    то $\Code(\Ss)$ {\em не е} полуразрешим език.  
+  \end{lemma}
+\end{important}
+\mynote{Това означава, че ако $\Code(\Ss)$ е полуразрешим език, то всеки език $L_0 \in \Ss$ притежава краен подезик, който също принадлежи на $\Ss$.}
 \begin{hint}
   Нека $L_0 = \L(\M_0)$ като $L_0 \in \Ss$, но всеки краен подезик на $L_0$ не принадлежи на $\Ss$.
-  Ще докажем, че:
-  \[\Ldiag \leq_m \texttt{Code}(\Ss).\]
+  Ще докажем, че имаме следната връзка:
+  \[\Ldiag \leq_m \Code(\Ss).\]
   Ще дефинираме тотална изчислима функция $f$, която при вход думата $\omega \in \{0,1\}^\star$ работи по следния начин:
   \begin{itemize}
   \item
     Ако $\omega$ не е код на машина на Тюринг, то $f(\omega) \df \omega$.
   \item
     Ако $\omega$ е код на машината на Тюринг $\M_\omega$, то тогава $f(\omega) \df \code{\M'}$,
-    където $\M'$ работи така:
-    \begin{itemize}
-    \item 
-      вход думата $\alpha$;
+    където $\M'$, при вход произволна дума $\alpha$, работи така:
+    \begin{enumerate}[(1)]
     \item
-      $\M'$ симулира работата на $\M_\omega$ върху думата $\omega$:
-      \begin{itemize}
-      \item
-        ако $\M_\omega$ завърши за по-малко от $|\alpha|$ на брой стъпки като \emph{приеме} $\omega$, 
-        то $\M'$ завършва веднага като \emph{отхвърля} $\alpha$;
-      \item
-        в противен случай, $\M'$ симулира работата на $\M_0$ върху $\alpha$.
-      \end{itemize}
-    \end{itemize}
-    Така получаваме, че 
-    \begin{align*}
-      \L(\M') = 
-      \begin{cases}
-        \{\alpha \in L_0 \mid \abs{\alpha} < s_0\}, & \text{ако } \M_\omega \text{ приема }\omega\\
-        L_0, & \text{ако }\M_\omega \text{ не приема }\omega,
-      \end{cases}
-    \end{align*}
-    където $s_0$ е минималният брой стъпки необходими на $\M_\omega$ за да приеме думата $\omega$.
+      Първоначално $\M'$ не обръща внимание на $\alpha$, а симулира работата на $\M_\omega$ върху думата $\omega$.
+    \item
+      Ако симулацията завърши за по-малко от $|\alpha|$ на брой стъпки с резултат, че $\M_\omega$ приема $\omega$, то $\M'$ завършва веднага като \emph{отхвърля} $\alpha$.
+    \item
+      В противен случай, $\M'$ симулира работата на $\M_0$ върху $\alpha$.
+    \item
+      Ако симулацията завърши с резултат, че $\M_0$ приема $\alpha$, то $\M'$ завършва като приеме думата $\alpha$.
+    \end{enumerate}
   \end{itemize}
-  
-  Заключаваме, че 
+  Така получаваме, че:
   \begin{align*}
-    & \M_\omega \text{ не приема }\omega \implies \omega \in \Ldiag \implies \code{\M'} \in \texttt{Code}(\Ss)\\
-    & \M_\omega \text{ приема }\omega \implies \omega \not\in \Ldiag \implies \code{\M'} \not\in \texttt{Code}(\Ss).
+    \L(\M') = 
+    \begin{cases}
+      \{\alpha \in L_0 \mid \abs{\alpha} < \texttt{step}_\omega\}, & \text{ако } \omega \in \L(\M_\omega)\\
+      L_0, & \text{ако }\omega \not\in \L(\M_\omega),
+    \end{cases}
   \end{align*}
-  Понеже
-  \[\omega \in \Ldiag \iff f(\omega) \in \texttt{Code}(\Ss),\]
-  то $\texttt{Code}(\Ss)$ не е полуразрешим, защото от \Theorem{diagonal} ние знаем, че $\Ldiag$ не е полуразрешим.
+  където $\texttt{step}_\omega$ е минималният брой стъпки необходими на $\M_\omega$ за да приеме думата $\omega$.
+  Заключаваме, че за произволна дума $\omega \in \{0,1\}^\star$ са изпълнени импликациите:
+  \begin{align*}
+    \omega \in \Ldiag & \implies \L(\M_{f(\omega)}) = L_0 \implies f(\omega) \in \Code(\Ss)\\
+    \omega \in \Lcode \setminus \Ldiag & \implies \L(\M_{f(\omega)}) \text{ е краен подезик на }L_0 \implies f(\omega) \not\in \Code(\Ss)\\
+    \omega \not\in \Lcode & \implies f(\omega) = \omega \implies f(\omega) \not\in \Code(\Ss).
+  \end{align*}
+  които можем да обединим в следната еквивалентност:
+  \[\omega \in \Ldiag \iff f(\omega) \in \Code(\Ss),\]
+  Оттук следва, че $\Code(\Ss)$ не е полуразрешим, защото от \Theorem{diagonal} ние знаем, че $\Ldiag$ не е полуразрешим.
 \end{hint}
 
 \begin{corollary}
-  За всяко от следните свойства $\Ss$ на полуразрешимите езици, 
-  $\texttt{Code}(\Ss)$ {\bf не} е полуразрешим език, където:
+  Директно от \Lemma{rice-shapiro:finite} следва, че за всяко от следните свойства $\Ss$ на полуразрешимите езици, 
+  $\Code(\Ss)$ {\bf не} е полуразрешим език, където:
   \mynote{Защо не можем да използваме \Lemma{rice-shapiro:finite} за да докажем, че свойството празнота не е полуразрешимо, както и свойството регулярност, разрешимост, полуразрешимост?}
   \begin{itemize}
   \item
     $\Ss$ е свойството безкрайност, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }|\L(\M)| = \infty\}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и }|\L(\M_\omega)| = \infty\}\]
     не е полуразрешим;
   \item
     $\Ss$ е свойството за пълнота, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и } \L(\M) = \Sigma^\star\}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и } \L(\M_\omega) = \Sigma^\star\}\]
     не е полуразрешим;
   \item
     $\Ss$ е свойството неразрешимост, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и $\L(\M)$ не е разрешим}\}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и $\L(\M_\omega)$ не е разрешим}\}\]
     не е полуразрешим;
   \item
     $\Ss$ е свойството неполуразрешимост, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и $\L(\M)$ не е полуразрешим}\}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и $\L(\M_\omega)$ не е полуразрешим}\}\]
     не е полуразрешим;
   \item
     $\Ss$ е свойството нерегулярност, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и $\L(\M)$ не е регулярен}\}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и $\L(\M_\omega)$ не е регулярен}\}\]
     не е полуразрешим.
   \end{itemize}
 \end{corollary}
 
-\begin{lemma}\label{lem:rice-shapiro:extension}
-  \mynote{Това означава, че за полуразрешим език $\texttt{Code}(\Ss)$, ако $L_1 \in \Ss$ и $L_1 \subseteq L_2$, като $L_2$ е полуразрешим, то $L_2 \in \Ss$.}
-  Нека $L_1$ е език в $\Ss$ и нека $L_2$ е полуразрешим език, като $L_1 \subset L_2$ и $L_2 \not\in\Ss$.
-  Тогава $\texttt{Code}(\Ss)$ не е полуразрешим език.
-\end{lemma}
+\begin{important}
+  \begin{lemma}
+    \label{lem:rice-shapiro:extension}
+    Нека $L_1$ е език в $\Ss$ и нека $L_2$ е полуразрешим език, като $L_1 \subsetneqq L_2$ и $L_2 \not\in\Ss$. Тогава $\Code(\Ss)$ не е полуразрешим език.
+  \end{lemma}  
+\end{important}
+\mynote{Това означава, че за полуразрешим език $\Code(\Ss)$, ако $L_1 \in \Ss$ и $L_1 \subseteq L_2$, като $L_2$ е полуразрешим, то $L_2 \in \Ss$.}
 \begin{hint}
   Нека $L_1 = \L(\M_1)$ и $L_2 = \L(\M_2)$. Ще докажем, че
-  \[\Ldiag \leq_m \texttt{Code}(\Ss).\]
+  \[\Ldiag \leq_m \Code(\Ss).\]
   Ще дефинираме тотална изчислима функция $f$, която при вход думата $\omega \in \{0,1\}^\star$ работи по следния начин:
   \begin{itemize}
   \item
-    Ако $\omega$ не е код на машина на Тюринг, то $f(\omega) = \omega$.
+    Ако $\omega$ не е код на машина на Тюринг, то $f(\omega) \df \omega$.
   \item
-    Ако $\omega$ е код на машината на Тюринг $\M_\omega$, тогава $f(\omega)$ ще бъде кода на машината на Тюринг $\hat{\M}$,
-    която работи по следния начин:
-    \begin{itemize}
-    \item 
-      вход думата $\alpha$;
+    Ако $\omega$ е код на машината на Тюринг $\M_\omega$, тогава $f(\omega) \df \code{\M'}$, където $\M'$, при вход произволна дума $\alpha$, работи така:
+    \begin{enumerate}[(1)]
     \item
-      $\hat{\M}$ симулира едновременно две изчисления - $\M_1$ върху $\alpha$ и $\M_\omega$ върху $\omega$
-      докато намери стъпка $s$, такава че:    
-      \begin{itemize}
-      \item 
-        ако $\M_1$ завършва за $s$ на брой стъпки като приема думата $\alpha$, то $\hat{\M}$ завършва като приема думата $\alpha$;
-      \item
-        ако $\M_\omega$ завършва за $s$ на брой стъпки като приема думата $\omega$, 
-        то $\hat{\M}$ симулира работата $\M_2$ върху $\alpha$.
-      \item
-        ако $\hat{\M}$ не намери такава стъпка, то е ясно, че $\hat{\M}$ никога не завършва върху $\alpha$.
-      \end{itemize}
-    \end{itemize}
+      $\M'$ симулира едновременно две изчисления - работата на $\M_1$ върху $\alpha$ и работата на $\M_\omega$ върху $\omega$, докато намери стъпка $s$, такава че:    
+    \item 
+      ако симулацията на $\M_1$ завършва за $s$ на брой стъпки като приема думата $\alpha$, то $\M'$ завършва като приема думата $\alpha$;
+    \item
+      ако симулацията на $\M_\omega$ завършва за $s$ на брой стъпки като приема думата $\omega$, 
+      то $\M'$ продължава като симулира работата $\M_2$ върху $\alpha$.
+    \item
+      Ако симулацията на $\M_2$ завърши като приема думата $\alpha$, то $\M'$ завършва като приема думата $\alpha$.
+    \end{enumerate}
   \end{itemize}
   Съобразете сами, че получаваме следното:
   \begin{align*}
-    \L(\hat{\M}) = 
+    \L(\M') = 
     \begin{cases}
-      L_2, & \text{ако $\M_\omega$ приема }\omega\\
-      L_1, & \text{ако $\M_\omega$ не приема }\omega.
+      L_2, & \text{ако } \omega \in \L(\M_\omega)\\
+      L_1, & \text{ако } \omega \not\in \L(\M_\omega).
     \end{cases}
   \end{align*}
-  Заключаваме, че:
-  \[\omega \in \Ldiag \iff f(\omega) \in \texttt{Code}(\Ss),\]
-  защото $L_2 \not\in \Ss$, а $L_1 \in \Ss$.
+  Понеже $L_2 \not\in \Ss$, а $L_1 \in \Ss$, можем да заключим, че за произволна дума $\omega \in \{0,1\}^\star$ са изпълнени импликациите:
+  \begin{align*}
+    \omega \in \Ldiag & \implies \L(\M_{f(\omega)}) = L_1 \implies f(\omega) \in \Code(\Ss)\\
+    \omega \in \Lcode\setminus\Ldiag & \implies \L(\M_{f(\omega)}) = L_2 \implies f(\omega) \not\in \Code(\Ss)\\
+    \omega \not\in \Lcode & \implies f(\omega) = \omega \implies f(\omega)  \not\in \Code(\Ss),
+  \end{align*}
+  които можем да обединим в следната еквивалентност:
+  \[\omega \in \Ldiag \iff f(\omega) \in \Code(\Ss),\]
   Това означава, че ефективно можем да сведем въпрос за принадлежност в $\Ldiag$
-  към въпрос за принадлежност в $\texttt{Code}(\Ss)$.
-  Следователно, ако $\texttt{Code}(\Ss)$ е полуразрешим език, то $\Ldiag$ е полуразрешим език, което е противоречие.  
+  към въпрос за принадлежност в $\Code(\Ss)$.
+  Следователно, ако $\Code(\Ss)$ е полуразрешим език, то $\Ldiag$ е полуразрешим език, което е противоречие.  
 \end{hint}
 
 \begin{corollary}
-  За всяко от следните свойства $\Ss$ на полуразрешимите езици, 
-  $\texttt{Code}(\Ss)$ {\bf не} е полуразрешим език, където:
+  Директно от \Lemma{rice-shapiro:extension} следва, че за всяко от следните свойства $\Ss$ на полуразрешимите езици, 
+  $\Code(\Ss)$ {\bf не} е полуразрешим език, където:
   \begin{itemize}
   \item
     $\Ss$ е свойството крайност, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }|\L(\M)| < \infty\}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и }|\L(\M_\omega)| < \infty\}\]
     не е полуразрешим;
   \item
     $\Ss$ е свойството празнота, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }\L(\M) = \emptyset\}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и }\L(\M_\omega) = \emptyset\}\]
     не е полуразрешим;
   \item
     $\Ss$ е свойството разрешимост, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }\L(\M) \text{ е разрешим} \}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и }\L(\M_\omega) \text{ е разрешим} \}\]
     не е полуразрешим;
   \item
     $\Ss$ е свойството безконтекстност, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }\L(\M) \text{ е безконтекстен} \}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и }\L(\M_\omega) \text{ е безконтекстен} \}\]
     не е полуразрешим;
   \item
     $\Ss$ е свойството регулярност, т.е. езикът
-    \[\texttt{Code}(\Ss) = \{\code{\M} \mid \text{$\M$ е машина на Тюринг и }\L(\M) \text{ е регулярен} \}\]
+    \[\Code(\Ss) = \{\omega \mid \text{$\omega$ е код на машина на Тюринг и }\L(\M_\omega) \text{ е регулярен} \}\]
     не е полуразрешим.
   \end{itemize}
 \end{corollary}
@@ -160,13 +161,20 @@
 
 \begin{framed}
   \begin{theorem}[Райс-Шапиро]
-    Нека $\texttt{Code}(\Ss)$ е полуразрешим език. Тогава е изпълнено, че:
+    \label{th:rice-shapiro}
+    \index{Райс}
+    \index{Шапиро}
+    Нека $\Code(\Ss)$ е полуразрешим език. Тогава е изпълнена еквивалентността:
     \[L \in \Ss \iff (\exists L_0 \subseteq \Sigma^\star )[L_0\text{ е краен и }L_0 \subseteq L\ \&\ L_0 \in \Ss].\]
   \end{theorem}
 \end{framed}
 \begin{proof}
-  Посоката $(\Rightarrow)$ следва от \Lemma{rice-shapiro:finite},
-  докато посоката $(\Leftarrow)$ следва от \Lemma{rice-shapiro:extension}.
+  \Lemma{rice-shapiro:finite} може да се формулира така:
+  ако $\Code(\Ss)$ е полуразрешим, то всеки език $L \in \Ss$ има краен подезик $L_0 \subseteq L$, за който $L_0 \in \Ss$. Това ни дава посоката $(\Rightarrow)$ на \Theorem{rice-shapiro}.
+
+  \Lemma{rice-shapiro:extension} може да се формулира така:
+  ако $\Code(\Ss)$ е полуразрешим, то за всеки два езика $L_1 \subseteq L_2$, ако $L_1 \in \Ss$,
+  то $L_2 \in \Ss$. Това ни дава посоката $(\Leftarrow)$ на \Theorem{rice-shapiro}.
 \end{proof}
 
 

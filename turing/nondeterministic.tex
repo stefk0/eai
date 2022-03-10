@@ -9,50 +9,15 @@
 която ще казва как моментното описание на машината $\N$ се променя при изпълнение на една стъпка.
 
 \begin{important}
-\begin{figure}[H]
-  \begin{subfigure}[b]{0.5\textwidth}
+  \begin{figure}[H]
+    \centering
     \begin{prooftree}
-      \AxiomC{$\Delta(q,x) \ni (p,y,\goright)$}
-      \RightLabel{\scriptsize{(right-1)}}
-      \UnaryInfC{$(\alpha, q, xz\beta) \vdash_\N (\alpha y, p, z\beta)$}
+      \AxiomC{$\exists y \exists d : \Delta(q,x) \ni (q',y,d)$}
+      \AxiomC{$(\lambda, q, x\rho) \vdash_{y,d} (\lambda', q', \rho')$}
+      \BinaryInfC{$(\lambda, q, x\rho) \vdash_{\N} (\lambda', q', \rho')$}
     \end{prooftree}
-    \vspace*{2mm}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{$\Delta(q,x) \ni (p,y,\goleft)$}
-      \RightLabel{\scriptsize{(left-1)}}
-      \UnaryInfC{$(\alpha z, q, x\beta) \vdash_\N (\alpha,p,zy\beta)$}
-    \end{prooftree}
-    \vspace*{2mm}
-  \end{subfigure}
-  
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{$\Delta(q,x) \ni (p,y,\goright)$}
-      \RightLabel{\scriptsize{(right-2)}}
-      \UnaryInfC{$(\alpha, q, x) \vdash_\N (\alpha y, p, \blank)$}
-    \end{prooftree}
-    \vspace*{2mm}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{$\Delta(q,x) \ni (p,y,\goleft)$}
-      \RightLabel{\scriptsize{(left-2)}}
-      \UnaryInfC{$(\varepsilon,q,x\beta) \vdash_\N (\varepsilon,p,\blank y\beta)$}
-    \end{prooftree}
-    \vspace*{2mm}
-  \end{subfigure}
-  
-  \begin{prooftree}
-    \AxiomC{$\Delta(q, z) \ni (p, y, \stay)$}
-    \RightLabel{\scriptsize{(stay)}}
-    \UnaryInfC{$(\alpha, q, z\beta) \vdash_\N (\alpha , p, y\beta)$}
-  \end{prooftree}
-  \caption{Едностъпков преход в недетерминирана машина на Тюринг}
-\end{figure}
+    \caption{Едностъпков преход в еднолентова недетерминирана машина на Тюринг}
+  \end{figure}
 \end{important}
 
 \mynote{Тази дефиниция на релацията $\vdash^\ell$ вече се повтаря няколко пъти.}
@@ -81,7 +46,7 @@
   С $\vdash^\star$ ще означаваме рефлексивното и транзитивно затваряне на релацията $\vdash$ или с други думи,
   \[\kappa \vdash^\star \kappa' \dff (\exists \ell \in \Nat)[\kappa \vdash^\ell \kappa'].\]
 
-  Макар и една конфигурация $\kappa$ да преставлява тройка, то често ще бъде удобно да гледаме на $\kappa$ като на дума от $\Gamma^\star Q \Gamma^+$.
+  % Макар и една конфигурация $\kappa$ да преставлява тройка, то често ще бъде удобно да гледаме на $\kappa$ като на дума от $\Gamma^\star Q \Gamma^+$.
 
 С $\vdash^\star$ ще означаваме рефлексивното и транзитивно затваряне на $\vdash$.
 Тогава за недетерминирана машина на Тюринг $\N$, 
@@ -183,7 +148,7 @@
 \subsection*{Канонична наредба на $\Sigma^\star$}
 \index{наредба!канонична}
 
-\mynote{За доказателството, че всяка НМТ е еквивалентна на ДМТ, е необходимо да фиксираме канонична подредба на думите над дадена азбука}
+\mynote{За доказателството, че всяка НМТ е еквивалентна на ДМТ, е необходимо да фиксираме канонична подредба на думите над дадена азбука.}
 Нека $\Sigma = \{a_0,a_1,\dots,a_{k-1}\}$.
 Подреждаме думите по ред на тяхната дължина.
 Думите с еднаква дължина подреждаме по техния числов ред, т.е.

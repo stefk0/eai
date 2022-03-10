@@ -68,59 +68,70 @@
   Една конфигурация ще наричаме {\bf заключителна}, ако тя е или приемаща или отхвърляща.
 \end{itemize}
 
-Както за автомати, удобно е да дефинираме бинарна релация $\vdash$ над $\Gamma^\star~\times~Q~\times~\Gamma^+$,
+Както за автомати, удобно е да дефинираме бинарна релация $\vdash_\M$ над $\Gamma^\star~\times~Q~\times~\Gamma^+$,
 която ще казва как моментната конфигурация на машината $\M$ се променя при изпълнение на една стъпка.
 
-\mynote{Ако няма опасност да се заблудим за коя точно машина на Тюринг $\M$ говорим, то е възможно да пишем просто $\vdash$.}
 
+За да направим това, удобно е първо да дефинираме бинарната релация $\vdash_{y,d}$ над $\Gamma^\star~\times~Q~\times~\Gamma^+$, която показва как една моментна конфигурация се променя, когато заменим символа на главата с $y$ и се придвижим на посока $d \in \{\goleft, \goright, \stay\}$.
 
+\mynote{Дефиницията на релацията $\vdash_{y,d}$ не зависи от конкретна машина на Тюринг!}
 \begin{important}
-\begin{figure}[H]
-  \begin{subfigure}[b]{0.5\textwidth}
+  \begin{figure}[H]
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{}
+        \UnaryInfC{$(\lambda, q, xz\rho) \vdash_{y,\goright} (\lambda y, p, z\rho)$}
+      \end{prooftree}
+      \vspace*{2mm}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{}
+        \UnaryInfC{$(\lambda, q, x) \vdash_{y,\goright} (\lambda y, p, \blank)$}
+      \end{prooftree}
+      \vspace*{2mm}
+    \end{subfigure}
+    
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{}
+        \UnaryInfC{$(\lambda z, q, x\rho) \vdash_{y,\goleft} (\lambda, p, z y\rho)$}
+      \end{prooftree}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[b]{0.5\textwidth}
+      \begin{prooftree}
+        \AxiomC{}
+        \UnaryInfC{$(\varepsilon, q, x\rho) \vdash_{y,\goleft} (\varepsilon, p, \blank y \rho)$}
+      \end{prooftree}
+    \end{subfigure}
+    
     \begin{prooftree}
-      \AxiomC{$\delta(q,x) = (p,y,\goright)$}
-      \RightLabel{\scriptsize{(right-1)}}
-      \UnaryInfC{$(\alpha, q, xz\beta) \vdash_\M (\alpha y, p, z\beta)$}
+      \AxiomC{}
+      \UnaryInfC{$(\lambda, q, x\rho) \vdash_{y,\stay} (\lambda, p, y \rho)$}
     \end{prooftree}
-    \vspace*{2mm}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{$\delta(q,x) = (p,y,\goleft)$}
-      \RightLabel{\scriptsize{(left-1)}}
-      \UnaryInfC{$(\alpha z, q, x\beta) \vdash_\M (\alpha,p,zy\beta)$}
-    \end{prooftree}
-    \vspace*{2mm}
-  \end{subfigure}
-  
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{$\delta(q,x) = (p,y,\goright)$}
-      \RightLabel{\scriptsize{(right-2)}}
-      \UnaryInfC{$(\alpha, q, x) \vdash_\M (\alpha y, p, \blank)$}
-    \end{prooftree}
-    \vspace*{2mm}
-  \end{subfigure}
-  ~
-  \begin{subfigure}[b]{0.5\textwidth}
-    \begin{prooftree}
-      \AxiomC{$\delta(q,x) = (p,y,\goleft)$}
-      \RightLabel{\scriptsize{(left-2)}}
-      \UnaryInfC{$(\varepsilon,q,x\beta) \vdash_\M (\varepsilon,p,\blank y\beta)$}
-    \end{prooftree}
-    \vspace*{2mm}
-  \end{subfigure}
-
-  \begin{prooftree}
-    \AxiomC{$\delta(q, z) = (p, y, \stay)$}
-    \RightLabel{\scriptsize{(stay)}}
-    \UnaryInfC{$(\alpha, q, z\beta) \vdash_\M (\alpha , p, y\beta)$}
-  \end{prooftree}
-  \caption{Едностъпков преход в детерминистична машина на Тюринг}
-\end{figure}
+    \caption{Дефиниция на релацията $\vdash_{y,d}$.}
+  \end{figure}
 \end{important}
 
+
+
+\mynote{Ако няма опасност да се заблудим за коя точно машина на Тюринг $\M$ говорим, то е възможно да пишем просто $\vdash$ вместо $\vdash_\M$.}
+
+Сега вече сме готови да дефинираме релацията $\vdash_\M$.
+
+\begin{important}
+  \begin{figure}[H]
+    \centering
+    \begin{prooftree}
+      \AxiomC{$\delta(q,x) = (q',y,d)$}
+      \AxiomC{$(\lambda, q, x\rho) \vdash_{y,d} (\lambda', q', \rho')$}
+      \BinaryInfC{$(\lambda, q, x\rho) \vdash_{\M} (\lambda', q', \rho')$}
+    \end{prooftree}
+    \caption{Едностъпков преход в еднолентова детерминистична машина на Тюринг $\M$}
+  \end{figure}
+\end{important}
 
 Сега за всяко естествено число $\ell$, ще дефинираме релацията $\vdash^{\ell}$,
 която ще казва, че от конфигурацията $\kappa$ можем да достигнем до конфигурацията $\kappa'$ за $\ell$ на брой стъпки.
